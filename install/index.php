@@ -85,7 +85,7 @@ switch ($Mode) {
             'table_prefix' => '{$prefix}',
             )
         )
-    )
+    );
 EOF;
             fwrite($dz, $fileData);
             fclose($dz);
@@ -301,7 +301,7 @@ EOF;
             'table_prefix' => '{$prefix}',
             )
         )
-    )
+    );
 EOF;
             fwrite($dz, $fileData);
             fclose($dz);

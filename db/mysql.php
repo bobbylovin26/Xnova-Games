@@ -15,39 +15,37 @@
  *
  */
 
-function doquery($query, $table, $fetch = false){
-  global $link, $debug;
-//    echo $query."<br />";
-$config = require ROOT_PATH . 'config.php';
-
-
-
-	if(!$link)
-	{
-		$link = mysql_connect(
-			$config['global']['database']['options']['hostname'],
-			$config['global']['database']['options']['username'],
-			$config['global']['database']['options']['password'])
-				or trigger_error(E_WARNING, mysql_error() . "$query<br />" . PHP_EOL);
-
-		mysql_select_db($config['global']['database']['options']['hostname'])
-			or trigger_error(E_WARNING, mysql_error()."$query<br />" . PHP_EOL);
-	}
-	$sql = str_replace("{{table}}", $config['global']['database']['table_prefix'].$table, $query);
-
-	$sqlquery = mysql_query($sql) or
-		trigger_error(E_WARNING, mysql_error()."$sql<br />" . PHP_EOL);
-
-	global $numqueries,$debug;//,$depurerwrote003;
-	$numqueries++;
-
-	if($fetch)
-	{ //hace el fetch y regresa $sqlrow
-		$sqlrow = mysql_fetch_array($sqlquery);
-		return $sqlrow;
-	}else{ //devuelve el $sqlquery ("sin fetch")
-		return $sqlquery;
-	}
-
+class Database
+{
+    static $dbHandle = NULL;
+    static $config = NULL;
 }
-?>
+
+function doquery($query, $table, $fetch = false)
+{
+    if (!isset(Database::$config)) {
+        $config = require dirname(dirname(__FILE__)) . '/config.php';
+    }
+
+    if(!isset(Database::$dbHandle))
+    {
+        Database::$dbHandle = mysql_connect(
+            $config['global']['database']['options']['hostname'],
+            $config['global']['database']['options']['username'],
+            $config['global']['database']['options']['password'])
+                or trigger_error(mysql_error() . "$query<br />" . PHP_EOL, E_USER_WARNING);
+
+        mysql_select_db($config['global']['database']['options']['database'], Database::$dbHandle)
+            or trigger_error(mysql_error()."$query<br />" . PHP_EOL, E_USER_WARNING);
+    }
+    $sql = str_replace("{{table}}", "{$config['global']['database']['table_prefix']}{$table}", $query);
+
+    $sqlQuery = mysql_query($sql, Database::$dbHandle) or
+        trigger_error(mysql_error()."$sql<br />" . PHP_EOL, E_USER_WARNING);
+
+    if($fetch) {
+        return mysql_fetch_array($sqlQuery);
+    }else{
+        return $sqlquery;
+    }
+}
