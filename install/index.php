@@ -58,9 +58,7 @@ include(ROOT_PATH . 'includes/migrateinfo.php');
 
 $mode     = isset($_GET['mode']) ? strval($_GET['mode']) : 'intro';
 $page     = isset($_GET['page']) ? intval($_GET['page']) : 1;
-$phpself  = $_SERVER['PHP_SELF'];
 $nextPage = $page + 1;
-
 
 $mainTpl = gettemplate('install/ins_body');
 includeLang('install/install');
@@ -68,8 +66,8 @@ includeLang('install/install');
 switch ($mode) {
     case 'intro':
             $subTpl = gettemplate('install/ins_intro');
-            $bloc   = $lang;
-            $bloc['dpath']        = $dpath;
+            $bloc = $lang;
+            $bloc['dpath'] = $dpath;
             $frame  = parsetemplate($subTpl, $bloc);
          break;
 
@@ -82,11 +80,11 @@ switch ($mode) {
 	            adminMessage ($lang['ins_error2'], $lang['ins_error']);
             }
 
-            $subTpl = gettemplate ('install/ins_form');
+            $subTpl = gettemplate('install/ins_form');
             $bloc   = $lang;
-            $bloc['dpath']        = $dpath;
+            $bloc['dpath'] = $dpath;
             $frame  = parsetemplate($subTpl, $bloc);
-        } elseif ($page == 2) {
+        } else if ($page == 2) {
             $host   = $_POST['host'];
             $user   = $_POST['user'];
             $pass   = $_POST['passwort'];
@@ -157,7 +155,7 @@ EOF;
             $frame  = parsetemplate ( $subTpl, $bloc );
         } elseif ($page == 3) {
             if (isset($_GET['error']) && intval($_GET['error']) == 3) {
-            adminMessage ($lang['ins_error3'], $lang['ins_error']);
+                adminMessage ($lang['ins_error3'], $lang['ins_error']);
             }
 
             $subTpl = gettemplate ('install/ins_acc');

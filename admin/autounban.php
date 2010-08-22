@@ -31,7 +31,7 @@
 define('INSIDE' , true);
 define('INSTALL' , false);
 define('IN_ADMIN', true);
-require_once dirname(__FILE__) .'./../common.php';
+require_once dirname(dirname(__FILE__)) .'/common.php';
 
 	if ($user['authlevel'] >= 3) {
 		$lang['PHP_SELF'] = 'options.'.PHPEXT;

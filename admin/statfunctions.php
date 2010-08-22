@@ -105,31 +105,3 @@ function GetFleetPoints ( $CurrentPlanet ) {
 
 	return $RetValue;
 }
-
-function GetFlyingFleetPoints ( $FlyingFleet ) {
-	global $resource, $pricelist, $reslist;
-
-	$FleetCounts = 0;
-	$FleetPoints = 0;
-
-	while ($Fleet = mysql_fetch_assoc ($FlyingFleet))
-	{
-		$FleetRec     = explode(";", $Fleet['fleet_array']);
-
-		foreach ($FleetRec as $Item => $Group)
-		{
-			if ($Group  != '')
-			{
-				$Ship    = explode(",", $Group);
-				$Units         = $pricelist[ $Ship[0] ]['metal'] + $pricelist[ $Ship[0] ]['crystal'] + $pricelist[ $Ship[0] ]['deuterium'];
-				$FleetPoints   += ($Units * $Ship[1]);
-				$FleetCounts   += $Ship[1];
-			}
-		}
-	}
-	$RetValue['FleetCount'] = $FleetCounts;
-	$RetValue['FleetPoint'] = $FleetPoints;
-
-	return $RetValue;
-}
-?>

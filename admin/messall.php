@@ -31,7 +31,7 @@
 define('INSIDE' , true);
 define('INSTALL' , false);
 define('IN_ADMIN', true);
-require_once dirname(__FILE__) .'./../common.php';
+require_once dirname(dirname(__FILE__)) .'/common.php';
 
 	if ($user['authlevel'] >= 1) {
 		if ($_POST && $mode == "change") {
