@@ -9,7 +9,7 @@
 */
 
 function MissionCaseDestruction($FleetRow) {
-   global $user, $phpEx, $ugamela_root_path, $pricelist, $lang, $resource, $CombatCaps;
+   global $user, $ugamela_root_path, $pricelist, $lang, $resource, $CombatCaps;
 
    includeLang('system');
 
@@ -19,7 +19,7 @@ function MissionCaseDestruction($FleetRow) {
 
          if (!isset($CombatCaps[202]['sd'])) {
 
-            message("<font color=\"red\">". $lang['sys_no_vars'] ."</font>", $lang['sys_error'], "fleet." . $phpEx, 2);
+            message("<font color=\"red\">". $lang['sys_no_vars'] ."</font>", $lang['sys_error'], "fleet." . PHPEXT, 2);
 
          }
 
@@ -137,7 +137,7 @@ function MissionCaseDestruction($FleetRow) {
 
 
 
-         include_once($ugamela_root_path . 'includes/ataki.' . $phpEx);
+         include_once($ugamela_root_path . 'includes/ataki.' . PHPEXT);
 
 
 

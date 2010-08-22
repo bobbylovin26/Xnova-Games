@@ -8,7 +8,7 @@
  */
 
 if ( defined('INSIDE') ) {
-	include($xnova_root_path . 'db/mysql.'.$phpEx);
+	include(ROOT_PATH . 'db/mysql.'.PHPEXT);
 }
 
 ?>

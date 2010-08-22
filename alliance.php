@@ -1,10 +1,43 @@
 <?php
-
 /**
- * alliance.php
+ * XNova Legacies
  *
- * @version 1.0
- * @copyright 2008 by ??????? for XNova
+ * @license http://www.xnova-ng.org/license-legacies
+ * @see http://www.xnova-ng.org/
+ *
+ * Copyright (c) 2009-Present, XNova Support Team
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  - Redistributions of source code must retain the above copyright notice,
+ * this list of conditions and the following disclaimer.
+ *  - Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *  - Neither the name of the team or any contributor may be used to endorse or
+ * promote products derived from this software without specific prior written
+ * permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ *
+ *                                --> NOTICE <--
+ *  This file is part of the core development branch, changing its contents will
+ * make you unable to use the automatic updates manager. Please refer to the
+ * documentation for further information about customizing XNova.
+ *
  */
 
 define('INSTALL' , false);
@@ -38,10 +71,15 @@ $id = intval($_GET['id']);
 if (empty($id))
 	unset($id);
 
-define('INSIDE', true);
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc');
-include($xnova_root_path . 'common.' . $phpEx);
+define('INSIDE' , true);
+require_once dirname(__FILE__) .'/common.php';
+
+
+if(empty($user['id'])){
+echo '<script language="javascript">';
+echo 'parent.location="../";';
+echo '</script>';
+}
 
 $mode     = $_GET['mode'];
 $yes      = $_GET['yes'];
@@ -70,18 +108,18 @@ if ($_GET['mode'] == 'ainfo') {
 	$tag = mysql_escape_string($_GET['tag']);
 	// Evitamos errores casuales xD
 	// query
-	$lang['Alliance_information'] = "Allianz Information";
+	$lang['Alliance_information'] = "Information Alliance";
 
 	if (isset($_GET['tag'])) {
 		$allyrow = doquery("SELECT * FROM {{table}} WHERE ally_tag='{$tag}'", "alliance", true);
 	} elseif (is_numeric($a) && $a != 0) {
 		$allyrow = doquery("SELECT * FROM {{table}} WHERE id='{$a}'", "alliance", true);
 	} else {
-		message("Diese Allianz existiert leider nicht!", "Allianz Information (1)");
+      message("Cette alliance n'existe pas !", "Information Alliance (1)");
 	}
 	// Si no existe
 	if (!$allyrow) {
-		message("Diese Allianz existiert leider nicht!", "Allianz Information (1)");
+      message("Cette alliance n'existe pas !", "Information Alliance (1)");
 	}
 	extract($allyrow);
 
@@ -92,7 +130,7 @@ if ($_GET['mode'] == 'ainfo') {
 	if ($ally_description != "") {
 		$ally_description = "<tr><th colspan=2 height=100>{$ally_description}</th></tr>";
 	} else
-		$ally_description = "<tr><th colspan=2 height=100>Bei dieser Allianz hat noch niemand eine Beschreibung eingegeben.</th></tr>";
+		$ally_description = "<tr><th colspan=2 height=100>Il n'y as aucune descriptions de cette alliance.</th></tr>";
 
 	if ($ally_web != "") {
 		$ally_web = "<tr>
@@ -121,12 +159,12 @@ if ($_GET['mode'] == 'ainfo') {
 
 	if ($user['ally_id'] == 0) {
 		$lang['bewerbung'] = "<tr>
-	  <th>Bewerben</th>
-	  <th><a href=\"alliance.php?mode=apply&amp;allyid=" . $id . "\">Klicke hier um eine Bewerbung zu schreiben</a></th>
+	  <th>Candidature</th>
+	  <th><a href=\"alliance.php?mode=apply&amp;allyid=" . $id . "\">Cliquer ici pour ecrire votre candidature</a></th>
 
 	</tr>";
 	} else
-		$lang['bewerbung'] = "";
+		$lang['bewerbung'] = "Candidature";
 
 	$page .= parsetemplate(gettemplate('alliance_ainfo'), $lang);
 	display($page, str_replace('%s', $ally_name, $lang['Info_of_Alliance']));
@@ -148,6 +186,8 @@ if ($user['ally_id'] == 0) { // Sin alianza
 			if (!$_POST['aname']) {
 				message($lang['have_not_name'], $lang['make_alliance']);
 			}
+			$_POST['aname']=addslashes($_POST['aname']);
+      $_POST['atag']=addslashes($_POST['atag']);
 
 			$tagquery = doquery("SELECT * FROM {{table}} WHERE ally_tag='{$_POST['atag']}'", 'alliance', true);
 
@@ -182,9 +222,7 @@ if ($user['ally_id'] == 0) { // Sin alianza
 	}
 
 	if ($mode == 'search' && $user['ally_request'] == 0) { // search one
-		/*
-	  Buscador de alianzas
-	*/
+
 		$parse = $lang;
 		$lang['searchtext'] = $_POST['searchtext'];
 		$page = parsetemplate(gettemplate('alliance_searchform'), $lang);
@@ -276,22 +314,7 @@ if ($user['ally_id'] == 0) { // Sin alianza
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 // Parte de adentro de la alianza
 elseif ($user['ally_id'] != 0 && $user['ally_request'] == 0) { // Con alianza
-	// query para la allyrow
-	/*
-array(1 =>
-	'name' => 'Co. Leader',
-	'mails' => '1',
-	'delete' => '0',
-	'kick' => '1',
-	'bewerbungen' => '1',
-	'administrieren' => '1',
-	'memberlist' => '1',
-	'bewerbungenbearbeiten' => '1',
-	'onlinestatus' => '1',
-	'rechtehand' => '1'
-	);
 
-*/
 	$ally = doquery("SELECT * FROM {{table}} WHERE id='{$user['ally_id']}'", "alliance", true);
 
 	$ally_ranks = unserialize($ally['ally_ranks']);
@@ -349,7 +372,7 @@ array(1 =>
 		$user_onlinestatus = false;
 
 	if (!$ally) {
-		doquery("UPDATE {{table}} SET `ally_id`=0 WHERE `id`='{$user['id']}'", "users");
+		doquery("UPDATE {{table}} SET `ally_name`='',`ally_id`=0 WHERE `id`='{$user['id']}'", "users");
 		message($lang['ally_notexist'], $lang['your_alliance'], 'alliance.php');
 	}
 
@@ -366,7 +389,7 @@ array(1 =>
 		} else {
 			// se pregunta si se quiere salir
 			$lang['Want_go_out'] = str_replace("%s", $ally_name, $lang['Want_go_out']);
-			$page = MessageForm($lang['Want_go_out'], "<br>", "?mode=exit&yes=1", "Ja");
+			$page = MessageForm($lang['Want_go_out'], "<br>", "?mode=exit&yes=1", "Oui");
 		}
 		display($page);
 	}
@@ -513,7 +536,7 @@ array(1 =>
 			/*
 		  Aca un mensajito diciendo que a quien se mando.
 		*/
-			$page = MessageForm($lang['Circular_sended'], "Folgende Mitglieder erhielten eine Nachricht:" . $list, "alliance.php", $lang['Ok'], true);
+			$page = MessageForm($lang['Circular_sended'], "Les membres suivants ont reçu un message:" . $list, "alliance.php", $lang['Ok'], true);
 			display($page, $lang['Send_circular_mail']);
 		}
 
@@ -719,7 +742,7 @@ array(1 =>
 			$ally['ally_request_notallow'] = intval($_POST['request_notallow']);
 
 			if ($ally['ally_request_notallow'] != 0 && $ally['ally_request_notallow'] != 1) {
-				message("W&auml;hle bei \"Bewerbungen\" eine Option aus dem Formular!", "Fehler");
+            message("Aller à \"Candidature\" et sur une option dans le formulaire!", "Erreur");
 				exit;
 			}
 
@@ -785,6 +808,26 @@ array(1 =>
 		display($page, $lang['Alliance_admin']);
 	}
 
+	if ($mode == 'admin' && $edit == 'give') {
+	if ($_POST["id"]) {
+	  doquery("update {{table}} set `ally_owner`='".$_POST["id"]."' where `id`='".$user['ally_id']."'",'alliance');
+	  } else {
+	$selection=doquery("SELECT * FROM {{table}} where ally_id='".$user['ally_id']."'",'users');
+  $select='';
+while($data=mysql_fetch_array($selection)){
+  $select.='<OPTION VALUE="'.$data['id'].'">'.$data['username'];
+}
+  $page .= '<br><form method="post" action="alliance.php?mode=admin&edit=give"><table width="600" border="0" cellpadding="0" cellspacing="1" ALIGN="center">';
+	$page .= '<tr><td class="c" colspan="4" align="center">A qui voulez vous donner l alliance ?</td></tr>';
+  $page .= '<tr>';
+	$page .= "<th colspan=\"3\">Choisissez le joueur a qui vous souhaitez donner l alliance :</th><th colspan=\"1\"><SELECT NAME=\"id\">$select</SELECT></th>";
+	$page .= '</tr>';
+	$page .= '<tr><th colspan="4"><INPUT TYPE="submit" VALUE="Donner"></th></tr>';
+	}
+  }
+
+
+
 	if ($mode == 'admin' && $edit == 'members') { // Administrar a los miembros
 		/*
 	  En la administrar a los miembros se pueden establecer los rangos
@@ -806,7 +849,7 @@ array(1 =>
 			$u = doquery("SELECT * FROM {{table}} WHERE id='{$kick}' LIMIT 1", 'users', true);
 			// kickeamos!
 			if ($u['ally_id'] == $ally['id'] && $u['id'] != $ally['ally_owner']) {
-				doquery("UPDATE {{table}} SET `ally_id`='0' WHERE `id`='{$u['id']}'", 'users');
+				doquery("UPDATE {{table}} SET `ally_id`='0' ,`ally_name` = '' WHERE `id`='{$u['id']}'", 'users');
 			}
 		} elseif (isset($_POST['newrang'])) {
 			$q = doquery("SELECT * FROM {{table}} WHERE id='{$u}' LIMIT 1", 'users', true);
@@ -933,7 +976,7 @@ array(1 =>
 			message($lang['Denied_access'], $lang['Check_the_requests']);
 		}
 
-		if ($_POST['action'] == "Akzeptieren") {
+		if ($_POST['action'] == "Accepter") {
 			$_POST['text'] = mysql_escape_string(strip_tags($_POST['text']));
 
 			$u = doquery("SELECT * FROM {{table}} WHERE id=$show", 'users', true);
@@ -964,7 +1007,7 @@ array(1 =>
 			header('Location:alliance.php?mode=admin&edit=requests');
 			die();
 
-		} elseif ($_POST['action'] == "Ablehnen" && $_POST['action'] != '') {
+		} elseif ($_POST['action'] == "Refuser" && $_POST['action'] != '') {
 			$_POST['text'] = mysql_escape_string(strip_tags($_POST['text']));
 
 			doquery("UPDATE {{table}} SET ally_request_text='',ally_request='0',ally_id='0',new_message=new_message+1, mnl_alliance=mnl_alliance+1 WHERE id='{$show}'", 'users');
@@ -999,7 +1042,7 @@ array(1 =>
 			$i++;
 		}
 		if ($parse['list'] == '') {
-			$parse['list'] = '<tr><th colspan=2>Es liegen keine Bewerbungen vor</th></tr>';
+			$parse['list'] = '<tr><th colspan=2>Il ne reste plus aucune candidature</th></tr>';
 		}
 		// Con $show
 		if (isset($show) && $show != 0 && $parse['list'] != '') {
@@ -1082,6 +1125,7 @@ array(1 =>
 	  Si bien, se tendria que confirmar, no tengo animos para hacerlo mas detallado...
 	  sorry :(
 	*/
+		doquery("UPDATE {{table}} SET `ally_id`='0', `ally_name` = '' WHERE `id`='{$user['id']}'", 'users');	
 		doquery("DELETE FROM {{table}} WHERE id='{$ally['id']}'", "alliance");
 		header('Location: alliance.php');
 		exit;

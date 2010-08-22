@@ -1,19 +1,48 @@
 <?php
-
 /**
- * overview.php
+ * XNova Legacies
  *
- * @version 1
- * @copyright 2008 By Chlorel for XNova
- * @Copyright, bot de mapomme (Britania) modifiÃ© et adaptÃ© pour XNova by Bono ;)
+ * @license http://www.xnova-ng.org/license-legacies
+ * @see http://www.xnova-ng.org/
+ *
+ * Copyright (c) 2009-Present, XNova Support Team
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  - Redistributions of source code must retain the above copyright notice,
+ * this list of conditions and the following disclaimer.
+ *  - Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *  - Neither the name of the team or any contributor may be used to endorse or
+ * promote products derived from this software without specific prior written
+ * permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ *
+ *                                --> NOTICE <--
+ *  This file is part of the core development branch, changing its contents will
+ * make you unable to use the automatic updates manager. Please refer to the
+ * documentation for further information about customizing XNova.
+ *
  */
 
 define('INSIDE' , true);
 define('INSTALL' , false);
-
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc');
-include($xnova_root_path . 'common.' . $phpEx);
+require_once dirname(__FILE__) .'/common.php';
 
 $lunarow = doquery("SELECT * FROM {{table}} WHERE `id_owner` = '" . $planetrow['id_owner'] . "' AND `galaxy` = '" . $planetrow['galaxy'] . "' AND `system` = '" . $planetrow['system'] . "' AND `lunapos` = '" . $planetrow['planet'] . "';", 'lunas', true);
 
@@ -94,33 +123,36 @@ switch ($mode) {
             // On affiche la forme pour l'abandon de la colonie
             display($page, $lang['rename_and_abandon_planet']);
         } elseif ($_POST['kolonieloeschen'] == 1 && $_POST['deleteid'] == $user['current_planet']) {
-            // Controle du mot de passe pour abandon de colonie
-            if (md5($_POST['pw']) == $user["password"] && $user['id_planet'] != $user['current_planet']) {
-                $destruyed = time() + 60 * 60 * 24;
+                // Controle du mot de passe pour abandon de colonie
+                if (md5($_POST['pw']) == $user["password"] && $user['id_planet'] != $user['current_planet']) {
+                   
+                include_once(ROOT_PATH . 'includes/functions/AbandonColony.' . PHPEXT);
+                if (CheckFleets($planetrow)){
+                   $strMessage = "Vous ne pouvez pas abandonner la colonie, il y a de la flotte en vol !";
+                   message($strMessage, $lang['colony_abandon'], 'overview.php?mode=renameplanet',3);
+                }
+                
+                AbandonColony($user,$planetrow);
+                
+                    $QryUpdateUser = "UPDATE {{table}} SET ";
+                    $QryUpdateUser .= "`current_planet` = `id_planet` ";
+                    $QryUpdateUser .= "WHERE ";
+                    $QryUpdateUser .= "`id` = '" . $user['id'] . "' LIMIT 1";
+                    doquery($QryUpdateUser, "users");
+                    // Tout s'est bien passé ! La colo a été effacée !!
+                    message($lang['deletemessage_ok'] , $lang['colony_abandon'], 'overview.php',3); 
 
-                $QryUpdatePlanet = "UPDATE {{table}} SET ";
-                $QryUpdatePlanet .= "`destruyed` = '" . $destruyed . "', ";
-                $QryUpdatePlanet .= "`id_owner` = '0' ";
-                $QryUpdatePlanet .= "WHERE ";
-                $QryUpdatePlanet .= "`id` = '" . $user['current_planet'] . "' LIMIT 1;";
-                doquery($QryUpdatePlanet , 'planets');
+                } elseif ($user['id_planet'] == $user["current_planet"]) {
+                    // Et puis quoi encore ??? On ne peut pas effacer la planete mere ..
+                    // Uniquement les colonies crées apres coup !!!
+                    message($lang['deletemessage_wrong'], $lang['colony_abandon'], 'overview.php?mode=renameplanet');
 
-                $QryUpdateUser = "UPDATE {{table}} SET ";
-                $QryUpdateUser .= "`current_planet` = `id_planet` ";
-                $QryUpdateUser .= "WHERE ";
-                $QryUpdateUser .= "`id` = '" . $user['id'] . "' LIMIT 1";
-                doquery($QryUpdateUser, "users");
-                // Tout s'est bien passÃ© ! La colo a Ã©tÃ© effacÃ©e !!
-                message($lang['deletemessage_ok'] , $lang['colony_abandon'], 'overview.php?mode=renameplanet');
-            } elseif ($user['id_planet'] == $user["current_planet"]) {
-                // Et puis quoi encore ??? On ne peut pas effacer la planete mere ..
-                // Uniquement les colonies crÃ©es apres coup !!!
-                message($lang['deletemessage_wrong'], $lang['colony_abandon'], 'overview.php?mode=renameplanet');
-            } else {
-                // Erreur de saisie du mot de passe je n'efface pas !!!
-                message($lang['deletemessage_fail'] , $lang['colony_abandon'], 'overview.php?mode=renameplanet');
+                } else {
+                    // Erreur de saisie du mot de passe je n'efface pas !!!
+                    message($lang['deletemessage_fail'] , $lang['colony_abandon'], 'overview.php?mode=renameplanet');
+
+                }
             }
-        }
 
         $parse = $lang;
 
@@ -142,9 +174,9 @@ switch ($mode) {
             if ($user['new_message'] != 0) {
                 $Have_new_message .= "<tr>";
                 if ($user['new_message'] == 1) {
-                    $Have_new_message .= "<th colspan=4><a href=messages.$phpEx>" . $lang['Have_new_message'] . "</a></th>";
+                    $Have_new_message .= "<th colspan=4><a href=messages.php>" . $lang['Have_new_message'] . "</a></th>";
                 } elseif ($user['new_message'] > 1) {
-                    $Have_new_message .= "<th colspan=4><a href=messages.$phpEx>";
+                    $Have_new_message .= "<th colspan=4><a href=messages.php>";
                     $m = pretty_number($user['new_message']);
                     $Have_new_message .= str_replace('%m', $m, $lang['Have_new_messages']);
                     $Have_new_message .= "</a></th>";
@@ -171,7 +203,7 @@ switch ($mode) {
                     $QryUpdateUser .= "`id` = '" . $user['id'] . "';";
                     doquery($QryUpdateUser, 'users');
                     $HaveNewLevelMineur = "<tr>";
-                    $HaveNewLevelMineur .= "<th colspan=4><a href=officier.$phpEx>" . $lang['Have_new_level_mineur'] . "</a></th>";
+                    $HaveNewLevelMineur .= "<th colspan=4><a href=officier.". PHPEXT .">" . $lang['Have_new_level_mineur'] . "</a></th>";
                 }
                 if ($XPRaid >= $XpRaidUp) {
                     $QryUpdateUser = "UPDATE {{table}} SET ";
@@ -181,7 +213,7 @@ switch ($mode) {
                     $QryUpdateUser .= "`id` = '" . $user['id'] . "';";
                     doquery($QryUpdateUser, 'users');
                     $HaveNewLevelMineur = "<tr>";
-                    $HaveNewLevelMineur .= "<th colspan=4><a href=officier.$phpEx>" . $lang['Have_new_level_raid'] . "</a></th>";
+                    $HaveNewLevelMineur .= "<th colspan=4><a href=officier.". PHPEXT .">" . $lang['Have_new_level_raid'] . "</a></th>";
                 }
             }
             // -----------------------------------------------------------------------------------------------

@@ -1,9 +1,9 @@
 <?php
 
 function doquery($query, $table, $fetch = false){
-  global $link, $debug, $xnova_root_path;
+  global $link, $debug;
 //    echo $query."<br />";
-	require($xnova_root_path.'config.php');
+$dbsettings = require ROOT_PATH . 'config.php';
 
 
 
@@ -46,8 +46,4 @@ function doquery($query, $table, $fetch = false){
 	}
 
 }
-
-
-
-// Created by Perberos. All rights reversed (C) 2006
 ?>

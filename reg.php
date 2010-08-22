@@ -1,18 +1,51 @@
 <?php
-
 /**
- * reg.php
+ * XNova Legacies
  *
- * @version 1.1
- * @copyright 2008 by Chlorel for XNova
+ * @license http://www.xnova-ng.org/license-legacies
+ * @see http://www.xnova-ng.org/
+ *
+ * Copyright (c) 2009-Present, XNova Support Team
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  - Redistributions of source code must retain the above copyright notice,
+ * this list of conditions and the following disclaimer.
+ *  - Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *  - Neither the name of the team or any contributor may be used to endorse or
+ * promote products derived from this software without specific prior written
+ * permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ *
+ *                                --> NOTICE <--
+ *  This file is part of the core development branch, changing its contents will
+ * make you unable to use the automatic updates manager. Please refer to the
+ * documentation for further information about customizing XNova.
+ *
  */
 
 define('INSIDE' , true);
 define('INSTALL' , false);
+require_once dirname(__FILE__) .'/common.php';
 
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc');
-include($xnova_root_path . 'common.' . $phpEx);
+//on demarre la session qui ne sers ici que pour le code de secu
+session_start();
 
 includeLang('reg');
 
@@ -56,6 +89,13 @@ function mymail($to, $title, $body, $from = '')
 if ($_POST) {
     $errors = 0;
     $errorlist = "";
+    
+//si la secu est active
+	
+if ( $game_config['secu'] == 1 ){
+echo $_session['secu'];
+if (!$_POST['secu'] || $_POST['secu'] != $_SESSION['secu'] ) { $errorlist .= $lang['error_secu']; $errors++; }
+}
 
     $_POST['email'] = strip_tags($_POST['email']);
     if (!is_email($_POST['email'])) {
@@ -130,7 +170,7 @@ if ($_POST) {
         $QryInsertUser .= "`register_time` = '" . time() . "', ";
         $QryInsertUser .= "`password`='" . $md5newpass . "';";
         doquery($QryInsertUser, 'users');
-        // On cherche le numero d'enregistrement de l'utilisateur fraichement créé
+        // On cherche le numero d'enregistrement de l'utilisateur fraichement cree
         $NewUser = doquery("SELECT `id` FROM {{table}} WHERE `username` = '" . mysql_escape_string($_POST['character']) . "' LIMIT 1;", 'users', true);
         $iduser = $NewUser['id'];
         // Recherche d'une place libre !
@@ -224,16 +264,32 @@ if ($_POST) {
         }
         message($Message, $lang['reg_welldone']);
     }
-} else {
+} elseif ( $game_config['secu'] == 1 ){
+
+$parse = $lang;
+$_SESSION['nombre1']= rand(0,50);
+$_SESSION['nombre2']= rand(0,50);
+$_SESSION['secu'] = $_SESSION['nombre1'] + $_SESSION['nombre2'];
+
+    $parse['servername'] = '<img src="images/xnova.png" align="top" border="0" >';
+    $parse['code_secu'] = "<th>Securite: </th>";
+	$parse['affiche'] = $_SESSION['nombre1']." + ".$_SESSION['nombre2']." = <input name='secu' size='3' maxlength='3' type='text'>";
+	$page = parsetemplate(gettemplate('registry_form'), $parse);
+	
+	}else{
+
     // Afficher le formulaire d'enregistrement
     $parse = $lang;
-    $parse['servername'] = $game_config['game_name'];
+	$parse['code_secu'] = "";
+	$parse['affiche'] = "";
+    $parse['servername'] = '<img src="images/xnova.png" align="top" border="0" >';
     $page = parsetemplate(gettemplate('registry_form'), $parse);
-
-    display ($page, $lang['registry'], false);
 }
+    display ($page, $lang['registry'], false);
+
 // -----------------------------------------------------------------------------------------------------------
 // History version
 // 1.0 - Version originelle
 // 1.1 - Menage + rangement + utilisation fonction de creation planete nouvelle generation
+// 1.2 - Ajout securite activable ou non
 ?>

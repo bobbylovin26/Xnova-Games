@@ -2,13 +2,10 @@
 
 /**
  * BatimentBuildingPage.php
- *
- * @version 1.1
- * @copyright 2008 by Chlorel for XNova
  */
 
 function BatimentBuildingPage (&$CurrentPlanet, $CurrentUser) {
-	global $lang, $resource, $reslist, $phpEx, $dpath, $game_config, $_GET;
+	global $lang, $resource, $reslist, $dpath, $game_config, $_GET;
 
 	CheckPlanetUsedFields ( $CurrentPlanet );
 
@@ -27,6 +24,7 @@ function BatimentBuildingPage (&$CurrentPlanet, $CurrentUser) {
 		if       ( isset ( $Element )) {
 			if ( !strchr ( $Element, " ") ) {
 				if ( !strchr ( $Element, ",") ) {
+				if ( !strchr ( $Element, ";") ) {
 					if (in_array( trim($Element), $Allowed[$CurrentPlanet['planet_type']])) {
 						$bDoItNow = true;
 					} else {
@@ -35,6 +33,9 @@ function BatimentBuildingPage (&$CurrentPlanet, $CurrentUser) {
 				} else {
 					$bThisIsCheated = true;
 				}
+				} else {
+                $bThisIsCheated = true;
+            }
 			} else {
 				$bThisIsCheated = true;
 			}
@@ -174,11 +175,4 @@ function BatimentBuildingPage (&$CurrentPlanet, $CurrentUser) {
 
 	display($page, $lang['Builds']);
 }
-
-// -----------------------------------------------------------------------------------------------------------
-// History version
-// 1.0 Mise en module initiale (creation)
-// 1.1 FIX interception cheat +1
-// 1.2 FIX interception cheat destruction a -1
-
 ?>

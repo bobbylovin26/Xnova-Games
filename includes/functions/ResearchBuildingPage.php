@@ -15,7 +15,8 @@
 // $InResearch    -> Indicateur qu'il y a une Recherche en cours
 // $ThePlanet     -> Planete sur laquelle se realise la technologie eventuellement
 function ResearchBuildingPage (&$CurrentPlanet, $CurrentUser, $InResearch, $ThePlanet) {
-	global $lang, $resource, $reslist, $phpEx, $dpath, $game_config, $_GET;
+	       $_GET['tech']=ereg_replace("[^0-9]",'',$_GET['tech']);
+	global $lang, $resource, $reslist, $dpath, $game_config, $_GET;
 
 
 	$NoResearchMessage = "";

@@ -19,6 +19,7 @@ $lang['Sex']               = 'Sexe';
 $lang['accept']            = 'J\'acc&egrave;pte le r&egrave;glement';
 $lang['signup']            = ' S\'enregistrer ';
 $lang['neededpass']        = 'Mot de passe';
+$lang['code_secu']          = 'Securite';
 
 // Send
 $lang['mail_welcome']      = 'Merci beaucoup de votre inscription &agrave; notre jeu ({gameurl}) \nVotre mot de passe est : {password}\n\nBon amusement !\n{gameurl}';
@@ -30,6 +31,7 @@ $lang['text_message_ig']   = 'Bienvenue sur XNova, nous vous souhaitons bon jeu 
 
 
 // Errors
+$lang['error_secu']        = 'Code de securite invalide !<br />';
 $lang['error_mail']        = 'E-mail invalide !<br />';
 $lang['error_planet']      = 'Erreur dans votre nom de plan&egrave;te !.<br />';
 $lang['error_hplanetnum']  = 'Vous devez utiliser des caract&egrave;res alphanum&eacute;rique pour votre nom de plan&egrave;te !<br />';

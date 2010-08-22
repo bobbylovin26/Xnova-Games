@@ -1,13 +1,6 @@
-<?php // debug.class.php ::  Clase Debug, maneja reporte de eventos
+<?php
 
 if(!defined('INSIDE')){ die("attemp hacking");}
-//
-//  Experiment code!!!
-//
-/*vamos a experimentar >:)
-  le veo futuro a las classes, ayudaria mucho a tener un codigo mas ordenado...
-  que esperabas!!! soy newbie!!! D':<
-*/
 
 class debug
 {
@@ -26,8 +19,8 @@ class debug
 	}
 
 	function echo_log()
-	{	global $xnova_root_path;
-		echo  "<br><table><tr><td class=k colspan=4><a href=".$xnova_root_path."admin/settings.php>Debug Log</a>:</td></tr>".$this->log."</table>";
+	{
+		echo  "<br><table><tr><td class=k colspan=4><a href=".ROOT_PATH."admin/settings.php>Debug Log</a>:</td></tr>".$this->log."</table>";
 		die();
 	}
 	
@@ -38,12 +31,10 @@ class debug
 			echo "<h2>$title</h2><br><font color=red>$message</font><br><hr>";
 			echo  "<table>".$this->log."</table>";
 		}
-		//else{
-			//A futuro, se creara una tabla especial, para almacenar
-			//los errores que ocurran.
-			global $user,$xnova_root_path,$phpEx;
-			include($xnova_root_path . 'config.'.$phpEx);
-			if(!$link) die('mySQL no esta disponible por el momento, sentimos el inconveniente...');
+
+			global $user;
+			include(ROOT_PATH . 'config.'.PHPEXT);
+			if(!$link) die('La base de donnee n est pas disponible pour le moment, desole pour la gene occasionnee...');
 			$query = "INSERT INTO {{table}} SET
 				`error_sender` = '{$user['id']}' ,
 				`error_time` = '".time()."' ,
@@ -68,5 +59,4 @@ class debug
 	
 }
 
-// Created by Perberos. All rights reversed (C) 2006
 ?>

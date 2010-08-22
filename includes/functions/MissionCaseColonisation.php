@@ -71,9 +71,11 @@ function MissionCaseColonisation ( $FleetRow ) {
 
 		}
 	} else {
+		if ($FleetRow['fleet_end_time'] <= time()) {
 		// Retour de flotte
 		RestoreFleetToPlanet ( $FleetRow, true );
 		doquery("DELETE FROM {{table}} WHERE fleet_id=" . $FleetRow["fleet_id"], 'fleets');
+		}
 	}
 }
 

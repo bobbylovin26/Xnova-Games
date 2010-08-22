@@ -6,6 +6,10 @@ $lang['make_alliance_owner'] = 'Fonder sa propre alliance';
 $lang['search_alliance'] = 'Chercher une alliance';
 $lang['make_alliance'] = 'Fonder sa propre alliance';
 $lang['search_alliance'] = 'Chercher';
+$lang['New_name'] = 'Nouveau nom';
+$lang['Change'] ='Changer';
+$lang['How_you_will_call_the_alliance_in_the_future'] = 'Quel Nom voulez vous ?';
+
 
 $lang['searched_alliance_availables'] = 'Nous avons trouv&eacute; les alliances suivantes:';
 $lang['alliance_has_been_maked'] = 'L\'alliance %s a &eacute;t&eacute; cr&eacute;e';

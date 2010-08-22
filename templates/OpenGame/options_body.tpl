@@ -11,7 +11,7 @@
 	<th><input name="db_character" size="20" value="{opt_usern_data}" type="text"></th>
 </tr><tr>
 	<th>{lastpassword}</th>
-	<th><input name="db_password" size="20" value="" type="password"></th>
+	<th><input name="db_password" size="20" value="" type="password" autocomplete="off"></th>
 </tr><tr>
 	<th>{newpassword}</th>
 	<th><input name="newpass1"    size="20" maxlength="40" type="password"></th>

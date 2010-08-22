@@ -12,5 +12,4 @@ $lang['rec_level']  = "Niveau";
 $lang['rec_nbre']   = "Nombre";
 $lang['rec_rien']   = "-";
 
-// Created by Chlorel (XNova Team). All rights reversed (C) 2008
 ?>

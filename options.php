@@ -1,22 +1,52 @@
 <?php
+/**
+ * XNova Legacies
+ *
+ * @license http://www.xnova-ng.org/license-legacies
+ * @see http://www.xnova-ng.org/
+ *
+ * Copyright (c) 2009-Present, XNova Support Team
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  - Redistributions of source code must retain the above copyright notice,
+ * this list of conditions and the following disclaimer.
+ *  - Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *  - Neither the name of the team or any contributor may be used to endorse or
+ * promote products derived from this software without specific prior written
+ * permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ *
+ *                                --> NOTICE <--
+ *  This file is part of the core development branch, changing its contents will
+ * make you unable to use the automatic updates manager. Please refer to the
+ * documentation for further information about customizing XNova.
+ *
+ */
 
-    /**
-    * options.php
-    *
-    * @version 1.0
-    * @copyright 2008 by ??????? for XNova
-    */
-
-    define('INSIDE'  , true);
-    define('INSTALL' , false);
-
-    $ugamela_root_path = './';
-    include($ugamela_root_path . 'extension.inc');
-    include($ugamela_root_path . 'common.' . $phpEx);
+define('INSIDE' , true);
+define('INSTALL' , false);
+require_once dirname(__FILE__) .'/common.php';
 
     includeLang('options');
 
-    $lang['PHP_SELF'] = 'options.' . $phpEx;
+    $lang['PHP_SELF'] = 'options.' . PHPEXT;
 
     $dpath = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
     $mode = $_GET['mode'];
@@ -27,7 +57,23 @@
           doquery("UPDATE {{table}} SET   
              `urlaubs_modus` = '0',
              `urlaubs_until` = '0'
-             WHERE `id` = '".$user['id']."' LIMIT 1", "users");   
+             WHERE `id` = '".$user['id']."' LIMIT 1", "users");
+             
+//Remise des mines au retour du mod vacance
+
+          $query = doquery("SELECT * FROM {{table}} WHERE id_owner = '{$user['id']}'", 'planets');
+          while($id = mysql_fetch_array($query)){
+             doquery("UPDATE {{table}} SET
+                   energy_used = '10',
+                   energy_max = '10',
+                   metal_mine_porcent = '10',
+                   crystal_mine_porcent = '10',
+                   deuterium_sintetizer_porcent = '10',
+                   solar_plant_porcent = '10',
+                   fusion_plant_porcent = '10',
+                   solar_satelit_porcent = '10'
+                 WHERE id = '{$id['id']}' AND `planet_type` = 1 ", 'planets');}
+                    
           $dpath = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
           message($lang['succeful_save'], $lang['Options'],"options.php",1);
        }else{
@@ -39,7 +85,11 @@
     if ($_POST && $mode == "change") { // Array ( [db_character]
        $iduser = $user["id"];
        $avatar = $_POST["avatar"];
-       $dpath = $_POST["dpath"];
+	   
+	   if ($_POST["dpath"] != "")
+			$dpath = $_POST["dpath"];
+		else
+			$dpath = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
 
        // Gestion des options speciales pour les admins
        if ($user['authlevel'] > 0) {
@@ -130,12 +180,24 @@
        }
        // Modo vacaciones
        if (isset($_POST["urlaubs_modus"]) && $_POST["urlaubs_modus"] == 'on') {
+       //Selectionne si le joueur a des flottes en vol
+       	$fleet  = doquery("SELECT COUNT(fleet_owner) AS `actcnt` FROM {{table}} WHERE `fleet_owner` = '".$user['id']."';", 'fleets', true);
+       //Selectionne si le joueur a des batiments en construction
+        $build  = doquery("SELECT COUNT(id_owner) AS `building` FROM {{table}} WHERE `id_owner` = '".$user['id']."' and `b_building`!=0;", 'planets', true);
+       //Selectionne si le joueur a des techno en cours
+        $tech  = doquery("SELECT COUNT(id) AS `tech` FROM {{table}} WHERE `id` = '".$user['id']."' and `b_tech_planet`!=0;", 'users', true);
+       //Selectionne si le joueur est en train de se faire attaquer
+        $attack  = doquery("SELECT COUNT(fleet_taget_owner) AS `attack` FROM {{table}} WHERE `fleet_taget_owner` = '".$user['id']."';", 'fleets', true);
+       	if($fleet['actcnt']=='0' && $build['building']=='0' && $tech['tech']=='0' && $attack['attack']=='0') {
           $urlaubs_modus = "1";
           $time = time() + 172800;
           doquery("UPDATE {{table}} SET   
              `urlaubs_modus` = '$urlaubs_modus',
              `urlaubs_until` = '$time'
              WHERE `id` = '$iduser' LIMIT 1", "users");
+             }  else {
+             message ( 'Verifiez vos flottes, technologies et batiments','<center><font color=\"red\">Vous avez des actions en cours</font></center>'  );
+             }
 
           $query = doquery("SELECT * FROM {{table}} WHERE id_owner = '{$user['id']}'", 'planets');
           while($id = mysql_fetch_array($query)){
@@ -191,7 +253,7 @@
        WHERE `id` = '$iduser' LIMIT 1", "users");
 
        if (isset($_POST["db_password"]) && md5($_POST["db_password"]) == $user["password"]) {
-          if ($_POST["newpass1"] == $_POST["newpass2"]) {
+          if (!empty($_POST['newpass1']) && !empty($_POST['newpass2']) && $_POST["newpass1"] == $_POST["newpass2"]) {
              $newpass = md5($_POST["newpass1"]);
              doquery("UPDATE {{table}} SET `password` = '{$newpass}' WHERE `id` = '{$user['id']}' LIMIT 1", "users");
              setcookie(COOKIE_NAME, "", time()-100000, "/", "", 0); //le da el expire

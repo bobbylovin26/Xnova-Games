@@ -16,8 +16,15 @@ function RemoveBuildingFromQueue ( &$CurrentPlanet, $CurrentUser, $QueueID ) {
 			$ActualCount   = count ( $QueueArray );
 			$ListIDArray   = explode ( ",", $QueueArray[$QueueID - 2] );
 			$BuildEndTime  = $ListIDArray[3];
+			$ListIDArray   = explode ( ",", $QueueArray[$QueueID - 1] );
+			$Element = $ListIDArray[0];
 			for ($ID = $QueueID; $ID < $ActualCount; $ID++ ) {
 				$ListIDArray          = explode ( ",", $QueueArray[$ID] );
+				if ($Element == $ListIDArray[0])
+				{
+					$ListIDArray[1]		 -= 1;
+					$ListIDArray[2]		  = GetBuildingTimeLevel($CurrentUser, $CurrentPlanet, $ListIDArray[0], $ListIDArray[1]);
+				}
 				$BuildEndTime        += $ListIDArray[2];
 				$ListIDArray[3]       = $BuildEndTime;
 				$QueueArray[$ID - 1]  = implode ( ",", $ListIDArray );

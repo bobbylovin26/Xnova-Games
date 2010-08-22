@@ -39,8 +39,9 @@
 		</select></th>
 </tr>
 <tr>
-  <td height="20" colspan="2"></td>
-  </tr>
+{code_secu}
+<th>{affiche}</th>
+</tr>
 <tr>
   <th><input name="rgt" type="checkbox">
     {accept}</th>

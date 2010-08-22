@@ -10,12 +10,12 @@
 // Mission Case 1: -> Attaquer
 function MissionCaseAttack ($FleetRow)
 {
-    global $user, $phpEx, $xnova_root_path, $pricelist, $lang, $resource, $CombatCaps;
+    global $user, $xnova_root_path, $pricelist, $lang, $resource, $CombatCaps;
 
     if ($FleetRow['fleet_start_time'] <= time()) {
         if ($FleetRow['fleet_mess'] == 0) {
             if (!isset($CombatCaps[202]['sd'])) {
-                message("<font color=\"red\">" . $lang['sys_no_vars'] . "</font>", $lang['sys_error'], "fleet." . $phpEx, 2);
+                message("<font color=\"red\">" . $lang['sys_no_vars'] . "</font>", $lang['sys_error'], "fleet." . PHPEXT, 2);
             }
             $QryTargetPlanet = "SELECT * FROM {{table}} ";
             $QryTargetPlanet .= "WHERE ";
@@ -36,6 +36,9 @@ function MissionCaseAttack ($FleetRow)
             $QryTargetUser .= "WHERE ";
             $QryTargetUser .= "`id` = '" . $TargetUserID . "';";
             $TargetUser = doquery($QryTargetUser, 'users', true);
+            
+            // Actualisation des ressources de la planete.
+      		PlanetResourceUpdate($TargetUser, $TargetPlanet, time());
 
             $QryTargetTech = "SELECT ";
             $QryTargetTech .= "`military_tech`, `defence_tech`, `shield_tech` ";
@@ -66,7 +69,7 @@ function MissionCaseAttack ($FleetRow)
                 }
             }
 
-            include_once($xnova_root_path . 'includes/ataki.' . $phpEx);
+            include_once($xnova_root_path . 'includes/ataki.' . PHPEXT);
             // Calcul de la duree de traitement (initialisation)
             $mtime = microtime();
             $mtime = explode(" ", $mtime);

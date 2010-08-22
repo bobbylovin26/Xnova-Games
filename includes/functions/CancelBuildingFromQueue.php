@@ -21,13 +21,29 @@ function CancelBuildingFromQueue ( &$CurrentPlanet, &$CurrentUser ) {
 		$Element             = $CanceledIDArray[0];
 		$BuildMode           = $CanceledIDArray[4]; // pour savoir si on construit ou detruit
 
+		$nb_item = $Element;
+		
 		if ($ActualCount > 1) {
 			array_shift( $QueueArray );
 			$NewCount        = count( $QueueArray );
 			// Mise a jour de l'heure de fin de construction theorique du batiment
 			$BuildEndTime        = time();
+			
 			for ($ID = 0; $ID < $NewCount ; $ID++ ) {
 				$ListIDArray          = explode ( ",", $QueueArray[$ID] );
+				
+				// Pour diminuer le niveau et le temps de construction
+				// si le bâtiment qui est annulé se trouve plusieurs fois dans la queue
+				// Exemple de queue de construction : 
+				// Mine de métal (Niveau 40) | Silo de missile (Niveau 30) | Silo de missiles (Niveau 31) | Mine de métal (Niveau 41)
+				
+				// Si on supprime le premier bâtiment, on aura dans la queue de construction :
+				// Silo de missile (Niveau 30) | Silo de missiles (Niveau 31) | Mine de métal (Niveau 40)
+				if ( $nb_item == $ListIDArray[0])
+				{
+					$ListIDArray[1]		 -= 1;
+					$ListIDArray[2]		  = GetBuildingTimeLevel($CurrentUser, $CurrentPlanet, $ListIDArray[0], $ListIDArray[1]);
+				}
 				$BuildEndTime        += $ListIDArray[2];
 				$ListIDArray[3]       = $BuildEndTime;
 				$QueueArray[$ID]      = implode ( ",", $ListIDArray );

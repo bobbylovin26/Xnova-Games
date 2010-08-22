@@ -12,6 +12,7 @@ $lang['Download'] = "T&eacute;l&eacute;charger";
 $lang['Search'] = "Chercher";
 $lang['succeful_changepass'] = "Le mot de passe a bien &eacute;t&eacute; chang&eacute;.<br /><a href=\"login.php\" target=\"_top\">Retour</a>";
 $lang['succeful_save'] = "Les changements ont &eacute;t&eacute; sauvegard&eacute;.<br /><a href=\"options.php\">Retour</a>";
+$lang['Options'] = 'Options';
 
 // Form
 $lang['userdata'] = "Informations sur le joueur";
@@ -70,7 +71,4 @@ $lang['deleteaccount'] = "Effacer le compte";
 $lang['deleteaccount_tip'] = "Ton compte sera compl&egrave;tement effac&eacute; dans 7 jours.";
 $lang['save_settings'] = "Sauvegarder les changements";
 
-
-// Created by Perberos. All rights reversed (C) 2006
-// Complet by XNova Team. All rights reversed (C) 2008
 ?>

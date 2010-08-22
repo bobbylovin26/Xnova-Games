@@ -11,7 +11,7 @@
 	</tr>
 	<tr>
 	  <th>&#160;</th>
-	  <th><input type="submit" name="action" value="Akzeptieren"></th>
+	  <th><input type="submit" name="action" value="Accepter"></th>
 	</tr>
 	<tr>
 	  <th>{Motive_optional} <span id="cntChars">0</span> / 500 {characters}</th>
@@ -19,7 +19,7 @@
 	</tr>
 	<tr>
 	  <th>&#160;</th>
-	  <th><input type="submit" name="action" value="Ablehnen"></th>
+	  <th><input type="submit" name="action" value="Refuser"></th>
 	</tr>
 	<tr>
 	  <td colspan=2>&#160;</td>

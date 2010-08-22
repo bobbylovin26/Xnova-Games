@@ -28,6 +28,10 @@ function MissionCaseSpy ( $FleetRow ) {
 		$CurrentSpyLvl       = $CurrentUser['spy_tech'];
 		$TargetUser          = doquery("SELECT * FROM {{table}} WHERE `id` = '".$TargetUserID."';", 'users', true);
 		$TargetSpyLvl        = $TargetUser['spy_tech'];
+		
+	    // Actualisation des ressources de la planete.
+      	PlanetResourceUpdate($TargetUser, $TargetPlanet, time());
+      	     
 		$fleet               = explode(";", $FleetRow['fleet_array']);
 		$fquery              = "";
 		foreach ($fleet as $a => $b) {

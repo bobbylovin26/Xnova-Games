@@ -29,8 +29,9 @@ function f(target_url,win_name) {
 	<td colspan="2"><div><a href="buildings.php?mode=defense" accesskey="d" target="{mf}">{Defense}</a></div></td>
 </tr><tr>
 	<td colspan="2"><div><a href="officier.php" accesskey="o" target="{mf}">{Officiers}</a></div></td>
-</tr></tr>{marchand_link}<tr><tr>
-
+</tr><tr>
+	{marchand_link}
+</tr><tr>
 	<td colspan="2" background="{dpath}img/bg1.gif"><center>{navig}</center></td>
 </tr><tr>
 	<td colspan="2"><div><a href="alliance.php" accesskey="a" target="{mf}">{Alliance}</a></div></td>

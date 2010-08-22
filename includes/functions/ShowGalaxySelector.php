@@ -10,14 +10,14 @@
 function ShowGalaxySelector ( $Galaxy, $System ) {
 	global $lang;
 
-	if ($Galaxy > 9) {
-		$Galaxy = 9;
+	if ($Galaxy > MAX_GALAXY_IN_WORLD) {
+		$Galaxy = MAX_GALAXY_IN_WORLD;
 	}
 	if ($Galaxy < 1) {
 		$Galaxy = 1;
 	}
-	if ($System > 499) {
-		$System = 499;
+	if ($System > MAX_SYSTEM_IN_GALAXY) {
+		$System = MAX_SYSTEM_IN_GALAXY;
 	}
 	if ($System < 1) {
 		$System = 1;
