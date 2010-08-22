@@ -226,7 +226,7 @@ if ( defined('INSIDE')) {
 		113 => array ( 'metal' =>       0, 'crystal' =>     800, 'deuterium' =>     400, 'energy' =>    0, 'factor' =>   2),
 		114 => array ( 'metal' =>       0, 'crystal' =>    4000, 'deuterium' =>    2000, 'energy' =>    0, 'factor' =>   2),
 		115 => array ( 'metal' =>     400, 'crystal' =>       0, 'deuterium' =>     600, 'energy' =>    0, 'factor' =>   2),
-		117 => array ( 'metal' =>    2000, 'crystal' =>    4000, 'deuterium' =>    6000, 'energy' =>    0, 'factor' =>   2),
+		117 => array ( 'metal' =>    2000, 'crystal' =>    4000, 'deuterium' =>     600, 'energy' =>    0, 'factor' =>   2),
 		118 => array ( 'metal' =>   10000, 'crystal' =>   20000, 'deuterium' =>    6000, 'energy' =>    0, 'factor' =>   2),
 		120 => array ( 'metal' =>     200, 'crystal' =>     100, 'deuterium' =>       0, 'energy' =>    0, 'factor' =>   2),
 		121 => array ( 'metal' =>    1000, 'crystal' =>     300, 'deuterium' =>     100, 'energy' =>    0, 'factor' =>   2),

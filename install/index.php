@@ -36,7 +36,7 @@ define('ROOT_PATH', dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
 define('PHPEXT', include ROOT_PATH . 'extension.inc');
 
 define('DEFAULT_SKINPATH', '../skins/xnova/');
-define('TEMPLATE_DIR', 'templates/');
+define('TEMPLATE_DIR', realpath(ROOT_PATH . '/templates/'));
 define('TEMPLATE_NAME', 'OpenGame');
 define('DEFAULT_LANG', 'fr');
 $dpath = DEFAULT_SKINPATH;
@@ -155,7 +155,7 @@ EOF;
             $frame  = parsetemplate ( $subTpl, $bloc );
         } elseif ($page == 3) {
             if (isset($_GET['error']) && intval($_GET['error']) == 3) {
-                adminMessage ($lang['ins_error3'], $lang['ins_error']);
+            adminMessage($lang['ins_error3'], $lang['ins_error']);
             }
 
             $subTpl = gettemplate ('install/ins_acc');

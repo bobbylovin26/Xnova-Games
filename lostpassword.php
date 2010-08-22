@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -31,57 +31,85 @@
 define('INSIDE' , true);
 define('INSTALL' , false);
 define('DISABLE_IDENTITY_CHECK', true);
-require_once dirname(__FILE__) .'/common.php';
+require_once dirname(__FILE__) . '/common.php';
 
-define('ADMINEMAIL',"no-reply@xnova-legacies.org"); //Changez l'email duquel on va envoyer le message
-define('GAMEURL',"http://".$_SERVER['HTTP_HOST']."/");
+$mailData = array(
+    'recipient' => NULL,
+    'sender' => 'no-reply',
+    'subject' => 'XNova:Legacies - Changement de mot de passe'
+    );
 
 includeLang('lostpassword');
 
-    if($_GET['action'] == '1'){
-
-       $add = 0;
-       $name = doquery("SELECT * FROM {{table}} WHERE `username`='{$_POST['pseudo']}'",'users',true);
-       $email = doquery("SELECT * FROM {{table}} WHERE `email_2`='{$_POST['email']}'",'users',true);
-       if(!$name){$add++; message('Ce nom de joueur n a pas ete trouve','Erreur','lostpassword.php');}
-       if(!$email){$add++; message('Cette adresse email n a pas ete trouvee!','Erreur','lostpassword.php');}
-       if(!$_POST['pseudo']){$add++; message('Entrez votre pseudo!','Erreur','lostpassword.php');}
-       if(!$_POST['email']){$add++; message('Entrez un email!','Erreur','lostpassword.php');}
-       if($name['id']!=$email['id']){$add++; message('L adresse mail ne correspond pas au pseudo!!','Erreur','lostpassword.php');}
-
-
-    if($add==0){
-    $user_array = doquery("SELECT `email`,`username` FROM {{table}} WHERE `email` = '{$_POST['email']}' AND `username` = '{$_POST['pseudo']}' LIMIT 1","users",true);
-    $email = $_POST['email'];
-    $email = $_POST['email'];
-    $hashh = (time());
-    $actor = "From: Serveur Xnova";  // Changez le nom du serv ici
-    $up = "Serveur Xnova - Changer le mot de passe"; // Ici aussi
-    mail($email, $up, "
-    Vous devez changer votre mot de passe dans votre compte mais pour vous logger vous pouvez utiliser le
-    mot de passe :
-
-    Votre nouveau mot de passe est : $hashh
-
-    Attention, n oubliez pas de changer votre mot de passe apres s etre connect� !
-
-      ", $actor);
-
-    $user_array = doquery("SELECT `email_2` FROM {{table}} WHERE `email_2` = '{$_POST['email']}' LIMIT 1","users",true);
-    $md5newpass = md5($hashh);
-
-    if($user_array)
-    {
-    doquery("UPDATE {{table}} SET `password`='{$md5newpass}' WHERE `email_2`='{$_POST['email']}'",'users');
-    message('Mot de passe envoye ! Veuiller regarder dans votre boite mail, ou dans vos spam!','Nouveau mot de passe','index.php');
-
+$username = NULL;
+if (!empty($_POST)) {
+    if(isset($_POST['pseudo']) && !empty($_POST['pseudo'])) {
+        $username = mysql_real_escape_string($_POST['pseudo']);
+        $sql =<<<EOF
+SELECT users.email, users.username
+  FROM {{table}} AS users
+  WHERE users.username="{$username}"
+  LIMIT 1
+EOF;
+        if (!($result = doquery($sql, 'users', true))) {
+            message("Cet utilisateur n'existe pas", 'Erreur', 'lostpassword.php');
+            die();
+        }
+        list($mailData['recipient'], $username) = $result;
+    } else if(isset($_POST['email']) && !empty($_POST['email'])) {
+        $email = mysql_real_escape_string($_POST['email']);
+        $sql =<<<EOF
+SELECT users.email, users.username
+  FROM {{table}} AS users
+  WHERE users.email="{$email}"
+  LIMIT 1
+EOF;
+        if (!($result = doquery($sql, 'users', true))) {
+            message("Cet email n'est utilisé par aucun joueur", 'Erreur', 'lostpassword.php');
+            die();
+        }
+        list($mailData['recipient'], $username) = $result;
+    } else {
+        message('Veuillez entrer votre login ou votre email.', 'Erreur', 'lostpassword.php');
+        die();
     }
-    else
-    message('Cette email n existe pas !','Erreur');
-    }}
 
+    if (!is_null($mailData['recipient'])) {
+        $characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        $randomPass = '';
+        $size = rand(8, 10);
+        for ($i = 0; $i < $size; $i++) {
+            $randomPass .= $characters[rand(0, strlen($characters) - 1)];
+        }
 
-       $parse = $lang;
-       $page = parsetemplate(gettemplate('lostpassword'), $parse);
+        $message =<<<EOF
+Votre mot de passe a été modifié, veuillez trouver ci-dessous vos informations de connexion :
+login : $username
+mot de passe : $randomPass
 
-       display($page,$lang['registry']);
+A bientôt sur XNova:Legacies
+EOF;
+
+        $version = VERSION;
+        $headers =<<<EOF
+From: {$mailData['sender']}
+X-Sender: Legacies/{$version}
+
+EOF;
+        mail($mailData['recipient'], $mailData['subject'], $message, $headers);
+
+        $sql =<<<EOF
+UPDATE {{table}} AS users
+  SET users.password="{$randomPass}"
+  WHERE users.username="$username"
+EOF;
+
+        doquery($sql, 'users');
+        message('Mot de passe envoyé ! Veuillez regarder votre boite e-mail ou dans vos spam.', 'Nouveau mot de passe', 'index.php');
+        die();
+    }
+}
+
+$parse = $lang;
+$page = parsetemplate(gettemplate('lostpassword'), $parse);
+display($page, $lang['registry']);

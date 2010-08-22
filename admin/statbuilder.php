@@ -34,7 +34,7 @@ define('IN_ADMIN', true);
 
 require_once dirname(dirname(__FILE__)) .'/common.php';
 
-include($xnova_root_path . 'admin/statfunctions.' . $phpEx);
+include(ROOT_PATH . 'admin/statfunctions.' . PHPEXT);
 
 
 	if ($user['authlevel'] >= 1) {

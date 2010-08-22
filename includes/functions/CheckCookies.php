@@ -51,7 +51,7 @@ EOF;
         $sql =<<<EOF
 SELECT * FROM {{table}}
     WHERE id={$cookieData['id']}
-      AND (@key:={$cookieData['key']})=CONCAT(SHA1(CONCAT(u.username, u.password, (@salt:=MID(@key, 0, 4))), @salt)
+      AND (@key:={$cookieData['key']})=CONCAT((@salt:=MID(@key, 0, 4)), SHA1(CONCAT(u.username, u.password, @salt))
     LIMIT 1
 EOF;
         $userData = doquery($sql, 'users', true);

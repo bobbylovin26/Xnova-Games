@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -34,7 +34,7 @@ ini_set('display_errors', false);
 define('ROOT_PATH', realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
 define('PHPEXT', require 'extension.inc');
 
-define('VERSION', '2009.1');
+define('VERSION', '2009.2');
 
 if (0 === filesize(ROOT_PATH . 'config.php') /*&& !defined('IN_INSTALL')*/) {
     header('Location: install/');
@@ -46,13 +46,13 @@ $user          = array();
 $lang          = array();
 $IsUserChecked = false;
 
-define('DEFAULT_SKINPATH', 'skins/xnova/');
-define('TEMPLATE_DIR', 'templates/');
+define('DEFAULT_SKINPATH', '/skins/xnova/');
+define('TEMPLATE_DIR', realpath(ROOT_PATH . '/templates/'));
 define('TEMPLATE_NAME', 'OpenGame');
 define('DEFAULT_LANG', 'fr');
 
 include(ROOT_PATH . 'includes/debug.class.'.PHPEXT);
-$debug = new debug();
+$debug = new Debug();
 
 include(ROOT_PATH . 'includes/constants.' . PHPEXT);
 include(ROOT_PATH . 'includes/functions.' . PHPEXT);
@@ -83,7 +83,7 @@ if (empty($user) && !defined('DISABLE_IDENTITY_CHECK')) {
     header('Location: login.php');
     exit(0);
 }
-$_fleets = doquery("SELECT * FROM {{table}} WHERE `fleet_start_time` <= '".time()."';", 'fleets'); //  OR fleet_end_time <= ".time()
+$_fleets = doquery('SELECT * FROM {{table}} WHERE `fleet_start_time` <= UNIX_TIMESTAMP()', 'fleets'); //  OR fleet_end_time <= ".time()
 while ($row = mysql_fetch_array($_fleets)) {
     $array                = array();
     $array['galaxy']      = $row['fleet_start_galaxy'];
@@ -94,7 +94,7 @@ while ($row = mysql_fetch_array($_fleets)) {
     $temp = FlyingFleetHandler($array);
 }
 
-$_fleets = doquery("SELECT * FROM {{table}} WHERE `fleet_end_time` <= '".time()."';", 'fleets'); //  OR fleet_end_time <= ".time()
+$_fleets = doquery('SELECT * FROM {{table}} WHERE `fleet_end_time` <= UNIX_TIMESTAMP()', 'fleets'); //  OR fleet_end_time <= ".time()
 while ($row = mysql_fetch_array($_fleets)) {
     $array                = array();
     $array['galaxy']      = $row['fleet_end_galaxy'];
@@ -109,7 +109,7 @@ unset($_fleets);
 
 include(ROOT_PATH . 'rak.'.PHPEXT);
 if (!defined('IN_ADMIN')) {
-    $dpath = (!isset($user["dpath"]) || empty($user["dpath"])) ? DEFAULT_SKINPATH : $user["dpath"];
+    $dpath = (isset($user['dpath']) && !empty($user["dpath"])) ? $user['dpath'] : DEFAULT_SKINPATH;
 } else {
     $dpath = '../' . DEFAULT_SKINPATH;
 }

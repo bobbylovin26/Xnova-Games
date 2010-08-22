@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -137,11 +137,7 @@ function FleetBuildingPage ( &$CurrentPlanet, $CurrentUser ) {
 				    // Si ... Et Seulement si je peux construire je mets la p'tite zone de saisie
                 if ($CanBuildOne) {
                    $TabIndex++;
-                   if ($BuildOneElementTime > 0) {
-                      $PageTable .= "<input type=text id=fmenge[".$Element."] name=fmenge[".$Element."] alt='".$lang['tech'][$Element]."' size=2 maxlength=2 value=0 tabindex=".$TabIndex.">";
-                   } else {
-                      $PageTable .= "<input type=text id=fmenge[".$Element."] name=fmenge[".$Element."] alt='".$lang['tech'][$Element]."' size=20 maxlength=20 value=0 tabindex=".$TabIndex.">";
-                   }
+                   $PageTable .= "<input type=text id=fmenge[".$Element."] name=fmenge[".$Element."] alt='".$lang['tech'][$Element]."' value=0 tabindex=".$TabIndex.">";
                 }
 
 		$MaxElements   = GetMaxConstructibleElements ( $Element, $CurrentPlanet );
@@ -175,4 +171,3 @@ function FleetBuildingPage ( &$CurrentPlanet, $CurrentUser ) {
 
 	display($page, $lang['Fleet']);
 }
-?>

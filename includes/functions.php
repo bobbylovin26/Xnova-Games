@@ -30,7 +30,7 @@
 
 function check_urlaubmodus ($user) {
 	if ($user['urlaubs_modus'] == 1) {
-		message("Vous �tes en mode vacances!", $title = $user['username'], $dest = "", $time = "3");
+		message("Vous êtes en mode vacances!", $title = $user['username'], $dest = "", $time = "3");
 	}
 }
 
@@ -61,12 +61,12 @@ function is_email($email) {
 //
 // Routine Affichage d'un message administrateur avec saut vers une autre page si souhait�
 //
-function AdminMessage ($mes, $title = 'Error', $dest = "", $time = "3") {
+function AdminMessage ($mes, $title = 'Error', $dest = '', $time = '3', $color= 'red') {
 	$parse['color'] = $color;
 	$parse['title'] = $title;
 	$parse['mes']   = $mes;
 
-	$page .= parsetemplate(gettemplate('admin/message_body'), $parse);
+	$page = parsetemplate(gettemplate('admin/message_body'), $parse);
 
 	display ($page, $title, false, (($dest != "") ? "<meta http-equiv=\"refresh\" content=\"$time;URL=javascript:self.location='$dest';\">" : ""), true);
 }
@@ -75,14 +75,14 @@ function AdminMessage ($mes, $title = 'Error', $dest = "", $time = "3") {
 //
 // Routine Affichage d'un message avec saut vers une autre page si souhait�
 //
-function message ($mes, $title = 'Error', $dest = "", $time = "3") {
-	$parse['color'] = $color;
-	$parse['title'] = $title;
-	$parse['mes']   = $mes;
+function message($mes, $title = 'Error', $dest = "", $time = "3", $color = 'orange') {
+    $parse['color'] = $color;
+    $parse['title'] = $title;
+    $parse['mes']   = $mes;
 
-	$page .= parsetemplate(gettemplate('message_body'), $parse);
+    $page = parsetemplate(gettemplate('admin/message_body'), $parse);
 
-	display ($page, $title, false, (($dest != "") ? "<meta http-equiv=\"refresh\" content=\"$time;URL='$dest';\">" : ""), false);
+    display ($page, $title, false, (($dest != "") ? "<meta http-equiv=\"refresh\" content=\"$time;URL=javascript:self.location='$dest';\">" : ""), true);
 }
 
 // ----------------------------------------------------------------------------------------------------------------

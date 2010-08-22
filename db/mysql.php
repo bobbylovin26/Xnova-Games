@@ -53,8 +53,9 @@ function doquery($query, $table, $fetch = false)
     }
     $sql = str_replace("{{table}}", "{$config['global']['database']['table_prefix']}{$table}", $query);
 
-    $sqlQuery = mysql_query($sql, Database::$dbHandle) or
-        trigger_error(mysql_error()."$sql<br />" . PHP_EOL, E_USER_WARNING);
+    if (false === ($sqlQuery = mysql_query($sql, Database::$dbHandle))) {
+        trigger_error(mysql_error() . PHP_EOL . "<br /><pre></code>$sql<code></pre><br />" . PHP_EOL, E_USER_WARNING);
+    }
 
     if($fetch) {
         return mysql_fetch_array($sqlQuery);

@@ -202,8 +202,8 @@ function ReadFromFile($filename) {
     return $content;
 }
 
-function SaveToFile($filename, $content) {
-    $content = @file_put_contents($filename, $content);
+function saveToFile($filename, $content) {
+    $content = file_put_contents($filename, $content);
 }
 
 function parsetemplate($template, $array) {
@@ -212,7 +212,7 @@ function parsetemplate($template, $array) {
 
 function getTemplate($templateName) {
 
-    $filename = ROOT_PATH . TEMPLATE_DIR . TEMPLATE_NAME . "/{$templateName}.tpl";
+    $filename = TEMPLATE_DIR . '/' . TEMPLATE_NAME . "/{$templateName}.tpl";
 
     return ReadFromFile($filename);
 }
@@ -228,14 +228,23 @@ function includeLang($filename, $extension = '.mo')
 {
     global $lang, $user;
 
-    $pathPattern = ROOT_PATH . "language/%s/{$filename}{$extension}";
-    if (isset($user['lang']) && !empty($user['lang']) &&
-        !($fp = @fopen($filename = sprintf($pathPattern, $user['lang'])))) {
-        require_once $filename;
+    $pathPattern = ROOT_PATH . "language/%s/{$filename}%s";
+    if (isset($user['lang']) && !empty($user['lang'])) {
+        if($fp = @fopen($filename = sprintf($pathPattern, $user['lang'], '.csv'), 'r', true)) {
+            fclose($fp);
+
+            require_once $filename;
+            return;
+        } else if ($fp = @fopen($filename = sprintf($pathPattern, $user['lang'], $extension), 'r', true)) {
+            fclose($fp);
+
+            require_once $filename;
+            return;
+        }
     }
-    else {
-        require_once sprintf($pathPattern, DEFAULT_LANG);
-    }
+
+    require_once sprintf($pathPattern, DEFAULT_LANG, '.mo');
+    return;
 }
 
 // ----------------------------------------------------------------------------------------------------------------

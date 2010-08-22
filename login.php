@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -43,17 +43,18 @@ if (!empty($_POST)) {
     );
     $sql =<<<EOF
 SELECT
-    u.id,
-    u.username,
-    u.banaday,
-    (CASE WHEN MD5("{$userData['password']}")=u.password THEN 1 ELSE 0 END) AS login_success,
-    CONCAT((@salt:=MID(MD5(RAND()), 0, 4)), SHA1(CONCAT(u.username, u.password, @salt))) AS login_rememberme
-    FROM {{table}} AS u
-        WHERE u.username="{$userData['username']}"
+    users.id,
+    users.username,
+    users.banaday,
+    (CASE WHEN MD5("{$userData['password']}")=users.password THEN 1 ELSE 0 END) AS login_success,
+    CONCAT((@salt:=MID(MD5(RAND()), 0, 4)), SHA1(CONCAT(users.username, users.password, @salt))) AS login_rememberme
+    FROM {{table}}users AS users
+        WHERE users.username="{$userData['username']}"
         LIMIT 1
 EOF;
 
-    $login = doquery($sql, 'users', true);
+    $login = doquery($sql, '', true);
+
     if($login['banaday'] <= time() & $login['banaday'] !='0' ){
         doquery("UPDATE {{table}} SET `banaday` = '0', `bana` = '0', `urlaubs_modus` ='0'  WHERE `username` = '".$login['username']."' LIMIT 1;", 'users');
         doquery("DELETE FROM {{table}} WHERE `who` = '".$login['username']."'",'banned');
@@ -65,8 +66,15 @@ EOF;
                 setcookie('nova-cookie', array('id' => $login['id'], 'key' => $login['login_rememberme']), time() + 2592000);
             }
 
+            $sql =<<<EOF
+UPDATE {{table}} AS users
+  SET users.onlinetime=UNIX_TIMESTAMP()
+  WHERE users.id={$login['id']}
+EOF;
+            doquery($sql, 'users');
+
             $_SESSION['user_id'] = $login['id'];
-            header("Location: ./frames.php");
+            header("Location: frames.php");
             exit(0);
         } else {
             message($lang['Login_FailPassword'], $lang['Login_Error']);
@@ -76,10 +84,10 @@ EOF;
     }
 } else {
     $parse                 = $lang;
-    $Count                 = doquery('SELECT COUNT(*) as `players` FROM {{table}}', 'users', true);
-    $LastPlayer            = doquery('SELECT `username` FROM {{table}} ORDER BY `register_time` DESC', 'users', true);
+    $Count                 = doquery('SELECT COUNT(DISTINCT users.id) AS `players` FROM {{table}} AS users WHERE users.authlevel < 3', 'users', true);
+    $LastPlayer            = doquery('SELECT users.`username` FROM {{table}} AS users ORDER BY `register_time` DESC LIMIT 1', 'users', true);
     $parse['last_user']    = $LastPlayer['username'];
-    $PlayersOnline         = doquery("SELECT COUNT(DISTINCT(id)) as `onlinenow` FROM {{table}} WHERE `onlinetime` > '" . (time()-900) ."';", 'users', true);
+    $PlayersOnline         = doquery("SELECT COUNT(DISTINCT id) AS `onlinenow` FROM {{table}} AS users WHERE `onlinetime` > (UNIX_TIMESTAMP()-900) AND users.authlevel < 3", 'users', true);
     $parse['online_users'] = $PlayersOnline['onlinenow'];
     $parse['users_amount'] = $Count['players'];
     $parse['servername']   = $game_config['game_name'];

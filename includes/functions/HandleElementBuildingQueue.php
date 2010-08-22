@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -28,55 +28,35 @@
  *
  */
 
-function HandleElementBuildingQueue ( $CurrentUser, &$CurrentPlanet, $ProductionTime ) {
-	global $resource;
-	// Pendant qu'on y est, si on verifiait ce qui se passe dans la queue de construction du chantier ?
-	if ($CurrentPlanet['b_hangar_id'] != 0) {
-		$Builded                    = array ();
-		$CurrentPlanet['b_hangar'] += $ProductionTime;
+function HandleElementBuildingQueue($currentUser, &$currentPlanet, $productionTime) {
+    global $resource;
+    // Pendant qu'on y est, si on verifiait ce qui se passe dans la queue de construction du chantier ?
+    if ($currentPlanet['b_hangar_id']) {
+        $buildArray = array();
+        $currentPlanet['b_hangar'] += $productionTime;
 
-		$BuildQueue                 = explode(';', $CurrentPlanet['b_hangar_id']);
+        $buildQueue = explode(';', $currentPlanet['b_hangar_id']);
 
-		foreach ($BuildQueue as $Node => $Array) {
-			if ($Array != '') {
-				$Item              = explode(',', $Array);
-				// On stocke sous forme Element, Nombre, Duree de fab
-				$BuildArray[$Node] = array($Item[0], $Item[1], GetBuildingTime ($CurrentUser, $CurrentPlanet, $Item[0]));
-			}
-		}
+        $currentPlanet['b_hangar_id'] = '';
+        foreach ($buildQueue as $element) {
+            if (empty($element) || !($element = explode(',', $element)) || count($element) != 2) {
+                continue;
+            }
+            list($item, $count) = $element;
+            $buildTime = GetBuildingTime($currentUser, $currentPlanet, $item);
 
-		$CurrentPlanet['b_hangar_id'] = '';
+            if($currentPlanet['b_hangar'] >= $buildTime && $count > 0) {
+                $currentPlanet['b_hangar'] -= $buildTime * $count;
+                $buildArray[$element] += $count;
+                $currentPlanet[$resource[$element]] += $count;
 
-		$UnFinished = false;
-		foreach ( $BuildArray as $Node => $Item ) {
-			if (!$UnFinished) {
-				$Element   = $Item[0];
-				$Count     = $Item[1];
-				$BuildTime = $Item[2];
-				while ( $CurrentPlanet['b_hangar'] >= $BuildTime && !$UnFinished ) {
-					if ( $Count > 0 ) {
-						$CurrentPlanet['b_hangar'] -= $BuildTime;
-						$Builded[$Element]++;
-						$CurrentPlanet[$resource[$Element]]++;
-						$Count--;
-						if ($Count == 0) {
-							break;
-						}
-					} else {
-						$UnFinished = true;
-						break;
-					}
-				}
-			}
-			if ( $Count != 0 ) {
-				$CurrentPlanet['b_hangar_id'] .= $Element.",".$Count.";";
-			}
-		}
-	} else {
-		$Builded                   = '';
-		$CurrentPlanet['b_hangar'] = 0;
-	}
+                $currentPlanet['b_hangar_id'] .= "$element,$Count;";
+            }
+        }
+    } else {
+        $buildArray = array();
+        $currentPlanet['b_hangar'] = 0;
+    }
 
-	return $Builded;
+    return $buildArray;
 }
-?>
