@@ -68,18 +68,18 @@ while($row = mysql_fetch_assoc($query)) {
     $game_config[$row['config_name']] = $row['config_value'];
 }
 
-if (!isset($InLogin) || $InLogin != true) {
+if (!defined('DISABLE_IDENTITY_CHECK')) {
     $Result        = CheckTheUser ( $IsUserChecked );
     $IsUserChecked = $Result['state'];
     $user          = $Result['record'];
-} else if ($InLogin == false && $game_config['game_disable'] && $user['authlevel'] < 1) {
+} else if (!defined('DISABLE_IDENTITY_CHECK') && $game_config['game_disable'] && $user['authlevel'] < 1) {
     message(stripslashes($game_config['close_reason']), $game_config['game_name']);
 }
 
 includeLang('system');
 includeLang('tech');
 
-if (empty($user) && !isset($InLogin)) {
+if (empty($user) && !defined('DISABLE_IDENTITY_CHECK')) {
     header('Location: login.php');
     exit(0);
 }

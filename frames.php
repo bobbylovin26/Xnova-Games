@@ -30,9 +30,7 @@
 
 define('INSIDE' , true);
 define('INSTALL' , false);
-
-
-$InLogin = false;
+define('DISABLE_IDENTITY_CHECK', true);
 
 $XNova_Host    = $_SERVER['HTTP_HOST'];
 $XNova_Script  = $_SERVER['SCRIPT_NAME'];

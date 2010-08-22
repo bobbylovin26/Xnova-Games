@@ -30,19 +30,13 @@
 
 define('INSIDE' , true);
 define('INSTALL' , false);
-
-    $InLogin = true;
-
+define('DISABLE_IDENTITY_CHECK', true);
 require_once dirname(__FILE__) .'/common.php';
 
+define('ADMINEMAIL',"no-reply@xnova-legacies.org"); //Changez l'email duquel on va envoyer le message
+define('GAMEURL',"http://".$_SERVER['HTTP_HOST']."/");
 
-
-    define('ADMINEMAIL',"NoReply@Xnova.fr"); //Changez l'email duquel on va envoyer le message
-    define('GAMEURL',"http://".$_SERVER['HTTP_HOST']."/");
-
-	includeLang('lostpassword');
-    include("config.php");
-
+includeLang('lostpassword');
 
     if($_GET['action'] == '1'){
 
@@ -91,4 +85,3 @@ require_once dirname(__FILE__) .'/common.php';
        $page = parsetemplate(gettemplate('lostpassword'), $parse);
 
        display($page,$lang['registry']);
-    ?>
