@@ -1,37 +1,25 @@
 <?php
 /**
- * XNova Legacies
+ * Tis file is part of XNova:Legacies
  *
- * @license http://www.xnova-ng.org/license-legacies
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
  *
- * Copyright (c) 2009-Present, XNova Support Team
+ * Copyright (c) 2009-Present, XNova Support Team <http://www.xnova-ng.org>
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  - Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
- *  - Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
- *  - Neither the name of the team or any contributor may be used to endorse or
- * promote products derived from this software without specific prior written
- * permission.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *                                --> NOTICE <--
  *  This file is part of the core development branch, changing its contents will
@@ -151,14 +139,14 @@ function DisplayGameSettingsPage ( $CurrentUser ) {
 			if (isset($_POST['energy_basic_income']) && is_numeric($_POST['energy_basic_income'])) {
 				$game_config['energy_basic_income'] = $_POST['energy_basic_income'];
 			}
-			
+
 			// Lien supplémentaire dans le menu
 			if (isset($_POST['enable_link_']) && is_numeric($_POST['enable_link_'])) {
 				$game_config['link_enable'] = $_POST['enable_link_'];
 			}
 						// Texte de ce lien...
 $game_config['link_name'] = addslashes( $_POST['name_link_']);
-	
+
 			// URL de ce lien...
 $game_config['link_url'] = $_POST['url_link_'];
 			// Image de la bannière
@@ -189,14 +177,14 @@ $game_config['banner_source_post'] = $_POST['banner_source_post'];
 	if (isset($_POST['duration_ban']) && is_numeric($_POST['duration_ban'])) {
 				$game_config['ban_duration'] = $_POST['duration_ban'];
 			}
-			
+
 								// Activation -ou non- du bot
 	if (isset($_POST['bot_enable']) && is_numeric($_POST['bot_enable'])) {
 				$game_config['enable_bot'] = $_POST['bot_enable'];
 			}
-			
+
 											// BBCode ou pas ?
-										
+
 	if (isset($_POST['bbcode_field']) && is_numeric($_POST['bbcode_field'])) {
 				$game_config['enable_bbcode'] = $_POST['bbcode_field'];
 			}
@@ -206,17 +194,17 @@ $game_config['banner_source_post'] = $_POST['banner_source_post'];
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['close_reason']           ."' WHERE `config_name` = 'close_reason';", 'config');
 
 		//Stats
-			
+
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['stat_settings']              ."' WHERE `config_name` = 'stat_settings';", 'config');
-			
-			
+
+
 				// Configuration du Jeu
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['forum_url']              ."' WHERE `config_name` = 'forum_url';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['game_speed']             ."' WHERE `config_name` = 'game_speed';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['fleet_speed']            ."' WHERE `config_name` = 'fleet_speed';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['resource_multiplier']    ."' WHERE `config_name` = 'resource_multiplier';", 'config');
 
-			// Page Generale 
+			// Page Generale
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['OverviewNewsFrame']       ."' WHERE `config_name` = 'OverviewNewsFrame';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['OverviewNewsText']        ."' WHERE `config_name` = 'OverviewNewsText';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['OverviewExternChat']      ."' WHERE `config_name` = 'OverviewExternChat';", 'config');
@@ -224,7 +212,7 @@ $game_config['banner_source_post'] = $_POST['banner_source_post'];
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['OverviewBanner']          ."' WHERE `config_name` = 'OverviewBanner';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['OverviewClickBanner']     ."' WHERE `config_name` = 'OverviewClickBanner';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['ForumBannerFrame']       ."' WHERE `config_name` = 'ForumBannerFrame';", 'config');
-			
+
 			//Bannière
 						doquery("UPDATE {{table}} SET `config_value` = '". $game_config['banner_source_post']       ."' WHERE `config_name` = 'banner_source_post';", 'config');
 
@@ -232,30 +220,30 @@ $game_config['banner_source_post'] = $_POST['banner_source_post'];
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['link_enable']         ."' WHERE `config_name` = 'link_enable';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['link_name']         ."' WHERE `config_name` = 'link_name';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['link_url']         ."' WHERE `config_name` = 'link_url';", 'config');
-			
+
 			// Options Planete
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['initial_fields']         ."' WHERE `config_name` = 'initial_fields';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['metal_basic_income']     ."' WHERE `config_name` = 'metal_basic_income';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['crystal_basic_income']   ."' WHERE `config_name` = 'crystal_basic_income';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['deuterium_basic_income'] ."' WHERE `config_name` = 'deuterium_basic_income';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['energy_basic_income']    ."' WHERE `config_name` = 'energy_basic_income';", 'config');
- 
-			//Bot antimulti 
+
+			//Bot antimulti
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['bot_name']    ."' WHERE `config_name` = 'bot_name';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['bot_adress']    ."' WHERE `config_name` = 'bot_adress';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['ban_duration']    ."' WHERE `config_name` = 'ban_duration';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['enable_bot']    ."' WHERE `config_name` = 'enable_bot';", 'config');
-			
-			
+
+
 			//Réglage du BBCode
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['enable_bbcode']    ."' WHERE `config_name` = 'enable_bbcode';", 'config');
-			
-			
+
+
 			//Controle des pages
  			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['enable_announces']    ."' WHERE `config_name` = 'enable_announces';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['enable_marchand']    ."' WHERE `config_name` = 'enable_marchand';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['enable_notes']    ."' WHERE `config_name` = 'enable_notes';", 'config');
-			
+
 			// Mode Debug
 			doquery("UPDATE {{table}} SET `config_value` = '" .$game_config['debug']                  ."' WHERE `config_name` ='debug'", 'config');
 			AdminMessage ('Options changees avec succes !', 'Succes', '?');
@@ -283,11 +271,11 @@ $game_config['banner_source_post'] = $_POST['banner_source_post'];
 			$parse['ban_duration']    = stripslashes($game_config['ban_duration']);
 			$parse['enable_bot']    = stripslashes($game_config['enable_bot']);
 			$parse['enable_bbcode']    = stripslashes($game_config['enable_bbcode']);
-			
+
 						$parse['banner_source_post']    = $game_config['banner_source_post'];
 						$parse['stat_settings']    = stripslashes($game_config['stat_settings']);
 
-			
+
 
 			$parse['closed']                 = ($game_config['game_disable'] == 1) ? " checked = 'checked' ":"";
 			$parse['close_reason']           = stripslashes( $game_config['close_reason'] );

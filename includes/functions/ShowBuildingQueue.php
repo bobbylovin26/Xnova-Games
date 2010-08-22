@@ -1,24 +1,33 @@
 <?php
-
 /**
- * ShowBuildingQueue.php
+ * Tis file is part of XNova:Legacies
  *
- * @version 1
- * @copyright 2008 by Chlorel for XNova
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ * @see http://www.xnova-ng.org/
+ *
+ * Copyright (c) 2009-Present, XNova Support Team <http://www.xnova-ng.org>
+ * All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *                                --> NOTICE <--
+ *  This file is part of the core development branch, changing its contents will
+ * make you unable to use the automatic updates manager. Please refer to the
+ * documentation for further information about customizing XNova.
+ *
  */
 
-// ----------------------------------------------------------------------------------------------------------
-// Construit le code html pour afficher une liste de construction en cours ...
-// Données en entree :
-// $CurrentPlanet -> Planete sur la quelle on affiche la page de construction de batiments
-// $CurrentUser   -> Joueur courrant (inutilisé pour le moment ... Mais sait on jamais)
-// Données en sortie :
-// $ListIDRow     -> lignes d'une table de 3 colonnes integrable au dessus (ou au dessous) de la page de
-//                   construction des batiments
-// Necessite :
-// Attention il faut avoir integré une fois au moins le script de controle en java ...
-// Donc lancer : InsertBuildListScript () avant la balise <table> de la page
-//
 function ShowBuildingQueue ( $CurrentPlanet, $CurrentUser ) {
 	global $lang;
 

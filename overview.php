@@ -1,37 +1,25 @@
 <?php
 /**
- * XNova Legacies
+ * Tis file is part of XNova:Legacies
  *
- * @license http://www.xnova-ng.org/license-legacies
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
  *
- * Copyright (c) 2009-Present, XNova Support Team
+ * Copyright (c) 2009-Present, XNova Support Team <http://www.xnova-ng.org>
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  - Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
- *  - Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
- *  - Neither the name of the team or any contributor may be used to endorse or
- * promote products derived from this software without specific prior written
- * permission.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *                                --> NOTICE <--
  *  This file is part of the core development branch, changing its contents will
@@ -55,42 +43,6 @@ $_POST['deleteid'] = intval($_POST['deleteid']);
 includeLang('resources');
 includeLang('overview');
 
-if($game_config['enable_bot'] == 1){
-	//robot anti multi -- debut --
-$multi = $user['multi_validated'];
-$ip = $user['user_lastip'];
-$time = time();
-$duree = $time + (stripslashes($game_config['ban_duration']) * 86400);
-$op = stripslashes($game_config['bot_name']);
-$mail = stripslashes($game_config['bot_adress']);
-$sql = mysql_query("SELECT * FROM game_users WHERE `user_lastip`='{$ip}'");
-$boucle = 0;
-$username ='';
-$v =',&nbsp;';
-   while($m = mysql_fetch_array($sql)){
-      $username .= $m['username'] . $v;
-      $boucle ++;
-            }
-if($boucle > 1 && $multi == 0){
-$ip = $user['user_lastip'];
-$sql = mysql_query("SELECT * FROM game_users WHERE `user_lastip`='{$ip}'");
-          while($b = mysql_fetch_array($sql)){
-      $QryBanMulti = "INSERT INTO {{table}} SET ";
-        $QryBanMulti .= "`who` = '" . mysql_escape_string(strip_tags($user['username'])) . "', ";
-        $QryBanMulti .= "`who2` = '" . mysql_escape_string(strip_tags($user['username'])) . "', ";
-        $QryBanMulti .= "`theme` = 'Multi-Compte entre " . mysql_escape_string($username) . "', ";
-        $QryBanMulti .= "`time` = '" . $time . "', ";
-		$QryBanMulti .= "`longer` = '" . $duree . "', ";
-		$QryBanMulti .= "`author` = '" . $op . "', ";
-		$QryBanMulti .= "`email`='" . $mail . "';";
-        doquery($QryBanMulti, 'banned');
-		doquery("UPDATE {{table}} SET bana=1 WHERE username='{$user['username']}'","users");
-   doquery("UPDATE {{table}} SET banaday='{$duree}' WHERE username='{$user['username']}'","users"); 
-         }
-
-      }
-//robot anti multi -- FIN -- 
-} else {}
 switch ($mode) {
     case 'renameplanet':
         // -----------------------------------------------------------------------------------------------
@@ -125,26 +77,26 @@ switch ($mode) {
         } elseif ($_POST['kolonieloeschen'] == 1 && $_POST['deleteid'] == $user['current_planet']) {
                 // Controle du mot de passe pour abandon de colonie
                 if (md5($_POST['pw']) == $user["password"] && $user['id_planet'] != $user['current_planet']) {
-                   
+
                 include_once(ROOT_PATH . 'includes/functions/AbandonColony.' . PHPEXT);
                 if (CheckFleets($planetrow)){
                    $strMessage = "Vous ne pouvez pas abandonner la colonie, il y a de la flotte en vol !";
                    message($strMessage, $lang['colony_abandon'], 'overview.php?mode=renameplanet',3);
                 }
-                
+
                 AbandonColony($user,$planetrow);
-                
+
                     $QryUpdateUser = "UPDATE {{table}} SET ";
                     $QryUpdateUser .= "`current_planet` = `id_planet` ";
                     $QryUpdateUser .= "WHERE ";
                     $QryUpdateUser .= "`id` = '" . $user['id'] . "' LIMIT 1";
                     doquery($QryUpdateUser, "users");
-                    // Tout s'est bien passé ! La colo a été effacée !!
-                    message($lang['deletemessage_ok'] , $lang['colony_abandon'], 'overview.php',3); 
+                    // Tout s'est bien passï¿½ ! La colo a ï¿½tï¿½ effacï¿½e !!
+                    message($lang['deletemessage_ok'] , $lang['colony_abandon'], 'overview.php',3);
 
                 } elseif ($user['id_planet'] == $user["current_planet"]) {
                     // Et puis quoi encore ??? On ne peut pas effacer la planete mere ..
-                    // Uniquement les colonies crées apres coup !!!
+                    // Uniquement les colonies crï¿½es apres coup !!!
                     message($lang['deletemessage_wrong'], $lang['colony_abandon'], 'overview.php?mode=renameplanet');
 
                 } else {

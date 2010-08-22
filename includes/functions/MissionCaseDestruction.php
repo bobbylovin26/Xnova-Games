@@ -1,12 +1,32 @@
 <?php
-
 /**
-* MissionCaseDestruction.php
-* Commencé Par Tom
-* Terminé par juju67 et Moa666
-* @version 1
-* @copyright 2008
-*/
+ * Tis file is part of XNova:Legacies
+ *
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ * @see http://www.xnova-ng.org/
+ *
+ * Copyright (c) 2009-Present, XNova Support Team <http://www.xnova-ng.org>
+ * All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *                                --> NOTICE <--
+ *  This file is part of the core development branch, changing its contents will
+ * make you unable to use the automatic updates manager. Please refer to the
+ * documentation for further information about customizing XNova.
+ *
+ */
 
 function MissionCaseDestruction($FleetRow) {
    global $user, $ugamela_root_path, $pricelist, $lang, $resource, $CombatCaps;
@@ -175,7 +195,7 @@ function MissionCaseDestruction($FleetRow) {
 
          $CurrentSet   = $walka["atakujacy"];
 
-         // Ce qu'il reste de l'attaqué
+         // Ce qu'il reste de l'attaquï¿½
 
          $TargetSet    = $walka["wrog"];
 
@@ -183,11 +203,11 @@ function MissionCaseDestruction($FleetRow) {
 
          $FleetResult  = $walka["wygrana"];
 
-         // Rapport long (rapport de bataille detaillé)
+         // Rapport long (rapport de bataille detaillï¿½)
 
          $dane_do_rw   = $walka["dane_do_rw"];
 
-         // Rapport court (cdr + unitées perdues)
+         // Rapport court (cdr + unitï¿½es perdues)
 
          $zlom         = $walka["zlom"];
 
@@ -234,7 +254,7 @@ function MissionCaseDestruction($FleetRow) {
          if ($destructionl2 > 100)   {
                   $chance = '100';
                   }
-               else   { 
+               else   {
                   $chance = round($destructionl2); // En pourcentage
                   }
          $tirage = mt_rand(0, 100);
@@ -281,7 +301,7 @@ function MissionCaseDestruction($FleetRow) {
 
                    $QryDetFleets1 .= "`fleet_start_type` = '1' ";
 
-                   $QryDetFleets1 .= "WHERE ";   
+                   $QryDetFleets1 .= "WHERE ";
 
                    $QryDetFleets1 .= "`fleet_start_galaxy` = '". $FleetRow['fleet_end_galaxy'] ."' AND ";
 
@@ -309,7 +329,7 @@ function MissionCaseDestruction($FleetRow) {
 
                    doquery( $QryDetFleets2 , 'fleets');
 
-         //maintenant on va verifier si la vue du joueur n est pas calee sur la lune qui est detruite  
+         //maintenant on va verifier si la vue du joueur n est pas calee sur la lune qui est detruite
          if ($TargetUser['current_planet'] == $TargetPlanet['id']){
          $QryPlanet  = "SELECT * FROM {{table}} ";
 
@@ -346,7 +366,7 @@ function MissionCaseDestruction($FleetRow) {
          $destructionrip = sqrt($TargetPlanet['diameter'])/2;
          //maintenant qu on sait quelle chance tantons la destruction, allez roule croupier
          $chance2 = round($destructionrip); // En pourcentage
-         if ($resultat == 0) {                  
+         if ($resultat == 0) {
                   $tirage2 = mt_rand(0, 100);
                   $probarip       = sprintf ($lang['sys_destruc_rip'], $chance2);
                        if($tirage2 <= $chance2)   {
@@ -358,12 +378,12 @@ function MissionCaseDestruction($FleetRow) {
                       $resultat2 = 'sauvees 0'; // les RIP sont saines et sauves
             $finmess = $lang['sys_destruc_null'];
             }}
-         //fin 
+         //fin
          }
 
          $introdestruc       = sprintf ($lang['sys_destruc_mess'], $DepName , $FleetRow['fleet_start_galaxy'], $FleetRow['fleet_start_system'], $FleetRow['fleet_start_planet'], $FleetRow['fleet_end_galaxy'], $FleetRow['fleet_end_system'], $FleetRow['fleet_end_planet']);
 
-         // Mise a jour de l'enregistrement de la planete attaquée
+         // Mise a jour de l'enregistrement de la planete attaquï¿½e
 
          $QryUpdateTarget  = "UPDATE {{table}} SET ";
 
@@ -391,7 +411,7 @@ function MissionCaseDestruction($FleetRow) {
 
 
 
-         // Mise a jour du champ de ruine devant la planete attaquée
+         // Mise a jour du champ de ruine devant la planete attaquï¿½e
 
          $QryUpdateGalaxy  = "UPDATE {{table}} SET ";
 
@@ -413,7 +433,7 @@ function MissionCaseDestruction($FleetRow) {
 
 
 
-         // Là on va discuter le bout de gras pour voir s'il y a moyen d'avoir une Lune !
+         // Lï¿½ on va discuter le bout de gras pour voir s'il y a moyen d'avoir une Lune !
 
          $FleetDebris      = $zlom['metal'] + $zlom['crystal'];
 
@@ -712,7 +732,7 @@ function MissionCaseDestruction($FleetRow) {
 
 
 
-         // Colorisation du résumé de rapport pour l'attaquant
+         // Colorisation du rï¿½sumï¿½ de rapport pour l'attaquant
 
             $raport  = "<a href # OnClick=\"f( 'rw.php?raport=". $rid ."', '');\" >";
 
@@ -762,7 +782,7 @@ function MissionCaseDestruction($FleetRow) {
 
 
 
-         // Colorisation du résumé de rapport pour le defenseur
+         // Colorisation du rï¿½sumï¿½ de rapport pour le defenseur
 
          $raport2  = "<a href # OnClick=\"f( 'rw.php?raport=". $rid ."', '');\" >";
 

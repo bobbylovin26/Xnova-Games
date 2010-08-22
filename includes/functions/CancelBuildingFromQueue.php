@@ -1,10 +1,31 @@
 <?php
-
 /**
- * CancelBuildingFromQueue
+ * Tis file is part of XNova:Legacies
  *
- * @version 1
- * @copyright 2008 by Chlorel for XNova
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ * @see http://www.xnova-ng.org/
+ *
+ * Copyright (c) 2009-Present, XNova Support Team <http://www.xnova-ng.org>
+ * All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *                                --> NOTICE <--
+ *  This file is part of the core development branch, changing its contents will
+ * make you unable to use the automatic updates manager. Please refer to the
+ * documentation for further information about customizing XNova.
+ *
  */
 
 function CancelBuildingFromQueue ( &$CurrentPlanet, &$CurrentUser ) {
@@ -22,21 +43,21 @@ function CancelBuildingFromQueue ( &$CurrentPlanet, &$CurrentUser ) {
 		$BuildMode           = $CanceledIDArray[4]; // pour savoir si on construit ou detruit
 
 		$nb_item = $Element;
-		
+
 		if ($ActualCount > 1) {
 			array_shift( $QueueArray );
 			$NewCount        = count( $QueueArray );
 			// Mise a jour de l'heure de fin de construction theorique du batiment
 			$BuildEndTime        = time();
-			
+
 			for ($ID = 0; $ID < $NewCount ; $ID++ ) {
 				$ListIDArray          = explode ( ",", $QueueArray[$ID] );
-				
+
 				// Pour diminuer le niveau et le temps de construction
 				// si le bâtiment qui est annulé se trouve plusieurs fois dans la queue
-				// Exemple de queue de construction : 
+				// Exemple de queue de construction :
 				// Mine de métal (Niveau 40) | Silo de missile (Niveau 30) | Silo de missiles (Niveau 31) | Mine de métal (Niveau 41)
-				
+
 				// Si on supprime le premier bâtiment, on aura dans la queue de construction :
 				// Silo de missile (Niveau 30) | Silo de missiles (Niveau 31) | Mine de métal (Niveau 40)
 				if ( $nb_item == $ListIDArray[0])

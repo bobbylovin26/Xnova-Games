@@ -1,10 +1,31 @@
 <?php
-
 /**
- * CreateOnePlanetRecord.php
+ * Tis file is part of XNova:Legacies
  *
- * @version 1.0
- * @copyright 2008 By Chlorel for XNova
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ * @see http://www.xnova-ng.org/
+ *
+ * Copyright (c) 2009-Present, XNova Support Team <http://www.xnova-ng.org>
+ * All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *                                --> NOTICE <--
+ *  This file is part of the core development branch, changing its contents will
+ * make you unable to use the automatic updates manager. Please refer to the
+ * documentation for further information about customizing XNova.
+ *
  */
 
 function PlanetSizeRandomiser ($Position, $HomeWorld = false) {
@@ -45,7 +66,7 @@ function CreateOnePlanetRecord($Galaxy, $System, $Position, $PlanetOwnerID, $Pla
 	$QrySelectPlanet .= "`planet` = '". $Position ."';";
 	$PlanetExist = doquery( $QrySelectPlanet, 'planets', true);
 
-	// Si $PlanetExist est autre chose que false ... c'est qu'il y a quelque chose là bas ...
+	// Si $PlanetExist est autre chose que false ... c'est qu'il y a quelque chose lï¿½ bas ...
 	// C'est donc aussi que je ne peux pas m'y poser !!
 	if (!$PlanetExist) {
 		$planet                      = PlanetSizeRandomiser ($Position, $HomeWorld);
@@ -140,7 +161,7 @@ function CreateOnePlanetRecord($Galaxy, $System, $Position, $PlanetOwnerID, $Pla
 		$QryInsertPlanet .= "`deuterium_max` = '".     $planet['deuterium_max']     ."';";
 		doquery( $QryInsertPlanet, 'planets');
 
-		// On recupere l'id de planete nouvellement créé
+		// On recupere l'id de planete nouvellement crï¿½ï¿½
 		$QrySelectPlanet  = "SELECT `id` ";
 		$QrySelectPlanet .= "FROM {{table}} ";
 		$QrySelectPlanet .= "WHERE ";
@@ -160,7 +181,7 @@ function CreateOnePlanetRecord($Galaxy, $System, $Position, $PlanetOwnerID, $Pla
 		$GetGalaxyID      = doquery( $QrySelectGalaxy, 'galaxy', true);
 
 		if ($GetGalaxyID) {
-			// Ah ... Ce secteur de ce vaste monde a deja ete occupé
+			// Ah ... Ce secteur de ce vaste monde a deja ete occupï¿½
 			$QryUpdateGalaxy  = "UPDATE {{table}} SET ";
 			$QryUpdateGalaxy .= "`id_planet` = '". $GetPlanetID['id'] ."' ";
 			$QryUpdateGalaxy .= "WHERE ";

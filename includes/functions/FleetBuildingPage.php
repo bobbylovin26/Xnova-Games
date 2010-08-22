@@ -1,27 +1,45 @@
 <?php
-
 /**
- * FleetBuildingPage.php
+ * Tis file is part of XNova:Legacies
+ *
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ * @see http://www.xnova-ng.org/
+ *
+ * Copyright (c) 2009-Present, XNova Support Team <http://www.xnova-ng.org>
+ * All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *                                --> NOTICE <--
+ *  This file is part of the core development branch, changing its contents will
+ * make you unable to use the automatic updates manager. Please refer to the
+ * documentation for further information about customizing XNova.
+ *
  */
 
-// Page de Construction d'Elements de Flotte
-// $CurrentPlanet -> Planete sur laquelle la construction est lancÃ©e
-//                   Parametre passÃ© par adresse, cela permet de mettre les valeurs a jours
-//                   dans le programme appelant
-// $CurrentUser   -> Utilisateur qui a lancÃ© la construction
-//
 function FleetBuildingPage ( &$CurrentPlanet, $CurrentUser ) {
  	global $pricelist, $lang, $resource, $dpath, $_POST;
 
 	if (isset($_POST['fmenge'])) {
 		// On vient de Cliquer ' Construire '
-		// Et y a une liste de doléances
+		// Et y a une liste de dolï¿½ances
 		$AddedInQueue                     = false;
 		// Ici, on sait precisement ce qu'on aimerait bien construire ...
 		foreach($_POST['fmenge'] as $Element => $Count) {
-			// Construction d'Element recuperés sur la page de Flotte ...
+			// Construction d'Element recuperï¿½s sur la page de Flotte ...
 			// ATTENTION ! La file d'attente Flotte est Commune a celle des Defenses
-			// Dans fmenge, on devrait trouver un tableau des elements constructibles et du nombre d'elements souhaités
+			// Dans fmenge, on devrait trouver un tableau des elements constructibles et du nombre d'elements souhaitï¿½s
 
 			$Element = intval($Element);
 			$Count   = ereg_replace("[^0-9]",'',$Count);

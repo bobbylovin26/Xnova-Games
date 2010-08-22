@@ -1,56 +1,32 @@
 <?php
-
 /**
- * CombatEngine.php
+ * Tis file is part of XNova:Legacies
  *
- * @version 1
- * @copyright 2008 By Chlorel
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ * @see http://www.xnova-ng.org/
+ *
+ * Copyright (c) 2009-Present, XNova Support Team <http://www.xnova-ng.org>
+ * All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *                                --> NOTICE <--
+ *  This file is part of the core development branch, changing its contents will
+ * make you unable to use the automatic updates manager. Please refer to the
+ * documentation for further information about customizing XNova.
+ *
  */
-
-
-// Tech : A : 11  B : 11  C : 13
-
-// Points de structure  	4.000
-// Puissance du bouclier 	10
-// Valeur d'attaque	 	50
-
-// A : 105
-// B :  21
-// C : 920
-
-// 204 => array('metal'=>3000   ,'crystal'=>1000   ,'deuterium'=>0      ,'energy'=>0,'factor'=>1,'consumption'=>20  ,'speed'=>12500    ,'capacity'=>50
-//             ,'shield'=>10   ,'attack'=>50    ,'sd'=>array(202=>2,203=>1,204=>1,205=>1,206=>1,207=>1,208=>1,209=>1,210=>5,211=>1,212=>5,213=>1,214=>1,215=>1,401=>1,402=>1,403=>1,404=>1,405=>1,406=>1,407=>1,408=>1)),
-
-// Attaque  : 'Valeur Attaque' + (( 'Valeur Attaque' * 'Technologie Armes' ) / 10 )
-// Bouclier : arrondi ('Puissance du bouclier' + (( 'Puissance du bouclier' * 'Technologie Bouclier' ) / 10 ))
-// Coque    : Points de structure + (( Points de structure * 'Technologie Protection des vaisseaux spatiaux' ) / 10 )
-
-/*
-202 => 'Petit transporteur',
-203 => 'Grand transporteur',
-204 => 'Chasseur l&eacute;ger',
-205 => 'Chasseur lourd',
-206 => 'Croiseur',
-207 => 'Vaisseau de bataille',
-208 => 'Vaisseau de colonisation',
-209 => 'Recycleur',
-210 => 'Sonde espionnage',
-211 => 'Bombardier',
-212 => 'Satellite solaire',
-213 => 'Destructeur',
-214 => 'Etoile de la mort',
-215 => 'Traqueur',
-
-401 => 'Lanceur de missiles',
-402 => 'Artillerie laser l&eacute;g&egrave;re',
-403 => 'Artillerie laser lourde',
-404 => 'Canon de Gauss',
-405 => 'Artillerie &agrave; ions',
-406 => 'Lanceur de plasma',
-407 => 'Petit bouclier',
-408 => 'Grand bouclier',
-
-*/
 
 $CombatCaps = array(
 202 => array ( 'shield' =>    10, 'attack' =>      5, 'sd' => array (202 =>   1, 203 =>   1, 204 =>   1, 205 =>   1, 206 =>   1, 207 =>   1, 208 =>   1, 209 =>   1, 210 =>    5, 211 =>   1, 212 =>    5, 213 =>   1, 214 =>   1, 215 =>   1, 401 =>   1, 402 =>   1, 403 =>   1, 404 =>   1, 405 =>   1, 406 =>   1, 407 =>   1, 408 =>   1 )),

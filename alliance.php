@@ -1,37 +1,25 @@
 <?php
 /**
- * XNova Legacies
+ * Tis file is part of XNova:Legacies
  *
- * @license http://www.xnova-ng.org/license-legacies
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
  *
- * Copyright (c) 2009-Present, XNova Support Team
+ * Copyright (c) 2009-Present, XNova Support Team <http://www.xnova-ng.org>
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  - Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
- *  - Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
- *  - Neither the name of the team or any contributor may be used to endorse or
- * promote products derived from this software without specific prior written
- * permission.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *                                --> NOTICE <--
  *  This file is part of the core development branch, changing its contents will
@@ -536,7 +524,7 @@ elseif ($user['ally_id'] != 0 && $user['ally_request'] == 0) { // Con alianza
 			/*
 		  Aca un mensajito diciendo que a quien se mando.
 		*/
-			$page = MessageForm($lang['Circular_sended'], "Les membres suivants ont reçu un message:" . $list, "alliance.php", $lang['Ok'], true);
+			$page = MessageForm($lang['Circular_sended'], "Les membres suivants ont reï¿½u un message:" . $list, "alliance.php", $lang['Ok'], true);
 			display($page, $lang['Send_circular_mail']);
 		}
 
@@ -742,7 +730,7 @@ elseif ($user['ally_id'] != 0 && $user['ally_request'] == 0) { // Con alianza
 			$ally['ally_request_notallow'] = intval($_POST['request_notallow']);
 
 			if ($ally['ally_request_notallow'] != 0 && $ally['ally_request_notallow'] != 1) {
-            message("Aller à \"Candidature\" et sur une option dans le formulaire!", "Erreur");
+            message("Aller ï¿½ \"Candidature\" et sur une option dans le formulaire!", "Erreur");
 				exit;
 			}
 
@@ -1125,7 +1113,7 @@ while($data=mysql_fetch_array($selection)){
 	  Si bien, se tendria que confirmar, no tengo animos para hacerlo mas detallado...
 	  sorry :(
 	*/
-		doquery("UPDATE {{table}} SET `ally_id`='0', `ally_name` = '' WHERE `id`='{$user['id']}'", 'users');	
+		doquery("UPDATE {{table}} SET `ally_id`='0', `ally_name` = '' WHERE `id`='{$user['id']}'", 'users');
 		doquery("DELETE FROM {{table}} WHERE id='{$ally['id']}'", "alliance");
 		header('Location: alliance.php');
 		exit;
