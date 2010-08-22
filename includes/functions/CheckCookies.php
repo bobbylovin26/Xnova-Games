@@ -28,68 +28,58 @@
  *
  */
 
-function CheckCookies ( $IsUserChecked )
+function CheckCookies($IsUserChecked)
 {
     global $lang, $game_config;
 
-    @session_start(); // TODO: Ouch!
-
     includeLang('cookies');
 
-    $UserRow = array();
+    $userData = array();
+    if (isset($_SESSION['user_id'])) {
+        $sql =<<<EOF
+SELECT * FROM {{table}}
+    WHERE id={$_SESSION['user_id']}
+    LIMIT 1
+EOF;
+        $userData = doquery($sql, 'users', true);
+    } else if (isset($_COOKIE['nova-cookie'])) {
+        $cookieData = array(
+            'id' => (isset($_COOKIE['nova-cookie']['id']) ? (int) $_COOKIE['nova-cookie']['id'] : 0),
+            'key' => (isset($_COOKIE['nova-cookie']['key']) ? (string) $_COOKIE['nova-cookie']['key'] : NULL)
+            );
 
-    if (isset($_COOKIE[$game_config['COOKIE_NAME']])) {
-        $TheCookie  = explode("/%/", $_COOKIE['nova-cookie']);
-        $UserRow = doquery('SELECT * FROM {{table}} WHERE `username` = "'
-            . mysql_real_escape_string($TheCookie[1]). '" LIMIT 1;', 'users', true);
-
-
-        // On teste si on a bien le bon UserID
-        if ($UserRow["id"] != intval($TheCookie[0])) {
-            message( $lang['cookies']['Error2'] );
+        $sql =<<<EOF
+SELECT * FROM {{table}}
+    WHERE id={$cookieData['id']}
+      AND (@key:={$cookieData['key']})=CONCAT(SHA1(CONCAT(u.username, u.password, (@salt:=MID(@key, 0, 4))), @salt)
+    LIMIT 1
+EOF;
+        $userData = doquery($sql, 'users', true);
+        $_SESSION['user_id'] = $userData['id'];
+        if (empty($userData)) {
+            message($lang['cookies']['Error2'] );
         }
 
-        // On teste si le mot de passe est correct !
-        if ($_SESSION['session_hash'] !== intval($TheCookie[2])) {
-            message( $lang['cookies']['Error3'] );
-        }
-
-        $NextCookie = implode("/%/", $TheCookie);
-        // Au cas ou dans l'ancien cookie il etait question de se souvenir de moi
-        // 3600 = 1 Heure // 86400 = 1 Jour // 31536000 = 365 Jours
-        // on ajoute au compteur!
-        if ($TheCookie[3] == 1) {
-            $ExpireTime = time() + 31536000;
-        } else {
-            $ExpireTime = 0;
-        }
-
-        if ($IsUserChecked == false) {
-            setcookie ($game_config['COOKIE_NAME'], $NextCookie, $ExpireTime, "/", "", 0);
-            $QryUpdateUser  = "UPDATE {{table}} SET ";
-            $QryUpdateUser .= "`onlinetime` = '". time() ."', ";
-            $QryUpdateUser .= "`current_page` = '". mysql_real_escape_string($_SERVER['REQUEST_URI']) ."', ";
-            $QryUpdateUser .= "`user_lastip` = '". mysql_real_escape_string($_SERVER['REMOTE_ADDR']) ."', ";
-            $QryUpdateUser .= "`user_agent` = '". mysql_real_escape_string($_SERVER['HTTP_USER_AGENT']) ."' ";
-            $QryUpdateUser .= "WHERE ";
-            $QryUpdateUser .= "`id` = '". $TheCookie[0] ."' LIMIT 1;";
-            doquery( $QryUpdateUser, 'users');
-            $IsUserChecked = true;
-        } else {
-            $QryUpdateUser  = "UPDATE {{table}} SET ";
-            $QryUpdateUser .= "`onlinetime` = '". time() ."', ";
-            $QryUpdateUser .= "`current_page` = '". mysql_real_escape_string($_SERVER['REQUEST_URI']) ."', ";
-            $QryUpdateUser .= "`user_lastip` = '". mysql_real_escape_string($_SERVER['REMOTE_ADDR']) ."', ";
-            $QryUpdateUser .= "`user_agent` = '". mysql_real_escape_string($_SERVER['HTTP_USER_AGENT']) ."' ";
-            $QryUpdateUser .= "WHERE ";
-            $QryUpdateUser .= "`id` = '". $TheCookie[0] ."' LIMIT 1;";
-            doquery( $QryUpdateUser, 'users');
-            $IsUserChecked = true;
-        }
+        $sessionData = array(
+            'request_uri' => mysql_real_escape_string($_SERVER['REQUEST_URI']),
+            'remote_addr' => mysql_real_escape_string($_SERVER['REMOTE_ADDR']/* . (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? '|' . $_SERVER['HTTP_X_FORWARDED_FOR'] : '')*/),
+            'user_agent' => mysql_real_escape_string($_SERVER['HTTP_USER_AGENT'])
+            );
+        $sql =<<<EOF
+UPDATE {{table}}
+    SET `onlinetime` = UNIX_TIMESTAMP(NOW()),
+        `current_page` = "{$sessionData['request_uri']}",
+        `user_lastip` = "{$sessionData['remote_addr']}",
+        `user_agent` = "{$sessionData['user_agent']}"
+    WHERE `id`={$_SESSION['user_id']}
+    LIMIT 1;
+EOF;
+        doquery($sql, 'users');
+        $IsUserChecked = true;
     }
 
-    $Return['state']  = $IsUserChecked;
-    $Return['record'] = $UserRow;
-
-    return $Return;
+    return array(
+        'state' => $IsUserChecked,
+        'record' => $userData
+        );
 }

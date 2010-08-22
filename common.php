@@ -28,12 +28,15 @@
  *
  */
 
+session_start();
+ini_set('display_errors', false);
+
 define('ROOT_PATH', realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
 define('PHPEXT', require 'extension.inc');
 
 define('VERSION', '2009.1');
 
-if (0 === filesize(ROOT_PATH . 'config.php') && !defined('IN_INSTALL')) {
+if (0 === filesize(ROOT_PATH . 'config.php') /*&& !defined('IN_INSTALL')*/) {
     header('Location: install/');
     die();
 }
@@ -41,13 +44,12 @@ if (0 === filesize(ROOT_PATH . 'config.php') && !defined('IN_INSTALL')) {
 $game_config   = array();
 $user          = array();
 $lang          = array();
-$link = NULL;
 $IsUserChecked = false;
 
 define('DEFAULT_SKINPATH', 'skins/xnova/');
-define('TEMPLATE_DIR'    , 'templates/');
-define('TEMPLATE_NAME'   , 'OpenGame');
-define('DEFAULT_LANG'    , 'fr');
+define('TEMPLATE_DIR', 'templates/');
+define('TEMPLATE_NAME', 'OpenGame');
+define('DEFAULT_LANG', 'fr');
 
 include(ROOT_PATH . 'includes/debug.class.'.PHPEXT);
 $debug = new debug();
@@ -77,10 +79,10 @@ if (!isset($InLogin) || $InLogin != true) {
 includeLang('system');
 includeLang('tech');
 
-if (empty($user) && isset($InLogin)) {
-    //die();
+if (empty($user) && !isset($InLogin)) {
+    header('Location: login.php');
+    exit(0);
 }
-
 $_fleets = doquery("SELECT * FROM {{table}} WHERE `fleet_start_time` <= '".time()."';", 'fleets'); //  OR fleet_end_time <= ".time()
 while ($row = mysql_fetch_array($_fleets)) {
     $array                = array();
@@ -106,21 +108,12 @@ while ($row = mysql_fetch_array($_fleets)) {
 unset($_fleets);
 
 include(ROOT_PATH . 'rak.'.PHPEXT);
-if (defined('IN_ADMIN')) {
-    $UserSkin  = $user['dpath'];
-    $local     = stristr ( $UserSkin, "http:");
-    if ($local === false) {
-        if (!$user['dpath']) {
-            $dpath     = "../". DEFAULT_SKINPATH  ;
-        } else {
-            $dpath     = "../". $user["dpath"];
-        }
-    } else {
-        $dpath = $UserSkin;
-    }
+if (!defined('IN_ADMIN')) {
+    $dpath = (!isset($user["dpath"]) || empty($user["dpath"])) ? DEFAULT_SKINPATH : $user["dpath"];
 } else {
-    $dpath = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
+    $dpath = '../' . DEFAULT_SKINPATH;
 }
+
 
 SetSelectedPlanet($user);
 

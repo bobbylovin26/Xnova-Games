@@ -33,7 +33,7 @@ define('INSTALL' , false);
 require_once dirname(__FILE__) .'/common.php';
 
 function ShowLeftMenu ( $Level , $Template = 'left_menu') {
-	global $lang, $dpath, $game_config;
+	global $lang, $user, $dpath, $game_config;
 
 	includeLang('leftmenu');
 

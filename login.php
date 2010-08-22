@@ -31,66 +31,69 @@
 define('INSIDE' , true);
 define('INSTALL' , false);
 define('LOGIN'   , true);
+$InLogin = true;
 require_once dirname(__FILE__) .'/common.php';
 
+includeLang('login');
 
-$InLogin = true;
+if (!empty($_POST)) {
+    $userData = array(
+        'username' => mysql_real_escape_string($_POST['username']),
+        'password' => mysql_real_escape_string($_POST['password'])
+    );
+    $sql =<<<EOF
+SELECT
+    u.id,
+    u.username,
+    u.banaday,
+    (CASE WHEN MD5("{$userData['password']}")=u.password THEN 1 ELSE 0 END) AS login_success,
+    CONCAT((@salt:=MID(MD5(RAND()), 0, 4)), SHA1(CONCAT(u.username, u.password, @salt))) AS login_rememberme
+    FROM {{table}} AS u
+        WHERE u.username="{$userData['username']}"
+        LIMIT 1
+EOF;
 
-	includeLang('login');
+    $login = doquery($sql, 'users', true);
+    if($login['banaday'] <= time() & $login['banaday'] !='0' ){
+        doquery("UPDATE {{table}} SET `banaday` = '0', `bana` = '0', `urlaubs_modus` ='0'  WHERE `username` = '".$login['username']."' LIMIT 1;", 'users');
+        doquery("DELETE FROM {{table}} WHERE `who` = '".$login['username']."'",'banned');
+    }
 
-	if ($_POST) {
-		$login = doquery("SELECT * FROM {{table}} WHERE `username` = '" . mysql_escape_string($_POST['username']) . "' LIMIT 1", "users", true);
-        if($login['banaday'] <= time() & $login['banaday'] !='0' ){
-            doquery("UPDATE {{table}} SET `banaday` = '0', `bana` = '0', `urlaubs_modus` ='0'  WHERE `username` = '".$login['username']."' LIMIT 1;", 'users');
-         doquery("DELETE FROM {{table}} WHERE `who` = '".$login['username']."'",'banned');
-      }
-		if ($login) {
-			if ($login['password'] == md5($_POST['password'])) {
-				if (isset($_POST["rememberme"])) {
-					$expiretime = time() + 31536000;
-					$rememberme = 1;
-				} else {
-					$expiretime = 0;
-					$rememberme = 0;
-				}
+    if ($login) {
+        if (intval($login['login_success'])) {
+            if (isset($_POST["rememberme"])) {
+                setcookie('nova-cookie', array('id' => $login['id'], 'key' => $login['login_rememberme']), time() + 2592000);
+            }
 
-				@include('config.php');
-				$cookie = $login["id"] . "/%/" . $login["username"] . "/%/" . md5($login["password"] . "--" . $dbsettings["secretword"]) . "/%/" . $rememberme;
-				setcookie(str_replace(' ', '', $game_config['COOKIE_NAME']), $cookie, $expiretime, "/", "", 0);
+            $_SESSION['user_id'] = $login['id'];
+            header("Location: ./frames.php");
+            exit(0);
+        } else {
+            message($lang['Login_FailPassword'], $lang['Login_Error']);
+        }
+    } else {
+        message($lang['Login_FailUser'], $lang['Login_Error']);
+    }
+} else {
+    $parse                 = $lang;
+    $Count                 = doquery('SELECT COUNT(*) as `players` FROM {{table}}', 'users', true);
+    $LastPlayer            = doquery('SELECT `username` FROM {{table}} ORDER BY `register_time` DESC', 'users', true);
+    $parse['last_user']    = $LastPlayer['username'];
+    $PlayersOnline         = doquery("SELECT COUNT(DISTINCT(id)) as `onlinenow` FROM {{table}} WHERE `onlinetime` > '" . (time()-900) ."';", 'users', true);
+    $parse['online_users'] = $PlayersOnline['onlinenow'];
+    $parse['users_amount'] = $Count['players'];
+    $parse['servername']   = $game_config['game_name'];
+    $parse['forum_url']    = $game_config['forum_url'];
+    $parse['PasswordLost'] = $lang['PasswordLost'];
 
-				unset($dbsettings);
-				header("Location: ./frames.php");
-				exit;
-			} else {
-				message($lang['Login_FailPassword'], $lang['Login_Error']);
-			}
-		} else {
-			message($lang['Login_FailUser'], $lang['Login_Error']);
-		}
-	} else {
-		$parse                 = $lang;
-		$Count                 = doquery('SELECT COUNT(*) as `players` FROM {{table}} WHERE 1', 'users', true);
-		$LastPlayer            = doquery('SELECT `username` FROM {{table}} ORDER BY `register_time` DESC', 'users', true);
-		$parse['last_user']    = $LastPlayer['username'];
-		$PlayersOnline         = doquery("SELECT COUNT(DISTINCT(id)) as `onlinenow` FROM {{table}} WHERE `onlinetime` > '" . (time()-900) ."';", 'users', true);
-		$parse['online_users'] = $PlayersOnline['onlinenow'];
-		$parse['users_amount'] = $Count['players'];
-		$parse['servername']   = $game_config['game_name'];
-		$parse['forum_url']    = $game_config['forum_url'];
-		$parse['PasswordLost'] = $lang['PasswordLost'];
+    $page = parsetemplate(gettemplate('login_body'), $parse);
 
-		$page = parsetemplate(gettemplate('login_body'), $parse);
+    // Test pour prendre le nombre total de joueur et le nombre de joueurs connect�s
+    if (isset($_GET['ucount']) && $_GET['ucount'] == 1) {
+        $page = $PlayersOnline['onlinenow']."/".$Count['players'];
+        die ( $page );
+    } else {
+        display($page, $lang['Login']);
+    }
+}
 
-		// Test pour prendre le nombre total de joueur et le nombre de joueurs connect�s
-		if ($_GET['ucount'] == 1) {
-			$page = $PlayersOnline['onlinenow']."/".$Count['players'];
-			die ( $page );
-		} else {
-			display($page, $lang['Login']);
-		}
-	}
-
-// -----------------------------------------------------------------------------------------------------------
-// History version
-
-?>

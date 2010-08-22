@@ -214,7 +214,7 @@ else
 <head>
 <title>Attaque par missiles interplanetaire</title>
 <link rel="SHORTCUT ICON" href="favicon.ico">
-<link rel="stylesheet" type="text/css" href="<?php echo DEFAULT_SKINPATH ?>/formate.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo $dpath ?>/formate.css" />
 <meta http-equiv="refresh" content="3; URL=galaxy.php?mode=3&galaxy=<?php echo $g; ?>&system=<?php echo $s; ?>&target=<?php echo $i; ?>">
 
 

@@ -655,9 +655,11 @@ function aks($angreifer_daten, $verteidiger_daten, $angreifer_schiffe, $verteidi
 			$killed = 1;
 	}
 
+	global $dpath;
+
 	$ausgabe = '<html>
 <HEAD>
-<LINK rel="stylesheet" type="text/css" href="' . DEFAULT_SKINPATH . '/formate.css">
+<LINK rel="stylesheet" type="text/css" href="' . $dpath . '/formate.css">
   <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
   <TITLE>Notizen</TITLE>
 </HEAD>

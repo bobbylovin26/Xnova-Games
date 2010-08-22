@@ -61,10 +61,6 @@ require_once dirname(__FILE__) .'./../common.php';
 				}
 			}
 
-
-
-
-
 			$Bloc['adm_ul_data_id']     = $u['id'];
 			$Bloc['adm_ul_data_name']   = $u['username'];
 			$Bloc['adm_ul_data_mail']   = $u['email'];

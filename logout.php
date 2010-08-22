@@ -30,14 +30,11 @@
 
 define('INSIDE' , true);
 define('INSTALL' , false);
-require_once dirname(__FILE__) .'/common.php';
+require_once dirname(__FILE__) . '/common.php';
 
-	includeLang('logout');
+includeLang('logout');
 
-	setcookie($game_config['COOKIE_NAME'], "", time()-100000, "/", "", 0);
+session_destroy();
+setcookie('nova-cookie', NULL, 0);
 
-	message ( $lang['see_you'], $lang['session_closed'], "login.".PHPEXT );
-
-// -----------------------------------------------------------------------------------------------------------
-// History version
-?>
+message($lang['see_you'], $lang['session_closed'], 'login.' . PHPEXT);

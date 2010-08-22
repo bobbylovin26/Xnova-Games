@@ -36,9 +36,9 @@ $lunarow = doquery("SELECT * FROM {{table}} WHERE `id_owner` = '" . $planetrow['
 
 CheckPlanetUsedFields ($lunarow);
 
-$mode = $_GET['mode'];
-$pl = mysql_escape_string($_GET['pl']);
+$mode = isset($_GET['mode']) ? $_GET['mode'] : '';
 $_POST['deleteid'] = intval($_POST['deleteid']);
+$pl = mysql_real_escape_string(isset($_GET['pl']) ? $_GET['pl'] : 0);
 
 includeLang('resources');
 includeLang('overview');

@@ -181,14 +181,14 @@ function setcoookie($a, $b, $c = '') {
 
     <head>
         <title>OGame Clone</title>
-        <link rel="stylesheet" type="text/css" href="<?php echo DEFAULT_SKINPATH?>/formate.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo $dpath?>formate.css">
     </head>
 
     <center>
 
 
         <body>
-            <form method="POST" action="<?php echo $_SERVER['PHP_SELF']?>">
+            <form method="POST" action="http://<?php echo $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']?>">
 <?php
 
 $tot = SumaTodo();

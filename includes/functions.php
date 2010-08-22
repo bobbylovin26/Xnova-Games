@@ -108,7 +108,7 @@ function display ($page, $title = '', $topnav = true, $metatags = '', $AdminPage
 	}
 	$DisplayPage .= "<center>\n". $page ."\n</center>\n";
 	// Affichage du Debug si necessaire
-	if ($user['authlevel'] == 1 || $user['authlevel'] == 3) {
+	if (isset($user['authlevel']) && ($user['authlevel'] == 1 || $user['authlevel'] == 3)) {
 		if ($game_config['debug'] == 1) $debug->echo_log();
 	}
 
@@ -167,7 +167,7 @@ function AdminUserHeader ($title = '', $metatags = '') {
 //
 function StdFooter() {
 	global $game_config, $lang;
-	$parse['copyright']     = $game_config['copyright'];
+	$parse['copyright']     = isset($game_config['copyright']) ? $game_config['copyright'] : 'XNova Support Team';
 	$parse['TranslationBy'] = isset($lang['TranslationBy']) ? $lang['TranslationBy'] : '';
 	return parsetemplate(gettemplate('overall_footer'), $parse);
 }

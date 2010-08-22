@@ -28,9 +28,11 @@
  *
  */
 
-function SetSelectedPlanet ( &$CurrentUser ) {
-	global $_GET;
-
+function SetSelectedPlanet ( &$CurrentUser )
+{
+    if (!isset($_GET['cp']) || !isset($_GET['re'])) {
+        return;
+    }
 	$SelectPlanet  = $_GET['cp'];
 	$RestorePlanet = $_GET['re'];
 
