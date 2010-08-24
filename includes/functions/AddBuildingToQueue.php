@@ -62,7 +62,7 @@ function AddBuildingToQueue ( &$CurrentPlanet, $CurrentUser, $Element, $AddMode 
 				$BuildTime    = GetBuildingTime($CurrentUser, $CurrentPlanet, $Element);
 				$CurrentPlanet[$resource[$Element]] -= $InArray;
 			} else {
-				$BuildLevel   = $ActualLevel - 1 + $InArray;
+				$BuildLevel   = $ActualLevel - 1 - $InArray;
 				$CurrentPlanet[$resource[$Element]] -= $InArray;
 				$BuildTime    = GetBuildingTime($CurrentUser, $CurrentPlanet, $Element) / 2;
 				$CurrentPlanet[$resource[$Element]] += $InArray;

@@ -335,22 +335,20 @@ function MissionCaseAttack ($FleetRow)
             $raport .= $lang['sys_gain'] . " " . $lang['Metal'] . ":<font color=\"#adaead\">" . pretty_number ($Mining['metal']) . "</font>   " . $lang['Crystal'] . ":<font color=\"#ef51ef\">" . pretty_number ($Mining['crystal']) . "</font>   " . $lang['Deuterium'] . ":<font color=\"#f77542\">" . pretty_number ($Mining['deuter']) . "</font><br />";
             $raport .= $lang['sys_debris'] . " " . $lang['Metal'] . ":<font color=\"#adaead\">" . pretty_number ($zlom['metal']) . "</font>   " . $lang['Crystal'] . ":<font color=\"#ef51ef\">" . pretty_number ($zlom['crystal']) . "</font><br /></center>";
 
-            $Mining['metal'] = $Mining['metal'] + $FleetRow["fleet_resource_metal"];
-            $Mining['crystal'] = $Mining['crystal'] + $FleetRow["fleet_resource_crystal"];
-            $Mining['deuter'] = $Mining['deuter'] + $FleetRow["fleet_resource_deuterium"];
+            
 
-            $QryUpdateFleet = "UPDATE {{table}} SET ";
-            $QryUpdateFleet .= "`fleet_amount` = '" . $FleetAmount . "', ";
-            $QryUpdateFleet .= "`fleet_array` = '" . $FleetArray . "', ";
-            $QryUpdateFleet .= "`fleet_mess` = '1', ";
-            $QryUpdateFleet .= "`fleet_resource_metal` = '" . $Mining['metal'] . "', ";
-            $QryUpdateFleet .= "`fleet_resource_crystal` = '" . $Mining['crystal'] . "', ";
-            $QryUpdateFleet .= "`fleet_resource_deuterium` = '" . $Mining['deuter'] . "' ";
-            $QryUpdateFleet .= "WHERE fleet_id = '" . $FleetRow['fleet_id'] . "' ";
-            $QryUpdateFleet .= "LIMIT 1 ;";
-            doquery($QryUpdateFleet , 'fleets');
-
-            SendSimpleMessage ($CurrentUserID, '', $FleetRow['fleet_start_time'], 3, $lang['sys_mess_tower'], $lang['sys_mess_attack_report'], $raport);
+         $QryUpdateFleet  = "UPDATE {{table}} SET ";
+         $QryUpdateFleet .= "`fleet_amount` = '". $FleetAmount ."', ";
+         $QryUpdateFleet .= "`fleet_array` = '". $FleetArray ."', ";
+         $QryUpdateFleet .= "`fleet_mess` = '1', ";
+         $QryUpdateFleet .= "`fleet_resource_metal` = `fleet_resource_metal` + '". $Mining['metal'] ."', ";
+         $QryUpdateFleet .= "`fleet_resource_crystal` = `fleet_resource_crystal` + '". $Mining['crystal'] ."', ";
+         $QryUpdateFleet .= "`fleet_resource_deuterium` = `fleet_resource_deuterium` + '". $Mining['deuter'] ."' ";
+         $QryUpdateFleet .= "WHERE fleet_id = '". $FleetRow['fleet_id'] ."' ";
+         $QryUpdateFleet .= "LIMIT 1 ;";
+         doquery( $QryUpdateFleet , 'fleets');            
+		 
+		 SendSimpleMessage ($CurrentUserID, '', $FleetRow['fleet_start_time'], 3, $lang['sys_mess_tower'], $lang['sys_mess_attack_report'], $raport);
             // Ajout du petit point raideur
             $AddPoint = $CurrentUser['xpraid'] + 1;
 

@@ -8,6 +8,7 @@
  * portion to e-Zobar
  */
 
+
 define('INSIDE'  , true);
 define('INSTALL' , false);
 define('IN_ADMIN', true);
@@ -29,7 +30,6 @@ include($xnova_root_path . 'common.' . $phpEx);
 			$metal       = $_POST['metal'];
 			$cristal     = $_POST['cristal'];
 			$deut        = $_POST['deut'];
-
 			$QryUpdatePlanet  = "UPDATE {{table}} SET ";
 			$QryUpdatePlanet .= "`metal` = `metal` + '". $metal ."', ";
 			$QryUpdatePlanet .= "`crystal` = `crystal` + '". $cristal ."', ";

@@ -1,9 +1,7 @@
 <tr>
   <th colspan="2">
 <br>{ins_tx_welco}<br>
-{ins_tx_intr1}<br>
-{ins_tx_intr2}<br>
-{ins_tx_intr3}<br><br>
+
 </th>
 </tr>
 <tr>

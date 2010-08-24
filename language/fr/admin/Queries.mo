@@ -1,11 +1,11 @@
 <?php
 
-$lang['Qry_title']  = "Executer une commande SQL";
-$lang['qry_title'] = "Commande SQL";
-$lang['qry_succesful']    = "La commande a ete executee avec succes";
-$lang['exec_check']    = "Reelement executer la commande ?";
-$lang['qry_unsuccesful']    = "Un probleme est apparu lors de la commande, veuillez reverifier la syntaxe";
+$lang['Qry_title']  = "Ejecutar un Comando SQL";
+$lang['qry_title'] = "Comando SQL";
+$lang['qry_succesful']    = "El orden se ha ejecutado con éxito";
+$lang['exec_check']    = "Realmente deseas ejecutar el comando ?";
+$lang['qry_unsuccesful']    = "Un problema se produjo en los pedidos, por favor verifica la sintaxis";
 
-$lang['md5_doit']   = "[ executer ]";
+$lang['md5_doit']   = "Ejecutar";
 
 ?>

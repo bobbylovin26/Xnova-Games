@@ -1,10 +1,10 @@
 <?php
 
-$lang['md5_title']  = "Changement du code d'un joueur";
-$lang['md5_pswcyp'] = "Changez ici le code d'un joueur";
-$lang['md5_psw']    = "Mot de passe";
+$lang['md5_title']  = "Cambio del código de un jugador";
+$lang['md5_pswcyp'] = "Cambiar aquí el código de un jugador";
+$lang['md5_psw']    = "Contraseña";
 
-$lang['md5_doit']   = "[ Changer le mot de passe ]";
-$lang['user_to_change']   = "Quel utilisateur ?";
+$lang['md5_doit']   = "Cambiar la Contraseña";
+$lang['user_to_change']   = "¿Qué usuario?";
 
 ?>

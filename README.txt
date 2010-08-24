@@ -90,4 +90,5 @@ Du côté moral, vous avez tout de même certaines obligations:
     * Signaler un bug ou une faille de sécurité.
     * Après résolution d'un bug, communiquer la solution aux membres.
     * Ne pas s'attribuer les mérites du travail de l'équipe d'XNova.
+    * Ne pas faire payer pour de quelconques bonus en jeu (ressources, augmentation du niveau de mine, option de confort, ...).
     * Avant téléchargement et utilisation, vous devez avoir lu cette charte et être en accord avec tout les points qui la constitue.

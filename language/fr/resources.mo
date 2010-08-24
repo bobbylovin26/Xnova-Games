@@ -1,20 +1,20 @@
 <?php
 
-$lang['Production_of_resources_in_the_planet'] = 'Production de mati&egrave;res premi&egrave;res sur la plan&egrave;te  "%s"';
-$lang['Production_level'] = 'Niveau de Production';
-$lang['Basic_income'] = 'Revenu de base';
-$lang['quantity'] = 'Quantit&eacute;';
-$lang['level'] = 'Niveau';
-$lang['Stores_capacity'] = 'Capacit&eacute; des d&eacute;p&ocirc;ts';
-$lang['Widespread_production'] = 'Production &eacute;tendue';
-$lang['Daily'] = 'Journali&egrave;re';
-$lang['Weekly'] = 'Hebdomadaire';
-$lang['Monthly'] = 'Mensuelle';
-$lang['Storage_state'] = 'Etat des d&eacute;p&ocirc;ts';
-$lang['Calcule'] = 'Calculer';
-$lang['o/o'] = '%';
-$lang['k'] = 'k';
+$lang['Production_of_resources_in_the_planet'] 	= 'Producci&oacute;n de recursos en el planeta  "%s"';
+$lang['Production_level'] 						= 'Nivel de Producci&oacute;n';
+$lang['Basic_income'] 							= 'Renta b&aacute;sica';
+$lang['quantity'] 								= 'Cantidad;';
+$lang['level'] 									= 'Nivel';
+$lang['Stores_capacity'] 						= 'Capacidad de los dep&oacute;sitos';
+$lang['Widespread_production'] 					= 'Producci&oacute;n ampliada';
+$lang['Daily'] 									= 'Diaria';
+$lang['Weekly'] 								= 'Semanal';
+$lang['Monthly'] 								= 'Mensual';
+$lang['Storage_state'] 							= 'Estado de los dep&oacute;sitos';
+$lang['Calcule'] 								= 'Calcular';
+$lang['o/o'] 							= '%';
+$lang['k'] 								= 'k';
 
-// Created by Perberos. All rights reserved (C) 2006 
-// Complet by XNova Team. All rights reversed (C) 2008
+
+
 ?>

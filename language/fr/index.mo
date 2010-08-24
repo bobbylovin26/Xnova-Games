@@ -1,5 +1,5 @@
 <?php
 
-$lang['NoFrames'] = "Ton navigateur n'accepte pas les frames.";
+$lang['NoFrames'] = "Tu Navegador no acepta frames, usa Internet Explorer 7 o Mozila Firefox.";
 
 ?>

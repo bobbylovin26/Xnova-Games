@@ -2,216 +2,479 @@
 
 // ----------------------------------------------------------------------------------------------------------
 // Interface !
-$lang['nfo_page_title']  = "Information";
-$lang['nfo_title_head']  = "Information concernant";
-$lang['nfo_name']        = "Nom";
-$lang['nfo_destroy']     = "D&eacute;truire";
-$lang['nfo_level']       = "Niveau";
-$lang['nfo_range']       = "Port&eacute;e des capteurs";
-$lang['nfo_used_energy'] = "Consommation d'&eacute;nergie";
-$lang['nfo_used_deuter'] = "Consommation de Deut&eacute;rium";
-$lang['nfo_prod_energy'] = "Production d'&eacute;nergie";
-$lang['nfo_difference']  = "Diff&eacute;rence";
-$lang['nfo_prod_p_hour'] = "Production/heure";
-$lang['nfo_needed']      = "N&eacute;cessite";
-$lang['nfo_dest_durati'] = "Dur&eacute;e de destruction";
+$lang['nfo_page_title']  = "Informacion";
+$lang['nfo_title_head']  = "Informacion de";
+$lang['nfo_name']        = "Nombre";
+$lang['nfo_destroy']     = "Destruir:";
+$lang['nfo_level']       = "Nivel";
+$lang['nfo_range']       = "Rango de Sensores";
+$lang['nfo_used_energy'] = "Consumo de Energia";
+$lang['nfo_used_deuter'] = "Consumo de Gashofa";
+$lang['nfo_prod_energy'] = "Producion de energia";
+$lang['nfo_difference']  = "Diferencia";
+$lang['nfo_prod_p_hour'] = "Producion/hora";
+$lang['nfo_needed']      = "Necesita";
+$lang['nfo_dest_durati'] = "Duracion de destruccion";
 
-$lang['nfo_struct_pt']   = "Points de structure";
-$lang['nfo_shielf_pt']   = "Puissance du bouclier";
-$lang['nfo_attack_pt']   = "Valeur d'attaque";
-$lang['nfo_rf_again']    = "Feu rapide contre";
-$lang['nfo_rf_from']     = "Feu rapide de";
-$lang['nfo_capacity']    = "Capacit&eacute; de fret";
-$lang['nfo_units']       = "Unit&eacute;s";
-$lang['nfo_base_speed']  = "Vitesse de base";
-$lang['nfo_consumption'] = "Consommation de carburant (Deut&eacute;rium)";
+$lang['nfo_struct_pt']   = "Puntos de Estructura";
+$lang['nfo_shielf_pt']   = "Integridad del Escudo";
+$lang['nfo_attack_pt']   = "Poder de ataque";
+$lang['nfo_rf_again']    = "Fuego rapido contra";
+$lang['nfo_rf_from']     = "Fuego rapido de";
+$lang['nfo_capacity']    = "Capacidad de carga";
+$lang['nfo_units']       = "Unidades";
+$lang['nfo_base_speed']  = "Velocidad base";
+$lang['nfo_consumption'] = "Consumo de combustible (Gashofa)";
 
 // ----------------------------------------------------------------------------------------------------------
-// Interface porte de saut
-$lang['gate_start_moon'] = "Lune de d&eacute;part";
-$lang['gate_dest_moon']  = "Lune de destination :";
-$lang['gate_use_gate']   = "Utiliser la porte de saut spatial";
-$lang['gate_ship_sel']   = "s&eacute;lection des vaisseaux";
+// Interface Salto Cuantico
+$lang['gate_start_moon'] = "Luna de partida";
+$lang['gate_dest_moon']  = "Luna de destino :";
+$lang['gate_use_gate']   = "Usar Salto Cuantico";
+$lang['gate_ship_sel']   = "Numero de Naves";
 $lang['gate_ship_dispo'] = "disponible";
-$lang['gate_jump_btn']   = "Sauter";
-$lang['gate_jump_done']  = "Les op&eacute;rations de saut se sont bien pass&eacute;, prochain saut possible dans : ";
-$lang['gate_wait_dest']  = "Les chargeurs d'&eacute;nergie de la porte de destination n'ont pas encore eu le temps de se recharger ! Temps d'attente : ";
-$lang['gate_no_dest_g']  = "Il n'y a pas de porte de saut sur la plan&egrave;te vers laquelle vous souhaitez envoyer la flotte !";
-$lang['gate_wait_star']  = "Les chargeurs d'&eacute;nergie de la porte de d&eacute;part n'ont pas encore eu le temps de se recharger ! Temps d'attente : ";
-$lang['gate_wait_data']  = "Erreur, il n'y a aucune donn&eacute;e de saut !";
+$lang['gate_jump_btn']   = "Saltar";
+$lang['gate_jump_done']  = "El Salto Cuantico no esta disponible, el proximo salto cuantico esta listo en : ";
+$lang['gate_wait_dest']  = "El salto cuantico no esta listo en la Luna de Destino, estara listo en : ";
+
+
+$lang['gate_no_dest_g']  = "No tienes Salto Cuantico en ese planeta !";
+$lang['gate_wait_star']  = "El Salto Cuantico fue usado, tiempo para recargar su energia ";
+
+$lang['gate_wait_data']  = "Error, no hay datos correctos del salto cuantico !";
 
 // ----------------------------------------------------------------------------------------------------------
-// Batiments Mines!
-$lang['info'][1]['name']          = "Mine de Metal";
-$lang['info'][1]['description']   = "Le Metal sert &agrave; la construction des b&acirc;timents, c'est la mati&egrave;re premi&egrave;re la plus &eacute;conomique mais elle est indispensable. Sa production utilise peu d'&eacute;nergie.";
-$lang['info'][2]['name']          = "Mine de cristal";
-$lang['info'][2]['description']   = "Toute construction n&eacute;cessite du cristal, son extraction demande beaucoup d'&eacute;nergie. Sa production est en interd&eacute;pendance avec le Metal.";
-$lang['info'][3]['name']          = "Extracteur Deuterium";
-$lang['info'][3]['description']   = "LE deuterium est le carburant des vaisseaux. Il a une grande valeur &eacute;conomique; sa production engendre des b&eacute;n&eacute;fices qui servent la recherche.";
+// ----------------------------------------------------------------------------------------------------------
+// Edificios Minas!
+$lang['info'][1]['name']          = "Mina de Titanio";
+$lang['info'][1]['description']   = "Las minas de titanio proveen los recursos b&aacute;sicos de un imperio emergente, y permiten la construcci&oacute;n de edificios y naves.";
+
+$lang['info'][2]['name']          = "Mina de Silicio";
+$lang['info'][2]['description']   = "Los silicios son el recurso principal usado para construir circuitos electr&oacute;nicos y ciertas aleaciones.";
+
+
+$lang['info'][3]['name']          = "Extractor de Gashofa";
+$lang['info'][3]['description']   = "La gashofa se usa como combustible para naves, y se recolecta en el mar profundo. Es una sustancia muy escasa, y por ello, relativamente cara.";
+
+
+
+
+
+
+
+
+
+
 
 // ----------------------------------------------------------------------------------------------------------
-// Batiments Energie!
-$lang['info'][4]['name']          = "Centrale thermique";
-$lang['info'][4]['description']   = "Le rayonnement solaire est transform&eacute; en &eacute;nergie. Les centrales thermiques sont les principales productrices d'&eacute;lectricit&eacute; servant au fonctionnement de l'industrie.";
-$lang['info'][12]['name']         = "Centrale &eacute;lectrique a Hydrog&eacute;ne";
-$lang['info'][12]['description']  = "Plus le niveau de votre centrale est &eacute;lev&eacute;, plus vous produirez d'&eacute;nergie. Attention, votre centrale &eacute;lectrique a Hydrog&eacute;ne consommera de l hydrog&eacute;ne !";
+// Edificios Energia!
+$lang['info'][4]['name']          = "Planta de Energ&iacute;a solar";
+$lang['info'][4]['description']   = "Las plantas de energ&iacute;a solar convierten energ&iacute;a fot&oacute;nica en energ&iacute;a el&eacute;ctrica, para su uso en casi todos los edificios y estructuras.";
+
+
+$lang['info'][12]['name']         = "Planta de Fusion";
+$lang['info'][12]['description']  = "En una planta de energ&iacute;a de fusi&oacute;n, los n&uacute;cleos de hidr&oacute;geno son fusionados en n&uacute;cleos de helio bajo una enorme temperatura y presi&oacute;n, despidiendo tremendas cantidades de energ&iacute;a..";
+
+
+
+
+
+
 
 // ----------------------------------------------------------------------------------------------------------
-// Batiments Généraux!
-$lang['info'][14]['name']         = "Usine de Robots";
-$lang['info'][14]['description']  = "Le d&eacute;veloppement de ce b&acirc;timent permet d'am&eacute;liorer la vitesse de construction des b&acirc;timents, vaisseaux, d&eacute;fenses et recherches.";
-$lang['info'][15]['name']         = "Usine de Nanites";
-$lang['info'][15]['description']  = "Une am&eacute;lioration deux fois plus puissante de l'usine de robot qui divise en deux le temps de construction des b&acirc;timents ainsi que des vaisseaux &agrave; chaque niveau.";
-$lang['info'][21]['name']         = "Centre spatial";
-$lang['info'][21]['description']  = "L'investissement dans un centre spatial plus d&eacute;velopp&eacute; vous permettra de construire des vaisseaux et de la d&eacute;fense plus cons&eacute;quente.";
-$lang['info'][22]['name']         = "Silo de Metal";
-$lang['info'][22]['description']  = "Votre silo a une capacit&eacute; r&eacute;duite, investissez dans un silo plus grand pour stocker d'avantage de metal. Attention si votre silo est plein, la production de metal s'arr&ecirc;te instantan&eacute;ment !";
-$lang['info'][23]['name']         = "Silo de cristal";
-$lang['info'][23]['description']  = "Votre silo a une capacit&eacute; r&eacute;duite, investissez dans un silo plus grand pour stocker d'avantage de cristal. Attention si votre silo est plein, la production de cristal s'arr&ecirc;te instantan&eacute;ment !";
-$lang['info'][24]['name']         = "Entrep&ocirc;t de deuterium";
-$lang['info'][24]['description']  = "Votre entrep&ocirc;t a une capacit&eacute; r&eacute;duite, investissez dans un entrep&ocirc;t plus grand pour stocker d'avantage de Deuterium. Attention si votre entrep&ocirc;t est plein, la production de deuterium s'arr&ecirc;te instantan&eacute;ment !";
-$lang['info'][31]['name']         = "Centre de recherche";
-$lang['info'][31]['description']  = "Le centre de recherche est n&eacute;cessaire pour d&eacute;velopper de nouvelles technologies. En construisant les niveaux sup&eacute;rieurs de ce b&acirc;timent vous faites acc&eacute;l&eacute;rer le temps de construction de vos technologies.";
-$lang['info'][33]['name']         = "Terraformeur";
-$lang['info'][33]['description']  = "Le d&eacute;veloppement continu des plan&egrave;tes a soulev&eacute; rapidement la question de la limitation de l'espace vital. Les m&eacute;thodes de construction souterraine et en surface se sont aver&eacute;es insuffisantes. Un petit groupe compos&eacute; de physiciens en &eacute;nergie et d'ing&eacute;nieurs en technologie de nanites a finalement trouv&eacute; la solution: la terraformation.<br>Le terraformeur peut rendre habitable des contr&eacute;es entieres ou m&ecirc;me des continents en utilisant de gigantesques quantit&eacute;s d'&eacute;nergie. Des nanites specialement d&eacute;velopp&eacute;es, assurant une qualit&eacute; constante du sol, sont produites continuellement dans ce bâtiment.<br><br>Une fois construit, le terraformeur ne peut &ecirc;tre d&eacute;truit.";
-$lang['info'][34]['name']         = "D&eacute;p&ocirc;t de ravitaillement";
-$lang['info'][34]['description']  = "Le d&eacute;p&ocirc;t de ravitaillement permet le stationnement prolong&eacute; des flottes d'autres membres de l'alliance ou des flottes de membres de votre liste d'amis pour augmenter la d&eacute;fense d'une plan&egrave;te. Les flottes restent en orbite et recoivent le carburant n&eacute;cessaire. Chaque niveau du d&eacute;p&ocirc;t permet de livrer 10.000 unit&eacute;s de deut&eacute;rium suppl&eacute;mentaire aux vaisseaux en orbite.";
+// Edificios Generales!
+$lang['info'][14]['name']         = "F&aacute;brica de Robots";
+$lang['info'][14]['description']  = "Las f&aacute;bricas de robots proporcionan unidades baratas y de f&aacute;cil construcci&oacute;n que pueden ser usadas para mejorar o construir cualquier estructura planetaria. Cada nivel de mejora de la f&aacute;brica aumenta la eficiencia y el numero de unidades rob&oacute;ticas que ayudan en la construcci&oacute;n.";
+
+
+$lang['info'][15]['name']         = "F&aacute;brica de Nanobots";
+$lang['info'][15]['description']  = "Los nanobots son realmente unidades rob&oacute;ticas min&uacute;sculas, con un tama&ntilde;o medio de apenas unos pocos nan&oacute;metros. Estos microbios mec&aacute;nicos son conectados en red y programados para una tarea de construcci&oacute;n, ofrecen una velocidad de producci&oacute;n anteriormente desconocida. Los nanobots operan en niveles moleculares, y son inmensamente &uacute;tiles para construir naves, puesto que permanecen como parte de su estructura y de esta forma sus capacidades de reparaci&oacute;n pueden ser usadas para el control de da&ntilde;o y reparar lo que fuera necesario si consiguen suficiente energ&iacute;a y recursos.";
+
+$lang['info'][21]['name']         = "Hangar";
+$lang['info'][21]['description']  = "El hangar planetario es responsable de la construcci&oacute;n de naves espaciales y sistemas de defensa. Seg&uacute;n va aumentando, puede producir una mayor variedad de naves a velocidades m&aacute;s altas. Si adem&aacute;s existe una f&aacute;brica de nanobots en el planeta, la velocidad a la que se completan las unidades, aumenta considerablemente.";
+
+$lang['info'][22]['name']         = "Almac&eacute;n de metal";
+$lang['info'][22]['description']  = "Almac&eacute;n de metal sin procesar.";
+
+
+$lang['info'][23]['name']         = "Almac&eacute;n de cristal";
+$lang['info'][23]['description']  = "Almac&eacute;n de cristal sin procesar";
+
+$lang['info'][24]['name']         = "Contenedor de deuterio";
+$lang['info'][24]['description']  = "Contenedores enormes para almacenar deuterio.";
+
+
+$lang['info'][31]['name']         = "Laboratorio de investigaci&oacute;n";
+$lang['info'][31]['description']  = "Para poder investigar en nuevas &aacute;reas de una tecnolog&iacute;a, se necesita un laboratorio de investigaci&oacute;n planetario. El nivel de mejoras de ese laboratorio, no solo incrementa la velocidad a la que se descubren nuevas tecnolog&iacute;as, sino que tambi&eacute;n abre nuevos campos para investigar. Para conducir una investigaci&oacute;n en el menor tiempo posible, todos los cient&iacute;ficos del imperio son enviados al planeta donde se inici&oacute; el trabajo de investigaci&oacute;n. En cuanto el trabajo se haya completado, volver&aacute;n a sus planetas y llevar&aacute;n con ellos la nueva tecnolog&iacute;a descubierta. De este modo, el conocimiento sobre nuevas tecnolog&iacute;as puede ser f&aacute;cilmente divulgado a trav&eacute;s del imperio.";
+
+$lang['info'][33]['name']         = "Terraformer";
+$lang['info'][33]['description']  = "La pregunta sobre c&oacute;mo disponer de m&aacute;s espacio para las estructuras en los planetas surgi&oacute; durante el proceso de crecimiento de las infraestructuras de los mismos a trav&eacute;s de las galaxias. Los m&eacute;todos de construcci&oacute;n e ingener&iacute;a tradicional eran insuficientes debido a la enorme necesidad de espacio edificable.
+Un peque&ntilde;o grupo de f&iacute;sicos de alta energ&iacute;a y nanot&eacute;cnicos finalmente encontraron una soluci&oacute;n: el Terraforming.
+Usando grandes cantidades de energ&iacute;a se pueden hacer incluso continentes enteros. En este edificio se producen nanobots dise&ntilde;ados especialmente para asegurar la calidad y usabilidad de las areas formadas.
+
+
+
+
+Una vez construido, el terraformer no puede ser desmontado.";
+
+
+
+$lang['info'][34]['name']         = "Dep&oacute;sito de la Alianza";
+$lang['info'][34]['description']  = "El dep&oacute;sito de la alianza ofrece la posibilidad de repostar a las flotas aliadas que est&eacute;n estacionadas en la &oacute;rbita ayudando a defender. Cada mejora del dep&oacute;sito de alianza permite proveer de 10.000 unidades adicionales de deuterio, por hora, a las flotas estacionadas en la &oacute;rbita.";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ----------------------------------------------------------------------------------------------------------
-// Batiments Lune!
-$lang['info'][41]['name']         = "Base lunaire";
-$lang['info'][41]['description']  = "Une lune n'ayant pas d'atmosph&egrave;re, une base lunaire est n&eacute;cessaire pour pouvoir commencer la colonisation. Celle-ci cr&eacute;e une atmosph&egrave;re et une gravit&eacute; artificielle et maintient l'atmosph&egrave;re &agrave; une temp&eacute;rature supportable. Une base plus grande augmente la surface couverte par la biosph&egrave;re. Pour chaque niveau de base lunaire, trois champs peuvent &ecirc;tre exploit&eacute;s jusqu'&agrave; la taille maximale de la lune.<br><br>Une fois construite, la base lunaire ne peut plus &ecirc;tre d&eacute;truite.";
-$lang['info'][42]['name']         = "Phalange de capteur";
-$lang['info'][42]['description']  = "Des capteurs de haute d&eacute;finition scannent le spectre complet des fr&eacute;quences de tous les rayonnements qui atteignent la phalange. Des ordinateurs de haute performance combinent des oscillations &eacute;nerg&eacute;tiques minuscules et de cette fa&ccedil;on gagnent des informations concernant le mouvement de vaisseaux sur des plan&egrave;tes &eacute;loign&eacute;es. Un tel scanner a besoin d'&eacute;nergie sous forme de deut&eacute;rium.";
-$lang['info'][43]['name']         = "Porte de saut spatial";
-$lang['info'][43]['description']  = "Les portes de saut spatial sont d'immenses &eacute;metteurs permettant de transporter des vaisseaux &agrave; travers la galaxie sans perte de temps. Cette tranmission n&eacute;cessite une technologie &eacute;lev&eacute;e et une &eacute;norme quantit&eacute; d'&eacute;nergie.";
+// Edificios en Luna!
+$lang['info'][41]['name']         = "Base Lunar";
+$lang['info'][41]['description']  = "Dado que la luna no tiene atm&oacute;sfera, se necesita una base lunar para generar espacio habitable. La base lunar no solo provee el ox&iacute;geno necesario, tambi&eacute;n la gravedad artificial, temperatura y protecci&oacute;n necesarias..";
 
-$lang['info'][44]['name']         = "Silo de missiles";
-$lang['info'][44]['description']  = "Les silos de missiles servent &agrave; stocker les missiles. Chaque niveau de d&eacute;veloppement permet le stockage de cinq missiles interplan&eacute;taires ou de dix missiles d'interception. Un missile interplan&eacute;taire occupe la place de deux missiles d'interception. Les types de missiles se combinent &agrave; souhait.";
 
-// ----------------------------------------------------------------------------------------------------------
-// Laboratoire !
-$lang['info'][106]['name']        = "Technologie Espionnage";
-$lang['info'][106]['description'] = "La technologie d'espionnage se concentre surtout sur l'&eacute;tude approfondie de nouveaux capteurs plus efficaces. Plus cette technique est d&eacute;velopp&eacute;e, plus le joueur peut poss&eacute;der d'informations sur ce qui ce passe dans son environnement. Pour les sondages, c'est la diff&eacute;rence entre le propre niveau d'espionnage et le niveau adverse qui est d&eacute;terminante. Une technique d'espionnage plus &eacute;lev&eacute;e permet d'avoir plus d'informations dans son rapport mais aussi d'avoir une probabilit&eacute; moindre d'&ecirc;tre d&eacute;couvert en train d'espionner. En envoyant une grande quantit&eacute; de sondes, on augmente la chance de d&eacute;couvrir des d&eacute;tails mais on a aussi le danger d'&ecirc;tre d&eacute;couvert. La technique d'espionnage am&eacute;liore aussi l'observation des flottes adverses. Seul le niveau d'espionnage est d&eacute;terminant. D&egrave;s le niveau 2, l'affichage d'une attaque comporte le nombre de vaisseaux attaquants. Le niveau 4 permet de voir le type de vaisseaux attaquants et le nombre total de vaisseaux, le niveau 8 le nombre de vaisseaux de chaque type. Cette technologie est indispensable pour les raideurs, car elle permet de voir si la victime se donne les moyens de d&eacute;fendre l'attaque. Il est pr&eacute;f&eacute;rable de d&eacute;velopper cette technologie d&egrave;s le d&eacute;part, juste apr&egrave;s la recherche des petits transporteurs.";
-$lang['info'][108]['name']        = "Technologie Ordinateur";
-$lang['info'][108]['description'] = "La technologie ordinateur permet de d&eacute;velopper votre infrastructure informatique, les syst&egrave;mes devenant plus efficaces et plus performants. La vitesse et la performance de calcul augmentent, ceci permettant de commander plus de flottes &agrave; la fois. Chaque niveau de technologie ordinateur augmente d'une le nombre total de flottes commandables. Un plus grand nombre de flottes vous permet de raider plus et donc de gagner plus de ressources. Naturellement cette technologie sert aussi aux marchands, ceux-ci pouvant g&eacute;rer plus de flottes marchandes. C'est pourquoi il est recommand&eacute; de continuer de d&eacute;velopper cette technologie pendant tout le cours du jeu.";
-$lang['info'][109]['name']        = "Technologie Armes";
-$lang['info'][109]['description'] = "La technologie armes se concentre surtout sur la mise au point des syst&egrave;mes d'armes d&eacute;j&agrave; existants. Le but principal est d'approvisionner les syst&egrave;mes avec plus d'&eacute;nergie et de concentrer celle-ci. Ceci rend les syst&egrave;mes d'armes plus efficaces et plus destructeurs. Chaque niveau de technologie armes augmente la puissance des armes des unit&eacute;s par tranche de 10% de la valeur de base. La technologie armes est importante pour tenir ses unit&eacute;s comp&eacute;titives &agrave; long terme. Un d&eacute;veloppement permanent est recommand&eacute;.";
-$lang['info'][110]['name']        = "Technologie Bouclier";
-$lang['info'][110]['description'] = "La technologie de bouclier se concentre surtout sur le d&eacute;veloppement de nouvelles possibilit&eacute;s d'approvisionnement des boucliers avec de l'&eacute;nergie et permet donc de les rendre plus efficaces et r&eacute;sistants. Chaque niveau augmente l'efficacit&eacute; des boucliers par tranche de 10%.";
-$lang['info'][111]['name']        = "Technologie Protection des vaisseaux spatiaux";
-$lang['info'][111]['description'] = "Des alliages sp&eacute;ciaux rendent les vaisseaux spatiaux de plus en plus r&eacute;sistants. Une fois qu'un alliage puissant est d&eacute;velopp&eacute;, la structure mol&eacute;culaire des vaisseaux est transform&eacute;e par rayonnement et mise au point avec le meilleur alliage. L'efficacit&eacute; de la protection augmente de 10% par niveau atteint.";
-$lang['info'][113]['name']        = "Technologie Energie";
-$lang['info'][113]['description'] = "La technologie &eacute;nergie se concentre surtout sur le d&eacute;veloppement des r&eacute;seaux et du stockage d'&eacute;nergie. Une telle technologie bien d&eacute;velopp&eacute;e permet de stocker plus d'&eacute;nergie et de la transporter plus efficacement.";
-$lang['info'][114]['name']        = "Technologie Hyperespace";
-$lang['info'][114]['description'] = "L'int&eacute;gration de la 4eme et 5eme dimension permet le d&eacute;veloppement d'un nouveau genre de propulsion plus puissant et efficace.";
-$lang['info'][115]['name']        = "R&eacute;acteur &agrave; combustion";
-$lang['info'][115]['description'] = "Les r&eacute;acteurs &agrave; combustion fonctionnent par le principe approuv&eacute; de la r&eacute;action. De la mati&egrave;re &agrave; temp&eacute;rature tr&egrave;s &eacute;lev&eacute;e est repouss&eacute;e et propulse le vaisseau dans la direction oppos&eacute;e. La port&eacute;e de ces r&eacute;acteurs est assez limit&eacute;e, mais ils sont bon march&eacute;, fiables et n'ont gu&egrave;re besoin de maintenance. En outre ils ont besoin de moins de place et se trouvent donc souvent sur des vaisseaux de petite taille. Le d&eacute;veloppement de ces r&eacute;acteurs rend les vaisseaux plus rapides mais &agrave; chaque niveau la vitesse n'augmente que de 10%. Comme les r&eacute;acteurs &agrave; combustion interne sont la base de l'astronautique, il est pr&eacute;f&eacute;rable de les d&eacute;velopper le plus t&ocirc;t possible. Apr&egrave;s, il est tr&egrave;s important de les am&eacute;liorer pour avoir des vaisseaux de type transporteur et des recycleurs plus rapides.";
-$lang['info'][117]['name']        = "R&eacute;acteur &agrave; impulsion";
-$lang['info'][117]['description'] = "Le r&eacute;acteur &agrave; impulsion est bas&eacute; sur le principe de r&eacute;action disant que la plus grande part de la masse du rayon est gagn&eacute;e comme sous-produit de la fusion d'atomes qui sert &agrave; produire l'&eacute;nergie n&eacute;cessaire. De la masse suppl&eacute;mentaire peut &ecirc;tre initi&eacute;e.";
-$lang['info'][118]['name']        = "Propulsion hyperespace";
-$lang['info'][118]['description'] = "Par une d&eacute;formation spatiale et temporelle dans l'environnement du vaisseau, l'espace est comprim&eacute; ce qui permet de parcourir de longues distances dans un minimum de temps. Une propulsion d'hyperespace tr&egrave;s d&eacute;velopp&eacute;e permet de comprimer l'espace encore plus, ce qui augmente la vitesse des vaisseaux de 30% par niveau. N&eacute;cessite : Technologie Hyperespace (Niveau 3) Laboratoire de recherche (Niveau 7)";
-$lang['info'][120]['name']        = "Technologie Laser";
-$lang['info'][120]['description'] = "Le Laser (Renforcement de lumi&egrave;re) cr&eacute;e un rayon intense et riche en &eacute;nergie de lumi&egrave;re coh&eacute;rente. Ces installations servent dans beaucoup de domaines, p. e. aux ordinateurs optiques, armes de laser qui peuvent d&eacute;truire la protection d'un vaisseau sans probl&egrave;mes et autres. La technologie laser est une base importante pour le d&eacute;veloppement d'autres technologies d'armes. N&eacute;cessite : Laboratoire de recherche (Niveau 1) Technologie d'&eacute;nergie (Niveau 2)";
-$lang['info'][121]['name']        = "Technologie Ions";
-$lang['info'][121]['description'] = "Rayon mortel compos&eacute; d'ions acc&eacute;l&eacute;r&eacute;s. En touchant un objet, il cause des d&eacute;g&acirc;ts importants.";
-$lang['info'][122]['name']        = "Plasma";
-$lang['info'][122]['description'] = "Un rayon &eacute;volutif de la technologie ions avec un puissance d&eacute;vastatrice.";
-$lang['info'][123]['name']        = "R&eacute;seau de recherche intergalactique";
-$lang['info'][123]['description'] = "Les chercheurs de plusieurs plan&egrave;tes utilisent ce r&eacute;seau pour communiquer.<br>Un laboratoire est ajout&eacute; au r&eacute;seau pour chaque niveau de recherche. Les laboratoires les plus d&eacute;velopp&eacute;s seront connect&eacute;s entre eux.";
-$lang['info'][124]['name']        = "Technologie Exp&eacute;ditions";
-$lang['info'][124]['description'] = "La technologie d'exp&eacute;dition contient diverses technologies de scan et permet aux vaisseaux de tailles diff&eacute;rentes d'&ecirc;tre &eacute;quip&eacute;s de modules de recherche. Ceux-ci contiennent une base de donn&eacute;es et un petit laboratoire mobile. Pour ne pas mettre en p&eacute;ril la s&eacute;curit&eacute; du vaisseau, le module de recherche est &eacute;quip&eacute; de son propre bloc &eacute;nerg&eacute;tique et d'un g&eacute;n&eacute;rateur de champ &eacute;nerg&eacute;tique, qui englobe le module de recherche en cas d'urgence.";
-$lang['info'][199]['name']        = "Graviton";
-$lang['info'][199]['description'] = "Le graviton est un champ &eacute;nerg&eacute;tique qui permet d'avoir une gravit&eacute; minime et un d&eacute;placement plus facile.";
+$lang['info'][42]['name']         = "Sensor Phalanx";
+$lang['info'][42]['description']  = "Una cadena de sensores de alta resoluci&oacute;n se usa para escanear un enorme espectro de frecuencia. Las unidades de proceso paralelo masivo analizan entonces las se&ntilde;ales recibidas para detectar incluso la m&aacute;s m&iacute;nima anomal&iacute;a en la frecuencia o fortalecimiento, para detectar maniobras de flotas en imperios distantes.";
+
+$lang['info'][43]['name']         = "Salto Cuantico";
+$lang['info'][43]['description']  = "El Salto cu&aacute;ntico es un sistema de transceptores gigante capaz de enviar incluso las flotas m&aacute;s grandes a otro Salto cu&aacute;ntico en cualquier lugar del universo sin p&eacute;rdida de tiempo.";
+
+$lang['info'][44]['name']         = "Silo de Misiles";
+$lang['info'][44]['description']  = "El silo es un lugar de almacenamiento y lanzamiento de misiles planetarios. Por cada nivel de tu silo, tienes espacio para 5 misiles interplanetarios o 10 misiles de intercepci&oacute;n. Es posible mezclar los tipos de misil; 1 interplanetario usa el espacio equivalente a 2 de intercepci&oacute;n.";
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ----------------------------------------------------------------------------------------------------------
-// Flotte !
-$lang['info'][202]['name']        = "Petit transporteur";
-$lang['info'][202]['description'] = "Les petits transporteurs ont &agrave; peu pr&egrave;s la m&ecirc;me taille que les chasseurs, mais n'ont pas de propulsion puissante ou d'armes, afin d'avoir plus de place pour le fret. Le vaisseau de type petit transporteur peut transporter 5.000 unit&eacute;s de ressources. Le grand transporteur peut transporter cinq fois plus de fret. En m&ecirc;me temps sa protection et sa propulsion sont plus puissantes. En raison de leur puissance de tir limit&eacute;e, les vaisseaux de type petit transporteur sont souvent escort&eacute;s par d'autres vaisseaux.<br><br>Le d&eacute;veloppement du r&eacute;acteur &agrave; impulsion au niveau 5 permet de r&eacute;&eacute;quiper le petit transporteur avec ce type de r&eacute;acteurs, acc&eacute;l&eacute;rant alors sensiblement ce vaisseau.";
-$lang['info'][203]['name']        = "Grand transporteur";
-$lang['info'][203]['description'] = "Ce vaisseau n'a gu&egrave;re d'armes ou d'autres technologies &agrave; bord. Il est donc pr&eacute;f&eacute;rable de lui fournir une escorte qui lui permet de profiter de toute sa capacit&eacute; de fret. Avec son r&eacute;acteur de combustion de haute performance, le grand transporteur sert pour transporter rapidement des ressources entre les plan&egrave;tes et bien s&ucirc;r il accompagne les flottes durant leurs attaques sur d'autres plan&egrave;tes pour pouvoir conqu&eacute;rir le nombre maximal de ressources.";
-$lang['info'][204]['name']        = "Chasseur L&eacute;ger";
-$lang['info'][204]['description'] = "Le chasseur l&eacute;ger est un vaisseau tr&egrave;s manoeuvrable qui est stationn&eacute; sur presque toutes les plan&egrave;tes. Les co&ucirc;ts ne sont pas tr&egrave;s importants, mais la puissance du bouclier et la capacit&eacute; de fret sont tr&egrave;s limit&eacute;es.";
-$lang['info'][205]['name']        = "Chasseur Lourd";
-$lang['info'][205]['description'] = "La propulsion conventionnelle n'&eacute;tait plus suffisante pour le d&eacute;veloppement des chasseurs lourds. Pour rendre les futurs vaisseaux plus rapides, les ing&eacute;nieurs eurent recours au r&eacute;acteur &agrave; impulsions. Ceci augmente certe les c&ocirc;uts de production, mais &eacute;largit les possibilit&eacute;s. L'arriv&eacute;e de cette propulsion permet d'utiliser plus d'&eacute;nergie pour les armes et la protection, de plus ces vaisseaux sont produits avec des mat&eacute;riaux d'une meilleure qualit&eacute;. Ceci am&eacute;liore l'int&eacute;grit&eacute; structurelle et la puissance de tir. Le Chasseur Lourd est donc un vaisseau beaucoup plus mena&ccedil;ant que son petit fr&egrave;re, le chasseur l&eacute;ger. Ce changement fait du chasseur lourd la technologie de base pour la technologie des croiseurs.";
-$lang['info'][206]['name']        = "Croiseur";
-$lang['info'][206]['description'] = "Le d&eacute;veloppement des lasers lourds et des canons d'ions sonn&egrave;rent le glas de l'&eacute;poque des chasseurs. Malgr&eacute; de nombreuses modifications, la puissance des Armements et de la protection ne purent &ecirc;tre assez am&eacute;lior&eacute;es pour pouvoir battre ces canons de d&eacute;fense. Il fut donc d&eacute;cid&eacute; de construire une nouvelle classe de vaisseaux avec plus de protection et de puissance de tir. Le Croiseur &eacute;tait cr&eacute;&eacute;. Les Croiseurs ont une protection presque trois fois plus grande que celle des chasseurs lourds et leur puissance de tir est plus que deux fois plus puissante. De plus, ils sont tr&egrave;s rapides. Il n'y a pas d'arme plus puissante contre la d&eacute;fense moyenne. Les Croiseurs ont domin&eacute; l'espace pendant presque un si&egrave;cle. L'apparition de l'artillerie &eacute;lectromagn&eacute;tique et des lanceurs de plasma a mis fin &agrave; leur domination. Pourtant ils servent encore souvent dans les batailles contre les unit&eacute;s de chasseurs.";
-$lang['info'][207]['name']        = "Vaisseau de Bataille";
-$lang['info'][207]['description'] = "Les Vaisseaux de Batailles jouent un r&ocirc;le central dans les flottes. Avec leur artillerie lourde, leur vitesse consid&eacute;rable et la grande capacit&eacute; de fret, ils sont des adversaires respectables.";
-$lang['info'][208]['name']        = "Vaisseau de Colonisation";
-$lang['info'][208]['description'] = "Ce vaisseau bien prot&eacute;g&eacute; sert &agrave; la conqu&ecirc;te de nouvelles plan&egrave;tes, ce qui est fondamental pour un empire ambitieux. Pour coloniser une nouvelle plan&egrave;te, ce vaisseau y est d&eacute;mont&eacute; et ces mat&eacute;riaux servent comme ressources pour la conqu&ecirc;te de la plan&egrave;te. Pour chaque empire le nombre maximal de plan&egrave;tes qui peuvent &ecirc;tre colonis&eacute;es en plus de la plan&egrave;te-m&egrave;re est de 8.";
-$lang['info'][209]['name']        = "Recycleur";
-$lang['info'][209]['description'] = "Les dimensions des batailles spatiales se sont constamment &eacute;largies. Des milliers de vaisseaux ont &eacute;t&eacute; construits, mais les Champs de d&eacute;bris semblaient &ecirc;tre perdus pour toujours. Les cargos ne pouvaient pas s'approcher des Champs de d&eacute;bris sans prendre le risque d'&ecirc;tre endommag&eacute;s consid&eacute;rablement par des d&eacute;combres. Un nouveau d&eacute;veloppement dans le domaine de la technologie des boucliers a permis de construire cette nouvelle classe de vaisseau comparable aux grands cargos, le recycleur. Gr&acirc;ce au recycleur, les ressources qui semblaient &ecirc;tre perdues peuvent quand m&ecirc;me &ecirc;tre exploit&eacute;es. M&ecirc;me les d&eacute;combres de petite taille ne les menacent pas gr&acirc;ce &agrave; leurs nouveaux boucliers. Malheureusement ces installations ont besoin d'espace ce qui limite la capacit&eacute; de fret &agrave; 20.000 unit&eacute;s.";
-$lang['info'][210]['name']        = "Sonde d'espionnage";
-$lang['info'][210]['description'] = "Les sondes d'espionnage sont des petits drones manoeuvrables qui espionnent les plan&egrave;tes m&ecirc;me &agrave; grande distance. Leurs r&eacute;acteurs de haute performance leur permettent de parcourir de longues distances en quelques secondes. D&egrave;s qu'elles atteignent l'orbite d'une plan&egrave;te elles s'y installent et l'espionnent. Pendant cette activit&eacute;, l'ennemi peut facilement les d&eacute;couvrir et attaquer. Pour limiter leur taille, elles n'ont pas de protection, de bouclier ou d'Armements, voila pourquoi on peut facilement les d&eacute;truire.";
-$lang['info'][211]['name']        = "Bombardier";
-$lang['info'][211]['description'] = "Le Bombardier a &eacute;t&eacute; d&eacute;velopp&eacute; pour pouvoir d&eacute;truire les installations de d&eacute;fense des plan&egrave;tes. Avec une lunette laser il lance des bombes de plasma de fa&ccedil;on cibl&eacute;e sur la surface des plan&egrave;tes et y cause des d&eacute;g&acirc;ts d&eacute;vastateurs.<br><br>D&eacute;truit la d&eacute;fense plan&eacute;taire.<br><br>Le d&eacute;veloppement de la propulsion hyperespace au niveau 8 permet de r&eacute;&eacute;quiper le Bombardier avec ce type de propulseurs, acc&eacute;l&eacute;rant alors sensiblement ce vaisseau.";
-$lang['info'][212]['name']        = "Satellite solaire";
-$lang['info'][212]['description'] = "Les satellites solaires sont positionn&eacute;s dans une orbite g&eacute;ostationnaire autour d'une plan&egrave;te. Ils collectent la lumi&egrave;re du soleil et la transmettent par laser &agrave; la station de base. L'efficacit&eacute; des satellites solaires d&eacute;pend de la lumi&egrave;re du soleil. Naturellement la quantit&eacute; d'&eacute;nergie est plus grande quand l'orbite est proche du soleil. Avec leur efficacit&eacute;, les satellites solaires sont la solution pour les probl&egrave;mes d'&eacute;nergie de beaucoup de plan&egrave;tes. Attention: Les satellites solaires peuvent &ecirc;tre d&eacute;truits pendant une bataille.";
-$lang['info'][213]['name']        = "Destructeur";
-$lang['info'][213]['description'] = "Le Destructeur est le roi des vaisseaux de guerre. Ses tours de guerre avec artillerie d'ions, plasma et &eacute;lectromagn&eacute;tiques peuvent, gr&acirc;ce &agrave; ses capteurs de cible, toucher des chasseurs rapides avec presque 99% de certitude. Comme ils sont tr&egrave;s grands, leur facult&eacute; de manoeuvrer est tr&egrave;s limit&eacute;e. Pendant une bataille ils sont donc plus comparables &agrave; une station de guerre qu'&agrave; un vaisseau de guerre. Leur consommation d Hydrog&eacute;ne est aussi grande que leur puissance dans la bataille.";
-$lang['info'][214]['name']        = "&eacute;toile de la mort";
-$lang['info'][214]['description'] = "L'&eacute;toile de la mort est &eacute;quip&eacute;e d'une artillerie g&eacute;ante de gravitons qui permet de d&eacute;truire des vaisseaux de la taille des Destructeurs ou m&ecirc;me d'une lune. Comme ceci &agrave; besoin d'une quantit&eacute; d'&eacute;nergie gigantesque elle se compose presque enti&egrave;rement de g&eacute;n&eacute;rateurs. Un vaisseau de cette taille et de cette puissance a besoin d'une gigantesque quantit&eacute; de ressources et d'ouvriers qui ne peuvent &ecirc;tre fournis que par des empires spatiaux important.";
-$lang['info'][215]['name']        = "Traqueur";
-$lang['info'][215]['description'] = "Ce vaisseau au fuselage filiforme est ideal pour detruire des convois ennemis. Ses Armements laser nouvelle generation le rendent capable d'affronter un grand nombre de vaisseaux en meme temps. A cause de son fuselage etroit et de son armement important, les capacites disponibles pour le transport de ressources sont tres limitees. Ceci est compense par l'utilisation de reacteurs propulsion hyperespace, peu gourmands en carburant.";
+// Laboratorio !
+$lang['info'][106]['name']        = "Tecnolog&iacute;a de espionaje";
+$lang['info'][106]['description'] = "Usando esta tecnolog&iacute;a, puede obtenerse informaci&oacute;n sobre otros planetas.";
+
+
+$lang['info'][108]['name']        = "Tecnolog&iacute;a de computaci&oacute;n";
+$lang['info'][108]['description'] = "Cuanto m&aacute;s elevado sea el nivel de tecnolog&iacute;a de computaci&oacute;n, m&aacute;s flotas podr&aacute;s controlar simultaneamente. Cada nivel adicional de esta tecnologia, aumenta el numero de flotas en 1.";
+
+
+$lang['info'][109]['name']        = "Tecnolog&iacute;a militar";
+$lang['info'][109]['description'] = "Este tipo de tecnolog&iacute;a incrementa la eficiencia de tus sistemas de armamento. Cada mejora de la tecnolog&iacute;a militar a&ntilde;ade un 10% de potencia a la base de da&ntilde;o de cualquier arma disponible.";
+
+$lang['info'][110]['name']        = "Tecnolog&iacute;a de defensa";
+$lang['info'][110]['description'] = "La tecnolog&iacute;a de defensa se usa para generar un escudo de part&iacute;culas protectoras alrededor de tus estructuras. Cada nivel de esta tecnolog&iacute;a aumenta el escudo efectivo en un 10% (basado en el nivel de una estructura dada).";
+
+$lang['info'][111]['name']        = "Tecnolog&iacute;a de blindaje";
+$lang['info'][111]['description'] = "Las aleaciones altamente sofisticadas ayudan a incrementar el blindaje de una nave a&ntilde;adiendo el 10% de su fuerza en cada nivel a la fuerza base.";
+
+
+
+
+
+
+
+
+$lang['info'][113]['name']        = "Tecnolog&iacute;a de energ&iacute;a";
+$lang['info'][113]['description'] = "Entendiendo la tecnolog&iacute;a de diferentes tipos de energ&iacute;a, muchas investigaciones nuevas y avanzadas pueden ser adaptadas. La tecnolog&iacute;a de energ&iacute;a es de gran importancia para un laboratorio de investigaci&oacute;n moderno.";
+
+$lang['info'][114]['name']        = "Tecnolog&iacute;a de hiperespacio";
+$lang['info'][114]['description'] = "Incorporando la cuarta y quinta dimensi&oacute;n en la tecnolog&iacute;a de propulsi&oacute;n, se puede disponer de un nuevo tipo de motor; que es m&aacute;s eficiente y usa menos combustible que los convencionales.";
+$lang['info'][115]['name']        = "Motor de combusti&oacute;n";
+$lang['info'][115]['description'] = "Los motores de combusti&oacute;n pertenecen a los m&aacute;s antiguos en funcionamiento y se basan en la repulsi&oacute;n. Las part&iacute;culas son aceleradas y abandonan el motor generando una fuerza de repusli&oacute;n que mueve la nave en la direcci&oacute;n opuesta..";
+$lang['info'][117]['name']        = "Motor de impulso";
+$lang['info'][117]['description'] = "El sistema del motor de impulso se basa en el principio de la repulsi&oacute;n de part&iacute;culas. La materia repelida es basura generada por el reactor de fusi&oacute;n usado para proporcionar la energ&iacute;a necesaria para este tipo de motor de propulsi&oacute;n.";
+
+$lang['info'][118]['name']        = "Propulsor hiperespacial";
+$lang['info'][118]['description'] = "A trav&eacute;s de la curvatura del espacio-tiempo en el entorno inmediato de las naves viajantes, el espacio se comprime hasta tal grado que las distancias m&aacute;s grandes pueden ser cubiertas en un corto per&iacute;odo de tiempo.";
+
+$lang['info'][120]['name']        = "Tecnolog&iacute;a l&aacute;ser";
+$lang['info'][120]['description'] = "El l&aacute;ser (amplificaci&oacute;n de luz por emisi&oacute;n estimulada de radiaci&oacute;n), es un rayo de fotones monocrom&aacute;tico coherente con excelentes capacidades de enfoque..";
+$lang['info'][121]['name']        = "Tecnolog&iacute;a i&oacute;nica";
+$lang['info'][121]['description'] = "La tecnolog&iacute;a i&oacute;nica enfoca un rayo de iones acelerados en un objetivo, lo que puede provocar un gran da&ntilde;o debido a su naturaleza de electrones cargados de energ&iacute;a. Los rayos i&oacute;nicos son superiores a los rayos l&aacute;ser, pero requieren un mayor coste de investigaci&oacute;n.";
+$lang['info'][122]['name']        = "Tecnolog&iacute;a de plasma";
+$lang['info'][122]['description'] = "Las armas de plasma son incluso m&aacute;s peligrosas que cualquier otro sistema de armamento conocido, debido a la naturaleza agresiva del plasma. Es uno de los cuatro estados de la materia (s&oacute;lido, l&iacute;quido, gas, plasma), y consiste en un numero igual de part&iacute;culas de gas cargadas positiva y negativamente.";
+$lang['info'][123]['name']        = "Red de investigaci&oacute;n intergal&aacute;ctica";
+$lang['info'][123]['description'] = "Los cient&iacute;ficos de tus planetas pueden comunicarse entre ellos a trav&eacute;s de esta red.
+Con cada nivel investigado, uno de tus laboratorios de investigaci&oacute;n del nivel m&aacute;s alto, ser&aacute; enlazado a la red. Sus niveles se a&ntilde;adir&aacute;n cuando la red se establezca.";
+$lang['info'][124]['name']        = "Tecnolog&iacute;a de expedici&oacute;n";
+$lang['info'][124]['description'] = "La Tecnolog&iacute;a de Expedici&oacute;n incluye diversas tecnolog&iacute;as de exploraci&oacute;n y permite dotar a las naves espaciales de diferentes tama&ntilde;os con un m&oacute;dulo de investigaci&oacute;n. Estos incluyen una base de datos y un laboratorio m&oacute;vil completamente equipado.";
+$lang['info'][199]['name']        = "Tecnolog&iacute;a de gravit&oacute;n";
+$lang['info'][199]['description'] = "Un gravit&oacute;n es una part&iacute;cula elemental responsable de los efectos de la gravedad. Es su propia antipart&iacute;cula, tiene masa cero y carece de carga, tambi&eacute;n posee un giro de 2. A trav&eacute;s del disparo de part&iacute;culas concentradas de gravit&oacute;n se genera un campo gravitacional artificial con suficiente potencia y poder de atracci&oacute;n para destruir no solo naves, sino lunas enteras.";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ----------------------------------------------------------------------------------------------------------
-// Defenses !
-$lang['info'][401]['name']        = "Lanceur de Missilles";
-$lang['info'][401]['description'] = "Le Lanceur de missiles est une fa&ccedil;on simple et bon march&eacute; de se d&eacute;fendre. Comme il n'est qu'une &eacute;volution d'Armements balistiques habituelles, il n'a pas besoin de recherche. Ses faibles frais de production permettent de s'en servir pour la d&eacute;fense contre des petites flottes, par contre au fur et &agrave; mesure il perd de son importance. Apr&egrave;s il ne sert qu'&agrave; intercepter des missiles. Des rumeurs existent affirmant que les militaires sont en train de d&eacute;velopper de nouveaux lanceurs. Les installations de d&eacute;fense sont d&eacute;sactiv&eacute;es d&egrave;s qu'elles sont trop endommag&eacute;es. Apr&egrave;s une bataille, jusqu'&agrave; 70% des syst&egrave;mes endommag&eacute;s peuvent &ecirc;tre r&eacute;par&eacute;s.";
-$lang['info'][402]['name']        = "Artillerie laser l&eacute;ger";
-$lang['info'][402]['description'] = "Pour pouvoir compenser les d&eacute;veloppements &eacute;normes de la technologie Vaisseaux, les chercheurs ont d&ucirc; d&eacute;velopper un syst&egrave;me de d&eacute;fense capable de battre des vaisseaux plus grands et mieux &eacute;quip&eacute;s. Ceci &eacute;tait la naissance du blaster l&eacute;ger. Le bombardement concentr&eacute; de photons peut causer des d&eacute;g&acirc;ts nettement plus importants que les Armements balistiques habituelles. De plus, on l'a aussi &eacute;quip&eacute;e d'un bouclier plus puissant pour pouvoir r&eacute;sister aux nouvelles classes de vaisseaux. Pour garder des frais de production raisonnables, la structure n'a pas &eacute;t&eacute; renforc&eacute;e. Le laser l&eacute;ger offre une performance importante par rapport aux faibles frais et est donc est tr&egrave;s int&eacute;ressant, m&ecirc;me pour des civilisations plus d&eacute;velopp&eacute;es. Les installations de d&eacute;fense sont d&eacute;sactiv&eacute;es d&egrave;s qu'elles sont trop endommag&eacute;es. Apr&egrave;s une bataille, jusqu'&agrave; 70% des syst&egrave;mes endommag&eacute;s peuvent &ecirc;tre r&eacute;par&eacute;s.";
-$lang['info'][403]['name']        = "Artillerie laser lourde";
-$lang['info'][403]['description'] = "Le blaster lourd au laser est l'&eacute;volution cons&eacute;quente du blaster leger au laser. La structure est renforc&eacute;e et am&eacute;lior&eacute;e avec des nouveaux mat&eacute;riaux. La structure est donc plus r&eacute;sistante. En m&ecirc;me temps ont &eacute;t&eacute; aussi am&eacute;lior&eacute;s le syst&egrave;me d'&eacute;nergie et l'ordinateur de cible, ce qui permet de concentrer plus d'&eacute;nergie sur un objet. Les installations de d&eacute;fense sont d&eacute;sactiv&eacute;es d&egrave;s qu'elles sont trop endommag&eacute;es. Apr&egrave;s une bataille jusqu'&agrave; 70% des syst&egrave;mes endommag&eacute;s peuvent &ecirc;tre r&eacute;par&eacute;s.";
-$lang['info'][404]['name']        = "Canon de Gauss";
-$lang['info'][404]['description'] = "Pendant longtemps on a pens&eacute; que les Armements &agrave; projectiles seraient comme la technologie de la fusion et de l'&eacute;nergie, le d&eacute;veloppement de la propulsion de hyperespace et le d&eacute;veloppement de protections am&eacute;lior&eacute;es resteraient antiques jusqu'&agrave; ce que la technologie de l'&eacute;nergie, qui l'avait &eacute;vinc&eacute; &agrave; l'&eacute;poque, les a remises en jeu. Le principe &eacute;tait d&eacute;j&agrave; connu au 20i&egrave;me et au 21i&egrave;me si&egrave;cle - le principe d'acc&eacute;l&eacute;ration de particules. Un canon de Gauss (Canon &eacute;lectromagn&eacute;tique) n'est en fait rien d'autre qu'une version nettement plus grande du canon. Des projectiles qui p&egrave;sent des tonnes sont acc&eacute;l&eacute;r&eacute;s magn&eacute;tiquement et atteignent une vitesse telle que les particules de salet&eacute; autour du projectile br&ucirc;lent et le recul fait trembler la terre. M&ecirc;me les protections et boucliers modernes ont du mal &agrave; r&eacute;sister &agrave; cette force, ce n'est pas rare qu'un projectile traverse compl&egrave;tement un objet. Les installations de d&eacute;fense sont d&eacute;sactiv&eacute;es d&egrave;s qu'elles sont trop endommag&eacute;es. Apr&egrave;s une bataille, jusqu'&agrave; 70% des syst&egrave;mes endommag&eacute;s peuvent &ecirc;tre r&eacute;par&eacute;s.";
-$lang['info'][405]['name']        = "Artillerie &agrave; ions";
-$lang['info'][405]['description'] = "Au 21eme si&egrave;cle existait quelque chose qui se nommait PEM. Le PEM &eacute;tait le pouls &eacute;lectromagn&eacute;tique qui causait une tension suppl&eacute;mentaire dans chaque circuit, ce qui causait de nombreux incidents bloquants tous les appareils sensibles. &agrave; l'&eacute;poque, le PEM &eacute;tait bas&eacute; sur les missiles et les bombes, entre autre en relation avec des bombes atomiques. Ensuite, le PEM a &eacute;t&eacute; am&eacute;lior&eacute; pour rendre des objets incapables d'agir sans les d&eacute;truire et donc de les reprendre. Aujourd'hui, l'artillerie d'ions est la version la plus moderne du PEM. Elle lance une vague d'ions sur l'objet, ceci d&eacute;stabilise les boucliers et les parties &eacute;lectroniques - tant qu'il n'y a pas de bouclier &eacute;lectronique. Sa puissance kin&eacute;tique n'est pas importante. Les Croiseurs se servent eux aussi de la technologie d'ions, c'est d'ailleurs le seul type de vaisseau, les autres types ne disposant pas des quantit&eacute;s d'&eacute;nergie n&eacute;cessaires. Il est souvent int&eacute;ressant de ne pas d&eacute;truire un vaisseau mais de le paralyser. Les syst&egrave;mes de d&eacute;fense se d&eacute;sactivent d&egrave;s qu'ils sont trop endommag&eacute;s. Apr&egrave;s une bataille jusqu'&agrave; 70% des syst&egrave;mes endommag&eacute;s peuvent &ecirc;tre r&eacute;par&eacute;s.";
-$lang['info'][406]['name']        = "Lanceur de plasma";
-$lang['info'][406]['description'] = "La technologie laser a ensuite &eacute;t&eacute; perfectionn&eacute;e, la technologie d'ions a atteint sa phase finale. On pensait qu'il serait impossible de rendre les syst&egrave;mes d'Armements encore plus efficaces. La possibilit&eacute; de combiner les deux syst&egrave;mes a chang&eacute; la situation. D&eacute;j&agrave; connue de la technologie de fusion, des lasers chauffent des particules (le plus souvent Hydrog&eacute;ne) &agrave; une temp&eacute;rature extr&ecirc;me, parfois jusqu'&agrave; des millions de degr&eacute;s. La technologie d'ions permet le chargement &eacute;lectrique des particules, les r&eacute;seaux de stabilit&eacute; et l'acc&eacute;l&eacute;ration des particules. En &eacute;chauffant la charge, en la mettant sous pression et l'ionisant, on la lance par acc&eacute;l&eacute;ration dans l'espace en direction d'un objet. La balle de plasma est bleue et visuellement fascinante, par contre il est difficile de s'imaginer que l'&eacute;quipage du vaisseau cibl&eacute; soit tr&egrave;s heureux de la voir... Le lanceur de plasma est une des Armements les plus mena&ccedil;antes, mais cette technologie est assez ch&egrave;re. Les syst&egrave;mes de d&eacute;fense se d&eacute;sactivent d&egrave;s qu'ils sont trop endommag&eacute;s. Apr&egrave;s une bataille jusqu'&agrave; 70% des syst&egrave;mes endommag&eacute;s peuvent &ecirc;tre r&eacute;par&eacute;s.";
-$lang['info'][407]['name']        = "Petit bouclier";
-$lang['info'][407]['description'] = "Longtemps avant l'installation des g&eacute;n&eacute;rateurs de bouclier sur des vaisseaux, existaient d&eacute;j&agrave; des g&eacute;n&eacute;rateurs g&eacute;ants sur la surface des plan&egrave;tes. Ceux-ci permettaient de couvrir les plan&egrave;tes avec des champs infranchissables qui pouvaient absorber des quantit&eacute;s &eacute;normes avant de s'effondrer. Des petites flottes d'attaques &eacute;chouent souvent contre ces boucliers. Ces boucliers peuvent &ecirc;tre am&eacute;lior&eacute;s. Apr&egrave;s, on peut m&ecirc;me construire un grand bouclier qui est encore plus puissant. Pour chaque plan&egrave;te on ne peut construire qu'un seul bouclier.";
-$lang['info'][408]['name']        = "Grand bouclier";
-$lang['info'][408]['description'] = "L'am&eacute;lioration du petit bouclier. Il est bas&eacute; sur la m&ecirc;me technologie mais peut se servir de nettement plus d'&eacute;nergie pour se d&eacute;fendre.";
+// Flota !
+$lang['info'][202]['name']        = "Nave chica de carga";
+$lang['info'][202]['description'] = "Las naves chicas de carga son aproximadamente tan grandes como los cazadores, pero sin motores eficientes ni armamento para permitir m&aacute;s espacio de carga. La nave chica de carga tiene una capacidad de 5.000 unidades de recursos.";
+$lang['info'][203]['name']        = "Nave grande de carga";
+$lang['info'][203]['description'] = "Esta nave nunca deber&iacute;a ser enviada sola, puesto que apenas tiene armas u otras tecnolog&iacute;as, para permitir tanto espacio de carga como sea posible. La nave grande de carga sirve como un suministro r&aacute;pido de recursos entre planetas gracias a su sofisticado motor de combusti&oacute;n.";
+$lang['info'][204]['name']        = "Cazador ligero";
+$lang['info'][204]['description'] = "Dado su relativamente d&eacute;bil escudo y sus simples sistemas de armamento, los cazadores ligeros pertenecen al grupo de naves de soporte cuando comienza la batalla.";
+$lang['info'][205]['name']        = "Cazador pesado";
+$lang['info'][205]['description'] = "Durante el progreso del cazador ligero, los investigadores llegaron al punto en el que la tecnolog&iacute;a convencional alcanzaba su l&iacute;mite. Para proporcionar m&aacute;s agilidad al nuevo cazador, se uso en primer momento un potente motor de impulso.";
+$lang['info'][206]['name']        = "Crucero";
+$lang['info'][206]['description'] = "Con l&aacute;sers pesados y ca&ntilde;ones i&oacute;nicos emergiendo en los campos de batalla, los cazadores estaban cada vez m&aacute;s y m&aacute;s obsoletos. A pesar de muchas modificaciones en el sistema de armamento y escudos, no se lograba aumentar lo suficiente para soportar ante los nuevos sistemas de defensa.
+Este es el motivo por el que se eligi&oacute; desarrollar un nuevo tipo de nave que poseyera m&aacute;s blindaje y arm&aacute;s m&aacute;s potentes. As&iacute; naci&oacute; el crucero.";
+$lang['info'][207]['name']        = "Nave de batalla";
+$lang['info'][207]['description'] = "Las naves de batalla son la espina dorsal de cualquier flota militar. Su pesado blindaje junto con un sistema de armamento impresionante y una velocidad de viaje relativamente alta hace que esta nave sea imprescindible para cualquier imperio.";
+$lang['info'][208]['name']        = "Colonizador";
+$lang['info'][208]['description'] = "El colonizador es una nave especialmente bien preparada para su prop&oacute;sito: permitir a un imperio expandirse y poblar nuevos mundos. En una maniobra muy inteligente, la estructura de las naves se usa como base para los primeros recursos que permiten crear las nuevas estructuras planetarias.";
+$lang['info'][209]['name']        = "Reciclador";
+$lang['info'][209]['description'] = "Los combates espaciales parecen estar aumentando constantemente y en una simple batalla, pueden destruirse miles de naves, con los consiguientes escombros que se perder&aacute;n para siempre. Las naves est&aacute;ndar de carga no tienen los medios para recolectar recursos &uacute;tiles, ni siquiera para acercarse a ellos.";
+$lang['info'][210]['name']        = "Sonda de espionaje";
+$lang['info'][210]['description'] = " 	Las sondas de espionaje son peque&ntilde;os droides no tripulados con un sistema de propulsi&oacute;n excepcionalmente r&aacute;pido usado para espiar en planetas extranjeros. Con su avanzado sistema de comunicaci&oacute;n, estas sondas pueden enviar de vuelta, a gran distancia, informaci&oacute;n inteligente. ";
+$lang['info'][211]['name']        = "Bombardero";
+$lang['info'][211]['description'] = "El Bombardero es una nave de prop&oacute;sito especial, desarrollado para atravesar las defensas planetarias m&aacute;s pesadas. Gracias a un sistema de ataque guiado por l&aacute;ser, las bombas de plasma pueden ser lanzadas con gran precisi&oacute;n sobre el objetivo, causando una inmensa devastaci&oacute;n en los sistemas de defensa planetaria.";
+$lang['info'][212]['name']        = "Sat&eacute;lite solar";
+$lang['info'][212]['description'] = "Los sat&eacute;lites solares son simples sat&eacute;lites en &oacute;rbita equipados con c&eacute;lulas fotovoltaicas y transmisores para llevar la energ&iacute;a al planeta. Se transmite por este medio a la tierra usando un rayo l&aacute;ser especial. La eficiencia de estas plataformas est&aacute; relacionada con la cantidad de luz solar, haci&eacute;ndolos m&aacute;s o menos eficientes dependiendo de la distancia de los planetas respecto al sol.";
+$lang['info'][213]['name']        = "Destructor";
+$lang['info'][213]['description'] = "Con el destructor, la madre de todas las naves de batalla entra en escena. Su sistemas de armamento multi-phalanx consisten en ca&ntilde;ones gauss, de plasma e i&oacute;nicos armados en torretas de respuesta r&aacute;pida, lo que permite eliminar a los cazadores operativos con una probabilidad del 99%.";
+$lang['info'][214]['name']        = "Estrella de la muerte";
+$lang['info'][214]['description'] = "Las estrellas de la muerte estan equipadas con grandes cantidades de ca&ntilde;&oacute;nes gauss, capaces de destruir cualquier cosa con un s&oacute;lo disparo, sean destructores o lunas. Para proveer la energ&iacute;a necesaria a este arma, se utilizan grandes &aacute;reas de las estrellas de la muerte para generadores de energ&iacute;a. El tama&ntilde;o de la nave tambi&eacute;n limita su velocidad de viaje, que es realmente baja. Se dice que el capit&aacute;n ayuda frecuentemente a aumentar su velocidad.";
+$lang['info'][215]['name']        = "Acorazado";
+$lang['info'][215]['description'] = "Esta nave, toda una filigrana tecnol&oacute;gica, es incre&iacute;blemente eficaz a la hora de destruir flotas atacantes. Con sus ca&ntilde;ones l&aacute;ser altamente desarrollados, ocupa una posici&oacute;n de privilegio en las batallas a gran escala, donde puede tumbar a varias naves con bastante facilidad. Dado su dise&ntilde;o peque&ntilde;o y su enorme armamento, la capacidad de carga es reducida, pero esto se ve equilibrado gracias al bajo consumo de su propulsor hiperespacial.";
+$lang['info'][216]['name']        = "Supernova";
+$lang['info'][216]['description'] = "L'ultime vaisseau de guerre. Il vous est donn&eacute; en r&eacute;compense par l'empereur pour vos comp&egrave;tence de raideur.";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ----------------------------------------------------------------------------------------------------------
+// Defensas !
+
+
+$lang['info'][401]['name']        = "Lanzamisiles";
+$lang['info'][401]['description'] = " 	El lanzamisiles es un sistema de defensa sencillo, pero barato. Puede ser muy efectivo si se construye en grandes n&uacute;meros, no necesita tecnolog&iacute;a alguna puesto que es una sencilla arma bal&iacute;stica.";
+
+
+
+
+$lang['info'][402]['name']        = "L&aacute;ser peque&ntilde;o";
+$lang['info'][402]['description'] = "Para mantener el ritmo con el aumento notable de la velocidad de desarrollo en t&eacute;rminos de tecnolog&iacute;a especial, los cient&iacute;ficos tuvieron que llegar a un nuevo sistema de defensa, capaz de aguantar contra naves y flotas m&aacute;s fuertes y mejor equipadas.
+De este modo, r&aacute;pidamente naci&oacute; el l&aacute;ser peque&ntilde;o, que era capaz de disparar un rayo l&aacute;ser altamente concentrado contra el objetivo y provocar un da&ntilde;o mucho m&aacute;s elevado que el impacto de los m&iacute;siles bal&iacute;sticos.";
+
+
+
+
+$lang['info'][403]['name']        = "L&aacute;ser grande";
+$lang['info'][403]['description'] = "El l&aacute;ser grande es la evoluci&oacute;n l&oacute;gica del peque&ntilde;o, en &eacute;ste, la integridad estructural ha sido aumentada y se han adoptado nuevos materiales. De esta manera el blindaje pod&iacute;a ser mejorado, con la nueva energ&iacute;a y sistemas de ordenadores a bordo, se libera mucha m&aacute;s potencia sobre un objetivo que usando un l&aacute;ser peque&ntilde;o.";
+
+
+
+$lang['info'][404]['name']        = "Ca&ntilde;&oacute;n Gauss";
+$lang['info'][404]['description'] = "Un Ca&ntilde;&oacute;n Gauss actualmente no es nada m&aacute;s que un acelerador de part&iacute;culas masivo de gran tama&ntilde;o, donde los proyectiles con un peso de varias toneladas son acelerados usando enormes bobinas electromagn&eacute;ticas. La velocidad de salida de estas enormes part&iacute;culas es tan grande que las part&iacute;culas de polvo en el aire circundante se queman y la repulsi&oacute;n del disparo sacude la tierra.";
+
+
+
+
+
+
+$lang['info'][405]['name']        = "Ca&ntilde;&oacute;n i&oacute;nico";
+$lang['info'][405]['description'] = "En el siglo 21 hab&iacute;a una tecnolog&iacute;a, denominada EMP, relacionada con los impulsos electromagn&eacute;ticos. Tal impulso de energ&iacute;a es peligroso principalmente para los sistemas que usan energ&iacute;a el&eacute;ctrica o son sensibles a &eacute;l. En aquellos d&iacute;as, estas armas eran transportadas en bombas o misiles, pero con el desarrollo continuado del area del EMP es actualmente posible montar estas unidades en ca&ntilde;ones sencillos. El ca&ntilde;&oacute;n i&oacute;nico, es de lejos, el mejor equipado con estas armas.";
+
+
+$lang['info'][406]['name']        = "Ca&ntilde;&oacute;n de plasma";
+$lang['info'][406]['description'] = " 	La tecnolog&iacute;a l&aacute;ser hab&iacute;a sido llevada casi a la perfecci&oacute;n, la tecnolog&iacute;a i&oacute;nica parec&iacute;a haber alcanzado su tope, y en general, no hab&iacute;a una visi&oacute;n sobre como llegar a conseguir mejorar los sistemas de armamento existentes. Pero esto cambi&oacute; cuando naci&oacute; la idea de unir estas dos tecnolog&iacute;as, mientras que el l&aacute;ser se utiliza para calentar las part&iacute;culas de deuterio varios millones de grados, la tecnolog&iacute;a i&oacute;nica, entonces, carga esas part&iacute;culas sobrecalentadas el&eacute;ctricamente, el conocimiento de la electromagn&eacute;tica era imprescindible para contener este peligroso plasma. ";
+
+
+
+
+$lang['info'][407]['name']        = "C&uacute;pula peque&ntilde;a de protecci&oacute;n";
+$lang['info'][407]['description'] = "Mucho antes de que los generadores de escudos fueran integrados y port&aacute;tiles, hab&iacute;a grandes y viejos generadores en la superficie de los planetas. Estos eran capaces de crear un enorme escudo alrdedor de la superficie del planeta, capaz de absorber grandes cantidades de energ&iacute;a cuando eran atacados.";
+
+
+$lang['info'][408]['name']        = "C&uacute;pula grande de protecci&oacute;n";
+$lang['info'][408]['description'] = "Esta es una versi&oacute;n avanzada de la c&uacute;pula de protecci&oacute;n, y su caracter&iacute;stica principal es el aumento de su capacidad para absorber energia. Est&aacute; basado en el mismo conocimiento tecnol&oacute;gico que la c&uacute;pula peque&ntilde;a. Pero, los generadores son menos ruidosos al estar en funcionamiento.";
+
+$lang['info'][409]['name']        = "Protecteur Plan&egrave;taire";
+
+$lang['info'][409]['description'] = "La protection ultime pour votre plan&egrave;te";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ----------------------------------------------------------------------------------------------------------
 // Missiles !
-$lang['info'][502]['name']        = "Missile Interception";
-$lang['info'][502]['description'] = "Le missile interception d&eacute;truit les missiles adverses. Chaque missile d'interception d&eacute;truit un missile interplan&eacute;taire.";
-$lang['info'][503]['name']        = "Missile Interplan&eacute;taire";
-$lang['info'][503]['description'] = "Les missiles interplan&eacute;taires d&eacute;truisent la d&eacute;fense adverse. Les syst&egrave;mes de d&eacute;fense d&eacute;truits par des missiles interplan&eacute;taires ne se r&eacute;parent pas.";
+$lang['info'][502]['name']        = "Misil de intercepci&oacute;n";
+$lang['info'][502]['description'] = "Los misiles de intercepci&oacute;n destruyen los misiles interplanetarios. Cada mis&iacute;l de intercepci&oacute;n destruye un mis&iacute;l interplanetario.";
+
+
+$lang['info'][503]['name']        = "Misil interplanetario";
+$lang['info'][503]['description'] = "Los misiles interplanetarios destruyen los sistemas de defensa del enemigo. Los sistemas de defensa destruidos por los misiles interplanetarios no ser&aacute;n reparados.";
+
+
 
 // ----------------------------------------------------------------------------------------------------------
 // Officiers !
-$lang['info'][601]['name']        = "G&eacute;ologue";
-$lang['info'][601]['description'] = "Le g&eacute;ologue est un expert reconnu en astromin&eacute;ralogie et en astrocristallographie. Avec son &eacute;quipe d'experts en m&eacute;tallurgie et d'ing&eacute;nieurs chimiste, il assiste les gouvernements interplan&eacute;taires dans la recherche de nouvelles sources de mati&egrave;res premi&egrave;res et optimise le raffinage de celles-ci.<br><br>+5% de production. Niveau Max. : 20";
-$lang['info'][602]['name']        = "Amiral";
-$lang['info'][602]['description'] = "L'amiral de la flotte est un v&eacute;t&eacute;ran de guerre et un strat&egrave;ge redout&eacute;. M&ecirc;me lorsque le combat est acharn&eacute;, il garde le sang froid n&eacute;cessaire pour dominer la situation et est en contact permanent avec les amiraux sous ses ordres. Un empereur responsable ne saurait se passer de l'amiral de la flotte pour coordonner ses attaques et peut lui faire une telle confiance qu'il peut envoyer plus de flottes en combat.<br><br>+5% de bouclier, protection des vaisseaux et armes sur les vaisseaux. Niveau Max. : 20";
-$lang['info'][603]['name']        = "Ingenieur";
-$lang['info'][603]['description'] = "L'ing&eacute;nieur est un sp&eacute;cialiste de la gestion d'&eacute;nergie. En temps de paix, il optimise l'efficacit&eacute; des r&eacute;seaux d'&eacute;nergie des colonies.<br><br>+5% d'energie. Niveau Max. : 10";
-$lang['info'][604]['name']        = "Technocrate";
-$lang['info'][604]['description'] = "Les guildes de technocrates sont des scientifiques au g&eacute;nie reconnu. On les trouve aux endroits o&ugrave; la technique atteint ses limites. Personne ne parviendra &agrave; d&eacute;chiffrer le cryptage d'un technocrate, sa seule pr&eacute;sence inspire les chercheurs de tout l'empire.<br><br>-5% de temps de construction des vaisseaux. Niveau Max : 10";
-$lang['info'][605]['name']        = "Constructeur";
-$lang['info'][605]['description'] = "Le constructeur est un nouveau type de b&acirc;tisseur. Son ADN a &eacute;t&eacute; modifi&eacute;e pour lui conf&eacute;rer une force surhumaine. Un seul de ces \"homme\" peut construire une ville enti&egrave;re.<br><br>-10% de temps de construction. Niveau Max. : 3";
-$lang['info'][606]['name']        = "Scientifique";
-$lang['info'][606]['description'] = "Les scientifiques font partis d'une guilde concurente &agrave; celle des technocrates. Ils sont sp&eacute;cialis&eacute;s dans l'am&eacute;lioration des technologies.<br><br>-10% de temps de recherche. Niveau Max. : 3";
-$lang['info'][607]['name']        = "Stockeur";
-$lang['info'][607]['description'] = "Le stockeur fait parti de l'ancienne confr&eacute;rie de le plan&egrave;te Hsac. Sa devise est de gagner un maximum mais pour cel&agrave; il lui faut des espaces de stockage important. C'est pourquoi &agrave; l'aide du constructeur il a d&eacute;velopp&eacute; une nouvelle technique de stockage.<br><br>+50% de stockage. Niveau Max. : 2";
-$lang['info'][608]['name']        = "Defenseur";
-$lang['info'][608]['description'] = "Le defenseur est membre de l'arm&eacute;e imperiale. Son ardeur dans son travail lui permet de construire une d&eacute;fense redoutable en peu de temps dans les colonies hostile.<br><br>-50% de temps de construction de la d&eacute;fense.";
+$lang['info'][601]['name']        = "Ge&oacute;logo";
+$lang['info'][601]['description'] = "El ge&oacute;logo es un experto en astrominerolog&iacute;a y astrocristalograf&iacute;a. Asiste a sus equipos en la metalurgia y qu&iacute;mica y tambi&eacute;n se encarga de las comunicaciones interplanetarias para optimizar el uso y refinamiento de la materia bruta a lo largo de todo el imperio.<br><br>+5% de producci&oacute;n. Nivel Max. : 20";
+
+
+$lang['info'][602]['name']        = "Almirante de flota";
+$lang['info'][602]['description'] = "El almirante de flota es un veterano de guerra experimentado y un habilidoso estratega. En las batallas mas duras, es capaz de hacerse una idea de la situaci&oacute;n y contactar a sus almirantes subordinados. Un emperador sabio puede apoyarse en su ayuda durante los combates.<br><br>+5% Escudo de Naves. Nivel Max. : 20";
+
+
+$lang['info'][603]['name']        = "Ingeniero";
+$lang['info'][603]['description'] = "El Ingeniero es un especialista en gesti&oacute;n de energ&iacute;a. En tiempos de paz, aumenta la energ&iacute;a de todas las colonias. En caso de ataque, garantiza el abastecimiento de energ&iacute;a a los ca&ntilde;ones, evitando una posible sobrecarga, lo que conduce a una reducci&oacute;n de defensas perdidas en batalla.<br><br>+5% de energia. Nivel Max. : 10";
+
+
+$lang['info'][604]['name']        = "Tecn&oacute;crata";
+$lang['info'][604]['description'] = "El gremio de los Tecn&oacute;cratas est&aacute; compuesto de aut&eacute;nticos genios, y siempre los encontrar&aacute;s en ese peligroso borde donde todo saltar&iacute;a en mil pedazos antes de poder encontrar una explicaci&oacute;n tecnol&oacute;gica y racional. Ning&uacute;n ser humano normal tratar&iacute;an jam&aacute;s intentar descifrar el c&oacute;digo de un tecn&oacute;crata, con su presencia, inspira a los investigadores del imperio.<br><br>+5% Velocidad Construcci&oacute;n Naves. Nivel Max : 10";
+
+
+$lang['info'][605]['name']        = "Constructor";
+$lang['info'][605]['description'] = "El Constructor tiene alterado su ADN, uno solo de estos hombres puede construir una ciudad entera en poco tiempo.<br><br>+10% Rapidez Construccion Edificios. Nivel Max. : 3";
+
+
+$lang['info'][606]['name']        = "Cientifico";
+$lang['info'][606]['description'] = "Los cient&iacute;ficos forman parte de un gremio concurente a la de los tecn&oacute;cratas. Ellos se especializan en la mejora de las tecnolog&iacute;as.<br><br>+10% Rapidez de Investigacion. Nivel Max. : 3";
+
+
+$lang['info'][607]['name']        = "Almacenista";
+$lang['info'][607]['description'] = "El almacenista es parte de la antigua Hermandad del planeta Hsac. Su lema es ganar el m&aacute;ximo, pero por esta raz&oacute;n que necesita espacios de almacenamiento enormes. Esa es la raz&oacute;n por la que el Constructor ha desarrollado una nueva t&eacute;cnica de almacenamiento.<br><br>+50% de Almacenamiento. Nivel Max. : 2";
+
+
+$lang['info'][608]['name']        = "Defensor";
+$lang['info'][608]['description'] = "El defensor es un miembro del ej&eacute;rcito imperial. Su celo en su trabajo le permite construir una formidable defensa en un breve espacio de tiempo en las colonias hostiles.<br><br>+50% Rapidez Construccion Defensas.";
+
+
 $lang['info'][609]['name']        = "Bunker";
-$lang['info'][609]['description'] = "L'empereur a remarqu&eacute; le travail impressionnant que vous avez fournit &agrave; son empire. Pour vous remerciez il vous offre la chance de devenir Bunker. Le Bunker est la plus haute distinction de la branche Mini&egrave;re de l'arm&eacute;e imp&eacute;riale.<br><br>D&eacute;blocage du Protecteur Plan&egrave;taire";
-$lang['info'][610]['name']        = "Espion";
-$lang['info'][610]['description'] = "L'espion est une personne &eacute;nigmatique. Personne n'a jamais vu son visage r&eacute;el, a moins d'&ecirc;tre d&eacute;j&ageave; mort.<br><br>+5 Lvl D'espionnage. Niveau Max. : 2";
-$lang['info'][611]['name']        = "Commandant";
-$lang['info'][611]['description'] = "Le commandant de l'arm&eacute;e imp&eacute;riale est pass&eacute; ma&icirc;tre dans l'art du maniement des flottes. Son cerveau peut calculer les trajectoires de nombreuses flotte, beaucoup plus que celle d'un humain normal.<br><br>+3 slots de flottes. Niveau Max. : 3";
-$lang['info'][612]['name']        = "Destructeur";
-$lang['info'][612]['description'] = "Le destructeur est un officier sans piti&eacute;. Il a massacr&eacute; des plan&egrave;tes enti&egrave;res juste pour son plaisir. Il d&eacute;veloppe actuellement une nouvelle m&eacute;thode de production des &eacute;toiles de la mort.<br><br>2 RIP construites au lieu d'une. Niveau Max. : 1";
+ $lang['info'][609]['description'] = "El emperador se&ntilde;al&oacute; el impresionante trabajo que usted proporciona a su imperio. Dar las gracias a usted le da la oportunidad de convertirse en Bunker. El Bunker es la m&aacute;s alta distinci&oacute;n de la Miner&iacute;a de la rama del Ej&eacute;rcito Imperial.<br><br>Desbloquear la Proteccion Planetaria.";
+
+
+$lang['info'][610]['name']        = "Espia";
+$lang['info'][610]['description'] = "El esp&iacute;a es una persona enigm&aacute;tica. Nadie nunca vio su verdadero rostro, a menos que est&eacute; muerto.<br><br>+5 Niveles de Espionaje. Nivel Max. : 2";
+$lang['info'][611]['name']        = "Comandante";
+$lang['info'][611]['description'] = "El comandante del ej&eacute;rcito imperial ha dominado el arte del manejo de flotas. Su cerebro puede calcular las trayectorias de muchos flota, mucho m&aacute;s que la de un humano normal.<br><br>+3 slots de Flotas. Nivel Max. : 3";
+
+
+$lang['info'][612]['name']        = "Destructor";
+$lang['info'][612]['description'] = "El destructor es un funcionario sin misericordia. &eacute;l masacra a todos en los planetas s&oacute;lo por placer. Actualmente est&aacute; desarrollando un nuevo m&eacute;todo de producci&oacute;n de las estrellas de la muerte.<br><br>2 Estrellas al hacer 1. Nivel Max. : 1";
+
+
 $lang['info'][613]['name']        = "General";
-$lang['info'][613]['description'] = "Le General est une v&eacute;n&eacute;rable personne qui a servit de nombreuses ann&eacute;es dans l'arm&eacute;e. Les ouvrier constructeur de vaisseaux produisent plus vite en sa pr&eacute;sence.<br><br>+25% de vitesse des vaisseaux. Niveau Max. : 3";
-$lang['info'][614]['name']        = "Raideur";
-$lang['info'][614]['description'] = "L'empereur a rep&eacute;r&eacute; en vous des qualit&eacute;s ind&eacute;niable de conqu&eacute;rent. Il vous propose de devenir Raideur. Le Raideur est le grade le plus &eacute;lev&eacute; de la branche des raideurs de l'arm&eacute;e imp&eacute;riale<br><br>D&eacute;blocage de la SuperNova";
-$lang['info'][615]['name']        = "Empereur";
-$lang['info'][615]['description'] = "Vous avez montr&eacute; que vous &ecirc;tiez le plus grand conqu&eacute;rant de l'univers. Il est tant pour vous de prendre la place qui vous revient.<br><br>D&eacute;blocage du Destructeur Plan&egrave;taire";
+$lang['info'][613]['description'] = "El venerable General es una persona que ha servido desde hace muchos a&ntilde;os en el ej&eacute;rcito. Los fabricantes de naves producen mas r&aacute;pido en su presencia.<br><br>+25% Rapidez Hangares. Nivel Max. : 3";
+$lang['info'][614]['name']        = "Raider";
+$lang['info'][614]['description'] = "El emperador ha detectado en usted innegables cualidades de conquistador. Le ofrece convertirse en Raider. El Raider es el m&aacute;s alto rango del ej&eacute;rcito imperial.<br><br>Desbloquear la SuperNova.";
+$lang['info'][615]['name']        = "Emperador";
+$lang['info'][615]['description'] = "Usted puso de manifiesto que usted es el m&aacute;s grande conquistador del universo. Es momento para que usted tome el lugar que merece.<br><br>Desbloquear la Destrucci&oacute;n de Planetas.";
+
+
+
+
+
+
+
+
 
 ?>

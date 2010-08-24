@@ -1,101 +1,96 @@
 <?php
 
-// User menu links
 $lang['qry']   = 'Executer commande SQL';
-
 
 $lang['Multiverse']   = '<b>XNova</b> Uni';
 
-$lang['Overview']     = 'Vue g&eacute;n&eacute;rale';
-$lang['Officiers']    = 'Officiers';
+$lang['Overview']   = 'Vision General';
+$lang['Officiers']  = 'Oficiales';
+$lang['Buildings']  = 'Edificios';
+$lang['Research']   = 'Investigacion';
+$lang['Shipyard']   = 'Hangar';
+$lang['Defense']    = 'Defensas';
 
-$lang['Buildings']    = 'B&acirc;timents';
-$lang['Research']     = 'Laboratoire';
-$lang['Shipyard']     = 'Chantier spatial';
-$lang['Defense']      = 'D&eacute;fense';
+$lang['multi']      = 'Declaracion de Multi';
 
-$lang['multi']      = 'D&eacute;claration de multi';
+$lang['Resources']  = 'Recursos';
+$lang['Imperium']   = 'Imperio';
+$lang['Marchand']   = 'Mercado';
+$lang['Annonces']   = 'Anuncios';
+$lang['Technology'] = 'Tecnologia';
+$lang['Galaxy']     = 'Galaxia';
+$lang['Fleet']      = 'Flotas';
+$lang['Alliance']   = 'Alianza';
+$lang['Chat']       = 'Chat';
+$lang['Statistics'] = 'Estadisticas';
+$lang['Search']     = 'Buscar';
+$lang['blocked']    = 'Baneados';
+$lang['Records']    = 'Records';
 
-$lang['Resources']    = 'Ressources';
-$lang['Imperium']     = 'Empire';
-$lang['Marchand']     = 'Marchand';
-$lang['Annonces']     = 'Petites Annonces';
-$lang['Technology']   = 'Technologies';
+$lang['Messages']   = 'Mensajes';
+$lang['Notes']      = 'Notas';
+$lang['Buddylist']  = 'Amigos';
 
-$lang['Galaxy']       = 'Galaxie';
-$lang['Fleet']        = 'Flotte';
+$lang['Board']      = 'Foro';
+$lang['Contact']    = 'Contacto';
+$lang['Options']    = 'Opciones';
 
-$lang['Alliance']     = 'Alliance';
-$lang['Chat']         = 'Chat';
-$lang['Statistics']   = 'Statistiques';
-$lang['Search']       = 'Recherche';
-$lang['blocked']      = 'Piloris';
-$lang['Records']      = 'Records';
+$lang['Logout']     = 'Salir';
 
-$lang['Messages']     = 'Messages';
-$lang['Notes']        = 'Notes';
-$lang['Buddylist']    = 'Liste amis';
-
-$lang['Board']        = 'Forum';
-$lang['Contact']      = 'Contact';
-$lang['Options']      = 'Options';
-
-$lang['Logout']       = 'D&eacute;connexion';
-
-$lang['Help']         = 'Aide';
-$lang['Rules']        = 'R&egrave;gles';
+$lang['Help']       = 'Ayuda';
+$lang['Rules']      = 'Reglas';
 
 // User menu titles
-$lang['devlp']        = 'D&eacute;veloppement';
-$lang['navig']        = 'Navigation';
-$lang['observ']       = 'Observatoire';
-$lang['commun']       = 'Communaut&eacute;';
-$lang['infog']        = 'Informations';
+$lang['devlp']        = 'Desarrollo';
+$lang['navig']        = 'Navegacion';
+$lang['observ']       = 'Observacion';
+$lang['commun']       = 'Comunicacion';
+$lang['infog']        = 'Informacion';
 
 // Administrator menu links
-$lang['adm_over']     = 'Vue g&eacute;n&eacute;rale';
+$lang['adm_over']     = 'Vision General';
 $lang['adm_conf']     = 'Configuration';
-$lang['adm_reset']    = 'Remise &agrave; z&eacute;ro';
+$lang['adm_reset']    = 'Resetear Universo';
 $lang['adm_extcopy']  = 'Copyright &eacute;tendus';
 
-$lang['adm_multi']    = 'Liste multi-comptes';
-$lang['multis_declared']    = 'Multicomptes d&eacute;clar&eacute;s';
+$lang['adm_multi']    = 'Lista multi-cuentas';
+$lang['multis_declared']    = 'Multi-cuentas denunciadas';
 
-$lang['adm_plrlst']   = 'Liste des joueurs';
-$lang['adm_plrsch']   = 'Chercher un joueur';
-$lang['adm_addres']   = 'Ajout de ressources';
+$lang['adm_plrlst']   = 'Lista de Usuarios';
+$lang['adm_plrsch']   = 'Encontrar un jugador';
+$lang['adm_addres']   = 'Adición de recursos';
 
-$lang['adm_pltlst']   = 'Liste des plan&egrave;tes';
-$lang['adm_actplt']   = 'Plan&egrave;tes actives';
+$lang['adm_pltlst']   = 'Lista de Usuarios';
+$lang['adm_actplt']   = 'Planetas Activos';
 
-$lang['adm_moonlst']  = 'Liste des lunes';
-$lang['adm_addmoon']  = 'Ajout de lunes';
+$lang['adm_moonlst']  = 'Lista de Lunas';
+$lang['adm_addmoon']  = 'Añadir Luna';
 
-$lang['adm_fleet']    = 'Flottes en vol';
+$lang['adm_fleet']    = 'Flotas en vuelo';
 
-$lang['adm_ban']      = 'Bannir';
-$lang['adm_unban']    = 'D&eacute;bannir';
+$lang['adm_ban']      = 'Banear';
+$lang['adm_unban']    = 'Desbanear';
 
-$lang['adm_chat']     = 'Administration chat';
-$lang['adm_updpt']    = 'Actualiser points';
-$lang['adm_msg']      = 'Liste des messages';
-$lang['adm_md5']      = 'Outil cryptage';
-$lang['adm_build']    = 'Queue fabrication';
+$lang['adm_chat']     = 'Administrar Chat';
+$lang['adm_updpt']    = 'Actualizar Puntos';
+$lang['adm_msg']      = 'Lista de Mensajes';
+$lang['adm_md5']      = 'Erramienta de Encriptacion';
+$lang['adm_build']    = 'Cola de fabricación';
 
-$lang['adm_error']    = 'Erreurs';
-$lang['change_pass']    = 'Changer code d\'un joueur';
-$lang['adm_help']     = 'Forum d\'aide';
-$lang['adm_back']     = 'Retour';
+$lang['adm_error']    = 'Errores';
+$lang['change_pass']    = 'Cambiar codigo de un Usuario';
+$lang['adm_help']     = 'Foro de Soporte';
+$lang['adm_back']     = 'Volver';
 
 // Administrator menu titles
-$lang['admin']        = 'Administration';
-$lang['player']       = 'Joueurs';
-$lang['tool']         = 'Pratique';
+$lang['admin']        = 'Administracion';
+$lang['player']       = 'Jugador';
+$lang['tool']         = 'Archivo';
 
 // Informations serveur
-$lang['lm_ifo_serv']  = "Ressources";
-$lang['lm_ifo_game']  = "Jeu";
-$lang['lm_ifo_fleet'] = "Flotte";
-$lang['lm_ifo_queue'] = "Queues";
+$lang['lm_ifo_serv']  = "Recursos";
+$lang['lm_ifo_game']  = "Juego";
+$lang['lm_ifo_fleet'] = "Flota";
+$lang['lm_ifo_queue'] = "Colas";
 
 ?>

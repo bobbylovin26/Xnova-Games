@@ -1,25 +1,25 @@
 <?php
 
-$lang['cred_link']    = 'Liens';
-$lang['cred_site']    = 'Site';
-$lang['cred_forum']   = 'Forum';
-$lang['cred_credit']  = 'Cr&eacute;dits';
-$lang['cred_creat']   = 'Fondateur';
-$lang['cred_prog']    = 'Programmeur';
-$lang['cred_master']  = 'Chef';
-$lang['cred_design']  = 'Designer';
+$lang['cred_link']    = 'Enlaces';
+$lang['cred_site']    = 'Lugar';
+$lang['cred_forum']   = 'Foro';
+$lang['cred_credit']  = 'Cr&eacute;ditos';
+$lang['cred_creat']   = 'Fundador';
+$lang['cred_prog']    = 'Programador';
+$lang['cred_master']  = 'Jefe';
+$lang['cred_design']  = 'Dise&ntilde;ador';
 $lang['cred_web']     = 'Webmaster';
-$lang['cred_thx']     = 'Remerciements';
-$lang['cred_based']   = 'Qui a servi de base &agrave; XNova';
-$lang['cred_start']   = 'Pour avoir accueilli XNova &agrave; ses d&eacute;buts';
+$lang['cred_thx']     = 'Agradecimientos';
+$lang['cred_based']   = 'Quien sirbio como soporte y traduccion';
+$lang['cred_start']   = '';
 
-$lang['cred_ext']     = 'Copyright &eacute;tendus';
-$lang['cred_info']    = 'Informations';
-$lang['cred_infotxt'] = 'La page de cr&eacute;dit n\'a pas vocation d\'&ecirc;tre modifi&eacute;e  car elle garantie votre droit d\'utiliser XNova pour votre propre serveur. Vous n\'avez donc pas la permission de changer ce qu\'elle contient par d&eacute;faut. Cependant, gr&acirc;ce au syst&egrave;me de copyright &eacute;tendus, vous avez la possibilit&eacute; d\'afficher votre nom en dessous des d&eacute;veloppeurs officiels et ainsi prot&eacute;ger vos innovations.';
-$lang['cred_added']   = 'Seront visibles sur la page cr&eacute;dit';
-$lang['cred_name']    = 'Pseudos (une ligne par pseudo)';
-$lang['cred_funct']   = 'Fonctions (une ligne par fonction)';
-$lang['cred_save']    = 'Sauvegarder';
-$lang['cred_done']    = 'Copyright chang&eacute;s avec succ&egrave;s!';
+$lang['cred_ext']     = 'Copyright ampliado';
+$lang['cred_info']    = 'Informacion';
+$lang['cred_infotxt'] = 'La pagina de credito no estA destinado a ser modificado, ya que garantiza su derecho a utilizar XNova para su propio servidor. Usted no necesita permiso para cambiar lo que contiene por defecto. Sin embargo, gracias al amplio sistema de derechos de autor, puede mostrar su nombre debajo de los desarrolladores oficiales y proteger sus innovaciones.';
+$lang['cred_added']   = 'Será visible en la página de crédito';
+$lang['cred_name']    = 'Nombre (una línea por nombre)';
+$lang['cred_funct']   = 'Funciones (una línea por posición)';
+$lang['cred_save']    = 'Guardar';
+$lang['cred_done']    = 'Los cambios han sido guardados!';
 
 ?>

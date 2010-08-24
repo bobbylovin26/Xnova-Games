@@ -138,7 +138,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 
 	$page  = InsertGalaxyScripts ( $CurrentPlanet );
 
-	$page .= "<body style=\"overflow: hidden;\" onUnload=\"\"><br><br>";
+	$page .= "<body style=\"overflow: auto;\" onUnload=\"\"><br><br>";
 	$page .= ShowGalaxySelector ( $galaxy, $system );
 
 	if ($mode == 2) {

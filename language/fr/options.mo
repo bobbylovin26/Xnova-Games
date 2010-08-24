@@ -1,76 +1,77 @@
 <?php
 //Mode Vacances (Thx Prethorian)
-$lang['exit_vacations'] = "Retour de vacances";
-$lang['Vaccation_mode'] = "Mode vacances actif jusqua : ";
-$lang['You_cant_exit_vmode'] = "Vous ne pouvez pas desactiver votre mode vacances tant que la date minimale n'est pas atteinte !";
-$lang['Error'] = "Erreur";
+$lang['exit_vacations'] = "Salir de Vacaciones";
+$lang['Vaccation_mode'] = "Modo vacaciones activado hasta : ";
+$lang['You_cant_exit_vmode'] = "No se puede desactivar el modo vacaciones, no se llega a la fecha minima!";
+$lang['Error'] = "Error";
 
 
 // Messages
-$lang['changue_pass'] = "Changer de mot de passe";
-$lang['Download'] = "T&eacute;l&eacute;charger";
-$lang['Search'] = "Chercher";
-$lang['succeful_changepass'] = "Le mot de passe a bien &eacute;t&eacute; chang&eacute;.<br /><a href=\"login.php\" target=\"_top\">Retour</a>";
-$lang['succeful_save'] = "Les changements ont &eacute;t&eacute; sauvegard&eacute;.<br /><a href=\"options.php\">Retour</a>";
+$lang['changue_pass'] = "Cambiar contraseña";
+$lang['Download'] = "Descargar";
+$lang['Search'] = "Buscar";
+$lang['succeful_changepass'] = "La contraseña se ha cambiado;.<br /><a href=\"login.php\" target=\"_top\">Volver</a>";
+$lang['succeful_save'] = "Los cambios se han guardado;.<br /><a href=\"options.php\">Volver</a>";
 
 // Form
-$lang['userdata'] = "Informations sur le joueur";
-$lang['username'] = "Nom du joueur";
-$lang['lastpassword'] = "Ancien mot de passe";
-$lang['newpassword'] = "Nouveau mot de passe (min. 8 Caracteres)";
-$lang['newpasswordagain'] = "Nouveau mot de passe (repetition)";
-$lang['emaildir'] = "Adresse e-mail";
-$lang['emaildir_tip'] = "Cette adresse peut &ecirc;tre chang&eacute;e &agrave; tout moment. L'adresse deviendra permanente s'il n'y a pas de changemements pendant les 7 jours qui suivent.";
-$lang['permanentemaildir'] = "Adresse e-mail permanente";
+$lang['userdata'] = "Informacion de Usuario";
+$lang['username'] = "Nombre de Usuario";
+$lang['lastpassword'] = "Contraseña anterior";
+$lang['newpassword'] = "Contraseña nueva (min. 8 Caracteres)";
+$lang['newpasswordagain'] = "Contraseña nueva (confirmacion)";
+$lang['emaildir'] = "Direccion de E-mail";
+$lang['emaildir_tip'] = "Esta dirección puede ser cambiada en cualquier momento. La dirección pasará a ser permanente si no cambia durante 7 días.";
+$lang['permanentemaildir'] = "Direccion de E-mail Permanente";
 
-$lang['opt_lst_ord']  = "Classer les planetes dans l'ordre suivant :";
-$lang['opt_lst_ord0'] = "Date de colonisation";
-$lang['opt_lst_ord1'] = "Coordonnees";
-$lang['opt_lst_ord2'] = "Ordre alphabetique";
-$lang['opt_lst_cla']  = "Ordre de classement :";
-$lang['opt_lst_cla0'] = "croissant";
-$lang['opt_lst_cla1'] = "décroissant";
-$lang['opt_chk_skin'] = "Utiliser le skin";
+$lang['opt_lst_ord']  = "Clasificar los planetas en el siguiente orden:";
+$lang['opt_lst_ord0'] = "Orden de colonizacion";
+$lang['opt_lst_ord1'] = "Coordenadas";
+$lang['opt_lst_ord2'] = "Orden Alfavetico";
+$lang['opt_lst_cla']  = "Orden de clasificación:";
+$lang['opt_lst_cla0'] = "Creciente";
+$lang['opt_lst_cla1'] = "Decreciente";
+$lang['opt_chk_skin'] = "Utilizar el Skin";
 
 // Admin Options
-$lang['opt_adm_title'] = "Options r&eacute;serv&eacute;es a l'administration";
-$lang['opt_adm_planet_prot'] = "Protection des plan&egrave;tes";
+$lang['opt_adm_title'] = "Opciones reservado en el hotel";
+$lang['opt_adm_planet_prot'] = "Proteccion de Planetas";
 
 // General options
-$lang['thanksforregistry'] = "Merci de votre inscription.<br />Vous recevrez dans un moment, un e-mail avec votre mot de passe.";
-$lang['general_settings'] = "R&eacute;glage g&eacute;n&eacute;ral";
+$lang['thanksforregistry'] = "Gracias por su registro.";
+$lang['general_settings'] = "Configuracion General";
 $lang['skins_example'] = "Skins (p.e. /css/)";
 $lang['avatar_example'] = "Avatar (p.e. /img/avatar.jpg)";
-$lang['untoggleip'] = "D&eacute;sactiver la v&eacute;rification d'IP";
-$lang['untoggleip_tip'] = "La v&eacute;rification d'IP signifie qu'on effectuera un logout de s&eacute;curit&eacute; automatiquement quand il y aura un changement  d'IP ou quand 2 personnes entreront sur le m&ecirc;me compte en utilisant diff&eacute;rentes IPs. Activer la v&eacute;rification d'IP peut &ecirc;tre un atout de s&eacute;curit&eacute; !";
+$lang['untoggleip'] = "Desactivar comprobacion de IP";
+$lang['untoggleip_tip'] = "	
+La verificación de la propiedad intelectual significa que vamos a realizar un logout de seguridad automáticamente cuando se producirá un cambio de la propiedad intelectual 2 o cuando la gente entrar en la misma cuenta a través de diferentes direcciones IP. La verificación Habilitar la propiedad intelectual puede ser un activo de seguridad!";
 
 // Option galaxy
-$lang['galaxyvision_options'] = "Param&eacute;trage de la vue de la galaxie";
-$lang['spy_cant'] = "Nombre de sondes";
-$lang['spy_cant_tip'] = "Nombre de sondes d'espionnage envoy&eacute;es depuis le menu galaxie &agrave; chaque fois que vous espionnez quelqu'un.";
-$lang['tooltip_time'] = "Afficher tooltips pour";
-$lang['mess_ammount_max'] = "Nombre maximal de messages de flotte";
-$lang['show_ally_logo'] = "Montrer le logo des alliances";
-$lang['seconds'] = "Secondes";
+$lang['galaxyvision_options'] = "Configurar Vista en Galaxia";
+$lang['spy_cant'] = "Cantidad de Sondas";
+$lang['spy_cant_tip'] = "Número de espionaje, sondas enviadas galaxia en el menú cada vez que alguien espie.";
+$lang['tooltip_time'] = "Para mostrar tooltips";
+$lang['mess_ammount_max'] = "El número máximo de mensajes de la flota";
+$lang['show_ally_logo'] = "Mostrar el logotipo de alianzas";
+$lang['seconds'] = "Segundos";
 
 //Rapport acces
-$lang['shortcut'] = "Acc&egrave;s direct";
-$lang['show'] = "Montrer";
-$lang['write_a_messege'] = "Ecrire message";
-$lang['spy'] = "Espionner";
-$lang['add_to_buddylist'] = "Ajouter &agrave; la liste d'amis";
-$lang['attack_with_missile'] = "Attaquer avec les missiles";
-$lang['show_report'] = "Voir rapport";
+$lang['shortcut'] = "Acceso directo";
+$lang['show'] = "Mostrar";
+$lang['write_a_messege'] = "Escribir mensaje";
+$lang['spy'] = "Espiar";
+$lang['add_to_buddylist'] = "Añadir a la lista de amigos";
+$lang['attack_with_missile'] = "Atacar con misiles";
+$lang['show_report'] = "Ver informe";
 
 //Vacations mod
-$lang['delete_vacations'] = "Mode vacances / Effacer le compte";
-$lang['mode_vacations'] = "Activer le mode vacances";
-$lang['vacations_tip'] = "Le mode vacances est l&agrave; pour vous prot&eacute;ger pendant votre absence.";
-$lang['deleteaccount'] = "Effacer le compte";
-$lang['deleteaccount_tip'] = "Ton compte sera compl&egrave;tement effac&eacute; dans 7 jours.";
-$lang['save_settings'] = "Sauvegarder les changements";
+$lang['delete_vacations'] = "Modo de vacaciones / Borrar cuenta";
+$lang['mode_vacations'] = "Activar Modo Vacaciones";
+$lang['vacations_tip'] = "El modo de vacaciones está allí para protegerlo a usted durante su ausencia.";
+$lang['deleteaccount'] = "Borrar Cuenta";
+$lang['deleteaccount_tip'] = "Su cuenta se eliminará por completo dentro de 7 días.";
+$lang['save_settings'] = "Guardar Cambios";
 
 
-// Created by Perberos. All rights reversed (C) 2006
+// Created by PowerMaster. All rights reversed (C) 2006
 // Complet by XNova Team. All rights reversed (C) 2008
 ?>

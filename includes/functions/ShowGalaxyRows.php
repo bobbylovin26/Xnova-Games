@@ -50,7 +50,7 @@ function ShowGalaxyRows ($Galaxy, $System) {
 			}
 		}
 		$Result .= "\n";
-		$Result .= GalaxyRowPos        ( $Planet, $GalaxyRow );
+        $Result .= GalaxyRowPos        ( $GalaxyRow, $Galaxy, $System, $Planet, 1 );
 		$Result .= "\n";
 		$Result .= GalaxyRowPlanet     ( $GalaxyRow, $GalaxyRowPlanet, $GalaxyRowPlayer, $Galaxy, $System, $Planet, 1 );
 		$Result .= "\n";

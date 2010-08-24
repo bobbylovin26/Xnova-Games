@@ -17,7 +17,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 function ModuleMarchand ( $CurrentUser, &$CurrentPlanet ) {
 	global $lang, $_POST;
 
-	includeLang('marchand');
+	includeLang('Marchand');
 
 	$parse   = $lang;
 

@@ -7,10 +7,10 @@
  * @copyright 2008 By Chlorel for XNova
  */
 
-function GalaxyRowPos ( $Planet, $GalaxyRow ) {
+function GalaxyRowPos ( $GalaxyRow, $Galaxy, $System, $Planet ) {
 	// Pos
 	$Result  = "<th width=30>";
-	$Result .= "<a href=\"#\"";
+    $Result .= "<a href=\"fleet.php?galaxy=".$Galaxy."&system=".$System."&planet=".$Planet."&planettype=0&target_mission=7\"";
 	if ($GalaxyRow) {
 		$Result .= " tabindex=\"". ($Planet + 1) ."\"";
 	}

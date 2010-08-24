@@ -5,44 +5,47 @@ if (!defined('INSIDE')) {
 }
 
 // Registration form
-$lang['registry']          = 'Inscription';
-$lang['form']              = 'Formulaire';
-$lang['Register']          = 'XNova Inscription';
-$lang['Undefined']         = '- ind&eacute;fini -';
-$lang['Male']              = 'Homme';
-$lang['Female']            = 'Femme';
-$lang['Multiverse']        = 'XNova';
-$lang['E-Mail']            = 'Adresse e-Mail';
-$lang['MainPlanet']        = 'Nom de votre plan&egrave;te m&egrave;re';
-$lang['GameName']          = 'Pseudo';
-$lang['Sex']               = 'Sexe';
-$lang['accept']            = 'J\'acc&egrave;pte le r&egrave;glement';
-$lang['signup']            = ' S\'enregistrer ';
-$lang['neededpass']        = 'Mot de passe';
+$lang['registry']          = 'Registrarse';
+$lang['form']              = 'Formulario';
+$lang['Register']          = 'Registro Juego';
+$lang['Undefined']         = '- Indefinido -';
+$lang['Male']              = 'Hombre';
+$lang['Female']            = 'Mujer';
+$lang['Multiverse']        = 'Juego';
+$lang['E-Mail']            = 'Direcci&oacute;n e-Mail';
+$lang['MainPlanet']        = 'Nombre de tu planeta';
+$lang['GameName']          = 'Usuario';
+$lang['Sex']               = 'Sexo';
+$lang['accept']            = '<a href="help.php?conditions">Acepto Reglamento</a>';
+
+$lang['signup']            = 'Registrarse';
+$lang['neededpass']        = 'Contrase&ntilde;a';
 
 // Send
-$lang['mail_welcome']      = 'Merci beaucoup de votre inscription &agrave; notre jeu ({gameurl}) \nVotre mot de passe est : {password}\n\nBon amusement !\n{gameurl}';
-$lang['mail_title']        = 'Enregistrment';
-$lang['thanksforregistry'] = 'Merci de vous &ecirc;tre inscrit ! Vous allez recevoir un mail avec votre mot de passe.';
-$lang['sender_message_ig'] = 'Admin';
-$lang['subject_message_ig']= 'Bienvenue';
-$lang['text_message_ig']   = 'Bienvenue sur XNova, nous vous souhaitons bon jeu et bonne chance !';
+$lang['mail_welcome']      = 'Muchas gracias de su inscripci&oacute;n a nuestro juego ({juego.kilu.de}) \nSu contrase&ntilde;a es : {password}\n\n¡Buena diversi&oacute;n!\n{gameurl}';
 
+$lang['mail_title']        = '';
+$lang['thanksforregistry'] = '';
+
+$lang['sender_message_ig'] = 'Admin';
+$lang['subject_message_ig']= 'Bienvenido';
+$lang['text_message_ig']   = 'Bienvenido a ..::MegaVerso::.., espero que te guste el juego, y si tenes alguna critica para mejorar o corregir el juego, contactate con algun adimn y planteale la situacion, seras escuchado con toda libertad... Un saludo !';
 
 // Errors
-$lang['error_mail']        = 'E-mail invalide !<br />';
-$lang['error_planet']      = 'Erreur dans votre nom de plan&egrave;te !.<br />';
-$lang['error_hplanetnum']  = 'Vous devez utiliser des caract&egrave;res alphanum&eacute;rique pour votre nom de plan&egrave;te !<br />';
-$lang['error_character']   = 'Erreur dans le nom du joueur !<br />';
-$lang['error_charalpha']   = 'Le pseudo doit etre conpose de caractere alphanumerique !<br />';
-$lang['error_password']    = 'Le mot de passe doit faire 4 caracteres au minimum !<br />';
-$lang['error_rgt']         = 'Vous devez accepter les conditions d\'utilisation.<<br />';
-$lang['error_userexist']   = 'Ce nom de joueur existe d&eacute;j&agrave; !<br />';
-$lang['error_emailexist']  = 'Cet e-mail est d&eacute;j&agrave; utilis&eacute; !<br />';
-$lang['error_sex']         = 'Erreur dans le sexe !<br />';
-$lang['error_mailsend']    = 'Une erreur s\'est produite lors de l\'envoi du courriel! Votre mot de passe est : ';
-$lang['reg_welldone']      = 'Inscription termin&eacute;e !';
+$lang['error_mail']        = 'Correo electr&oacute;nico inv&aacute;lido!<br />';
+$lang['error_planet']      = 'Error en el nombre de planeta.<br />';
+$lang['error_hplanetnum']  = '¡Debe utilizar caracteres alfanum&eacute;rico para su nombre de planeta!<br />';
+$lang['error_character']   = '¡Error en el nombre del jugador!<br />';
+$lang['error_charalpha']   = '¡El usuario debe componerse de car&aacute;cter alfanum&eacute;rico!<br />';
 
-// Created by Perberos. All rights reversed (C) 2006
-// Complet by XNova Team. All rights reversed (C) 2008
+$lang['error_password']    = '¡La contrase&ntilde;a debe hacer 4 caracteres como m&iacute;nimo!<br />';
+$lang['error_rgt']         = 'Debe aceptar las condiciones de utilizaci&oacute;n.<<br />';
+
+$lang['error_userexist']   = '¡Este nombre de jugador ya existe!<br />';
+$lang['error_emailexist']  = '¡Ya se utiliza este correo electr&oacute;nico!<br />';
+$lang['error_sex']         = '¡Error en el sexo!<br />';
+$lang['error_mailsend']    = '¡Un error se produjo en el env&iacute;o del correo! Su contrase&ntilde;a es:';
+
+$lang['reg_welldone']      = 'Inscripci&oacute;n terminada';
+
 ?>

@@ -316,7 +316,7 @@
 	$QryTablePlanets    .= "`deuterium_perhour` int(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`deuterium_max` bigint(20) default '100000', ";
 	$QryTablePlanets    .= "`energy_used` int(11) NOT NULL default '0', ";
-	$QryTablePlanets    .= "`energy_max` int(11) NOT NULL default '0', ";
+	$QryTablePlanets    .= "`energy_max` bigint(20) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`metal_mine` int(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`crystal_mine` int(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`deuterium_sintetizer` int(11) NOT NULL default '0', ";
@@ -346,6 +346,7 @@
 	$QryTablePlanets    .= "`destructor` bigint(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`dearth_star` bigint(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`battleship` bigint(11) NOT NULL default '0', ";
+	$QryTablePlanets    .= "`supernova` bigint(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`misil_launcher` bigint(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`small_laser` bigint(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`big_laser` bigint(11) NOT NULL default '0', ";
@@ -353,6 +354,7 @@
 	$QryTablePlanets    .= "`ionic_canyon` bigint(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`buster_canyon` bigint(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`small_protection_shield` int(11) NOT NULL default '0', ";
+	$QryTablePlanets    .= "`planet_protector` int(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`big_protection_shield` int(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`interceptor_misil` int(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`interplanetary_misil` int(11) NOT NULL default '0', ";

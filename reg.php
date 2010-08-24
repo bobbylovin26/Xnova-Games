@@ -38,7 +38,8 @@ function mymail($to, $title, $body, $from = '')
     $rp = ADMINEMAIL;
 
     $head = '';
-    $head .= "Content-Type: text/plain \r\n";
+    $head .= "Content-Type: text/html \r\n";
+	$head  .= "charset: iso-8859-1 \r\n";
     $head .= "Date: " . date('r') . " \r\n";
     $head .= "Return-Path: $rp \r\n";
     $head .= "From: $from \r\n";
@@ -222,7 +223,7 @@ if ($_POST) {
             $Message .= " (" . htmlentities($_POST["email"]) . ")";
             $Message .= "<br><br>" . $lang['error_mailsend'] . " <b>" . $newpass . "</b>";
         }
-        message($Message, $lang['reg_welldone']);
+        message( $Message, $lang['reg_welldone'], "login.".$phpEx );
     }
 } else {
     // Afficher le formulaire d'enregistrement

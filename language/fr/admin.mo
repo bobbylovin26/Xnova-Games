@@ -1,117 +1,207 @@
 <?php
-//Tweaks vue générale
+//Vision General
 $lang['usr_email']               = "Email";
-$lang['xp_raid']               = "&Eacute;xp&eacute;rience Raids";
-$lang['xp_min']               = "&Eacute;xp&eacute;rience Minage";
-$lang['lang_vacancy']    = "Mode vacances";
-$lang['is_in_vacancy']    = "Mode vacances actif";
-$lang['not_in_vacancy']               = "Mode vacances inactif";
-$lang['is_banned_lang']               = "Non";
-$lang['banned_lang']               = "Banni ?"; 
-$lang['usr_current_planet']               = "Plan&egrave;te";
-$lang['usr_current_page']               = "Page actuellement vision&eacute;e";
+$lang['xp_raid']               = "&Eacute;xp&eacute;rience Flota";
+$lang['xp_min']               = "&Eacute;xp&eacute;rience Minero";
+$lang['lang_vacancy']    = "Modo Vacaciones";
+$lang['is_in_vacancy']    = "Modo Vacaciones Activado";
+$lang['not_in_vacancy']               = "Modo Vacaciones Desactivado";
+$lang['is_banned_lang']               = "No";
+$lang['banned_lang']               = "Baneado"; 
+$lang['usr_current_planet']               = "Planeta";
+$lang['usr_current_page']               = "Viendo Pagina";
 
-$lang['oups_youre_banned']               = "Votre compte a &eacute;t&eacute;  suspendu!";
-$lang['user_is_banned_for']               = "Vous avez &eacute;t&eacute; banni pour la raison suivante : ";
-$lang['banned_until']               = "Vous avez &eacute;t&eacute; banni jusqu\'a ";
-$lang['who_has_banned']    = "Par l\'op&eacute;rateur suivant";
+$lang['oups_youre_banned']               = "Su cuenta ha sido suspendida!";
+$lang['user_is_banned_for']               = "Usted ha sido baneado por las siguientes razones:";
+$lang['banned_until']               = "Ha sido baneado hasta:";
+$lang['who_has_banned']    = "Por el siguiente Operador:";
 
-$lang['adm_ul_data_ip_reg']    = "IP a l'enregistrement";
-
-
-$lang['messages_settings']               = "R&eacute;glage des messages et du contenu des messages";
-$lang['bbcode_settings']               = "R&eacute;glage du BBCode<br>(0 = d&eacute;sactiv&eacute;, 1 = activ&eacute;)";
+$lang['adm_ul_data_ip_reg']    = "Registro de propiedad intelectual";
 
 
-$lang['adm_done']               = "Termin&eacute;";
-$lang['adm_stat_title']         = "Statistiques";
-$lang['adm_cleaner_title']      = "Nettoyage de queue de construction";
-$lang['adm_cleaned']            = "Nombre de queues supprim&eacute;es : ";
-$lang['Fix']                    = "Mise &agrave; jour";
-$lang['Welcome_to_Fix_section'] = "Bienvenue dans la section d'update";
-$lang['There_is_not_need_fix']  = "La mise &agrave; jour a bien &eacute;t&eacute; effectu&eacute;!";
-$lang['Fix_welldone']           = "La mise &agrave; jour n'a pu &ecirc;tre effectu&eacute;.";
+$lang['messages_settings']               = "Configuración de mensajes y el contenido de los mensajes";
+$lang['bbcode_settings']               = "Configuración de BBCode <br> (0 = off, 1 = habilitado)";
 
-$lang['adm_ov_title'] = "Vue g&eacute;n&eacute;rale";
-$lang['adm_ov_infos'] = "Informations";
-$lang['adm_ov_yourv'] = "Votre version";
+
+$lang['adm_done']               = "Listo";
+$lang['adm_stat_title']         = "Estadisticas";
+$lang['adm_cleaner_title']      = "Limpieza de la cola de construcción";
+$lang['adm_cleaned']            = "Número de colas suprimido: ";
+$lang['Fix']                    = "Actualizado";
+$lang['Welcome_to_Fix_section'] = "Bienvenidos a la sección de actualización";
+$lang['There_is_not_need_fix']  = "La actualización se ha hecho!";
+$lang['Fix_welldone']           = "La actualización se ha realizado.";
+
+$lang['adm_ov_title'] = "Vision General";
+$lang['adm_ov_infos'] = "Informacion";
+$lang['adm_ov_yourv'] = "Version";
 $lang['adm_ov_lastv'] = "Version disponible";
-$lang['adm_ov_here']  = "ici";
-$lang['adm_ov_onlin'] = "Online";
-$lang['adm_ov_ally']  = "Alliance";
-$lang['adm_ov_point'] = "Points";
-$lang['adm_ov_activ'] = "Activit&eacute;";
-$lang['adm_ov_count'] = "Joueurs en ligne";
-$lang['adm_ov_wrtpm'] = "Envoyer un MP";
+$lang['adm_ov_here']  = "Ver";
+$lang['adm_ov_onlin'] = "En Linea";
+$lang['adm_ov_ally']  = "Alianza";
+$lang['adm_ov_point'] = "Puntos";
+$lang['adm_ov_activ'] = "Actividad";
+$lang['adm_ov_count'] = "Usuarios en Linea";
+$lang['adm_ov_wrtpm'] = "Enviar Mensaje";
 $lang['adm_ov_altpm'] = "[MP]";
 
+//Lista de Jugadores
+$lang['adm_ul_title'] = "Lista de Jugadores";
+$lang['adm_ul_ttle2'] = "Jugadores Inscriptos";
+$lang['adm_ul_id']    = "Identificacion";
+$lang['adm_ul_name']  = "Nombre de Usuario";
+$lang['adm_ul_mail']  = "Direccion de E-mail";
+$lang['adm_ul_adip']  = "Direccion de IP";
+$lang['adm_ul_regd']  = "Fecha de Inscripcion";
+$lang['adm_ul_lconn'] = "Ultima vicita";
+$lang['adm_ul_bana']  = "Baneado";
+$lang['adm_ul_detai'] = "Detalles";
+$lang['adm_ul_actio'] = "Expulsar";
+$lang['adm_ul_playe'] = " Usuarios";
+$lang['adm_ul_yes']   = "Si";
+$lang['adm_ul_no']    = "No";
 
-$lang['adm_ul_title'] = "Liste des joueurs";
-$lang['adm_ul_ttle2'] = "Joueurs inscrit";
-$lang['adm_ul_id']    = "ID";
-$lang['adm_ul_name']  = "Nom du joueur";
-$lang['adm_ul_mail']  = "Adresse e-Mail";
-$lang['adm_ul_adip']  = "Adresse IP";
-$lang['adm_ul_regd']  = "Inscription";
-$lang['adm_ul_lconn'] = "Dernier login";
-$lang['adm_ul_bana']  = "Banni";
-$lang['adm_ul_detai'] = "Details";
-$lang['adm_ul_actio'] = "Action";
-$lang['adm_ul_playe'] = " joueur(s)";
-$lang['adm_ul_yes']   = "Oui";
-$lang['adm_ul_no']    = "Non";
+//Actividad de Planetas
+$lang['adm_pl_title'] = "Actividad de Planetas";
+$lang['adm_pl_activ'] = "Planetas Activos";
+$lang['adm_pl_name']  = "Nombre de Planetas";
+$lang['adm_pl_posit'] = "Posicion";
+$lang['adm_pl_point'] = "Puntos";
+$lang['adm_pl_since'] = "Actividad";
+$lang['adm_pl_they']  = "En este momento hay";
+$lang['adm_pl_apla']  = "Planeta/s Activo/s";
 
-$lang['adm_pl_title'] = "Activit&eacute; des plan&egrave;tes";
-$lang['adm_pl_activ'] = "Plan&egrave;tes actives";
-$lang['adm_pl_name']  = "Noms des Plan&egrave;tes";
-$lang['adm_pl_posit'] = "Position";
-$lang['adm_pl_point'] = "Valeur";
-$lang['adm_pl_since'] = "Activit&eacute;";
-$lang['adm_pl_they']  = "Il y a";
-$lang['adm_pl_apla']  = "plan&egrave;te(s) active(s)";
+//Añadir Recursos
+$lang['adm_am_plid']  = "Identificacion del Planeta";
+$lang['adm_am_done']  = "Listo";
+$lang['adm_am_ttle']  = "Sumar Recursos";
+$lang['adm_am_add']   = "Sumar";
+$lang['adm_am_form']  = "Formulario";
 
-$lang['adm_am_plid']  = "ID de la plan&egrave;te";
-$lang['adm_am_done']  = "Ajout OK";
-$lang['adm_am_ttle']  = "Ajout de ressources";
-$lang['adm_am_add']   = "Ajouter";
-$lang['adm_am_form']  = "Formulaire d'ajout";
-
-$lang['adm_bn_ttle']  = "Bannir un joueur";
-$lang['adm_bn_plto']  = "Joueur &agrave; bannir";
-$lang['adm_bn_name']  = "Nom du joueur";
-$lang['adm_bn_reas']  = "Raison de la sanction";
-$lang['adm_bn_time']  = "Dur&eacute;e de la sanction";
-$lang['adm_bn_days']  = "Jours";
-$lang['adm_bn_hour']  = "Heures";
-$lang['adm_bn_mins']  = "Minutes";
-$lang['adm_bn_secs']  = "Secondes";
-$lang['adm_bn_bnbt']  = "Bannir";
+//Banear Jugador
+$lang['adm_bn_ttle']  = "Banear Jugador";
+$lang['adm_bn_plto']  = "Formulario para el Baneo";
+$lang['adm_bn_name']  = "Nombre de Usuario";
+$lang['adm_bn_reas']  = "Razon de la sancion";
+$lang['adm_bn_time']  = "Duracion de la sancion";
+$lang['adm_bn_days']  = "Dias";
+$lang['adm_bn_hour']  = "Horas";
+$lang['adm_bn_mins']  = "Minutos";
+$lang['adm_bn_secs']  = "Segundos";
+$lang['adm_bn_bnbt']  = "Banear";
 $lang['adm_bn_thpl']  = "Le joueur";
 $lang['adm_bn_isbn']  = "a bien &eacute;t&eacute; banni!";
 
-$lang['adm_rz_ttle']  = "Remise &agrave; z&eacute;ro de l'univers";
-$lang['adm_rz_done']  = " Utilisateur(s) transf&eacute;r&eacute;(s)";
-$lang['adm_rz_conf']  = "Confirmation";
-$lang['adm_rz_text']  = "En appuyant sur Accepter, vous remettrez &agrave; z&eacute;ro votre Univers. Seul les comptes ne sont pas effac&eacute;es. Cette op&eacute;ration ne peut pas &ecirc;tre annul&eacute; par la suite, il est donc conseill&eacute; d'avoir une sauvegarde de votre base de donn&eacute;e!";
-$lang['adm_rz_doit']  = "Accepter";
+//Reiniciar Universo
+$lang['adm_rz_ttle']  = "Reinicio del Universo";
+$lang['adm_rz_done']  = "Universo Reiniciado";
+$lang['adm_rz_conf']  = "Confirmar";
+$lang['adm_rz_text']  = "Al pulsar Aceptar, se reiniciara a cero su universo. Solo las cuentas no son borradas. Esta operacion no puede ser cancelada en una etapa posterior, es recomendable tener una copia de seguridad de su base de datos!";
+$lang['adm_rz_doit']  = "Aceptar";
 
-$lang['adm_ch_ttle']  = "Administration du chat";
-$lang['adm_ch_list']  = "Liste des messages";
-$lang['adm_ch_clear'] = "vider";
-$lang['adm_ch_msg']   = "Message";
-$lang['adm_ch_delet'] = "Supprimer";
-$lang['adm_ch_play']  = "Joueur";
-$lang['adm_ch_time']  = "Date";
-$lang['adm_ch_nbs']   = "messages(s) au total...";
+//Administrar Chat
+$lang['adm_ch_ttle']  = "Administracion del Chat";
+$lang['adm_ch_list']  = "Lista de Mensajes";
+$lang['adm_ch_clear'] = "vacío";
+$lang['adm_ch_msg']   = "Mensaje";
+$lang['adm_ch_delet'] = "Eliminar";
+$lang['adm_ch_play']  = "Usuario";
+$lang['adm_ch_time']  = "Dato";
+$lang['adm_ch_nbs']   = "mensaje (s) en total...";
 
-$lang['adm_er_ttle']  = "Erreurs r&eacute;pertori&eacute;es";
-$lang['adm_er_list']  = "Messages d'erreur";
-$lang['adm_er_clear'] = "vider la liste";
+$lang['adm_er_ttle']  = "Errores";
+$lang['adm_er_list']  = "Mensajes de Error";
+$lang['adm_er_clear'] = "vaciar la lista";
 $lang['adm_er_idmsg'] = "ID";
-$lang['adm_er_type']  = "Type";
-$lang['adm_er_play']  = "Num&eacute;ro du joueur";
-$lang['adm_er_time']  = "Date";
-$lang['adm_er_delete']= "Supprimer";
-$lang['adm_er_nbs']   = "erreur(s) au total...";
+$lang['adm_er_type']  = "Tipo";
+$lang['adm_er_play']  = "Número jugador";
+$lang['adm_er_time']  = "Dato";
+$lang['adm_er_delete']= "Eliminar";
+$lang['adm_er_nbs']   = "error (es) en total...";
 
+
+$lang['Id'] = "ID de la plan&egrave;te";
+$lang['cle'] = "Chasseur Leger"; 
+$lang['clourd'] = "Chasseur Lourd";
+$lang['pt'] = "Petit Transporteur";
+$lang['gt'] = "Grand Transporteur";
+$lang['cruise'] = "Croiseur";
+$lang['vb'] = "Vaisseau de bataille";
+$lang['colo'] = "Colonisateur";
+$lang['rc'] = "Recycleur";
+$lang['spy'] = "Sondes d'espionnage";
+$lang['bomb'] = "Bombardier";
+$lang['solar'] = "Satelitte solaire";
+$lang['des'] = "Destructeur";
+$lang['rip'] = "Etoile de la mort";
+$lang['traq'] = "Traqueur";
+
+
+// Ajout de flotte
+$lang['add_ship_form']    = "Forma de añadir la flota";
+$lang['add_ship_ttle']    = "La adición de flota";
+$lang['ship_typ']         = "Nombre del buque";
+$lang['hinz']             = "Agregar";
+$lang['del']              = "Eliminar";
+$lang['nr']               = "Nr";
+$lang['kt']               = "Petit Transporteur";
+$lang['gt']               = "Grand Transporteur";
+$lang['lj']               = "Chasseur Leger";
+$lang['sj']               = "Chasseur Lourd";
+$lang['kz']               = "Croiseur";
+$lang['ss']               = "Vaisseau de bataille";
+$lang['ks']               = "Colonisateur";
+$lang['tf']               = "Recycleur";
+$lang['sp']               = "Sondes d'espionnage";
+$lang['bo']               = "Bombardier";
+$lang['so']               = "Satelitte solaire";
+$lang['zt']               = "Destructeur";
+$lang['rp']               = "Etoile de la mort";
+$lang['sk']               = "Traqueur";
+
+$lang['adm_delship1'] = "etire la flota";
+$lang['adm_delship2'] = "La flota se ha suprimido con éxito";
+$lang['adm_addship1'] = "Adición de flota";
+$lang['adm_addship2'] = "La flota se ha añadido con éxito";
+$lang['adm_delbuilding1'] = "Eliminar los edificios";
+$lang['adm_delbuilding2'] = "Los edificios se han reducido con éxito";
+$lang['adm_addbuilding1'] = "Adición de edificios";
+$lang['adm_addbuilding2'] = "Los edificios se han añadido con éxito";
+$lang['adm_delresearch1'] = "Eliminar búsqueda";
+$lang['adm_delresearch2'] = "La investigación se ha reducido con éxito";
+$lang['adm_addresearch1'] = "La adición de Investigación";
+$lang['adm_addresearch2'] = "La investigación se ha añadido con éxito";
+$lang['adm_delmoney1'] = "Eliminar los recursos";
+$lang['adm_delmoney2'] = "Los recursos se han suprimido con éxito";
+$lang['adm_deldef1'] = "Eliminar defensas";
+$lang['adm_deldef2'] = "Las defensas se eliminaron con éxito";
+$lang['adm_adddef1'] = "Adición de defensas";
+$lang['adm_adddef2'] = "Las defensas se han añadido con éxito";
+$lang['adm_shipdel1'] = "Eliminar las flotas";
+$lang['adm_shipdel2'] = "Forma de eliminación de flota";
+$lang['adm_buildingadd1'] = "Agregando nivel a edificios";
+$lang['adm_buildingadd2'] = "La adición de nivel los edificios";
+$lang['adm_moneydel1'] = "Eliminar los recursos";
+$lang['adm_moneydel2'] = "Forma de eliminación";
+$lang['adm_buildingdel1'] = "Eliminar los edificios";
+$lang['adm_buildingdel2'] = "Como restar nivel";
+$lang['adm_researchadd1'] = "Adición de Investigación";
+$lang['adm_researchadd2'] = "Cómo agregar nivel";
+$lang['adm_researchdel1'] = "Eliminar búsqueda";
+$lang['adm_researchdel2'] = "Como restar nivel";
+$lang['adm_defadd1'] = "Adición de las defensas";
+$lang['adm_defadd2'] = "Forma de añadir defensas";
+$lang['adm_defdel1'] = "Eliminar defensas";
+$lang['adm_defdel2'] = "Forma de eliminación de defensas";
+
+
+$lang['mats_titel'] = "El cambio de planeta";
+$lang['mats_utitel'] = "Añadiendo y eliminando el material";
+$lang['mats_add'] = "Agregar";
+$lang['mats_del'] = "Eliminar";
+$lang['mats_ress'] = "Recursos";
+$lang['mats_ship'] = "Flota";
+$lang['mats_building'] = "Edificios";
+$lang['mats_research'] = "Investigaciones";
+$lang['mats_def'] = "Defensas";
 ?>

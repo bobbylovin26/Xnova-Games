@@ -74,6 +74,7 @@ if ( defined('INSIDE')) {
 	213 => "destructor",
 	214 => "dearth_star",
 	215 => "battleship",
+	216 => "supernova",
 
 	401 => "misil_launcher",
 	402 => "small_laser",
@@ -83,6 +84,7 @@ if ( defined('INSIDE')) {
 	406 => "buster_canyon",
 	407 => "small_protection_shield",
 	408 => "big_protection_shield",
+	409 => "planet_protector",
 
 	502 => "interceptor_misil",
 	503 => "interplanetary_misil",
@@ -148,6 +150,7 @@ if ( defined('INSIDE')) {
 		213 => array(  21 =>   9, 118 =>   6, 114 =>   5),
 		214 => array(  21 =>  12, 118 =>   7, 114 =>   6, 199 =>   1),
 		215 => array( 114 =>   5, 120 =>  12, 118 =>   5,  21 =>   8),
+		216 => array( 614 => 1),
 
 		// Defense
 		401 => array(  21 =>   1),
@@ -158,6 +161,7 @@ if ( defined('INSIDE')) {
 		406 => array(  21 =>   8, 122 =>   7),
 		407 => array( 110 =>   2,  21 =>   1),
 		408 => array( 110 =>   6,  21 =>   6),
+		409 => array( 609 =>   1),
 		502 => array(  44 =>   2),
 		503 => array(  44 =>   4),
 
@@ -205,7 +209,7 @@ if ( defined('INSIDE')) {
 		113 => array ( 'metal' =>       0, 'crystal' =>     800, 'deuterium' =>     400, 'energy' =>    0, 'factor' =>   2),
 		114 => array ( 'metal' =>       0, 'crystal' =>    4000, 'deuterium' =>    2000, 'energy' =>    0, 'factor' =>   2),
 		115 => array ( 'metal' =>     400, 'crystal' =>       0, 'deuterium' =>     600, 'energy' =>    0, 'factor' =>   2),
-		117 => array ( 'metal' =>    2000, 'crystal' =>    4000, 'deuterium' =>    6000, 'energy' =>    0, 'factor' =>   2),
+		117 => array ( 'metal' =>    2000, 'crystal' =>    4000, 'deuterium' =>    600, 'energy' =>    0, 'factor' =>   2),
 		118 => array ( 'metal' =>   10000, 'crystal' =>   20000, 'deuterium' =>    6000, 'energy' =>    0, 'factor' =>   2),
 		120 => array ( 'metal' =>     200, 'crystal' =>     100, 'deuterium' =>       0, 'energy' =>    0, 'factor' =>   2),
 		121 => array ( 'metal' =>    1000, 'crystal' =>     300, 'deuterium' =>     100, 'energy' =>    0, 'factor' =>   2),
@@ -228,7 +232,9 @@ if ( defined('INSIDE')) {
 		213 => array ( 'metal' =>   60000, 'crystal' =>   50000, 'deuterium' =>   15000, 'energy' => 0, 'factor' => 1, 'consumption' => 1000, 'consumption2' => 1000, 'speed' =>      5000, 'speed2' =>      5000, 'capacity' =>    2000 ),
 		214 => array ( 'metal' => 5000000, 'crystal' => 4000000, 'deuterium' => 1000000, 'energy' => 0, 'factor' => 1, 'consumption' => 1   , 'consumption2' => 1   , 'speed' =>       100, 'speed2' =>       100, 'capacity' => 1000000 ),
 		215 => array ( 'metal' =>   30000, 'crystal' =>   40000, 'deuterium' =>   15000, 'energy' => 0, 'factor' => 1, 'consumption' => 250 , 'consumption2' => 250 , 'speed' =>     10000, 'speed2' =>     10000, 'capacity' =>     750 ),
+        216 => array ( 'metal' =>   20000000, 'crystal' =>   15000000, 'deuterium' =>   5000000, 'energy' => 0, 'factor' => 1, 'consumption' => 250 , 'consumption2' => 250 , 'speed' =>     150, 'speed2' =>     150, 'capacity' =>     2000000 ),
 
+		
 		401 => array ( 'metal' =>    2000, 'crystal' =>       0, 'deuterium' =>       0, 'energy' => 0, 'factor' => 1 ),
 		402 => array ( 'metal' =>    1500, 'crystal' =>     500, 'deuterium' =>       0, 'energy' => 0, 'factor' => 1 ),
 		403 => array ( 'metal' =>    6000, 'crystal' =>    2000, 'deuterium' =>       0, 'energy' => 0, 'factor' => 1 ),
@@ -237,8 +243,10 @@ if ( defined('INSIDE')) {
 		406 => array ( 'metal' =>   50000, 'crystal' =>   50000, 'deuterium' =>   30000, 'energy' => 0, 'factor' => 1 ),
 		407 => array ( 'metal' =>   10000, 'crystal' =>   10000, 'deuterium' =>       0, 'energy' => 0, 'factor' => 1 ),
 		408 => array ( 'metal' =>   50000, 'crystal' =>   50000, 'deuterium' =>       0, 'energy' => 0, 'factor' => 1 ),
+        409 => array ( 'metal' =>   10000000, 'crystal' =>   5000000, 'deuterium' =>       2500000, 'energy' => 0, 'factor' => 1 ),
 
-		502 => array ( 'metal' =>    8000, 'crystal' =>    2000, 'deuterium' =>       0, 'energy' => 0, 'factor' => 1 ),
+		
+		502 => array ( 'metal' =>    8000, 'crystal' =>    0, 'deuterium' =>       2000, 'energy' => 0, 'factor' => 1 ),
 		503 => array ( 'metal' =>   12500, 'crystal' =>    2500, 'deuterium' =>   10000, 'energy' => 0, 'factor' => 1 ),
 
 		601 => array ( 'max' =>  20),
@@ -251,7 +259,7 @@ if ( defined('INSIDE')) {
 		608 => array ( 'max' =>   2),
 		609 => array ( 'max' =>   1),
 		610 => array ( 'max' =>   2),
-		611 => array ( 'max' =>   2),
+		611 => array ( 'max' =>   3),
 		612 => array ( 'max' =>   1),
 		613 => array ( 'max' =>   3),
 		614 => array ( 'max' =>   1),
@@ -273,7 +281,9 @@ if ( defined('INSIDE')) {
 		213 => array ( 'shield' =>   500, 'attack' =>   2000, 'sd' => array (202 =>   1, 203 =>   1, 204 =>   1, 205 =>   1, 206 =>   1, 207 =>   1, 208 =>   1, 209 =>   1, 210 =>    5, 211 =>   1, 212 =>    5, 213 =>   1, 214 =>   1, 215 =>   2, 401 =>   1, 402 =>  10, 403 =>   1, 404 =>   1, 405 =>   1, 406 =>   1, 407 =>   1, 408 =>   1 )),
 		214 => array ( 'shield' => 50000, 'attack' => 200000, 'sd' => array (202 => 250, 203 => 250, 204 => 200, 205 => 100, 206 =>  33, 207 =>  30, 208 => 250, 209 => 250, 210 => 1250, 211 =>  25, 212 => 1250, 213 =>   5, 214 =>   1, 215 =>  15, 401 => 200, 402 => 200, 403 => 100, 404 =>  50, 405 => 100, 406 =>   1, 407 =>   1, 408 =>   1 )),
 		215 => array ( 'shield' =>   400, 'attack' =>    700, 'sd' => array (202 =>   3, 203 =>   3, 204 =>   1, 205 =>   4, 206 =>   4, 207 =>   7, 208 =>   1, 209 =>   1, 210 =>    5, 211 =>   1, 212 =>    5, 213 =>   1, 214 =>   1, 215 =>   1, 401 =>   1, 402 =>   1, 403 =>   1, 404 =>   1, 405 =>   1, 406 =>   1, 407 =>   1, 408 =>   1 )),
-
+        216 => array ( 'shield' => 1000000, 'attack' => 1000000, 'sd' => array (202 => 250, 203 => 250, 204 => 200, 205 => 100, 206 =>  33, 207 =>  30, 208 => 250, 209 => 250, 210 => 1250, 211 =>  25, 212 => 1250, 213 =>   5, 214 =>   1, 215 =>  15, 401 => 200, 402 => 200, 403 => 100, 404 =>  50, 405 => 100, 406 =>   1, 407 =>   1, 408 =>   1 )),
+		
+		
 		401 => array ( 'shield' =>    20, 'attack' =>     80, 'sd' => array (202 =>   1, 203 =>   1, 204 =>   1, 205 =>   1, 206 =>   1, 207 =>   1, 208 =>   1, 209 =>   1, 210 =>    5, 211 =>   1, 212 =>    0, 213 =>   1, 214 =>   1, 215 =>   1) ),
 		402 => array ( 'shield' =>    25, 'attack' =>    100, 'sd' => array (202 =>   1, 203 =>   1, 204 =>   1, 205 =>   1, 206 =>   1, 207 =>   1, 208 =>   1, 209 =>   1, 210 =>    5, 211 =>   1, 212 =>    0, 213 =>   1, 214 =>   1, 215 =>   1) ),
 		403 => array ( 'shield' =>   100, 'attack' =>    250, 'sd' => array (202 =>   1, 203 =>   1, 204 =>   1, 205 =>   1, 206 =>   1, 207 =>   1, 208 =>   1, 209 =>   1, 210 =>    5, 211 =>   1, 212 =>    0, 213 =>   1, 214 =>   1, 215 =>   1) ),
@@ -281,8 +291,10 @@ if ( defined('INSIDE')) {
 		405 => array ( 'shield' =>   500, 'attack' =>    150, 'sd' => array (202 =>   1, 203 =>   1, 204 =>   1, 205 =>   1, 206 =>   1, 207 =>   1, 208 =>   1, 209 =>   1, 210 =>    5, 211 =>   1, 212 =>    0, 213 =>   1, 214 =>   1, 215 =>   1) ),
 		406 => array ( 'shield' =>   300, 'attack' =>   3000, 'sd' => array (202 =>   1, 203 =>   1, 204 =>   1, 205 =>   1, 206 =>   1, 207 =>   1, 208 =>   1, 209 =>   1, 210 =>    5, 211 =>   1, 212 =>    0, 213 =>   1, 214 =>   1, 215 =>   1) ),
 		407 => array ( 'shield' =>  2000, 'attack' =>      1, 'sd' => array (202 =>   1, 203 =>   1, 204 =>   1, 205 =>   1, 206 =>   1, 207 =>   1, 208 =>   1, 209 =>   1, 210 =>    5, 211 =>   1, 212 =>    0, 213 =>   1, 214 =>   1, 215 =>   1) ),
-		408 => array ( 'shield' =>  2000, 'attack' =>      1, 'sd' => array (202 =>   1, 203 =>   1, 204 =>   1, 205 =>   1, 206 =>   1, 207 =>   1, 208 =>   1, 209 =>   1, 210 =>    5, 211 =>   1, 212 =>    0, 213 =>   1, 214 =>   1, 215 =>   1) ),
-
+		408 => array ( 'shield' =>  10000, 'attack' =>      1, 'sd' => array (202 =>   1, 203 =>   1, 204 =>   1, 205 =>   1, 206 =>   1, 207 =>   1, 208 =>   1, 209 =>   1, 210 =>    5, 211 =>   1, 212 =>    0, 213 =>   1, 214 =>   1, 215 =>   1) ),
+		409 => array ( 'shield' =>  1000000, 'attack' =>      1000000, 'sd' => array (202 =>   1, 203 =>   1, 204 =>   1, 205 =>   1, 206 =>   1, 207 =>   1, 208 =>   1, 209 =>   1, 210 =>    5, 211 =>   1, 212 =>    0, 213 =>   1, 214 =>   1, 215 =>   1) ),
+		
+		
 		502 => array ( 'shield' =>     1, 'attack' =>      1 ),
 		503 => array ( 'shield' =>     1, 'attack' =>  12000 )
 	);
@@ -310,7 +322,7 @@ if ( defined('INSIDE')) {
 				'metal'     => 'return   "0";',
 				'crystal'   => 'return   "0";',
 				'deuterium' => 'return  ((10 * $BuildLevel * pow((1.1), $BuildLevel)) * (-0.002 * $BuildTemp + 1.28)) * (0.1 * $BuildLevelFactor);',
-				'energy'    => 'return - (30 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);')
+				'energy'    => 'return - (20 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);')
 		),
 		// Energie Solaire
 		4   => array( 'metal' =>   50, 'crystal' =>   20, 'deuterium' =>    0, 'energy' => 0, 'factor' => 3/2,
@@ -340,8 +352,8 @@ if ( defined('INSIDE')) {
 
 	$reslist['build']    = array (   1,   2,   3,   4,  12,  14,  15,  21,  22,  23,  24,  31,  33,  34,  44,  41,  42,  43 );
 	$reslist['tech']     = array ( 106, 108, 109, 110, 111, 113, 114, 115, 117, 118, 120, 121, 122, 123, 124, 199 );
-	$reslist['fleet']    = array ( 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215 );
-	$reslist['defense']  = array ( 401, 402, 403, 404, 405, 406, 407, 408, 502, 503 );
+	$reslist['fleet']    = array ( 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216 );
+	$reslist['defense']  = array ( 401, 402, 403, 404, 405, 406, 407, 408, 409, 502, 503 );
 	$reslist['officier'] = array ( 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615);
 	$reslist['prod']     = array (   1,   2,   3,   4,  12, 212 );
 }

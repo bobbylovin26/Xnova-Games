@@ -1,8 +1,6 @@
 <?php
 
 //Player search
-$lang['SearchPlayer'] = "Entrer le nom du joueur";
+$lang['SearchPlayer'] = "Escribe el nombre del jugador";
 
-// Created by Perberos. All rights reversed (C) 2006
-// Complet by XNova. All rights reversed (C) 2008
 ?>

@@ -35,7 +35,8 @@ function MipAttack ($NbreMip, $IDAversaire) {
         405 => array ('shield' => 500),
         406 => array ('shield' => 300),
         407 => array ('shield' => 2000),
-        408 => array ('shield' => 2000)
+        408 => array ('shield' => 10000),
+		409 => array ('shield' => 1000000)
     );
 
     $DefenseAdversaire = array(
@@ -46,11 +47,12 @@ function MipAttack ($NbreMip, $IDAversaire) {
         405 => ($InfoAdversaire['ionic_canyon']),
         406 => ($InfoAdversaire['buster_canyon']),
         407 => ($InfoAdversaire['small_protection_shield']),
-        408 => ($InfoAdversaire['big_protection_shield'])
+        408 => ($InfoAdversaire['big_protection_shield']),
+		409 => ($InfoAdversaire['planet_protector'])
 	);
 
     while ($PuissanceAttaque > 20) {
-        $RandomDefense = rand(401, 408);
+        $RandomDefense = rand(401, 409);
 
         $SelectionDefense = $DefenseAdversaire[$RandomDefense];
         if ($SelectionDefense > 0) {
@@ -68,7 +70,8 @@ function MipAttack ($NbreMip, $IDAversaire) {
     $SqlDefenseur .= "`ionic_canyon`='".$DefenseAdversaire[405]."', ";
     $SqlDefenseur .= "`buster_canyon`='".$DefenseAdversaire[406]."', ";
     $SqlDefenseur .= "`small_protection_shield`='".$DefenseAdversaire[407]."', ";
-    $SqlDefenseur .= "`big_protection_shield`='".$DefenseAdversaire[408]."' ";
+    $SqlDefenseur .= "`big_protection_shield`='".$DefenseAdversaire[408]."', ";
+	$SqlDefenseur .= "`planet_protector`='".$DefenseAdversaire[409]."' ";
     $SqlDefenseur .= " WHERE `id`='".$IDAversaire."'";
 
     doquery($SqlDefenseur, 'planets');

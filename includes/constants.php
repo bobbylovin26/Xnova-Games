@@ -21,13 +21,13 @@ if ( defined('INSIDE') ) {
 	// Nombre de colones pour les rapports d'espionnage
 	define('SPY_REPORT_ROW'           , 2);
 	// Cases données par niveau de Base Lunaire
-	define('FIELDS_BY_MOONBASIS_LEVEL', 4);
+	define('FIELDS_BY_MOONBASIS_LEVEL', 5);
 	// Nombre maximum de colonie par joueur
-	define('MAX_PLAYER_PLANETS'       , 21);
+	define('MAX_PLAYER_PLANETS'       , 51);
 	// Nombre maximum d'element dans la liste de construction de batiments
-	define('MAX_BUILDING_QUEUE_SIZE'  , 5);
+	define('MAX_BUILDING_QUEUE_SIZE'  , 10);
 	// Nombre maximum d'element dans une ligne de liste de construction flotte et defenses
-	define('MAX_FLEET_OR_DEFS_PER_ROW', 1000);
+	define('MAX_FLEET_OR_DEFS_PER_ROW', 50000);
 	// Taux de depassement possible dans l'espace de stockage des hangards ...
 	// 1.0 pour 100% - 1.1 pour 110% etc ...
 	define('MAX_OVERFLOW'             , 1.1);
@@ -37,10 +37,10 @@ if ( defined('INSIDE') ) {
 	define('SHOW_ADMIN_IN_RECORDS'    , 0);
 
 	// Valeurs de bases pour les colonies ou planetes fraichement crées
-	define('BASE_STORAGE_SIZE'        , 1000000);
-	define('BUILD_METAL'              , 500);
-	define('BUILD_CRISTAL'            , 500);
-	define('BUILD_DEUTERIUM'          , 500);
+	define('BASE_STORAGE_SIZE'        , 40000000);
+	define('BUILD_METAL'              , 400);
+	define('BUILD_CRISTAL'            , 200);
+	define('BUILD_DEUTERIUM'          , 1);
 
 	// Debug Level
 	define('DEBUG', 1); // Debugging off

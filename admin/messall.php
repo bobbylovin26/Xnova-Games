@@ -4,7 +4,7 @@
  * messall.php
  *
  * @version 1.0
- * @copyright 2008 by ??????? for XNova
+ * @copyright 2008 by ?????? for XNova
  */
 
 define('INSIDE'  , true);
@@ -15,43 +15,60 @@ $xnova_root_path = './../';
 include($xnova_root_path . 'extension.inc');
 include($xnova_root_path . 'common.' . $phpEx);
 
-	if ($user['authlevel'] >= 1) {
-		if ($_POST && $mode == "change") {
-			if (isset($_POST["tresc"]) && $_POST["tresc"] != '') {
-				$game_config['tresc'] = $_POST['tresc'];
-			}
-			if (isset($_POST["temat"]) && $_POST["temat"] != '') {
-				$game_config['temat'] = $_POST['temat'];
-			}
-			if ($user['authlevel'] == 3) {
-				$kolor = 'red';
-				$ranga = 'Administrator';
-			} elseif ($user['authlevel'] == 4) {
-				$kolor = 'skyblue';
-				$ranga = 'GameOperator';
-			} elseif ($user['authlevel'] == 5) {
-				$kolor = 'yellow';
-				$ranga = 'SuperGameOperator';
-			}
-			if ($game_config['tresc'] != '' and $game_config['temat']) {
-				$sq      = doquery("SELECT `id` FROM {{table}}", "users");
-				$Time    = time();
-				$From    = "<font color=\"". $kolor ."\">". $ranga ." ".$user['username']."</font>";
-				$Subject = "<font color=\"". $kolor ."\">". $game_config['temat'] ."</font>";
-				$Message = "<font color=\"". $kolor ."\"><b>". $game_config['tresc'] ."</b></font>";
-				while ($u = mysql_fetch_array($sq)) {
-					SendSimpleMessage ( $u['id'], $user['id'], $Time, 97, $From, $Subject, $Message);
-				}
-				message("<font color=\"lime\">Wys³a³e¶ wiadomo¶æ do wszystkich graczy</font>", "Complete", "../overview." . $phpEx, 3);
-			}
-		} else {
-			$parse = $game_config;
-			$parse['dpath'] = $dpath;
-			$parse['debug'] = ($game_config['debug'] == 1) ? " checked='checked'/":'';
-			$page .= parsetemplate(gettemplate('admin/messall_body'), $parse);
-			display($page, '', false,'', true);
-		}
-	} else {
-		message($lang['sys_noalloaw'], $lang['sys_noaccess']);
-	}
+	if ($user['authlevel'] >= 2)  {
+
+       if ($_POST && $_GET['mode'] == "change")    { 
+          if ($user['authlevel'] == 3) // niveau administrateur 
+          {             
+           $kolor = 'red';             
+           $ranga = 'Administrateur';         
+          }
+          
+         elseif ($user['authlevel'] == 2) // niveau Operateur
+         {             
+          $kolor = 'skyblue';             
+          $ranga = 'Opérateur';         
+         }   
+        
+         elseif ($user['authlevel'] == 1) // niveau Moderateur
+         {             
+          $kolor = 'yellow';             
+          $ranga = 'Modérateur';   
+          }       
+           // Tout est OK donc on peut ecrir un message a tout les joueurs 
+          if ((isset($_POST["tresc"]) && $_POST["tresc"] != '') && (isset($_POST["temat"]) && $_POST["temat"] != '')) {             
+             $sq      = doquery("SELECT * FROM {{table}}", "users");
+             $Time    = time();             
+             $From    = "<font color=\"". $kolor ."\">". $ranga ." ".$user['username']."</font>";             
+             $Subject = "<font color=\"". $kolor ."\">". $_POST['temat'] ."</font>";             
+             $Message = "<font color=\"". $kolor ."\"><b>". $_POST['tresc'] ."</b></font>";         
+             $summery=0;   
+             
+           while ($u = mysql_fetch_array($sq)) {               
+              SendSimpleMessage ( $u['id'], $user['id'], $Time, 1, $From, $Subject, $Message);
+                $_POST['tresc'] = str_replace(":name:",$u['username'],$_POST['tresc']);
+             }   
+           // Ici le message est bien Partis.
+           message("<font color=\"lime\">Votre message a &eacute;t&eacute; envoy&eacute;!</font>", "Envoy&eacute;", "../overview." . $phpEx, 3);         
+          }
+         else
+         {
+          // Ici on a une erreur : pas de sujet spécifié
+          message("Vous n\'avez pas sp&eacute;cifi&eacute; de sujet!", "Erreur", "../overview." . $phpEx, 3);
+         }       
+        }
+        else
+       {         
+        $parse = $game_config;
+        $parse['dpath'] = $dpath;         
+        $parse['debug'] = ($game_config['debug'] == 1) ? " checked='checked'/":'';         
+        $page .= parsetemplate(gettemplate('admin/messall_body'), $parse);         
+        display($page, '', false,'', true);       
+       }   
+    } // fin de la requette de verification level
+
+    else // on vire car pas le bon level
+      {       
+       message($lang['sys_noalloaw'], $lang['sys_noaccess']);   
+      }
 ?>

@@ -14,7 +14,7 @@ $xnova_root_path = './';
 include($xnova_root_path . 'extension.inc');
 include($xnova_root_path . 'common.' . $phpEx);
 include($xnova_root_path . 'includes/functions/BBcodeFunction.' . $phpEx);
-if($user['authlevel']!="1"&$user['authlevel']!="3"&$user['authlevel']!="0"){ header("Location: login.php");} 
+if($user['authlevel']!="1"&$user['authlevel']!="2"&$user['authlevel']!="3"&$user['authlevel']!="0"){ header("Location: login.php");} 
 
 	includeLang('messages');
 

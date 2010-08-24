@@ -1,27 +1,27 @@
 <?php
 
-// Language file for Statistic module
-$lang['stat_title']    = "Statistiques";
-$lang['stat_show']     = "Classement des";
-$lang['stat_by']       = "selon";
-$lang['stat_range']    = "Place";
 
-$lang['stat_player']   = "joueurs";
-$lang['stat_allys']    = "alliances";
+$lang['stat_title']    = "Estadisticas";
+$lang['stat_show']     = "Mostrar";
+$lang['stat_by']       = "por";
+$lang['stat_range']    = "Posicion";
+
+$lang['stat_player']   = "Jugador";
+$lang['stat_allys']    = "Alianza";
 $lang['stat_main']     = "General";
-$lang['stat_fleet']    = "Flotte";
-$lang['stat_research'] = "Recherches";
-$lang['stat_building'] = "Batiment";
-$lang['stat_defenses'] = "Defense";
+$lang['stat_fleet']    = "Flota";
+$lang['stat_research'] = "Investigaciones";
+$lang['stat_building'] = "Edificios";
+$lang['stat_defenses'] = "Defensas";
 
-$lang['Position']      = "Place";
-$lang['Difference']    = "Diff.";
-$lang['Player']        = "Joueur";
-$lang['Alliance']      = "Alliance";
-$lang['Points']        = "Points";
-$lang['Members']       = "Membres";
-$lang['PerMember']     = "Par Membres";
-$lang['Ecrire']        = "Ecrire un message";
+$lang['Position']      = "Posicion";
+$lang['Difference']    = "Diferencia";
+$lang['Player']        = "Jugador";
+$lang['Alliance']      = "Alianza";
+$lang['Points']        = "Puntos";
+$lang['Members']       = "Miembros";
+$lang['PerMember']     = "Por Miembro";
+$lang['Ecrire']        = "Escribir un mensaje";
 
-// Created by Chlorel (XNova Team). All rights reversed (C) 2008
+
 ?>

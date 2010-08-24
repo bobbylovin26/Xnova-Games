@@ -1,6 +1,6 @@
 <?php
 
-$lang['Id'] = "ID de la plan&egrave;te";
+$lang['Id'] = "ID del Planeta";
 $lang['cle'] = "Chasseur Leger"; 
 $lang['clourd'] = "Chasseur Lourd";
 $lang['pt'] = "Petit Transporteur";

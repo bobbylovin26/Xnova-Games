@@ -14,6 +14,8 @@
 
 
 
+  
+
 	
 function check_urlaubmodus ($user) {
 	if ($user['urlaubs_modus'] == 1) {

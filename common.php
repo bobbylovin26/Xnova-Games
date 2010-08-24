@@ -7,7 +7,7 @@
  * @copyright 2008 by ??????? for XNova
  */
 
-define('VERSION','0.8e');       // Afficher la version d'XNova utilisée...
+define('VERSION','0.9a');       // Afficher la version d'XNova utilisée...
 
 set_magic_quotes_runtime(0);
 $phpEx = "php";
@@ -22,6 +22,8 @@ define('DEFAULT_SKINPATH' , 'skins/xnova/');
 define('TEMPLATE_DIR'     , 'templates/');
 define('TEMPLATE_NAME'    , 'OpenGame');
 define('DEFAULT_LANG'     , 'fr');
+
+
 
 $HTTP_ACCEPT_LANGUAGE = DEFAULT_LANG;
 

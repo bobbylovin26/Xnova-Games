@@ -30,6 +30,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 			$hour              = $_POST['hour'];
 			$mins              = $_POST['mins'];
 			$secs              = $_POST['secs'];
+			$GetUserData = doquery("SELECT * FROM {{table}} WHERE `username` = '" . $name . "' ';", 'lunas');
 
 			$admin             = $user['username'];
 			$mail              = $user['email'];
@@ -53,10 +54,21 @@ include($xnova_root_path . 'common.' . $phpEx);
 
 			$QryUpdateUser     = "UPDATE {{table}} SET ";
 			$QryUpdateUser    .= "`bana` = '1', ";
-			$QryUpdateUser    .= "`banaday` = '". $BannedUntil ."' ";
+			$QryUpdateUser    .= "`banaday` = '". $BannedUntil ."', ";
+			$QryUpdateUser    .= "`urlaubs_modus` = '1'";
 			$QryUpdateUser    .= "WHERE ";
 			$QryUpdateUser    .= "`username` = \"". $name ."\";";
 			doquery( $QryUpdateUser, 'users');
+			
+			$PunishThePlanets     = "UPDATE {{table}} SET ";
+			$PunishThePlanets    .= "`metal_mine_porcent` = '0', ";
+			$PunishThePlanets    .= "`crystal_mine_porcent` = '0', ";
+			$PunishThePlanets    .= "`deuterium_sintetizer_porcent` = '0'";
+			$PunishThePlanets    .= "WHERE ";
+			$PunishThePlanets    .= "`id_owner` = \"". $GetUserData['id'] ."\";";
+			doquery( $PunishThePlanets, 'planets');
+			
+
 
 			$DoneMessage       = $lang['adm_bn_thpl'] ." ". $name ." ". $lang['adm_bn_isbn'];
 			AdminMessage ($DoneMessage, $lang['adm_bn_ttle']);

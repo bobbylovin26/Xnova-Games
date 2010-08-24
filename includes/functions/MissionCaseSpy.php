@@ -71,10 +71,10 @@ function MissionCaseSpy ( $FleetRow ) {
 						}
 						$TargetChances = rand(0, $TargetForce);
 						$SpyerChances  = rand(0, 100);
-						if ($TargetChances >= $SpyerChances) {
-							$DestProba = sprintf( $lang['sys_mess_spy_lostproba'], $TargetChances);
-						} elseif ($TargetChances < $SpyerChances) {
-							$DestProba = "<font color=\"red\">".$lang['sys_mess_spy_destroyed']."</font>";
+						 if ($TargetChances >= $SpyerChances) {
+                        $DestProba = "<font color=\"red\">".$lang['sys_mess_spy_destroyed']."</font>";
+                        } elseif ($TargetChances < $SpyerChances) {
+                        $DestProba = sprintf( $lang['sys_mess_spy_lostproba'], $TargetChances);
 						}
 						$AttackLink = "<center>";
 						$AttackLink .= "<a href=\"fleet.php?galaxy=". $FleetRow['fleet_end_galaxy'] ."&system=". $FleetRow['fleet_end_system'] ."";

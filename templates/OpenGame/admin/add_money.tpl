@@ -1,3 +1,4 @@
+
 <br><br>
 <h2>{adm_am_ttle}</h2>
 <form action="add_money.php" method="post">

@@ -1,35 +1,35 @@
 <?php
 
-$lang['phl_tbl_title'] = "Scan de lune";
-$lang['phl_tbl_moves'] = "Mouvements de flotte actuels";
-$lang['phl_no_deuter'] = "Vous n'avez pas assez de deut&eacute;rium !";
+$lang['phl_tbl_title'] = "Escanear Luna";
+$lang['phl_tbl_moves'] = "Movimiento actual de flotas";
+$lang['phl_no_deuter'] = "No tienes Gashofa !";
 
 // Gestion des flottes
-$lang['ov_fleet']            = "flotte";
-$lang['ov_une']              = "Une ";
-$lang['ov_vennant']          = " venant ";
-$lang['ov_planet_to']        = "de la plan&egrave;te ";
-$lang['ov_moon_to']          = "de la lune ";
-$lang['ov_atteint']          = " atteint ";
-$lang['ov_planet_to_target'] = "la plan&egrave;te ";
-$lang['ov_moon_to_target']   = "la lune ";
-$lang['ov_debris_to_target'] = "le Champ de d&eacute;bris ";
-$lang['ov_explo_to_target']  = "la position ";
-$lang['ov_mission']          = ". Elle avait pour mission : ";
+$lang['ov_fleet']            = "flota";
+$lang['ov_une']              = "Una ";
+$lang['ov_vennant']          = " se dirige ";
+$lang['ov_planet_to']        = "del planeta ";
+$lang['ov_moon_to']          = "de la luna ";
+$lang['ov_atteint']          = " llega ";
+$lang['ov_planet_to_target'] = "al planeta ";
+$lang['ov_moon_to_target']   = "a la luna ";
+$lang['ov_debris_to_target'] = "el campo de escombros ";
+$lang['ov_explo_to_target']  = "la posicion ";
+$lang['ov_mission']          = ". Con la mision de : ";
 
-$lang['ov_explo_stay']       = " explore ";
-$lang['ov_explo_mission']    = ". Elle a pour mission : ";
+$lang['ov_explo_stay']       = " explorar ";
+$lang['ov_explo_mission']    = ". Con la mision de : ";
 
-$lang['ov_rentrant']         = " rentre ";
-$lang['ov_planet_from']      = "de la plan&egrave;te ";
-$lang['ov_moon_from']        = "de la lune ";
-$lang['ov_debris_from']      = "du Champ de d&eacute;bris ";
-$lang['ov_explo_from']       = "de la position ";
-$lang['ov_back_planet']      = " &agrave; la plan&egrave;te ";
-$lang['ov_back_moon']        = " &agrave; la lune ";
+$lang['ov_rentrant']         = " regresa ";
+$lang['ov_planet_from']      = "del planeta ";
+$lang['ov_moon_from']        = "de la luna ";
+$lang['ov_debris_from']      = "del campo de escombros ";
+$lang['ov_explo_from']       = "de la posicion ";
+$lang['ov_back_planet']      = " el planeta ";
+$lang['ov_back_moon']        = " a la luna ";
 
-$lang['ov_une_hostile']      = "Une ";
-$lang['ov_hostile']          = " hostile de ";
-$lang['ov_message']          = "Envoyer un message";
+$lang['ov_une_hostile']      = "Una ";
+$lang['ov_hostile']          = " flota de ";
+$lang['ov_message']          = "Escribir mensaje";
 
 ?>

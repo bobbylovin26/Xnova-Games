@@ -66,6 +66,9 @@ function get_komplett_name ($id) {
 		case '408':
 			$name = "Grand bouclier";
 			break;
+		case '409':
+            $name = "Protecteur Plan&egrave;taire";
+            break;			
 		default:
 			$name = "N/A";
 	}

@@ -65,9 +65,7 @@ function MissionCaseRecycling ($FleetRow) {
 					}
 				}
 			}
-			$NewCargo['Metal']     = $FleetRow["fleet_resource_metal"]   + $RecycledGoods["metal"];
-			$NewCargo['Crystal']   = $FleetRow["fleet_resource_crystal"] + $RecycledGoods["crystal"];
-			$NewCargo['Deuterium'] = $FleetRow["fleet_resource_deuterium"];
+
 
 			$QryUpdateGalaxy  = "UPDATE {{table}} SET ";
 			$QryUpdateGalaxy .= "`metal` = `metal` - '".$RecycledGoods["metal"]."', ";
@@ -84,14 +82,13 @@ function MissionCaseRecycling ($FleetRow) {
 			doquery("UPDATE {{table}} SET `mnl_exploit` = `mnl_exploit` + '1' WHERE `id` = '".$FleetRow['fleet_owner']."'", 'users');
 
 			$QryUpdateFleet  = "UPDATE {{table}} SET ";
-            $QryUpdateFleet .= "`fleet_resource_metal` = '".$NewCargo['Metal']."', ";
-			$QryUpdateFleet .= "`fleet_resource_crystal` = '".$NewCargo['Crystal']."', ";
-			$QryUpdateFleet .= "`fleet_resource_deuterium` = '".$NewCargo['Deuterium']."', ";
-			$QryUpdateFleet .= "`fleet_mess` = '1' ";
+            $QryUpdateFleet .= "`fleet_resource_metal` = `fleet_resource_metal` + '".$RecycledGoods["metal"]."', ";
+            $QryUpdateFleet .= "`fleet_resource_crystal` = `fleet_resource_crystal` + '".$RecycledGoods["crystal"]."', ";
+            $QryUpdateFleet .= "`fleet_mess` = '1' ";
             $QryUpdateFleet .= "WHERE ";
-			$QryUpdateFleet .= "`fleet_id` = '".$FleetRow['fleet_id']."' ";
+            $QryUpdateFleet .= "`fleet_id` = '".$FleetRow['fleet_id']."' ";
             $QryUpdateFleet .= "LIMIT 1;";
-			doquery( $QryUpdateFleet, 'fleets');
+         doquery( $QryUpdateFleet, 'fleets');
 		}
 	} else {
 		if ($FleetRow['fleet_end_time'] <= time()) {

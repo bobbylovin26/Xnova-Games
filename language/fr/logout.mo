@@ -2,15 +2,15 @@
 
 /*******************************************************************************************************
 *
-*		german UGamela
-*		http://ugamela-forum.pheelgood.net
-*		UGamela basescripts from Perberos @2006 (all rights reversed)
+*		Xnova
+*		http://juego.kilu.de
+*		Xnova @2008 (all rights reversed)
 *		
 *
 *******************************************************************************************************/
 
 
-$lang['see_you'] = 'En esp&eacute;rant vous revoir tr&egrave;s bientot. Le staff.';
-$lang['session_closed'] = "Session termin&eacute;e.";
+$lang['see_you'] 		= 'Esperamos volverte a ver muy pronto.';
+$lang['session_closed'] = "Sesion terminada";
 
 ?>

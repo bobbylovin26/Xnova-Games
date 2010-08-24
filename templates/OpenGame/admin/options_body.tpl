@@ -8,7 +8,7 @@
 	<td class="c" colspan="2">{adm_opt_game_settings}</td>
 </tr><tr>
 	<th>{adm_opt_game_name}</th>
-	<th><input name=game_name size=20 value={game_name} type=text></th>
+	<th><input name="game_name"  size=20 value="{game_name}" type=text></th>
 </tr>
 <tr>
 	<th>{adm_opt_menu_link_enable}</th>

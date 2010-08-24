@@ -74,8 +74,10 @@ function ShowProductionTable ($CurrentUser, $CurrentPlanet, $BuildID, $Template)
 	$Prod[1]          = (floor(eval($ProdGrid[$BuildID]['formule']['metal'])     * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_geologue']  * 0.05)));
 	$Prod[2]          = (floor(eval($ProdGrid[$BuildID]['formule']['crystal'])   * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_geologue']  * 0.05)));
 	$Prod[3]          = (floor(eval($ProdGrid[$BuildID]['formule']['deuterium']) * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_geologue']  * 0.05)));
-	$Prod[4]          = (floor(eval($ProdGrid[$BuildID]['formule']['energy'])    * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_ingenieur'] * 0.05)));
-	$BuildLevel       = "";
+	  // Prise en compte du bonus de l'ingénieur :
+   if( $BuildID >= 4 ) { // l'énergie augmente avec les centrales et satellites :
+      $Prod[4] = (floor(eval($ProdGrid[$BuildID]['formule']['energy'])    * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_ingenieur'] * 0.05)));
+   } else $Prod[4] = (floor(eval($ProdGrid[$BuildID]['formule']['energy'])    * $game_config['resource_multiplier'])) * $BuildLevel       = "";
 
 	$ActualProd       = floor($Prod[$BuildID]);
 	if ($BuildID != 12) {
@@ -95,8 +97,11 @@ function ShowProductionTable ($CurrentUser, $CurrentPlanet, $BuildID, $Template)
 			$Prod[1] = (floor(eval($ProdGrid[$BuildID]['formule']['metal'])     * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_geologue']  * 0.05)));
 			$Prod[2] = (floor(eval($ProdGrid[$BuildID]['formule']['crystal'])   * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_geologue']  * 0.05)));
 			$Prod[3] = (floor(eval($ProdGrid[$BuildID]['formule']['deuterium']) * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_geologue']  * 0.05)));
-			$Prod[4] = (floor(eval($ProdGrid[$BuildID]['formule']['energy'])    * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_ingenieur'] * 0.05)));
-
+			   // Prise en compte du bonus de l'ingénieur :
+         if( $BuildID >= 4 ) { // l'énergie augmente avec les centrales et satellites :
+            $Prod[4] = (floor(eval($ProdGrid[$BuildID]['formule']['energy'])    * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_ingenieur'] * 0.05)));
+         } else $Prod[4] = (floor(eval($ProdGrid[$BuildID]['formule']['energy'])    * $game_config['resource_multiplier']));
+		 
 			$bloc['build_lvl']       = ($CurrentBuildtLvl == $BuildLevel) ? "<font color=\"#ff0000\">".$BuildLevel."</font>" : $BuildLevel;
 			if ($ProdFirst > 0) {
 				if ($BuildID != 12) {
@@ -236,7 +241,7 @@ function ShowBuildingInfoPage ($CurrentUser, $CurrentPlanet, $BuildID) {
 	} elseif ($BuildID >= 106 && $BuildID <= 199) {
 		// Laboratoire
 		$PageTPL              = gettemplate('info_buildings_general');
-	} elseif ($BuildID >= 202 && $BuildID <= 215) {
+	} elseif ($BuildID >= 202 && $BuildID <= 216) {
 		// Flotte
 		$PageTPL              = gettemplate('info_buildings_fleet');
 		$parse['element_typ'] = $lang['tech'][200];
@@ -254,7 +259,7 @@ function ShowBuildingInfoPage ($CurrentUser, $CurrentPlanet, $BuildID) {
 		} elseif ($BuildID == 211) {
 			$parse['upd_speed']   = "<font color=\"yellow\">(". pretty_number ($pricelist[$BuildID]['speed2']) .")</font>";       // Vitesse rééquipée
 		}
-	} elseif ($BuildID >= 401 && $BuildID <= 408) {
+	} elseif ($BuildID >= 401 && $BuildID <= 409) {
 		// Defenses
 		$PageTPL              = gettemplate('info_buildings_defense');
 		$parse['element_typ'] = $lang['tech'][400];
