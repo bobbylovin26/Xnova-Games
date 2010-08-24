@@ -542,7 +542,7 @@ class ShowAlliancePage
 				if ($sendmail == 1)
 				{
 					$_POST['r'] 	= intval($_POST['r']);
-					$_POST['text']  = trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) );
+					$_POST['text']	= preg_replace ( "/([^\s]{80}?)/" , "\\1<br />" , trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) ) );
 
 					if ($_POST['r'] == 0)
 						$sq = doquery("SELECT id,username FROM {{table}} WHERE ally_id='{$CurrentUser['ally_id']}'", "users");
@@ -790,6 +790,7 @@ class ShowAlliancePage
 						doquery("UPDATE {{table}} SET
 						`ally_request`='{$ally['ally_request']}'
 						WHERE `id`='{$ally['id']}'", "alliance");
+						header ("Location: game.php?page=alliance&mode=admin&edit=ally&t=3");
 					}
 					elseif ($t == 2)
 					{
@@ -797,6 +798,7 @@ class ShowAlliancePage
 						doquery("UPDATE {{table}} SET
 						`ally_text`='{$ally['ally_text']}'
 						WHERE `id`='{$ally['id']}'", "alliance");
+						header ("Location: game.php?page=alliance&mode=admin&edit=ally&t=2");
 					}
 					else
 					{
@@ -805,6 +807,7 @@ class ShowAlliancePage
 						doquery("UPDATE {{table}} SET
 						`ally_description`='" . $ally['ally_description'] . "'
 						WHERE `id`='{$ally['id']}'", "alliance");
+						header ("Location: game.php?page=alliance&mode=admin&edit=ally&t=1");
 					}
 				}
 

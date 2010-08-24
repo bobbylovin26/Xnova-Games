@@ -27,8 +27,16 @@ $xgp_root = './../';
 include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.' . $phpEx);
 
-if ($user['authlevel'] < 1) die(message ($lang['not_enough_permissions']));
+if ($user['authlevel'] < 1) die();
 
-	display( parsetemplate(gettemplate('adm/topnav'), $lang), false, '', true, false);
+$parse	=	$lang;
 
+if ($user['authlevel'] == 3)
+{
+	$parse['moderation']	=	'<a href="Moderation.php?moderation=1" target="Hauptframe" class="topn">&nbsp;'.$lang['mu_moderation_page'].'&nbsp;</a>';
+	$parse['authlevels']	=	'<a href="Moderation.php?moderation=2" target="Hauptframe" class="topn">&nbsp;'.$lang['ad_authlevel_title'].'&nbsp;</a>';
+}
+	
+	
+display( parsetemplate(gettemplate('adm/Topnav'), $parse), false, '', true, false);
 ?>

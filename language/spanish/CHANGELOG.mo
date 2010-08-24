@@ -4,7 +4,49 @@ $lang['Version']     = 'Versión';
 $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
-'2.9.0' => ' 10/10/09
+'2.9.1' => ' 21/10/09
+
+- [Fix][Menor] Corregido un bug menor en el texto de los informes de espionaje que permitía bashing.-
+- [Fix][Menor] Corregido un bug menor en el texto de los reportes de combates.-
+- [Fix][Menor] Corregido un bug menor que mostraba carácteres raros en la alianza luego de editar un texto (By Neko).-
+- [Fix][Menor] Corregido un bug menor que deformaba la página de los mensajes al enviar mensajes muy largos (By Neko).- 
+- [Fix][Menor] Correciones en algunos textos.-
+
+Nueva numeración (bug tracker)
+- [Fix][Bug #0000010] No direcciona bien el ataque.-
+
+Vieja numeración
+- [Fix][Bug #5] Los sacs no coordinan los tiempos.-
+- [Fix][Bug #6] Los sacs no aparecen en el mismo mensajes en la visión general (By privatethedawn).-
+
+
+- [Cambio] Ahora cuando se estan moviendo flotas no es posible abandonar un planeta (By privatethedawn).-
+- [Cambio] Ahora al explorar la galaxia, si es tu propio sistema solar, no perderás deuterio.-
+- [Cambio] Nuevo panel administrativo (By Neko)
+.- Nuevo skin
+.- Agregado el sistema de moderación.
+.- FIX suspender usuario (Si el jugador ya estaba suspendido y lo suspendias de vuelta creaba 
+otra tabla con los mismos datos (duplicacion)). Mejoras.
+.- Reset de universo mejorado, con poder de reiniciar distintas cosas.
+.- [FIX] Al resetear todo el universo: 
+ || no introducia el "id_level" en la tabla de planetas.
+ || dejaba al usuario como inactivo (al reiniciar nuevamente se borraban las cuentas por inactividad).
+.- Opciones de lunas mejorado.
+.- Agregada la creación de planetas.
+.- Contador de caracteres para mensajes (cntchar.js) nuevo y mejorado.
+.- Agregada la opcion de "ver todos los mensajes" y un "seleccionar todo" en la lista de mensajes.
+.- Agregado sistema para crear cuentas.
+.- Reestructuración del adminresources.php (ahora AccountEditorPage.php)
+ || Agregada la edición de datos personales.
+ || Agregada varias opciones más para la edición de planetas y lunas.
+ || Agregada la edición de oficiales.
+.- Agregado un buscador avanzado.
+.- Eliminado el borrado de reportes cuando se borraba un usuario, sino cuando el otro atacante o defensor queria ver
+la batalla no le figuraba.
+',
+
+
+'2.9.0' => ' 21/10/09
 
 - [Seguridad] Ahora es encriptada la contraseña que se ingresa durante la actualización.- 
 

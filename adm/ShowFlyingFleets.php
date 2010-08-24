@@ -27,13 +27,13 @@ $xgp_root = './../';
 include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.' . $phpEx);
 include($xgp_root . 'includes/classes/class.FlyingFleetsTable.' . $phpEx);
+include('AdminFunctions/Autorization.' . $phpEx);
 
-if ($user['authlevel'] < 1) die(message ($lang['not_enough_permissions']));
+if ($Observation != 1) die();
 
-	$parse				= $lang;
-	$FlyingFleetsTable 	= new FlyingFleetsTable();
-	$parse['flt_table'] = $FlyingFleetsTable->BuildFlyingFleetTable();
+$parse				= $lang;
+$FlyingFleetsTable 	= new FlyingFleetsTable();
+$parse['flt_table'] = $FlyingFleetsTable->BuildFlyingFleetTable();
 
-	display(parsetemplate(gettemplate('adm/fleet_body'), $parse), false, '', true, false);
-
+display(parsetemplate(gettemplate('adm/fleet_body'), $parse), false, '', true, false);
 ?>

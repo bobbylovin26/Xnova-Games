@@ -1658,7 +1658,7 @@ class FlyingFleetHandler
 
 							$AttackLink = "<center>";
 							$AttackLink .= "<a href=\"game.php?page=fleet&galaxy=". $FleetRow['fleet_end_galaxy'] ."&system=". $FleetRow['fleet_end_system'] ."";
-							$AttackLink .= "&planet=".$FleetRow['fleet_end_planet']."";
+							$AttackLink .= "&planet=".$FleetRow['fleet_end_planet']."&planettype=".$FleetRow['fleet_end_type']."";
 							$AttackLink .= "&target_mission=1";
 							$AttackLink .= " \">". $lang['type_mission'][1] ."";
 							$AttackLink .= "</a></center>";
@@ -1686,13 +1686,16 @@ class FlyingFleetHandler
 							SendSimpleMessage ( $CurrentUserID, '', $FleetRow['fleet_start_time'], 0, $lang['sys_mess_qg'], $lang['sys_mess_spy_report'], $SpyMessage);
 
 							$TargetMessage  = $lang['sys_mess_spy_ennemyfleet'] ." ". $CurrentPlanet['name'];
+
+							if($FleetRow['fleet_start_type'] == 3)
+								$TargetMessage .= $lang['sys_mess_spy_report_moon'] . " ";
+
 							$TargetMessage .= "<a href=\"game.php?page=galaxy&mode=3&galaxy=". $CurrentPlanet["galaxy"] ."&system=". $CurrentPlanet["system"] ."\">";
 							$TargetMessage .= "[". $CurrentPlanet["galaxy"] .":". $CurrentPlanet["system"] .":". $CurrentPlanet["planet"] ."]</a> ";
 							$TargetMessage .= $lang['sys_mess_spy_seen_at'] ." ". $TargetPlanet['name'];
 							$TargetMessage .= " [". $TargetPlanet["galaxy"] .":". $TargetPlanet["system"] .":". $TargetPlanet["planet"] ."].";
 
 							SendSimpleMessage ( $TargetUserID, '', $FleetRow['fleet_start_time'], 0, $lang['sys_mess_spy_control'], $lang['sys_mess_spy_activity'], $TargetMessage);
-
 						}
 						if ($TargetChances >= $SpyerChances)
 						{

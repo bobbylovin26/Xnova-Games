@@ -333,11 +333,11 @@ class ShowGalaxyPage extends GalaxyRows
 			$system        = 1;
 		}
 
-		if ( ( $CurrentPlanet['system'] != ( $_POST["system"] - 1 ) ) &&  ( $mode != 0 ) && ( $CurrentPlanet['deuterium'] < 10 ) )
+		if ( ( $CurrentPlanet['system'] != ( $_POST["system"] - 1 ) ) && ( $mode != 0 ) && ( $CurrentPlanet['deuterium'] < 10 ) )
 		{
 			die (message($lang['gl_no_deuterium_to_view_galaxy'], "game.php?page=galaxy&mode=0", 2));
 		}
-		else
+		elseif( ( $CurrentPlanet['system'] != ( $_POST["system"] - 1 ) ) && ( $mode != 0 ) )
 		{
 			$QryGalaxyDeuterium   = "UPDATE {{table}} SET ";
 			$QryGalaxyDeuterium  .= "`deuterium` = `deuterium` -  10 ";

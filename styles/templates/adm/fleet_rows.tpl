@@ -1,3 +1,4 @@
+<style>th.u{border:0px;font-weight:600;}</style>
 <tr>
 	<th>{Id}</th>
 	<th>{Fleet}</th>

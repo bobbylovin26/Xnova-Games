@@ -131,6 +131,7 @@ $lang['ov_planet_name']						= 'Nombre';
 $lang['ov_actions']							= 'Acciones';
 $lang['ov_planet_rename']					= 'Nombrar';
 $lang['ov_planet_rename_action']			= 'Nombrar';
+$lang['ov_abandon_planet_not_possible']		= 'No es posible abandonar un planeta cuando hay flotas moviendose';
 
 //----------------------------------------------------------------------------//
 //GALAXY
@@ -1101,6 +1102,7 @@ $lang['sys_spy_maretials'] 					= "Recursos en";
 $lang['sys_spy_fleet'] 						= "Flota";
 $lang['sys_spy_defenses'] 					= "Defensas";
 $lang['sys_mess_qg'] 						= "Cuartel General";
+$lang['sys_mess_spy_report_moon']			= "(Luna)";
 $lang['sys_mess_spy_report'] 				= "Reporte de espionaje";
 $lang['sys_mess_spy_lostproba'] 			= "Probabilidad de detección de la flota de espionaje : %d %% ";
 $lang['sys_mess_spy_control'] 				= "Control Espacial";
@@ -1234,7 +1236,7 @@ $lang['fa_week_player']						= 'Error, el jugador es demasiado débil';
 $lang['fa_strong_player']					= 'Error, el jugador es demasiado fuerte';
 $lang['fa_not_spy_yourself']				= 'Error, no puedes espiarte a ti mismo';
 $lang['fa_not_attack_yourself']				= 'Error, no puedes atacarte a ti mismo';
-$lang['fa_action_not_allowed']				= 'Error, acción no permitida';
+$lang['fa_action_not_allowed']				= 'Error, accion no permitida';
 $lang['fa_vacation_mode_current']			= 'Error, te encuentras en modo vacaciones';
 $lang['fa_sending']							= 'Enviando';
 

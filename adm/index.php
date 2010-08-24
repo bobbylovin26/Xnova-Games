@@ -27,7 +27,7 @@ $xgp_root = './../';
 include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.' . $phpEx);
 
-if ($user['authlevel'] < 1) die(message ($lang['not_enough_permissions']));
+if ($user['authlevel'] < 1) die();
 
 	$page  = "<html>\n";
 	$page .= "<head>\n";
@@ -35,11 +35,11 @@ if ($user['authlevel'] < 1) die(message ($lang['not_enough_permissions']));
 	$page .= "<title>". $game_config['game_name'] ." - Admin CP</title>\n";
 	$page .= "<link rel=\"shortcut icon\" href=\"./../favicon.ico\">\n";
 	$page .= "</head>\n";
-	$page .= "<frameset cols=\"160,*\" frameborder=\"no\" border=\"0\" framespacing=\"0\">\n";
+	$page .= "<frameset cols=\"180,*\" frameborder=\"no\" border=\"0\" framespacing=\"0\">\n";
 	$page .= "<frame src=\"menu.php\" name=\"rightFrame\" id=\"rightFrame\"/>\n";
-	$page .= "<frameset rows=\"61,*\" frameborder=\"no\" border=\"0\" framespacing=\"0\">\n";
+	$page .= "<frameset rows=\"65,*\" frameborder=\"no\" border=\"0\" framespacing=\"0\">\n";
 	$page .= "<frame src=\"topnav.php\" name=\"topFrame\" scrolling=\"No\" noresize=\"noresize\" id=\"topFrame\"/>\n";
-	$page .= "<frame src=\"overview.php\" name=\"Hauptframe\" scrolling=\"yes\" noresize=\"noresize\" id=\"mainFrame\"/>\n";
+	$page .= "<frame src=\"OverviewPage.php\" name=\"Hauptframe\" scrolling=\"Auto\" noresize=\"noresize\" id=\"mainFrame\"/>\n";
 	$page .= "</frameset>\n";
 	$page .= "<noframes><body>\n";
 	$page .= "</body>\n";

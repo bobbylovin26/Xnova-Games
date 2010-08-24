@@ -131,6 +131,7 @@ $lang['ov_planet_name']						= 'Name';
 $lang['ov_actions']							= 'Functions';
 $lang['ov_planet_rename']					= 'rename';
 $lang['ov_planet_rename_action']			= 'rename';
+$lang['ov_abandon_planet_not_possible']		= 'It\'s not possible abandon a planet where are fleets moving';
 
 //----------------------------------------------------------------------------//
 //GALAXY
@@ -1090,6 +1091,7 @@ $lang['sys_spy_maretials'] 					= "Resources";
 $lang['sys_spy_fleet'] 						= "Fleet";
 $lang['sys_spy_defenses'] 					= "Fenders";
 $lang['sys_mess_qg'] 						= "Headquarters";
+$lang['sys_mess_spy_report_moon']			= "(Moon)";
 $lang['sys_mess_spy_report'] 				= "Report espionage";
 $lang['sys_mess_spy_lostproba'] 			= "Probability of detection of the fleet of spy : %d %% ";
 $lang['sys_mess_spy_control'] 				= "Space Control";

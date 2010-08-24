@@ -54,13 +54,13 @@ $QryTableAlliance   .= ") ENGINE=MyISAM;";
 
 $QryTableBanned      = "CREATE TABLE `{{table}}` ( ";
 $QryTableBanned     .= "`id` bigint(11) NOT NULL auto_increment, ";
-$QryTableBanned     .= "`who` varchar(11) character set latin1 NOT NULL default '', ";
+$QryTableBanned     .= "`who` varchar(64) character set latin1 NOT NULL default '', ";
 $QryTableBanned     .= "`theme` text character set latin1 NOT NULL, ";
-$QryTableBanned     .= "`who2` varchar(11) character set latin1 NOT NULL default '', ";
+$QryTableBanned     .= "`who2` varchar(64) character set latin1 NOT NULL default '', ";
 $QryTableBanned     .= "`time` int(11) NOT NULL default '0', ";
 $QryTableBanned     .= "`longer` int(11) NOT NULL default '0', ";
-$QryTableBanned     .= "`author` varchar(11) character set latin1 NOT NULL default '', ";
-$QryTableBanned     .= "`email` varchar(20) character set latin1 NOT NULL default '', ";
+$QryTableBanned     .= "`author` varchar(64) character set latin1 NOT NULL default '', ";
+$QryTableBanned     .= "`email` varchar(64) character set latin1 NOT NULL default '', ";
 $QryTableBanned     .= "KEY `ID` (`id`) ";
 $QryTableBanned     .= ") ENGINE=MyISAM;";
 
@@ -80,8 +80,9 @@ $QryTableConfig     .= ") ENGINE=MyISAM;";
 
 $QryInsertConfig     = "INSERT INTO `{{table}}` ";
 $QryInsertConfig    .= "(`config_name`           , `config_value`) VALUES ";
-$QryInsertConfig    .= "('VERSION'          	 , '2.8'), ";
+$QryInsertConfig    .= "('VERSION'          	 , '2.9.1'), ";
 $QryInsertConfig    .= "('users_amount'          , '0'), ";
+$QryInsertConfig    .= "('moderation'            , '1,0,0,1;1,1,0,1;'), ";
 $QryInsertConfig    .= "('game_speed'            , '2500'), ";
 $QryInsertConfig    .= "('fleet_speed'           , '2500'), ";
 $QryInsertConfig    .= "('resource_multiplier'   , '1'), ";

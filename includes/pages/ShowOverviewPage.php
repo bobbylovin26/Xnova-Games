@@ -66,27 +66,58 @@ function ShowOverviewPage($CurrentUser, $CurrentPlanet)
 			}
 			elseif ($_POST['kolonieloeschen'] == 1 && intval($_POST['deleteid']) == $CurrentUser['current_planet'])
 			{
-				if (md5($_POST['pw']) == $CurrentUser["password"] && $CurrentUser['id_planet'] != $CurrentUser['current_planet'])
+				$filokontrol = doquery("SELECT * FROM {{table}} WHERE fleet_owner = '{$user['id']}' AND fleet_start_galaxy='{$CurrentPlanet['galaxy']}' AND fleet_start_system='{$CurrentPlanet['system']}' AND fleet_start_planet='{$CurrentPlanet['planet']}'", 'fleets');
+
+				while($satir = mysql_fetch_array($filokontrol))
 				{
-
-					doquery("UPDATE {{table}} SET `destruyed` = '".(time()+ 86400)."' WHERE `id` = '".mysql_real_escape_string($CurrentUser['current_planet'])."' LIMIT 1;" , 'planets');
-					doquery("UPDATE {{table}} SET `current_planet` = `id_planet` WHERE `id` = '". mysql_real_escape_string($CurrentUser['id']) ."' LIMIT 1", "users");
-	                doquery("DELETE FROM {{table}} WHERE `galaxy` = '". $CurrentPlanet['galaxy'] ."' AND `system` = '". $CurrentPlanet['system'] ."' AND `planet` = '". $CurrentPlanet['planet'] ."' AND `planet_type` = 3;", 'planets');
-
-					message($lang['ov_planet_abandoned'], 'game.php?page=overview&mode=renameplanet');
+					$kendifilo 	= $satir['fleet_owner'];
+					$digerfilo 	= $satir['fleet_target_owner'];
+					$harabeyeri = $satir['fleet_end_type'];
+					$mess 		= $satir['fleet_mess'];
 				}
-				elseif ($CurrentUser['id_planet'] == $CurrentUser["current_planet"])
+
+				$filokontrol = doquery("SELECT * FROM {{table}} WHERE fleet_target_owner = '{$user['id']}' AND fleet_end_galaxy='{$CurrentPlanet['galaxy']}' AND fleet_end_system='{$CurrentPlanet['system']}' AND fleet_end_planet='{$CurrentPlanet['planet']}'" , 'fleets');
+
+				while($satir = mysql_fetch_array($filokontrol))
 				{
-					message($lang['ov_principal_planet_cant_abanone'], 'game.php?page=overview&mode=renameplanet');
+					$kendifilo 	= $satir['fleet_owner'];
+					$digerfilo 	= $satir['fleet_target_owner'];
+					$gezoay 	= $satir['fleet_end_type'];
+					$mess 		= $satir['fleet_mess'];
+				}
+
+				if ($kendifilo > 0)
+				{
+					message($lang['ov_abandon_planet_not_possible'], 'game.php?page=overview&mode=renameplanet');
+				}
+				elseif ((($digerfilo > 0) && ($mess < 1 )) && $gezoay <> 2  )
+				{
+					message($lang['ov_abandon_planet_not_possible'], 'game.php?page=overview&mode=renameplanet');
 				}
 				else
 				{
-					message($lang['ov_wrong_pass'], 'game.php?page=overview&mode=renameplanet');
+					if (md5($_POST['pw']) == $CurrentUser["password"] && $CurrentUser['id_planet'] != $CurrentUser['current_planet'])
+					{
+
+						doquery("UPDATE {{table}} SET `destruyed` = '".(time()+ 86400)."' WHERE `id` = '".mysql_real_escape_string($CurrentUser['current_planet'])."' LIMIT 1;" , 'planets');
+						doquery("UPDATE {{table}} SET `current_planet` = `id_planet` WHERE `id` = '". mysql_real_escape_string($CurrentUser['id']) ."' LIMIT 1", "users");
+						doquery("DELETE FROM {{table}} WHERE `galaxy` = '". $CurrentPlanet['galaxy'] ."' AND `system` = '". $CurrentPlanet['system'] ."' AND `planet` = '". $CurrentPlanet['planet'] ."' AND `planet_type` = 3;", 'planets');
+
+						message($lang['ov_planet_abandoned'], 'game.php?page=overview&mode=renameplanet');
+					}
+					elseif ($CurrentUser['id_planet'] == $CurrentUser["current_planet"])
+					{
+						message($lang['ov_principal_planet_cant_abanone'], 'game.php?page=overview&mode=renameplanet');
+					}
+					else
+					{
+						message($lang['ov_wrong_pass'], 'game.php?page=overview&mode=renameplanet');
+					}
 				}
 			}
 
 			return display(parsetemplate(gettemplate('overview/overview_renameplanet'), $parse));
-		break;
+			break;
 
 		default:
 			if ($CurrentUser['new_message'] != 0)
@@ -116,7 +147,13 @@ function ShowOverviewPage($CurrentUser, $CurrentPlanet)
 				$StartTime 	= $FleetRow['fleet_start_time'];
 				$StayTime 	= $FleetRow['fleet_end_stay'];
 				$EndTime 	= $FleetRow['fleet_end_time'];
-
+				/////// // ### LUCKY , CODES ARE BELOW
+				$hedefgalaksi = $FleetRow['fleet_end_galaxy'];
+				$hedefsistem = $FleetRow['fleet_end_system'];
+				$hedefgezegen = $FleetRow['fleet_end_planet'];
+				$mess = $FleetRow['fleet_mess'];
+				$filogrubu = $FleetRow['fleet_group'];
+				//////
 				$Label = "fs";
 				if ($StartTime > time())
 				{
@@ -139,6 +176,62 @@ function ShowOverviewPage($CurrentUser, $CurrentPlanet)
 					}
 				}
 			}
+			mysql_free_result($OwnFleets);
+			//iss ye katilan filo////////////////////////////////////
+
+			// ### LUCKY , CODES ARE BELOW
+
+			$dostfilo = doquery("SELECT * FROM {{table}} WHERE `fleet_end_galaxy` = '" . $hedefgalaksi . "' AND `fleet_end_system` = '" . $hedefsistem . "' AND `fleet_end_planet` = '" . $hedefgezegen . "' AND `fleet_group` = '" . $filogrubu . "';", 'fleets');
+			$Record1 = 0;
+			while ($FleetRow = mysql_fetch_array($dostfilo)) {
+
+
+				$StartTime = $FleetRow['fleet_start_time'];
+				$StayTime = $FleetRow['fleet_end_stay'];
+				$EndTime = $FleetRow['fleet_end_time'];
+
+				///////
+				$hedefgalaksi = $FleetRow['fleet_end_galaxy'];
+				$hedefsistem = $FleetRow['fleet_end_system'];
+				$hedefgezegen = $FleetRow['fleet_end_planet'];
+				$mess = $FleetRow['fleet_mess'];
+				$filogrubu = $FleetRow['fleet_group'];
+				///////
+				if (($FleetRow['fleet_mission'] == 2) && ($FleetRow['fleet_owner'] != $CurrentUser['id'])) {
+					$Record1++;
+					//		if (($FleetRow['fleet_mission'] == 2) ){
+					if($mess > 0){
+						$StartTime = "";
+					}else{
+						$StartTime = $FleetRow['fleet_start_time'];
+					}
+
+					if ($StartTime > time()) {
+						$Label = "ofs";
+						$fpage[$StartTime] =$FlyingFleetsTable-> BuildFleetEventTable ($FleetRow, 0, false, $Label, $Record1);
+					}
+
+					//	}
+				} ///""
+
+				if (($FleetRow['fleet_mission'] == 1) && ($FleetRow['fleet_owner'] != $CurrentUser['id']) && ($filogrubu > 0 ) ){
+					$Record++;
+					if($mess > 0){
+						$StartTime = "";
+					}else{
+						$StartTime = $FleetRow['fleet_start_time'];
+					}
+					if ($StartTime > time()) {
+						$Label = "ofs";
+						$fpage[$StartTime] = $FlyingFleetsTable-> BuildFleetEventTable ($FleetRow, 0, false, $Label, $Record);
+					}
+
+				}
+
+			}
+			mysql_free_result($dostfilo);
+			//
+			//////////////////////////////////////////////////
 
 			$OtherFleets = doquery("SELECT * FROM {{table}} WHERE `fleet_target_owner` = '" . $CurrentUser['id'] . "';", 'fleets');
 
@@ -169,6 +262,7 @@ function ShowOverviewPage($CurrentUser, $CurrentPlanet)
 					}
 				}
 			}
+			mysql_free_result($OtherFleets);
 
 			$planets_query = doquery("SELECT * FROM `{{table}}` WHERE id_owner='{$CurrentUser['id']}' AND `destruyed` = 0", "planets");
 			$Colone  	= 1;
@@ -218,6 +312,7 @@ function ShowOverviewPage($CurrentUser, $CurrentPlanet)
 					}
 				}
 			}
+			mysql_free_result($planets_query);
 
 			$AllPlanets .= "</tr>";
 
@@ -307,7 +402,7 @@ function ShowOverviewPage($CurrentUser, $CurrentPlanet)
 
 			$parse['date_time']				= date("D M j H:i:s", time());
 			return display(parsetemplate(gettemplate('overview/overview_body'), $parse));
-		break;
+			break;
 	}
 }
 ?>

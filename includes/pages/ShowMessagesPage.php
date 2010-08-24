@@ -98,14 +98,16 @@ function ShowMessagesPage($CurrentUser)
 
 					$_POST['text'] = str_replace("'", '&#39;', $_POST['text']);
 
-					$Owner   = $OwnerID;
-					$Sender  = $CurrentUser['id'];
-					$From    = $CurrentUser['username'] ." [".$CurrentUser['galaxy'].":".$CurrentUser['system'].":".$CurrentUser['planet']."]";
-					$Subject = $_POST['subject'];
-					$Message = trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) );
+					$Owner   	= $OwnerID;
+					$Sender  	= $CurrentUser['id'];
+					$From    	= $CurrentUser['username'] ." [".$CurrentUser['galaxy'].":".$CurrentUser['system'].":".$CurrentUser['planet']."]";
+					$Subject 	= $_POST['subject'];
+                    $Message	= preg_replace ( "/([^\s]{80}?)/" , "\\1<br />" , trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) ) );
+
 					SendSimpleMessage($Owner, $Sender, '', 1, $From, $Subject, $Message);
-					$subject = "";
-					$text    = "";
+
+					$subject 	= "";
+					$text    	= "";
 				}
 			}
 			$parse['id']           = $OwnerID;
