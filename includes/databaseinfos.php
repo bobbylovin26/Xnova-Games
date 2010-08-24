@@ -311,10 +311,10 @@
 	$QryTablePlanets    .= "`cazacrucero` bigint(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`transportador` bigint(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`titan` bigint(11) NOT NULL default '0', ";
-	$QryTablePlanets    .= "`nave_humano` BIGINT( 11 ) NOT NULL DEFAULT '0' ";
-	$QryTablePlanets    .= "`nave_alien` BIGINT( 11 ) NOT NULL DEFAULT '0'";
-	$QryTablePlanets    .= "`nave_predator` BIGINT( 11 ) NOT NULL DEFAULT '0'";
-	$QryTablePlanets    .= "`nave_dark` BIGINT( 11 ) NOT NULL DEFAULT '0'";
+	$QryTablePlanets    .= "`nave_humano` bigint( 11 ) NOT NULL DEFAULT '0', ";
+	$QryTablePlanets    .= "`nave_alien` bigint( 11 ) NOT NULL DEFAULT '0', ";
+	$QryTablePlanets    .= "`nave_predator` bigint( 11 ) NOT NULL DEFAULT '0', ";
+	$QryTablePlanets    .= "`nave_dark` bigint( 11 ) NOT NULL DEFAULT '0', ";
 	$QryTablePlanets    .= "`misil_launcher` bigint(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`small_laser` bigint(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`big_laser` bigint(11) NOT NULL default '0', ";
@@ -402,6 +402,7 @@
 	$QryTableUsers      .= "`alien` BIGINT( 11 ) NOT NULL DEFAULT '0', ";
 	$QryTableUsers      .= "`predator` BIGINT( 11 ) NOT NULL DEFAULT '0', ";
 	$QryTableUsers      .= "`dark` BIGINT( 11 ) NOT NULL DEFAULT '0', ";
+	$QryTableUsers      .= "`id_race` INT NOT NULL DEFAULT '-1', ";
 	$QryTableUsers      .= "`authlevel` tinyint(4) NOT NULL default '0', ";
 	$QryTableUsers      .= "`id_planet` int(11) NOT NULL default '0', ";
 	$QryTableUsers      .= "`galaxy` int(11) NOT NULL default '0', ";

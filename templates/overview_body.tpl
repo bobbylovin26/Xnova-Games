@@ -12,6 +12,7 @@
 <tr>
    <td class="c" colspan="4"><a href="overview.php?mode=renameplanet" title="{Planet_menu}">{Planet} "{planet_name}"</a> ({user_username})</td>
 </tr>
+<tr><td class="c" colspan="4">{race}</td></tr> 
 {Have_new_message}
 {Have_new_level_mineur}
 {Have_new_level_raid}
@@ -61,10 +62,11 @@ show()
       </tr>
 </form>
 </th>
-</tr>
+<tr>
 {NewsFrame}
 <tr>
-   <td colspan="4" class="c">{Events}</td>
+
+  <td colspan="4" class="c">{Events}</td>
 </tr>
 {fleet_list}
 <tr>
@@ -72,7 +74,7 @@ show()
    <th colspan="2"><a href="overview.php?mode=renameplanet" title="{Planet_menu}">{Planet} "{planet_name}"</a><br /><img src="{dpath}planeten/{planet_image}.jpg" height="200" width="200"><br />{coords} <a href="galaxy.php?mode=0&galaxy={galaxy_galaxy}&system={galaxy_system}">[{galaxy_galaxy}:{galaxy_system}:{galaxy_planet}]</a><br />{building}</th>
    <th><table width="100%" border="0">
       <tr>
-         <th colspan="2">{ov_user}</th>
+         <th colspan="2">Jugador</th>
          <th colspan="2">{user_username}</th>
       </tr><tr>
          <th colspan="2" align="center"><b>{Rank}</b></th>
@@ -97,7 +99,7 @@ show()
          <td align="left" width="50%" style="background-color: transparent;"><b>{total_points}</b></td></tr>
          </tbody></table></th>
       </tr><tr> 
-         <th colspan="2" align="center">{ov_off_title}</th>
+         <th colspan="2" align="center">-</th>
          <th align="center">{ov_off_mines}</th>
          <th align="center">{ov_off_raids}</th>
       </tr><tr> 

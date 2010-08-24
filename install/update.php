@@ -78,6 +78,7 @@ ADD `dark_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `predator_tech` ;");
 			$Qry15 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_alien` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `nave_humano` ;");
 			$Qry16 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_predator` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `nave_alien` ;");
 			$Qry17 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_dark` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `nave_predator` ; ");
+			$Qry18 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `id_race` INT DEFAULT '-1' NOT NULL AFTER `Dark`;");
 		break;
 
 		case '1.4f':
@@ -133,94 +134,14 @@ ADD `dark_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `predator_tech` ;");
 			$Qry15 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_alien` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `nave_humano` ;");
 			$Qry16 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_predator` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `nave_alien` ;");
 			$Qry17 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_dark` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `nave_predator` ; ");
+			$Qry18 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `id_race` INT DEFAULT '-1' NOT NULL AFTER `Dark`;");
+		break;
+
+		case'1.5a':
+			$Qry18 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `id_race` INT DEFAULT '-1' NOT NULL AFTER `Dark`;");
 		break;
 		}
-
-			if ($Qry1)
-				$msg .=  "<font color=\"green\"><-HECHO Qry1-></font><br>";
-			else
-				$msg .=  "<font color=\"red\"><-ERROR Qry1-></font><br>";
-
-			if ($Qry2)
-				$msg .=  "<font color=\"green\"><-HECHO Qry2-></font><br>";
-			else
-				$msg .=  "<font color=\"red\"><-ERROR Qry2-></font><br>";
-
-			if ($Qry3)
-				$msg .=  "<font color=\"green\"><-HECHO Qry3-></font><br>";
-			else
-				$msg .=  "<font color=\"red\"><-ERROR Qry3-></font><br>";
-
-			if ($Qry4)
-				$msg .=  "<font color=\"green\"><-HECHO Qry4-></font><br>";
-			else
-				$msg .=  "<font color=\"red\"><-ERROR Qry4-></font><br>";
-
-			if ($Qry5)
-				$msg .=  "<font color=\"green\"><-HECHO Qry5-></font><br>";
-			else
-				$msg .=  "<font color=\"red\"><-ERROR Qry5-></font><br>";
-
-			if ($Qry6)
-				$msg .=  "<font color=\"green\"><-HECHO Qry6-></font><br>";
-			else
-				$msg .=  "<font color=\"red\"><-ERROR Qry6-></font><br>";
-
-			if ($Qry7)
-				$msg .=  "<font color=\"green\"><-HECHO Qry7-></font><br>";
-			else
-				$msg .=  "<font color=\"red\"><-ERROR Qry7-></font><br>";
-
-			if ($Qry8)
-				$msg .=  "<font color=\"green\"><-HECHO Qry8-></font><br>";
-			else
-				$msg .=  "<font color=\"red\"><-ERROR Qry8-></font><br>";
-
-			if ($Qry9)
-				$msg .=  "<font color=\"green\"><-HECHO Qry9-></font><br>";
-			else
-				$msg .=  "<font color=\"red\"><-ERROR Qry9-></font><br>";
-
-			if ($Qry10)
-				$msg .=  "<font color=\"green\"><-HECHO Qry10-></font><br>";
-			else
-				$msg .=  "<font color=\"red\"><-ERROR Qry10-></font><br>";
-
-			if ($Qry11)
-				$msg .=  "<font color=\"green\"><-HECHO Qry11-></font><br>";
-			else
-				$msg .=  "<font color=\"red\"><-ERROR Qry11-></font><br>";
-
-			if ($Qry12)
-				$msg .=  "<font color=\"green\"><-HECHO Qry12-></font><br>";
-			else
-				$msg .=  "<font color=\"red\"><-ERROR Qry12-></font><br>";
-
-			if ($Qry13)
-				$msg .=  "<font color=\"green\"><-HECHO Qry13-></font><br>";
-			else
-				$msg .=  "<font color=\"red\"><-ERROR Qry13-></font><br>";
-
-			if ($Qry14)
-				$msg .=  "<font color=\"green\"><-HECHO Qry14-></font><br>";
-			else
-				$msg .=  "<font color=\"red\"><-ERROR Qry14-></font><br>";
-
-			if ($Qry15)
-				$msg .=  "<font color=\"green\"><-HECHO Qry15-></font><br>";
-			else
-				$msg .=  "<font color=\"red\"><-ERROR Qry15-></font><br>";
-
-			if ($Qry16)
-				$msg .=  "<font color=\"green\"><-HECHO Qry16-></font><br>";
-			else
-				$msg .=  "<font color=\"red\"><-ERROR Qry16-></font><br>";
-
-			if ($Qry17)
-				$msg .=  "<font color=\"green\"><-HECHO Qry17-></font><br>";
-			else
-				$msg .=  "<font color=\"red\"><-ERROR Qry17-></font><br>";
-		echo $msg;
+		echo "<center><h1>¡LISTO!</h1></center>";
 		echo "<br>";
 		echo "<font color=\"red\"><strong>Recuerda borrar la carpeta install y este archivo tambien</strong></font>";
 
@@ -282,17 +203,19 @@ Soy conciente de que este script no es perfecto, y que solo funciona con instala
 						<th align="center">v9.0a/v1.0a/v1.0b/v1.1a/v1.1b/v1.1c/v1.2a/v1.2b/v1.2c/v1.3a/v1.3b/v1.3b EU/v1.3c DMV</th>
 						<th align="center">v1.4a/v1.4b/1.4c</th>
 						<th align="center">1.4d/1.4e/1.4f</th>
+						<th align="center">1.5a</th>
 					</tr>
 					<tr>
 						<th align="center"><font color="red"><strong>Versiones ya NO soportadas, recomendamos siempre mantener al d&iacute;a tu juego</strong></red></th>
 						<th align="center"><input type="radio" name="modo" value="1.4b"/></th>
 						<th align="center"><input type="radio" name="modo" value="1.4f"/></th>
+						<th align="center"><input type="radio" name="modo" value="1.5a"/></th>
 					</tr>
 				</table>
 			</th>
 		</tr>
 		<tr>
-			<th align="center" colspan="2"><br><input type="submit" name="continuar" value="Actualizar a la 1.5a"/></th>
+			<th align="center" colspan="2"><br><input type="submit" name="continuar" value="Actualizar a la 1.5b"/></th>
 		</tr>
 	</table>
 </form>

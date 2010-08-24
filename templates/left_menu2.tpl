@@ -98,9 +98,6 @@
             <th width="125"><div><div><a href="contact.php" accesskey="3" target="{mf}" >{Contact}</a></th>
 			          </tr>
 <tr>
-            <th width="125"><a href="alliance.php?mode=ainfo&a=1" target="{mf}" class="Stil1" accesskey="3" >{Go}</a></th>
-			          </tr>
-<tr>
             <th width="125"><a href="{forum_url}" accesskey="1" target="{mf}">{Board}</a></th>
 			          </tr>
 <tr>

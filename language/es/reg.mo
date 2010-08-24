@@ -26,6 +26,11 @@ $lang['error_userexist']   	= '¡El jugador ya existe, seleccione otro!<br />';
 $lang['error_emailexist']  	= '¡El email ya existe, por favor seleccione otro!<br />';
 $lang['error_mailsend']    	= '¡Un error se produjo en el env&iacute;o del e-mail! Su contrase&ntilde;a es:';
 $lang['error_raza']   		= 'No has seleccionado ninguna raza! ';
+$lang['Race']               = 'Choisissez votre race';
+$lang['id_race_1']           = 'Humano';
+$lang['id_race_2']           = 'Alien';
+$lang['id_race_3']           = 'Predator';
+$lang['id_race_4']           = 'Dark';
 
 $lang['reg_welldone']      	= '¡Registro completado con éxito!';
 

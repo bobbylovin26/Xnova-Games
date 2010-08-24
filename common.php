@@ -7,7 +7,7 @@
  * @copyright 2008 by ??????? for XNova
  */
 
-define('VERSION','1.4 d .');
+define('VERSION','1.5b');
 
 set_magic_quotes_runtime(0);
 $phpEx = "php";

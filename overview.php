@@ -97,6 +97,16 @@ case 'renameplanet':
             $parse['galaxy_system'] = $planetrow['system'];
             $parse['galaxy_planet'] = $planetrow['planet'];
             $parse['planet_name'] = $planetrow['name'];
+			if ($user['id_race'] == -1)
+                $parse['race'] = 'Race : Inconnue | Contactez votre administrateur';
+            if ($user['id_race'] == 0)
+                $parse['race'] = 'Race : Humano';
+            if ($user['id_race'] == 1)
+                $parse['race'] = 'Race : Alien';
+            if ($user['id_race'] == 2)
+                $parse['race'] = 'Race : Predator';
+            if ($user['id_race'] == 3)
+                $parse['race'] = 'Race : Dark'; 
 
             $page .= parsetemplate(gettemplate('overview_deleteplanet'), $parse);
 

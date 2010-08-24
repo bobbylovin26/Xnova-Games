@@ -11,8 +11,8 @@
         define('INSTALL' , false);
 
         $ugamela_root_path = './';
-        include($ugamela_root_path . 'extension.inc');
-        include($ugamela_root_path . 'common.' . $phpEx);
+        include($xnova_root_path . 'extension.inc');
+        include($xnova_root_path . 'common.' . $phpEx);
 
         $Tiempo = time();
         $loteria = gettemplate('loteria_off');
@@ -25,7 +25,7 @@
           $segundos_2=$segundos%60%60%60;
           if($minutos2<10)$minutos2='0'.$minutos2;
           if($segundos_2<10)$segundos_2='0'.$segundos_2;
-          
+
           if($segundos<60){ /* segundos */
           $resultado= round($segundos).' Segundos';
           }elseif($segundos>60 && $segundos<3600){/* minutos */
@@ -39,21 +39,21 @@
           //echo 'Segundos: '.$tiempolote.' Resultado: '.segundos_tiempo($Falta1);
 
         $parse['usuarios'] = "Aun faltan [".segundos_tiempo($Falta1)."] para la proxima Loteria";
-           
+
            $lote = parsetemplate( $loteria, $parse);
            display ($lote, "Loteria", false, '', true);
-           
+
         } else {
 
                     $resto = $Tiempo - $game_config['Actualizacion'];
-                   
-                 
+
+
            $loteria = gettemplate('loteria_body');
-        $tiempolote = 63600;
-        $maxtickets = 100;
-        $canxticketm = 10000;
-        $canxticketc = 10000;
-        $canxticketd = 10000;
+        $tiempolote = 21600;
+        $maxtickets = 50;
+        $canxticketm = 100;
+        $canxticketc = 100;
+        $canxticketd = 50;
 
 
 
@@ -99,7 +99,7 @@
         $parse['MensajeCompra'] = "<font color='#00FF00'>Acabas de Comprar ".$_POST['Tickets']." Tickets</font>";
         ?> <META HTTP-EQUIV='Refresh' CONTENT="0; URL='overview.php'> <?
         }
-                     
+
 
         if(($_POST['Tickets']+$CantidadTickets['total_tickets']) == $maxtickets) {
 
@@ -107,30 +107,30 @@
                      $ganador = doquery("SELECT * FROM {{table}} order by rand()", "loteria");
                     $elganador = mysql_fetch_array($ganador);
                     $ganad = $elganador['ID'];
-                   
+
                     $userio = doquery("SELECT * FROM {{table}} WHERE `id` = '".$ganad."' limit 1",'users');
            $Datoswiner = mysql_fetch_array($userio);
               $ganadp = $Datoswiner['id_planet'];
                       $complant = doquery("SELECT * FROM {{table}} WHERE `id_owner` = '".$ganad."' limit 1",'planets');
            $DatosPlaneta = mysql_fetch_array($complant);
-           
+
            $emetal = $DatosPlaneta['metal']+($canxticketm*$maxtickets);
            $ecristal = $DatosPlaneta['crystal']+($canxticketc*$maxtickets);
            $edeuterio = $DatosPlaneta['deuterium']+($canxticketd*$maxtickets);
            doquery("UPDATE {{table}} SET `metal`='".$emetal."', `crystal`='".$ecristal."', `deuterium`='".$edeuterio."' WHERE `id`='".$ganadp."' limit 1", "planets");
-                 
+
                 $dando = doquery("SELECT * FROM {{table}}", "loteria");
-                     $Time    = time();             
-                     $From    = "<font color=\"". $kolor ."\">Loterias</font>";             
-                     $Subject = "<font color=\"". $kolor ."\">Resultado loteria</font>";   
-                     $summery=0;   
-                     
-                   while ($uzer = mysql_fetch_array($dando)) {         
+                     $Time    = time();
+                     $From    = "<font color=\"". $kolor ."\">Loterias</font>";
+                     $Subject = "<font color=\"". $kolor ."\">Resultado loteria</font>";
+                     $summery=0;
+
+                   while ($uzer = mysql_fetch_array($dando)) {
                  if($ganad == $uzer['ID']) { $Message = "<font color='#00ff00'>Felicidades!¡!¡<br>Tu tenias el Ticket Ganador de la loteria, <br>Esperamos verte pronto por alli.</font>"; }
                  else { $Message = "<font color='#FF0000'>OHHHH!¡!¡<br>Tu No tenias el Ticket Ganador de la loteria, <br>Esperamos verte pronto por alli.</font>"; }
                       SendSimpleMessage ( $uzer['ID'], $uzer['ID'], $Time, 1, $From, $Subject, $Message);
-                   
-                     }   
+
+                     }
                   doquery ("DELETE FROM {{table}} ",'loteria');
                   $sigueintelore = $tiempolote + time();
                   doquery("UPDATE {{table}} SET `config_value`='".$sigueintelore."' WHERE `config_name`='Loteria' limit 1", "config");
@@ -140,9 +140,9 @@
         $pase['usuarios'] = "Otros Jugadores";
         if($CantidadTickets == $maxtickets) { $parse['color'] = "red"; } else { $parse['color'] = "green"; }
                $usuarios   = doquery("SELECT * FROM {{table}} order by tickets", "loteria");
-                   while ($listad = mysql_fetch_array($usuarios)) {   
+                   while ($listad = mysql_fetch_array($usuarios)) {
                  $parse['usuarios'] .= "".$listad['user']." con ".$listad['tickets']." tickets<br/>";
-               
+
                  }
 
 

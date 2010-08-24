@@ -117,7 +117,8 @@ if ($_POST) {
         $QryInsertUser .= "`username` = '" . mysql_escape_string(strip_tags($UserName)) . "', ";
         $QryInsertUser .= "`email` = '" . mysql_escape_string($UserEmail) . "', ";
         $QryInsertUser .= "`email_2` = '" . mysql_escape_string($UserEmail) . "', ";
-		$QryInsertUser .= "`ip_at_reg` = '" . $_SERVER["REMOTE_ADDR"] . "', ";
+		$QryInsertUser .= "`id_race` = '" . mysql_escape_string($_POST['race']) . "', ";
+	    $QryInsertUser .= "`ip_at_reg` = '" . $_SERVER["REMOTE_ADDR"] . "', ";
         $QryInsertUser .= "`id_planet` = '0', ";
         $QryInsertUser .= "`register_time` = '" . time() . "', ";
         $QryInsertUser .= "`password`='" . $md5newpass . "';";

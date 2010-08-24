@@ -168,7 +168,10 @@ $lang['tech'] = array(
 613 => "General",
 614 => "Raider",
 615 => "Emperador",
-
+1000 => "Humano",
+1001 => "Alien",
+1002 => "Predator",
+1003 => "Dark",
 );
 
 $lang['res']['descriptions'] = array(

@@ -4,8 +4,15 @@ $lang['Version']     = 'Versión';
 $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
+'<font color="lime">1.5b</font>' => ' 03/04/09 12:57
+- Cambios y correcciones en templates y textos.-
+- Loteria reparada (By lucky).-
+- Correciones en el instalador, soportando correctamente las razas, y también en el auto-update.-
+- Razas corregidas (By Tonique).-
+- Corregido un bug en el instalador.-
+',
 
-'<font color="lime">1.5a</font>' => ' 18/03/09 12:00
+'1.5a' => ' 26/03/09 12:00
 - Corregido el link de administración.-
 - Mejoras en el instalador.-
 - Fix corregido bug que mostraba mal la leyenda en la galaxia.-

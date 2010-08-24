@@ -13,7 +13,7 @@
     <tr>
        <th class="c">
        <br>
-       <form method="POST" action="loteria.php?cp=compra">
+       <form method="POST" action="lotery.php?cp=compra">
        <select size="1" name="Tickets">
        <option value="1">1</option>
        <option value="2">2</option>

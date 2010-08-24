@@ -25,15 +25,14 @@
      if (event.which==60 || event.which==62) return false;"></th>
 </tr>
     <tr>
-      <th>Raza</th>
-      <th><select name="raza">
-                    <option value="">Selecciona una raza</option>
-                    <option value="H">Humano</option>
-                    <option value="A">Alien</option>
-                    <option value="P">Predator</option>
-					<option value="D">Dark</option>
-                    </select></th>
-    </tr>
+  <th>{Race}</th>
+  <th><select name="race">
+        <option value="0">{id_race_1}</option>
+        <option value="1">{id_race_2}</option>
+        <option value="2">{id_race_3}</option>
+        <option value="3">{id_race_4}</option>
+        </select></th>
+</tr>
 <tr>
   <td height="20" colspan="2"></td>
   </tr>
