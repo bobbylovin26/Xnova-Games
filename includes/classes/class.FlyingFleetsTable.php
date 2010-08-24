@@ -148,10 +148,19 @@ class FlyingFleetsTable
 
 			$Bloc['En_Posit'] = "[".$CurrentFleet['fleet_end_galaxy'] .":". $CurrentFleet['fleet_end_system'] .":". $CurrentFleet['fleet_end_planet'] ."]<br>". ( ($CurrentFleet['fleet_end_type'] == 1) ? "[P]": (($CurrentFleet['fleet_end_type'] == 2) ? "D" : "L"  )) ."";
 
-			if ($CurrentFleet['fleet_mission'] == 15)
-				$Bloc['Wa_Time']  = date('G:i:s d/n/Y', $CurrentFleet['fleet_stay_time']);
+			if ($CurrentFleet['fleet_mission'] == 5)
+			{
+				if ($CurrentFleet['fleet_mess'] == 2)
+					$Bloc['Wa_Time']  = date('G:i:s d/n/Y', $CurrentFleet['fleet_end_stay']);
+				elseif ($CurrentFleet['fleet_mess'] == 1)
+					$Bloc['Wa_Time']  = $lang['cff_back'];
+				else
+					$Bloc['Wa_Time']  = $lang['cff_to_destination'];
+			}
 			else
+			{
 				$Bloc['Wa_Time']  = "";
+			}
 
 			$Bloc['En_Time']  = date('G:i:s d/n/Y', $CurrentFleet['fleet_end_time']);
 

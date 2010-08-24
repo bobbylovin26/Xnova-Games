@@ -26,6 +26,8 @@ $xgp_root = './';
 include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.' . $phpEx);
 
+$planetrow 		= doquery("SELECT * FROM {{table}} WHERE `id` = '". $user['current_planet'] ."';", 'planets', true);
+
 $UserSpyProbes  = $planetrow['spy_sonde'];
 $UserRecycles   = $planetrow['recycler'];
 $UserDeuterium  = $planetrow['deuterium'];
@@ -289,8 +291,6 @@ $QryUpdatePlanet .= "`id` = '". $planetrow['id'] ."';";
 doquery( $QryUpdatePlanet, 'planets');
 
 $CurrentFlyingFleets++;
-
-$planetrow 		= doquery("SELECT * FROM {{table}} WHERE `id` = '". $user['current_planet'] ."';", 'planets', true);
 $ResultMessage  = "600; ".$lang['fa_sending']." ". $FleetShipCount  ." ". $lang['tech'][$Ship] ." a ". $_POST['galaxy'] .":". $_POST['system'] .":". $_POST['planet'] ."...|";
 $ResultMessage .= $CurrentFlyingFleets ." ".$UserSpyProbes." ".$UserRecycles." ".$UserMissiles;
 

@@ -286,8 +286,6 @@ $lang['cs_save_changes']					= 'Guardar cambios';
 $lang['cs_timeact_1']						= 'La última actualización se efectuó el: ';
 
 //----------------------------------------------------------------------------//
-
-//----------------------------------------------------------------------------//
 //ErrorPage.php
 $lang['er_errors']							= ' error/es';
 $lang['er_error_list']						= 'Lista de errores';
@@ -410,8 +408,6 @@ $lang['ow_old_version']						= 'Hay una nueva versión disponible. Haz click <a h
 $lang['ow_none']							= 'No hay actualizaciones ni advertencias';
 
 //----------------------------------------------------------------------------//
-
-//----------------------------------------------------------------------------//
 //PlanetListPage.php
 $lang['pl_only_one_planet']					= 'Sólo hay un planeta';
 $lang['pl_there_are']						= 'Hay ';
@@ -424,7 +420,6 @@ $lang['pl_system']							= 'Sistema';
 $lang['pl_planet']							= 'Planeta';
 
 //----------------------------------------------------------------------------//
-
 //SettingsPage.php
 $lang['se_server_parameters']				= 'Parámetros del servidor';
 $lang['se_name']							= 'Nombre';
@@ -465,8 +460,8 @@ $lang['se_noob_protect2']					= 'Protección N. puntos';
 $lang['se_noob_protect3']					= 'Protección N. puntos limite';
 $lang['se_noob_protect_e2']					= 'Límite de puntos en el que dejas de ser novato';
 $lang['se_noob_protect_e3']					= '<a href=\"http://xtreme-gamez.com.ar/foros/showthread.php?t=506\" target=\"blank_\">Más información</a>';
-//----------------------------------------------------------------------------//
 
+//----------------------------------------------------------------------------//
 // Moderation.php
 $lang['mod_title']							= 'Administrar poderes';
 $lang['mod_moderator']						= 'Moderador';
@@ -476,6 +471,7 @@ $lang['mod_power_view']						= 'Poder de observación';
 $lang['mod_power_edit']						= 'Poder de editaje';
 $lang['mod_power_config']					= 'Poder de configurar el juego';
 $lang['mod_power_tools']					= 'Poder de manipular herramientas';
+
 //Authlevels
 $lang['ad_authlevel_title']					= 'Rangos';
 $lang['ad_authlevel_name']					= 'Nombre';
@@ -604,7 +600,7 @@ $lang['re_reset_h1']						= 'Opciones de reseteo';
 $lang['re_reset_excess']					= 'Opciones reiniciadas con éxito';
 $lang['re_reset_resetnow']					= 'Reiniciar';
 
-//accountdata.php
+//AccountDataPage.php
 $lang['ac_user_id_required']				= '¡Debes seleccionar algun usuario!';
 $lang['ac_select_one_id']					= '¡Por favor, elegí solo un usuario!';
 $lang['ac_no_character']					= '¡No se aceptan letras, solo numeros!';
@@ -629,17 +625,19 @@ $lang['ac_destroyer']						= 'Destructor';
 $lang['ac_general']							= 'General';
 $lang['ac_conqueror']						= 'Conquistador';
 $lang['ac_emperor']							= 'Emperador';
-$lang['ac_yes']								= 'Si';
-$lang['ac_no']								= 'No';
+$lang['ac_res'][0]							= 'No';
+$lang['ac_res'][1]							= '<font color=lime>Si</font>';
 $lang['ac_no_ally']							= 'No tiene alianza';
 $lang['ac_moon']							= 'Luna';
 $lang['ac_enter_user_id']					= 'Seleccionar usuario';
 $lang['ac_send']							= 'Enviar';
 $lang['ac_minimize_maximize']				= 'Minimizar/Maximizar';
-$lang['ac_account_data']					= 'Datos de la Cuenta';
+$lang['ac_account_data']					= 'Datos de la cuenta';
 $lang['ac_id']								= 'ID';
 $lang['ac_name']							= 'Nombre';
-$lang['ac_password']						= 'Contraseña';
+$lang['ac_checkip_title']					= 'Comprobación de IP';
+$lang['ac_checkip'][1]						= '<font color=aqua>Activado</font>';
+$lang['ac_checkip'][0]						= '<font color=#FF6600>Desactivado</font>';
 $lang['ac_mail']							= 'Email';
 $lang['ac_perm_mail']						= 'Email Permanente';
 $lang['ac_auth_level']						= 'Rango';
@@ -701,22 +699,33 @@ $lang['ac_no_text_int']						= 'La alianza no tiene texto interno';
 $lang['ac_no_text_sol']						= 'La alianza no tiene texto de solicitud';
 $lang['ac_no_img']							= 'La alianza no tiene logo';
 $lang['ac_no_web']							= 'La alianza no tiene página web';
-$lang['ac_back_to_ally']					= 'Volver a la tabla de detalles';
 $lang['ac_view_image']						= 'Ver imagen en otra ventana';
 $lang['ac_view_image2']						= 'Ver imagen';
 $lang['ac_view_text_ext']					= 'Ver texto externo';
 $lang['ac_view_text_int']					= 'Ver texto interno';
 $lang['ac_view_text_sol']					= 'Ver texto de solicitud';
-$lang['ac_message_id']						= 'ID:';
-$lang['ac_message_from']					= 'De:';
-$lang['ac_message_subject']					= 'Asunto:';
-$lang['ac_message_time']					= 'Hora y fecha:';
-$lang['ac_message_a']						= 'MENSAJE:';
-$lang['ac_messages_no']						= '¡El usuario no tiene mensajes!';
 $lang['ac_moons_no']						= '<font color=red>(No tiene lunas)</font>';
-$lang['ac_messages']						= 'Mensajes';
-//----------------------------------------------------------------------------//
+$lang['ac_urlnow']							= 'URL: ';
+$lang['ac_time_destruyed']					= 'Fecha de destrucción total';
+$lang['ac_isnodestruyed']					= '<font color=red>(No hay planetas destruidos recientemente)</font>';
+$lang['ac_no_alliance']						= '<font color=red>(No tiene alianza)</font>';
+$lang['ac_ali_text_11']						= 'Texto externo';
+$lang['ac_ali_text_22']						= 'Texto interno';
+$lang['ac_ali_text_33']						= 'Texto de solicitud';
+$lang['ac_ali_logo_11']						= 'Logo de la alianza';
+$lang['ac_ali_idid']						= 'ID:';
+$lang['ac_suspended_title']					= 'Visor de suspensión';
+$lang['ac_suspended_time']					= 'Suspendido el';
+$lang['ac_suspended_longer']				= 'Hasta el';
+$lang['ac_suspended_reason']				= 'Razón';
+$lang['ac_suspended_autor']					= 'Suspendido por';
+$lang['ac_note_k']							= '<table><tr><th width=10%><font color=lime>K</font></th><th>Supera o iguala los mil</th></tr>';
+$lang['ac_note_m']							= '<tr><th width=10%><font color=lime>M</font></th><th>Supera o iguala el millon</th></tr>';
+$lang['ac_note_b']							= '<tr><th width=10%><font color=lime>B</font></th><th>Supera o iguala el billon</th></tr>';
+$lang['ac_note_t']							= '<tr><th width=10%><font color=lime>T</font></th><th>Supera o iguala el trillon</th></tr>';
+$lang['ac_note_c']							= '<tr><th width=10%><font color=lime>T+</font></th><th>Supera el trillon</th></tr></table>';
 
+//---------------------------------------------------------------------------//
 // SearchInDB.php
 $lang['se_no_data']		=	"No hay datos";
 $lang['se_yes']			=	"Si";
@@ -786,8 +795,8 @@ $lang['se_input_planett']	=	' planeta/s';
 $lang['se_input_moonn']		=	' luna/s';
 $lang['se_input_userss']	=	' usuario/s';
 $lang['se_input_vacatii']	=	' usuario/s en vacaciones';
-//----------------------------------------------------------------------------//
 
+//----------------------------------------------------------------------------//
 // PlanetsOptionsPage.php
 $lang['po_title_page']			=	'Opciones de planetas';
 $lang['po_add_planet']			=	'Añadir planeta';
@@ -807,8 +816,8 @@ $lang['po_complete_invalid']	=	'¡Datos invalidos!';
 $lang['po_complete_invalid2']	=	'¡Planeta inexistente!';
 $lang['po_complete_invalid3']	=	'¡Solo se pueden borrar planetas!';
 $lang['po_complete_succes2']	=	'¡Planeta borrado con éxito!';
-//----------------------------------------------------------------------------//
 
+//----------------------------------------------------------------------------//
 // CreateNewUserPage.php
 $lang['new_title']					= 'Crear nuevo usuario';
 $lang['new_only_numbers']			= '¡Las coordenadas solo deben tener números!';
@@ -830,5 +839,4 @@ $lang['new_coord']					= 'Coordenadas';
 $lang['new_email']					= 'Correo electrónico';
 $lang['new_pass']					= 'Contraseña';
 $lang['new_name']					= 'Nombre';
-//----------------------------------------------------------------------------//
 ?>

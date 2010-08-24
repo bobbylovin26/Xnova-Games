@@ -155,6 +155,8 @@ switch ($Mode) {
 			$QryInsertAdm .= "`username`          = '". $adm_user ."', ";
 			$QryInsertAdm .= "`email`             = '". $adm_email ."', ";
 			$QryInsertAdm .= "`email_2`           = '". $adm_email ."', ";
+			$QryInsertAdm .= "`ip_at_reg` 		  = '". $_SERVER["REMOTE_ADDR"] . "', ";
+			$QryInsertAdm .= "`user_agent`        = '', ";
 			$QryInsertAdm .= "`authlevel`         = '3', ";
 			$QryInsertAdm .= "`id_planet`         = '1', ";
 			$QryInsertAdm .= "`galaxy`            = '1', ";
@@ -213,7 +215,7 @@ switch ($Mode) {
 
 			if ($_POST[continuar] && (empty($_POST[modo]) or empty($_POST[servidor]) or empty($_POST[usuario]) or empty($_POST[clave]) or empty($_POST[base]) or empty($_POST[prefix])))
 			{
-				message("Debes aceptar los terminos, y rellenar todos los campos<br><a href=\"./index.php\">Volver</a>","", "", false, false);
+				message("Error!, debes rellenar todos los campos<br><a href=\"./index.php\">Volver</a>","", "", false, false);
 			}
 			else
 			{
@@ -272,7 +274,7 @@ switch ($Mode) {
 				$Qry16 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsFrame' LIMIT 1;";
 				$Qry17 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsText' LIMIT 1;";
 				$Qry18 = "DELETE FROM `$_POST[prefix]config` WHERE `config_name` = 'VERSION'";
-				$Qry19 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.9.1');";
+				$Qry19 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.9.2');";
 				$Qry20 = "ALTER TABLE `$_POST[prefix]rw` ADD `owners` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0';";
 				$Qry21 = "ALTER TABLE `$_POST[prefix]fleets` CHANGE `fleet_group` `fleet_group` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' ;";
 				$Qry22 = "ALTER TABLE `$_POST[prefix]aks` ADD `planet_type` TINYINT( 1 ) NOT NULL DEFAULT '1' AFTER `planet` ;";
@@ -346,6 +348,9 @@ switch ($Mode) {
 						$QrysArray	= array($Qry18, $Qry19, $Qry28, $Qry29, $Qry30, $Qry31);
 					break;
 					case'2.9.1':
+						$QrysArray	= array($Qry18, $Qry19, $Qry30, $Qry31);
+					break;
+					case'2.9.2':
 						$QrysArray	= array($Qry18, $Qry19, $Qry30, $Qry31);
 					break;
 				}

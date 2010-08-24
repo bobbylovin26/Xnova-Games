@@ -4,7 +4,23 @@ $lang['Version']     = 'Versión';
 $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
-'2.9.1' => ' 21/10/09
+'2.9.2' => ' 01/11/09
+- [Seguridad] Cerrado un agujero en la alianza que permitía sql injection (Gracias a privatethedawn).-
+
+- [Novedad] Implementado un nuevo sistema de plugins/mods/adds.-
+- [Novedad] Ahora cuando hay muchos recursos en la cuenta de un usuario se muestra K,M,B,T,T+ en la información de cuentas del panel del admin.-
+
+- [Fix][Bug varios] Fueron corregidos varios bugs menores.-
+- [Fix][Bug #0000019] Famoso error en las estadísticas provocado por una query que no era finalizada.-
+- [Fix][Bug #0000020] Información de cuentas en el panel del admin.
+- [Fix][Bug #-------] No se muestra bien el tiempo de estacionar en aliado en el panel del admin.-
+- [Fix][Bug #-------] Corregidos varios textos (español,inglés) en el panel de administración.-
+
+
+- [Cambio] Algunas mejoras de optimización en la información de cuentas en el panel administrativo.
+',
+
+'2.9.1' => ' 01/11/09
 
 - [Fix][Menor] Corregido un bug menor en el texto de los informes de espionaje que permitía bashing.-
 - [Fix][Menor] Corregido un bug menor en el texto de los reportes de combates.-

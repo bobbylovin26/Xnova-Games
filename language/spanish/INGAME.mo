@@ -1201,6 +1201,8 @@ $lang['cff_toward']							= ' hacia ';
 $lang['cff_with_the_mission_of']			= '. Con la misión de: ';
 $lang['cff_to_explore']						= ' a explorar ';
 $lang['cff_comming_back']					= ' vuelve ';
+$lang['cff_back']							= 'Regresando';
+$lang['cff_to_destination']					= 'Llendo a destino';
 
 //----------------------------------------------------------------------------//
 // EXTRA LANGUAGE FUNCTIONS

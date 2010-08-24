@@ -34,29 +34,23 @@ if ($Observation != 1) die();
 $parse	= 	$lang;
 
 
-$query_1	=	doquery("SELECT * FROM {{table}} ORDER BY `username` ASC", "users");
-while($informacion	=	mysql_fetch_array($query_1))
+$UserWhileLogin	=	doquery("SELECT `id`, `username` FROM {{table}} ORDER BY `username` ASC", "users");
+while($UserList	=	mysql_fetch_array($UserWhileLogin))
 {
-	$parse['lista']	.=	"<option value=\"".$informacion['id']."\">".$informacion['username']."</option>";
+	$parse['lista']	.=	"<option value=\"".$UserList['id']."\">".$UserList['username']."</option>";
 }
 
 
 if($_POST['id_u'] != NULL)
-{
 	$id_u	=	$_POST['id_u'];
-}
 else
-{
 	$id_u	=	$_POST['id_u2'];
-}
 
 
-$modo		=	$_POST['modo'];
-$info_u 	= 	doquery("SELECT * FROM {{table}} WHERE `id` LIKE '%{$id_u}%'", "users");
-$info_p		=	doquery("SELECT * FROM {{table}} WHERE `id_owner` = '".$id_u."'", "planets");	//Consulta para sacar datos de la tabla de planetas
+$OnlyQueryLogin 	= 	doquery("SELECT `id` FROM {{table}} WHERE `id` = '".$id_u."'", "users", true);
 
 		
-	if ($modo == "datos")
+	if ($_POST['modo'] == "datos")
 	{
 		if ($id_u == NULL)
 		{
@@ -70,384 +64,407 @@ $info_p		=	doquery("SELECT * FROM {{table}} WHERE `id_owner` = '".$id_u."'", "pl
 		{
 			$parse['error']	=	$lang['ac_no_character'];
 		}
-		elseif(mysql_num_rows($info_u) == 0)
+		elseif($OnlyQueryLogin == NULL or $OnlyQueryLogin == 0)
 		{
 			$parse['error']	=	$lang['ac_username_doesnt'];
 		}
 		else
 		{
-			//Despliegue de todos los datos de la cuenta
-			while ($b = mysql_fetch_array($info_u))
+			// COMIENZA SAQUEO DE DATOS DE LA TABLA DE USUARIOS
+			$SpecifyItemsU	=	
+			"id,username,email,email_2,authlevel,id_planet,galaxy,system,planet,user_lastip,ip_at_reg,user_agent,register_time,onlinetime,noipcheck,urlaubs_modus,
+			 urlaubs_until,spy_tech,computer_tech,military_tech,defence_tech,shield_tech,energy_tech,hyperspace_tech,combustion_tech,impulse_motor_tech,
+			 hyperspace_motor_tech,laser_tech,ionic_tech,buster_tech,intergalactic_tech,expedition_tech,graviton_tech,ally_id,ally_name,ally_request,
+			 ally_request_text,ally_register_time,ally_rank_id,rpg_geologue,rpg_amiral,rpg_ingenieur,rpg_technocrate,rpg_espion,rpg_constructeur,rpg_scientifique,
+			 rpg_commandant,rpg_stockeur,darkmatter,rpg_defenseur,rpg_destructeur,rpg_general,rpg_bunker,rpg_raideur,rpg_empereur,bana,banaday";
+			
+			$UserQuery 	= 	doquery("SELECT ".$SpecifyItemsU." FROM {{table}} WHERE `id` = '".$id_u."'", "users", true);
+
+			
+			$parse['reg_time']		=	gmdate("d-m-Y H:i:s", $UserQuery['register_time']);
+			$parse['onlinetime']	=	gmdate("d-m-Y H:i:s", $UserQuery['onlinetime']);
+			$parse['id']			=	$UserQuery['id'];
+			$parse['nombre']		=	$UserQuery['username'];
+			$parse['email_1']		=	$UserQuery['email'];
+			$parse['email_2']		=	$UserQuery['email_2'];
+			$parse['ip']			=	$UserQuery['ip_at_reg'];
+			$parse['ip2']			=	$UserQuery['user_lastip'];
+			$parse['id_p']			=	$UserQuery['id_planet'];
+			$parse['g']				=	$UserQuery['galaxy'];
+			$parse['s']				=	$UserQuery['system'];
+			$parse['p']				=	$UserQuery['planet'];
+			$parse['info']			=	$UserQuery['user_agent'];
+			$alianza				=	$UserQuery['ally_name'];
+			$parse['nivel']			=	$lang['se_authlevel'][$UserQuery['authlevel']];
+			$parse['ipcheck']		=	$lang['ac_checkip'][$UserQuery['noipcheck']];
+			if($UserQuery['vacas'] == 1) $parse['vacas'] = $lang['ac_res'][1]; else $parse['vacas'] = $lang['ac_res'][0];
+			if($UserQuery['bana'] == 1) $parse['suspen'] = $lang['ac_res'][1]; else $parse['suspen'] = $lang['ac_res'][0];
+
+
+			$parse['mo']	=	"<a title=\"".pretty_number($UserQuery['darkmatter'])."\">".shortly_number($UserQuery['darkmatter'])."</a>";
+
+
+			$parse['tec_espia']				=	$UserQuery['spy_tech'];
+			$parse['tec_compu']				=	$UserQuery['computer_tech'];
+			$parse['tec_militar']			=	$UserQuery['military_tech'];
+			$parse['tec_defensa']			=	$UserQuery['defence_tech'];
+			$parse['tec_blindaje']			=	$UserQuery['shield_tech'];
+			$parse['tec_energia']			=	$UserQuery['energy_tech'];
+			$parse['tec_hiperespacio']		=	$UserQuery['hyperspace_tech'];
+			$parse['tec_combustion']		=	$UserQuery['combustion_tech'];
+			$parse['tec_impulso']			=	$UserQuery['impulse_motor_tech'];
+			$parse['tec_hiperespacio_p']	=	$UserQuery['hyperspace_motor_tech'];
+			$parse['tec_laser']				=	$UserQuery['laser_tech'];
+			$parse['tec_ionico']			=	$UserQuery['ionic_tech'];
+			$parse['tec_plasma']			=	$UserQuery['buster_tech'];
+			$parse['tec_intergalactico']	=	$UserQuery['intergalactic_tech'];
+			$parse['tec_expedicion']		=	$UserQuery['expedition_tech'];
+			$parse['tec_graviton']			=	$UserQuery['graviton_tech'];
+				
+
+			$parse['ofi_geologo']			=	$UserQuery['rpg_geologue'];
+			$parse['ofi_almirante']			=	$UserQuery['rpg_amiral'];
+			$parse['ofi_ingeniero']			=	$UserQuery['rpg_ingenieur'];
+			$parse['ofi_tecnocrata']		=	$UserQuery['rpg_technocrate'];
+			$parse['ofi_espia']				=	$UserQuery['rpg_espion'];
+			$parse['ofi_constructor']		=	$UserQuery['rpg_constructeur'];
+			$parse['ofi_cientifico']		=	$UserQuery['rpg_scientifique'];
+			$parse['ofi_comandante']		=	$UserQuery['rpg_commandant'];
+			$parse['ofi_almacenista']		=	$UserQuery['rpg_stockeur'];
+			$parse['ofi_defensa']			=	$UserQuery['rpg_defenseur'];
+			$parse['ofi_destructor']		=	$UserQuery['rpg_destructeur'];
+			$parse['ofi_general']			=	$UserQuery['rpg_general'];
+			$parse['ofi_bunker']			=	$UserQuery['rpg_bunker'];
+			$parse['ofi_conquis']			=	$UserQuery['rpg_raideur'];
+			$parse['ofi_emperador']			=	$UserQuery['rpg_empereur'];			
+			
+			
+			if ($UserQuery['bana'] != 0)
 			{
-				$identi						=	$b['id'];
-				$nivel						=	$b['authlevel'];
-				$vacas						=	$b['urlaubs_modus'];
-				$alianza					=	$b['ally_name'];
-				$id_ali						=	$b['ally_id'];
-				$suspen						=	$b['bana'];
-				$parse['reg_time']			=	gmdate("d/M/y H:i:s", $b['register_time']);
-				$parse['onlinetime']		=	gmdate("d/M/y H:i:s", $b['onlinetime']);
-				$parse['id']				=	$b['id'];
-				$parse['nombre']			=	$b['username'];
-				$parse['contra']			=	$b['password'];
-				$parse['email_1']			=	$b['email'];
-				$parse['email_2']			=	$b['email_2'];
-				$parse['ip']				=	$b['ip_at_reg'];
-				$parse['ip2']				=	$b['user_lastip'];
-				$parse['id_p']				=	$b['id_planet'];
-				$parse['g']					=	$b['galaxy'];
-				$parse['s']					=	$b['system'];
-				$parse['p']					=	$b['planet'];
-				$parse['info']				=	$b['user_agent'];
-
-				//Materia Oscura
-				$parse['mo']	.=	pretty_number($b['darkmatter']);
-
-
-				//Investigaciones
-				$parse['tec_espia']				=	$b['spy_tech'];
-				$parse['tec_compu']				=	$b['computer_tech'];
-				$parse['tec_militar']			=	$b['military_tech'];
-				$parse['tec_defensa']			=	$b['defence_tech'];
-				$parse['tec_blindaje']			=	$b['shield_tech'];
-				$parse['tec_energia']			=	$b['energy_tech'];
-				$parse['tec_hiperespacio']		=	$b['hyperspace_tech'];
-				$parse['tec_combustion']		=	$b['combustion_tech'];
-				$parse['tec_impulso']			=	$b['impulse_motor_tech'];
-				$parse['tec_hiperespacio_p']	=	$b['hyperspace_motor_tech'];
-				$parse['tec_laser']				=	$b['laser_tech'];
-				$parse['tec_ionico']			=	$b['ionic_tech'];
-				$parse['tec_plasma']			=	$b['buster_tech'];
-				$parse['tec_intergalactico']	=	$b['intergalactic_tech'];
-				$parse['tec_expedicion']		=	$b['expedition_tech'];
-				$parse['tec_graviton']			=	$b['graviton_tech'];
+				$parse['mas']			=	"<a href=\"javascript:animatedcollapse.toggle('banned')\">".$lang['ac_more']."</a>";
+				
+				$BannedQuery	=	doquery("SELECT theme,time,longer,author FROM {{table}} WHERE `who` = '".$UserQuery['username']."'", "banned", true);
 				
 				
-				//Oficiales
-				$parse['ofi_geologo']			=	$b['rpg_geologue'];
-				$parse['ofi_almirante']			=	$b['rpg_amiral'];
-				$parse['ofi_ingeniero']			=	$b['rpg_ingenieur'];
-				$parse['ofi_tecnocrata']		=	$b['rpg_technocrate'];
-				$parse['ofi_espia']				=	$b['rpg_espion'];
-				$parse['ofi_constructor']		=	$b['rpg_constructeur'];
-				$parse['ofi_cientifico']		=	$b['rpg_scientifique'];
-				$parse['ofi_comandante']		=	$b['rpg_commandant'];
-				$parse['ofi_almacenista']		=	$b['rpg_stockeur'];
-				$parse['ofi_defensa']			=	$b['rpg_defenseur'];
-				$parse['ofi_destructor']		=	$b['rpg_destructeur'];
-				$parse['ofi_general']			=	$b['rpg_general'];
-				$parse['ofi_bunker']			=	$b['rpg_bunker'];
-				$parse['ofi_conquis']			=	$b['rpg_raideur'];
-				$parse['ofi_emperador']			=	$b['rpg_empereur'];
-			}
-
-
-
-			if ($vacas != 0)
-			{
-				$parse['vacas']	=	$lang['ac_yes'];
-			}
-			else
-			{
-				$parse['vacas']	=	$lang['ac_no'];
-			}
-
-
-			if ($suspen != 0)
-			{
-				$parse['suspen']	=	$lang['ac_yes'];
-			}
-			else
-			{
-				$parse['suspen']	=	$lang['ac_no'];
+				$parse['sus_longer']	=	gmdate("d-m-Y H-i-s", $BannedQuery['longer']);
+				$parse['sus_time']		=	gmdate("d-m-Y H-i-s", $BannedQuery['time']);
+				$parse['sus_reason']	=	$BannedQuery['theme'];
+				$parse['sus_author']	=	$BannedQuery['author'];
+				
 			}
 			
-			//Puntaje
-			$info_puntaje	=	doquery("SELECT * FROM {{table}} WHERE `id_owner` = '".$id_u."'", "statpoints");
 			
-			while ($f = mysql_fetch_array($info_puntaje))
-			{
-				$stat_type	=	$f['stat_type'];
-				if ($stat_type	==	'1')
-				{
-					$count_tecno	=	pretty_number($f['tech_count']);
-					$count_def		=	pretty_number($f['defs_count']);
-					$count_fleet	=	pretty_number($f['fleet_count']);
-					$count_builds	=	pretty_number($f['build_count']);
-				
-					$point_builds	=	pretty_number($f['build_points']);
-					$point_tecno	=	pretty_number($f['tech_points']);
-					$point_def		=	pretty_number($f['defs_points']);
-					$point_fleet	=	pretty_number($f['fleet_points']);
-				
-				
-					$ranking_tecno		=	$f['tech_rank'];
-					$ranking_builds		=	$f['build_rank'];
-					$ranking_def		=	$f['defs_rank'];
-					$ranking_fleet		=	$f['fleet_rank'];
-				
-					$total_points	=	pretty_number($f['total_points']);
-					
-					
-					$parse['count_tecno']	=	$count_tecno;
-					$parse['count_def']		=	$count_def;
-					$parse['count_fleet']	=	$count_fleet;
-					$parse['count_builds']	=	$count_builds;
-				
-					$parse['point_builds']	=	$point_builds;
-					$parse['point_tecno']	=	$point_tecno;
-					$parse['point_def']		=	$point_def;
-					$parse['point_fleet']	=	$point_fleet;
-				
-				
-					$parse['ranking_tecno']		=	$ranking_tecno;
-					$parse['ranking_builds']	=	$ranking_builds;
-					$parse['ranking_def']		=	$ranking_def;
-					$parse['ranking_fleet']		=	$ranking_fleet;
-				
-					$parse['total_points']	=	$total_points;
-				}
-			}
+			// COMIENZA EL SAQUEO DE DATOS DE LA TABLA DE PUNTAJE
+			$SpecifyItemsS	=	
+			"tech_count,defs_count,fleet_count,build_count,build_points,tech_points,defs_points,fleet_points,tech_rank,build_rank,defs_rank,fleet_rank,total_points,
+			stat_type";
+			
+			$StatQuery	=	doquery("SELECT ".$SpecifyItemsS." FROM {{table}} WHERE `id_owner` = '".$id_u."' AND `stat_type` = '1'", "statpoints", true);
 
-			// ALIANZA
-			if ($alianza == 0 && $id_ali == 0)
+			$parse['count_tecno']	=	pretty_number($StatQuery['tech_count']);
+			$parse['count_def']		=	pretty_number($StatQuery['defs_count']);
+			$parse['count_fleet']	=	pretty_number($StatQuery['fleet_count']);
+			$parse['count_builds']	=	pretty_number($StatQuery['build_count']);
+				
+			$parse['point_builds']	=	pretty_number($StatQuery['build_points']);
+			$parse['point_tecno']	=	pretty_number($StatQuery['tech_points']);
+			$parse['point_def']		=	pretty_number($StatQuery['defs_points']);
+			$parse['point_fleet']	=	pretty_number($StatQuery['fleet_points']);
+				
+				
+			$parse['ranking_tecno']		=	$StatQuery['tech_rank'];
+			$parse['ranking_builds']	=	$StatQuery['build_rank'];
+			$parse['ranking_def']		=	$StatQuery['defs_rank'];
+			$parse['ranking_fleet']		=	$StatQuery['fleet_rank'];
+				
+			$parse['total_points']	=	pretty_number($StatQuery['total_points']);
+			
+
+			
+			// COMIENZA EL SAQUEO DE DATOS DE LA ALIANZA
+			$AliID	=	$UserQuery['ally_id'];
+			
+			
+			if ($alianza == 0 && $AliID == 0)
 			{
 				$parse['alianza']	=	$lang['ac_no_ally'];
+				$parse['AllianceHave']	=	"<span class=\"no_moon\"><img src=\"../styles/images/Adm/arrowright.png\" width=\"16\" height=\"10\"/> 
+							".$lang['ac_alliance']."&nbsp;".$lang['ac_no_alliance']."</span>";	
 			}
-			elseif ($alianza != NULL && $id_ali != 0)
+			elseif ($alianza != NULL && $AliID != 0)
 			{
-				$parse['alianza']	=	$alianza;
-				$parse['id_ali']	=	" (ID: ".$id_ali.")";
-				$parse['mas']		=	"<a href=\"#\" rel=\"toggle[alianza]\" class=\"editar_l\">".$lang['ac_more']."</a>";
-
+				include_once("AdminFunctions/BBCode-Panel-Adm.php");	
+				$bbcode = new bbcode;
 				
-				$info_a		=	doquery("SELECT * FROM {{table}} WHERE `ally_name` = '".$alianza."'", "alliance");
-				while ($c = mysql_fetch_array($info_a))
+				$parse['AllianceHave']	=	"<a href=\"javascript:animatedcollapse.toggle('alianza')\" class=\"link\">
+							<img src=\"../styles/images/Adm/arrowright.png\" width=\"16\" height=\"10\"/> ".$lang['ac_alliance']."</a>";
+										
+							
+				
+				$SpecifyItemsA	=	
+				"ally_owner,id,ally_tag,ally_name,ally_web,ally_description,ally_text,ally_request,ally_image,ally_members,ally_register_time";
+				
+				$AllianceQuery		=	doquery("SELECT ".$SpecifyItemsA." FROM {{table}} WHERE `ally_name` = '".$alianza."'", "alliance", true);
+				
+				
+				
+				$parse['alianza']				=	$alianza;
+				$parse['id_ali']				=	" (".$lang['ac_ali_idid']."&nbsp;".$AliID.")";	
+				$parse['id_aliz']				=	$AllianceQuery['id'];
+				$parse['tag']					=	$AllianceQuery['ally_tag'];
+				$parse['ali_nom']				=	$AllianceQuery['ally_name'];
+				$parse['ali_cant']				=	$AllianceQuery['ally_members'];
+				$parse['ally_register_time']	=	gmdate("d-m-Y H:i:s", $AllianceQuery['ally_register_time']);
+				$ali_lider						=	$AllianceQuery['ally_owner'];
+					
+					
+				if($AllianceQuery['ally_web'] != NULL)
+					$parse['ali_web'] = $AllianceQuery['ally_web'];
+				else
+					$parse['ali_web'] = $lang['ac_no_web'];
+					
+					
+				if($AllianceQuery['ally_description'] != NULL)
 				{
-					include_once("AdminFunctions/BBCode-Panel-Adm.php");	
-					$bbcode = new bbcode;			
+					$parse['ali_ext2'] = $bbcode->reemplazo($AllianceQuery['ally_description']);
+					$parse['ali_ext']  = "<a href=\"#\" rel=\"toggle[externo]\">".$lang['ac_view_text_ext']."</a>";
+				}
+				else
+				{
+					$parse['ali_ext'] = $lang['ac_no_text_ext'];
+				}
 					
-					$ali_lider			=	$c['ally_owner'];
-					$parse['id_aliz']	=	$c['id'];
-					$parse['tag']		=	$c['ally_tag'];
-					$parse['ali_nom']	=	$c['ally_name'];
 					
-					if($c['ally_web'] != NULL){$parse['ali_web'] = $c['ally_web'];}else{$parse['ali_web'] = $lang['ac_no_web'];}
+				if($AllianceQuery['ally_text'] != NULL)
+				{
+					$parse['ali_int2'] = $bbcode->reemplazo($AllianceQuery['ally_text']);
+					$parse['ali_int']  = "<a href=\"#\" rel=\"toggle[interno]\">".$lang['ac_view_text_int']."</a>";
+				}
+				else
+				{
+					$parse['ali_int'] = $lang['ac_no_text_int'];
+				}
 					
-					if($c['ally_description'] != NULL)
+					
+				if($AllianceQuery['ally_request'] != NULL)
+				{
+					$parse['ali_sol2'] = $bbcode->reemplazo($AllianceQuery['ally_request']);
+					$parse['ali_sol']  = "<a href=\"#\" rel=\"toggle[solicitud]\">".$lang['ac_view_text_sol']."</a>";
+				}
+				else
+				{
+					$parse['ali_sol'] = $lang['ac_no_text_sol'];
+				}
+					
+					
+				if($AllianceQuery['ally_image'] != NULL)
+				{
+					$parse['ali_logo2'] = $AllianceQuery['ally_image'];
+					$parse['ali_logo'] = "<a href=\"#\" rel=\"toggle[imagen]\">".$lang['ac_view_image2']."</a>";
+				}
+				else
+				{
+					$parse['ali_logo'] = $lang['ac_no_img'];
+				}
+				
+				
+				$SearchLeader		=	doquery("SELECT `username` FROM {{table}} WHERE `id` = '".$ali_lider."'", "users", true);
+				$parse['ali_lider']	=	$SearchLeader['username'];
+
+
+
+				$StatQueryAlly	=	doquery("SELECT ".$SpecifyItemsS." FROM {{table}} WHERE `id_owner` = '".$ali_lider."' AND 
+									`stat_type` = '2'", "statpoints", true);
+						
+				$parse['count_tecno_ali']	=	pretty_number($StatQueryAlly['tech_count']);
+				$parse['count_def_ali']		=	pretty_number($StatQueryAlly['defs_count']);
+				$parse['count_fleet_ali']	=	pretty_number($StatQueryAlly['fleet_count']);
+				$parse['count_builds_ali']	=	pretty_number($StatQueryAlly['build_count']);
+				
+				$parse['point_builds_ali']	=	pretty_number($StatQueryAlly['build_points']);
+				$parse['point_tecno_ali']	=	pretty_number($StatQueryAlly['tech_points']);
+				$parse['point_def_ali']		=	pretty_number($StatQueryAlly['defs_points']);
+				$parse['point_fleet_ali']	=	pretty_number($StatQueryAlly['fleet_points']);
+				
+				
+				$parse['ranking_tecno_ali']		=	pretty_number($StatQueryAlly['tech_rank']);
+				$parse['ranking_builds_ali']	=	pretty_number($StatQueryAlly['build_rank']);
+				$parse['ranking_def_ali']		=	pretty_number($StatQueryAlly['defs_rank']);
+				$parse['ranking_fleet_ali']		=	pretty_number($StatQueryAlly['fleet_rank']);
+				
+				$parse['total_points_ali']		=	pretty_number($StatQueryAlly['total_points']);
+			}		
+			
+			
+			
+			
+			// COMIENZA EL SAQUEO DE DATOS DE LOS PLANETAS
+			$SpecifyItemsP	=	
+				"planet_type,id,name,galaxy,system,planet,destruyed,diameter,field_current,field_max,temp_min,temp_max,metal,crystal,deuterium,energy_max,
+				metal_mine,crystal_mine,deuterium_sintetizer,solar_plant,fusion_plant,robot_factory,nano_factory,hangar,metal_store,crystal_store,deuterium_store,
+				laboratory,terraformer,ally_deposit,silo,small_ship_cargo,big_ship_cargo,light_hunter,heavy_hunter,crusher,battle_ship,colonizer,recycler,
+				spy_sonde,bomber_ship,solar_satelit,destructor,dearth_star,battleship,supernova,misil_launcher,small_laser,big_laser,gauss_canyon,ionic_canyon,
+				buster_canyon,small_protection_shield,planet_protector,big_protection_shield,interceptor_misil,interplanetary_misil,mondbasis,phalanx,sprungtor,
+				energy_used";
+				
+			$PlanetsQuery	=	doquery("SELECT ".$SpecifyItemsP." FROM {{table}} WHERE `id_owner` = '".$id_u."'", "planets");
+			
+			while ($PlanetsWhile	=	mysql_fetch_array($PlanetsQuery))
+			{
+				if ($PlanetsWhile['planet_type'] == 3)
+				{
+					$Planettt = $PlanetsWhile['name']."&nbsp;(".$lang['ac_moon'].")<br><font color=aqua>["
+								.$PlanetsWhile['galaxy'].":".$PlanetsWhile['system'].":".$PlanetsWhile['planet']."]</font>";					
+					
+					$MoonZ	=	0;		
+					$Moons = $PlanetsWhile['name']."&nbsp;(".$lang['ac_moon'].")<br><font color=aqua>["
+								.$PlanetsWhile['galaxy'].":".$PlanetsWhile['system'].":".$PlanetsWhile['planet']."]</font>";
+					$MoonZ++;
+				}
+				else
+				{
+					$Planettt = $PlanetsWhile['name']."<br><font color=aqua>[".$PlanetsWhile['galaxy'].":".$PlanetsWhile['system'].":"
+								.$PlanetsWhile['planet']."]</font>";
+				}
+					
+					
+					
+				if ($PlanetsWhile["destruyed"] == 0)
+				{	
+					$parse['planets_moons']	.=	"
+					<tr>
+						<th>".$Planettt."</th>
+						<th>".$PlanetsWhile['id']."</th>
+						<th>".pretty_number($PlanetsWhile['diameter'])."</th>
+						<th>".pretty_number($PlanetsWhile['field_current'])."/".pretty_number($PlanetsWhile['field_max'])."</th>
+						<th>".pretty_number($PlanetsWhile['temp_min'])."/".pretty_number($PlanetsWhile['temp_max'])."</th>
+					</tr>";
+					
+					if ($PlanetsWhile['energy_used'] < 0) 
+						$Color	=	"<font color=#FF6600>".shortly_number($PlanetsWhile['energy_used'])."</font>";
+					else 
+						$Color	=	shortly_number($PlanetsWhile['energy_used']);
+					
+					
+					$parse['resources']	.=	"
+					<tr>
+						<th>".$Planettt."</th>
+						<th><a title=\"".pretty_number($PlanetsWhile['metal'])."\">".shortly_number($PlanetsWhile['metal'])."</a></th>
+						<th><a title=\"".pretty_number($PlanetsWhile['crystal'])."\">".shortly_number($PlanetsWhile['crystal'])."</a></th>
+						<th><a title=\"".pretty_number($PlanetsWhile['deuterium'])."\">".shortly_number($PlanetsWhile['deuterium'])."</a></th>
+						<th><a title=\"".pretty_number($PlanetsWhile['energy_used'])."\">".$Color."</a>/
+						<a title=\"".pretty_number($PlanetsWhile['energy_max'])."\">".shortly_number($PlanetsWhile['energy_max'])."</a></th>
+					</tr>";
+				
+				
+					$parse['ships']	.=	"
+					<tr>
+						<th width=\"10%\">".$Planettt."</th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['small_ship_cargo'])."\">".shortly_number($PlanetsWhile['small_ship_cargo'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['big_ship_cargo'])."\">".shortly_number($PlanetsWhile['big_ship_cargo'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['light_hunter'])."\">".shortly_number($PlanetsWhile['light_hunter'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['heavy_hunter'])."\">".shortly_number($PlanetsWhile['heavy_hunter'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['crusher'])."\">".shortly_number($PlanetsWhile['crusher'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['battle_ship'])."\">".shortly_number($PlanetsWhile['battle_ship'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['colonizer'])."\">".shortly_number($PlanetsWhile['colonizer'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['recycler'])."\">".shortly_number($PlanetsWhile['recycler'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['spy_sonde'])."\">".shortly_number($PlanetsWhile['spy_sonde'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['bomber_ship'])."\">".shortly_number($PlanetsWhile['bomber_ship'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['solar_satelit'])."\">".shortly_number($PlanetsWhile['solar_satelit'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['destructor'])."\">".shortly_number($PlanetsWhile['destructor'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['dearth_star'])."\">".shortly_number($PlanetsWhile['dearth_star'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['battleship'])."\">".shortly_number($PlanetsWhile['battleship'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['supernova'])."\">".shortly_number($PlanetsWhile['supernova'])."</a></th>
+					</tr>";
+						
+						
+					$parse['defenses']	.=	"
+					<tr>
+						<th width=\"10%\">".$Planettt."</th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['misil_launcher'])."\">".shortly_number($PlanetsWhile['misil_launcher'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['small_laser'])."\">".shortly_number($PlanetsWhile['small_laser'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['big_laser'])."\">".shortly_number($PlanetsWhile['big_laser'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['gauss_canyon'])."\">".shortly_number($PlanetsWhile['gauss_canyon'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['ionic_canyon'])."\">".shortly_number($PlanetsWhile['ionic_canyon'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['buster_canyon'])."\">".shortly_number($PlanetsWhile['buster_canyon'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['small_protection_shield'])."\">".shortly_number($PlanetsWhile['small_protection_shield'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['big_protection_shield'])."\">".shortly_number($PlanetsWhile['big_protection_shield'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['planet_protector'])."\">".shortly_number($PlanetsWhile['planet_protector'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['interceptor_misil'])."\">".shortly_number($PlanetsWhile['interceptor_misil'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['interplanetary_misil'])."\">".shortly_number($PlanetsWhile['interplanetary_misil'])."</a></th>
+					</tr>";
+					
+					
+					$parse['buildings']	.=	"
+					<tr>
+						<th width=\"10%\">".$Planettt."</th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['metal_mine'])."\">".shortly_number($PlanetsWhile['metal_mine'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['crystal_mine'])."\">".shortly_number($PlanetsWhile['crystal_mine'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['deuterium_sintetizer'])."\">".shortly_number($PlanetsWhile['deuterium_sintetizer'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['solar_plant'])."\">".shortly_number($PlanetsWhile['solar_plant'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['fusion_plant'])."\">".shortly_number($PlanetsWhile['fusion_plant'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['robot_factory'])."\">".shortly_number($PlanetsWhile['robot_factory'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['nano_factory'])."\">".shortly_number($PlanetsWhile['nano_factory'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['hangar'])."\">".shortly_number($PlanetsWhile['hangar'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['metal_store'])."\">".shortly_number($PlanetsWhile['metal_store'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['crystal_store'])."\">".shortly_number($PlanetsWhile['crystal_store'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['deuterium_store'])."\">".shortly_number($PlanetsWhile['deuterium_store'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['laboratory'])."\">".shortly_number($PlanetsWhile['laboratory'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['terraformer'])."\">".shortly_number($PlanetsWhile['terraformer'])."</a></th>
+						<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['ally_deposit'])."\">".shortly_number($PlanetsWhile['ally_deposit'])."</a></th>
+						<th width=\"30%\"><a title=\"".pretty_number($PlanetsWhile['silo'])."\">".shortly_number($PlanetsWhile['silo'])."</a></th>
+					</tr>";
+					
+					
+					
+					if ($PlanetsWhile['planet_type'] == 3)
 					{
-						$parse['ali_ext2'] = $bbcode->reemplazo($c['ally_description']);
-						$parse['ali_ext']  = "<a href=\"#\" rel=\"toggle[externo]\">".$lang['ac_view_text_ext']."</a>";}
+						$parse['moon_buildings']	.=	"
+						<tr>
+							<th width=\"10%\">".$Moons."</th>
+							<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['mondbasis'])."\">".shortly_number($PlanetsWhile['mondbasis'])."</a></th>
+							<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['phalanx'])."\">".shortly_number($PlanetsWhile['phalanx'])."</a></th>
+							<th width=\"10%\"><a title=\"".pretty_number($PlanetsWhile['sprungtor'])."\">".shortly_number($PlanetsWhile['sprungtor'])."</a></th>
+						</tr>";
+					}
+					
+					
+					
+					if ($MoonZ != 0)
+						$parse['MoonHave']	=	"<a href=\"javascript:animatedcollapse.toggle('especiales')\" class=\"link\">
+							<img src=\"../styles/images/Adm/arrowright.png\" width=\"16\" height=\"10\"/> ".$lang['ac_lunar_buildings']."</a>";
 					else
-					{$parse['ali_ext'] = $lang['ac_no_text_ext'];}
+						$parse['MoonHave']	=	"<span class=\"no_moon\"><img src=\"../styles/images/Adm/arrowright.png\" width=\"16\" height=\"10\"/> 
+							".$lang['ac_lunar_buildings']."&nbsp;".$lang['ac_moons_no']."</span>";	
 					
-					if($c['ally_text'] != NULL)
-					{
-						$parse['ali_int2'] = $bbcode->reemplazo($c['ally_text']);
-						$parse['ali_int']  = "<a href=\"#\" rel=\"toggle[interno]\">".$lang['ac_view_text_int']."</a>";}
-					else{$parse['ali_int'] = $lang['ac_no_text_int'];}
-					
-					if($c['ally_request'] != NULL)
-					{
-						$parse['ali_sol2'] = $bbcode->reemplazo($c['ally_request']);
-						$parse['ali_sol']  = "<a href=\"#\" rel=\"toggle[solicitud]\">".$lang['ac_view_text_sol']."</a>";}
-					else{$parse['ali_sol'] = $lang['ac_no_text_sol'];}
-					
-					if($c['ally_image'] != NULL)
-					{
-						$parse['ali_logo2'] = $c['ally_image'];
-						$parse['ali_logo'] = "<a href=\"#\" rel=\"toggle[imagen]\">".$lang['ac_view_image2']."</a>";}
-					else{$parse['ali_logo'] = $lang['ac_no_img'];}
-					
-					$parse['ali_cant']				=	$c['ally_members'];
-					$parse['ally_register_time']	=	gmdate("d/M/y H:i:s", $c['ally_register_time']);
 				}
-			
-				$info_uu	=	doquery("SELECT * FROM {{table}} WHERE `id` = '".$ali_lider."'", "users");
-				while ($d = mysql_fetch_array($info_uu))
+				
+				$DestruyeD	=	0;
+				if ($PlanetsWhile["destruyed"] > 0)
 				{
-					$parse['ali_lider']	=	$d['username'];
+					$parse['destroyed']	.=	"
+						<tr>
+							<th>".$PlanetsWhile['name']."</th>
+							<th>".$PlanetsWhile['id']."</th>
+							<th>[".$PlanetsWhile['galaxy'].":".$PlanetsWhile['system'].":".$PlanetsWhile['planet']."]</th>
+							<th>".gmdate("d-m-Y   H:i:s", $PlanetsWhile['destruyed'])."</th>
+						</tr>";	
+					$DestruyeD++;
 				}
 				
 				
-			$info_puntaje_ali	=	doquery("SELECT * FROM {{table}} WHERE `id_owner` = '".$id_ali."'", "statpoints");
-			while ($g = mysql_fetch_array($info_puntaje_ali))
-			{
-				$stat_type	=	$g['stat_type'];
-				if ($stat_type	==	'2')
-				{		
-					$parse['count_tecno_ali']	=	pretty_number($g['tech_count']);
-					$parse['count_def_ali']		=	pretty_number($g['defs_count']);
-					$parse['count_fleet_ali']	=	pretty_number($g['fleet_count']);
-					$parse['count_builds_ali']	=	pretty_number($g['build_count']);
-				
-					$parse['point_builds_ali']	=	pretty_number($g['build_points']);
-					$parse['point_tecno_ali']	=	pretty_number($g['tech_points']);
-					$parse['point_def_ali']		=	pretty_number($g['defs_points']);
-					$parse['point_fleet_ali']	=	pretty_number($g['fleet_points']);
-				
-				
-					$parse['ranking_tecno_ali']		=	$g['tech_rank'];
-					$parse['ranking_builds_ali']	=	$g['build_rank'];
-					$parse['ranking_def_ali']		=	$g['defs_rank'];
-					$parse['ranking_fleet_ali']		=	$g['fleet_rank'];
-				
-					$parse['total_points_ali']		=	pretty_number($g['total_points']);
-				}
-			}
-		}	
-
-
-			if ($nivel == 3)
-			{
-				$parse['nivel']	=	$lang['user_level'][3];
-			}
-			elseif ($nivel == 2)
-			{
-				$parse['nivel']	=	$lang['user_level'][2];
-			}
-			elseif ($nivel == 1)
-			{
-				$parse['nivel']	=	$lang['user_level'][1];
-			}
-			elseif ($nivel == 0)
-			{
-				$parse['nivel']	=	$lang['user_level'][0];
+				if ($DestruyeD != 0)
+					$parse['DestructionHave']	=	"<a href=\"javascript:animatedcollapse.toggle('destr')\" class=\"link\">
+						<img src=\"../styles/images/Adm/arrowright.png\" width=\"16\" height=\"10\"/> ".$lang['ac_recent_destroyed_planets']."</a>";
+				else
+					$parse['DestructionHave']	=	"<span class=\"no_moon\"><img src=\"../styles/images/Adm/arrowright.png\" width=\"16\" height=\"10\"/> 
+						".$lang['ac_recent_destroyed_planets']."&nbsp;".$lang['ac_isnodestruyed']."</span>";
 			}
 
-			
-			//Despliegue de todos los datos de los planetas
-			while ($a = mysql_fetch_array($info_p))
-			{
-				if ($a["destruyed"] == 0) {
-				//Recursos
-				$parse['metal']		.=	"<th>".pretty_number($a['metal'])."</th>";
-				$parse['cristal']	.=	"<th>".pretty_number($a['crystal'])."</th>";
-				$parse['deute']		.=	"<th>".pretty_number($a['deuterium'])."</th>";
-				$parse['energia']	.=	"<th>".pretty_number($a['energy_max'])."</th>";
 
-				//Edificios
-				$parse['mina_metal']	.=	"<th>".pretty_number($a['metal_mine'])."</th>";
-				$parse['mina_cristal']	.=	"<th>".pretty_number($a['crystal_mine'])."</th>";
-				$parse['mina_deu']		.=	"<th>".pretty_number($a['deuterium_sintetizer'])."</th>";
-				$parse['planta_s']		.=	"<th>".pretty_number($a['solar_plant'])."</th>";
-				$parse['planta_f']		.=	"<th>".pretty_number($a['fusion_plant'])."</th>";
-				$parse['fabrica']		.=	"<th>".pretty_number($a['robot_factory'])."</th>";
-				$parse['nanos']			.=	"<th>".pretty_number($a['nano_factory'])."</th>";
-				$parse['hangar']		.=	"<th>".pretty_number($a['hangar'])."</th>";
-				$parse['almacen_m']		.=	"<th>".pretty_number($a['metal_store'])."</th>";
-				$parse['almacen_c']		.=	"<th>".pretty_number($a['crystal_store'])."</th>";
-				$parse['almacen_d']		.=	"<th>".pretty_number($a['deuterium_store'])."</th>";
-				$parse['labo']			.=	"<th>".pretty_number($a['laboratory'])."</th>";
-				$parse['terra']			.=	"<th>".pretty_number($a['terraformer'])."</th>";
-				$parse['ali']			.=	"<th>".pretty_number($a['ally_deposit'])."</th>";
-				$parse['silo']			.=	"<th>".pretty_number($a['silo'])."</th>";
-
-				$moont	=	0;
-				if ($a['planet_type'] == 3)
-				{
-					//Edificios de la luna
-					$parse['base']		.=	"<th>".pretty_number($a['mondbasis'])."</th>";
-					$parse['phalanx']	.=	"<th>".pretty_number($a['phalanx'])."</th>";
-					$parse['salto']		.=	"<th>".pretty_number($a['sprungtor'])."</th>";
-					$moont++;
-				}
-				if ($moont == 0){$parse['no_moon']	=	$lang['ac_moons_no'];$parse['min_max']	= "";}else{
-				$parse['min_max']	=	"<a href=\"javascript:animatedcollapse.toggle('especiales')\"><div align=\"center\">
-											".$lang['ac_minimize_maximize']."</div></a>";$parse['no_moon']	=	"";}
-
-				//Naves
-				$parse['peque']		.=	"<th>".pretty_number($a['small_ship_cargo'])."</th>";
-				$parse['grande']	.=	"<th>".pretty_number($a['big_ship_cargo'])."</th>";
-				$parse['ligero']	.=	"<th>".pretty_number($a['light_hunter'])."</th>";
-				$parse['pesado']	.=	"<th>".pretty_number($a['heavy_hunter'])."</th>";
-				$parse['cru']		.=	"<th>".pretty_number($a['crusher'])."</th>";
-				$parse['nave']		.=	"<th>".pretty_number($a['battle_ship'])."</th>";
-				$parse['colo']		.=	"<th>".pretty_number($a['colonizer'])."</th>";
-				$parse['reci']		.=	"<th>".pretty_number($a['recycler'])."</th>";
-				$parse['sondas']	.=	"<th>".pretty_number($a['spy_sonde'])."</th>";
-				$parse['bomba']		.=	"<th>".pretty_number($a['bomber_ship'])."</th>";
-				$parse['satelite']	.=	"<th>".pretty_number($a['solar_satelit'])."</th>";
-				$parse['destru']	.=	"<th>".pretty_number($a['destructor'])."</th>";
-				$parse['edlm']		.=	"<th>".pretty_number($a['dearth_star'])."</th>";
-				$parse['aco']		.=	"<th>".pretty_number($a['battleship'])."</th>";
-				$parse['supernova']	.=	"<th>".pretty_number($a['supernova'])."</th>";
-
-				//Defensas
-				$parse['lanza']		.=	"<th>".pretty_number($a['misil_launcher'])."</th>";
-				$parse['laser_p']	.=	"<th>".pretty_number($a['small_laser'])."</th>";
-				$parse['laser_g']	.=	"<th>".pretty_number($a['big_laser'])."</th>";
-				$parse['gauss']		.=	"<th>".pretty_number($a['gauss_canyon'])."</th>";
-				$parse['ionico']	.=	"<th>".pretty_number($a['ionic_canyon'])."</th>";
-				$parse['plasma']	.=	"<th>".pretty_number($a['buster_canyon'])."</th>";
-				$parse['c_peque']	.=	"<th>".pretty_number($a['small_protection_shield'])."</th>";
-				$parse['c_grande']	.=	"<th>".pretty_number($a['big_protection_shield'])."</th>";
-				$parse['protector']	.=	"<th>".pretty_number($a['planet_protector'])."</th>";
-				$parse['misil_i']	.=	"<th>".pretty_number($a['interceptor_misil'])."</th>";
-				$parse['misil_in']	.=	"<th>".pretty_number($a['interplanetary_misil'])."</th>";
-				}
-
-
-				if ($a["destruyed"] == 0)
-				{
-					if ($a['planet_type'] == 3)
-					{
-						$parse['planetas'] .= "<tr><th>".$a['id']."</th><th>".$a['name']."&nbsp;(".$lang['ac_moon'].")</th>";
-						$parse['planetas'] .= "<th>[".$a['galaxy'].":".$a['system'].":".$a['planet']."]</th>";
-						$parse['planetas'] .= "<th>".pretty_number($a['diameter'])."</th>";
-						$parse['planetas'] .= "<th>".pretty_number($a['field_current'])."/".pretty_number($a['field_max'])."</th>";
-						$parse['planetas'] .= "<th>".$a['temp_min']."/".$a['temp_max']."</th></tr>";
-						$parse['lunas']    .= "<th><center><font color=#0099FF>".$a['name']."&nbsp;(".$lang['ac_moon'].")<br>[".$a['galaxy'].":".$a['system'].":".$a['planet']."]</th>";
-						$parse['planetas2'] .= "<th><center><font color=#0099FF>".$a['name']."&nbsp;(".$lang['ac_moon'].")
-											<br>[".$a['galaxy'].":".$a['system'].":".$a['planet']."]</font><center></th>";
-					}
-					elseif ($a['planet_type'] == 1)
-					{
-						$parse['planetas'] .= "<tr><th>".$a['id']."</th><th>".$a['name']."</th>";
-						$parse['planetas'] .= "<th>[".$a['galaxy'].":".$a['system'].":".$a['planet']."]</th>";
-						$parse['planetas'] .= "<th>".pretty_number($a['diameter'])."</th>";
-						$parse['planetas'] .= "<th>".pretty_number($a['field_current'])."/".pretty_number($a['field_max'])."</th>";
-						$parse['planetas'] .= "<th>".$a['temp_min']."/".$a['temp_max']."</th></tr>";
-						$parse['planetas2'] .= "<th><center><font color=#0099FF>".$a['name']."
-												<br>[".$a['galaxy'].":".$a['system'].":".$a['planet']."]</font><center></th>";
-					}
-				}
-
-				if ($a["destruyed"] > 0)
-				{
-					$parse['planetas_d'] .= "<tr><th>".$a['id']."</th><th>".$a['name']."</th>";
-					$parse['planetas_d'] .= "<th>[".$a['galaxy'].":".$a['system'].":".$a['planet']."]</th></tr>";
-				}
-			}
-			
-			/*$info_mensajes	=	doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".$id_u."' ORDER BY `message_time` ASC", "messages");
-			$i	=	0;
-			while ($t	=	mysql_fetch_array($info_mensajes))
-			{
-				$parse['messages_list']	.=
-				"<table border=\"5\" cellpadding=\"5\" cellspacing=\"0\" style=\"border-collapse: collapse\" bordercolor=\"#000000\" width=\"65%\">
-				<tr><th class=\"message\">".$lang['ac_message_id']." <font color=#0099FF>".$t['message_id']."</font></th></tr>
-				<tr><th class=\"message\">".$lang['ac_message_from']." <font color=#0099FF>".$t['message_from']."</font></th></tr>
-				<tr><th class=\"message\">".$lang['ac_message_subject']." <font color=#0099FF>".$t['message_subject']."</font></th></tr>
-				<tr><th class=\"message\">".$lang['ac_message_time']." <font color=#0099FF>".gmdate("d/M/y H:i:s",$t['message_time'])."</font></th></tr>
-				<tr><th align=\"left\"><span class=\"message2\">".$lang['ac_message_a']."</span><br><br>".$t['message_text']."</th></tr></table><br>";
-				$i++;
-			}
-			$parse['conteoo']	=	"(".$i.")";
-			if($i	==	'0')
-			{
-				$parse['sin_mensajes']	=
-				"<table border=\"5\" cellpadding=\"5\" cellspacing=\"0\" style=\"border-collapse: collapse\" bordercolor=\"#000000\" width=\"60%\">
-				<tr><td class=\"messages2\"><center>".$lang['ac_messages_no']."</center></td></tr>
-				</table>";
-			}*/
-					
 			display (parsetemplate(gettemplate("adm/AccountDataBody"), $parse), false, '', true, false);
 		}
 	}
-
-
-
 
 display (parsetemplate(gettemplate("adm/AccountDataIntro"), $parse), false, '', true, false);
 ?>

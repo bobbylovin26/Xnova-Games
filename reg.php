@@ -135,6 +135,7 @@ if ($_POST)
 		$QryInsertUser .= "`email` = '" . mysql_escape_string($UserEmail) . "', ";
 		$QryInsertUser .= "`email_2` = '" . mysql_escape_string($UserEmail) . "', ";
 		$QryInsertUser .= "`ip_at_reg` = '" . $_SERVER["REMOTE_ADDR"] . "', ";
+		$QryInsertAdm  .= "`user_agent` = '', ";
 		$QryInsertUser .= "`id_planet` = '0', ";
 		$QryInsertUser .= "`register_time` = '" . time() . "', ";
 		$QryInsertUser .= "`password`='" . $md5newpass . "';";

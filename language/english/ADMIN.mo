@@ -388,13 +388,13 @@ $lang['ou_vacation_mode']					= 'Vacation mode';
 $lang['ou_banned']							= 'Banned';
 $lang['ou_planet']							= 'Planet';
 $lang['ou_actual_page']						= 'Displaying page';
-
+$lang['ou_yes_yes']							= 'Yes';
 
 //----------------------------------------------------------------------------//
 //OverviewPage.php
 $lang['ow_title']							= 'Welcome to XG Proyect';
 $lang['ow_welcome_text']					= 'Thank you for choosing XG Proyect. Day by day we work to be the OpenSource OGame Nº1 on the web. Here is a "look" of the overall game. You can make all the changes you want browsing the menu on the left.';
-$lang['ow_warnings']						= 'Warnings';
+$lang['ow_overview']						= 'Control panel';
 $lang['ow_support']							= 'Support';
 $lang['ow_credits']							= 'Credits';
 $lang['ow_forum']							= 'Forum';
@@ -420,7 +420,6 @@ $lang['pl_system']							= 'System';
 $lang['pl_planet']							= 'Planet';
 
 //----------------------------------------------------------------------------//
-
 //SettingsPage.php
 $lang['se_server_parameters'] 				= 'Server Settings';
 $lang['se_name'] 							= 'Name';
@@ -628,8 +627,9 @@ $lang['ac_destroyer'] 						= 'Destroyer';
 $lang['ac_general'] 						= 'General';
 $lang['ac_conqueror'] 						= 'Conqueror';
 $lang['ac_emperor'] 						= 'Emperor';
-$lang['ac_yes'] 							= 'Yes';
-$lang['ac_no'] 								= 'No';
+
+$lang['ac_res'][0]							= 'No';
+$lang['ac_res'][1]							= '<font color=lime>Yes</font>';
 $lang['ac_no_ally'] 						= 'No alliance';
 $lang['ac_moon'] 							= 'Luna';
 $lang['ac_enter_user_id'] 					= 'Select User';
@@ -638,7 +638,9 @@ $lang['ac_minimize_maximize'] 				= 'Minimize / Maximize';
 $lang['ac_account_data'] 					= 'Data Account';
 $lang['ac_id'] 								= 'ID';
 $lang['ac_name'] 							= 'Name';
-$lang['ac_password'] 						= 'Password';
+$lang['ac_checkip_title']					= 'Comprobación de IP';
+$lang['ac_checkip'][1]						= '<font color=aqua>Activated</font>';
+$lang['ac_checkip'][0]						= '<font color=#FF6600>Off</font>';
 $lang['ac_mail'] 							= 'Email';
 $lang['ac_perm_mail'] 						= 'Email Standing';
 $lang['ac_auth_level']	 					= 'Rank';
@@ -700,20 +702,32 @@ $lang['ac_no_text_int'] 					= 'The alliance has no inner text';
 $lang['ac_no_text_sol'] 					= 'The alliance has no application text';
 $lang['ac_no_img'] 							= 'The alliance has no logo';
 $lang['ac_no_web'] 							= 'The alliance does not have a website';
-$lang['ac_back_to_ally'] 					= 'Back to the Table of details';
+
 $lang['ac_view_image'] 						= 'View image in another window';
 $lang['ac_view_image2'] 					= 'View image';
 $lang['ac_view_text_ext'] 					= 'Show external text';
 $lang['ac_view_text_int'] 					= 'View inner text';
 $lang['ac_view_text_sol'] 					= 'See text of order';
-$lang['ac_message_id'] 						= 'ID:';
-$lang['ac_message_from']				 	= 'From:';
-$lang['ac_message_subject'] 				= 'Subject:';
-$lang['ac_message_time'] 					= 'Time and date:';
-$lang['ac_message_a'] 						= 'MESSAGE';
-$lang['ac_messages_no'] 					= 'The user has no messages!';
-$lang['ac_moons_no'] 						= '<font color=red> (No moon) </font>';
-$lang['ac_messages'] 						= 'Messages';
+$lang['ac_moons_no']						= '<font color=red>(No moons)</font>';
+$lang['ac_urlnow']							= 'URL: ';
+$lang['ac_time_destruyed']					= 'Total destruction date';
+$lang['ac_isnodestruyed']					= '<font color=red>(No planets destroyed)</font>';
+$lang['ac_no_alliance']						= '<font color=red>(No alliance)</font>';
+$lang['ac_ali_text_11']						= 'Internal text';
+$lang['ac_ali_text_22']						= 'External text';
+$lang['ac_ali_text_33']						= 'Request text';
+$lang['ac_ali_logo_11']						= 'Alliance logo';
+$lang['ac_ali_idid']						= 'ID:';
+$lang['ac_suspended_title']					= 'Suspension viewer';
+$lang['ac_suspended_time']					= 'Suspended the';
+$lang['ac_suspended_longer']				= 'Until';
+$lang['ac_suspended_reason']				= 'Reason';
+$lang['ac_suspended_autor']					= 'Banned by';
+$lang['ac_note_k']							= '<table><tr><th width=10%><font color=lime>K</font></th><th>Exceeds or equals thousand</th></tr>';
+$lang['ac_note_m']							= '<tr><th width=10%><font color=lime>M</font></th><th>Exceeds or equals millon</th></tr>';
+$lang['ac_note_b']							= '<tr><th width=10%><font color=lime>B</font></th><th>Exceeds or equals billon</th></tr>';
+$lang['ac_note_t']							= '<tr><th width=10%><font color=lime>T</font></th><th>Exceeds or equals trillon</th></tr>';
+$lang['ac_note_c']							= '<tr><th width=10%><font color=lime>T+</font></th><th>Exceeds trillon</th></tr></table>';
 
 //----------------------------------------------------------------------------//
 // SearchInDB.php

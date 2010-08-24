@@ -124,6 +124,10 @@ return $RetValue;
 //FIN FIX ACTUALIZACION PUNTOS CON FLOTA VOLANDO
 function MakeStats()
 {global $resource, $pricelist, $reslist, $game_config, $xgp_root, $phpEx;
+
+	$CheckUserQuery = false;
+	$CheckAllyQuery	= false;
+
 	// Initial Time
 	$mtime        = microtime();
 	$mtime        = explode(" ", $mtime);
@@ -188,7 +192,8 @@ function MakeStats()
 	$total_users = doquery("SELECT COUNT(*) AS `count` FROM {{table}} WHERE 1;", 'users', true);
 	//We will make query every $game_config['stat_amount'] users
 	//Min amount = 10, if it is less than 10, it is not a good system
-	$amount_per_block	= (($game_config['stat_amount']>=10)?$game_config['stat_amount']:10);
+	$game_config['stat_amount']	= (($game_config['stat_amount']>=10)?$game_config['stat_amount']:10);
+	$amount_per_block	= (($game_config['stat_amount']<$game_config['users_amount'])?$game_config['users_amount']:$game_config['stat_amount']);
 	if ($total_users['count'] > $amount_per_block)
 	{
 		$LastQuery = roundUp($total_users['count'] / $amount_per_block);
@@ -198,12 +203,16 @@ function MakeStats()
 		$LastQuery = 1;
 	}
 
-	$Query = 0;
-	while ($Query < $LastQuery)
+	for ($Query=1;$Query<=$LastQuery;$Query++)
 	{
-		$QueryValue      = ($Query * $amount_per_block);
-		++$Query;
-		$start = floor($QueryValue / $amount_per_block % $amount_per_block) * $amount_per_block;
+		if ($Query==1)
+		{//based on:http://www.desarrolloweb.com/articulos/1035.php
+			$start = 0;
+		}
+		else
+		{
+			$start = ($Query - 1) * $amount_per_block;
+		}
 		$minmax_sql	=	'SELECT Max(id) AS `max`, Min(id) AS `min` FROM
 						(SELECT id FROM {{table}}users ORDER BY id ASC LIMIT
 						'. $start.','. ($amount_per_block) .') AS A';
@@ -344,10 +353,19 @@ function MakeStats()
 										'.$u_GPoints.','.$u_GCount.','.$stats_time.'),' ;
 			}
 			unset_vars( 'u_' );
+
+			$CheckUserQuery = true;
 		}
+		//TODO, make a end string check in case that insert_user_query end in VALUE...
 		//Here we change the end of the query for ;
-		$insert_user_query	=	substr_replace($insert_user_query, ';', -1);
-		doquery ( $insert_user_query , 'statpoints');
+
+		if($CheckUserQuery == true)
+		{
+			$insert_user_query	=	substr_replace($insert_user_query, ';', -1);
+			doquery ( $insert_user_query , 'statpoints');
+		}
+
+
 
 		unset($insert_user_query, $total_data, $CurUser, $old_stats_array, $Buildings_array, $flying_fleets_array);
 	}
@@ -367,7 +385,8 @@ function MakeStats()
 	if ($total_ally > 0)//We only update allys if at least 1 ally exist...
 	{
 		//Min amount = 10, if it is less than 10, it is not a good system
-		$amount_per_block	= (($game_config['stat_amount']>=10)?$game_config['stat_amount']:10);
+		$game_config['stat_amount']= (($game_config['stat_amount']>=10)?$game_config['stat_amount']:10);
+		$amount_per_block	= (($game_config['stat_amount']<$game_config['users_amount'])?$game_config['users_amount']:$game_config['stat_amount']);
 		if ($total_ally > $amount_per_block)
 		{
 			$LastQuery = roundUp($total_ally / $amount_per_block);
@@ -377,12 +396,16 @@ function MakeStats()
 			$LastQuery = 1;
 		}
 
-		$Query = 0;
-		while ($Query < $LastQuery)
+		for ($Query=1;$Query<=$LastQuery;$Query++)
 		{
-			$QueryValue      = ($Query * $amount_per_block);
-			++$Query;
-			$start = floor($QueryValue / $amount_per_block % $amount_per_block) * $amount_per_block;
+			if ($Query==1)
+			{//based on:http://www.desarrolloweb.com/articulos/1035.php
+				$start = 0;
+			}
+			else
+			{
+				$start = ($Query - 1) * $amount_per_block;
+			}
 			$minmax_sql	=	'SELECT Max(id) AS `max`, Min(id) AS `min` FROM
 						(SELECT id FROM {{table}}alliance ORDER BY id ASC LIMIT
 						'. $start.','. $amount_per_block.') AS A';
@@ -455,10 +478,17 @@ function MakeStats()
 				{
 					doquery ( "UPDATE {{table}}	SET `ally_id`=0, `ally_name` = '', 	`ally_register_time`= 0, `ally_rank_id`= 0 	WHERE `ally_id`='{$CurAlly['id_ally']}'", "users");
 				}
+
+				$CheckAllyQuery	= true;
 			}
 			//Here we change the end of the query for ;
-			$insert_ally_query	=	substr_replace($insert_ally_query, ';', -1);
-			doquery ( $insert_ally_query , 'statpoints');
+
+			if($CheckAllyQuery == true)
+			{
+				$insert_ally_query	=	substr_replace($insert_ally_query, ';', -1);
+				doquery ( $insert_ally_query , 'statpoints');
+			}
+
 			unset($insert_ally_query, $ally_old_data, $CurAlly, $ally_points);
 		}
 		unset($ally_check_value);

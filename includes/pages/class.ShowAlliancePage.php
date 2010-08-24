@@ -253,14 +253,14 @@ class ShowAlliancePage
 
 
 					doquery("INSERT INTO {{table}} SET
-					`ally_name`='{$_POST['aname']}',
-					`ally_tag`='{$_POST['atag']}' ,
+					`ally_name`='".mysql_escape_string($_POST['aname'])."',
+					`ally_tag`='".mysql_escape_string($_POST['atag'])."' ,
 					`ally_owner`='{$CurrentUser['id']}',
 					`ally_owner_range`='Leader',
 					`ally_members`='1',
 					`ally_register_time`=" . time() , "alliance");
 
-					$allyquery = doquery("SELECT * FROM {{table}} WHERE ally_tag='{$_POST['atag']}'", 'alliance', true);
+					$allyquery = doquery("SELECT * FROM {{table}} WHERE ally_tag='".mysql_escape_string($_POST['atag'])."'", 'alliance', true);
 
 					doquery("UPDATE {{table}} SET
 					`ally_id`='{$allyquery['id']}',
@@ -906,7 +906,7 @@ class ShowAlliancePage
 
 					$u['points'] = "" . pretty_number($UserPoints['total_points']) . "";
 
-					$days = floor(round(time() - $u["onlinetime"]) / 3600 % 24);
+					$days = floor(round(time() - $u["onlinetime"]) / 3600 * 24);
 
 					$u["onlinetime"] = str_replace("%s", $days, "%s d");
 
