@@ -138,7 +138,7 @@ function MakeStats()
 	$del_inactive 	= time() - (60 * 60 * 24 * 30); // 1 MONTH
 	$del_deleted 	= time() - (60 * 60 * 24 * 7); // 1 WEEK
 
-	$ChooseToDelete = doquery("SELECT `id`,`db_deaktjava`,`onlinetime` FROM `{{table}}` WHERE (`db_deaktjava` < '".$del_deleted."' AND `db_deaktjava` <> 0) OR `onlinetime` < '".$del_inactive."'", 'users');
+	$ChooseToDelete = doquery("SELECT `id` FROM `{{table}}` WHERE (`db_deaktjava` < '".$del_deleted."' AND `db_deaktjava` <> 0) OR `onlinetime` < '".$del_inactive."'", 'users');
 
 	if($ChooseToDelete)
 	{

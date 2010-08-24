@@ -4,6 +4,15 @@ $lang['Version']     = 'Versión';
 $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
+'2.9' => ' 10/10/09
+
+- [Cambio] Mejora en el rendimiento de algunas páginas.-
+- [Cambio] Ahora al explorar la galaxia, si es tu propio sistema solar, no perderás deuterio.-
+
+- [Fix][Bug #122] Problemas en la actualización de los puntos.-
+- [Fix][Bug #124] Problemas con el phalanx.-
+
+',
 
 '2.8' => ' 10/10/09
 

@@ -4,6 +4,21 @@ $lang['Version']     = 'Versión';
 $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
+'2.9.0' => ' 10/10/09
+
+- [Seguridad] Ahora es encriptada la contraseña que se ingresa durante la actualización.- 
+
+- [Cambio] Optimización y mejora general en el manejo de las lunas (By angelus_ira).-
+- [Cambio] Mejora en el rendimiento de algunas páginas.-
+- [Cambio] Ahora al explorar la galaxia, si es tu propio sistema solar, no perderás deuterio.-
+
+- [Fix][Bug #122] Problemas en la actualización de los puntos.-
+- [Fix][Bug #123] Bug en los reportes mostrando que se produjo un empate cuando no fue asi.-
+- [Fix][Bug #124] Problemas con el phalanx.-
+- [Fix][Bug #125] Bug en la lista de amigos no permite aceptar/rechazar.-
+- [Fix][Bug #126] No le aparecen los reportes de ataque al defensor.-
+- [Fix][Bug #127] Problema con el title de los recursos maximo en las flotas.-
+',
 
 '2.8' => ' 10/10/09
 

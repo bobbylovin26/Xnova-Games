@@ -26,6 +26,7 @@ $xgp_root = './../';
 include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.'.$phpEx);
 include_once('databaseinfos.'.$phpEx);
+include_once('UpdateMoonID.'.$phpEx);
 
 $Mode     = $_GET['mode'];
 $Page     = $_GET['page'];
@@ -108,7 +109,6 @@ switch ($Mode) {
 			doquery ($QryTableErrors     , 'errors'     );
 			doquery ($QryTableFleets     , 'fleets'     );
 			doquery ($QryTableGalaxy     , 'galaxy'     );
-			doquery ($QryTableLunas      , 'lunas'      );
 			doquery ($QryTableMessages   , 'messages'   );
 			doquery ($QryTableNotes      , 'notes'      );
 			doquery ($QryTablePlanets    , 'planets'    );
@@ -272,7 +272,7 @@ switch ($Mode) {
 				$Qry16 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsFrame' LIMIT 1;";
 				$Qry17 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsText' LIMIT 1;";
 				$Qry18 = "DELETE FROM `$_POST[prefix]config` WHERE `config_name` = 'VERSION'";
-				$Qry19 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.8');";
+				$Qry19 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.9.0');";
 				$Qry20 = "ALTER TABLE `$_POST[prefix]rw` ADD `owners` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0';";
 				$Qry21 = "ALTER TABLE `$_POST[prefix]fleets` CHANGE `fleet_group` `fleet_group` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' ;";
 				$Qry22 = "ALTER TABLE `$_POST[prefix]aks` ADD `planet_type` TINYINT( 1 ) NOT NULL DEFAULT '1' AFTER `planet` ;";
@@ -306,52 +306,46 @@ switch ($Mode) {
 												CHANGE `total_count` `total_count` INT(11) NOT NULL DEFAULT '0',
 												CHANGE `stat_date` `stat_date` INT(11) NOT NULL DEFAULT '0'";
 				$Qry27 = "ALTER TABLE `$_POST[prefix]messages` CHANGE `message_subject` `message_subject` TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL";
+				$Qry28 = "DROP TABLE `$_POST[prefix]lunas`";
+				$Qry29 = "ALTER TABLE `$_POST[prefix]users` ADD `current_luna` INT( 11 ) NOT NULL DEFAULT '0' AFTER `ally_rank_id` ";
 
 				switch($_POST[modo])
 				{
 					case'2.3':
+						UpdateMoonID();
 						$QrysArray	= array($Qry1, $Qry2, $Qry3, $Qry4, $Qry5, $Qry6, $Qry7, $Qry8, $Qry9, $Qry10, $Qry11, $Qry12, $Qry13,
-											$Qry14, $Qry15, $Qry16, $Qry17, $Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry25, $Qry26, $Qry27);
-
-						foreach ( $QrysArray as $DoQuery)
-						{
-							mysql_query($DoQuery);
-						}
+											$Qry14, $Qry15, $Qry16, $Qry17, $Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry25, $Qry26,
+											$Qry27, $Qry28, $Qry29);
 					break;
 					case'2.4':
+						UpdateMoonID();
 						$QrysArray	= array($Qry3, $Qry4, $Qry5, $Qry6, $Qry7, $Qry8, $Qry9, $Qry10, $Qry11, $Qry12, $Qry13,
-											$Qry14, $Qry15, $Qry16, $Qry17, $Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry25, $Qry26, $Qry27);
-
-						foreach ( $QrysArray as $DoQuery)
-						{
-							mysql_query($DoQuery);
-						}
+											$Qry14, $Qry15, $Qry16, $Qry17, $Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23,
+											$Qry25, $Qry26, $Qry27, $Qry28, $Qry29);
 					break;
 					case'2.5':
-						$QrysArray	= array($Qry16, $Qry17, $Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry25, $Qry26,$Qry27);
-
-						foreach ( $QrysArray as $DoQuery)
-						{
-							mysql_query($DoQuery);
-						}
+						UpdateMoonID();
+						$QrysArray	= array($Qry16, $Qry17, $Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry25, $Qry26,$Qry27, $Qry28, $Qry29);
 					break;
 					case( ( $_POST[modo] == '2.6' ) or ( $_POST[modo] == '2.7' ) ):
-						$QrysArray	= array($Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry25, $Qry26, $Qry27);
-
-						foreach ( $QrysArray as $DoQuery)
-						{
-							mysql_query($DoQuery);
-						}
+						UpdateMoonID();
+						$QrysArray	= array($Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry25, $Qry26, $Qry27, $Qry28, $Qry29);
 					break;
 					case'2.8':
-						$QrysArray	= array($Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry24, $Qry25, $Qry26, $Qry27);
-
-						foreach ( $QrysArray as $DoQuery)
-						{
-							mysql_query($DoQuery);
-						}
+						UpdateMoonID();
+						$QrysArray	= array($Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry24, $Qry25, $Qry26, $Qry27, $Qry28, $Qry29);
+					break;
+					case'2.9':
+						UpdateMoonID();
+						$QrysArray	= array($Qry18, $Qry19, $Qry28, $Qry29);
 					break;
 				}
+
+				foreach ( $QrysArray as $DoQuery)
+				{
+					mysql_query($DoQuery);
+				}
+
 				message("XG Proyect finalizó la actualización con éxito, para finalizar borra el directorio install y luego haz <a href=\"./../\">click aqui</a>", "", "", false, false);
 			}
 		}

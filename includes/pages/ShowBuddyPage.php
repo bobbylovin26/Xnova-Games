@@ -27,7 +27,7 @@ function ShowBuddyPage($CurrentUser)
 
 	foreach($_GET as $name => $value)
 	{
-		$name = intval( $value );
+		$$name = intval( $value );
 	}
 	switch($mode)
 	{

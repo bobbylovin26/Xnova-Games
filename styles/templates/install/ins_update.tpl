@@ -8,7 +8,7 @@
 		</tr>
 		<tr>
 			<th align="center">Clave SQL <font color="red">(ej: abc12345)</font></th>
-			<th align="left"><input type="text" name="clave"/></th>
+			<th align="left"><input type="password" name="clave"/></th>
 		</tr>
 		<tr>
 			<th align="center">Nombre de la base SQL <font color="red">(ej: ogame)</font></th>
@@ -28,9 +28,10 @@
                     <option value="2.6">XG Proyect 2.5</option>
                     <option value="2.7">XG Proyect 2.6</option>
                     <option value="2.8">XG Proyect 2.7</option>
+                    <option value="2.9">XG Proyect 2.8</option>
                 </select>
             </th>
 		</tr>        
 		<tr>
-			<th align="center" colspan="2"><input type="submit" name="continuar" value="Actualizar a la versi&oacute;n 2.8"/></th>
+			<th align="center" colspan="2"><input type="submit" name="continuar" value="Actualizar a la versi&oacute;n 2.9"/></th>
 		</tr>

@@ -30,18 +30,18 @@ include($xgp_root . 'common.' . $phpEx);
 if ($user['authlevel'] < 2) die(message ($lang['not_enough_permissions']));
 
 	$parse	= $lang;
-	$query 	= doquery("SELECT * FROM {{table}}", "lunas");
+	$query = doquery("SELECT * FROM {{table}} WHERE planet_type='3'", "planets");
 	$i 		= 0;
 
 	while ($u = mysql_fetch_array($query))
 	{
 		$parse['moon'] .= "<tr>"
 		. "<th>" . $u[0] . "</th>"
+		. "<th>" . $u[1] . "</th>"
 		. "<th>" . $u[2] . "</th>"
+		. "<th>" . $u[4] . "</th>"
 		. "<th>" . $u[5] . "</th>"
 		. "<th>" . $u[6] . "</th>"
-		. "<th>" . $u[7] . "</th>"
-		. "<th>" . $u[8] . "</th>"
 		. "</tr>";
 		$i++;
 	}

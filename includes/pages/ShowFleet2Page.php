@@ -188,9 +188,6 @@ function ShowFleet2Page($CurrentUser, $CurrentPlanet)
 
 	$parse['input_extra'] 			= $input_extra;
 	$parse['missionselector'] 		= $MissionSelector;
-	$parse['planetrow_metal'] 		= floor($CurrentPlanet["metal"]);
-	$parse['planetrow_crystal'] 	= floor($CurrentPlanet["crystal"]);
-	$parse['planetrow_deuterium']	= floor($CurrentPlanet["deuterium"]);
 
 	if ($planet == 16)
 	{

@@ -155,7 +155,7 @@ class ShowGalaxyPage extends GalaxyRows
 
 					if ($GalaxyRow["id_luna"] != 0)
 					{
-						$GalaxyRowMoon   = doquery("SELECT * FROM {{table}} WHERE `id` = '". $GalaxyRow["id_luna"] ."';", 'lunas', true);
+						$GalaxyRowMoon   = doquery("SELECT * FROM {{table}} WHERE `id` = '". $GalaxyRow["id_luna"] ."' AND planet_type='3';", 'planets', true);
 
 						if ($GalaxyRowMoon["destruyed"] != 0)
 						{
@@ -188,8 +188,6 @@ class ShowGalaxyPage extends GalaxyRows
 	{
 		global $xgp_root, $phpEx, $dpath, $resource, $lang, $planetcount;
 
-		$lunarow       	= doquery("SELECT * FROM {{table}} WHERE `id` = '". $CurrentUser['current_luna'] ."';", 'lunas', true);
-
 		$fleetmax      	= ($CurrentUser['computer_tech'] + 1) + ($CurrentUser['rpg_commandant'] * COMMANDANT);
 		$CurrentPlID   	= $CurrentPlanet['id'];
 		$CurrentMIP    	= $CurrentPlanet['interplanetary_misil'];
@@ -199,20 +197,9 @@ class ShowGalaxyPage extends GalaxyRows
 		$CurrentSystem 	= $CurrentPlanet['system'];
 		$CurrentGalaxy 	= $CurrentPlanet['galaxy'];
 		$CanDestroy    	= $CurrentPlanet[$resource[213]] + $CurrentPlanet[$resource[214]];
-		$UserDeuterium 	= $CurrentPlanet['deuterium'] - 10;
 
 		$maxfleet       = doquery("SELECT * FROM {{table}} WHERE `fleet_owner` = '". $CurrentUser['id'] ."';", 'fleets');
 		$maxfleet_count = mysql_num_rows($maxfleet);
-
-		if ($UserDeuterium < 10)
-			die (message($lang['gl_no_deuterium_to_view_galaxy'], "game.php?page=overview", 2));
-
-		$QryGalaxyDeuterium   = "UPDATE {{table}} SET ";
-		$QryGalaxyDeuterium  .= "`deuterium` = '". $UserDeuterium ."' ";
-		$QryGalaxyDeuterium  .= "WHERE ";
-		$QryGalaxyDeuterium  .= "`id` = '". $CurrentPlanet['id'] ."' ";
-		$QryGalaxyDeuterium  .= "LIMIT 1;";
-		doquery($QryGalaxyDeuterium, 'planets');
 
 		if (!isset($mode))
 		{
@@ -238,6 +225,7 @@ class ShowGalaxyPage extends GalaxyRows
 				$_POST["galaxy"] = abs($_POST["galaxy"]);
 			else
 				$_POST["galaxy"] = 1;
+
 			if (is_numeric($_POST["system"]))
 				$_POST["system"] = abs($_POST["system"]);
 			else
@@ -343,6 +331,20 @@ class ShowGalaxyPage extends GalaxyRows
 		{
 			$galaxy        = 1;
 			$system        = 1;
+		}
+
+		if ( ( $CurrentPlanet['system'] != ( $_POST["system"] - 1 ) ) &&  ( $mode != 0 ) && ( $CurrentPlanet['deuterium'] < 10 ) )
+		{
+			die (message($lang['gl_no_deuterium_to_view_galaxy'], "game.php?page=galaxy&mode=0", 2));
+		}
+		else
+		{
+			$QryGalaxyDeuterium   = "UPDATE {{table}} SET ";
+			$QryGalaxyDeuterium  .= "`deuterium` = `deuterium` -  10 ";
+			$QryGalaxyDeuterium  .= "WHERE ";
+			$QryGalaxyDeuterium  .= "`id` = '". $CurrentPlanet['id'] ."' ";
+			$QryGalaxyDeuterium  .= "LIMIT 1;";
+			doquery($QryGalaxyDeuterium, 'planets');
 		}
 
 		$planetcount = 0;

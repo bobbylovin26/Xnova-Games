@@ -57,31 +57,29 @@ if ($user['authlevel'] < 2) die(message ($lang['not_enough_permissions']));
 
 		$QrySelectMoon  = "SELECT * FROM {{table}} ";
 		$QrySelectMoon .= "WHERE ";
-		$QrySelectMoon .= "`id` = '". $MoonID ."';";
-		$MoonSelected = doquery ( $QrySelectMoon, 'lunas', true);
+		$QrySelectMoon .= "`id` = '". $MoonID ."' AND `planet_type`='3';";
+		$MoonSelected = doquery ( $QrySelectMoon, 'planets', true);
 
-		$Galaxy    = $MoonSelected['galaxy'];
-		$System    = $MoonSelected['system'];
-		$Planet    = $MoonSelected['lunapos'];
-		$Owner     = $MoonSelected['id_owner'];
+		if ($MoonSelected)
+		{
+			$Galaxy    = $MoonSelected['galaxy'];
+			$System    = $MoonSelected['system'];
+			$Planet    = $MoonSelected['planet'];
+			$Owner     = $MoonSelected['id_owner'];
 
+			$DeleteMoonQry  = "DELETE FROM {{table}} WHERE `id` ='".$MoonSelected['id']."';";
+			doquery($DeleteMoonQry, 'planets');
 
-		$DeleteMoonQry1  = "DELETE FROM {{table}} WHERE `id` = '".$MoonID."';";
-		doquery($DeleteMoonQry1, 'lunas');
-
-		$DeleteMoonQry2  = "DELETE FROM {{table}} WHERE `galaxy` ='".$Galaxy."' AND `system` ='".$System."' AND `planet` ='".$Planet."' AND `planet_type` = 3;";
-		doquery($DeleteMoonQry2, 'planets');
-
-		$QryUpdateGalaxy  = "UPDATE {{table}} SET ";
-		$QryUpdateGalaxy .= "`id_luna` = '0' ";
-		$QryUpdateGalaxy .= "WHERE ";
-		$QryUpdateGalaxy .= "`galaxy` = '". $Galaxy ."' AND ";
-		$QryUpdateGalaxy .= "`system` = '". $System ."' AND ";
-		$QryUpdateGalaxy .= "`planet` = '". $Planet ."' ";
-		$QryUpdateGalaxy .= "LIMIT 1;";
-		doquery( $QryUpdateGalaxy , 'galaxy');
-
-		message ($lang['mo_moon_deleted'],"moonoptions.php",2);
+			$QryUpdateGalaxy  = "UPDATE {{table}} SET ";
+			$QryUpdateGalaxy .= "`id_luna` = '0' ";
+			$QryUpdateGalaxy .= "WHERE ";
+			$QryUpdateGalaxy .= "`galaxy` = '". $Galaxy ."' AND ";
+			$QryUpdateGalaxy .= "`system` = '". $System ."' AND ";
+			$QryUpdateGalaxy .= "`planet` = '". $Planet ."' ";
+			$QryUpdateGalaxy .= "LIMIT 1;";
+			doquery( $QryUpdateGalaxy , 'galaxy');
+			message ($lang['mo_moon_deleted'],"moonoptions.php",2);
+		}
 	}
 	else
 		display (parsetemplate(gettemplate("adm/moonoptions"), $parse), false, '', true, false);

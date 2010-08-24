@@ -51,17 +51,17 @@ function getStorageFaktor() {
                     <tr height="20">
         				<th>{Metal}</th>
         				<th><a href="javascript:maxResource('1');">{fl_max}</a></th>
-        				<th><input name="resource1" title="{Metal} {planetrow_metal}" size="10" onchange="calculateTransportCapacity();" type="text"></th>
+        				<th><input name="resource1" size="10" onchange="calculateTransportCapacity();" type="text"></th>
         			</tr>
                     <tr height="20">
         				<th>{Crystal}</th>
         				<th><a href="javascript:maxResource('2');">{fl_max}</a></th>
-        				<th><input name="resource2" title="{Crystal} {planetrow_crystal}" size="10" onchange="calculateTransportCapacity();" type="text"></th>
+        				<th><input name="resource2" size="10" onchange="calculateTransportCapacity();" type="text"></th>
         			</tr>
                     <tr height="20">
         				<th>{Deuterium}</th>
         				<th><a href="javascript:maxResource('3');">{fl_max}</a></th>
-        				<th><input name="resource3" title="{Deuterium} {planetrow_deuterium}" size="10" onchange="calculateTransportCapacity();" type="text"></th>
+        				<th><input name="resource3" size="10" onchange="calculateTransportCapacity();" type="text"></th>
         			</tr>
                     <tr height="20">
         				<th>{fl_resources_left}</th>

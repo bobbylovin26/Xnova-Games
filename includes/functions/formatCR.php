@@ -1,36 +1,16 @@
 <?php
+function formatCR (&$result_array,&$steal_array,&$moon_int,&$moon_string,&$time_float)
+{
+	global $lang;
 
-##############################################################################
-# *																			 #
-# * XG PROYECT																 #
-# *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
-# *																			 #
-# *																			 #
-# *  This program is free software: you can redistribute it and/or modify    #
-# *  it under the terms of the GNU General Public License as published by    #
-# *  the Free Software Foundation, either version 3 of the License, or       #
-# *  (at your option) any later version.									 #
-# *																			 #
-# *  This program is distributed in the hope that it will be useful,		 #
-# *  but WITHOUT ANY WARRANTY; without even the implied warranty of			 #
-# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the			 #
-# *  GNU General Public License for more details.							 #
-# *																			 #
-##############################################################################
+	$html 		= "";
+	$bbc 		= "";
+	$html 		.= $lang['sys_attack_title']." ".date("D M j H:i:s", time()).".<br /><br />";
+	$round_no 	= 1;
 
-if(!defined('INSIDE')){ die(header("location:../../"));}
-
-	function formatCR (&$result_array,&$steal_array,&$moon_int,&$moon_string,&$time_float)
+	foreach( $result_array['rw'] as $round => $data1)
 	{
-		global $lang;
-
-		$html 		= "";
-		$bbc 		= "";
-		$html 		.= $lang['sys_attack_title']." ".date("D M j H:i:s", time()).".<br /><br />";
-		$round_no 	= 1;
-
-		foreach( $result_array['rw'] as $round => $data1)
+		if($round_no <= 6)
 		{
 			$html 		.= $lang['sys_attack_round']." ".$round_no." :<br /><br />";
 			$attackers1 = $data1['attackers'];
@@ -87,41 +67,39 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 
 				$info_part1[$fleet_id1] = $fl_info1.$table1.$ships1.$count1;
 			}
-			if ($attackers2 != '')
+
+			foreach( $attackers2 as $fleet_id2 => $data3)
 			{
-				foreach( $attackers2 as $fleet_id2 => $data3)
+				$weap1  = "<tr><th>".$lang['sys_ship_weapon']."</th>";
+				$shields1  = "<tr><th>".$lang['sys_ship_shield']."</th>";
+				$armour1  = "<tr><th>".$lang['sys_ship_armour']."</th>";
+
+				foreach( $data3 as $ship_id2 => $ship_points1)
 				{
-					$weap1  = "<tr><th>".$lang['sys_ship_weapon']."</th>";
-					$shields1  = "<tr><th>".$lang['sys_ship_shield']."</th>";
-					$armour1  = "<tr><th>".$lang['sys_ship_armour']."</th>";
-
-					foreach( $data3 as $ship_id2 => $ship_points1)
+					if ($ship_points1['shield'] > 0)
 					{
-						if ($ship_points1['shield'] > 0)
-						{
-							$weap1 		.= "<th>".number_format($ship_points1['att'])."</th>";
-							$shields1 	.= "<th>".number_format($ship_points1['def'])."</th>";
-							$armour1 	.= "<th>".number_format($ship_points1['shield'])."</th>";
-						}
+					   $weap1 		.= "<th>".number_format($ship_points1['att'])."</th>";
+					   $shields1 	.= "<th>".number_format($ship_points1['def'])."</th>";
+					   $armour1 	.= "<th>".number_format($ship_points1['shield'])."</th>";
 					}
+				}
 
-					$weap1 		.= "</tr>";
-					$shields1 	.= "</tr>";
-					$armour1 	.= "</tr>";
-					$endtable1 	.= "</table></th></tr></table>";
+				$weap1 		.= "</tr>";
+				$shields1 	.= "</tr>";
+				$armour1 	.= "</tr>";
+				$endtable1 	.= "</table></th></tr></table>";
 
-					$info_part2[$fleet_id2] = $weap1.$shields1.$armour1.$endtable1;
+				$info_part2[$fleet_id2] = $weap1.$shields1.$armour1.$endtable1;
 
-					if (number_format($data1['attack']['total']) > 0)
-					{
-						$html .= $info_part1[$fleet_id2].$info_part2[$fleet_id2];
-						$html .= "<br /><br />";
-					}
-					else
-					{
-						$html .= $info_part1[$fleet_id2];
-						$html .= "</table></th></tr></table><br /><br />";
-					}
+				if (number_format($data1['attack']['total']) > 0)
+				{
+					$html .= $info_part1[$fleet_id2].$info_part2[$fleet_id2];
+					$html .= "<br /><br />";
+				}
+				else
+				{
+					$html .= $info_part1[$fleet_id2];
+					$html .= "</table></th></tr></table><br /><br />";
 				}
 			}
 
@@ -164,76 +142,73 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 				$info_part1[$fleet_id1] = $fl_info1.$table1.$ships1.$count1;
 			}
 
-			if ( $defenders2 != '' )
+			foreach( $defenders2 as $fleet_id2 => $data3)
 			{
-				foreach( $defenders2 as $fleet_id2 => $data3)
+				$weap1  	= "<tr><th>".$lang['sys_ship_weapon']."</th>";
+				$shields1  	= "<tr><th>".$lang['sys_ship_shield']."</th>";
+				$armour1  	= "<tr><th>".$lang['sys_ship_armour']."</th>";
+
+				foreach( $data3 as $ship_id2 => $ship_points1)
 				{
-					$weap1  	= "<tr><th>".$lang['sys_ship_weapon']."</th>";
-					$shields1  	= "<tr><th>".$lang['sys_ship_shield']."</th>";
-					$armour1  	= "<tr><th>".$lang['sys_ship_armour']."</th>";
-
-					foreach( $data3 as $ship_id2 => $ship_points1)
+					if ($ship_points1['shield'] > 0)
 					{
-						if ($ship_points1['shield'] > 0)
-						{
-							$weap1 .= "<th>".number_format($ship_points1['att'])."</th>";
-							$shields1 .= "<th>".number_format($ship_points1['def'])."</th>";
-							$armour1 .= "<th>".number_format($ship_points1['shield'])."</th>";
-						}
-					}
-
-					$weap1 		.= "</tr>";
-					$shields1 	.= "</tr>";
-					$armour1 	.= "</tr>";
-					$endtable1 	.= "</table></th></tr></table>";
-
-					$info_part2[$fleet_id2] = $weap1.$shields1.$armour1.$endtable1;
-
-					if (number_format($data1['defense']['total']) > 0)
-					{
-						$html .= $info_part1[$fleet_id2].$info_part2[$fleet_id2];
-						$html .= "<br /><br />";
-					}
-					else
-					{
-						$html .= $info_part1[$fleet_id2];
-						$html .= "</table></th></tr></table><br /><br />";
+						$weap1 .= "<th>".number_format($ship_points1['att'])."</th>";
+						$shields1 .= "<th>".number_format($ship_points1['def'])."</th>";
+						$armour1 .= "<th>".number_format($ship_points1['shield'])."</th>";
 					}
 				}
-			}
 
+				$weap1 		.= "</tr>";
+				$shields1 	.= "</tr>";
+				$armour1 	.= "</tr>";
+				$endtable1 	.= "</table></th></tr></table>";
+
+				$info_part2[$fleet_id2] = $weap1.$shields1.$armour1.$endtable1;
+
+				if (number_format($data1['defense']['total']) > 0)
+				{
+					$html .= $info_part1[$fleet_id2].$info_part2[$fleet_id2];
+					$html .= "<br /><br />";
+				}
+				else
+				{
+					$html .= $info_part1[$fleet_id2];
+					$html .= "</table></th></tr></table><br /><br />";
+				}
+			}
 			$html .=  $lang['fleet_attack_1']." ".number_format($data1['attack']['total'])." ".$lang['fleet_attack_2']." ".number_format($data1['defShield'], 0, ' ', ' ')." ".$lang['damage']."<br />";
 			$html .= $lang['fleet_defs_1']." ".number_format($data1['defense']['total'])." ".$lang['fleet_defs_2']." ".number_format($data1['attackShield'], 0, ' ', ' ')." ".$lang['damage']."<br /><br />";
 			$round_no++;
 		}
-
-		if ($result_array['won'] == "r")
-		{
-			$result1  = $lang['sys_defender_won']."<br />";
-		}
-		elseif ($result_array['won'] == "a")
-		{
-			$result1  = $lang['sys_attacker_won']."<br />";
-			$result1 .= $lang['sys_stealed_ressources']." ".$steal_array['metal']." ".$lang['Metal'].", ".$steal_array['crystal']." ".$lang['Crystal']." ".$lang['and']." ".$steal_array['deuterium']." ".$lang['Deuterium']."<br />";
-		}
-		else
-		{
-			$result1  = $lang['sys_both_won'].".<br />";
-		}
-
-		$html .= "<br /><br />";
-		$html .= $result1;
-		$html .= "<br />";
-
-		$debirs_meta = ($result_array['debree']['att'][0] + $result_array['debree']['def'][0]);
-		$debirs_crys = ($result_array['debree']['att'][1] + $result_array['debree']['def'][1]);
-
-		$html .= $lang['sys_attacker_lostunits']." ".$result_array['lost']['att']." ".$lang['sys_units']."<br />";
-		$html .= $lang['sys_defender_lostunits']." ".$result_array['lost']['def']." ".$lang['sys_units']."<br />";
-		$html .= $lang['debree_field_1']." ".$debirs_meta." ".$lang['Metal']." ".$lang['sys_and']." ".$debirs_crys." ".$lang['debree_field_2']."<br /><br />";
-		$html .= $lang['sys_moonproba']." ".$moon_int." %<br />";
-		$html .= $moon_string."<br /><br />";
-
-		return array('html' => $html, 'bbc' => $bbc);
 	}
+
+	if ($result_array['won'] == "r")
+	{
+		$result1  = $lang['sys_defender_won']."<br />";
+	}
+	elseif ($result_array['won'] == "a")
+	{
+		$result1  = $lang['sys_attacker_won']."<br />";
+		$result1 .= $lang['sys_stealed_ressources']." ".$steal_array['metal']." ".$lang['Metal'].", ".$steal_array['crystal']." ".$lang['Crystal']." ".$lang['and']." ".$steal_array['deuterium']." ".$lang['Deuterium']."<br />";
+	}
+	else
+	{
+		$result1  = $lang['sys_both_won'].".<br />";
+	}
+
+	$html .= "<br /><br />";
+	$html .= $result1;
+	$html .= "<br />";
+
+	$debirs_meta = ($result_array['debree']['att'][0] + $result_array['debree']['def'][0]);
+	$debirs_crys = ($result_array['debree']['att'][1] + $result_array['debree']['def'][1]);
+
+	$html .= $lang['sys_attacker_lostunits']." ".$result_array['lost']['att']." ".$lang['sys_units']."<br />";
+	$html .= $lang['sys_defender_lostunits']." ".$result_array['lost']['def']." ".$lang['sys_units']."<br />";
+	$html .= $lang['debree_field_1']." ".$debirs_meta." ".$lang['Metal']." ".$lang['sys_and']." ".$debirs_crys." ".$lang['debree_field_2']."<br /><br />";
+	$html .= $lang['sys_moonproba']." ".floor($moon_int)." %<br />";
+	$html .= $moon_string."<br /><br />";
+
+	return array('html' => $html, 'bbc' => $bbc);
+}
 ?>

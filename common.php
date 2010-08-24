@@ -76,7 +76,7 @@ if (INSTALL != true)
 		}
 	}
 
-	if(time() >= ($game_config['stat_last_update'] + (60 * $game_config['stat_update_time'])) && !defined('LOGIN') && !defined('INSTALL'))
+	if ( ( time() >= ( $game_config['stat_last_update'] + ( 60 * $game_config['stat_update_time'] ) ) ) )
 	{
 		include($xgp_root . 'adm/statfunctions.' . $phpEx);
 		$result		= MakeStats();

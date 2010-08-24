@@ -38,7 +38,7 @@ class GalaxyRows
 		return $MissileRange;
 	}
 
-	private function GetPhalanxRange($PhalanxLevel)
+	public function GetPhalanxRange($PhalanxLevel)
 	{
 		$PhalanxRange = 0;
 
@@ -57,7 +57,9 @@ class GalaxyRows
 	public function CheckAbandonMoonState($lunarow)
 	{
 		if (($lunarow['destruyed'] + 172800) <= time() && $lunarow['destruyed'] != 0)
-			doquery("DELETE FROM {{table}} WHERE id = '" . $lunarow['id'] . "'", "lunas");
+			$QryUpdateGalaxy  = "UPDATE {{table}} SET `id_luna` = '0' WHERE `galaxy` = '". $lunarow['galaxy'] ."' AND `system` = '". $lunarow['system'] ."' AND `planet` = '". $lunarow['planet'] ."' LIMIT 1;";
+		doquery( $QryUpdateGalaxy , 'galaxy');
+		doquery("DELETE FROM {{table}} WHERE `id` = ".$lunarow['id']."", 'planets');
 	}
 
 	public function CheckAbandonPlanetState(&$planet)
@@ -109,7 +111,7 @@ class GalaxyRows
 					}
 					else
 					{
-					$MissileBtn = false;
+						$MissileBtn = false;
 					}
 				}
 				else
@@ -296,8 +298,8 @@ class GalaxyRows
 		if ($GalaxyRowUser['id'] != $user['id'])
 			if ($CanDestroy > 0)
 				$MissionType9Link = "<a href=game.php?page=fleet&galaxy=".$Galaxy."&system=".$System."&planet=".$Planet."&planettype=".$PlanetType."&target_mission=9>".$lang['type_mission'][9]."</a>";
-			else
-				$MissionType9Link = "";
+		else
+			$MissionType9Link = "";
 		elseif ($GalaxyRowUser['id'] == $user['id'])
 			$MissionType9Link = "";
 
@@ -549,7 +551,7 @@ class GalaxyRows
 	public function GalaxyRowPos($GalaxyRow, $Galaxy, $System, $Planet)
 	{
 		$Result  = "<th width=30>";
-	    $Result .= "<a href=\"game.php?page=fleet&galaxy=".$Galaxy."&system=".$System."&planet=".$Planet."&planettype=0&target_mission=7\"";
+		$Result .= "<a href=\"game.php?page=fleet&galaxy=".$Galaxy."&system=".$System."&planet=".$Planet."&planettype=0&target_mission=7\"";
 		if ($GalaxyRow)
 			$Result .= " tabindex=\"". ($Planet + 1) ."\"";
 		$Result .= ">". $Planet ."</a>";

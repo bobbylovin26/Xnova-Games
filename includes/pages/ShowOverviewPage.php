@@ -30,7 +30,10 @@ function ShowOverviewPage($CurrentUser, $CurrentPlanet)
 
 	$FlyingFleetsTable = new FlyingFleetsTable();
 
-	$lunarow = doquery("SELECT * FROM {{table}} WHERE `id_owner` = '" . $CurrentPlanet['id_owner'] . "' AND `galaxy` = '" . $CurrentPlanet['galaxy'] . "' AND `system` = '" . $CurrentPlanet['system'] . "' AND `lunapos` = '" . $CurrentPlanet['planet'] . "';", 'lunas', true);
+	$lunarow = 	 doquery("SELECT * FROM {{table}} WHERE `id_owner` = '".$CurrentPlanet['id_owner'] . "' AND `galaxy` = '" . $CurrentPlanet['galaxy'] . "' AND `system` = '" . $CurrentPlanet['system'] . "' AND  `planet` = '" . $CurrentPlanet['planet'] . "' AND `planet_type`='3'", 'planets', true);
+
+	if (empty($lunarow)) { unset($lunarow); }
+
 	CheckPlanetUsedFields($lunarow);
 
 	$parse					= $lang;
@@ -55,11 +58,6 @@ function ShowOverviewPage($CurrentUser, $CurrentPlanet)
 				if ($newname != "")
 				{
 					doquery("UPDATE {{table}} SET `name` = '" . $newname . "' WHERE `id` = '" . $CurrentUser['current_planet'] . "' LIMIT 1;", "planets");
-
-					if ($CurrentPlanet['planet_type'] == 3)
-					{
-						doquery("UPDATE {{table}} SET `name` = '" . $newname . "' WHERE `galaxy` = '" . $CurrentPlanet['galaxy'] . "' AND `system` = '" . $CurrentPlanet['system'] . "' AND `lunapos` = '" . $CurrentPlanet['planet'] . "' LIMIT 1;", "lunas");
-					}
 				}
 			}
 			elseif ($_POST['action'] == $lang['ov_abandon_planet'])
@@ -74,7 +72,6 @@ function ShowOverviewPage($CurrentUser, $CurrentPlanet)
 					doquery("UPDATE {{table}} SET `destruyed` = '".(time()+ 86400)."' WHERE `id` = '".mysql_real_escape_string($CurrentUser['current_planet'])."' LIMIT 1;" , 'planets');
 					doquery("UPDATE {{table}} SET `current_planet` = `id_planet` WHERE `id` = '". mysql_real_escape_string($CurrentUser['id']) ."' LIMIT 1", "users");
 	                doquery("DELETE FROM {{table}} WHERE `galaxy` = '". $CurrentPlanet['galaxy'] ."' AND `system` = '". $CurrentPlanet['system'] ."' AND `planet` = '". $CurrentPlanet['planet'] ."' AND `planet_type` = 3;", 'planets');
-	                doquery("DELETE FROM {{table}} WHERE `galaxy` = '". $CurrentPlanet['galaxy'] ."' AND `system` = '". $CurrentPlanet['system'] ."' AND `lunapos` = '". $CurrentPlanet['planet'] ."';", 'lunas');
 
 					message($lang['ov_planet_abandoned'], 'game.php?page=overview&mode=renameplanet');
 				}

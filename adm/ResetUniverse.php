@@ -46,7 +46,6 @@ function ResetUniverse ( $CurrentUser )
 		doquery( "TRUNCATE TABLE {{table}}", 'galaxy');
 		doquery( "TRUNCATE TABLE {{table}}", 'errors');
 		doquery( "TRUNCATE TABLE {{table}}", 'fleets');
-		doquery( "TRUNCATE TABLE {{table}}", 'lunas');
 		doquery( "TRUNCATE TABLE {{table}}", 'messages');
 		doquery( "TRUNCATE TABLE {{table}}", 'notes');
 		doquery( "TRUNCATE TABLE {{table}}", 'rw');
