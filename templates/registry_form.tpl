@@ -24,15 +24,6 @@
      if (event.keyCode==60 || event.keyCode==62) event.returnValue = false;
      if (event.which==60 || event.which==62) return false;"></th>
 </tr>
-    <tr>
-  <th>{Race}</th>
-  <th><select name="race">
-        <option value="0">{id_race_1}</option>
-        <option value="1">{id_race_2}</option>
-        <option value="2">{id_race_3}</option>
-        <option value="3">{id_race_4}</option>
-        </select></th>
-</tr>
 <tr>
   <td height="20" colspan="2"></td>
   </tr>

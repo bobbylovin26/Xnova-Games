@@ -12,7 +12,7 @@ function MessageForm ($Title, $Message, $Goto = '', $Button = ' ok ', $TwoLines 
 	$Form .= "<form action=\"". $Goto ."\" method=\"post\">";
 	$Form .= "<table width=\"519\">";
 	$Form .= "<tr>";
-		$Form .= "<td class=\"c\" colspan=\"2\">". $Title ."</td>";
+	$Form .= "<td class=\"c\" colspan=\"2\">". $Title ."</td>";
 	$Form .= "</tr><tr>";
 	if ($TwoLines == true) {
 		$Form .= "<th colspan=\"2\">". $Message ."</th>";

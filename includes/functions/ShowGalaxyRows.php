@@ -10,6 +10,18 @@
 function ShowGalaxyRows ($Galaxy, $System) {
 	global $lang, $planetcount, $CurrentRC, $dpath, $user;
 
+	include("includes/functions/GalaxyCheckFunctions.php");
+	include("includes/functions/GalaxyRowActions.php");
+	include("includes/functions/GalaxyRowAlly.php");
+	include("includes/functions/GalaxyRowDebris.php");
+	include("includes/functions/GalaxyRowMoon.php");
+	include("includes/functions/GalaxyRowPlanet.php");
+	include("includes/functions/GalaxyRowPlanetName.php");
+	include("includes/functions/GalaxyRowPos.php");
+	include("includes/functions/GalaxyRowUser.php");
+	include("includes/functions/GetMissileRange.php");
+	include("includes/functions/GetPhalanxRange.php");
+
 	$UserPoints    = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $user['id'] ."';", 'statpoints', true);
 
 	$Result = "";

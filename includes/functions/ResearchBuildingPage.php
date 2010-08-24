@@ -17,7 +17,6 @@
 function ResearchBuildingPage (&$CurrentPlanet, $CurrentUser, $InResearch, $ThePlanet) {
 	global $lang, $resource, $reslist, $phpEx, $dpath, $game_config, $_GET;
 
-
 	$NoResearchMessage = "";
 	$bContinue         = true;
 	// Deja est qu'il y a un laboratoire sur la planete ???
@@ -103,8 +102,8 @@ function ResearchBuildingPage (&$CurrentPlanet, $CurrentUser, $InResearch, $TheP
 		}
 	}
 
-	$TechRowTPL = gettemplate('buildings_research_row');
-	$TechScrTPL = gettemplate('buildings_research_script');
+	$TechRowTPL = gettemplate('buildings/buildings_research_row');
+	$TechScrTPL = gettemplate('buildings/buildings_research_script');
 
 	foreach($lang['tech'] as $Tech => $TechName) {
 		if ($Tech > 105 && $Tech <= 199) {
@@ -185,7 +184,7 @@ function ResearchBuildingPage (&$CurrentPlanet, $CurrentUser, $InResearch, $TheP
 	$PageParse                = $lang;
 	$PageParse['noresearch']  = $NoResearchMessage;
 	$PageParse['technolist']  = $TechnoList;
-	$Page                    .= parsetemplate(gettemplate('buildings_research'), $PageParse);
+	$Page                    .= parsetemplate(gettemplate('buildings/buildings_research'), $PageParse);
 
 	display( $Page, $lang['Research'] );
 }

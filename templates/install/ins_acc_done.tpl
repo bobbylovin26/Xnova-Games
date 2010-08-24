@@ -1,9 +1,9 @@
 <tr>
   <th colspan="2">
-<br>{ins_tx_done2}<br>
-{ins_tx_done3}<br><br>
+<br>El Administrador ha sido creado correctamente.<br>
+¡Ahora debes borrar la carpeta <i>install</i> asi evitaras problemas graves de seguridad!<br><br>
 </th>
 </tr>
 <tr>
-  <th colspan="2"><input type="button" name="next" onclick="self.location.href='../'" value="{ins_btn_login}" ></th>
+  <th colspan="2"><input type="button" name="next" onclick="self.location.href='../'" value="Finalizar" ></th>
 </tr>

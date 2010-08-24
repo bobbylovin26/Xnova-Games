@@ -11,17 +11,12 @@ define('INSIDE'  , true);
 define('INSTALL' , false);
 
 $xnova_root_path = './';
-include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
 
 
 function BuildRessourcePage ( $CurrentUser, $CurrentPlanet ) {
 	global $lang, $ProdGrid, $resource, $reslist, $game_config, $_POST;
-
-	includeLang('resources');
-
-	$RessBodyTPL = gettemplate('resources');
-	$RessRowTPL  = gettemplate('resources_row');
 
 	// Si c'est une lune ... pas de ressources produites
 	if ($CurrentPlanet['planet_type'] == 3) {
@@ -47,8 +42,6 @@ function BuildRessourcePage ( $CurrentUser, $CurrentPlanet ) {
 			}
 		}
 	}
-
-	$parse  = $lang;
 
 	$parse['production_level'] = 100;
 	if       ($CurrentPlanet['energy_max'] == 0 &&
@@ -116,7 +109,7 @@ function BuildRessourcePage ( $CurrentUser, $CurrentPlanet ) {
 				$CurrRow['option'] .= "<option value=\"".$OptValue."\"".$OptSelected.">".$OptValue."%</option>";
 			}
 			$CurrRow['type']                     = $lang['tech'][$ProdID];
-			$CurrRow['level']                    = ($ProdID > 200) ? $lang['quantity'] : $lang['level'];
+			$CurrRow['level']                    = ($ProdID > 200) ? "cantidad" : "nivel";
 			$CurrRow['level_type']               = $CurrentPlanet[ $resource[$ProdID] ];
 			$CurrRow['metal_type']               = pretty_number ( $metal     );
 			$CurrRow['crystal_type']             = pretty_number ( $crystal   );
@@ -127,12 +120,12 @@ function BuildRessourcePage ( $CurrentUser, $CurrentPlanet ) {
 			$CurrRow['deuterium_type']           = colorNumber ( $CurrRow['deuterium_type'] );
 			$CurrRow['energy_type']              = colorNumber ( $CurrRow['energy_type']    );
 
-			$parse['resource_row']              .= parsetemplate ( $RessRowTPL, $CurrRow );
+			$parse['resource_row']              .= parsetemplate ( gettemplate('resources/resources_row'), $CurrRow );
 		}
 	}
 
 	$parse['Production_of_resources_in_the_planet'] =
-	str_replace('%s', $CurrentPlanet['name'], $lang['Production_of_resources_in_the_planet']);
+	str_replace('%s', $CurrentPlanet['name'], "Producción de recursos en el planeta \"%s\"");
 	if       ($CurrentPlanet['energy_max'] == 0 &&
 		$CurrentPlanet['energy_used'] > 0) {
 		$parse['production_level'] = 0;
@@ -159,21 +152,21 @@ function BuildRessourcePage ( $CurrentUser, $CurrentPlanet ) {
 	} else {
 		$parse['metal_max']         = "<font color=\"#00ff00\">";
 	}
-	$parse['metal_max']            .= pretty_number($CurrentPlanet['metal_max'] / 1000) ." ". $lang['k']."</font>";
+	$parse['metal_max']            .= pretty_number($CurrentPlanet['metal_max'] / 1000) ."k</font>";
 
 	if ($CurrentPlanet['crystal_max'] < $CurrentPlanet['crystal']) {
 		$parse['crystal_max']       = "<font color=\"#ff0000\">";
 	} else {
 		$parse['crystal_max']       = "<font color=\"#00ff00\">";
 	}
-	$parse['crystal_max']          .= pretty_number($CurrentPlanet['crystal_max'] / 1000) ." ". $lang['k']."</font>";
+	$parse['crystal_max']          .= pretty_number($CurrentPlanet['crystal_max'] / 1000) ."k</font>";
 
 	if ($CurrentPlanet['deuterium_max'] < $CurrentPlanet['deuterium']) {
 		$parse['deuterium_max']     = "<font color=\"#ff0000\">";
 	} else {
 		$parse['deuterium_max']     = "<font color=\"#00ff00\">";
 	}
-	$parse['deuterium_max']        .= pretty_number($CurrentPlanet['deuterium_max'] / 1000) ." ". $lang['k']."</font>";
+	$parse['deuterium_max']        .= pretty_number($CurrentPlanet['deuterium_max'] / 1000) ."k</font>";
 
 	$parse['metal_total']           = colorNumber( pretty_number( floor( ( $CurrentPlanet['metal_perhour']     * 0.01 * $parse['production_level'] ) + $parse['metal_basic_income'])));
 	$parse['crystal_total']         = colorNumber( pretty_number( floor( ( $CurrentPlanet['crystal_perhour']   * 0.01 * $parse['production_level'] ) + $parse['crystal_basic_income'])));
@@ -204,9 +197,9 @@ function BuildRessourcePage ( $CurrentUser, $CurrentPlanet ) {
 	$parse['weekly_deuterium']      = colorNumber(pretty_number($parse['weekly_deuterium']));
 	$parse['monthly_deuterium']     = colorNumber(pretty_number($parse['monthly_deuterium']));
 
-	$parse['metal_storage']         = floor($CurrentPlanet['metal']     / $CurrentPlanet['metal_max']     * 100) . $lang['o/o'];
-	$parse['crystal_storage']       = floor($CurrentPlanet['crystal']   / $CurrentPlanet['crystal_max']   * 100) . $lang['o/o'];
-	$parse['deuterium_storage']     = floor($CurrentPlanet['deuterium'] / $CurrentPlanet['deuterium_max'] * 100) . $lang['o/o'];
+	$parse['metal_storage']         = floor($CurrentPlanet['metal']     / $CurrentPlanet['metal_max']     * 100) . "%";
+	$parse['crystal_storage']       = floor($CurrentPlanet['crystal']   / $CurrentPlanet['crystal_max']   * 100) . "%";
+	$parse['deuterium_storage']     = floor($CurrentPlanet['deuterium'] / $CurrentPlanet['deuterium_max'] * 100) . "%";
 	$parse['metal_storage_bar']     = floor(($CurrentPlanet['metal']     / $CurrentPlanet['metal_max']     * 100) * 2.5);
 	$parse['crystal_storage_bar']   = floor(($CurrentPlanet['crystal']   / $CurrentPlanet['crystal_max']   * 100) * 2.5);
 	$parse['deuterium_storage_bar'] = floor(($CurrentPlanet['deuterium'] / $CurrentPlanet['deuterium_max'] * 100) * 2.5);
@@ -249,12 +242,12 @@ function BuildRessourcePage ( $CurrentUser, $CurrentPlanet ) {
 	$QryUpdatePlanet .= "`id` = '". $CurrentPlanet['id'] ."';";
 	doquery( $QryUpdatePlanet, 'planets');
 
-	$page = parsetemplate( $RessBodyTPL, $parse );
+	$page = parsetemplate( gettemplate('resources/resources'), $parse );
 
 	return $page;
 }
 
 	$Page = BuildRessourcePage ( $user, $planetrow );
-	display( $Page, $lang['Resources'] );
+	display( $Page, "Recursos");
 
 ?>

@@ -14,7 +14,7 @@ define('INSTALL' , false);
 define('IN_ADMIN', true);
 
 $xnova_root_path = './../';
-include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
 
 	if ($user['authlevel'] >= 2) {
@@ -52,13 +52,13 @@ include($xnova_root_path . 'common.' . $phpEx);
 			$QryUpdatePlanet .= "`id` = '". $id ."' ";
 			doquery( $QryUpdatePlanet, "planets");
 
-			AdminMessage ( $lang['adm_adddef2'], $lang['adm_adddef1'] );
+			message ( $lang['adm_adddef2'], $lang['adm_adddef1'] );
 		}
 		$Page = parsetemplate($PageTpl, $parse);
 
 		display ($Page, $lang['adm_am_ttle'], false, '', true);
 	} else {
-		AdminMessage ( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
+		message ( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
 	}
 
 ?>

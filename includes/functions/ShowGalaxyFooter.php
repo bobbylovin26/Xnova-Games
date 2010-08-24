@@ -10,6 +10,7 @@
 function ShowGalaxyFooter ( $Galaxy, $System,  $CurrentMIP, $CurrentRC, $CurrentSP) {
 	global $lang, $maxfleet_count, $fleetmax, $planetcount;
 
+	include("includes/functions/GalaxyLegendPopup.php");
 	$Result  = "";
 	if ($planetcount == 1) {
 		$PlanetCountMessage = $planetcount ." ". $lang['gf_cntmone'];

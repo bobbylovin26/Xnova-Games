@@ -14,6 +14,8 @@
 function MissionCaseStay ( $FleetRow ) {
 	global $lang, $resource;
 
+	include("includes/functions/RestoreFleetToPlanet.php");
+
 	if ($FleetRow['fleet_mess'] == 0) {
 		if ($FleetRow['fleet_start_time'] <= time()) {
 			$QryGetTargetPlanet   = "SELECT * FROM {{table}} ";

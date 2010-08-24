@@ -35,7 +35,7 @@ function ElementBuildListBox ( $CurrentUser, $CurrentPlanet ) {
 
 	$parse['pretty_time_b_hangar'] = pretty_time($QueueTime - $CurrentPlanet['b_hangar']);
 
-	$text .= parsetemplate(gettemplate('buildings_script'), $parse);
+	$text .= parsetemplate(gettemplate('buildings/buildings_script'), $parse);
 
 	return $text;
 }

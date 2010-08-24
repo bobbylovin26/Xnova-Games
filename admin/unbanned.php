@@ -12,7 +12,7 @@ define('INSTALL' , false);
 define('IN_ADMIN', true);
 
 $xnova_root_path = './../';
-include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
 
 	if ($user['authlevel'] >= "2") {
@@ -33,7 +33,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 
 		display(parsetemplate(gettemplate('admin/unbanned'), $parse), "Overview", false, '', true);
 	} else {
-		message( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
+		message ( "No tienes permisos suficientes", "¡Error!");
 	}
 
 ?>

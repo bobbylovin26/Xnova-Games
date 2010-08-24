@@ -11,8 +11,14 @@ define('INSIDE'  , true);
 define('INSTALL' , false);
 
 $xnova_root_path = './';
-include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
+include($xnova_root_path . 'includes/functions/InsertGalaxyScripts.' . $phpEx);
+include($xnova_root_path . 'includes/functions/ShowGalaxyFooter.'.$phpEx);
+include($xnova_root_path . 'includes/functions/ShowGalaxyMISelector.'.$phpEx);
+include($xnova_root_path . 'includes/functions/ShowGalaxyRows.'.$phpEx);
+include($xnova_root_path . 'includes/functions/ShowGalaxySelector.'.$phpEx);
+include($xnova_root_path . 'includes/functions/ShowGalaxyTitles.'.$phpEx);
 
 	includeLang('galaxy');
 

@@ -43,12 +43,17 @@ function FleetBuildingPage ( &$CurrentPlanet, $CurrentUser ) {
 					}
 					$Ressource = GetElementRessources ( $Element, $Count );
 					$BuildTime = GetBuildingTime($CurrentUser, $CurrentPlanet, $Element);
-					if ($Count >= 1) {
-						$CurrentPlanet['metal']          -= $Ressource['metal'];
-						$CurrentPlanet['crystal']        -= $Ressource['crystal'];
-						$CurrentPlanet['deuterium']      -= $Ressource['deuterium'];
-						$CurrentPlanet['b_hangar_id']    .= "". $Element .",". $Count .";";
-					}
+                    if ($Count >= 1) {
+                        $CurrentPlanet['metal']          -= $Ressource['metal'];
+                        $CurrentPlanet['crystal']        -= $Ressource['crystal'];
+                        $CurrentPlanet['deuterium']      -= $Ressource['deuterium'];
+                        //INICIO FIX OFICIAL DESTRUCTOR
+                        if ($Element == 214 && $CurrentUser['rpg_destructeur'] == 1) {
+                            $Count = 2 * $Count;
+                            }
+                        //FIN FIX
+                        $CurrentPlanet['b_hangar_id']    .= "". $Element .",". $Count .";";
+                    }
 				}
 			}
 		}
@@ -121,12 +126,8 @@ function FleetBuildingPage ( &$CurrentPlanet, $CurrentUser ) {
 	$parse['buildlist']    = $PageTable;
 	// Et la liste de constructions en cours dans $BuildQueue;
 	$parse['buildinglist'] = $BuildQueue;
-	$page .= parsetemplate(gettemplate('buildings_fleet'), $parse);
+	$page .= parsetemplate(gettemplate('buildings/buildings_fleet'), $parse);
 
 	display($page, $lang['Fleet']);
 }
-// Version History
-// - 1.0 Modularisation
-// - 1.1 Correction mise en place d'une limite max d'elements constructibles par ligne
-//
 ?>

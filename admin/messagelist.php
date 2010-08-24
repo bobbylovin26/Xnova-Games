@@ -12,7 +12,7 @@ define('INSTALL' , false);
 define('IN_ADMIN', true);
 
 $xnova_root_path = './../';
-include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
 
 	if ($user['authlevel'] >= "2") {
@@ -120,7 +120,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 
 		if (isset($_POST['delit'])) {
 			doquery ("DELETE FROM {{table}} WHERE `message_id` = '". $_POST['delit'] ."';", 'messages');
-			AdminMessage ( $lang['mlst_mess_del'] ." ( ". $_POST['delit'] ." )", $lang['mlst_title'], "./messagelist.".$phpEx, 3);
+			message ( $lang['mlst_mess_del'] ." ( ". $_POST['delit'] ." )", $lang['mlst_title'], "./messagelist.".$phpEx, 3);
 		}
 		display ($display, $lang['mlst_title'], false, '', true);
 	} else {

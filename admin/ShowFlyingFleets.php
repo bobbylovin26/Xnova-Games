@@ -12,8 +12,10 @@ define('INSTALL' , false);
 define('IN_ADMIN', true);
 
 $xnova_root_path = './../';
-include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
+include($xnova_root_path . 'includes/functions/BuildFlyingFleetTable.' . $phpEx);
+
 
 	if ($user['authlevel'] >= 1) {
 		includeLang('admin/fleets');
@@ -26,7 +28,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 		display ( $page, $lang['flt_title'], false, '', true);
 
 	} else {
-		AdminMessage ( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
+		message ( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
 	}
 
 ?>

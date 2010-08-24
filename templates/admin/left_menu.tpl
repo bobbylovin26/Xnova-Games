@@ -1,75 +1,138 @@
-<div id='leftmenu'>
-<script language="JavaScript">
-function f(target_url,win_name) {
-  var new_win = window.open(target_url,win_name,'resizable=yes,scrollbars=yes,menubar=no,toolbar=no,width=550,height=280,top=0,left=0');
-  new_win.focus();
-}
-parent.frames['Hauptframe'].location.replace("overview.php");
-</script>
-<body  class="style" topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
-<center>
-<div id='menu'>
-<br>
-<table width="130" cellspacing="0" cellpadding="0">
+<style type="text/css">
+<!--
+.Stil1 {color: #FF8000}
+-->
+</style>
+<p>
+<p><img border="0" src="../images/leftunten.png" width="138" height="5">
+</p>
+<div align="center">
+<table width="125" id="table1">
+<tbody>
+      <th colspan="3">
+      <table width="125">
+        <tbody>
 <tr>
-	<td style="border-top: 1px #545454 solid"><div><center>{servername}<br>(<a href="changelog.php" target={mf}><font color=red>{XNovaRelease}</font></a>)<center></div></td>
-</tr><tr>
-	<td background="{dpath}img/bg1.gif"><center>{admin}</center></td>
-</tr><tr>
-	<td><div><a href="overview.php" accesskey="v" target="{mf}">{adm_over}</a></div></td>
-</tr><tr>
-	<td><div><a href="settings.php" accesskey="e" target="{mf}">{adm_conf}</a></div></td>
-</tr><tr>
-	<td><div><a href="XNovaResetUnivers.php" accesskey="e" target="{mf}">{adm_reset}</a></div></td>
-</tr><tr>
-	<td><div><a href="credit.php" accesskey="e" target="{mf}">{adm_extcopy}</a></div></td>
-</tr><tr>
-	<td background="{dpath}img/bg1.gif"><center>{player}</center></td>
-</tr><tr>
-	<td><div><a href="mats.php" accesskey="k" target="{mf}">Utilidades de administración</a></div></td>
-</tr><tr>
-	<td><div><a href="messall.php" accesskey="k" target="{mf}">Mensaje Global</a></div></td>
-</tr><tr>
-	<td><div><a href="userlist.php" accesskey="a" target="{mf}">{adm_plrlst}</a></div></td>
-</tr><tr>
-	<td><div><a href="paneladmina.php" accesskey="k" target="{mf}">{adm_plrsch}</a></div></td>
-</tr><tr>
-	<td><div><a href="planetlist.php" accesskey="1" target="{mf}">{adm_pltlst}</a></div></td>
-</tr><tr>
-	<td><div><a href="activeplanet.php" accesskey="k" target="{mf}">{adm_actplt}</a></div></td>
-</tr><tr>
-	<td><div><a href="moonlist.php" accesskey="k" target="{mf}">{adm_moonlst}</a></div></td>
-</tr><tr>
-	<td><div><a href="add_moon.php" accesskey="k" target="{mf}">{adm_addmoon}</a></div></td>
-</tr><tr>
-	<td><div><a href="ShowFlyingFleets.php" accesskey="k" target="{mf}">{adm_fleet}</a></div></td>
-</tr><tr>
-	<td><div><a href="banned.php" accesskey="k" target="{mf}">{adm_ban}</a></div></td>
-</tr><tr>
-	<td><div><a href="unbanned.php" accesskey="k" target="{mf}">{adm_unban}</a></div></td>
-</tr><tr>
-	<td background="{dpath}img/bg1.gif"><center>{tool}</center></td>
-</tr><tr>
-	<td><div><a href="statbuilder.php" accesskey="p" target="{mf}">{adm_updpt}</a></div></td>
-</tr><tr>
-	<td><div><a href="QueryExecute.php" accesskey="k" target="{mf}">{qry}</a></div></td>
-</tr><tr>
-	<td><div><a href="messagelist.php" accesskey="k" target="{mf}">{adm_msg}</a></div></td>
-</tr><tr>
-	<td><div><a href="md5enc.php" accesskey="p" target="{mf}">{adm_md5}</a></div></td>
-</tr><tr>
-	<td><div><a href="md5changepass.php" accesskey="k" target="{mf}">{change_pass}</a></div></td>
-</tr><tr>
-	<td><div><a href="ElementQueueFixer.php" accesskey="p" target="{mf}">{adm_build}</a></div></td>
-</tr><tr>
-	<td><div><a href="errors.php" accesskey="e" target="{mf}">{adm_error}</a></div></td>
-</tr><tr>
-	<td><div><a href="../frames.php" accesskey="i" target="_top" style="color:red">{adm_back}</a></div></td>
-</tr><tr>
-	<td background="{dpath}img/bg1.gif"><center>{infog}</center></td>
-</tr><tr>
-	<td><div><center><a href="../credit.php" accesskey="T" target="{mf}">XNova Team</a><br>&copy; Copyright 2008</center></div></td>
+            <td class="c" colspan="2">
+			<p align="center"><font color="#00CCCC">Generales</font></td>
+          </tr>
+<tr>
+            <th width="125"><a href="overview.php" target="Hauptframe">Ver conectados</a></th>
+			          </tr>
+<tr>
+            <th width="125"><a href="settings.php" target="Hauptframe">Configuración</a></th>
+			          </tr>
+<tr>
+            <th width="125"><a href="XNovaResetUnivers.php" target="Hauptframe">Reiniciar Universo</a></th>
+			          </tr>
+<tr>
+</tbody>
+</table>
+</table>
+<p><img border="0" src="../images/leftunten.png" width="138" height="5">
+
+<comment></comment>
+<img border="0" src="../images/leftoben.png" width="138" height="5">
+<div align="center">
+
+<table width="125" id="table1">
+<tbody>
 </tr>
+      <th colspan="3">
+      <table width="125">
+        <tbody>
+<tr>
+            <td class="c" colspan="2">
+			<p align="center"><font color="#00CCCC">Usuarios</font></td>
+          </tr>
+<tr>
+            <th width="125"><a href="mats.php" target="Hauptframe">Añadir/eliminar recursos</a></th>
+			          </tr>
+<tr>
+            <th width="125"><a href="messall.php" target="Hauptframe">Mensaje Global</a></th>
+			          </tr>
+<tr>
+            <th width="125"><a href="userlist.php" target="Hauptframe">Ver jugadores</a></th>
+			          </tr>
+<tr>
+            <th width="125"><a href="paneladmina.php" target="Hauptframe">Buscar/Editar jugador</a></th>
+			          </tr>
+<tr>
+            <th width="125"><a href="planetlist.php" target="Hauptframe">Ver planetas</a></th>
+			          </tr>
+<tr>
+            <th width="125"><a href="activeplanet.php" target="Hauptframe">Planetas activos</a></th>
+			          </tr>
+<tr>
+            <th width="125"><a href="moonlist.php" target="Hauptframe">Lista de lunas</a></th>
+			          </tr>
+<tr>
+            <th width="125"><a href="add_moon.php" target="Hauptframe">Agregar lunas</a></th>
+			          </tr>
+<tr>
+            <th width="125"><a href="ShowFlyingFleets.php" target="Hauptframe">Flotas en vuelo</a></th>
+			          </tr>
+<tr>
+            <th width="125"><a href="banned.php" target="Hauptframe">Banear jugador</a></th>
+			          </tr>
+<tr>
+            <th width="125"><a href="unbanned.php" target="Hauptframe">Desbanear jugador</a></th>
+			          </tr>
+</tbody>
+</table>
+</table>
+<p><img border="0" src="../images/leftunten.png" width="138" height="5">
+
+<comment></comment>
+<img border="0" src="../images/leftoben.png" width="138" height="5">
+<div align="center">
+
+<table width="125" id="table1">
+<tbody>
+</tr>
+      <th colspan="3">
+      <table width="125">
+        <tbody>
+<tr>
+            <td class="c" colspan="2">
+			<p align="center"><font color="#00CCCC">Herramientas</font></td>
+          </tr>
+<tr>
+            <th width="125"><a href="QueryExecute.php" target="Hauptframe">Consulta SQL</a></th>
+			          </tr>
+<tr>
+            <th width="125"><div><a href="messagelist.php" target="Hauptframe">Lista de mensajes</a></th>
+			          </tr>
+<tr>
+            <th width="125"><div><div><a href="md5enc.php" target="Hauptframe">Encriptador MD5</a></th>
+			          </tr>
+<tr>
+            <th width="125"><a href="md5changepass.php" target="Hauptframe">Cambiar clave</a></th>
+			          </tr>
+<tr>
+            <th width="125"><div><a href="ElementQueueFixer.php" target="Hauptframe">Colas</a></th>
+			          </tr>
+<tr>
+            <th width="125"><a href="errors.php" target="Hauptframe">Logs de errores</a></th>
+			          </tr>
+<tr>
+            <th width="125"><div><a href="../frames.php" target="_top" style="color:red">Salir</a></th>
+			          </tr>
+</tbody>
+</table>
+</table>
+<p>
+<comment></comment>
+<img border="0" src="../images/leftoben.png" width="138" height="5">
+<div align="center">
+<table width="125" id="table1">
+<tbody>
+</tr>
+</tbody>
+</table>
+</table>
+</table>
+</table>
 </table>
 </div>
 </center>

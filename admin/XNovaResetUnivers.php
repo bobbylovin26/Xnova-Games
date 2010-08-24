@@ -12,8 +12,9 @@ define('INSTALL' , false);
 define('IN_ADMIN', true);
 
 $xnova_root_path = './../';
-include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.'.$phpEx);
+include($xnova_root_path . 'includes/functions/CreateOnePlanetRecord.'.$phpEx);
 
 includeLang('admin');
 
@@ -91,9 +92,9 @@ function XNovaResetUnivers ( $CurrentUser ) {
 		doquery("DROP TABLE {{table}}", 'planets_s');
 		doquery("DROP TABLE {{table}}", 'users_s');
 
-		AdminMessage ( $lang['adm_rz_done'], $lang['adm_rz_ttle'] );
+		message ( $lang['adm_rz_done'], $lang['adm_rz_ttle'] );
 	} else {
-		AdminMessage ( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
+		message ( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
 	}
 	return $Page;
 }

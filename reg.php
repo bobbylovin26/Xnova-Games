@@ -11,8 +11,10 @@ define('INSIDE' , true);
 define('INSTALL' , false);
 
 $xnova_root_path = './';
-include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
+include($xnova_root_path . 'includes/functions/CheckInputStrings.' . $phpEx);
+include($xnova_root_path . 'includes/functions/CreateOnePlanetRecord.'.$phpEx);
 
 includeLang('reg');
 
@@ -95,15 +97,7 @@ if ($_POST) {
         $errorlist .= $lang['error_emailexist'];
         $errors++;
     }
-	    if ($_POST['raza'] != ''  &&
-          $_POST['raza'] != 'H' &&
-		  $_POST['raza'] != 'A' &&
-		  $_POST['raza'] != 'P' &&
-          $_POST['raza'] != 'D') {
-          $errorlist .= $lang['error_raza'];
-          $errors++;
-        }
-					
+
     if ($errors != 0) {
         message ($errorlist, $lang['Register'], "reg.php", "3");
     } else {
@@ -117,7 +111,6 @@ if ($_POST) {
         $QryInsertUser .= "`username` = '" . mysql_escape_string(strip_tags($UserName)) . "', ";
         $QryInsertUser .= "`email` = '" . mysql_escape_string($UserEmail) . "', ";
         $QryInsertUser .= "`email_2` = '" . mysql_escape_string($UserEmail) . "', ";
-		$QryInsertUser .= "`id_race` = '" . mysql_escape_string($_POST['race']) . "', ";
 	    $QryInsertUser .= "`ip_at_reg` = '" . $_SERVER["REMOTE_ADDR"] . "', ";
         $QryInsertUser .= "`id_planet` = '0', ";
         $QryInsertUser .= "`register_time` = '" . time() . "', ";
@@ -187,11 +180,7 @@ if ($_POST) {
         }
         // Recherche de la reference de la nouvelle planete (qui est unique normalement !
         $PlanetID = doquery("SELECT `id` FROM {{table}} WHERE `id_owner` = '". $NewUser['id'] ."' LIMIT 1;" , 'planets', true);
-                  if ($_POST[raza] == 'H') {doquery("UPDATE {{table}} SET `Humano` = '1' WHERE `id` = '". $NewUser['id'] ."' LIMIT 1;", 'users'  );
-			} elseif ($_POST[raza] == 'A'){doquery("UPDATE {{table}} SET `Alien` = '1' WHERE `id` = '". $NewUser['id'] ."' LIMIT 1;", 'users'  );
-			} elseif ($_POST[raza] == 'P'){doquery("UPDATE {{table}} SET `Predator` = '1' WHERE `id` = '". $NewUser['id'] ."' LIMIT 1;", 'users'  );
-			} elseif ($_POST[raza] == 'D'){doquery("UPDATE {{table}} SET `Dark` = '1' WHERE `id` = '". $NewUser['id'] ."' LIMIT 1;", 'users'  );
-        }
+
         // Mise a jour de l'enregistrement utilisateur avec les infos de sa planete mere
         $QryUpdateUser = "UPDATE {{table}} SET ";
         $QryUpdateUser .= "`id_planet` = '" . $PlanetID['id'] . "', ";
@@ -220,7 +209,7 @@ if ($_POST) {
             $Message .= " (" . htmlentities($_POST["email"]) . ")";
             $Message .= "<br><br>" . $lang['error_mailsend'] . " <b>" . $newpass . "</b>";
         }
-        message( $Message, $lang['reg_welldone'], "login.".$phpEx, "3" );
+        message( $Message, $lang['reg_welldone'], "index.".$phpEx, "3" );
     }
 } else {
     // Afficher le formulaire d'enregistrement

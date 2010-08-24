@@ -9,6 +9,7 @@
 
 function GalaxyRowActions ( $GalaxyRow, $GalaxyRowPlanet, $GalaxyRowPlayer, $Galaxy, $System, $Planet, $PlanetType ) {
 global $lang, $user, $dpath, $CurrentMIP, $CurrentSystem, $CurrentGalaxy;
+
 // Icones action
 $Result = "<th style=\"white-space: nowrap;\" width=125>";
 if ($GalaxyRowPlayer['id'] != $user['id']) {

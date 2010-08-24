@@ -1,18 +1,22 @@
 <?php
 
 /**
- * CheckUser.php
+ * ChekUser.php
  *
  * @version 1.0
  * @copyright 2008 By Chlorel for XNova
  */
 
 function CheckTheUser ( $IsUserChecked ) {
-	global $user;
-		includeLang('admin');
+	global $user, $xnova_root_path;
+
+	include($xnova_root_path . "includes/functions/CheckCookies.php");
+
+	includeLang('admin');
+
 	$Result        = CheckCookies( $IsUserChecked );
 	$IsUserChecked = $Result['state'];
-	
+
 
 	if ($Result['record'] != false) {
 		$user = $Result['record'];
@@ -28,6 +32,7 @@ function CheckTheUser ( $IsUserChecked ) {
 	} else {
 		$RetValue['record'] = array();
 		$RetValue['state']  = false;
+		header("location:".$xnova_root_path);
 	}
 
 	return $RetValue;

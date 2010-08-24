@@ -14,6 +14,8 @@
 function MissionCaseStayAlly ( $FleetRow ) {
 	global $lang;
 
+	include("includes/functions/RestoreFleetToPlanet.php");
+
 	$QryStartPlanet   = "SELECT * FROM {{table}} ";
 	$QryStartPlanet  .= "WHERE ";
 	$QryStartPlanet  .= "`galaxy` = '". $FleetRow['fleet_start_galaxy'] ."' AND ";

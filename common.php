@@ -3,13 +3,14 @@
 /**
  * common.php
  *
- * @version 1.0
+ * @version 2.0
  * @copyright 2008 by ??????? for XNova
+ * Reprogramado 2009 By lucky for XG PROYECT XNova - Argentina
+ *
  */
 
-define('VERSION','1.5b');
+define('VERSION','v2.0');
 
-set_magic_quotes_runtime(0);
 $phpEx = "php";
 
 $game_config   = array();
@@ -22,36 +23,51 @@ define('DEFAULT_SKINPATH' , 'skins/xnova/');
 define('TEMPLATE_DIR'     , 'templates/');
 define('DEFAULT_LANG'     , 'es');
 
-
-
-$HTTP_ACCEPT_LANGUAGE = DEFAULT_LANG;
-
 include($xnova_root_path . 'includes/debug.class.'.$phpEx);
 $debug = new debug();
 
-include($xnova_root_path . 'includes/constants.'.$phpEx);
 include($xnova_root_path . 'includes/functions.'.$phpEx);
-include($xnova_root_path . 'includes/unlocalised.'.$phpEx);
-include($xnova_root_path . 'includes/todofleetcontrol.'.$phpEx);
-include($xnova_root_path . 'language/'. DEFAULT_LANG .'/lang_info.cfg');
 
-if (INSTALL != true) {
-    include($xnova_root_path . 'includes/vars.'.$phpEx);
-    include($xnova_root_path . 'includes/db.'.$phpEx);
-    include($xnova_root_path . 'includes/strings.'.$phpEx);
+if (INSTALL != true)
+{
+	//GENERALES
+	include($xnova_root_path . 'includes/vars.'.$phpEx);
+	include($xnova_root_path . 'includes/constants.'.$phpEx);
 
-    $query = doquery("SELECT * FROM {{table}}",'config');
-    while ( $row = mysql_fetch_assoc($query) ) {
-	    $game_config[$row['config_name']] = $row['config_value'];
-    }
+	//FUNCIONES
+	include($xnova_root_path . 'includes/functions/calculateAttack.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/CheckPlanetUsedFields.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/ChekUser.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/FlyingFleetHandler.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/formatCR.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/HandleElementBuildingQueue.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/IsVacationMode.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/PlanetResourceUpdate.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/raketenangriff.' . $phpEx);
+	include($xnova_root_path . 'includes/functions/SendSimpleMessage.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/SetSelectedPlanet.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/SortUserPlanets.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/strings.'.$phpEx);
 
-	if ($InLogin != true) {
+	$query = doquery("SELECT * FROM {{table}}",'config');
+
+	while ($row = mysql_fetch_assoc($query))
+	{
+		$game_config[$row['config_name']] = $row['config_value'];
+	}
+
+	if ($InLogin != true)
+	{
 		$Result        = CheckTheUser ( $IsUserChecked );
 		$IsUserChecked = $Result['state'];
 		$user          = $Result['record'];
-	} elseif ($InLogin == false) {
-		if( $game_config['game_disable']) {
-			if ($user['authlevel'] < 1) {
+	}
+	elseif ($InLogin == false)
+	{
+		if( $game_config['game_disable'])
+		{
+			if ($user['authlevel'] < 1)
+			{
 				message ( stripslashes ( $game_config['close_reason'] ), $game_config['game_name'] );
 			}
 		}
@@ -68,9 +84,11 @@ if (INSTALL != true) {
 		doquery("UPDATE {{table}} SET `config_value` = '". $Time ."' WHERE `config_name` = 'actualizar_puntos';", "config");
 	}
 
-	if ( isset ($user) ) {
-		$_fleets = doquery("SELECT * FROM {{table}} WHERE `fleet_start_time` <= '".time()."';", 'fleets'); //  OR fleet_end_time <= ".time()
-		while ($row = mysql_fetch_array($_fleets)) {
+	if ( isset ($user) )
+	{
+		$_fleets = doquery("SELECT `fleet_start_galaxy`,`fleet_start_system`,`fleet_start_planet`,`fleet_start_type` FROM {{table}} WHERE `fleet_start_time` <= '".time()."';", 'fleets'); //  OR fleet_end_time <= ".time()
+		while ($row = mysql_fetch_array($_fleets))
+		{
 			$array                = array();
 			$array['galaxy']      = $row['fleet_start_galaxy'];
 			$array['system']      = $row['fleet_start_system'];
@@ -80,8 +98,9 @@ if (INSTALL != true) {
 			$temp = FlyingFleetHandler ($array);
 		}
 
-		$_fleets = doquery("SELECT * FROM {{table}} WHERE `fleet_end_time` <= '".time()."';", 'fleets'); //  OR fleet_end_time <= ".time()
-		while ($row = mysql_fetch_array($_fleets)) {
+		$_fleets = doquery("SELECT `fleet_end_galaxy`,`fleet_end_system`,`fleet_end_planet`,`fleet_end_type` FROM {{table}} WHERE `fleet_end_time` <= '".time()."';", 'fleets'); //  OR fleet_end_time <= ".time()
+		while ($row = mysql_fetch_array($_fleets))
+		{
 			$array                = array();
 			$array['galaxy']      = $row['fleet_end_galaxy'];
 			$array['system']      = $row['fleet_end_system'];
@@ -93,19 +112,28 @@ if (INSTALL != true) {
 
 		unset($_fleets);
 
-		if ( defined('IN_ADMIN') ) {
+		if ( defined('IN_ADMIN') )
+		{
 			$UserSkin  = $user['dpath'];
 			$local     = stristr ( $UserSkin, "http:");
-			if ($local === false) {
-				if (!$user['dpath']) {
+			if ($local === false)
+			{
+				if (!$user['dpath'])
+				{
 					$dpath     = "../". DEFAULT_SKINPATH  ;
-				} else {
+				}
+				else
+				{
 					$dpath     = "../". $user["dpath"];
 				}
-			} else {
+			}
+			else
+			{
 				$dpath     = $UserSkin;
 			}
-		} else {
+		}
+		else
+		{
 			$dpath     = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
 		}
 
@@ -115,8 +143,10 @@ if (INSTALL != true) {
 		$galaxyrow = doquery("SELECT * FROM {{table}} WHERE `id_planet` = '".$planetrow['id']."';", 'galaxy', true);
 
 		CheckPlanetUsedFields($planetrow);
-	} else {}
-} else {
+	}
+}
+else
+{
 	$dpath     = "../" . DEFAULT_SKINPATH;
 }
 ?>

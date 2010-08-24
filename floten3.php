@@ -11,16 +11,17 @@ define('INSIDE'  , true);
 define('INSTALL' , false);
 
 $xnova_root_path = './';
-include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
+
+	if (IsVacationMode($user))
+	{
+       message("El modo vacaciones se encuentra activo","&#161;Error!","overview.php",2);
+    }
 
 	$dpath     = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
 
 	includeLang('fleet');
-
-	if (IsVacationMode($CurrentUser)){
-       return false;
-    }
 
 	$CurrentPlanet = doquery("SELECT * FROM {{table}} WHERE `id` = '". $user['current_planet'] ."'", 'planets', true);
 	$TargetPlanet  = doquery("SELECT * FROM {{table}} WHERE `galaxy` = '". $_POST['galaxy'] ."' AND `system` = '". $_POST['system'] ."' AND `planet` = '". $_POST['planet'] ."' AND `planet_type` = '". $_POST['planettype'] ."';", 'planets', true);
@@ -165,11 +166,12 @@ include($xnova_root_path . 'common.' . $phpEx);
 			 $UsedPlanet) {
 			$missiontype[2] = $lang['type_mission'][2];
 		}
-        if ( $_POST['planettype'] == 3 &&
-	     $_POST['ship214'] >= 1    &&
-           !$YourPlanet            &&
-           $UsedPlanet) {
-          $missiontype[9] = $lang['type_mission'][9];
+		if ( $_POST['planettype'] == 3 &&
+		     $_POST['ship214'] >= 1    &&
+	           !$YourPlanet            &&
+	           $UsedPlanet			   &&
+			   $user['rpg_empereur'] == 1) {
+	          $missiontype[9] = $lang['type_mission'][9];
         }
 	}
 

@@ -4,7 +4,130 @@ $lang['Version']     = 'Versión';
 $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
-'<font color="lime">1.5b</font>' => ' 03/04/09 12:57
+'<font color="lime">2.0</font>' => ' 03/04/09 12:57
+- Visión general del panel del admin mejorada, ajustada mejor la tabla e integrado el lenguaje a las plantillas.-
+- Simplificación del sistema de créditos, e integración del lenguaje.-
+- Integrado el idioma a resources.php y a las respectivas plantillas.-
+- Cambios en las tablas de las estadísticas, inclución del lenguaje a las plantillas, revisión del código y algunas mejoras en la carga.-
+- Algunos cambios visuales en fleet.php.-
+- Eliminada la función AdminMessage, cumplia la misma función que message.-
+- Optimización e integración del lenguaje a admin/settings.php
+- Algunas correcciones que previenen que por la actualización de puntos se provoque un bug en el panel de administración.-
+- Optimizadas algunas querys de las flotas en commons.php.-
+- Correciones en algunos textos en los mensajes de movimientos de flotas.-
+- Mejora de seguridad, no podrás ver las páginas internas del juego sino te logueaste.-
+- Ahora se pueden ver bien los mensajes de error e informes de los mensajes.-
+- Corregido un bug que al abandonar un planeta no borraba la luna, y esta podía ser utilizada.-
+- Simplificación y reorganización de BatimentBuildingPage.php.-
+- Correcciones visuales en los edificios, y correciones de algunas tablas para ajustarlas mejor.-
+- Nueva imagen de materia oscura en el menú superior, también se ampliaron los tamaños de las imágenes.-
+- Reparado un bug que permitía mover flotas en modo vacaciones.-
+- Traducido el mensaje del modo vacaciones, y corregido un bug que no mostraba el tiempo real de vacaciones.-
+- Cambiados algunos $ugamela por $xnova.-
+- Implementación de seguridad, fue renombrado el archivo extension.inc a extension.inc.php, no estaba protegido y podía leerse su contenido.-
+- Algunas correcciones y simplificación del código en buddy.php.-
+- Revisado todo el notes.php:
+
+--------- Plantillas agregadas a su carpeta correspondiente "notes".-
+--------- Algunas correciones visuales.-
+--------- Integración del idioma a las plantillas.-
+--------- Reparados algunos bugs.-
+--------- Ahora al editar el mensaje, se muestra el asunto y el mensaje.-
+--------- Conteo de caracteres en js aplicado.-
+
+- Eliminadas algunas funciones de administración.-
+- Reparado un bug que no mostraba el límite real de las flotas posibles a enviar.-
+- Oficiales:
+
+--------- Algunas correciones visuales.-
+--------- Oficiales pendientes por reparar: Almirante y General.-
+--------- Oficiales funcionando: Geólogo, Ingeniero, Tecnócrata, Constructor, Científico, Almacenista, Defensor, Bunker, Espía, Comandante, Destructor, Raider y Emperador.-
+--------- Reparados los oficiales espía y Comandante.- 
+--------- Reparado el oficial empeador(By thyphoon) y destructor(By angelus_ira).-
+--------- Integración del idioma a las plantillas y código.-
+
+- Limpieza de scripts.-
+- Re-organizadas todas las funciones del juego (optimizandolo increíblemente)(cada función se asigno a su archivo correspondiente).-
+- Eliminado CombatEngine.php.-
+- Algunas correciones en commons.php para agilizar el juego en general.-
+- Limpieza y optimización del instalador.-
+- La función doquery fue unificada también dentro de functions.php.-
+- Las funciones de unlocalised.php fueron integradas a functions.php
+- Limpieza de funciones inutiles en includes/functions:
+
+--------- Eliminado RevisionTime.php.-
+--------- Eliminado SecureArrayFunction.php.-
+--------- Eliminado ResetThisFuckingCheater.php.-
+--------- Eliminado ElementBuildListQueue.php, el archivo ElementBuildListBox.php cumple la misma función y se encuentra en uso.-
+
+- Limpieza en functions.php,se borraron algunas funciones sin utilidad alguna.-
+- Limpieza en unlocalised.php,se borraron algunas funciones sin utilidad alguna o vacías.-
+- Se reorganizaron casi todas las plantillas y se borraron algunas más sin utilidad (algunas pedientes a organizar).-
+- Se borraron todas las plantillas de la galaxia que no tenían utilidad(la galaxia la genera el código php dinámicamente).-
+- Revisado todo el search.php:
+
+--------- Borradas algunas lineas.-
+--------- Reorganizado el código.-
+--------- Reorganizadas las plantillas en una carpeta en templates.-
+--------- Se integro search.mo a las plantillas.-
+--------- Se corrigió un bug que no mostraba la alianza en la búsqueda por usuarios.-
+--------- Se corrigió un bug que no redirigía correctamente a la vista de la alianza.-
+--------- Se corrigió un bug dentro de la alianza para poder verla desde search.php
+
+- Revisado todo el mercader:
+
+--------- Adherido marchand.mo a sus respectivas plantillas.-
+--------- Corregidas todas las plantillas y bugs en la muestra de los recursos(no aparecen más en eltop).-
+--------- Simplificación del código php, reorganizado y reprogramado lo que no funcionaba bien.-
+--------- Corregidas las validaciones, admiten ceros, pero no números negativos.-
+--------- Añadidas las plantillas respectivas a una carpeta en templates(para una mejor organización).-
+
+- Cookies.mo integrado a su archivo correspondiente.-
+- Algunos textos fueron colocados en system.mo, ya que hacen al caracter general del juego, y no de un sector en especifico.-
+- Optimizado MissionCaseAttack.php.-
+- Optimizado el overview, se elimino código innecesario, se reorganizó, se eliminaron querys que no tenían utilidad y se integro el idioma a las plantillas.-
+- Reubicados algunos archivos.-
+- Limpieza de la base de datos, de cosas que no se utilizaban.-
+- Reorganizado el menú de opciones, integración del idioma a la plantilla y se eliminaron querys innecesarias.-
+- Algunos archivos de texto fueron integrados directamente a los archivos para agilizar el juego y su velocidad.-
+- Se reorganizaron algunas plantillas y se eliminaron algunas otras inútiles.-
+- Eliminados los emoticones.-
+- Como siempre actualizados el auto-update y el instalador para que todo sea más facil.-
+- Cambios en el instalador.-
+- Optimizadas unas cuantas páginas.-
+- login.php, lostpassword.php y logout.php unificados en el index.php mejorando un poco el rendimiento y organización.-
+- Algunas correcciones visuales en la visión del imperio.-
+
+- Revisada toda la alianza:
+ 
+--------- Mejoras varias.-
+--------- Mejoras en lenguajes.-
+--------- Mejoras en plantillas.-
+--------- Se agregaron validaciones.-
+--------- Se reorganizó el código.-
+--------- Se reparo el texto de las solicitudes, ahora podrás editarla.-
+--------- Todos los mensajes ahora te redirigiran.-
+--------- Se corrigió un bug en los rangos.-
+--------- Se optimizó un poco, se eliminaron lineas inútiles y se fixearon algunos bugs.-
+--------- Se repararon todos los errores encontrados en los textos y plantillas que no se mostraban, asi como cosas que no se realizaban.-
+
+- Cuando un usuario falla al intentar el login ahora es redirigido al inicio.-
+- Mejorado el index ahora funciona mucho más rápido.-
+- Mejorados algunos textos en general, y corregidos algunos detalles.-
+- Rediseñado el sistema de ingreso al panel del admin y regreso al juego.-
+- Limpieza de archivos y residuos.-
+- Eliminado el chat, loteria, razas, simulador, tutoria, records y todo aquello que no consideraba necesario.-
+- Reprogramados los menús derechos e izquierdos.-
+
+- Un resumen de las figuras más destacadas de este proyecto:
+
+--------- Tomo las riendas sobre la 1.5b saltando a la 2.0 para trerles todas las mejoras enunciadas a continuación [By lucky].-
+--------- Partiendo de la version 0.9a llegando hasta la 1.5b del XG Proyect por lucky, PowerMaster, Calzon, Tarta, Tonique y muchas personas más.-
+--------- Continuado por UGamela Britania con varias mejoras, seguido por el equipo francés Raito, Chlorel, e-Zobar y Flousedid.-
+--------- Proyecto ogame para todos y con todas las funciones iniciado por Perberos.-
+',
+
+'1.5b' => ' 03/04/09 12:57
 - Cambios y correcciones en templates y textos.-
 - Loteria reparada (By lucky).-
 - Correciones en el instalador, soportando correctamente las razas, y también en el auto-update.-

@@ -11,14 +11,11 @@ define('INSIDE'  , true);
 define('INSTALL' , false);
 
 $xnova_root_path = './';
-include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
 
 	includeLang('fleet');
 
-	if (IsVacationMode($CurrentUser)){
-       return false;
-    }
 	$speed = array(10 => 100,
 		9 => 90,
 		8 => 80,

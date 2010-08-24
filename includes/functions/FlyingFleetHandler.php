@@ -8,7 +8,7 @@
  */
 
 function FlyingFleetHandler (&$planet) {
-	global $resource;
+	global $resource, $xnova_root_path;
 
 	doquery("LOCK TABLE {{table}}lunas WRITE, {{table}}rw WRITE, {{table}}errors WRITE, {{table}}messages WRITE, {{table}}fleets WRITE, {{table}}planets WRITE, {{table}}galaxy WRITE ,{{table}}users WRITE", "");
 
@@ -30,57 +30,57 @@ function FlyingFleetHandler (&$planet) {
 	while ($CurrentFleet = mysql_fetch_array($fleetquery)) {
 		switch ($CurrentFleet["fleet_mission"]) {
 			case 1:
-				// Attaquer
+				include($xnova_root_path. "includes/functions/MissionCaseAttack.php");
 				MissionCaseAttack ( $CurrentFleet );
 				break;
 
 			case 2:
-				// Attaque groupée
+				//ATAQUE EN GRUPO
 				doquery ("DELETE FROM {{table}} WHERE `fleet_id` = '". $CurrentFleet['fleet_id'] ."';", 'fleets');
 				break;
 
 			case 3:
-				// Transporter
+				include($xnova_root_path. "includes/functions/MissionCaseTransport.php");
 				MissionCaseTransport ( $CurrentFleet );
 				break;
 
 			case 4:
-				// Stationner
+				include($xnova_root_path. "includes/functions/MissionCaseStay.php");
 				MissionCaseStay ( $CurrentFleet );
 				break;
 
 			case 5:
-				// Stationner chez un Allié
-			MissionCaseStayAlly ( $CurrentFleet );
+				include($xnova_root_path. "includes/functions/MissionCaseStayAlly.php");
+				MissionCaseStayAlly ( $CurrentFleet );
 				break;
 
 			case 6:
-				// Flotte d'espionnage
+				include($xnova_root_path. "includes/functions/MissionCaseSpy.php");
 				MissionCaseSpy ( $CurrentFleet );
 				break;
 
 			case 7:
-				// Coloniser
+				include($xnova_root_path. "includes/functions/MissionCaseColonisation.php");
 				MissionCaseColonisation ( $CurrentFleet );
 				break;
 
 			case 8:
-				// Recyclage
+				include($xnova_root_path. "includes/functions/MissionCaseRecycling.php");
 				MissionCaseRecycling ( $CurrentFleet );
 				break;
 
 			case 9:
-				// Detruire ??? dans le code ogame c'est 9 !!
+				include($xnova_root_path. "includes/functions/MissionCaseDestruction.php");
 				MissionCaseDestruction ( $CurrentFleet );
 				break;
 
 			case 10:
-				// Missiles !!
+				include($xnova_root_path. "includes/functions/MissionCaseMIP.php");
 				MissionCaseMIP ( $CurrentFleet );
 				break;
 
 			case 15:
-				// Expeditions
+				include($xnova_root_path. "includes/functions/MissionCaseExpedition.php");
 				MissionCaseExpedition ( $CurrentFleet );
 				break;
 

@@ -22,42 +22,37 @@
       <table width="500" border="0" cellpadding="0" cellspacing="0" class="header" id="resources" padding-right="30">
       <tbody>
       <tr class="header">
-         <td class="header" align="center" width="150"><img src="{dpath}images/metall.gif" border="0" height="22" width="42"></td>
-         <td class="header" align="center" width="150"><img src="{dpath}images/kristall.gif" border="0" height="22" width="42"></td>
-         <td class="header" align="center" width="150"><img src="{dpath}images/deuterium.gif" border="0" height="22" width="42"></td>
-       <td class="header" align="center" width="150"><img src="{dpath}images/darkmatter.jpg" border="0" height="22" width="42"></td>
-         <td class="header" align="center" width="150"><img src="{dpath}images/energie.gif" border="0" height="22" width="42"></td>
-         <td class="header" align="center" width="150"><img src="{dpath}images/message.gif" border="0" height="22" width="42"></td>
+         <td class="header" align="center" width="150"><img src="{dpath}images/metall.gif" border="0" height="32" width="48"></td>
+         <td class="header" align="center" width="150"><img src="{dpath}images/kristall.gif" border="0" height="32" width="48"></td>
+         <td class="header" align="center" width="150"><img src="{dpath}images/deuterium.gif" border="0" height="32" width="48"></td>
+         <td class="header" align="center" width="250"><img src="{dpath}images/darkmatter.gif" border="0" height="32" width="48"></td>
+         <td class="header" align="center" width="150"><img src="{dpath}images/energie.gif" border="0" height="32" width="48"></td>
+         <td class="header" align="center" width="150"><img src="{dpath}images/message.gif" border="0" height="32" width="48"></td>
       </tr>
       <tr class="header">
-         <td class="header" align="center" width="150"><i><b><font color="#ffffff">{Metal}</font></i></td>
-         <td class="header" align="center" width="150"><i><b><font color="#ffffff">{Crystal}</font></b></i></td>
-         <td class="header" align="center" width="150"><i><b><font color="#ffffff">{Deuterium}</font></b></i></td>
-       <td class="header" align="center" width="150"><i><b><font color="#ffffff">Materia Oscura</font></b></i></td>  
-         <td class="header" align="center" width="150"><i><b><font color="#ffffff">{Energy}</font></b></i></td>
-         <td class="header" align="center" width="150"><i><b><font color="#ffffff">{Message}</font></b></i></td>
+         <td class="header" align="center" width="150"><i><b><font color="#ffffff">Metal</font></i></td>
+         <td class="header" align="center" width="150"><i><b><font color="#ffffff">Cristal</font></b></i></td>
+         <td class="header" align="center" width="150"><i><b><font color="#ffffff">Deuterio</font></b></i></td>
+       	 <td class="header" align="center" width="250"><i><b><font color="#ffffff">Materia Oscura</font></b></i></td>  
+         <td class="header" align="center" width="150"><i><b><font color="#ffffff">Energía</font></b></i></td>
+         <td class="header" align="center" width="150"><i><b><font color="#ffffff">Mensajes</font></b></i></td>
       </tr>
       <center>
       <tr class="header">
-         <td class="header" align="center" width="150"><font><div id="metal"></div></font></td>
-         <td class="header" align="center" width="150"><font><div id="crystal"></div></font></td>
-         <td class="header" align="center" width="150"><font><div id="deut"></div></font></td>
-       <td class="header" align="center" width="150"><font>{darkmatter}</font></td>         
-       <td class="header" align="center" width="150"><font>{energy}</font></td>
-         <td class="header" align="center" width="150"><font></font>{message}</td>
+         <td class="header" align="center" width="150"><div id="metal"></div></td>
+         <td class="header" align="center" width="150"><div id="crystal"></div></font></td>
+         <td class="header" align="center" width="150"><div id="deut"></div></font></td>
+         <td class="header" align="center" width="250">{darkmatter}</td>         
+         <td class="header" align="center" width="150">{energy}</td>
+         <td class="header" align="center" width="150">{message}</td>
       </tr>
          <td class="header" align="center" width="150">{metal_max}</td>
          <td class="header" align="center" width="150">{crystal_max}</td>
          <td class="header" align="center" width="150">{deuterium_max}</td>
-         <td class="header" align="center" width="150"></td>
-         <td class="header" align="center" width="150"><font></font></td>
+         <td class="header" align="center" width="250">&nbsp;</td>
+         <td class="header" align="center" width="150">&nbsp;</td>
+         <td class="header" align="center" width="150">&nbsp;</td>
       </tr>
-         <td class="header" align="center" width="150">&nbsp;</td>
-         <td class="header" align="center" width="150">&nbsp;</td>
-         <td class="header" align="center" width="150">&nbsp;</td>
-         <td class="header" align="center" width="150">&nbsp;</td>
-         <td class="header" align="center" width="150">&nbsp;</td>
-         <td class="header" align="center" width="150"><font></font></td>
       </table>
    </td>
 </tr>

@@ -12,7 +12,7 @@ define('INSTALL' , false);
 define('IN_ADMIN', true);
 
 $xnova_root_path = './../';
-include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
 
 	if ($user['authlevel'] >= "1") {
@@ -23,7 +23,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 		if ($_POST['really_do_it'] == 'on') {
 
 			mysql_query ($_POST['qry_sql']);
-			AdminMessage ($lang['qry_succesful'], 'Succes', '?');
+			message ($lang['qry_succesful'], 'Succes', '?');
 			
 		} else {
 
@@ -35,7 +35,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 
 		display( $Page, $lang['qry_title'], false, '', true );
 	} else {
-		message( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
+		message ( "No tienes permisos suficientes", "¡Error!");
 	}
 
 ?>

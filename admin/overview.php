@@ -11,8 +11,8 @@ define('INSIDE'  , true);
 define('INSTALL' , false);
 define('IN_ADMIN', true);
 
-$xnova_root_path = '../';
-include($xnova_root_path . 'extension.inc');
+$xnova_root_path = './../';
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
 
 	if ($user['authlevel'] >= 1) {
@@ -75,7 +75,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 									if ($TheUser['bana'] == 1) {
 											$Bloc['is_banned']  = "<img src=\"../images/banned.png\" >";
 									} else {
-											$Bloc['is_banned']  = $lang['is_banned_lang'];
+											$Bloc['is_banned']  = "No";
 									}
 									$Bloc['usr_planet_gal']    = $TheUser['galaxy'];
 									$Bloc['usr_planet_sys']    = $TheUser['system'];
@@ -91,7 +91,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 
 		display ( $Page, $lang['sys_overview'], false, '', true);
 	} else {
-		AdminMessage ( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
+		message ( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
 	}
 
 ?>

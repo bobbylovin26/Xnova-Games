@@ -26,24 +26,7 @@ if ($_POST[continuar] && !$_POST[aceptar] or empty($_POST[modo]) or empty($_POST
 		case '1.4b':
 			$Qry1 = mysql_query("DROP TABLE `$_POST[prefix]_annonce`");
 			$Qry2 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_announces' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '1' LIMIT 1;");
-			$Qry3 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `super_terraformer`int(11) NOT NULL AFTER `terraformer`; ");
 			$Qry4 = mysql_query("ALTER TABLE `$_POST[prefix]_messages` ADD `leido` INT( 11 ) NOT NULL DEFAULT '1';");
-			$Qry5 = mysql_query("
-			CREATE TABLE `$_POST[prefix]_loteria` (
-			  `ID` int(11) NOT NULL,
-			  `user` varchar(255) collate latin1_spanish_ci NOT NULL,
-			  `tickets` int(5) NOT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;");
-			$Qry6 = mysql_query("
-			CREATE TABLE `$_POST[prefix]_chat` (
-			  `messageid` int(5) unsigned NOT NULL auto_increment,
-			  `user` varchar(255) NOT NULL default '',
-			  `message` text NOT NULL,
-			  `timestamp` int(11) NOT NULL default '0',
-			  `ally_id` int(11) NOT NULL default '0',
-			  PRIMARY KEY  (`messageid`)
-			) TYPE=MyISAM AUTO_INCREMENT=16 AUTO_INCREMENT=16 ;");
-
 			$Qry7 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'Actualizacion';");
 			$Qry8 = mysql_query("
 			INSERT INTO `$_POST[prefix]_config` (
@@ -53,53 +36,57 @@ if ($_POST[continuar] && !$_POST[aceptar] or empty($_POST[modo]) or empty($_POST
 			VALUES (
 			'actualizar_puntos', '0'
 			);");
-
-			$Qry9 = mysql_query("
-			ALTER TABLE `$_POST[prefix]_planets` ADD `interceptor` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `supernova` ,
-			ADD `cazacrucero` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `interceptor` ,
-			ADD `transportador` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `cazacrucero` ,
-			ADD `titan` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `transportador` ;");
-
-			$Qry10 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `fotocanyon` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `planet_protector` ,
-ADD `baseespacial` INT( 11 ) NOT NULL DEFAULT '0' AFTER `fotocanyon` ;");
-
-			$Qry11 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `humano` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `lang` ,
-ADD `alien` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `humano` ,
-ADD `predator` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `alien` ,
-ADD `dark` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `predator` ;");
-
-			$Qry12 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `humano_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `graviton_tech` ,
-ADD `alien_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `humano_tech` ,
-ADD `predator_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `alien_tech` ,
-ADD `dark_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `predator_tech` ;");
-
-			$Qry13 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `desarrollo_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `expedition_tech` ;");
-			$Qry14 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_humano` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `titan` ;");
-			$Qry15 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_alien` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `nave_humano` ;");
-			$Qry16 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_predator` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `nave_alien` ;");
-			$Qry17 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_dark` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `nave_predator` ; ");
-			$Qry18 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `id_race` INT DEFAULT '-1' NOT NULL AFTER `Dark`;");
+			$Qry18 = mysql_query("DROP TABLE `$_POST[prefix]_chat`, `$_POST[prefix]_loteria`;");
+			$Qry19 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'OverviewBanner' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
+			$Qry20 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'OverviewClickBanner' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
+			$Qry21 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ExtCopyFrame' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
+			$Qry22 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ExtCopyOwner' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
+			$Qry23 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ExtCopyFunct' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
+			$Qry24 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ForumBannerFrame' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
+			$Qry25 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'link_enable' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
+			$Qry26 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'link_name' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
+			$Qry27 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'link_url' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
+			$Qry28 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_marchand' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '1' LIMIT 1;");
+			$Qry29 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_notes' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '1' LIMIT 1;");
+			$Qry30 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'banner_source_post' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '../images/bann.png' LIMIT 1;");
+			$Qry31 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'bot_name' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = 'XNoviana Reali' LIMIT 1;");
+			$Qry32 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'bot_adress' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = 'xnova@xnova.fr' LIMIT 1;");
+			$Qry33 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_bot' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
+			$Qry34 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ban_duration' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '30' LIMIT 1;");
+			$Qry35 = mysql_query("ALTER TABLE `$_POST[prefix]_planets`
+  DROP `super_terraformer`,
+  DROP `interceptor`,
+  DROP `cazacrucero`,
+  DROP `transportador`,
+  DROP `titan`,
+  DROP `nave_humano`,
+  DROP `nave_alien`,
+  DROP `nave_predator`,
+  DROP `nave_dark`,
+  DROP `fotocanyon`,
+  DROP `baseespacial`;");
+  $Qry36 = mysql_query("ALTER TABLE `$_POST[prefix]_users`
+  DROP `humano`,
+  DROP `alien`,
+  DROP `predator`,
+  DROP `dark`,
+  DROP `id_race`,
+  DROP `kolorminus`,
+  DROP `kolorplus`,
+  DROP `kolorpoziom`,
+  DROP `desarrollo_tech`,
+  DROP `humano_tech`,
+  DROP `alien_tech`,
+  DROP `predator_tech`,
+  DROP `dark_tech`
+  DROP `raids1`,
+  DROP `raidsdraw`,
+  DROP `raidswin`,
+  DROP `raidsloose`;");
 		break;
 
 		case '1.4f':
-			$Qry3 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `super_terraformer`int(11) NOT NULL AFTER `terraformer`; ");
 			$Qry4 = mysql_query("ALTER TABLE `$_POST[prefix]_messages` ADD `leido` INT( 11 ) NOT NULL DEFAULT '1';");
-			$Qry5 = mysql_query("
-			CREATE TABLE `$_POST[prefix]_loteria` (
-			  `ID` int(11) NOT NULL,
-			  `user` varchar(255) collate latin1_spanish_ci NOT NULL,
-			  `tickets` int(5) NOT NULL
-			) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;");
-			$Qry6 = mysql_query("
-			CREATE TABLE `$_POST[prefix]_chat` (
-			  `messageid` int(5) unsigned NOT NULL auto_increment,
-			  `user` varchar(255) NOT NULL default '',
-			  `message` text NOT NULL,
-			  `timestamp` int(11) NOT NULL default '0',
-			  `ally_id` int(11) NOT NULL default '0',
-			  PRIMARY KEY  (`messageid`)
-			) TYPE=MyISAM AUTO_INCREMENT=16 AUTO_INCREMENT=16 ;");
-
 			$Qry7 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'Actualizacion';");
 			$Qry8 = mysql_query("
 			INSERT INTO `$_POST[prefix]_config` (
@@ -109,37 +96,108 @@ ADD `dark_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `predator_tech` ;");
 			VALUES (
 			'actualizar_puntos', '0'
 			);");
-
-			$Qry9 = mysql_query("
-			ALTER TABLE `$_POST[prefix]_planets` ADD `interceptor` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `supernova` ,
-			ADD `cazacrucero` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `interceptor` ,
-			ADD `transportador` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `cazacrucero` ,
-			ADD `titan` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `transportador` ;");
-
-			$Qry10 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `fotocanyon` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `planet_protector` ,
-ADD `baseespacial` INT( 11 ) NOT NULL DEFAULT '0' AFTER `fotocanyon` ;");
-
-			$Qry11 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `humano` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `lang` ,
-ADD `alien` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `humano` ,
-ADD `predator` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `alien` ,
-ADD `dark` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `predator` ;");
-
-			$Qry12 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `humano_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `graviton_tech` ,
-ADD `alien_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `humano_tech` ,
-ADD `predator_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `alien_tech` ,
-ADD `dark_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `predator_tech` ;");
-
-			$Qry13 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `desarrollo_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `expedition_tech` ;");
-			$Qry14 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_humano` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `titan` ;");
-			$Qry15 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_alien` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `nave_humano` ;");
-			$Qry16 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_predator` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `nave_alien` ;");
-			$Qry17 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_dark` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `nave_predator` ; ");
-			$Qry18 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `id_race` INT DEFAULT '-1' NOT NULL AFTER `Dark`;");
+			$Qry18 = mysql_query("DROP TABLE `$_POST[prefix]_chat`, `$_POST[prefix]_loteria`;");
+			$Qry19 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'OverviewBanner' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
+			$Qry20 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'OverviewClickBanner' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
+			$Qry21 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ExtCopyFrame' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
+			$Qry22 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ExtCopyOwner' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
+			$Qry23 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ExtCopyFunct' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
+			$Qry24 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ForumBannerFrame' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
+			$Qry25 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'link_enable' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
+			$Qry26 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'link_name' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
+			$Qry27 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'link_url' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
+			$Qry28 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_marchand' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '1' LIMIT 1;");
+			$Qry29 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_notes' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '1' LIMIT 1;");
+			$Qry30 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'banner_source_post' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '../images/bann.png' LIMIT 1;");
+			$Qry31 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'bot_name' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = 'XNoviana Reali' LIMIT 1;");
+			$Qry32 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'bot_adress' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = 'xnova@xnova.fr' LIMIT 1;");
+			$Qry33 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_bot' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
+			$Qry34 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ban_duration' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '30' LIMIT 1;");
+			$Qry35 = mysql_query("ALTER TABLE `$_POST[prefix]_planets`
+  DROP `super_terraformer`,
+  DROP `interceptor`,
+  DROP `cazacrucero`,
+  DROP `transportador`,
+  DROP `titan`,
+  DROP `nave_humano`,
+  DROP `nave_alien`,
+  DROP `nave_predator`,
+  DROP `nave_dark`,
+  DROP `fotocanyon`,
+  DROP `baseespacial`;");
+  $Qry36 = mysql_query("ALTER TABLE `$_POST[prefix]_users`
+  DROP `humano`,
+  DROP `alien`,
+  DROP `predator`,
+  DROP `dark`,
+  DROP `id_race`,
+  DROP `kolorminus`,
+  DROP `kolorplus`,
+  DROP `kolorpoziom`,
+  DROP `desarrollo_tech`,
+  DROP `humano_tech`,
+  DROP `alien_tech`,
+  DROP `predator_tech`,
+  DROP `dark_tech`
+  DROP `raids1`,
+  DROP `raidsdraw`,
+  DROP `raidswin`,
+  DROP `raidsloose`;");
 		break;
 
 		case'1.5a':
-			$Qry18 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `id_race` INT DEFAULT '-1' NOT NULL AFTER `Dark`;");
+			$Qry18 = mysql_query("DROP TABLE `$_POST[prefix]_chat`, `$_POST[prefix]_loteria`;");
+			$Qry19 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'OverviewBanner' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
+			$Qry20 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'OverviewClickBanner' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
+			$Qry21 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ExtCopyFrame' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
+			$Qry22 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ExtCopyOwner' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
+			$Qry23 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ExtCopyFunct' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
+			$Qry24 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ForumBannerFrame' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
+			$Qry25 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'link_enable' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
+			$Qry26 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'link_name' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
+			$Qry27 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'link_url' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
+			$Qry28 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_marchand' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '1' LIMIT 1;");
+			$Qry29 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_notes' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '1' LIMIT 1;");
+			$Qry30 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'banner_source_post' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '../images/bann.png' LIMIT 1;");
+			$Qry31 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'bot_name' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = 'XNoviana Reali' LIMIT 1;");
+			$Qry32 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'bot_adress' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = 'xnova@xnova.fr' LIMIT 1;");
+			$Qry33 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_bot' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
+			$Qry34 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ban_duration' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '30' LIMIT 1;");
+			$Qry35 = mysql_query("ALTER TABLE `$_POST[prefix]_planets`
+  DROP `super_terraformer`,
+  DROP `interceptor`,
+  DROP `cazacrucero`,
+  DROP `transportador`,
+  DROP `titan`,
+  DROP `nave_humano`,
+  DROP `nave_alien`,
+  DROP `nave_predator`,
+  DROP `nave_dark`,
+  DROP `fotocanyon`,
+  DROP `baseespacial`;");
+  $Qry36 = mysql_query("ALTER TABLE `$_POST[prefix]_users`
+  DROP `humano`,
+  DROP `alien`,
+  DROP `predator`,
+  DROP `dark`,
+  DROP `id_race`,
+  DROP `kolorminus`,
+  DROP `kolorplus`,
+  DROP `kolorpoziom`,
+  DROP `desarrollo_tech`,
+  DROP `humano_tech`,
+  DROP `alien_tech`,
+  DROP `predator_tech`,
+  DROP `dark_tech`
+  DROP `raids1`,
+  DROP `raidsdraw`,
+  DROP `raidswin`,
+  DROP `raidsloose`;");
 		break;
+
+		/*case'2.0':
+
+		break;*/
 		}
 		echo "<center><h1>¡LISTO!</h1></center>";
 		echo "<br>";
@@ -197,16 +255,14 @@ Soy conciente de que este script no es perfecto, y que solo funciona con instala
 			<th colspan="2">
 				<table border="0" cellspacing="0" cellpadding="0" width="100%">
 					<tr>
-						<th align="center" colspan="5">Tengo la versi&oacute;n:<br><br><br></th>
+						<th align="center" colspan="4">Tengo la versi&oacute;n:<br><br><br></th>
 					</tr>
 					<tr>
-						<th align="center">v9.0a/v1.0a/v1.0b/v1.1a/v1.1b/v1.1c/v1.2a/v1.2b/v1.2c/v1.3a/v1.3b/v1.3b EU/v1.3c DMV</th>
 						<th align="center">v1.4a/v1.4b/1.4c</th>
-						<th align="center">1.4d/1.4e/1.4f</th>
-						<th align="center">1.5a</th>
+						<th align="center">v1.4d/v1.4e/v1.4f</th>
+						<th align="center">v1.5a/v1.5b</th>
 					</tr>
 					<tr>
-						<th align="center"><font color="red"><strong>Versiones ya NO soportadas, recomendamos siempre mantener al d&iacute;a tu juego</strong></red></th>
 						<th align="center"><input type="radio" name="modo" value="1.4b"/></th>
 						<th align="center"><input type="radio" name="modo" value="1.4f"/></th>
 						<th align="center"><input type="radio" name="modo" value="1.5a"/></th>
@@ -215,7 +271,10 @@ Soy conciente de que este script no es perfecto, y que solo funciona con instala
 			</th>
 		</tr>
 		<tr>
-			<th align="center" colspan="2"><br><input type="submit" name="continuar" value="Actualizar a la 1.5b"/></th>
+			<th align="center" colspan="4"><br><input type="submit" name="continuar" value="Actualizar a la versi&oacute;n 2.0"/></th>
+		</tr>
+		<tr>
+			<th colspan="2"><br><br><br><font color="red">Versiones ya no soportadas: v9.0a/v1.0a/v1.0b/v1.1a/v1.1b/v1.1c/v1.2a/v1.2b/v1.2c/v1.3a/v1.3b/v1.3b EU/v1.3c DMV</font></th>
 		</tr>
 	</table>
 </form>

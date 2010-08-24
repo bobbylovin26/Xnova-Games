@@ -9,13 +9,9 @@
 
 define('INSIDE'  , true);
 define('INSTALL' , false);
-define('IN_ADMIN', true);
 
-$xnova_root_path = './'; 
-
-include($xnova_root_path . 'admin/statfunctions.' . $phpEx);
-
-	includeLang('admin');
+$xnova_root_path = './';
+include($xnova_root_path . 'admin/statfunctions.php');
 
 	$StatDate   = time();
 	// Rotation des statistiques
@@ -92,7 +88,7 @@ include($xnova_root_path . 'admin/statfunctions.' . $phpEx);
 		$GCount  += $Points['FleetCount'];
 		$TFleetPoints += ($Points['FleetPoint'] / $game_config['stat_settings']);
 		$GPoints += ($Points['FleetPoint'] / $game_config['stat_settings']);
-		
+
 		$QryInsertStats  = "INSERT INTO {{table}} SET ";
 		$QryInsertStats .= "`id_owner` = '". $CurUser['id'] ."', ";
 		$QryInsertStats .= "`id_ally` = '". $CurUser['ally_id'] ."', ";
@@ -254,6 +250,6 @@ include($xnova_root_path . 'admin/statfunctions.' . $phpEx);
 		doquery ( $QryInsertStats , 'statpoints');
 	}
 
-	//AdminMessage ( $lang['adm_done'], $lang['adm_stat_title'] );
+	//message ( $lang['adm_done'], $lang['adm_stat_title'] );
 
 ?>

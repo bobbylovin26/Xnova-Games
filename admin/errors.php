@@ -12,7 +12,7 @@ define('INSTALL' , false);
 define('IN_ADMIN', true);
 
 $xnova_root_path = '../';
-include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
 
 includeLang('admin');
@@ -46,7 +46,7 @@ $parse = $lang;
 
 		display(parsetemplate(gettemplate('admin/errors_body'), $parse), "Bledy", false, '', true);
 	} else {
-		message( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
+		message ( "No tienes permisos suficientes", "¡Error!");
 	}
 
 ?>

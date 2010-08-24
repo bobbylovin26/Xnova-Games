@@ -12,8 +12,9 @@ define('INSTALL' , false);
 define('IN_ADMIN', true);
 
 $xnova_root_path = './../';
-include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
+include($xnova_root_path . 'includes/functions/CreateOneMoonRecord.' . $phpEx);
 
 	if ($user['authlevel'] >= 2) {
 		includeLang('admin/addmoon');
@@ -40,12 +41,12 @@ include($xnova_root_path . 'common.' . $phpEx);
 
 			CreateOneMoonRecord ( $Galaxy, $System, $Planet, $Owner, $MoonID, $MoonName, 20 );
 
-			AdminMessage ( $lang['addm_done'], $lang['addm_title'] );
+			message ( $lang['addm_done'], $lang['addm_title'] );
 		}
 		$Page = parsetemplate($PageTpl, $parse);
 
 		display ($Page, $lang['addm_title'], false, '', true);
 	} else {
-		AdminMessage ( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
+		message ( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
 	}
 ?>

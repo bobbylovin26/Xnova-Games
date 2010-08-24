@@ -43,14 +43,7 @@ $lang['tech_rc'] = array (
 214 => "Estrella de la muerte",
 215 => "Acorazado",
 216 => "Supernova",
-217 => "Interceptor",
-218 => "Cazador Crucero",
-219 => "Transportador",
-220 => "Titan",
-221 => "Nave Humana",
-222 => "Nave Alien",
-223 => "Nave Predator",
-224 => "Nave Dark",
+
 
 401 => "Lanzamisiles",
 402 => "L&aacute;ser peque&ntilde;o",
@@ -61,8 +54,7 @@ $lang['tech_rc'] = array (
 407 => "C&uacute;pula peque&ntilde;a de protecci&oacute;n",
 408 => "C&uacute;pula grande de protecci&oacute;n",
 409 => 'Proteccion Planetaria',
-410 => "Ca&ntilde;&oacute;n de Fotones",
-411 => "Base Espacial",
+
 );
 
 $lang['tech'] = array(
@@ -86,7 +78,6 @@ $lang['tech'] = array(
 42 => "Sensor Phalanx",
 43 => "Salto cu&aacute;ntico",
 44 => "Silo",
-45 => "Super Terraformer",
 
 // Technologies
 100 => "Investigaci&oacute;n",
@@ -105,11 +96,6 @@ $lang['tech'] = array(
 122 => "Tecnolog&iacute;a de plasma",
 123 => "Red de investigaci&oacute;n intergal&aacute;ctica",
 124 => 'Tecnologia de expedicion',
-125 => 'Tecnologias Unicas de Humanos',
-126 => 'Tecnologias Unicas de Aliens',
-127 => 'Tecnologias Unicas de Predators',
-128 => 'Tecnologias Unicas de Darks',
-129 => 'Tecnologia de Desarrollo',
 199 => "Tecnolog&iacute;a de gravit&oacute;n",
 
 200 => "Naves espaciales",
@@ -128,14 +114,6 @@ $lang['tech'] = array(
 214 => "Estrella de la muerte",
 215 => "Acorazado",
 216 => 'SuperNova',
-217 => "Interceptor",
-218 => "Cazador Crucero",
-219 => "Transportador",
-220 => "Titan",
-221 => "Nave Humana",
-222 => "Nave Alien",
-223 => "Nave Predator",
-224 => "Nave Dark",
 
 400 => "Sistemas de defensa",
 401 => "Lanzamisiles",
@@ -147,8 +125,6 @@ $lang['tech'] = array(
 407 => "C&uacute;pula peque&ntilde;a de protecci&oacute;n",
 408 => "C&uacute;pula grande de protecci&oacute;n",
 409 => 'Proteccion Planetaria',
-410 => "Ca&ntilde;&oacute;n de Fotones",
-411 => "Base Espacial",
 
 502 => "Misil de intercepci&oacute;n",
 503 => "Misil interplanetario",
@@ -168,10 +144,6 @@ $lang['tech'] = array(
 613 => "General",
 614 => "Raider",
 615 => "Emperador",
-1000 => "Humano",
-1001 => "Alien",
-1002 => "Predator",
-1003 => "Dark",
 );
 
 $lang['res']['descriptions'] = array(

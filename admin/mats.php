@@ -12,7 +12,7 @@ define('INSTALL' , false);
 define('IN_ADMIN', true);
 
 $xnova_root_path = './../';
-include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
 
 	if ($user['authlevel'] >= "1") {
@@ -95,7 +95,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 					$Message    = $lang['adm_mess_lvl1']. " ". $Player ." ".$lang['adm_mess_lvl2'];
 					$Message   .= "<font color=\"red\">".$lang['adm_usr_level'][ $NewLvl ]."</font>!";
 
-					AdminMessage ( $Message, $lang['adm_mod_level'] );
+					message ( $Message, $lang['adm_mod_level'] );
 					break;
 
 				case 'ip_search':
@@ -147,7 +147,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 		$page = parsetemplate( $PanelMainTPL, $parse );
 		display( $page, $lang['panel_mainttl'], false, '', true );
 	} else {
-		message( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
+		message ( "No tienes permisos suficientes", "¡Error!");
 	}
 
 ?>

@@ -11,10 +11,10 @@ define('INSIDE'  , true);
 define('INSTALL' , false);
 
 $xnova_root_path = './';
-include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
 include($xnova_root_path . 'includes/functions/BBcodeFunction.' . $phpEx);
-if($user['authlevel']!="1"&$user['authlevel']!="2"&$user['authlevel']!="3"&$user['authlevel']!="0"){ header("Location: login.php");}
+if($user['authlevel']!="1"&$user['authlevel']!="2"&$user['authlevel']!="3"&$user['authlevel']!="0"){ header("Location: index.php");}
 
 	includeLang('messages');
 
@@ -39,12 +39,12 @@ if($user['authlevel']!="1"&$user['authlevel']!="2"&$user['authlevel']!="3"&$user
 		$TotalMess[$MessType] += 1;
 		$TotalMess[100]       += 1;
 	}
-             
+
     $page .= "<center>
                <table width=\"569\">";
        $page .= "<tr><td class=\"c\" colspan=\"9\">". $lang['title'] ."</td>
              </tr>";
-             
+
              for ($MessType = 0; $MessType < 100; $MessType++) {
                 if ( in_array($MessType, $MessageType) ) {
                    $page .= "<th width=\"100\"><a href=\"messages.php?mode=show&amp;messcat=". $MessType ."&amp;lista_id=1 \"><font color=\"". $TitleColor[$MessType] ."\">". $lang['type'][$MessType] ."</a></th>";}}
@@ -60,7 +60,7 @@ if($user['authlevel']!="1"&$user['authlevel']!="2"&$user['authlevel']!="3"&$user
              }
              $page .= "</tr></table>";
              $page .= "</center>";
-			 
+
 	switch ($MessPageMode) {
 		case 'write':
 			if ( !is_numeric( $OwnerID ) ) {
@@ -82,14 +82,14 @@ if($user['authlevel']!="1"&$user['authlevel']!="2"&$user['authlevel']!="3"&$user
 				$error = 0;
 				if (!$_POST["subject"]) {
 					$error++;
-					$page .= "<center><br><font color=#FF0000>".$lang['mess_no_subject']."<br></font></center>";
+					$page .= "<table><tr><td><font color=#FF0000>Falta el asunto</font></td></tr></table>";
 				}
 				if (!$_POST["text"]) {
 					$error++;
-					$page .= "<center><br><font color=#FF0000>".$lang['mess_no_text']."<br></font></center>";
+					$page .= "<table><tr><td><font color=#FF0000>Falta el mensaje</font></td></tr></table>";
 				}
 				if ($error == 0) {
-					$page .= "<center><font color=#00FF00>".$lang['mess_sended']."<br></font></center>";
+					$page .= "<table><tr><td><font color=\"#00FF00\">Mensaje enviado</font></td></tr></table>";
 
 					$_POST['text'] = str_replace("'", '&#39;', $_POST['text']);
 //					$_POST['text'] = str_replace('\r\n', '<br />', $_POST['text']);
@@ -157,8 +157,8 @@ $Message = trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) ); }
 			$MessCategory = $_POST['category'];
 
     case 'show':
-          
-          
+
+
              // -------------------------------------------------------------------------------------------------------
     $sql=doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".$user['id']."' AND  `message_type`='".$MessCategory."';", 'messages');
     $cant=mysql_num_rows($sql);
@@ -204,7 +204,7 @@ $Message = trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) ); }
     }else{
     }
 
-             
+
              // Affichage de la page des messages
              $page  .= "<script language=\"JavaScript\">\n";
              $page .= "function f(target_url, win_name) {\n";
@@ -237,22 +237,22 @@ $Message = trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) ); }
              $page .= "<input name=\"category\" value=\"".$MessCategory."\" type=\"hidden\">";
              $page .= "<input onchange=\"document.getElementById('fullreports').checked=this.checked\" id=\"fullreports2\" name=\"fullreports2\" type=\"checkbox\">".$lang['mess_partialreport']." ".$lista_pagina."</th>";
              $page .= "</tr><tr>";
-             
+
              $page .= "<th>".$lang['mess_action']."</th>";
              $page .= "<th>".$lang['mess_date']."</th>";
              $page .= "<th>".$lang['mess_from']."</th>";
              $page .= "<th>".$lang['mess_subject']."</th>";
              $page .= "</tr>";
 
-             
+
                 $UsrMess       = doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".$user['id']."' AND `message_type` = '".$MessCategory."' ORDER BY `message_time` DESC ".$limit, 'messages');
-                
+
                 while ($CurMess = mysql_fetch_array($UsrMess)) {
                    if ($CurMess['message_type'] == $MessCategory) {
                    $page .= "\n<tr>";
                    $page .= "<input name=\"showmes". $CurMess['message_id'] . "\" type=\"hidden\" value=\"1\">";
                    $page .= "<th><input name=\"delmes". $CurMess['message_id'] ."\" type=\"checkbox\"></th>";
-                   
+
                    $page .= "<th>". date("m-d H:i:s O", $CurMess['message_time']) ."</th>";
                    $page .= "<th>". stripslashes( $CurMess['message_from'] ) ."</th>";
                    $page .= "<th> <a href='messages.php?mode=".$MessPageMode."&&lista_id=".$_GET['lista_id']."&messcat=".$MessCategory."&ver=".$CurMess['message_id']."'>". stripslashes( $CurMess['message_subject'] ) ."</a> ";
@@ -267,11 +267,11 @@ $Message = trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) ); }
                       } else {
                          $page .= "</th>";
                       }
-                      
+
                       $page .= "</tr>";
                    }
                 }
-             
+
     if($_GET["ver"]){
     $CurMess=doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".$user['id']."' AND `message_id` = '".$_GET["ver"]."' ;", 'messages', true);
     $page .= "<tr></tr><tr><th></th>";
@@ -280,7 +280,7 @@ $Message = trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) ); }
                    $page .= "<th> <b>". stripslashes( $CurMess['message_subject'] ) ."</b></tr><tr>";
                    $page .= "<td style=\"background-color: ".$BackGndColor[$CurMess['message_type']]."; background-image: none;\"; class=\"b\"> </td>";
                    $page .= "<td style=\"background-color: ".$BackGndColor[$CurMess['message_type']]."; background-image: none;\"; colspan=\"4\" class=\"b\">". stripslashes( nl2br( $CurMess['message_text'] ) ) ."</td></tr>";
-                   
+
                 $QryUpdatemen  = "UPDATE {{table}} SET ";
                 $QryUpdatemen .= "`leido` = '0' "; // Vraiment pas envie de me casser le fion a virer la derniere virgule du sub query
                 $QryUpdatemen .= "WHERE ";
@@ -313,7 +313,7 @@ $Message = trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) ); }
              $page .= "</table>\n";
              $page .= "</center>";
              break;
-             
+
 	}
 
 	display($page, $lang['mess_pagetitle']);

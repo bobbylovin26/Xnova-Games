@@ -9,8 +9,9 @@
 */
 
 function MissionCaseDestruction($FleetRow) {
-   global $user, $phpEx, $ugamela_root_path, $pricelist, $lang, $resource, $CombatCaps;
+   global $user, $phpEx, $xnova_root_path, $pricelist, $lang, $resource, $CombatCaps;
 
+   include($xnova_root_path. "includes/functions/CreateOneMoonRecord.php");
    includeLang('system');
 
    if ($FleetRow['fleet_start_time'] <= time()) {
@@ -137,7 +138,7 @@ function MissionCaseDestruction($FleetRow) {
 
 
 
-         include_once($ugamela_root_path . 'includes/ataki.' . $phpEx);
+         include_once($xnova_root_path . 'includes/functions/ataki.' . $phpEx);
 
 
 
@@ -234,7 +235,7 @@ function MissionCaseDestruction($FleetRow) {
          if ($destructionl2 > 100)   {
                   $chance = '100';
                   }
-               else   { 
+               else   {
                   $chance = round($destructionl2); // En pourcentage
                   }
          $tirage = mt_rand(0, 100);
@@ -281,7 +282,7 @@ function MissionCaseDestruction($FleetRow) {
 
                    $QryDetFleets1 .= "`fleet_start_type` = '1' ";
 
-                   $QryDetFleets1 .= "WHERE ";   
+                   $QryDetFleets1 .= "WHERE ";
 
                    $QryDetFleets1 .= "`fleet_start_galaxy` = '". $FleetRow['fleet_end_galaxy'] ."' AND ";
 
@@ -309,7 +310,7 @@ function MissionCaseDestruction($FleetRow) {
 
                    doquery( $QryDetFleets2 , 'fleets');
 
-         //maintenant on va verifier si la vue du joueur n est pas calee sur la lune qui est detruite  
+         //maintenant on va verifier si la vue du joueur n est pas calee sur la lune qui est detruite
          if ($TargetUser['current_planet'] == $TargetPlanet['id']){
          $QryPlanet  = "SELECT * FROM {{table}} ";
 
@@ -346,7 +347,7 @@ function MissionCaseDestruction($FleetRow) {
          $destructionrip = sqrt($TargetPlanet['diameter'])/2;
          //maintenant qu on sait quelle chance tantons la destruction, allez roule croupier
          $chance2 = round($destructionrip); // En pourcentage
-         if ($resultat == 0) {                  
+         if ($resultat == 0) {
                   $tirage2 = mt_rand(0, 100);
                   $probarip       = sprintf ($lang['sys_destruc_rip'], $chance2);
                        if($tirage2 <= $chance2)   {
@@ -358,7 +359,7 @@ function MissionCaseDestruction($FleetRow) {
                       $resultat2 = 'sauvees 0'; // les RIP sont saines et sauves
             $finmess = $lang['sys_destruc_null'];
             }}
-         //fin 
+         //fin
          }
 
          $introdestruc       = sprintf ($lang['sys_destruc_mess'], $DepName , $FleetRow['fleet_start_galaxy'], $FleetRow['fleet_start_system'], $FleetRow['fleet_start_planet'], $FleetRow['fleet_end_galaxy'], $FleetRow['fleet_end_system'], $FleetRow['fleet_end_planet']);
@@ -741,7 +742,6 @@ function MissionCaseDestruction($FleetRow) {
                      $raport .= $lang['sys_debris'] ." ". $lang['Metal'] .":<font color=\"#adaead\">". $zlom['metal'] ."</font>   ". $lang['Crystal'] .":<font color=\"#ef51ef\">". $zlom['crystal'] ."</font><br /></center>";
 
 
-
          $QryUpdateFleet  = "UPDATE {{table}} SET ";
 
          $QryUpdateFleet .= "`fleet_amount` = '". $FleetAmount ."', ";
@@ -757,10 +757,7 @@ function MissionCaseDestruction($FleetRow) {
          doquery( $QryUpdateFleet , 'fleets');
 
 
-
          SendSimpleMessage ( $CurrentUserID, '', $FleetRow['fleet_start_time'], 3, $lang['sys_mess_tower'], $lang['sys_mess_destruc_report'], $raport );
-
-
 
          // Colorisation du résumé de rapport pour le defenseur
 
@@ -784,16 +781,11 @@ function MissionCaseDestruction($FleetRow) {
 
          $raport2 .= $lang['sys_mess_destruc_report'] ." [". $FleetRow['fleet_end_galaxy'] .":". $FleetRow['fleet_end_system'] .":". $FleetRow['fleet_end_planet'] ."] </font></a><br /><br />";
 
-
-
          SendSimpleMessage ( $TargetUserID, '', $FleetRow['fleet_start_time'], 3, $lang['sys_mess_tower'], $lang['sys_mess_destruc_report'], $raport2 );
 
 
 
       }
-
-
-
       // Retour de flotte (s'il en reste)
 
       $fquery = "";
@@ -825,8 +817,6 @@ function MissionCaseDestruction($FleetRow) {
             }
 
          }
-
-
 
          doquery ("DELETE FROM {{table}} WHERE `fleet_id` = " . $FleetRow["fleet_id"], 'fleets');
 

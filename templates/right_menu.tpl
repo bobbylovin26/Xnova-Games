@@ -1,21 +1,24 @@
-
 <style type="text/css">
 <!--
 .Stil1 {color: #FF8000}
 -->
 </style>
-<body  class="style" topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
-<img border="0" src="/images/leftunten.png" width="138" height="7">
-
+<img border="0" src="images/leftunten.png" width="138" height="7">
 <table width="125" id="table2">
 <tbody>
       <th>
       <table width="125" id="table3">
+        <tbody>
+<tr>
+            <td class="c">
+			<p align="center"><a href="credit.php" accesskey="T" target="Hauptframe">&copy; Copyright 2009</a></font></td>
+					</tr>
+</tbody>
 </table>
 </table>
 <p>
-<p><img border="0" src="/images/leftunten.png" width="138" height="5">
-<img border="0" src="/images/leftoben.png" width="138" height="5">
+<p><img border="0" src="images/leftunten.png" width="138" height="5">
+<img border="0" src="images/leftoben.png" width="138" height="5">
 </p>
 <div align="center">
 <table width="125" id="table1">
@@ -25,28 +28,22 @@
         <tbody>
 <tr>
             <td class="c" colspan="2">
-			<p align="center"><font color="#00CCCC">{Alli}</a></font></td>
+			<p align="center"><font color="#00CCCC">Observación</a></font></td>
           </tr>
 <tr>
-            <th width="125"><div><a href="alliance.php" accesskey="a" target="{mf}">{Alliance}</a></th>
+            <th width="125"><a href="stat.php?start={user_rank}" accesskey="k" target="Hauptframe">Estadísticas</a></th>
 			          </tr>
 <tr>
-            <th width="125"><a href="buddy.php" accesskey="c" target="{mf}">{Buddylist}</a></th>
-			          </tr>
-<tr>
-            <th width="125"><a href="notes.php" accesskey="c" target="{mf}">{Notes}</a></th>
-			          </tr>
-<tr>
-            <th width="125"><a href="messages.php" accesskey="c" target="{mf}">{Messages}</a></th>
+            <th width="125"><div><a href="search.php" accesskey="b" target="Hauptframe">Buscar</a></th>
 			          </tr>
 <tr>
 </tbody>
 </table>
 </table>
-<p><img border="0" src="/images/leftunten.png" width="138" height="5">
+<p><img border="0" src="images/leftunten.png" width="138" height="5">
 
 <comment></comment>
-<img border="0" src="/images/leftoben.png" width="138" height="5">
+<img border="0" src="images/leftoben.png" width="138" height="5">
 <div align="center">
 
 <table width="125" id="table1">
@@ -57,28 +54,21 @@
         <tbody>
 <tr>
             <td class="c" colspan="2">
-			<p align="center"><font color="#00CCCC">{observ}</a></font></td>
+			<p align="center"><font color="#00CCCC">Otros</a></font></td>
           </tr>
 <tr>
-            <th width="125"><a href="stat.php?start={user_rank}" accesskey="k" target="{mf}">{Statistics}</a></th>
+            <th width="125"><a href="options.php" accesskey="o" target="Hauptframe">Opciones</a></th>
 			          </tr>
 <tr>
-            <th width="125"><a href="topkb.php" target="{mf}">{Hfame}</a></th>
+            <th width="125"><a href="banned.php" accesskey="3" target="Hauptframe">Baneados</a></th>
 			          </tr>
-<tr>
-            <th width="125"><a href="records.php" accesskey="3" target="{mf}">{Records}</a></th>
-			          </tr>
-<tr>
-            <th width="125"><a href="simulator.php" accesskey="a" target="{mf}">{Sim}</a></th>
-			          </tr>
-<tr>
 </tbody>
 </table>
 </table>
-<p><img border="0" src="/images/leftunten.png" width="138" height="5">
+<p><img border="0" src="images/leftunten.png" width="138" height="5">
 
 <comment></comment>
-<img border="0" src="/images/leftoben.png" width="138" height="5">
+<img border="0" src="images/leftoben.png" width="138" height="5">
 <div align="center">
 
 <table width="125" id="table1">
@@ -89,45 +79,60 @@
         <tbody>
 <tr>
             <td class="c" colspan="2">
-			<p align="center"><font color="#00CCCC">{sonstiges}</a></font></td>
+			<p align="center"><font color="#00CCCC">Comunicación</a></font></td>
           </tr>
 <tr>
-            <th width="125"><div><a href="search.php" accesskey="b" target="{mf}">{Search}</a></th>
+            <th width="125"><div><div><a href="contact.php" accesskey="3" target="Hauptframe" >Contacto</a></th>
 			          </tr>
 <tr>
-            <th width="125"><a href="lotery.php" accesskey="3" target="{mf}">{Loto}</a></th>
+            <th width="125"><a href="{forum_url}" accesskey="1" target="Hauptframe">Foros</a></th>
 			          </tr>
 <tr>
-            <th width="125"><a href="fleetshortcut.php" accesskey="3" target="{mf}">{Showf}</a></th>
+            <th width="140"><a href="javascript:top.location.href='index.php?salir=salir'" accesskey="s" style="color:red">Salir</a></th>
 			          </tr>
-<tr>
-            <th width="125"><a href="banned.php" accesskey="3" target="{mf}">{blocked}</a></th>
-			          </tr>
+{admin_link}
 </tbody>
 </table>
 </table>
-<p><img border="0" src="/images/leftunten.png" width="138" height="5">
-<img border="0" src="/images/leftoben.png" width="138" height="5">
+<p><img border="0" src="images/leftunten.png" width="138" height="5">
 
-<table width="125" id="table2">
+<comment></comment>
+<img border="0" src="images/leftoben.png" width="138" height="5">
+<div align="center">
+<table width="125" id="table1">
 <tbody>
-      <th>
-      <table width="125" id="table3">
+</tr>
+      <th colspan="2">
+      <table width="125">
         <tbody>
 <tr>
-            <td class="c">
-			<p align="center"><a href="credit.php" accesskey="T" target="{mf}">XNova</a></font></td>
+            <td class="c" colspan="2">
+			<p align="center"><font color="#00CCCC">Velocidades</a></font></td>
           </tr>
 <tr>
-            <th width="125">&copy; Copyright 2009</a></th>
-			          </tr>
+<tr>
+    <td style="padding-left: 3px">Juego</td>
+    <td align="right" style="padding-right: 3px">x {lm_tx_game}</td>
+</tr>
+<tr>
+  <td style="padding-left: 3px">Flotas</td>
+  <td align="right" style="padding-right: 3px">x {lm_tx_fleet}</td>
+</tr>
+<tr>
+  <td style="padding-left: 3px">Recursos</td>
+  <td align="right" style="padding-right: 3px">x {lm_tx_serv}</td>
+</tr>
+<tr>
+  <td style="padding-left: 3px">Colas</td>
+  <td align="right" style="padding-right: 3px">{lm_tx_queue}</td>
+</tr>
 </tbody>
 </table>
 </table>
-<p>
-<p><img border="0" src="/images/leftoben.png" 
+</table>
+</table>
+<p><img border="0" src="images/leftoben.png" 
 width="138" height="7">
-{ADMIN_LINK}
 </table>
 </div>
 </center>

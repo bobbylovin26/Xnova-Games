@@ -1,20 +1,22 @@
 <?php
 
 /**
- * index.php (Installeur)
+ * index.php (Instalador)
  *
- * @version 1
- * @copyright 2008 By e-Zobar for XNova
+ * @version 2.0
+ * @copyright 2008 by e-Zobar for XNova
  * Based on first Chlorel's code
+ * Reprogramado 2009 By lucky for XG PROYECT XNova - Argentina
+ *
  */
 
 define('INSIDE'  , true);
 define('INSTALL' , true);
 
 $xnova_root_path = './../';
-include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.'.$phpEx);
-include($xnova_root_path . 'includes/databaseinfos.'.$phpEx);
+include($xnova_root_path . 'install/databaseinfos.'.$phpEx);
 
 $Mode     = $_GET['mode'];
 $Page     = $_GET['page'];
@@ -24,26 +26,20 @@ $nextpage = $Page + 1;
 	if (empty($Mode)) { $Mode = 'intro'; }
 	if (empty($Page)) { $Page = 1;       }
 
-	$MainTPL = gettemplate('install/ins_body');
-	includeLang('install/install');
 	switch ($Mode) {
 		case 'intro':
-				$SubTPL = gettemplate ('install/ins_intro');
-				$bloc   = $lang;
-				$frame  = parsetemplate ( $SubTPL, $bloc );
+				$frame  = parsetemplate(gettemplate('install/ins_intro'), false);
 		 	break;
 		case 'ins':
 			if ($Page == 1) {
 				if ($_GET['error'] == 1) {
-				adminMessage ($lang['ins_error1'], $lang['ins_error']);
+				message ("La conexi&oacute;n a la base de datos a fallado", "¡Error!","?mode=ins&page=1",3);
 				}
 				elseif ($_GET['error'] == 2) {
-				adminMessage ($lang['ins_error2'], $lang['ins_error']);
+				message ("El fichero config.php no puede ser sustituido, no tenia acceso chmod 777", "¡Error!","?mode=ins&page=1",3);
 				}
 
-				$SubTPL = gettemplate ('install/ins_form');
-				$bloc   = $lang;
-				$frame  = parsetemplate ( $SubTPL, $bloc );
+				$frame  = parsetemplate ( gettemplate ('install/ins_form'), false);
 			}
 			elseif ($Page == 2) {
 				$host   = $_POST['host'];
@@ -83,63 +79,46 @@ $nextpage = $Page + 1;
 				fwrite($dz, "?>");
 				fclose($dz);
 
-				function doquery ($InQry, $TblName) {
-					global $prefix;
-					$Table  = $prefix.$TblName;
-					$DoQry  = str_replace("{{table}}", $Table, $InQry);
-					$return = mysql_query($DoQry) or die("MySQL Error: <b>".mysql_error()."</b>");
-				return $return;
-				}
-
 				doquery ( $QryTableAks        , 'aks'        );
-				$parse['aks_created'] == $lang['create_aks'];
+				$parse['aks_created'][create_aks] .= "Creación de la tabla \"aks\" .................... <b><font color=\"lime\">¡Listo!</font></b>";
 				doquery ( $QryTableAlliance   , 'alliance'   );
-				$parse['aks_created'] == $lang['create_alliance'];
+				$parse['aks_created'][create_alliance] .= "Creación de la tabla \"alliance\" .................... <b><font color=\"lime\">¡Listo!</font></b>";
 				doquery ( $QryTableBanned     , 'banned'     );
-				$parse['aks_created'] == $lang['create_banned'];
+				$parse['aks_created'][create_banned] .= "Creación de la tabla \"banned\" .................... <b><font color=\"lime\">¡Listo!</font></b>";
 				doquery ( $QryTableBuddy      , 'buddy'      );
-				$parse['aks_created'] == $lang['create_buddy'];
-				doquery ( $QryTableChat      , 'chat'      );
-				$parse['aks_created'] == $lang['create_chat'];
+				$parse['aks_created'][create_buddy] .= "Creación de la tabla \"buddy\" .................... <b><font color=\"lime\">¡Listo!</font></b>";
 				doquery ( $QryTableConfig     , 'config'     );
-				$parse['aks_created'] == $lang['create_config'];
+				$parse['aks_created'][create_config] .= "Creación de la tabla \"config\" .................... <b><font color=\"lime\">¡Listo!</font></b>";
 				doquery ( $QryInsertConfig    , 'config'     );
-				$parse['aks_created'] == $lang['populate_config'];
+				$parse['aks_created'][populate_config] .= "Inyección de datos en la tabla \"config\" .................... <b><font color=\"lime\">¡Listo!</font></b>";
 				doquery ( $QryTableErrors     , 'errors'     );
-				$parse['aks_created'] == $lang['create_errors'];
+				$parse['aks_created'][create_errors] .= "Creación de la tabla \"errors\" .................... <b><font color=\"lime\">¡Listo!</font></b>";
 				doquery ( $QryTableFleets     , 'fleets'     );
-				$parse['aks_created'] == $lang['create_fleetss'];
+				$parse['aks_created'][create_fleets] .= "Creación de la tabla \"fleets\" .................... <b><font color=\"lime\">¡Listo!</font></b>";
 				doquery ( $QryTableGalaxy     , 'galaxy'     );
-				$parse['aks_created'] == $lang['create_galaxy'];
-				doquery ( $QryTableLoteria      , 'loteria'    );
-				$parse['aks_created'] == $lang['create_loteria'];
+				$parse['aks_created'][create_galaxy] .= "Creación de la tabla \"galaxy\" .................... <b><font color=\"lime\">¡Listo!</font></b>";
 				doquery ( $QryTableLunas      , 'lunas'      );
-				$parse['aks_created'] == $lang['create_lunas'];
+				$parse['aks_created'][create_lunas] .= "Creación de la tabla \"lunas\" .................... <b><font color=\"lime\">¡Listo!</font></b>";
 				doquery ( $QryTableMessages   , 'messages'   );
-				$parse['aks_created'] == $lang['create_messages'];
+				$parse['aks_created'][create_messages] .= "Creación de la tabla \"messages\" .................... <b><font color=\"lime\">¡Listo!</font></b>";
 				doquery ( $QryTableNotes      , 'notes'      );
-				$parse['aks_created'] == $lang['create_notes'];
+				$parse['aks_created'][create_notes] .= "Creación de la tabla \"notes\" .................... <b><font color=\"lime\">¡Listo!</font></b>";
 				doquery ( $QryTablePlanets    , 'planets'    );
-				$parse['aks_created'] == $lang['create_planets'];
+				$parse['aks_created'][create_planets] .= "Creación de la tabla \"planets\" .................... <b><font color=\"lime\">¡Listo!</font></b>";
 				doquery ( $QryTableRw         , 'rw'         );
-				$parse['aks_created'] == $lang['create_rw'];
+				$parse['aks_created'][create_rw] .= "Creación de la tabla \"rw\" .................... <b><font color=\"lime\">¡Listo!</font></b>";
 				doquery ( $QryTableStatPoints , 'statpoints' );
-				$parse['aks_created'] == $lang['create_statpoints'];
+				$parse['aks_created'][create_statpoints] .= "Creación de la tabla \"statpoints\" .................... <b><font color=\"lime\">¡Listo!</font></b>";
 				doquery ( $QryTableUsers      , 'users'      );
-				$parse['aks_created'] == $lang['create_users'];
+				$parse['aks_created'][create_users] .= "Creación de la tabla \"users\" .................... <b><font color=\"lime\">¡Listo!</font></b>";
 
-				$SubTPL = gettemplate ('install/ins_form_done');
-				$bloc   = $lang;
-				$frame  = parsetemplate ( $SubTPL, $bloc );
+				$frame  = parsetemplate ( gettemplate ('install/ins_form_done'), $parse['aks_created'] );
 			}
 			elseif ($Page == 3) {
 				if ($_GET['error'] == 3) {
-				adminMessage ($lang['ins_error3'], $lang['ins_error']);
+				message ("¡Debes completar todos los campos!", "¡Error!","?mode=ins&page=3",2);
 				}
-
-				$SubTPL = gettemplate ('install/ins_acc');
-				$bloc   = $lang;
-				$frame  = parsetemplate ( $SubTPL, $bloc );
+				$frame  = parsetemplate ( gettemplate ('install/ins_acc'), false );
 			}
 			elseif ($Page == 4) {
 				$adm_user   = $_POST['adm_user'];
@@ -158,33 +137,6 @@ $nextpage = $Page + 1;
 				if (!$_POST['adm_email']) {
 					header("Location: ?mode=ins&page=3&error=3");
 					exit();
-				}
-
-				include($xnova_root_path.'config.php');
-				$db_host   = $dbsettings['server'];
-				$db_user   = $dbsettings['user'];
-				$db_pass   = $dbsettings['pass'];
-				$db_prefix = $dbsettings['prefix'];
-				$db_db     = $dbsettings['name'];
-
-				$connection = @mysql_connect($db_host, $db_user, $db_pass);
-					if (!$connection) {
-					header("Location: ?mode=ins&page=1&error=1");
-					exit();
-					}
-
-				$dbselect = @mysql_select_db($db_db);
-					if (!$dbselect) {
-					header("Location: ?mode=ins&page=1&error=1");
-					exit();
-					}
-
-				function doquery ($InQry, $TblName) {
-					global $db_prefix;
-					$Table  = $db_prefix.$TblName;
-					$DoQry  = str_replace("{{table}}", $Table, $InQry);
-					$return = mysql_query($DoQry) or die("MySQL Error: <b>".mysql_error()."</b>");
-				return $return;
 				}
 
 				$QryInsertAdm  = "INSERT INTO {{table}} SET ";
@@ -237,23 +189,16 @@ $nextpage = $Page + 1;
 				doquery("UPDATE {{table}} SET `config_value` = '1' WHERE `config_name` = 'LastSettedPlanetPos';", 'config');
 				doquery("UPDATE {{table}} SET `config_value` = `config_value` + '1' WHERE `config_name` = 'users_amount' LIMIT 1;", 'config');
 
-				$SubTPL = gettemplate ('install/ins_acc_done');
-				$bloc   = $lang;
-				$frame  = parsetemplate ( $SubTPL, $bloc );
+				$frame  = parsetemplate ( gettemplate ('install/ins_acc_done'), false );
 			}
 			break;
-		case 'bye':
-				header("Location: ../");
-		 	break;
 		default:
 	}
-
-	$parse                 = $lang;
 	$parse['ins_state']    = $Page;
 	$parse['ins_page']     = $frame;
 	$parse['dis_ins_btn']  = "?mode=$Mode&page=$nextpage";
-	$Displ                 = parsetemplate ($MainTPL, $parse);
+	$Displ                 = parsetemplate (gettemplate('install/ins_body'), $parse);
 
-	display ($Displ, "Instalacion de XNova", false, '', true);
+	display ($Displ, "Instalacion de XG Proyect", false, '', true);
 
 ?>

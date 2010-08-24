@@ -3,375 +3,113 @@
 /**
  * BatimentBuildingPage.php
  *
- * @version 1.1
+ * @version 2.0
  * @copyright 2008 by Chlorel for XNova
+ * Reprogramado 2009 By lucky for XG PROYECT XNova - Argentina
+ *
  */
 
 function BatimentBuildingPage (&$CurrentPlanet, $CurrentUser) {
-	global $ProdGrid,$lang, $resource, $reslist, $phpEx, $dpath, $game_config, $_GET;
+global $ProdGrid,$lang, $resource, $reslist, $phpEx, $dpath, $game_config, $_GET;
 
 	CheckPlanetUsedFields ( $CurrentPlanet );
-
-	// Tables des batiments possibles par type de planete
+	// ARRAYS CON LOS EDIFICIOS POSIBLES || MISMA ESTUPIDEZ Q EN EL OGAME ORIGINAL, ALMACENES EN UNA LUNA :S
 	$Allowed['1'] = array(  1,  2,  3,  4, 12, 14, 15, 21, 22, 23, 24, 31, 33, 34, 35, 44, 45);
 	$Allowed['3'] = array( 12, 14, 21, 22, 23, 24, 34, 41, 42, 43);
 
-	// Boucle d'interpretation des eventuelles commandes
-	if (isset($_GET['cmd'])) {
-		// On passe une commande
-		$bDoItNow = false;
+	if (isset($_GET['cmd']))
+	{
+		$bDoItNow 	= false;
 		$TheCommand = $_GET['cmd'];
-		$Element = $_GET['building'];
-		$ListID = $_GET['listid'];
-	
-//AutoBan
-if( strchr ( $Element, "," )) {
-$user = doquery("SELECT * FROM {{table}} WHERE `id` ='{$CurrentUser['id']}';","users");
-while($usern = mysql_fetch_array($user)){
-$username = $usern['username'];
-doquery("UPDATE {{table}} SET bana='1', banaday='{$bantime}' WHERE id='{$CurrentUser['id']}'","users");
-doquery("INSERT INTO {{table}} SET
-`who` = '{$username}',
-`theme`= 'Cheatversuch',
-`who2` = '{$usern['id']}',
-`time` = '{$time}',
-`longer` = '{$bantime}',
-`author` = 'SYSTEM: B',
-`email` = 'n'",'banned');
+		$Element 	= $_GET['building'];
+		$ListID 	= $_GET['listid'];
 
-}
-message("Cheatversuch! Dein Account wurde automatisch gesperrt, um genaueres zu erfahren schreibe einen Admin an!","Cheatversuch");
-die();
-}
-elseif( strchr ( $Element, " " )) {
-$user = doquery("SELECT * FROM {{table}} WHERE `id` ='{$CurrentUser['id']}';","users");
-while($usern = mysql_fetch_array($user)){
-$username = $usern['username'];
-doquery("UPDATE {{table}} SET bana='1', banaday='{$bantime}' WHERE id='{$CurrentUser['id']}'","users");
-doquery("INSERT INTO {{table}} SET
-`who` = '{$username}',
-`theme`= 'Cheatversuch',
-`who2` = '{$usern['id']}',
-`time` = '{$time}',
-`longer` = '{$bantime}',
-`author` = 'SYSTEM: B',
-`email` = 'n'",'banned');
-
-}
-message("Cheatversuch! Dein Account wurde automatisch gesperrt, um genaueres zu erfahren schreibe einen Admin an!","Cheatversuch");
-die();
-}
-elseif( strchr ( $Element, "+" )) {
-$user = doquery("SELECT * FROM {{table}} WHERE `id` ='{$CurrentUser['id']}';","users");
-while($usern = mysql_fetch_array($user)){
-$username = $usern['username'];
-doquery("UPDATE {{table}} SET bana='1', banaday='{$bantime}' WHERE id='{$CurrentUser['id']}'","users");
-doquery("INSERT INTO {{table}} SET
-`who` = '{$username}',
-`theme`= 'Cheatversuch',
-`who2` = '{$usern['id']}',
-`time` = '{$time}',
-`longer` = '{$bantime}',
-`author` = 'SYSTEM: B',
-`email` = 'n'",'banned');
-
-}
-message("Cheatversuch! Dein Account wurde automatisch gesperrt, um genaueres zu erfahren schreibe einen Admin an!","Cheatversuch");
-die();
-}
-elseif( strchr ( $Element, "*" )) {
-$user = doquery("SELECT * FROM {{table}} WHERE `id` ='{$CurrentUser['id']}';","users");
-while($usern = mysql_fetch_array($user)){
-$username = $usern['username'];
-doquery("UPDATE {{table}} SET bana='1', banaday='{$bantime}' WHERE id='{$CurrentUser['id']}'","users");
-doquery("INSERT INTO {{table}} SET
-`who` = '{$username}',
-`theme`= 'Cheatversuch',
-`who2` = '{$usern['id']}',
-`time` = '{$time}',
-`longer` = '{$bantime}',
-`author` = 'SYSTEM: B',
-`email` = 'n'",'banned');
-
-}
-message("Cheatversuch! Dein Account wurde automatisch gesperrt, um genaueres zu erfahren schreibe einen Admin an!","Cheatversuch");
-die();
-}
-elseif( strchr ( $Element, "~" )) {
-$user = doquery("SELECT * FROM {{table}} WHERE `id` ='{$CurrentUser['id']}';","users");
-while($usern = mysql_fetch_array($user)){
-$username = $usern['username'];
-doquery("UPDATE {{table}} SET bana='1', banaday='{$bantime}' WHERE id='{$CurrentUser['id']}'","users");
-doquery("INSERT INTO {{table}} SET
-`who` = '{$username}',
-`theme`= 'Cheatversuch',
-`who2` = '{$usern['id']}',
-`time` = '{$time}',
-`longer` = '{$bantime}',
-`author` = 'SYSTEM: B',
-`email` = 'n'",'banned');
-
-}
-message("Cheatversuch! Dein Account wurde automatisch gesperrt, um genaueres zu erfahren schreibe einen Admin an!","Cheatversuch");
-die();
-}
-elseif( strchr ( $Element, "=" )) {
-$user = doquery("SELECT * FROM {{table}} WHERE `id` ='{$CurrentUser['id']}';","users");
-while($usern = mysql_fetch_array($user)){
-$username = $usern['username'];
-doquery("UPDATE {{table}} SET bana='1', banaday='{$bantime}' WHERE id='{$CurrentUser['id']}'","users");
-doquery("INSERT INTO {{table}} SET
-`who` = '{$username}',
-`theme`= 'Cheatversuch',
-`who2` = '{$usern['id']}',
-`time` = '{$time}',
-`longer` = '{$bantime}',
-`author` = 'SYSTEM: B',
-`email` = 'n'",'banned');
-
-}
-message("Cheatversuch! Dein Account wurde automatisch gesperrt, um genaueres zu erfahren schreibe einen Admin an!","Cheatversuch");
-die();
-}
-elseif( strchr ( $Element, ";" )) {
-$user = doquery("SELECT * FROM {{table}} WHERE `id` ='{$CurrentUser['id']}';","users");
-while($usern = mysql_fetch_array($user)){
-$username = $usern['username'];
-doquery("UPDATE {{table}} SET bana='1', banaday='{$bantime}' WHERE id='{$CurrentUser['id']}'","users");
-doquery("INSERT INTO {{table}} SET
-`who` = '{$username}',
-`theme`= 'Cheatversuch',
-`who2` = '{$usern['id']}',
-`time` = '{$time}',
-`longer` = '{$bantime}',
-`author` = 'SYSTEM: B',
-`email` = 'n'",'banned');
-
-}
-message("Cheatversuch! Dein Account wurde automatisch gesperrt, um genaueres zu erfahren schreibe einen Admin an!","Cheatversuch");
-die();
-}
-elseif( strchr ( $Element, "'" )) {
-$user = doquery("SELECT * FROM {{table}} WHERE `id` ='{$CurrentUser['id']}';","users");
-while($usern = mysql_fetch_array($user)){
-$username = $usern['username'];
-doquery("UPDATE {{table}} SET bana='1', banaday='{$bantime}' WHERE id='{$CurrentUser['id']}'","users");
-doquery("INSERT INTO {{table}} SET
-`who` = '{$username}',
-`theme`= 'Cheatversuch',
-`who2` = '{$usern['id']}',
-`time` = '{$time}',
-`longer` = '{$bantime}',
-`author` = 'SYSTEM: B',
-`email` = 'n'",'banned');
-
-}
-message("Cheatversuch! Dein Account wurde automatisch gesperrt, um genaueres zu erfahren schreibe einen Admin an!","Cheatversuch");
-die();
-}
-elseif( strchr ( $Element, "[" )) {
-$user = doquery("SELECT * FROM {{table}} WHERE `id` ='{$CurrentUser['id']}';","users");
-while($usern = mysql_fetch_array($user)){
-$username = $usern['username'];
-doquery("UPDATE {{table}} SET bana='1', banaday='{$bantime}' WHERE id='{$CurrentUser['id']}'","users");
-doquery("INSERT INTO {{table}} SET
-`who` = '{$username}',
-`theme`= 'Cheatversuch',
-`who2` = '{$usern['id']}',
-`time` = '{$time}',
-`longer` = '{$bantime}',
-`author` = 'SYSTEM: B',
-`email` = 'n'",'banned');
-
-}
-message("Cheatversuch! Dein Account wurde automatisch gesperrt, um genaueres zu erfahren schreibe einen Admin an!","Cheatversuch");
-die();
-}
-elseif( strchr ( $Element, "]" )) {
-$user = doquery("SELECT * FROM {{table}} WHERE `id` ='{$CurrentUser['id']}';","users");
-while($usern = mysql_fetch_array($user)){
-$username = $usern['username'];
-doquery("UPDATE {{table}} SET bana='1', banaday='{$bantime}' WHERE id='{$CurrentUser['id']}'","users");
-doquery("INSERT INTO {{table}} SET
-`who` = '{$username}',
-`theme`= 'Cheatversuch',
-`who2` = '{$usern['id']}',
-`time` = '{$time}',
-`longer` = '{$bantime}',
-`author` = 'SYSTEM: B',
-`email` = 'n'",'banned');
-
-}
-message("Cheatversuch! Dein Account wurde automatisch gesperrt, um genaueres zu erfahren schreibe einen Admin an!","Cheatversuch");
-die();
-}
-elseif( strchr ( $Element, "#" )) {
-$user = doquery("SELECT * FROM {{table}} WHERE `id` ='{$CurrentUser['id']}';","users");
-while($usern = mysql_fetch_array($user)){
-$username = $usern['username'];
-doquery("UPDATE {{table}} SET bana='1', banaday='{$bantime}' WHERE id='{$CurrentUser['id']}'","users");
-doquery("INSERT INTO {{table}} SET
-`who` = '{$username}',
-`theme`= 'Cheatversuch',
-`who2` = '{$usern['id']}',
-`time` = '{$time}',
-`longer` = '{$bantime}',
-`author` = 'SYSTEM: B',
-`email` = 'n'",'banned');
-
-}
-message("Cheatversuch! Dein Account wurde automatisch gesperrt, um genaueres zu erfahren schreibe einen Admin an!","Cheatversuch");
-die();
-}
-elseif( strchr ( $Element, "-" )) {
-$user = doquery("SELECT * FROM {{table}} WHERE `id` ='{$CurrentUser['id']}';","users");
-while($usern = mysql_fetch_array($user)){
-$username = $usern['username'];
-doquery("UPDATE {{table}} SET bana='1', banaday='{$bantime}' WHERE id='{$CurrentUser['id']}'","users");
-doquery("INSERT INTO {{table}} SET
-`who` = '{$username}',
-`theme`= 'Cheatversuch',
-`who2` = '{$usern['id']}',
-`time` = '{$time}',
-`longer` = '{$bantime}',
-`author` = 'SYSTEM: B',
-`email` = 'n'",'banned');
-
-}
-message("Cheatversuch! Dein Account wurde automatisch gesperrt, um genaueres zu erfahren schreibe einen Admin an!","Cheatversuch");
-die();
-}
-elseif( strchr ( $Element, "_" )) {
-$user = doquery("SELECT * FROM {{table}} WHERE `id` ='{$CurrentUser['id']}';","users");
-while($usern = mysql_fetch_array($user)){
-$username = $usern['username'];
-doquery("UPDATE {{table}} SET bana='1', banaday='{$bantime}' WHERE id='{$CurrentUser['id']}'","users");
-doquery("INSERT INTO {{table}} SET
-`who` = '{$username}',
-`theme`= 'Cheatversuch',
-`who2` = '{$usern['id']}',
-`time` = '{$time}',
-`longer` = '{$bantime}',
-`author` = 'SYSTEM: B',
-`email` = 'n'",'banned');
-
-}
-message("Cheatversuch! Dein Account wurde automatisch gesperrt, um genaueres zu erfahren schreibe einen Admin an!","Cheatversuch");
-die();
-}
-elseif( strchr ( $Element, "." )) {
-$user = doquery("SELECT * FROM {{table}} WHERE `id` ='{$CurrentUser['id']}';","users");
-while($usern = mysql_fetch_array($user)){
-$username = $usern['username'];
-doquery("UPDATE {{table}} SET bana='1', banaday='{$bantime}' WHERE id='{$CurrentUser['id']}'","users");
-doquery("INSERT INTO {{table}} SET
-`who` = '{$username}',
-`theme`= 'Cheatversuch',
-`who2` = '{$usern['id']}',
-`time` = '{$time}',
-`longer` = '{$bantime}',
-`author` = 'SYSTEM: B',
-`email` = 'n'",'banned');
-
-}
-message("Cheatversuch! Dein Account wurde automatisch gesperrt, um genaueres zu erfahren schreibe einen Admin an!","Cheatversuch");
-die();
-}
-elseif( strchr ( $Element, ":" )) {
-$user = doquery("SELECT * FROM {{table}} WHERE `id` ='{$CurrentUser['id']}';","users");
-while($usern = mysql_fetch_array($user)){
-$username = $usern['username'];
-doquery("UPDATE {{table}} SET bana='1', banaday='{$bantime}' WHERE id='{$CurrentUser['id']}'","users");
-doquery("INSERT INTO {{table}} SET
-`who` = '{$username}',
-`theme`= 'Cheatversuch',
-`who2` = '{$usern['id']}',
-`time` = '{$time}',
-`longer` = '{$bantime}',
-`author` = 'SYSTEM: B',
-`email` = 'n'",'banned');
-
-}
-message("Cheatversuch! Dein Account wurde automatisch gesperrt, um genaueres zu erfahren schreibe einen Admin an!","Cheatversuch");
-die();
-}
-
-
-//AutoBanEnd
-
-
-
-
-
-if       ( isset ( $Element )) {
-			if ( !strchr ( $Element, ",") && !strchr ( $Element, " ") && !strchr ( $Element, "+") && !strchr ( $Element, "*") && !strchr ( $Element, "~") && !strchr ( $Element, "=") && !strchr ( $Element, ";") && !strchr ( $Element, "'") && !strchr ( $Element, "#") && !strchr ( $Element, "-") && !strchr ( $Element, "_") && !strchr ( $Element, "[") && !strchr ( $Element, "]") && !strchr ( $Element, ".") && !strchr ( $Element, ":"))
+		if( isset ( $Element ))
+		{
+			if ( !strchr ( $Element, ",") && !strchr ( $Element, " ") &&
+				 !strchr ( $Element, "+") && !strchr ( $Element, "*") &&
+				 !strchr ( $Element, "~") && !strchr ( $Element, "=") &&
+				 !strchr ( $Element, ";") && !strchr ( $Element, "'") &&
+				 !strchr ( $Element, "#") && !strchr ( $Element, "-") &&
+				 !strchr ( $Element, "_") && !strchr ( $Element, "[") &&
+				 !strchr ( $Element, "]") && !strchr ( $Element, ".") &&
+				 !strchr ( $Element, ":"))
 			{
-				if (in_array( trim($Element), $Allowed[$CurrentPlanet['planet_type']])) {
+				if (in_array( trim($Element), $Allowed[$CurrentPlanet['planet_type']]))
+				{
 					$bDoItNow = true;
 				}
-
-			
 			}
-		} elseif ( isset ( $ListID )) {
+			else// ESTO REEMPLAZA A TODAS LAS LINEAS QUE HACIAN UN BAN AUTOMATICO Y BLA BLA BLA...
+			{
+				header("location:buildings.php");
+			}
+		}
+		elseif ( isset ( $ListID ))
+		{
 			$bDoItNow = true;
 		}
-		if ($bDoItNow == true) {
-			switch($TheCommand){
+
+		if ($bDoItNow == true)
+		{
+			switch($TheCommand)
+			{
 				case 'cancel':
-					// Interrompre le premier batiment de la queue
 					CancelBuildingFromQueue ( $CurrentPlanet, $CurrentUser );
-					break;
+				break;
 				case 'remove':
-					// Supprimer un element de la queue (mais pas le premier)
-					// $RemID -> element de la liste a supprimer
 					RemoveBuildingFromQueue ( $CurrentPlanet, $CurrentUser, $ListID );
-					break;
+				break;
 				case 'insert':
-					// Insere un element dans la queue
 					AddBuildingToQueue ( $CurrentPlanet, $CurrentUser, $Element, true );
-					break;
+				break;
 				case 'destroy':
-					// Detruit un batiment deja construit sur la planete !
 					AddBuildingToQueue ( $CurrentPlanet, $CurrentUser, $Element, false );
-					break;
-				default:
-					break;
-			} // switch
+				break;
+			}
 		}
 	}
 
-	SetNextQueueElementOnTop ( $CurrentPlanet, $CurrentUser );
+	SetNextQueueElementOnTop($CurrentPlanet, $CurrentUser);
+	$Queue = ShowBuildingQueue($CurrentPlanet, $CurrentUser);
+	BuildingSavePlanetRecord($CurrentPlanet);
+	BuildingSaveUserRecord($CurrentUser);
 
-	$Queue = ShowBuildingQueue ( $CurrentPlanet, $CurrentUser );
-
-	// On enregistre ce que l'on a modifié dans planet !
-	BuildingSavePlanetRecord ( $CurrentPlanet );
-	// On enregistre ce que l'on a eventuellement modifié dans users
-	BuildingSaveUserRecord ( $CurrentUser );
-
-	if ($Queue['lenght'] < (MAX_BUILDING_QUEUE_SIZE+$CurrentUser['desarrollo_tech'])) {
+	if ($Queue['lenght'] < (MAX_BUILDING_QUEUE_SIZE))
+	{
 		$CanBuildElement = true;
-	} else {
+	}
+	else
+	{
 		$CanBuildElement = false;
 	}
 
-	$SubTemplate         = gettemplate('buildings_builds_row');
+	$SubTemplate         = gettemplate('buildings/buildings_builds_row');
 	$BuildingPage        = "";
 	$zaehler         	 = 1;
-	
-	foreach($lang['tech'] as $Element => $ElementName) {
-		if (in_array($Element, $Allowed[$CurrentPlanet['planet_type']])) {
+
+	foreach($lang['tech'] as $Element => $ElementName)
+	{
+		if (in_array($Element, $Allowed[$CurrentPlanet['planet_type']]))
+		{
 			$CurrentMaxFields      = CalculateMaxPlanetFields($CurrentPlanet);
-			if ($CurrentPlanet["field_current"] < ($CurrentMaxFields - $Queue['lenght'])) {
+			if ($CurrentPlanet["field_current"] < ($CurrentMaxFields - $Queue['lenght']))
+			{
 				$RoomIsOk = true;
-			} else {
+			}
+			else
+			{
 				$RoomIsOk = false;
 			}
 
-			if (IsTechnologieAccessible($CurrentUser, $CurrentPlanet, $Element)) {
-				if ($zaehler == 1 || $zaehler % 3 == 1) {
+			if (IsTechnologieAccessible($CurrentUser, $CurrentPlanet, $Element))
+			{
+				if ($zaehler == 1 || $zaehler % 3 == 1)
+				{
 					$parse['tropen'] = '<tr>';
-				} else {
+				}
+				else
+				{
 					$parse['tropen'] = '';
 				}
 				$HaveRessources        = IsElementBuyable ($CurrentUser, $CurrentPlanet, $Element, true, false);
@@ -379,8 +117,7 @@ if       ( isset ( $Element )) {
 				$parse['dpath']        = $dpath;
 				$parse['i']            = $Element;
 				$BuildingLevel         = $CurrentPlanet[$resource[$Element]];
-				$parse['nivel']        = ($BuildingLevel == 0) ? "" : " (". $lang['level'] ." ". $BuildingLevel .")";
-				
+				$parse['nivel']        = ($BuildingLevel == 0) ? "" : " (Nivel ". $BuildingLevel .")";
 				$parse['n']            = $ElementName;
 				$parse['descriptions'] = $lang['res']['descriptions'][$Element];
 				$ElementBuildTime      = GetBuildingTime($CurrentUser, $CurrentPlanet, $Element);
@@ -389,82 +126,83 @@ if       ( isset ( $Element )) {
 				$parse['click']        = '';
 				$NextBuildLevel        = $CurrentPlanet[$resource[$Element]] + 1;
 
-				if ($Element == 31) {
-					// Spécial Laboratoire
-					if ($CurrentUser["b_tech_planet"] != 0 &&     // Si pas 0 y a une recherche en cours
-						$game_config['BuildLabWhileRun'] != 1) {  // Variable qui contient le parametre
-						// On verifie si on a le droit d'evoluer pendant les recherches (Setting dans config)
-						$parse['click'] = "<font color=#FF0000>". $lang['in_working'] ."</font>";
+				if ($Element == 31)
+				{
+					if ($CurrentUser["b_tech_planet"] != 0 && $game_config['BuildLabWhileRun'] != 1)
+					{
+						$parse['click'] = "<font color=#FF0000>Trabajando</font>";
 					}
 				}
-				if       ($parse['click'] != '') {
-					// Bin on ne fait rien, vu que l'on l'a deja fait au dessus !!
-				} elseif ($RoomIsOk && $CanBuildElement) {
-					if ($Queue['lenght'] == 0) {
-						if ($NextBuildLevel == 1) {
-							if ( $HaveRessources == true ) {
-								$parse['click'] = "<a href=\"?cmd=insert&building=". $Element ."\"><font color=#00FF00>". $lang['BuildFirstLevel'] ."</font></a>";
-							} else {
-								$parse['click'] = "<font color=#FF0000>". $lang['BuildFirstLevel'] ."</font>";
-							}
-						} else {
-							if ( $HaveRessources == true ) {
-								$parse['click'] = "<a href=\"?cmd=insert&building=". $Element ."\"><font color=#00FF00>". $lang['BuildNextLevel'] ." ". $NextBuildLevel ."</font></a>";
-							} else {
-								$parse['click'] = "<font color=#FF0000>". $lang['BuildNextLevel'] ." ". $NextBuildLevel ."</font>";
-							}
+				if($parse['click'] != '')
+				{
+				//ESPACIO AL PEDO :S NI GANAS DE ELIMINARLO....
+				}
+				elseif ($RoomIsOk && $CanBuildElement)
+				{
+					if ($Queue['lenght'] == 0)
+					{
+						if ($NextBuildLevel == 1)
+						{
+							if ( $HaveRessources == true )
+								$parse['click'] = "<a href=\"?cmd=insert&building=". $Element ."\"><font color=#00FF00>Construir</font></a>";
+							else
+								$parse['click'] = "<font color=#FF0000>Construir</font>";
 						}
-					} else {
-						$parse['click'] = "<a href=\"?cmd=insert&building=". $Element ."\"><font color=#00FF00>". $lang['InBuildQueue'] ."</font></a>";
+						else
+						{
+							if ( $HaveRessources == true )
+								$parse['click'] = "<a href=\"?cmd=insert&building=". $Element ."\"><font color=#00FF00>Construir nivel ". $NextBuildLevel ."</font></a>";
+							else
+								$parse['click'] = "<font color=#FF0000>Construir nivel ". $NextBuildLevel ."</font>";
+						}
 					}
-				} elseif ($RoomIsOk && !$CanBuildElement) {
-					if ($NextBuildLevel == 1) {
-						$parse['click'] = "<font color=#FF0000>". $lang['BuildFirstLevel'] ."</font>";
-					} else {
-						$parse['click'] = "<font color=#FF0000>". $lang['BuildNextLevel'] ." ". $NextBuildLevel ."</font>";
+					else
+					{
+						$parse['click'] = "<a href=\"?cmd=insert&building=". $Element ."\"><font color=#00FF00>Agregar a la lista</font></a>";
 					}
-				} else {
-					$parse['click'] = "<font color=#FF0000>". $lang['NoMoreSpace'] ."</font>";
 				}
-				if ($zaehler % 5 == 0) {
+				elseif ($RoomIsOk && !$CanBuildElement)
+				{
+					if ($NextBuildLevel == 1)
+						$parse['click'] = "<font color=#FF0000>Construir</font>";
+					else
+						$parse['click'] = "<font color=#FF0000>Construir nivel ". $NextBuildLevel ."</font>";
+				}
+				else
+					$parse['click'] = "<font color=#FF0000>No hay espacio en el planeta</font>";
+
+				if ($zaehler % 5 == 0)
+				{
 					$parse['trclose'] = '</tr>';
 					$zaehler++;
-				} else {
+				}
+				else
+				{
 					$parse['trclose'] = '';
 					$zaehler++;
 				}
-				
+
 				$BuildingPage .= parsetemplate($SubTemplate, $parse);
 			}
 		}
 	}
 
 	$parse                         = $lang;
-
-	// Faut il afficher la liste de construction ??
-	if ($Queue['lenght'] > 0) {
+	if ($Queue['lenght'] > 0)
+	{
 		$parse['BuildListScript']  = InsertBuildListScript ( "buildings" );
 		$parse['BuildList']        = $Queue['buildlist'];
-	} else {
+	}
+	else
+	{
 		$parse['BuildListScript']  = "";
 		$parse['BuildList']        = "";
 	}
-
-    $parse['planet_field_current'] = $CurrentPlanet["field_current"];
+	$parse['planet_field_current'] = $CurrentPlanet["field_current"];
 	$parse['planet_field_max']     = $CurrentPlanet['field_max'] + ($CurrentPlanet[$resource[33]] * FIELDS_BY_TERRAFORMER) + ($CurrentPlanet[$resource[45]] * FIELDS_BY_S_TERRAFORMER);
-    $parse['field_libre']          = $parse['planet_field_max']  - $CurrentPlanet['field_current'];
-
+	$parse['field_libre']          = $parse['planet_field_max']  - $CurrentPlanet['field_current'];
 	$parse['BuildingsList']        = $BuildingPage;
 
-	$page                         .= parsetemplate(gettemplate('buildings_builds'), $parse);
-
-	display($page, $lang['Builds']);
+	display(parsetemplate(gettemplate('buildings/buildings_builds'), $parse), "Edificios");
 }
-
-// -----------------------------------------------------------------------------------------------------------
-// History version
-// 1.0 Mise en module initiale (creation)
-// 1.1 FIX interception cheat +1
-// 1.2 FIX interception cheat destruction a -1
-
 ?>

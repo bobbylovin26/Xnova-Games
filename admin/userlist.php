@@ -12,8 +12,9 @@ define('INSTALL' , false);
 define('IN_ADMIN', true);
 
 $xnova_root_path = './../';
-include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
+include($xnova_root_path . 'includes/functions/DeleteSelectedUser.'.$phpEx);
 
 	if ($user['authlevel'] >= 2) {
 		includeLang('admin');
@@ -44,10 +45,10 @@ include($xnova_root_path . 'common.' . $phpEx);
 				}
 			}
 
-			
-			
-			
-			
+
+
+
+
 			$Bloc['adm_ul_data_id']     = $u['id'];
 			$Bloc['adm_ul_data_name']   = $u['username'];
 			$Bloc['adm_ul_data_mail']   = $u['email'];
@@ -69,7 +70,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 		$page = parsetemplate( $PageTPL, $parse );
 		display( $page, $lang['adm_ul_title'], false, '', true);
 	} else {
-		message( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
+		message ( "No tienes permisos suficientes", "¡Error!");
 	}
 
 ?>

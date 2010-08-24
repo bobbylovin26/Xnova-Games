@@ -7,6 +7,7 @@
 */
 function ShowTopNavigationBar ( $CurrentUser, $CurrentPlanet ) {
    global $lang, $_GET, $game_config;
+
    if ($CurrentUser) {
       if ( !$CurrentPlanet ) {
          $CurrentPlanet = doquery("SELECT * FROM {{table}} WHERE `id` = '". $CurrentUser['current_planet'] ."';", 'planets', true);
@@ -23,7 +24,7 @@ function ShowTopNavigationBar ( $CurrentUser, $CurrentPlanet ) {
       $parse               = $lang;
       $parse['dpath']      = $dpath;
       $parse['image']      = $CurrentPlanet['image'];
-      $parse['show_umod_notice']    = $CurrentUser['urlaubs_modus'] ? '<table width="100%" style="border: 1px solid red; text-align:center;"><tr><td>Urlaubsmodus bis '.date('d.m.Y h:i:s',$CurrentUser['urlaubs_modus_time']).'</td></tr></table>' : '';
+      $parse['show_umod_notice']    = $CurrentUser['urlaubs_modus'] ? '<table width="100%" style="border: 3px solid red; text-align:center;"><tr><td>Modo vacaciones hasta el '.date('d.m.Y h:i:s',$CurrentUser['urlaubs_until']).'</td></tr></table>' : '';
       // Genearation de la combo des planetes du joueur
       $parse['planetlist'] = '';
       $ThisUsersPlanets    = SortUserPlanets ( $CurrentUser );
@@ -52,7 +53,7 @@ function ShowTopNavigationBar ( $CurrentUser, $CurrentPlanet ) {
       } else {
          $parse['energy'] = colorGreen($energy);
       }
- 
+
       // JAVASCRIPT REALTIME RESS
          // Modificacion color e inclusion de energia
       $parse['energy_total'] = colorNumber(pretty_number(floor(($CurrentPlanet['energy_max'] + $CurrentPlanet["energy_used"]))) - $parse['energy_basic_income']);
@@ -62,7 +63,7 @@ function ShowTopNavigationBar ( $CurrentUser, $CurrentPlanet ) {
              $parse['energy_max'] = '<font color="#00ff00">';
           }
           $parse['energy_max'] .= pretty_number($CurrentPlanet["energy_max"] / 1) . " {$lang['']}</font>";
- 
+
       // Metal maximo
       if (($CurrentPlanet["metal_max"] * MAX_OVERFLOW) <= $CurrentPlanet["metal"]) {
          $parse['metal_max'] = '<font color="#ff0000">';
@@ -93,16 +94,17 @@ function ShowTopNavigationBar ( $CurrentUser, $CurrentPlanet ) {
       $parse['metal_mmax'] .= $CurrentPlanet["metal_max"] * MAX_OVERFLOW;
       $parse['crystal_mmax'] .= $CurrentPlanet["crystal_max"] * MAX_OVERFLOW;
       $parse['deuterium_mmax'] .= $CurrentPlanet["deuterium_max"] * MAX_OVERFLOW;
- 
- 
+
+
       // JAVASCRIPT REALTIME RESS ENDE
       // Message
-      if ($CurrentUser['new_message'] > 0) {
-         $parse['message'] = "<a href=\"messages.php\">[ ". $CurrentUser['new_message'] ." ]</a>";
-      } else {
-         $parse['message'] = "0";
-      }
- 
+        $m = pretty_number(mysql_num_rows(doquery("SELECT * FROM {{table}} WHERE `message_owner`='" . $CurrentUser['id'] . "' AND `leido`='1'", "messages")));
+        if ($m != 0) {
+            $parse['message'] = "<a href=\"messages.php\">[ ". $m ." ]</a>";
+        } else {
+            $parse['message'] = "0";
+        }
+
 // CAMBIOS NECESARIOS REALIZADOS PARA AGREGAR LA MATERIO OSCURA(BY lucky Xtreme-gameZ.com.ar DarkMatter ADD-ON)
         $darkmatter = pretty_number($CurrentUser["darkmatter"]);
         $parse['darkmatter'] = $darkmatter;

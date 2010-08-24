@@ -11,14 +11,10 @@ define('INSIDE'  , true);
 define('INSTALL' , false);
 
 $xnova_root_path = './';
-include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
 
 	includeLang('fleet');
-
-	if (IsVacationMode($CurrentUser)){
-       return false;
-    }
 
 	$galaxy     = intval($_POST['galaxy']);
 	$system     = intval($_POST['system']);
@@ -103,7 +99,8 @@ include($xnova_root_path . 'common.' . $phpEx);
 	if ( $_POST['planettype'] == 3 &&
 	     $_POST['ship214'] >= 1    &&
            !$YourPlanet            &&
-           $UsedPlanet) {
+           $UsedPlanet			   &&
+		   $user['rpg_empereur'] == 1) {
           $missiontype[9] = $lang['type_mission'][9];
    }
 

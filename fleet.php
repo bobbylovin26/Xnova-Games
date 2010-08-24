@@ -11,12 +11,8 @@ define('INSIDE'  , true);
 define('INSTALL' , false);
 
 $xnova_root_path = './';
-include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
-
-	if (IsVacationMode($CurrentUser)){
-       return false;
-    }
 
 	$maxfleet  = doquery("SELECT COUNT(fleet_owner) AS `actcnt` FROM {{table}} WHERE `fleet_owner` = '".$user['id']."';", 'fleets', true);
 
@@ -28,8 +24,13 @@ include($xnova_root_path . 'common.' . $phpEx);
 	    $ExpeditionEnCours  = $maxexpde['expedi'];
 		$EnvoiMaxExpedition = 1 + floor( $MaxExpedition / 3 );
     }
+    else
+    {
+    	$ExpeditionEnCours 	= 0;
+		$EnvoiMaxExpedition = 0;
+	}
 
-	$MaxFlottes         = 1 + $user[$resource[108]] + ($user['rpg_commandant']*3);
+	$MaxFlottes         = 1 + $user[$resource[108]];
 
 	CheckPlanetUsedFields($planetrow);
 
@@ -76,22 +77,22 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$page .= "<table border=\"0\" width=\"100%\">";
 	$page .= "<tbody><tr>";
 	$page .= "<td style=\"background-color: transparent;\">";
-	$page .= $lang['fl_title']." ".$MaxFlyingFleets." ".$lang['fl_sur']." ".$MaxFlottes;
+	$page .= "Flotas ".$MaxFlyingFleets." / ".$MaxFlottes;
 	$page .= "</td><td style=\"background-color: transparent;\" align=\"right\">";
-	$page .= $ExpeditionEnCours."/".$EnvoiMaxExpedition." ".$lang['fl_expttl'];
+	$page .= $ExpeditionEnCours." / ".$EnvoiMaxExpedition." expediciones";
 	$page .= "</td>";
 	$page .= "</tr></tbody></table>";
 	$page .= "</td>";
 	$page .= "</tr><tr height='20'>";
-	$page .= "<th>".$lang['fl_id']."</th>";
-	$page .= "<th>".$lang['fl_mission']."</th>";
-	$page .= "<th>".$lang['fl_count']."</th>";
-	$page .= "<th>".$lang['fl_from']."</th>";
-	$page .= "<th>".$lang['fl_start_t']."</th>";
-	$page .= "<th>".$lang['fl_dest']."</th>";
-	$page .= "<th>".$lang['fl_dest_t']."</th>";
-	$page .= "<th>".$lang['fl_back_in']."</th>";
-	$page .= "<th>".$lang['fl_order']."</th>";
+	$page .= "<th>Num</th>";
+	$page .= "<th>Misión</th>";
+	$page .= "<th>Cantidad</th>";
+	$page .= "<th>Comienzo</th>";
+	$page .= "<th>Salida</th>";
+	$page .= "<th>Destino</th>";
+	$page .= "<th>Objetivo</th>";
+	$page .= "<th>Llegada</th>";
+	$page .= "<th>Orden</th>";
 	$page .= "</tr>";
 
 	$fq = doquery("SELECT * FROM {{table}} WHERE fleet_owner='$user[id]' AND fleet_mission <> 10", "fleets");

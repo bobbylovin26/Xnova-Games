@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * DefensesBuildingPage.php
  *
@@ -202,7 +203,7 @@ function DefensesBuildingPage ( &$CurrentPlanet, $CurrentUser ) {
 	// Et la liste de constructions en cours dans $BuildQueue;
 	$parse['buildinglist'] = $BuildQueue;
 	// fragmento de template
-	$page .= parsetemplate(gettemplate('buildings_defense'), $parse);
+	$page .= parsetemplate(gettemplate('buildings/buildings_defense'), $parse);
 
 	display($page, $lang['Defense']);
 

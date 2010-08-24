@@ -134,16 +134,6 @@ $lang['info'][123]['description'] = "Los cient&iacute;ficos de tus planetas pued
 Con cada nivel investigado, uno de tus laboratorios de investigaci&oacute;n del nivel m&aacute;s alto, ser&aacute; enlazado a la red. Sus niveles se a&ntilde;adir&aacute;n cuando la red se establezca.";
 $lang['info'][124]['name']        = "Tecnolog&iacute;a de expedici&oacute;n";
 $lang['info'][124]['description'] = "La Tecnolog&iacute;a de Expedici&oacute;n incluye diversas tecnolog&iacute;as de exploraci&oacute;n y permite dotar a las naves espaciales de diferentes tama&ntilde;os con un m&oacute;dulo de investigaci&oacute;n. Estos incluyen una base de datos y un laboratorio m&oacute;vil completamente equipado.";
-$lang['info'][125]['name']        = "Tecnolog&iacute;as Unicas de Humanos";
-$lang['info'][125]['description'] = "La Tecnolog&iacute;as Unicas de Humanos, Con cada nivel aumenta un 2% El poder de ataque y escudos de las naves, aumenta un 3% la produccion de las minas de metal y se tiene acceso a nuevas tecnologias y naves unicas de su raza.";
-$lang['info'][126]['name']        = "Tecnolog&iacute;as Unicas de Aliens";
-$lang['info'][126]['description'] = "La Tecnolog&iacute;as Unicas de Aliens, Con cada nivel aumenta un 5% El Blindaje de las naves, las minas de cristal aumentan un 3% la produccion y se tiene acceso a nuevas tecnologias y naves unicas de su raza.";
-$lang['info'][127]['name']        = "Tecnolog&iacute;as Unicas de Predators";
-$lang['info'][127]['description'] = "La Tecnolog&iacute;as Unicas de Predators, Con cada nivel aumenta un 10% El poder de ataque de las naves y se tiene acceso a nuevas tecnologias y naves unicas de su raza.";
-$lang['info'][128]['name']        = "Tecnolog&iacute;as Unicas de Darks";
-$lang['info'][128]['description'] = "La Tecnolog&iacute;as Unicas de Darks, Con cada nivel aumenta un 4% Los Escudos de las naves y 4% El Blindaje de las naves, los sintetizadores de deuterio producen un 3% mas y se tiene acceso a nuevas tecnologias y naves unicas de su raza.";
-$lang['info'][129]['name']        = "Tecnolog&iacute;a de Desarrollo";
-$lang['info'][129]['description'] = "Con esta tecnologia los trabajadores de tus planetas utilizan sistemas mas modernos de organizacion y planeacion para el desarrollo de nuevas construcciones.";
 
 
 $lang['info'][199]['name']        = "Tecnolog&iacute;a de gravit&oacute;n";
@@ -181,23 +171,7 @@ $lang['info'][214]['description'] = "Las estrellas de la muerte estan equipadas 
 $lang['info'][215]['name']        = "Acorazado";
 $lang['info'][215]['description'] = "Esta nave, toda una filigrana tecnol&oacute;gica, es incre&iacute;blemente eficaz a la hora de destruir flotas atacantes. Con sus ca&ntilde;ones l&aacute;ser altamente desarrollados, ocupa una posici&oacute;n de privilegio en las batallas a gran escala, donde puede tumbar a varias naves con bastante facilidad. Dado su dise&ntilde;o peque&ntilde;o y su enorme armamento, la capacidad de carga es reducida, pero esto se ve equilibrado gracias al bajo consumo de su propulsor hiperespacial.";
 $lang['info'][216]['name']        = "Supernova";
-$lang['info'][216]['description'] = "La última nave de guerra. Te lo otorga como recompensa el emperador como recompensa a tus habilidades.";
-$lang['info'][217]['name']        = "Interceptor";
-$lang['info'][217]['description'] = "Es la nave que saca lo mejor de todas las naves, alta velocidad, bajo consumo de combustible y buen poder de ataque.";
-$lang['info'][218]['name']        = "Cazador Crucero";
-$lang['info'][218]['description'] = "El Cazador Crucero tiene fuegos rapidos exelentes contra las naves mas comunes en el espacio.";
-$lang['info'][219]['name']        = "Transportador";
-$lang['info'][219]['description'] = "El Transportador puede mover altas cantidades de recursos.";
-$lang['info'][220]['name']        = "Titan";
-$lang['info'][220]['description'] = "El Titan es la nave espacial mas poderosa jamas creada.";
-$lang['info'][221]['name']        = "Nave Humana";
-$lang['info'][221]['description'] = "La nave humana...";
-$lang['info'][222]['name']        = "Nave Alien";
-$lang['info'][222]['description'] = "La nave alien ...";
-$lang['info'][223]['name']        = "Nave Predator";
-$lang['info'][223]['description'] = "La nave predator es...";
-$lang['info'][224]['name']        = "Nave Dark";
-$lang['info'][224]['description'] = "La nave dark es...";
+
 
 // ----------------------------------------------------------------------------------------------------------
 // Defensas !
@@ -220,10 +194,7 @@ $lang['info'][408]['name']        = "C&uacute;pula grande de protecci&oacute;n";
 $lang['info'][408]['description'] = "Esta es una versi&oacute;n avanzada de la c&uacute;pula de protecci&oacute;n, y su caracter&iacute;stica principal es el aumento de su capacidad para absorber energia. Est&aacute; basado en el mismo conocimiento tecnol&oacute;gico que la c&uacute;pula peque&ntilde;a. Pero, los generadores son menos ruidosos al estar en funcionamiento.";
 $lang['info'][409]['name']        = "Protector Planetario";
 $lang['info'][409]['description'] = "La mejor protección más avanzada para tu planeta.";
-$lang['info'][410]['name']        = "Ca&ntilde;&oacute;n de Fotones";
-$lang['info'][410]['description'] = "El Ca&ntilde;&oacute;n  de Fotones usa la ultima tecnologia... .";
-$lang['info'][411]['name']        = "Base Espacial";
-$lang['info'][411]['description'] = "La Base Espacial se ubica la atmosfera del planeta... .";
+
 
 // ----------------------------------------------------------------------------------------------------------
 // Missiles !

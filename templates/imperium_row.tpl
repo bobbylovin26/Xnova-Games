@@ -1,4 +1,3 @@
-<!-- row1 -->
-<th style="padding: 20px;">
+<th width="75">
 	{text}
 </th>
