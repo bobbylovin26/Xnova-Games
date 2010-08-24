@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -35,7 +35,7 @@ function check_updates()
 
 	if (function_exists('file_get_contents'))
 	{
-		$current = @file_get_contents('http://www.xtreme-gamez.com.ar/xgproyect/current.php');
+		$current = @file_get_contents('http://www.xgproyect.net/xgproyect/current.php');
 
 		if ($current > $game_config['VERSION'])
 		{

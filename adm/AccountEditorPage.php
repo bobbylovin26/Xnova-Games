@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2010 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2010 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #

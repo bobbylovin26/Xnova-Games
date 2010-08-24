@@ -4,6 +4,32 @@ $lang['Version']     = 'Versión';
 $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
+'2.9.6' => ' 00/00/10
+
+- [Seguridad] Validaciones globales para prevenir SQL Injections.-
+- [Seguridad] Cerrados varios agujeros de seguridad que permitian SQL Injection.-
+- [Seguridad] Corregido un bug de seguridad en los bbcode de la alianza (By slave7).-
+- [Seguridad] Corregidos varios bugs de seguridad en las páginas de la alianza y opciones.-
+
+- [Fixs]
+#0009: Alianza Contador de caracteres
+#0010: Contador de caracteres mensaje
+#0011: Texto de la solicitud de alianza
+#0013: Cancelar construcciones
+#0014: Problemas con nuevas versiones
+#0015: Link roto en actualización
+#4485: El Administrador desaparece por inactivo
+#4534: Fuego rápido no se calcula
+#4535: Mantener posicion
+#4536: Problemas con el phalanx
+#4537: Error en el lenguaje
+#4538: Bug en misión de expedicion
+#4539: Pequeño bug visual en vista de mensajes
+#4540: Saltos en la galaxia
+#4558: Bug de seguridad
+#4719: Problemas nanobots
+',
+
 '2.9.5' => ' 29/07/10
 
 - [Seguridad] Corregidos varios bugs de seguridad (By slave7).-

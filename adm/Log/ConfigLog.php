@@ -1,11 +1,9 @@
 
-El usuario  cambio la siguiente configuración:
-¿Servidor cerrado? : 
-¿Modo DEBUG activado? : 
-Nombre del juego : XG Proyect
-URL del foro : http://www.xtreme-gamez.com.ar/
-Velocidad del juego : x10000
-Velocidad de flota : x1
+El usuario lucky ha cambiado los parametros de estadisticas:
+Tiempo entre actualización de estadísticas (minutos): 1
+Operación realizada el: 15-08-2010 20:08:38
+peración realizada el: 15-08-2010 19:55:09
+d de flota : x1
 Velocidad de producción : x1
 Campos iniciales : 163
 Básico de metal por hora : 20
@@ -19,5 +17,6 @@ Naves a escombros : 30%
 ¿Protección contra novatos activado? : 
 Tiempo de protección contra novato : 5000
 Limite de puntos para la protección de novato : 5
-Operación realizada el: 29-07-2010 14:34:50
+Operación realizada el: 04-08-2010 08:50:06
+:50
 :55

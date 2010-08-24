@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -28,7 +28,7 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 		if ($CurrentUser['b_tech_planet'] != 0)
 		{
 			if ($CurrentUser['b_tech_planet'] != $CurrentPlanet['id'])
-				$WorkingPlanet = doquery("SELECT * FROM {{table}} WHERE `id` = '". $CurrentUser['b_tech_planet'] ."';", 'planets', true);
+				$WorkingPlanet = doquery("SELECT * FROM {{table}} WHERE `id` = '". intval($CurrentUser['b_tech_planet']) ."';", 'planets', true);
 
 			if ($WorkingPlanet)
 				$ThePlanet = $WorkingPlanet;
@@ -43,14 +43,14 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 				$QryUpdatePlanet .= "`b_tech` = '0', ";
 				$QryUpdatePlanet .= "`b_tech_id` = '0' ";
 				$QryUpdatePlanet .= "WHERE ";
-				$QryUpdatePlanet .= "`id` = '". $ThePlanet['id'] ."';";
+				$QryUpdatePlanet .= "`id` = '". intval($ThePlanet['id']) ."';";
 				doquery( $QryUpdatePlanet, 'planets');
 
 				$QryUpdateUser    = "UPDATE {{table}} SET ";
 				$QryUpdateUser   .= "`".$resource[$ThePlanet['b_tech_id']]."` = '". $CurrentUser[$resource[$ThePlanet['b_tech_id']]] ."', ";
 				$QryUpdateUser   .= "`b_tech_planet` = '0' ";
 				$QryUpdateUser   .= "WHERE ";
-				$QryUpdateUser   .= "`id` = '". $CurrentUser['id'] ."';";
+				$QryUpdateUser   .= "`id` = '". intval($CurrentUser['id']) ."';";
 				doquery( $QryUpdateUser, 'users');
 
 				$ThePlanet["b_tech_id"] = 0;
@@ -65,7 +65,7 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 			}
 			elseif ($ThePlanet["b_tech_id"] == 0)
 			{
-				doquery("UPDATE {{table}} SET `b_tech_planet` = '0'  WHERE `id` = '". $CurrentUser['id'] ."';", 'users');
+				doquery("UPDATE {{table}} SET `b_tech_planet` = '0'  WHERE `id` = '". intval($CurrentUser['id']) ."';", 'users');
 				$Result['WorkOn'] = "";
 				$Result['OnWork'] = false;
 			}

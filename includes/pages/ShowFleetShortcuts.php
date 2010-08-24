@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -34,7 +34,7 @@ function ShowFleetShortcuts($CurrentUser)
 
 			$r = strip_tags($_POST[n]) . "," . intval($_POST[g]) . "," . intval($_POST[s]) . "," . intval($_POST[p]) . "," . intval($_POST[t]) . "\r\n";
 			$CurrentUser['fleet_shortcut'] .= $r;
-			doquery("UPDATE {{table}} SET fleet_shortcut='{$CurrentUser[fleet_shortcut]}' WHERE id={$CurrentUser[id]}", "users");
+			doquery("UPDATE {{table}} SET fleet_shortcut='".addslashes(mysql_escape_string($CurrentUser[fleet_shortcut]))."' WHERE id=".intval($CurrentUser[id])."", "users");
 			header("location:game.".$phpEx."?page=shortcuts");
 		}
 
@@ -65,7 +65,7 @@ function ShowFleetShortcuts($CurrentUser)
 			{
 				unset($scarray[$a]);
 				$CurrentUser['fleet_shortcut'] = implode("\r\n", $scarray);
-				doquery("UPDATE {{table}} SET fleet_shortcut='{$CurrentUser[fleet_shortcut]}' WHERE id={$CurrentUser[id]}", "users");
+				doquery("UPDATE {{table}} SET fleet_shortcut='".addslashes(mysql_escape_string($CurrentUser[fleet_shortcut]))."' WHERE id=".intval($CurrentUser[id])."", "users");
 				header("location:game.".$phpEx."?page=shortcuts");
 			}
 			else
@@ -78,7 +78,7 @@ function ShowFleetShortcuts($CurrentUser)
 				$r[4] = intval($_POST['t']);
 				$scarray[$a] = implode(",", $r);
 				$CurrentUser['fleet_shortcut'] = implode("\r\n", $scarray);
-				doquery("UPDATE {{table}} SET fleet_shortcut='{$CurrentUser[fleet_shortcut]}' WHERE id={$CurrentUser[id]}", "users");
+				doquery("UPDATE {{table}} SET fleet_shortcut='".addslashes(mysql_escape_string($CurrentUser[fleet_shortcut]))."' WHERE id=".intval($CurrentUser[id])."", "users");
 				header("location:game.".$phpEx."?page=shortcuts");
 			}
 		}

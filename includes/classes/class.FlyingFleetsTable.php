@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -114,7 +114,7 @@ class FlyingFleetsTable
 	{
 		global $lang, $dpath;
 
-		$PlayerName  = doquery ("SELECT `username` FROM {{table}} WHERE `id` = '". $FleetRow['fleet_owner']."';", 'users', true);
+		$PlayerName  = doquery ("SELECT `username` FROM {{table}} WHERE `id` = '". intval($FleetRow['fleet_owner'])."';", 'users', true);
 		$Link  		 = $PlayerName['username']. " ";
 		$Link 		.= "<a href=\"game.php?page=messages&mode=write&id=".$FleetRow['fleet_owner']."\">";
 		$Link 		.= "<img src=\"".$dpath."/img/m.gif\" title=\"".$lang['write_message']."\" border=\"0\"></a>";
@@ -131,8 +131,8 @@ class FlyingFleetsTable
 
 		while ( $CurrentFleet = mysql_fetch_assoc( $FlyingFleets ) )
 		{
-			$FleetOwner       = doquery("SELECT `username` FROM {{table}} WHERE `id` = '". $CurrentFleet['fleet_owner'] ."';", 'users', true);
-			$TargetOwner      = doquery("SELECT `username` FROM {{table}} WHERE `id` = '". $CurrentFleet['fleet_target_owner'] ."';", 'users', true);
+			$FleetOwner       = doquery("SELECT `username` FROM {{table}} WHERE `id` = '". intval($CurrentFleet['fleet_owner']) ."';", 'users', true);
+			$TargetOwner      = doquery("SELECT `username` FROM {{table}} WHERE `id` = '". intval($CurrentFleet['fleet_target_owner']) ."';", 'users', true);
 
 			$Bloc['Id']       = $CurrentFleet['fleet_id'];
 			$Bloc['Mission']  = $this->CreateFleetPopupedMissionLink ( $CurrentFleet, $lang['type_mission'][ $CurrentFleet['fleet_mission'] ], '' );
@@ -200,9 +200,9 @@ class FlyingFleetsTable
 		$MissionType    = $FleetRow['fleet_mission'];
 		$FleetContent   = $this->CreateFleetPopupedFleetLink ( $FleetRow, "flotas", $FleetPrefix . $FleetStyle[ $MissionType ] );
 		$FleetCapacity  = $this->CreateFleetPopupedMissionLink ( $FleetRow, $lang['type_mission'][ $MissionType ], $FleetPrefix . $FleetStyle[ $MissionType ] );
-		$StartPlanet    = doquery("SELECT `name` FROM {{table}} WHERE `galaxy` = '".$FleetRow['fleet_start_galaxy']."' AND `system` = '".$FleetRow['fleet_start_system']."' AND `planet` = '".$FleetRow['fleet_start_planet']."' AND `planet_type` = '".$FleetRow['fleet_start_type']."';", 'planets', true);
+		$StartPlanet    = doquery("SELECT `name` FROM {{table}} WHERE `galaxy` = '".intval($FleetRow['fleet_start_galaxy'])."' AND `system` = '".intval($FleetRow['fleet_start_system'])."' AND `planet` = '".intval($FleetRow['fleet_start_planet'])."' AND `planet_type` = '".intval($FleetRow['fleet_start_type'])."';", 'planets', true);
 		$StartType      = $FleetRow['fleet_start_type'];
-		$TargetPlanet   = doquery("SELECT `name` FROM {{table}} WHERE `galaxy` = '".$FleetRow['fleet_end_galaxy']."' AND `system` = '".$FleetRow['fleet_end_system']."' AND `planet` = '".$FleetRow['fleet_end_planet']."' AND `planet_type` = '".$FleetRow['fleet_end_type']."';", 'planets', true);
+		$TargetPlanet   = doquery("SELECT `name` FROM {{table}} WHERE `galaxy` = '".intval($FleetRow['fleet_end_galaxy'])."' AND `system` = '".intval($FleetRow['fleet_end_system'])."' AND `planet` = '".intval($FleetRow['fleet_end_planet'])."' AND `planet_type` = '".intval($FleetRow['fleet_end_type'])."';", 'planets', true);
 		$TargetType     = $FleetRow['fleet_end_type'];
 
 		if ($Status != 2)

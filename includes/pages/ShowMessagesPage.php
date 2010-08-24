@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -25,16 +25,16 @@ function ShowMessagesPage($CurrentUser)
 {
 	global $xgp_root, $phpEx, $game_config, $dpath, $lang;
 
-	$OwnerID       = $_GET['id'];
-	$MessCategory  = $_GET['messcat'];
-	$MessPageMode  = $_GET["mode"];
+	$OwnerID       = intval($_GET['id']);
+	$MessCategory  = intval($_GET['messcat']);
+	$MessPageMode  = addslashes(mysql_escape_string($_GET["mode"]));
 	$DeleteWhat    = $_POST['deletemessages'];
 
 	if (isset ($DeleteWhat))
 		$MessPageMode = "delete";
 
-	$UsrMess       = doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".$CurrentUser['id']."' ORDER BY `message_time` DESC;", 'messages');
-	$UnRead        = doquery("SELECT * FROM {{table}} WHERE `id` = '". $CurrentUser['id'] ."';", 'users', true);
+	$UsrMess       = doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".intval($CurrentUser['id'])."' ORDER BY `message_time` DESC;", 'messages');
+	$UnRead        = doquery("SELECT * FROM {{table}} WHERE `id` = '". intval($CurrentUser['id']) ."';", 'users', true);
 
 	$MessageType   = array ( 0, 1, 2, 3, 4, 5, 15, 99, 100 );
 	$TitleColor    = array ( 0 => '#FFFF00', 1 => '#FF6699', 2 => '#FF3300', 3 => '#FF9900', 4 => '#773399', 5 => '#009933', 15 => '#030070', 99 => '#007070', 100 => '#ABABAB'  );
@@ -70,12 +70,12 @@ function ShowMessagesPage($CurrentUser)
 			if (!is_numeric($OwnerID))
 				header("location:game.php?page=messages");
 
-			$OwnerRecord = doquery("SELECT * FROM {{table}} WHERE `id` = '".$OwnerID."';", 'users', true);
+			$OwnerRecord = doquery("SELECT * FROM {{table}} WHERE `id` = '".intval($OwnerID)."';", 'users', true);
 
 			if (!$OwnerRecord)
 				header("location:game.php?page=messages");
 
-			$OwnerHome   = doquery("SELECT * FROM {{table}} WHERE `id_planet` = '". $OwnerRecord["id_planet"] ."';", 'galaxy', true);
+			$OwnerHome   = doquery("SELECT * FROM {{table}} WHERE `id_planet` = '". intval($OwnerRecord["id_planet"]) ."';", 'galaxy', true);
 			if (!$OwnerHome)
 				header("location:game.php?page=messages");
 
@@ -99,7 +99,7 @@ function ShowMessagesPage($CurrentUser)
 					$_POST['text'] = str_replace("'", '&#39;', $_POST['text']);
 
 					$Owner   	= $OwnerID;
-					$Sender  	= $CurrentUser['id'];
+					$Sender  	= intval($CurrentUser['id']);
 					$From    	= $CurrentUser['username'] ." [".$CurrentUser['galaxy'].":".$CurrentUser['system'].":".$CurrentUser['planet']."]";
 					$Subject 	= $_POST['subject'];
                     $Message	= preg_replace ( "/([^\s]{80}?)/" , "\\1<br />" , trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) ) );
@@ -119,7 +119,7 @@ function ShowMessagesPage($CurrentUser)
 		case 'delete':
 			$DeleteWhat = $_POST['deletemessages'];
 			if($DeleteWhat == 'deleteall')
-				doquery("DELETE FROM {{table}} WHERE `message_owner` = '". $CurrentUser['id'] ."';", 'messages');
+				doquery("DELETE FROM {{table}} WHERE `message_owner` = '". intval($CurrentUser['id']) ."';", 'messages');
 			elseif ($DeleteWhat == 'deletemarked')
 			{
 				foreach($_POST as $Message => $Answer)
@@ -127,9 +127,9 @@ function ShowMessagesPage($CurrentUser)
 					if (preg_match("/delmes/i", $Message) && $Answer == 'on')
 					{
 						$MessId   = str_replace("delmes", "", $Message);
-						$MessHere = doquery("SELECT * FROM {{table}} WHERE `message_id` = '". $MessId ."' AND `message_owner` = '". $CurrentUser['id'] ."';", 'messages');
+						$MessHere = doquery("SELECT * FROM {{table}} WHERE `message_id` = '". intval($MessId) ."' AND `message_owner` = '". intval($CurrentUser['id']) ."';", 'messages');
 						if ($MessHere)
-							doquery("DELETE FROM {{table}} WHERE `message_id` = '".$MessId."';", 'messages');
+							doquery("DELETE FROM {{table}} WHERE `message_id` = '".intval($MessId)."';", 'messages');
 
 					}
 				}
@@ -144,9 +144,9 @@ function ShowMessagesPage($CurrentUser)
 					$IsSelected = $_POST[ $Selected ];
 					if (preg_match("/showmes/i", $Message) && !isset($IsSelected))
 					{
-						$MessHere = doquery("SELECT * FROM {{table}} WHERE `message_id` = '". $MessId ."' AND `message_owner` = '". $CurrentUser['id'] ."';", 'messages');
+						$MessHere = doquery("SELECT * FROM {{table}} WHERE `message_id` = '". intval($MessId) ."' AND `message_owner` = '". intval($CurrentUser['id']) ."';", 'messages');
 						if ($MessHere)
-							doquery("DELETE FROM {{table}} WHERE `message_id` = '".$MessId."';", 'messages');
+							doquery("DELETE FROM {{table}} WHERE `message_id` = '".intval($MessId)."';", 'messages');
 
 					}
 				}
@@ -171,13 +171,13 @@ function ShowMessagesPage($CurrentUser)
 
 			if ($MessCategory == 100)
 			{
-				$UsrMess       = doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".$CurrentUser['id']."' ORDER BY `message_time` DESC;", 'messages');
+				$UsrMess       = doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".intval($CurrentUser['id'])."' ORDER BY `message_time` DESC;", 'messages');
 				$SubUpdateQry  = "";
 
 				$QryUpdateUser  = "UPDATE {{table}} SET ";
 				$QryUpdateUser .= "`new_message` = '0' ";
 				$QryUpdateUser .= "WHERE ";
-				$QryUpdateUser .= "`id` = '".$CurrentUser['id']."';";
+				$QryUpdateUser .= "`id` = '".intval($CurrentUser['id'])."';";
 				doquery ( $QryUpdateUser, 'users');
 
 				while ($CurMess = mysql_fetch_array($UsrMess))
@@ -205,7 +205,7 @@ function ShowMessagesPage($CurrentUser)
 			}
 			else
 			{
-				$UsrMess       = doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".$CurrentUser['id']."' AND `message_type` = '".$MessCategory."' ORDER BY `message_time` DESC;", 'messages');
+				$UsrMess       = doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".intval($CurrentUser['id'])."' AND `message_type` = '".$MessCategory."' ORDER BY `message_time` DESC;", 'messages');
 
 				while ($CurMess = mysql_fetch_array($UsrMess))
 				{
@@ -214,7 +214,7 @@ function ShowMessagesPage($CurrentUser)
 						$QryUpdateUser  = "UPDATE {{table}} SET ";
 						$QryUpdateUser .= "`new_message` = '0' ";
 						$QryUpdateUser .= "WHERE ";
-						$QryUpdateUser .= "`id` = '".$CurrentUser['id']."';";
+						$QryUpdateUser .= "`id` = '".intval($CurrentUser['id'])."';";
 						doquery ( $QryUpdateUser, 'users');
 
 						$page .= "\n<tr>";

@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -24,16 +24,17 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 	function SetSelectedPlanet ( &$CurrentUser )
 	{
 
-		$SelectPlanet  = $_GET['cp'];
-		$RestorePlanet = $_GET['re'];
+		$SelectPlanet  = intval($_GET['cp']);
+		$RestorePlanet = intval($_GET['re']);
 
 		if (isset($SelectPlanet) && is_numeric($SelectPlanet) && isset($RestorePlanet) && $RestorePlanet == 0)
 		{
-			$IsPlanetMine   = doquery("SELECT `id` FROM {{table}} WHERE `id` = '". $SelectPlanet ."' AND `id_owner` = '". $CurrentUser['id'] ."';", 'planets', true);
+			$IsPlanetMine   = doquery("SELECT `id` FROM {{table}} WHERE `id` = '". $SelectPlanet ."' AND `id_owner` = '". intval($CurrentUser['id']) ."';", 'planets', true);
+
 			if ($IsPlanetMine)
 			{
 				$CurrentUser['current_planet'] = $SelectPlanet;
-				doquery("UPDATE {{table}} SET `current_planet` = '". $SelectPlanet ."' WHERE `id` = '".$CurrentUser['id']."';", 'users');
+				doquery("UPDATE {{table}} SET `current_planet` = '". $SelectPlanet ."' WHERE `id` = '".intval($CurrentUser['id'])."';", 'users');
 			}
 		}
 	}

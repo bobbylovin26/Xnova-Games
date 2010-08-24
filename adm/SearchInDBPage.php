@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By Neko from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By Neko from xgproyect.net	         #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -40,7 +40,7 @@ switch($_POST[search])
 	// USUARIOS ####################################################################
 	case 'user':
 	$parse['selected_u']	=	'selected = "selected"';
-	
+
 	if ($_POST['key_order'] == 'username')
 		$b	=	'checked = "checked"';
 	elseif ($_POST['key_order'] == 'email_2')
@@ -53,15 +53,15 @@ switch($_POST[search])
 		$f	=	'checked = "checked"';
 	elseif ($_POST['key_order'] == 'user_lastip')
 		$g	=	'checked = "checked"';
-	else 
+	else
 		$a	=	'checked = "checked"';
-		
+
 	if ($_POST['key_acc']	==	'DESC')
 		$y	=	'checked = "checked"';
 	else
 		$z	=	'checked = "checked"';
-	
-	$parse['orderby']	=	
+
+	$parse['orderby']	=
 				'<table width="70%">
 				<tr>
 					<td class="c">-</td>
@@ -72,8 +72,8 @@ switch($_POST[search])
 					<td class="c">'.$lang['se_input_activity'].'</td>
 					<td class="c">'.$lang['se_input_register'].'</td>
 					<td class="c">'.$lang['se_input_ip'].'</td>
-					<th><a href="#" title="'.$lang['se_input_asc'].'">'.$lang['se_input_a'].' </a> 
-					<input type="radio" name="key_acc" value="ASC" '.$z.' title="'.$lang['se_input_asc'].'">&nbsp; 
+					<th><a href="#" title="'.$lang['se_input_asc'].'">'.$lang['se_input_a'].' </a>
+					<input type="radio" name="key_acc" value="ASC" '.$z.' title="'.$lang['se_input_asc'].'">&nbsp;
 					<a href="#" title="'.$lang['se_input_desc'].'">'.$lang['se_input_d'].' </a>
 					<input type="radio" name="key_acc" value="DESC" '.$y.' title="'.$lang['se_input_desc'].'"></th>
 				</tr><tr>
@@ -88,7 +88,7 @@ switch($_POST[search])
 					<th width="10%"><input type="submit" value="'.$lang['se_input_submit'].'"></th>
 				</tr>
 				</table>';
-	
+
 	$QueryFind	=	doquery("SELECT * FROM {{table}}", "users", true);
 	$ORDERBY	=	$_POST['key_order'];
 	$ORDERBY2	=	$_POST['key_acc'];
@@ -96,8 +96,8 @@ switch($_POST[search])
 		$ORDER	=	"id";
 	else
 		$ORDER	=	$_POST['key_order'];
-		
-		
+
+
 	if ($key_user	!=	NULL)
 	{
 		$search	=	doquery("SELECT * FROM {{table}} WHERE `username` LIKE '%{$key_user}%' ORDER BY `".$ORDER."` ".$ORDERBY2."", "users");
@@ -106,7 +106,7 @@ switch($_POST[search])
 	{
 		$search	=	doquery("SELECT * FROM {{table}} ORDER BY `".$ORDER."` ".$ORDERBY2."", "users");
 	}
-	
+
 	$cnt	=	mysql_num_rows($search);
 	if ($cnt	!=	NULL)
 	{
@@ -121,15 +121,15 @@ switch($_POST[search])
 			$authlevel	=	$user['authlevel'];
 			$suspended	=	$user['bana'];
 			$vacations	=	$user['urlaubs_modus'];
-		
+
 			if ($suspended == '0' or $suspended == NULL){$suspended = $lang['se_no'];}else{$suspended = "<font color=lime>".$lang['se_yes']."</font>";}
 			if ($vacations == '0'){$vacations = $lang['se_no'];}else{$vacations = "<font color=aqua>".$lang['se_yes']."</font>";}
 			for ($i = 0; $i < 5; $i++)
 			{
 				if ($authlevel == $i){$authlevel = $lang['se_authlevel'][$i];}
 			}
-		
-			
+
+
 			$parse['table1']	 =
 			"<table width=\"90%\">
 			".$OrderBy."
@@ -137,14 +137,14 @@ switch($_POST[search])
 			<td class=\"c\">".$lang['se_auth']."</th><td class=\"c\">".$lang['se_ban']."</th><td class=\"c\">".$lang['se_vacat']."</th>
 			<td class=\"c\">".$lang['se_input_activity']."</th><td class=\"c\">".$lang['se_input_register']."</th>
 			<td class=\"c\">".$lang['se_input_ip']."</th></tr>";
-			
+
 			$parse['table2']	.=
 			"<tr><th>".$id."</th><th>".$name."</th><th>".$email."</th><th>".$authlevel."</th><th>".$suspended."</th><th>".$vacations."</th>
 			<th>".gmdate("d/M/y H:i:s",$onlinetime)."</th><th>".gmdate("d/M/y H:i:s",$reg_time)."</th><th>".$user_ip."</th></tr>";
-			
+
 			$parse['table3']	 =	"<tr><th colspan=\"20\">".$lang['se_input_hay'].$cnt.$lang['se_input_userss']."</th></tr></table>";
 		}
-		
+
 	}
 	else
 	{
@@ -152,12 +152,12 @@ switch($_POST[search])
 	}
 	display(parsetemplate(gettemplate('adm/SearchInDBBody'), $parse), false, '', true, false);
 	break;
-	
-	
+
+
 	// PLANETAS ####################################################################
 	case 'planet':
 	$parse['selected_p']	=	'selected = "selected"';
-	
+
 	if ($_POST['key_order'] == 'name')
 		$b	=	'checked = "checked"';
 	elseif ($_POST['key_order'] == 'id_owner')
@@ -168,15 +168,15 @@ switch($_POST[search])
 		$e	=	'checked = "checked"';
 	elseif ($_POST['key_order'] == 'planet')
 		$f	=	'checked = "checked"';
-	else 
+	else
 		$a	=	'checked = "checked"';
-		
+
 	if ($_POST['key_acc']	==	'DESC')
 		$y	=	'checked = "checked"';
 	else
 		$z	=	'checked = "checked"';
-	
-	$parse['orderby']	=	
+
+	$parse['orderby']	=
 				'<table width="60%">
 				<tr>
 					<td class="c">-</td>
@@ -186,8 +186,8 @@ switch($_POST[search])
 					<td class="c">'.$lang['se_input_g'].'</td>
 					<td class="c">'.$lang['se_input_s'].'</td>
 					<td class="c">'.$lang['se_input_p'].'</td>
-					<th><a href="#" title="'.$lang['se_input_asc'].'">'.$lang['se_input_a'].' </a> 
-					<input type="radio" name="key_acc" value="ASC" '.$z.' title="'.$lang['se_input_asc'].'">&nbsp; 
+					<th><a href="#" title="'.$lang['se_input_asc'].'">'.$lang['se_input_a'].' </a>
+					<input type="radio" name="key_acc" value="ASC" '.$z.' title="'.$lang['se_input_asc'].'">&nbsp;
 					<a href="#" title="'.$lang['se_input_desc'].'">'.$lang['se_input_d'].' </a>
 					<input type="radio" name="key_acc" value="DESC" '.$y.' title="'.$lang['se_input_desc'].'"></th>
 				</tr><tr>
@@ -201,7 +201,7 @@ switch($_POST[search])
 					<th width="10%"><input type="submit" value="'.$lang['se_input_submit'].'"></th>
 				</tr>
 				</table>';
-			
+
 	$QueryFind	=	doquery("SELECT * FROM {{table}}", "planets", true);
 	$ORDERBY	=	$_POST['key_order'];
 	$ORDERBY2	=	$_POST['key_acc'];
@@ -209,7 +209,7 @@ switch($_POST[search])
 		$ORDER	=	"id";
 	else
 		$ORDER	=	$_POST['key_order'];
-		
+
 	if ($key_user	==	NULL)
 	{
 		$search	=	doquery("SELECT * FROM {{table}} WHERE `planet_type` = '1' ORDER BY `".$ORDER."` ".$ORDERBY2."", "planets");
@@ -218,7 +218,7 @@ switch($_POST[search])
 	{
 		$search	=	doquery("SELECT * FROM {{table}} WHERE `name` LIKE '%{$key_user}%' AND `planet_type` = '1' ORDER BY `".$ORDER."` ".$ORDERBY2."", "planets");
 	}
-	
+
 	$cnt	=	mysql_num_rows($search);
 	if ($cnt	==	NULL)
 	{
@@ -234,34 +234,34 @@ switch($_POST[search])
 			$g			=	$planet['galaxy'];
 			$s			=	$planet['system'];
 			$p			=	$planet['planet'];
-			
+
 			$QueryFiind	=	doquery("SELECT `id_luna` FROM {{table}} WHERE `galaxy` = '".$g."' AND `system` = '".$s."' AND `planet` = '".$p."'", "galaxy", true);
-			
+
 			if ($QueryFiind['id_luna']	!=	'0')
 				$moons	=	"<font color=lime>".$lang['se_yes']."</font>";
 			else
 				$moons	=	$lang['se_no'];
-			
+
 			$parse['table1']	 =
 			"<table width=\"65%\">
 			<tr><td class=\"c\">".$lang['se_id']."</th><td class=\"c\">".$lang['se_name']."</th><td class=\"c\">".$lang['se_id_owner']."</th>
 			<td class=\"c\">".$lang['se_galaxy']."</th><td class=\"c\">".$lang['se_system']."</th><td class=\"c\">".$lang['se_planet']."</th>
 			<td class=\"c\">".$lang['se_input_have_moon']."</th></tr>";
-			
+
 			$parse['table2']	.=
 			"<tr><th>".$id."</th><th>".$name."</th><th>".$id_owner."</th><th>".$g."</th><th>".$s."</th><th>".$p."</th><th>".$moons."</th></tr>";
-			
+
 			$parse['table3']	 =	"<tr><th colspan=\"20\">".$lang['se_input_hay'].$cnt.$lang['se_input_planett']."</th></tr></table>";
 		}
 	}
 	display(parsetemplate(gettemplate('adm/SearchInDBBody'), $parse), false, '', true, false);
 	break;
-	
-	
+
+
 	// LUNAS ####################################################################
 	case 'moon':
 	$parse['selected_m']	=	'selected = "selected"';
-	
+
 	if ($_POST['key_order'] == 'name')
 		$b	=	'checked = "checked"';
 	elseif ($_POST['key_order'] == 'id_owner')
@@ -272,15 +272,15 @@ switch($_POST[search])
 		$e	=	'checked = "checked"';
 	elseif ($_POST['key_order'] == 'planet')
 		$f	=	'checked = "checked"';
-	else 
+	else
 		$a	=	'checked = "checked"';
-		
+
 	if ($_POST['key_acc']	==	'DESC')
 		$y	=	'checked = "checked"';
 	else
 		$z	=	'checked = "checked"';
-	
-	$parse['orderby']	=	
+
+	$parse['orderby']	=
 				'<table width="60%">
 				<tr>
 					<td class="c">-</td>
@@ -290,8 +290,8 @@ switch($_POST[search])
 					<td class="c">'.$lang['se_input_g'].'</td>
 					<td class="c">'.$lang['se_input_s'].'</td>
 					<td class="c">'.$lang['se_input_p'].'</td>
-					<th><a href="#" title="'.$lang['se_input_asc'].'">'.$lang['se_input_a'].' </a> 
-					<input type="radio" name="key_acc" value="ASC" '.$z.' title="'.$lang['se_input_asc'].'">&nbsp; 
+					<th><a href="#" title="'.$lang['se_input_asc'].'">'.$lang['se_input_a'].' </a>
+					<input type="radio" name="key_acc" value="ASC" '.$z.' title="'.$lang['se_input_asc'].'">&nbsp;
 					<a href="#" title="'.$lang['se_input_desc'].'">'.$lang['se_input_d'].' </a>
 					<input type="radio" name="key_acc" value="DESC" '.$y.' title="'.$lang['se_input_desc'].'"></th>
 				</tr><tr>
@@ -305,7 +305,7 @@ switch($_POST[search])
 					<th width="10%"><input type="submit" value="'.$lang['se_input_submit'].'"></th>
 				</tr>
 				</table>';
-			
+
 	$QueryFind	=	doquery("SELECT * FROM {{table}}", "planets", true);
 	$ORDERBY	=	$_POST['key_order'];
 	$ORDERBY2	=	$_POST['key_acc'];
@@ -313,7 +313,7 @@ switch($_POST[search])
 		$ORDER	=	"id";
 	else
 		$ORDER	=	$_POST['key_order'];
-		
+
 	if ($key_user	==	NULL)
 	{
 		$search	=	doquery("SELECT * FROM {{table}} WHERE `planet_type` = '3' ORDER BY `".$ORDER."` ".$ORDERBY2."", "planets");
@@ -322,7 +322,7 @@ switch($_POST[search])
 	{
 		$search	=	doquery("SELECT * FROM {{table}} WHERE `name` LIKE '%{$key_user}%' AND `planet_type` = '3' ORDER BY `".$ORDER."` ".$ORDERBY2."", "planets");
 	}
-	
+
 	$cnt	=	mysql_num_rows($search);
 	if ($cnt	==	NULL)
 	{
@@ -338,26 +338,26 @@ switch($_POST[search])
 			$g			=	$moon['galaxy'];
 			$s			=	$moon['system'];
 			$p			=	$moon['planet'];
-		
-		
+
+
 			$parse['table1']	 =
 			"<table width=\"65%\">
 			<tr><td class=\"c\">".$lang['se_id']."</th><td class=\"c\">".$lang['se_name']."</th><td class=\"c\">".$lang['se_id_owner']."</th>
 			<td class=\"c\">".$lang['se_galaxy']."</th><td class=\"c\">".$lang['se_system']."</th><td class=\"c\">".$lang['se_planet']."</th></tr>";
-			
+
 			$parse['table2']	.=
 			"<tr><th>".$id."</th><th>".$name."</th><th>".$id_owner."</th><th>".$g."</th><th>".$s."</th><th>".$p."</th></tr>";
-			
+
 			$parse['table3']	 =	"<tr><th colspan=\"20\">".$lang['se_input_hay'].$cnt.$lang['se_input_moonn']."</th></tr></table>";
 		}
 	}
 	display(parsetemplate(gettemplate('adm/SearchInDBBody'), $parse), false, '', true, false);
 	break;
-	
+
 	// ALIANZAS ####################################################################
 	case 'ally':
 	$parse['selected_a']	=	'selected = "selected"';
-	
+
 	if ($_POST['key_order'] == 'ally_name')
 		$b	=	'checked = "checked"';
 	elseif ($_POST['key_order'] == 'ally_tag')
@@ -368,15 +368,15 @@ switch($_POST[search])
 		$e	=	'checked = "checked"';
 	elseif ($_POST['key_order'] == 'ally_members')
 		$f	=	'checked = "checked"';
-	else 
+	else
 		$a	=	'checked = "checked"';
-		
+
 	if ($_POST['key_acc']	==	'DESC')
 		$y	=	'checked = "checked"';
 	else
 		$z	=	'checked = "checked"';
-	
-	$parse['orderby']	=	
+
+	$parse['orderby']	=
 				'<table width="70%">
 				<tr>
 					<td class="c">-</td>
@@ -386,8 +386,8 @@ switch($_POST[search])
 					<td class="c">'.$lang['se_input_prop'].'</td>
 					<td class="c">'.$lang['se_input_register'].'</td>
 					<td class="c">'.$lang['se_input_members2'].'</td>
-					<th><a href="#" title="'.$lang['se_input_asc'].'">'.$lang['se_input_a'].' </a> 
-					<input type="radio" name="key_acc" value="ASC" '.$z.' title="'.$lang['se_input_asc'].'">&nbsp; 
+					<th><a href="#" title="'.$lang['se_input_asc'].'">'.$lang['se_input_a'].' </a>
+					<input type="radio" name="key_acc" value="ASC" '.$z.' title="'.$lang['se_input_asc'].'">&nbsp;
 					<a href="#" title="'.$lang['se_input_desc'].'">'.$lang['se_input_d'].' </a>
 					<input type="radio" name="key_acc" value="DESC" '.$y.' title="'.$lang['se_input_desc'].'"></th>
 				</tr><tr>
@@ -401,7 +401,7 @@ switch($_POST[search])
 					<th width="10%"><input type="submit" value="'.$lang['se_input_submit'].'"></th>
 				</tr>
 				</table>';
-			
+
 	$QueryFind	=	doquery("SELECT * FROM {{table}}", "alliance", true);
 	$ORDERBY	=	$_POST['key_order'];
 	$ORDERBY2	=	$_POST['key_acc'];
@@ -409,7 +409,7 @@ switch($_POST[search])
 		$ORDER	=	"id";
 	else
 		$ORDER	=	$_POST['key_order'];
-		
+
 	if ($key_user	==	NULL)
 	{
 		$search	=	doquery("SELECT * FROM {{table}} ORDER BY `".$ORDER."` ".$ORDERBY2."", "alliance");
@@ -418,7 +418,7 @@ switch($_POST[search])
 	{
 		$search	=	doquery("SELECT * FROM {{table}} WHERE `ally_name` LIKE '%{$key_user}%' ORDER BY `".$ORDER."` ".$ORDERBY2."", "alliance");
 	}
-	
+
 	$cnt	=	mysql_num_rows($search);
 	if ($cnt	==	NULL)
 	{
@@ -434,43 +434,43 @@ switch($_POST[search])
 			$ally_owner		=	$alliances['ally_owner'];
 			$reg_time_a		=	$alliances['ally_register_time'];
 			$ally_members	=	$alliances['ally_members'];
-		
-		
+
+
 			$parse['table1']	 =
 			"<table width=\"55%\">
 			<tr><td class=\"c\">".$lang['se_id']."</th><td class=\"c\">".$lang['se_name']."</th><td class=\"c\">".$lang['se_tag']."</th>
 			<td class=\"c\">".$lang['se_id_owner']."</th><td class=\"c\">".$lang['se_input_register']."</th><td class=\"c\">".$lang['se_input_members']."</th></tr>";
-			
+
 			$parse['table2']	.=
 			"<tr><th>".$id."</th><th>".$ally_name."</th><th>".$ally_tag."</th><th>".$ally_owner."</th><th>".gmdate("d/M/y H:i:s",$reg_time_a)."</th>
 			<th>".$ally_members."</th></tr>";
-			
+
 			$parse['table3']	 =	"<tr><th colspan=\"20\">".$lang['se_input_hay'].$cnt.$lang['se_input_allyy']."</th></tr></table>";
 		}
 	}
 	display(parsetemplate(gettemplate('adm/SearchInDBBody'), $parse), false, '', true, false);
 	break;
-	
-	
+
+
 	// VACACIONES ####################################################################
 	case 'vacation':
 	$parse['selected_v']	=	'selected = "selected"';
-	
+
 	if ($_POST['key_order'] == 'username')
 		$b	=	'checked = "checked"';
 	elseif ($_POST['key_order'] == 'email_2')
 		$c	=	'checked = "checked"';
 	elseif ($_POST['key_order'] == 'authlevel')
 		$d	=	'checked = "checked"';
-	else 
+	else
 		$a	=	'checked = "checked"';
-		
+
 	if ($_POST['key_acc']	==	'DESC')
 		$y	=	'checked = "checked"';
 	else
 		$z	=	'checked = "checked"';
-	
-	$parse['orderby']	=	
+
+	$parse['orderby']	=
 				'<table width="65%">
 				<tr>
 					<td class="c">-</td>
@@ -478,8 +478,8 @@ switch($_POST[search])
 					<td class="c">'.$lang['se_input_name'].'</td>
 					<td class="c">'.$lang['se_input_email'].'</td>
 					<td class="c">'.$lang['se_input_authlevel'].'</td>
-					<th><a href="#" title="'.$lang['se_input_asc'].'">'.$lang['se_input_a'].' </a> 
-					<input type="radio" name="key_acc" value="ASC" '.$z.' title="'.$lang['se_input_asc'].'">&nbsp; 
+					<th><a href="#" title="'.$lang['se_input_asc'].'">'.$lang['se_input_a'].' </a>
+					<input type="radio" name="key_acc" value="ASC" '.$z.' title="'.$lang['se_input_asc'].'">&nbsp;
 					<a href="#" title="'.$lang['se_input_desc'].'">'.$lang['se_input_d'].' </a>
 					<input type="radio" name="key_acc" value="DESC" '.$y.' title="'.$lang['se_input_desc'].'"></th>
 				</tr><tr>
@@ -491,7 +491,7 @@ switch($_POST[search])
 					<th width="10%"><input type="submit" value="'.$lang['se_input_submit'].'"></th>
 				</tr>
 				</table>';
-				
+
 	$QueryFind	=	doquery("SELECT * FROM {{table}}", "users", true);
 	$ORDERBY	=	$_POST['key_order'];
 	$ORDERBY2	=	$_POST['key_acc'];
@@ -499,7 +499,7 @@ switch($_POST[search])
 		$ORDER	=	"id";
 	else
 		$ORDER	=	$_POST['key_order'];
-		
+
 	if ($key_user	==	NULL)
 	{
 		$search	=	doquery("SELECT * FROM {{table}} WHERE `urlaubs_modus` = '1' ORDER BY `".$ORDER."` ".$ORDERBY2."", "users");
@@ -508,7 +508,7 @@ switch($_POST[search])
 	{
 		$search	=	doquery("SELECT * FROM {{table}} WHERE `username` LIKE '%{$key_user}%' AND `urlaubs_modus` = '1'  ORDER BY `".$ORDER."` ".$ORDERBY2."", "users");
 	}
-	
+
 	$cnt	=	mysql_num_rows($search);
 	if ($cnt	==	NULL)
 	{
@@ -524,49 +524,49 @@ switch($_POST[search])
 			$authlevel	=	$vacation['authlevel'];
 			$suspended	=	$vacation['bana'];
 			$vacations	=	$vacation['urlaubs_modus'];
-		
+
 			if ($suspended == '0' or $suspended == NULL){$suspended = $lang['se_no'];}else{$suspended = "<font color=lime>".$lang['se_yes']."</font>";}
 			if ($vacations == '0'){$vacations = $lang['se_no'];}else{$vacations = "<font color=aqua>".$lang['se_yes']."</font>";}
 			for ($i = 0; $i < 5; $i++)
 			{
 				if ($authlevel == $i){$authlevel = $lang['se_authlevel'][$i];}
 			}
-		
-			
+
+
 			$parse['table1']	 =
 			"<table width=\"65%\">
 			<tr><td class=\"c\">".$lang['se_id']."</th><td class=\"c\">".$lang['se_name']."</th><td class=\"c\">".$lang['se_email']."</th>
 			<td class=\"c\">".$lang['se_auth']."</th><td class=\"c\">".$lang['se_ban']."</th><td class=\"c\">".$lang['se_vacat']."</th></tr>";
-			
+
 			$parse['table2']	.=
 			"<tr><th>".$id."</th><th>".$name."</th><th>".$email."</th><th>".$authlevel."</th><th>".$suspended."</th><th>".$vacations."</th></tr>";
-			
+
 			$parse['table3']	 =	"<tr><th colspan=\"20\">".$lang['se_input_hay'].$cnt.$lang['se_input_vacatii']."</th></tr></table>";
 		}
 	}
 	display(parsetemplate(gettemplate('adm/SearchInDBBody'), $parse), false, '', true, false);
 	break;
-	
-	
+
+
 	// SUSPENDIDOS ####################################################################
 	case 'suspended':
 	$parse['selected_b']	=	'selected = "selected"';
-	
+
 	if ($_POST['key_order'] == 'who')
 		$b	=	'checked = "checked"';
 	elseif ($_POST['key_order'] == 'time')
 		$c	=	'checked = "checked"';
 	elseif ($_POST['key_order'] == 'longer')
 		$d	=	'checked = "checked"';
-	else 
+	else
 		$a	=	'checked = "checked"';
-		
+
 	if ($_POST['key_acc']	==	'DESC')
 		$y	=	'checked = "checked"';
 	else
 		$z	=	'checked = "checked"';
-	
-	$parse['orderby']	=	
+
+	$parse['orderby']	=
 				'<table width="65%">
 				<tr>
 					<td class="c">-</td>
@@ -574,8 +574,8 @@ switch($_POST[search])
 					<td class="c">'.$lang['se_input_name'].'</td>
 					<td class="c">'.$lang['se_input_time'].'</td>
 					<td class="c">'.$lang['se_input_longer'].'</td>
-					<th><a href="#" title="'.$lang['se_input_asc'].'">'.$lang['se_input_a'].' </a> 
-					<input type="radio" name="key_acc" value="ASC" '.$z.' title="'.$lang['se_input_asc'].'">&nbsp; 
+					<th><a href="#" title="'.$lang['se_input_asc'].'">'.$lang['se_input_a'].' </a>
+					<input type="radio" name="key_acc" value="ASC" '.$z.' title="'.$lang['se_input_asc'].'">&nbsp;
 					<a href="#" title="'.$lang['se_input_desc'].'">'.$lang['se_input_d'].' </a>
 					<input type="radio" name="key_acc" value="DESC" '.$y.' title="'.$lang['se_input_desc'].'"></th>
 				</tr><tr>
@@ -587,7 +587,7 @@ switch($_POST[search])
 					<th width="10%"><input type="submit" value="'.$lang['se_input_submit'].'"></th>
 				</tr>
 				</table>';
-				
+
 	$QueryFind	=	doquery("SELECT * FROM {{table}}", "banned", true);
 	$ORDERBY	=	$_POST['key_order'];
 	$ORDERBY2	=	$_POST['key_acc'];
@@ -595,7 +595,7 @@ switch($_POST[search])
 		$ORDER	=	"id";
 	else
 		$ORDER	=	$_POST['key_order'];
-		
+
 	if ($key_user	==	NULL)
 	{
 		$search	=	doquery("SELECT * FROM {{table}} ORDER BY `".$ORDER."` ".$ORDERBY2."", "banned");
@@ -604,7 +604,7 @@ switch($_POST[search])
 	{
 		$search	=	doquery("SELECT * FROM {{table}} WHERE `who` LIKE '%{$key_user}%' ORDER BY `".$ORDER."` ".$ORDERBY2."", "banned");
 	}
-	
+
 	$cnt	=	mysql_num_rows($search);
 	if ($cnt	==	NULL)
 	{
@@ -619,46 +619,46 @@ switch($_POST[search])
 			$theme		=	$suspended['theme'];
 			$time		=	$suspended['time'];
 			$longer		=	$suspended['longer'];
-			$author		=	$suspended['author'];	
-			
+			$author		=	$suspended['author'];
+
 			$date		=	gmdate("d/M/y H:i:s", $time);
 			$date_limit	=	gmdate("d/M/y H:i:s", $longer);
-			
+
 			$parse['table1']	 =
 			"<table width=\"90%\">
 			<tr><td class=\"c\">".$lang['se_id']."</th><td class=\"c\">".$lang['se_name']."</th><td class=\"c\">".$lang['se_ban_reason']."</th>
 			<td class=\"c\">".$lang['se_ban_time']."</th><td class=\"c\">".$lang['se_ban_limit']."</th><td class=\"c\">".$lang['se_ban_author']."</th></tr>";
-			
+
 			$parse['table2']	.=
 			"<tr><th>".$id."</th><th>".$name."</th><th width=\"25%\"><font color=aqua>".$theme."</font></th><th>".$date."</th>
 			<th>".$date_limit."</th><th>".$author."</th></tr>";
-			
+
 			$parse['table3']	 =	"<tr><th colspan=\"20\">".$lang['se_input_hay'].$cnt.$lang['se_input_susss']."</th></tr></table>";
 		}
 	}
 	display(parsetemplate(gettemplate('adm/SearchInDBBody'), $parse), false, '', true, false);
 	break;
-	
-	
+
+
 	// ADMINISTRADORES ####################################################################
 	case 'admin':
 	$parse['selected_s']	=	'selected = "selected"';
-	
+
 	if ($_POST['key_order'] == 'username')
 		$b	=	'checked = "checked"';
 	elseif ($_POST['key_order'] == 'email_2')
 		$c	=	'checked = "checked"';
 	elseif ($_POST['key_order'] == 'authlevel')
 		$d	=	'checked = "checked"';
-	else 
+	else
 		$a	=	'checked = "checked"';
-		
+
 	if ($_POST['key_acc']	==	'DESC')
 		$y	=	'checked = "checked"';
 	else
 		$z	=	'checked = "checked"';
-	
-	$parse['orderby']	=	
+
+	$parse['orderby']	=
 				'<table width="60%">
 				<tr>
 					<td class="c">-</td>
@@ -666,8 +666,8 @@ switch($_POST[search])
 					<td class="c">'.$lang['se_input_name'].'</td>
 					<td class="c">'.$lang['se_input_email'].'</td>
 					<td class="c">'.$lang['se_input_authlevel'].'</td>
-					<th><a href="#" title="'.$lang['se_input_asc'].'">'.$lang['se_input_a'].' </a> 
-					<input type="radio" name="key_acc" value="ASC" '.$z.' title="'.$lang['se_input_asc'].'">&nbsp; 
+					<th><a href="#" title="'.$lang['se_input_asc'].'">'.$lang['se_input_a'].' </a>
+					<input type="radio" name="key_acc" value="ASC" '.$z.' title="'.$lang['se_input_asc'].'">&nbsp;
 					<a href="#" title="'.$lang['se_input_desc'].'">'.$lang['se_input_d'].' </a>
 					<input type="radio" name="key_acc" value="DESC" '.$y.' title="'.$lang['se_input_desc'].'"></th>
 				</tr><tr>
@@ -679,7 +679,7 @@ switch($_POST[search])
 					<th width="10%"><input type="submit" value="'.$lang['se_input_submit'].'"></th>
 				</tr>
 				</table>';
-			
+
 	$QueryFind	=	doquery("SELECT * FROM {{table}}", "users", true);
 	$ORDERBY	=	$_POST['key_order'];
 	$ORDERBY2	=	$_POST['key_acc'];
@@ -687,7 +687,7 @@ switch($_POST[search])
 		$ORDER	=	"id";
 	else
 		$ORDER	=	$_POST['key_order'];
-		
+
 	if ($key_user	==	NULL)
 	{
 		$search	=	doquery("SELECT * FROM {{table}} WHERE `authlevel` > '0' ORDER BY `".$ORDER."` ".$ORDERBY2."", "users");
@@ -696,7 +696,7 @@ switch($_POST[search])
 	{
 		$search	=	doquery("SELECT * FROM {{table}} WHERE `username` LIKE '%{$key_user}%' AND `authlevel` > '0'  ORDER BY `".$ORDER."` ".$ORDERBY2."", "users");
 	}
-	
+
 	$cnt	=	mysql_num_rows($search);
 	if ($cnt	==	NULL)
 	{
@@ -712,57 +712,57 @@ switch($_POST[search])
 			$authlevel	=	$admin['authlevel'];
 			$suspended	=	$admin['bana'];
 			$vacations	=	$admin['urlaubs_modus'];
-		
+
 			if ($suspended == '0' or $suspended == NULL){$suspended = $lang['se_no'];}else{$suspended = "<font color=lime>".$lang['se_yes']."</font>";}
 			if ($vacations == '0'){$vacations = $lang['se_no'];}else{$vacations = "<font color=aqua>".$lang['se_yes']."</font>";}
 			for ($i = 0; $i < 5; $i++)
 			{
 				if ($authlevel == $i){$authlevel = $lang['se_authlevel'][$i];}
 			}
-		
-			
+
+
 			$parse['table1']	 =
 			"<table width=\"75%\">
 			<tr><td class=\"c\">".$lang['se_id']."</th><td class=\"c\">".$lang['se_name']."</th><td class=\"c\">".$lang['se_email']."</th>
 			<td class=\"c\">".$lang['se_auth']."</th><td class=\"c\">".$lang['se_ban']."</th><td class=\"c\">".$lang['se_vacat']."</th></tr>";
-			
+
 			$parse['table2']	.=
 			"<tr><th>".$id."</th><th>".$name."</th><th>".$email."</th><th>".$authlevel."</th><th>".$suspended."</th><th>".$vacations."</th></tr>";
-			
+
 			$parse['table3']	 =	"<tr><th colspan=\"20\">".$lang['se_input_hay'].$cnt.$lang['se_input_admm']."</th></tr></table>";
 		}
 	}
 	display(parsetemplate(gettemplate('adm/SearchInDBBody'), $parse), false, '', true, false);
 	break;
-	
-	
+
+
 	// INACTIVOS ####################################################################
 	case 'inactives':
 	$parse['selected_i']	=	'selected = "selected"';
 	$Time	=	time() - 604800;
-	
-	
+
+
 	if ($_POST['key_order'] == 'username')
 		$b	=	'checked = "checked"';
 	elseif ($_POST['key_order'] == 'onlinetime')
 		$c	=	'checked = "checked"';
-	else 
+	else
 		$a	=	'checked = "checked"';
-		
+
 	if ($_POST['key_acc']	==	'DESC')
 		$y	=	'checked = "checked"';
 	else
 		$z	=	'checked = "checked"';
-	
-	$parse['orderby']	=	
+
+	$parse['orderby']	=
 				'<table width="60%">
 				<tr>
 					<td class="c">-</td>
 					<td class="c">'.$lang['se_input_id'].'</td>
 					<td class="c">'.$lang['se_input_name'].'</td>
 					<td class="c">'.$lang['se_input_inacti'].'</td>
-					<th><a href="#" title="'.$lang['se_input_asc'].'">'.$lang['se_input_a'].' </a> 
-					<input type="radio" name="key_acc" value="ASC" '.$z.' title="'.$lang['se_input_asc'].'">&nbsp; 
+					<th><a href="#" title="'.$lang['se_input_asc'].'">'.$lang['se_input_a'].' </a>
+					<input type="radio" name="key_acc" value="ASC" '.$z.' title="'.$lang['se_input_asc'].'">&nbsp;
 					<a href="#" title="'.$lang['se_input_desc'].'">'.$lang['se_input_d'].' </a>
 					<input type="radio" name="key_acc" value="DESC" '.$y.' title="'.$lang['se_input_desc'].'"></th>
 				</tr><tr>
@@ -773,7 +773,7 @@ switch($_POST[search])
 					<th width="10%"><input type="submit" value="'.$lang['se_input_submit'].'"></th>
 				</tr>
 				</table>';
-	
+
 	$QueryFind	=	doquery("SELECT * FROM {{table}}", "users", true);
 	$ORDERBY	=	$_POST['key_order'];
 	$ORDERBY2	=	$_POST['key_acc'];
@@ -781,7 +781,7 @@ switch($_POST[search])
 		$ORDER	=	"id";
 	else
 		$ORDER	=	$_POST['key_order'];
-			
+
 	if ($key_user	==	NULL)
 	{
 		$search	=	doquery("SELECT * FROM {{table}} WHERE `onlinetime` < '".$Time."' ORDER BY `".$ORDER."` ".$ORDERBY2."", "users");
@@ -790,7 +790,7 @@ switch($_POST[search])
 	{
 		$search	=	doquery("SELECT * FROM {{table}} WHERE `username` LIKE '%{$key_user}%' AND `onlinetime` < '".$Time."' ORDER BY `".$ORDER."` ".$ORDERBY2."", "users");
 	}
-	
+
 	$cnt	=	mysql_num_rows($search);
 	if ($cnt	==	NULL)
 	{
@@ -806,29 +806,29 @@ switch($_POST[search])
 			$inactive	=	$inactives['onlinetime'];
 			$vacations	=	$inactives['urlaubs_modus'];
 			$suspended	=	$inactives['bana'];
-		
+
 			if ($suspended == '0' or $suspended == NULL){$suspended = $lang['se_no'];}else{$suspended = "<font color=lime>".$lang['se_yes']."</font>";}
 			if ($vacations == '0'){$vacations = $lang['se_no'];}else{$vacations = "<font color=aqua>".$lang['se_yes']."</font>";}
 			for ($i = 0; $i < 5; $i++)
 			{
 				if ($authlevel == $i){$authlevel = $lang['se_authlevel'][$i];}
 			}
-		
-			
+
+
 			$inactives	=	gmdate("d/M/y H:i:s", $inactive);
 			$parse['table1']	 =
 			"<table width=\"65%\">
 			<tr><td class=\"c\">".$lang['se_id']."</td><td class=\"c\">".$lang['se_name']."</td>
 			<td class=\"c\">".$lang['se_auth']."</td><td class=\"c\">".$lang['se_activity']."</td><td class=\"c\">".$lang['se_vacat']."</td>
 			<td class=\"c\">".$lang['se_ban']."</td></tr>";
-			
+
 			$parse['table2']	.=
 			"<tr><th>".$id."</th><th>".$name."</th><th>".$authlevel."</th><th>".$inactives."</th><th>".$vacations."</th><th>".$suspended."</th></tr>";
-			
+
 			$parse['table3']	 =	"<tr><th colspan=\"20\">".$lang['se_input_hay'].$cnt.$lang['se_input_inact']."</th></tr></table>";
-			
+
 		}
-		
+
 	}
 	display(parsetemplate(gettemplate('adm/SearchInDBBody'), $parse), false, '', true, false);
 	break;

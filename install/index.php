@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -275,7 +275,7 @@ switch ($Mode) {
 				$Qry16 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsFrame' LIMIT 1;";
 				$Qry17 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsText' LIMIT 1;";
 				$Qry18 = "DELETE FROM `$_POST[prefix]config` WHERE `config_name` = 'VERSION'";
-				$Qry19 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.9.5');";
+				$Qry19 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.9.6');";
 				$Qry20 = "ALTER TABLE `$_POST[prefix]rw` ADD `owners` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0';";
 				$Qry21 = "ALTER TABLE `$_POST[prefix]fleets` CHANGE `fleet_group` `fleet_group` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' ;";
 				$Qry22 = "ALTER TABLE `$_POST[prefix]aks` ADD `planet_type` TINYINT( 1 ) NOT NULL DEFAULT '1' AFTER `planet` ;";
@@ -356,7 +356,7 @@ switch ($Mode) {
 					case'2.9.4':
 						$QrysArray	= array($Qry18, $Qry19, $Qry33);
 					break;
-					case'2.9.5':
+					case( ( $_POST[modo] == '2.9.5' ) or ( $_POST[modo] == '2.9.6' ) ):
 						$QrysArray	= array($Qry18, $Qry19);
 					break;
 				}

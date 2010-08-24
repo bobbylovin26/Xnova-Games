@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By Neko from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By Neko from xgproyect.net	         #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -37,41 +37,41 @@ $parse	=	$lang;
 function MyCrazyLittleSearch($SpecifyItems, $WhereItem, $SpecifyWhere, $SpecialSpecify, $Order, $OrderBY, $Limit, $Table, $Page, $NameLang, $ArrayOSec, $Minimize, $SName)
 {
 	global $user, $phpEx, $xgp_root, $lang, $EditUsers;
-	
+
 	$parse	=	$lang;
-	
-	if (!$Page) 
-	{ 
-		$INI = 0; 
-    	$Page = 1; 
+
+	if (!$Page)
+	{
+		$INI = 0;
+    	$Page = 1;
 	}
 	else
 		$INI = ($Page - 1) * $Limit;
-		
+
 	$ArrayEx	=	explode(",", $SpecifyItems);
 
 	if (!$Order || !in_array($Order, $ArrayOSec))
 		$Order	=	$ArrayEx[0];
-		
+
 	$CountArray	=	count($ArrayEx);
-	
-	
+
+
 	$QuerySearch	 =	"SELECT ".$SpecifyItems." FROM {{table}} ";
 	$QuerySearch	.=	$WhereItem." ";
 	$QuerySearch	.=	$SpecifyWhere." ".$SpecialSpecify." ";
 	$QuerySearch	.=	"ORDER BY ".$Order." ".$OrderBY." ";
 	$QuerySearch	.=	"LIMIT ".$INI.",".$Limit;
 	$FinalQuery		=	doquery($QuerySearch, $Table);
-	
+
 	$QueryCSearch	 =	"SELECT COUNT(".$ArrayEx[0].") AS `total` FROM {{table}} ";
 	$QueryCSearch	.=	$WhereItem." ";
 	$QueryCSearch	.=	$SpecifyWhere." ".$SpecialSpecify." ";
 	$CountQuery		=	doquery($QueryCSearch, $Table, true);
-	
+
 	if ($CountQuery['total'] > 0)
 	{
 		$NumberOfPages = ceil($CountQuery['total'] / $Limit);
-	
+
 		$UrlForPage	=	"SearchingPage.php?search=".$_GET['search']."
 						&search_in=".$_GET['search_in']."
 						&fuki=".$_GET['fuki']."
@@ -79,43 +79,43 @@ function MyCrazyLittleSearch($SpecifyItems, $WhereItem, $SpecifyWhere, $SpecialS
 						&key_order=".$_GET['key_order']."
 						&key_acc=".$_GET['key_acc']."
 						&Limit=".$_GET['Limit'];
-						 
+
 		if($NumberOfPages > 1)
 		{
 			$BeforePage	=	($Page - 1);
 			$NextPage	=	($Page + 1);
-			
+
 			for ($i = 1; $i <= $NumberOfPages; $i++)
-			{ 
-				if ($Page == $i) 
-					$PAGEE	.=	 "&nbsp;".$Page."&nbsp;"; 
+			{
+				if ($Page == $i)
+					$PAGEE	.=	 "&nbsp;".$Page."&nbsp;";
 				else
-					$PAGEE	.=	 " <a href='".$UrlForPage."&Page=".$i.$Minimize."'>".$i."</a> ";	
+					$PAGEE	.=	 " <a href='".$UrlForPage."&Page=".$i.$Minimize."'>".$i."</a> ";
 			}
 
-			if(($Page - 1) > 0) 
+			if(($Page - 1) > 0)
 				$BEFORE	=	 "<a href='".$UrlForPage."&Page=".$BeforePage.$Minimize."'>
 						<img src=\"../styles/images/Adm/arrowleft.png\" title=".$lang['se__before']." height=10 width=14></a> ";
-		
-			if(($Page + 1) <= $NumberOfPages) 
+
+			if(($Page + 1) <= $NumberOfPages)
 				$NEXT	=	 "<a href='".$UrlForPage."&Page=".$NextPage.$Minimize."'>
 						<img src=\"../styles/images/Adm/arrowright.png\" title=".$lang['se__next']." height=10 width=14></a>";
-		
 
-			$Search['PAGES']	=		
+
+			$Search['PAGES']	=
 				"<tr>
 					<td colspan=3 style=\"color:#00CC33;border: 1px lime solid;\">".$BEFORE."&nbsp; ".$PAGEE." &nbsp;".$NEXT."</td>
 				</tr>";
 		}
-	
+
 
 		$Search['LIST']	 =	"<table width=\"100%\">";
 		$Search['LIST']	.=	"<tr>";
-	
+
 		for ($i = 0; $i < $CountArray; $i++)
 			$Search['LIST']	.=	"<td class=c>".$NameLang[$i]."</td>";
-	
-		if ($Table == "users") 
+
+		if ($Table == "users")
 		{
 			$Search['LIST']	.=	"<td class=c>".$lang['se_search_info']."</td>";
 
@@ -123,23 +123,23 @@ function MyCrazyLittleSearch($SpecifyItems, $WhereItem, $SpecifyWhere, $SpecialS
 			if ($user['authlevel']	==	'3')
 				$Search['LIST']	.=	"<td class=c>".$lang['button_delete']."</td>";
 		}
-		
+
 		if ($Table == "planets")
 		{
 			if($_GET['search'] == 'planet')
 				$Search['LIST']	.=	"<td class=c>".$lang['se_input_have_moon']."</td>";
-				
+
 			if ($EditUsers == '1')
 				$Search['LIST']	.=	"<td class=c>".$lang['se_search_edit']."</td>";
-				
+
 			if ($user['authlevel'] == '3')
 				$Search['LIST']	.=	"<td class=c>".$lang['button_delete']."</td>";
 		}
 
-		
+
 		$Search['LIST']	.=	"</tr>";
-	
-	
+
+
 		while ($WhileResult	=	mysql_fetch_array($FinalQuery))
 		{
 			$Search['LIST']	 .=	"<tr>";
@@ -148,73 +148,73 @@ function MyCrazyLittleSearch($SpecifyItems, $WhereItem, $SpecifyWhere, $SpecialS
 					$WhileResult[3]	=	pretty_time( time() - $WhileResult[3] );
 				else
 					$WhileResult[3]	=	date("d-m-Y H:i:s", $WhileResult[3] );
-					
+
 				$WhileResult[4]	=	date("d-m-Y H:i:s", $WhileResult[4]);
-				
+
 				$WhileResult[6]	=	$lang['rank'][$WhileResult[6]];
 				(($WhileResult[7] == '1')	? $WhileResult[7] = "<font color=lime>".$lang['one_is_yes'][1]."</font>" : $WhileResult[7] = $lang['one_is_yes'][0]);
 				(($WhileResult[8] == '1')	? $WhileResult[8] = "<font color=lime>".$lang['one_is_yes'][1]."</font>" : $WhileResult[8] = $lang['one_is_yes'][0]);
 			}
-			
+
 			if ($Table == "banned"){
 				$WhileResult[2]	=	date("d-m-Y H:i:s", $WhileResult[2]);
 				$WhileResult[3]	=	date("d-m-Y H:i:s", $WhileResult[3]);
 			}
-			
+
 			if ($Table == "alliance")
 				$WhileResult[4]	=	date("d-m-Y H:i:s", $WhileResult[4]);
-				
+
 			if ($Table == "planets")
 				$WhileResult[3]	=	pretty_time(time() - $WhileResult[3]);
-	
-	
+
+
 			for ($i = 0; $i < $CountArray; $i++)
 				$Search['LIST']	.=	"<th>".$WhileResult[$i]."</th>";
-		
-		
+
+
 			if ($Table == "users")
 			{
 				$Search['LIST']	.=	"<th><a href=AccountDataPage.php?id_u=".$WhileResult[0]."><img title=".$WhileResult[1]." src=../styles/images/Adm/GO.png></a></th>";
-			
-			
+
+
 				if ($user['authlevel']	==	'3')
 				{
 					if ($WhileResult[0] != $user['id'])
 						$DELETEBUTTON	=	"<a href=\"SearchingPage.php?delete=user&user=".$WhileResult[0]."\" border=\"0\" onclick=\"return confirm('".$lang['ul_sure_you_want_dlte']." $WhileResult[1]?');\"><img src=\"../styles/images/r1.png\" title=".$WhileResult[1]."></a>";
 					else
 						$DELETEBUTTON	=	"-";
-					
+
 					$Search['LIST']	.=	"<th>".$DELETEBUTTON."</th>";
 				}
 			}
-		
+
 			if ($Table == "planets"){
-			
+
 				if($_GET['search'] == 'planet')
 				{
 				$QueryForMoons	=	doquery("SELECT id_luna FROM {{table}} WHERE id_planet = '".$WhileResult[0]."'", "galaxy", true);
 				(($QueryForMoons['id_luna'] > '0')	? $QueryForMoons2 = "<font color=lime>".$lang['one_is_yes'][1]."</font>" : $QueryForMoons2 = $lang['one_is_yes'][0]);
 				$Search['LIST']	.=	"<th>".$QueryForMoons2."</th>";}
-				
+
 				if ($EditUsers == '1')
 					$Search['LIST']	.=	"<th><a href=\"AccountEditorPage.php\" border=\"0\"><img src=\"../styles/images/Adm/GO.png\" title=".$lang['se_search_edit']."></a></th>";
-					
+
 				if ($user['authlevel'] == '3')
 					$Search['LIST']	.=	"<th><a href=\"SearchingPage.php?delete=planet&planet=".$WhileResult[0]."\" border=\"0\" onclick=\"return confirm('".$lang['se_confirm_planet']." $WhileResult[1]');\"><img src=\"../styles/images/r1.png\" title=".$lang['button_delete']."></a></th>";
 			}
-			
+
 			$Search['LIST']	.=	"</tr>";
 		}
-		
+
 		$Search['LIST']	.=	"<tr><th colspan=20>".$lang['se_input_hay']."<font color=lime>".$CountQuery['total']."</font>".$SName."</th></tr>";
 		$Search['LIST']	.=	"</table>";
-	
-	
+
+
 		mysql_free_result($FinalQuery);
-		
+
 		$Result	.=	parsetemplate(gettemplate('adm/SearchInDBRow'), $Search);
-	
-	
+
+
 		return $Result;
 	}
 	else
@@ -239,9 +239,9 @@ elseif ($_GET['delete'] == 'planet'){
 	LogFunction($Log, "GeneralLog", $LogCanWork);
 	message($lang['se_delete_succes_p'], "SearchingPage.php?search=planet&minimize=on", 2);
 	}
-		
-		
-		
+
+
+
 $SearchFile		=	$_GET['search'];
 $SearchFor		=	$_GET['search_in'];
 $SearchMethod	=	$_GET['fuki'];
@@ -321,24 +321,24 @@ if ($_GET)
 		$NameLang		=	$lang['se_search_users'];
 		$SpecifyItems	=	"id,username,email_2,onlinetime,register_time,user_lastip,authlevel,bana,urlaubs_modus";
 		$SName			=	$lang['se_input_userss'];
-		
+
 		if ($SearchFile == "vacation"){
 			$SpecialSpecify	=	"AND urlaubs_modus = '1'";
 			$SName			=	$lang['se_input_vacatii'];}
-			
+
 		if ($SearchFile == "online"){
 			$SpecialSpecify	=	"AND onlinetime >= '".(time() - 15 * 60)."'";
 			$SName			=	$lang['se_input_connect'];}
-			
+
 		if ($SearchFile == "inactives"){
 			$SpecialSpecify	=	"AND onlinetime < '".(time() - 60 * 60 * 24 * 7)."'";
 			$SName			=	$lang['se_input_inact'];}
-			
+
 		if ($SearchFile == "admin"){
 			$SpecialSpecify	=	"AND authlevel <= '".$user['authlevel']."' AND authlevel > '0'";
 			$SName			=	$lang['se_input_admm'];}
-			
-			
+
+
 		(($SearchFor == "name") ? $WhereItem = "WHERE username" : $WhereItem = "WHERE id");
 		$ArrayOSec		=	array("id", "username", "email_2", "onlinetime", "register_time", "user_lastip", "authlevel", "bana", "urlaubs_modus");
 		$Array0SecCount	=	count($ArrayOSec);
@@ -346,69 +346,69 @@ if ($_GET)
 		for ($OrderNum = 0; $OrderNum < $Array0SecCount; $OrderNum++)
 			$OrderBYParse	 .=	'<option value="'.$ArrayOSec[$OrderNum].'"'.(($Order == $ArrayOSec[$OrderNum]) ? " selected": "").'>'.$lang['se_search_users'][$OrderNum].'</option>';
 	}
-	
-	
+
+
 	elseif (in_array($SearchFile, $ArrayPlanets))
 	{
 		$Table			=	"planets";
 		$TableUsers		=	"2";
 		$NameLang		=	$lang['se_search_planets'];
 		$SpecifyItems	=	"id,name,id_owner,last_update,galaxy,system,planet";
-		
+
 		if ($SearchFile == "planet"){
 			$SpecialSpecify	=	"AND planet_type = '1'";
 			$SName			=	$lang['se_input_planett'];}
-			
+
 		if ($SearchFile == "moon"){
 			$SpecialSpecify	=	"AND planet_type = '3'";
 			$SName			=	$lang['se_input_moonn'];}
-			
+
 		if ($SearchFile == "p_connect"){
 			$SpecialSpecify	=	"AND last_update >= '".(time() - 60 * 60)."'";
 			$SName			=	$lang['se_input_act_pla'];}
-			
-		
+
+
 		(($SearchFor == "name") ? $WhereItem = "WHERE name" : $WhereItem = "WHERE id");
-		
+
 		$ArrayOSec		=	array("id", "name", "id_owner", "last_update", "galaxy", "system", "planet");
 		$Array0SecCount	=	count($ArrayOSec);
-		
+
 		for ($OrderNum = 0; $OrderNum < $Array0SecCount; $OrderNum++)
 			$OrderBYParse	 .=	'<option value="'.$ArrayOSec[$OrderNum].'"'.(($Order == $ArrayOSec[$OrderNum]) ? " selected": "").'>'.$lang['se_search_planets'][$OrderNum].'</option>';
 	}
-	
-	
+
+
 	elseif (in_array($SearchFile, $ArrayBanned))
 	{
 		$Table			=	"banned";
 		$NameLang		=	$lang['se_search_banned'];
 		$SpecifyItems	=	"id,who,time,longer,theme,author";
 		$SName			=	$lang['se_input_susss'];
-		
+
 		(($SearchFor == "name") ? $WhereItem = "WHERE who" : $WhereItem = "WHERE id");
-		
-		
+
+
 		$ArrayOSec		=	array("id", "who", "time", "longer", "theme", "author");
 		$Array0SecCount	=	count($ArrayOSec);
-		
+
 		for ($OrderNum = 0; $OrderNum < $Array0SecCount; $OrderNum++)
 			$OrderBYParse	 .=	'<option value="'.$ArrayOSec[$OrderNum].'"'.(($Order == $ArrayOSec[$OrderNum]) ? " selected": "").'>'.$lang['se_search_banned'][$OrderNum].'</option>';
 	}
-	
-	
+
+
 	elseif (in_array($SearchFile, $ArrayAlliance))
 	{
 		$Table			=	"alliance";
 		$NameLang		=	$lang['se_search_alliance'];
 		$SpecifyItems	=	"id,ally_name,ally_tag,ally_owner,ally_register_time,ally_members";
 		$SName			=	$lang['se_input_allyy'];
-		
+
 		(($SearchFor == "name") ? $WhereItem = "WHERE ally_name" : $WhereItem = "WHERE id");
-		
-		
+
+
 		$ArrayOSec		=	array("id", "ally_name", "ally_tag", "ally_owner", "ally_register_time", "ally_members");
 		$Array0SecCount	=	count($ArrayOSec);
-		
+
 		for ($OrderNum = 0; $OrderNum < $Array0SecCount; $OrderNum++)
 			$OrderBYParse	 .=	'<option value="'.$ArrayOSec[$OrderNum].'"'.(($Order == $ArrayOSec[$OrderNum]) ? " selected": "").'>'.$lang['se_search_alliance'][$OrderNum].'</option>';
 	}
@@ -418,22 +418,22 @@ if ($_GET)
 		"<th>
 			".$lang['se_search_order']."
 		</th>";
-		
+
 	$parse['ORDER_BY']	=
 			"<th>
 				<select name=\"key_order\">
 					".$OrderBYParse."
 				</select>
 			</th>";
-			
-			
+
+
 	$parse['TPL_ROW']	=	MyCrazyLittleSearch($SpecifyItems, $WhereItem, $SpecifyWhere, $SpecialSpecify, $Order, $OrderBY, $Limit, $Table, $Page, $NameLang, $ArrayOSec, $Minimize, $SName);
 }
 
 
 $Micro 						= 	explode(" ", microtime());
 $Time_Two 					= 	(($Micro[1] + $Micro[0]) - $Time_One);
-$parse['TimeToCreatePage']	=	$lang['se_time_of_page'].$Time_Two."&nbsp;".$lang['time_seconds']; 
+$parse['TimeToCreatePage']	=	$lang['se_time_of_page'].$Time_Two."&nbsp;".$lang['time_seconds'];
 
 
 display(parsetemplate(gettemplate('adm/SearchInDBBody'), $parse), false, '', true, false);

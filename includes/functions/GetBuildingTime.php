@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -45,7 +45,7 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 			else
 			{
 				$limite = $intergal_lab+1;
-				$inves = doquery("SELECT laboratory FROM {{table}} WHERE id_owner='".$user['id']."' ORDER BY laboratory DESC limit ".$limite."", 'planets');
+				$inves = doquery("SELECT laboratory FROM {{table}} WHERE id_owner='".intval($user['id'])."' ORDER BY laboratory DESC LIMIT ".$limite."", 'planets');
 				$lablevel = 0;
 				while ($row= mysql_fetch_array($inves))
 				{

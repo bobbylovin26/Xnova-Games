@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -36,7 +36,7 @@ function ShowImperiumPage($CurrentUser)
 	`colonizer`,`recycler`,`spy_sonde`,`bomber_ship`,`solar_satelit`,`destructor`,`dearth_star`,
 	`battleship`,`supernova`,`misil_launcher`,`small_laser`,`big_laser`,`gauss_canyon`,`ionic_canyon`,
 	`buster_canyon`,`small_protection_shield`,`planet_protector`,`big_protection_shield`,`interceptor_misil`,
-	`interplanetary_misil`, `mondbasis`, `phalanx`, `sprungtor` FROM {{table}} WHERE `id_owner` = '" . $CurrentUser['id'] . "' AND `destruyed` = 0;", 'planets');
+	`interplanetary_misil`, `mondbasis`, `phalanx`, `sprungtor` FROM {{table}} WHERE `id_owner` = '" . intval($CurrentUser['id']) . "' AND `destruyed` = 0;", 'planets');
 
 	$parse 	= $lang;
 	$planet = array();

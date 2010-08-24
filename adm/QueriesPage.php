@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By Neko from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By Neko from xgproyect.net	         #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #

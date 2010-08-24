@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -67,9 +67,9 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 		$BuildListScript .= "				m = \"0\" + m;\n";
 		$BuildListScript .= "			}\n";
 		$BuildListScript .= "			if (1) {\n";
-		$BuildListScript .= "				blc.innerHTML = h + \":\" + m + \":\" + s + \"<br><a href=game.php?page=". $CallProgram ."&listid=\" + pk + \"&cmd=\" + pm + \"&planet=\" + pl + \">".$lang['bd_cancel']."</a>\";\n";
+		$BuildListScript .= "				blc.innerHTML = h + \":\" + m + \":\" + s + \"<br><a href=game.php?page=buildings&r=". $CallProgram ."&listid=\" + pk + \"&cmd=\" + pm + \"&planet=\" + pl + \">".$lang['bd_cancel']."</a>\";\n";
 		$BuildListScript .= "			} else {\n";
-		$BuildListScript .= "				blc.innerHTML = h + \":\" + m + \":\" + s + \"<br><a href=game.php?page=". $CallProgram ."&listid=\" + pk + \"&cmd=\" + pm + \"&planet=\" + pl + \">".$lang['bd_cancel']."</a>\";\n";
+		$BuildListScript .= "				blc.innerHTML = h + \":\" + m + \":\" + s + \"<br><a href=game.php?page=buildings&r=". $CallProgram ."&listid=\" + pk + \"&cmd=\" + pm + \"&planet=\" + pl + \">".$lang['bd_cancel']."</a>\";\n";
 		$BuildListScript .= "			}\n";
 		$BuildListScript .= "		}\n";
 		$BuildListScript .= "		pp = pp - 1;\n";

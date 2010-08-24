@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -122,7 +122,7 @@ class ShowGalaxyPage extends GalaxyRows
 	{
 		global $planetcount, $dpath, $user, $xgp_root, $phpEx;
 
-		$UserPoints    = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $user['id'] ."';", 'statpoints', true);
+		$UserPoints    = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". intval($user['id']) ."';", 'statpoints', true);
 
 		$Result = "";
 		for ($Planet = 1; $Planet < 1+(MAX_PLANET_IN_SYSTEM); $Planet++)
@@ -198,7 +198,7 @@ class ShowGalaxyPage extends GalaxyRows
 		$CurrentGalaxy 	= $CurrentPlanet['galaxy'];
 		$CanDestroy    	= $CurrentPlanet[$resource[213]] + $CurrentPlanet[$resource[214]];
 
-		$maxfleet       = doquery("SELECT * FROM {{table}} WHERE `fleet_owner` = '". $CurrentUser['id'] ."';", 'fleets');
+		$maxfleet       = doquery("SELECT * FROM {{table}} WHERE `fleet_owner` = '". intval($CurrentUser['id']) ."';", 'fleets');
 		$maxfleet_count = mysql_num_rows($maxfleet);
 
 		if (!isset($mode))
@@ -221,15 +221,23 @@ class ShowGalaxyPage extends GalaxyRows
 		}
 		elseif ($mode == 1)
 		{
-			if (is_numeric($_POST["galaxy"]))
-				$_POST["galaxy"] = abs($_POST["galaxy"]);
+			if (intval($_POST["galaxy"]))
+			{
+				$_POST["galaxy"] = ereg_replace("[^0-9]","",$_POST["galaxy"]);
+			}
 			else
+			{
 				$_POST["galaxy"] = 1;
+			}
 
-			if (is_numeric($_POST["system"]))
-				$_POST["system"] = abs($_POST["system"]);
+			if (intval($_POST["system"]))
+			{
+				$_POST["system"] = ereg_replace("[^0-9]","",$_POST["system"]);
+			}
 			else
+			{
 				$_POST["system"] = 1;
+			}
 
 			if ($_POST["galaxy"] > MAX_GALAXY_IN_WORLD)
 				$_POST["galaxy"] = MAX_GALAXY_IN_WORLD;
@@ -318,14 +326,14 @@ class ShowGalaxyPage extends GalaxyRows
 		}
 		elseif ($mode == 2)
 		{
-			$galaxy        = $_GET['galaxy'];
-			$system        = $_GET['system'];
-			$planet        = $_GET['planet'];
+			$galaxy        = intval($_GET['galaxy']);
+			$system        = intval($_GET['system']);
+			$planet        = intval($_GET['planet']);
 		}
 		elseif ($mode == 3)
 		{
-			$galaxy        = $_GET['galaxy'];
-			$system        = $_GET['system'];
+			$galaxy        = intval($_GET['galaxy']);
+			$system        = intval($_GET['system']);
 		}
 		else
 		{

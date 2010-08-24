@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2010 By Neko from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2010 By Neko from xgproyect.net	         #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -27,10 +27,10 @@ if ($user['authlevel'] < 1) die();
 function LogFunction ($Text, $Estado, $LogCanWork)
 {
 	global $lang;
-	
+
 	$Archive	=	"../adm/Log/".$Estado.".php";
-	
-	
+
+
 	if ($LogCanWork == 1)
 	{
 		if (!file_exists($Archive))

@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -27,13 +27,13 @@ function ShowFleetPage($CurrentUser, $CurrentPlanet)
 
 	$parse				= $lang;
 
-	$maxfleet  			= doquery("SELECT COUNT(fleet_owner) AS `actcnt` FROM {{table}} WHERE `fleet_owner` = '".$CurrentUser['id']."';", 'fleets', true);
+	$maxfleet  			= doquery("SELECT COUNT(fleet_owner) AS `actcnt` FROM {{table}} WHERE `fleet_owner` = '".intval($CurrentUser['id'])."';", 'fleets', true);
 	$MaxFlyingFleets    = $maxfleet['actcnt'];
 	$MaxExpedition      = $CurrentUser[$resource[124]];
 
 	if ($MaxExpedition >= 1)
 	{
-		$maxexpde  			= doquery("SELECT COUNT(fleet_owner) AS `expedi` FROM {{table}} WHERE `fleet_owner` = '".$CurrentUser['id']."' AND `fleet_mission` = '15';", 'fleets', true);
+		$maxexpde  			= doquery("SELECT COUNT(fleet_owner) AS `expedi` FROM {{table}} WHERE `fleet_owner` = '".intval($CurrentUser['id'])."' AND `fleet_mission` = '15';", 'fleets', true);
 	    $ExpeditionEnCours  = $maxexpde['expedi'];
 		$EnvoiMaxExpedition = 1 + floor( $MaxExpedition / 3 );
 	}
@@ -79,7 +79,7 @@ function ShowFleetPage($CurrentUser, $CurrentPlanet)
 	$parse['currentexpeditions']	= $ExpeditionEnCours;
 	$parse['maxexpeditions']		= $EnvoiMaxExpedition;
 
-	$fq = doquery("SELECT * FROM {{table}} WHERE fleet_owner='$CurrentUser[id]' AND fleet_mission <> 10", "fleets");
+	$fq = doquery("SELECT * FROM {{table}} WHERE fleet_owner='".intval($CurrentUser[id])."' AND fleet_mission <> 10", "fleets");
 	$i  = 0;
 
 	while ($f = mysql_fetch_array($fq))

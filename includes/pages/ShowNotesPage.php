@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -26,30 +26,30 @@ function ShowNotesPage($CurrentUser)
 	global $lang;
 
 	$parse 	= $lang;
-	$a 		= $_GET['a'];
+	$a 		= intval($_GET['a']);
 	$n 		= intval($_GET['n']);
 
 	if($_POST["s"] == 1 || $_POST["s"] == 2)
 	{
 		$time 		= time();
-		$priority 	= $_POST["u"];
+		$priority 	= intval($_POST["u"]);
 		$title 		= ($_POST["title"]) ? mysql_escape_string(strip_tags($_POST["title"])) : "Sin t&iacute;tulo";
 		$text 		= ($_POST["text"]) ? mysql_escape_string(strip_tags($_POST["text"])) : "Sin texto";
 
 		if($_POST["s"] ==1)
 		{
-			doquery("INSERT INTO {{table}} SET owner={$CurrentUser['id']}, time=$time, priority=$priority, title='$title', text='$text'","notes");
+			doquery("INSERT INTO {{table}} SET owner=".intval($CurrentUser[id]).", time=$time, priority=$priority, title='$title', text='$text'","notes");
 			header("location:game.php?page=notes");
 		}
 		elseif($_POST["s"] == 2)
 		{
 			$id = intval($_POST["n"]);
-			$note_query = doquery("SELECT * FROM {{table}} WHERE id=$id AND owner=".$CurrentUser["id"],"notes");
+			$note_query = doquery("SELECT * FROM {{table}} WHERE id=".intval($id)." AND owner=".intval($CurrentUser[id])."","notes");
 
 			if(!$note_query)
 				header("location:game.php?page=notes");
 
-			doquery("UPDATE {{table}} SET time=$time, priority=$priority, title='$title', text='$text' WHERE id=$id","notes");
+			doquery("UPDATE {{table}} SET time=$time, priority=$priority, title='$title', text='$text' WHERE id=".intval($id)."","notes");
 			header("location:game.php?page=notes");
 		}
 	}
@@ -60,12 +60,12 @@ function ShowNotesPage($CurrentUser)
 			if(preg_match("/delmes/i",$a) && $b == "y")
 			{
 				$id = str_replace("delmes","",$a);
-				$note_query = doquery("SELECT * FROM {{table}} WHERE id=$id AND owner={$CurrentUser['id']}","notes");
+				$note_query = doquery("SELECT * FROM {{table}} WHERE id=".intval($id)." AND owner=".intval($CurrentUser[id])."","notes");
 
 				if($note_query)
 				{
 					$deleted++;
-					doquery("DELETE FROM {{table}} WHERE `id`=$id;","notes");
+					doquery("DELETE FROM {{table}} WHERE `id`=".intval($id).";","notes");
 				}
 			}
 		}
@@ -90,7 +90,7 @@ function ShowNotesPage($CurrentUser)
 		}
 		elseif($_GET["a"] == 2)
 		{
-			$note = doquery("SELECT * FROM {{table}} WHERE owner={$CurrentUser['id']} AND id=$n",'notes',true);
+			$note = doquery("SELECT * FROM {{table}} WHERE owner=".intval($CurrentUser[id])." AND id=".intval($n)."",'notes',true);
 
 			if(!$note)
 				header("location:game.php?page=notes");
@@ -111,7 +111,7 @@ function ShowNotesPage($CurrentUser)
 		}
 		else
 		{
-			$notes_query = doquery("SELECT * FROM {{table}} WHERE owner={$CurrentUser['id']} ORDER BY time DESC",'notes');
+			$notes_query = doquery("SELECT * FROM {{table}} WHERE owner=".intval($CurrentUser[id])." ORDER BY time DESC",'notes');
 
 			$count = 0;
 

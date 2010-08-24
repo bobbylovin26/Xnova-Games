@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -27,21 +27,21 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 
 		if($CurrentUser['urlaubs_modus'] == 1)
 		{
-			$query = doquery("SELECT * FROM {{table}} WHERE id_owner = '{$CurrentUser['id']}'", 'planets');
+			$query = doquery("SELECT * FROM {{table}} WHERE id_owner = '".intval($CurrentUser['id'])."'", 'planets');
 
 			while($id = mysql_fetch_array($query))
 			{
 				doquery("UPDATE {{table}} SET
-				metal_perhour = '".$game_config['metal_basic_income']."',
-				crystal_perhour = '".$game_config['crystal_basic_income']."',
-				deuterium_perhour = '".$game_config['deuterium_basic_income']."',
+				metal_perhour = '".intval($game_config['metal_basic_income'])."',
+				crystal_perhour = '".intval($game_config['crystal_basic_income'])."',
+				deuterium_perhour = '".intval($game_config['deuterium_basic_income'])."',
 				metal_mine_porcent = '0',
 				crystal_mine_porcent = '0',
 				deuterium_sintetizer_porcent = '0',
 				solar_plant_porcent = '0',
 				fusion_plant_porcent = '0',
 				solar_satelit_porcent = '0'
-				WHERE id = '{$id['id']}' AND `planet_type` = '1' ", 'planets');
+				WHERE id = '".intval($id['id'])."' AND `planet_type` = '1' ", 'planets');
 			}
 			return true;
 		}

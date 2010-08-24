@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By Neko from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 Neko from xgproyect.net	         #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -56,7 +56,7 @@ if ($_GET['moderation'] == '1')
 	if($Operator[2] == 1){$parse['config_o'] = 'checked = "checked"';}
 	if($Operator[3] == 1){$parse['tools_o'] = 'checked = "checked"';}
 	if($Operator[4] == 1){$parse['log_o'] = 'checked = "checked"';}
-	
+
 	// ADMINISTRADOR (SOLO PARA EL HISTORIAL)
 	if($Administrator[0] == 1){$parse['log_a'] = 'checked = "checked"';}
 
@@ -68,22 +68,22 @@ if ($_GET['moderation'] == '1')
 
 	if ($_POST['mode'])
 	{
-		if($_POST['view_m'] == 'on') $view_m = 1; else $view_m = 0; 
-		if($_POST['edit_m'] == 'on') $edit_m = 1; else $edit_m = 0; 
+		if($_POST['view_m'] == 'on') $view_m = 1; else $view_m = 0;
+		if($_POST['edit_m'] == 'on') $edit_m = 1; else $edit_m = 0;
 		if($_POST['config_m'] == 'on') $config_m = 1; else $config_m = 0;
 		if($_POST['tools_m'] == 'on') $tools_m = 1; else $tools_m = 0;
 		if($_POST['log_m'] == 'on') $log_m = 1; else $log_m = 0;
-		
+
 		if($_POST['view_o'] == 'on') $view_o = 1; else $view_o = 0;
 		if($_POST['edit_o'] == 'on') $edit_o = 1; else $edit_o = 0;
 		if($_POST['config_o'] == 'on') $config_o = 1; else $config_o = 0;
 		if($_POST['tools_o'] == 'on') $tools_o = 1; else $tools_o = 0;
 		if($_POST['log_o'] == 'on') $log_o = 1; else $log_o = 0;
-		
+
 		if($_POST['log_a'] == 'on') $log_a = 1; else $log_a = 0;
-	
-	
-	
+
+
+
 		$QueryEdit	=	$view_m.",".$edit_m.",".$config_m.",".$tools_m.",".$log_m.";".
 						$view_o.",".$edit_o.",".$config_o.",".$tools_o.",".$log_o.";".$log_a.";";
 
@@ -100,14 +100,14 @@ if ($_GET['moderation'] == '1')
 		$Log	.=	$lang['log_edit'].":     ".$lang['log_viewmod'][$edit_o]."\n";
 		$Log	.=	$lang['log_view'].":     ".$lang['log_viewmod'][$view_o]."\n";
 		$Log	.=	$lang['log_config'].":     ".$lang['log_viewmod'][$config_o]."\n";
-				
+
 		LogFunction($Log, "ModerationLog", $LogCanWork);
-		
-		
+
+
 		doquery("UPDATE {{table}} SET `config_value` = '".$QueryEdit."' WHERE `config_name` = 'moderation'", "config");
 		header("Location: Moderation.php?moderation=1");
 	}
-	
+
 	display(parsetemplate(gettemplate('adm/ModerationBody'), $parse), false, '' , true, false);
 }
 elseif ($_GET['moderation'] == '2')
@@ -116,8 +116,8 @@ elseif ($_GET['moderation'] == '2')
 		{
 			$parse['authlevels']	.=	"<option value=\"".$i."\">".$lang['rank'][$i]."</option>";
 		}
-		
-		
+
+
 		if ($_GET['get'] == 'adm')
 			$WHEREUSERS	=	"WHERE `authlevel` = '3'";
 		elseif ($_GET['get'] == 'ope')
@@ -125,18 +125,18 @@ elseif ($_GET['moderation'] == '2')
 		elseif ($_GET['get'] == 'mod')
 			$WHEREUSERS	=	"WHERE `authlevel` = '1'";
 		elseif ($_GET['get'] == 'pla')
-			$WHEREUSERS	=	"WHERE `authlevel` = '0'";			
-			
-			
+			$WHEREUSERS	=	"WHERE `authlevel` = '0'";
+
+
 		$QueryUsers	=	doquery("SELECT `id`, `username`, `authlevel` FROM {{table}} ".$WHEREUSERS."", "users");
-			
-			
+
+
 		while ($List	=	mysql_fetch_array($QueryUsers))
 		{
 			$parse['List']	.=	"<option value=\"".$List['id']."\">".$List['username']."&nbsp;&nbsp;(".$lang['rank'][$List['authlevel']].")</option>";
 		}
 
-		
+
 		if ($_POST)
 		{
 			if ($_POST['id_1'] != NULL && $_POST['id_2'] != NULL)
@@ -162,22 +162,22 @@ elseif ($_GET['moderation'] == '2')
 				else
 					$id	=	$_POST['id_2'];
 
-				
+
 				$QueryFind	=	doquery("SELECT `authlevel` FROM {{table}} WHERE `id` = '".$id."'", "users", true);
-				
+
 				if($QueryFind['authlevel'] != $_POST['authlevel'])
-				{						
+				{
 					doquery("UPDATE {{table}} SET `authlevel` = '".$_POST['authlevel']."' WHERE `id` = '".$id."'", "users");
 					doquery("UPDATE {{table}} SET `id_level` = '".$_POST['authlevel']."' WHERE `id_owner` = '".$id."';", 'planets');
-					
-					
+
+
 					$ASD	=	$_POST['authlevel'];
 					$Log	.=	"\n".$lang['log_system_auth_title']."\n";
 					$Log	.=	$lang['log_the_user'].$user['username']." ".$lang['log_change_auth_1'].$id.",\n";
 					$Log	.=	$lang['log_change_auth_2'].$lang['ad_authlevel'][$ASD]."\n";
-				
+
 					LogFunction($Log, "ModerationLog", $LogCanWork);
-					
+
 					header ("Location: Moderation.php?moderation=2&succes=yes");
 				}
 				else
@@ -186,11 +186,11 @@ elseif ($_GET['moderation'] == '2')
 				}
 			}
 		}
-		
+
 		if ($_GET['succes']	==	'yes')
 			$parse['display']	=	'<tr><th colspan="3"><font color=lime>'.$lang['ad_authlevel_succes'].'</font></th></tr>';
-			
-			
+
+
 		display (parsetemplate(gettemplate("adm/AuthlevelBody"), $parse), false, '', true, false);
 }
 else

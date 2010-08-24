@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -123,7 +123,8 @@ return $RetValue;
 }
 //FIN FIX ACTUALIZACION PUNTOS CON FLOTA VOLANDO
 function MakeStats()
-{global $resource, $pricelist, $reslist, $game_config, $xgp_root, $phpEx;
+{
+	global $resource, $pricelist, $reslist, $game_config, $xgp_root, $phpEx;
 
 	$CheckUserQuery = false;
 	$CheckAllyQuery	= false;
@@ -142,7 +143,7 @@ function MakeStats()
 	$del_inactive 	= time() - (60 * 60 * 24 * 30); // 1 MONTH
 	$del_deleted 	= time() - (60 * 60 * 24 * 7); // 1 WEEK
 
-	$ChooseToDelete = doquery("SELECT `id` FROM `{{table}}` WHERE (`db_deaktjava` < '".$del_deleted."' AND `db_deaktjava` <> 0) OR `onlinetime` < '".$del_inactive."'", 'users');
+	$ChooseToDelete = doquery("SELECT `id` FROM `{{table}}` WHERE (`db_deaktjava` < '".$del_deleted."' AND `db_deaktjava` <> 0) OR (`onlinetime` < '".$del_inactive."' AND `authlevel` <> 3)", 'users');
 
 	if($ChooseToDelete)
 	{

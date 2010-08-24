@@ -34,9 +34,10 @@
                     <option value="2.9.3">XG Proyect 2.9.2</option>
                     <option value="2.9.4">XG Proyect 2.9.3</option>
                     <option value="2.9.5">XG Proyect 2.9.4</option>
+                    <option value="2.9.6">XG Proyect 2.9.5</option>
                 </select>
             </th>
 		</tr>
 		<tr>
-			<th align="center" colspan="2"><input type="submit" name="continuar" value="Actualizar a la versi&oacute;n 2.9.5"/></th>
+			<th align="center" colspan="2"><input type="submit" name="continuar" value="Actualizar a la versi&oacute;n 2.9.6"/></th>
 		</tr>

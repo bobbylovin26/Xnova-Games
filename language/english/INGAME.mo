@@ -1127,7 +1127,7 @@ $lang['sys_tran_mess_owner'] 				= "One of your fleet reaches %s %s and deliver 
 $lang['sys_tran_mess_user']  				= "Found a fleet de% s% s% s coming in his libro% s% s% s units, units de% s% s% s% s units.";
 $lang['sys_mess_fleetback'] 				= "Return of the fleet";
 $lang['sys_tran_mess_back'] 				= "A fleet back to planet % s% s. The fleet does not give resources.";
-$lang['sys_recy_gotten'] 					= "Your fleet arrived at the coordinates indicated and gatherers %s units %s and %s unitsof %s.";
+$lang['sys_recy_gotten'] 					= "Your fleet arrived at the coordinates indicated and gatherers %s units %s and %s units of %s.";
 $lang['sys_notenough_money'] 				= "You do not have enough resources to build a %s. You %s of %s, %s of %s and %s of %s and the cost of construction was %s of %s, %s of %s and %s of %s";
 $lang['sys_nomore_level'] 					= "You try to destroy a building ( %s ).";
 $lang['sys_buildlist'] 						= "List of building area";
@@ -1147,6 +1147,7 @@ $lang['sys_destruc_mess'] 					= "A fleet of the planet %s [%d:%d:%d] goes to th
 $lang['sys_destruc_echec'] 					= ". The tremors began to shake off the surface of the moon, but something goes wrong, the graviton in the stars of death also causes tremors and death stars fly to pieces.";
 $lang['sys_destruc_reussi'] 				= ", The tremors began to shake off the surface of the moon, after a while the moon does not support more and fly to pieces, mission accomplished, the fleet returns to home planet.";
 $lang['sys_destruc_null'] 					= ", The stars of death did not generate the power, the mission fails and the ships returned home.";
+$lang['sys_the']							= " the ";
 
 //----------------------------------------------------------------------------//
 //class.CheckSession.php

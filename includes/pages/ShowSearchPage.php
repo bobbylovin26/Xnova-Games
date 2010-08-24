@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -66,7 +66,7 @@ function ShowSearchPage()
 			{
 				if($s['ally_id'] != 0 && $s['ally_request'] == 0)
 				{
-					$aquery = doquery("SELECT id,ally_name FROM {{table}} WHERE id = {$s['ally_id']}","alliance",true);
+					$aquery = doquery("SELECT id,ally_name FROM {{table}} WHERE id = ".intval($s['ally_id'])."","alliance",true);
 				}
 				else
 				{
@@ -75,14 +75,14 @@ function ShowSearchPage()
 
 				if ($type == "planetname")
 				{
-					$pquery 			= doquery("SELECT username,ally_id,ally_name FROM {{table}} WHERE id = {$s['id_owner']}","users",true);
+					$pquery 			= doquery("SELECT username,ally_id,ally_name FROM {{table}} WHERE id = ".intval($s['id_owner'])."","users",true);
 					$s['planet_name'] 	= $s['name'];
 					$s['username'] 		= $pquery['username'];
 					$s['ally_name'] 	= ($pquery['ally_name']!='')?"<a href=\"game.php?page=alliance&mode=ainfo&a={$pquery['ally_id']}\">{$pquery['ally_name']}</a>":'';
 				}
 				else
 				{
-					$pquery 			= doquery("SELECT name FROM {{table}} WHERE id = {$s['id_planet']}","planets",true);
+					$pquery 			= doquery("SELECT name FROM {{table}} WHERE id = ".intval($s['id_planet'])."","planets",true);
 					$s['planet_name']	= $pquery['name'];
 					$s['ally_name'] 	= ($aquery['ally_name']!='')?"<a href=\"game.php?page=alliance&mode=ainfo&a={$aquery['id']}\">{$aquery['ally_name']}</a>":'';
 				}

@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -34,10 +34,10 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 	{
 		if($_POST['mission'] == 2)
 		{
-			$target = "g".$_POST["galaxy"]."s".$_POST["system"]."p".$_POST["planet"]."t".$_POST["planettype"];
+			$target = "g".intval($_POST["galaxy"])."s".intval($_POST["system"])."p".intval($_POST["planet"])."t".intval($_POST["planettype"]);
 			if($_POST['acs_target_mr'] == $target)
 			{
-				$aks_count_mr = doquery("SELECT * FROM {{table}} WHERE id = '".$_POST['fleet_group']."'",'aks');
+				$aks_count_mr = doquery("SELECT * FROM {{table}} WHERE id = '".intval($_POST['fleet_group'])."'",'aks');
 				if (mysql_num_rows($aks_count_mr) > 0)
 					$fleet_group_mr = $_POST['fleet_group'];
 			}
@@ -48,8 +48,8 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 		$_POST['mission'] = 1;
 
 
-	$TargetPlanet  		= doquery("SELECT `id_owner`,`id_level`,`destruyed`,`ally_deposit` FROM {{table}} WHERE `galaxy` = '". $_POST['galaxy'] ."' AND `system` = '". $_POST['system'] ."' AND `planet` = '". $_POST['planet'] ."' AND `planet_type` = '". $_POST['planettype'] ."';", 'planets', true);
-	$MyDBRec       		= doquery("SELECT `id`,`onlinetime`,`ally_id`,`urlaubs_modus` FROM {{table}} WHERE `id` = '". $CurrentUser['id']."';", 'users', true);
+	$TargetPlanet  		= doquery("SELECT `id_owner`,`id_level`,`destruyed`,`ally_deposit` FROM {{table}} WHERE `galaxy` = '". intval($_POST['galaxy']) ."' AND `system` = '". intval($_POST['system']) ."' AND `planet` = '". intval($_POST['planet']) ."' AND `planet_type` = '". intval($_POST['planettype']) ."';", 'planets', true);
+	$MyDBRec       		= doquery("SELECT `id`,`onlinetime`,`ally_id`,`urlaubs_modus` FROM {{table}} WHERE `id` = '". intval($CurrentUser['id'])."';", 'users', true);
 
 	$protection      	= $game_config['noobprotection'];
 	$protectiontime  	= $game_config['noobprotectiontime'];
@@ -77,7 +77,7 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 	$system             = intval($_POST['system']);
 	$planet             = intval($_POST['planet']);
 	$planettype         = intval($_POST['planettype']);
-	$fleetmission       = $_POST['mission'];
+	$fleetmission       = intval($_POST['mission']);
 
 	if ($planettype != 1 && $planettype != 2 && $planettype != 3)
 		exit(header("location:game." . $phpEx . "?page=fleet"));
@@ -112,7 +112,7 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 
 		if ($MaxExpedition >= 1)
 		{
-			$maxexpde  			= doquery("SELECT COUNT(fleet_owner) AS `expedi` FROM {{table}} WHERE `fleet_owner` = '".$CurrentUser['id']."' AND `fleet_mission` = '15';", 'fleets', true);
+			$maxexpde  			= doquery("SELECT COUNT(fleet_owner) AS `expedi` FROM {{table}} WHERE `fleet_owner` = '".intval($CurrentUser['id'])."' AND `fleet_mission` = '15';", 'fleets', true);
 			$ExpeditionEnCours  = $maxexpde['expedi'];
 			$EnvoiMaxExpedition = 1 + floor( $MaxExpedition / 3 );
 		}
@@ -152,10 +152,10 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 	if ($TargetPlanet['id_owner'] == '')
 		$HeDBRec = $MyDBRec;
 	elseif ($TargetPlanet['id_owner'] != '')
-		$HeDBRec = doquery("SELECT `id`,`onlinetime`,`ally_id`,`urlaubs_modus` FROM {{table}} WHERE `id` = '". $TargetPlanet['id_owner'] ."';", 'users', true);
+		$HeDBRec = doquery("SELECT `id`,`onlinetime`,`ally_id`,`urlaubs_modus` FROM {{table}} WHERE `id` = '". intval($TargetPlanet['id_owner']) ."';", 'users', true);
 
-	$UserPoints    = doquery("SELECT `total_points` FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $MyDBRec['id'] ."';", 'statpoints', true);
-	$User2Points   = doquery("SELECT `total_points` FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $HeDBRec['id'] ."';", 'statpoints', true);
+	$UserPoints    = doquery("SELECT `total_points` FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". intval($MyDBRec['id']) ."';", 'statpoints', true);
+	$User2Points   = doquery("SELECT `total_points` FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". intval($HeDBRec['id']) ."';", 'statpoints', true);
 
 	$MyGameLevel  = $UserPoints['total_points'];
 	$HeGameLevel  = $User2Points['total_points'];
@@ -180,7 +180,7 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 	if ($HeDBRec['urlaubs_modus'] && $_POST['mission'] != 8)
 		message("<font color=\"lime\"><b>".$lang['fl_in_vacation_player']."</b></font>", "game." . $phpEx . "?page=fleet", 2);
 
-	$FlyingFleets = mysql_fetch_assoc(doquery("SELECT COUNT(fleet_id) as Number FROM {{table}} WHERE `fleet_owner`='{$CurrentUser['id']}'", 'fleets'));
+	$FlyingFleets = mysql_fetch_assoc(doquery("SELECT COUNT(fleet_id) as Number FROM {{table}} WHERE `fleet_owner`='".intval($CurrentUser['id'])."'", 'fleets'));
 	$ActualFleets = $FlyingFleets["Number"];
 
 	if ((1 + $CurrentUser[$resource[108]]) + ($CurrentUser['rpg_commandant'] * COMMANDANT) <= $ActualFleets)
@@ -364,17 +364,17 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 	}
 
 	$QryInsertFleet  = "INSERT INTO {{table}} SET ";
-	$QryInsertFleet .= "`fleet_owner` = '". $CurrentUser['id'] ."', ";
+	$QryInsertFleet .= "`fleet_owner` = '". intval($CurrentUser['id']) ."', ";
 	$QryInsertFleet .= "`fleet_mission` = '".intval($_POST['mission'])."',  ";
-	$QryInsertFleet .= "`fleet_amount` = '". $FleetShipCount ."', ";
+	$QryInsertFleet .= "`fleet_amount` = '". intval($FleetShipCount) ."', ";
 	$QryInsertFleet .= "`fleet_array` = '". $fleet_array ."', ";
 	$QryInsertFleet .= "`fleet_start_time` = '". $fleet['start_time'] ."', ";
 	$QryInsertFleet .= "`fleet_start_galaxy` = '". intval($_POST['thisgalaxy']) ."', ";
 	$QryInsertFleet .= "`fleet_start_system` = '". intval($_POST['thissystem']) ."', ";
 	$QryInsertFleet .= "`fleet_start_planet` = '". intval($_POST['thisplanet']) ."', ";
 	$QryInsertFleet .= "`fleet_start_type` = '". intval($_POST['thisplanettype']) ."', ";
-	$QryInsertFleet .= "`fleet_end_time` = '". $fleet['end_time'] ."', ";
-	$QryInsertFleet .= "`fleet_end_stay` = '". $StayTime ."', ";
+	$QryInsertFleet .= "`fleet_end_time` = '". intval($fleet['end_time']) ."', ";
+	$QryInsertFleet .= "`fleet_end_stay` = '". intval($StayTime) ."', ";
 	$QryInsertFleet .= "`fleet_end_galaxy` = '". intval($_POST['galaxy']) ."', ";
 	$QryInsertFleet .= "`fleet_end_system` = '". intval($_POST['system']) ."', ";
 	$QryInsertFleet .= "`fleet_end_planet` = '". intval($_POST['planet']) ."', ";
@@ -382,7 +382,7 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 	$QryInsertFleet .= "`fleet_resource_metal` = '". $TransMetal ."', ";
 	$QryInsertFleet .= "`fleet_resource_crystal` = '". $TransCrystal ."', ";
 	$QryInsertFleet .= "`fleet_resource_deuterium` = '". $TransDeuterium ."', ";
-	$QryInsertFleet .= "`fleet_target_owner` = '". $TargetPlanet['id_owner'] ."', ";
+	$QryInsertFleet .= "`fleet_target_owner` = '". intval($TargetPlanet['id_owner']) ."', ";
 	$QryInsertFleet .= "`fleet_group` = '".intval($fleet_group_mr)."',  ";
 	$QryInsertFleet .= "`start_time` = '". time() ."';";
 	doquery( $QryInsertFleet, 'fleets');
@@ -393,7 +393,7 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 	$QryUpdatePlanet .= "`crystal` = `crystal` - ". $TransCrystal .", ";
 	$QryUpdatePlanet .= "`deuterium` = `deuterium` - ". ($TransDeuterium + $consumption) ." ";
 	$QryUpdatePlanet .= "WHERE ";
-	$QryUpdatePlanet .= "`id` = ". $CurrentPlanet['id'] ." LIMIT 1;";
+	$QryUpdatePlanet .= "`id` = ". intval($CurrentPlanet['id']) ." LIMIT 1;";
 	doquery ($QryUpdatePlanet, "planets");
 
 	$parse['mission'] 		= $missiontype[$_POST['mission']];

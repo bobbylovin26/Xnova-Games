@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -142,4 +142,9 @@ else
 {
 	$dpath     = "../" . DEFAULT_SKINPATH;
 }
+
+include('includes/classes/class.SecurePage.' . $phpEx ); // include the class
+$SecureSqlInjection	= new SecureSqlInjection(); // load the class
+$SecureSqlInjection->secureGlobals(); // run the main class function
+
 ?>

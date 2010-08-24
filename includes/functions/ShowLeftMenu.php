@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -35,7 +35,7 @@ function ShowLeftMenu ($Level)
 	$parse['lm_tx_queue']   = MAX_FLEET_OR_DEFS_PER_ROW;
 	$parse['forum_url']     = $game_config['forum_url'];
 	$parse['servername']   	= $game_config['game_name'];
-	$rank                   = doquery("SELECT `total_rank` FROM {{table}} WHERE `stat_code` = '1' AND `stat_type` = '1' AND `id_owner` = '". $user['id'] ."';",'statpoints',true);
+	$rank                   = doquery("SELECT `total_rank` FROM {{table}} WHERE `stat_code` = '1' AND `stat_type` = '1' AND `id_owner` = '". intval($user['id']) ."';",'statpoints',true);
 	$parse['user_rank']     = $rank['total_rank'];
 
 	if ($Level > 0)

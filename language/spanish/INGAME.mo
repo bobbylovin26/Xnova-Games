@@ -1158,6 +1158,7 @@ $lang['sys_destruc_mess'] 					= "Una flota del planeta %s [%d:%d:%d] se dirige 
 $lang['sys_destruc_echec'] 					= ". Los temblores empiezan a sacudir la superficie de la luna, pero algo sale mal, el graviton en las estrellas de la muerte tambien provoca temblores y las estrellas de la muerte vuelan en mil pedazos.";
 $lang['sys_destruc_reussi'] 				= ", Los temblores empiezan a sacudir la superficie de la luna, despues de unos instantes la luna no soporta mas y vuela en mil pedazos, mision cumplida, la flota vuelve al planeta de origen.";
 $lang['sys_destruc_null'] 					= ", Las estrellas de la muerten no generan el poder necesario, la mision falla y las naves vuelven de regreso.";
+$lang['sys_the']							= " el ";
 
 //----------------------------------------------------------------------------//
 //class.CheckSession.php

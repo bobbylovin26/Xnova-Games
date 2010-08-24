@@ -1,5 +1,5 @@
 <?php
-//---------------	GENERAL	------------------------// 
+//---------------	GENERAL	------------------------//
 $lang['404_page']			= 'Necesitas permisos especiales para ver ésta página';
 $lang['adm_cp_title']		= 'Panel de control de administración';
 $lang['adm_cp_index']		= 'Inicio';
@@ -25,7 +25,7 @@ $lang['time_seconds']	= 'Segundos';
 //###########################################################//
 
 
-//---------------	¿SI O NO? - YES OR NO?	------------------------// 
+//---------------	¿SI O NO? - YES OR NO?	------------------------//
 $lang['one_is_yes'][1]	= 'Si';
 $lang['one_is_yes'][0]	= 'No';
 
@@ -34,7 +34,7 @@ $lang['one_is_no'][0]	= 'Si';
 //###########################################################//
 
 
-//---------------	BOTONES - BUTTONS	------------------------// 
+//---------------	BOTONES - BUTTONS	------------------------//
 $lang['button_submit']		= 'Enviar';
 $lang['button_add']			= 'Agregar';
 $lang['button_delete']		= 'Borrar';
@@ -55,7 +55,7 @@ $lang['input_id_ally']		= 'ID de la ALIANZA';
 //###########################################################//
 
 
-//---------------	RECURSOS - RESOURCES	------------------------// 
+//---------------	RECURSOS - RESOURCES	------------------------//
 $lang['resources_title']	= 'Recursos';
 $lang['count_res']			= 'Cantidad de recursos';
 $lang['metal']				= 'Metal';
@@ -66,7 +66,7 @@ $lang['darkmatter']			= 'Materia oscura';
 //###########################################################//
 
 
-//---------------	NAVES - SHIPS	------------------------// 
+//---------------	NAVES - SHIPS	------------------------//
 $lang['ships_title']		= 'Naves';
 $lang['ships_count']		= 'Cantidad de naves';
 $lang['small_ship_cargo']	= 'Nave pequeña de carga';
@@ -87,7 +87,7 @@ $lang['supernova']			= 'Supernova';
 //###########################################################//
 
 
-//---------------	DEFENSAS - DEFENSES	------------------------// 
+//---------------	DEFENSAS - DEFENSES	------------------------//
 $lang['defenses_title']				= 'Defensas';
 $lang['defenses_count']				= 'Cantidad de defensas';
 $lang['misil_launcher']				= 'Lanzamisiles';
@@ -104,7 +104,7 @@ $lang['interplanetary_misil']		= 'Misil interplanetario';
 //###########################################################//
 
 
-//---------------	EDIFICIOS - BUILDINGS	------------------------// 
+//---------------	EDIFICIOS - BUILDINGS	------------------------//
 $lang['buildings_title']		= 'Edificios';
 $lang['moon_build']				= 'Edificios lunares';
 $lang['buildings_count']		= 'Cantidad de edificios';
@@ -129,7 +129,7 @@ $lang['cuantic']				= 'Salto cuántico';
 //###########################################################//
 
 
-//---------------	INVESTIGACIONES - RESEARCHS	------------------------// 
+//---------------	INVESTIGACIONES - RESEARCHS	------------------------//
 $lang['researchs_title']		= 'Investigaciones';
 $lang['researchs_count']		= 'Cantidad de investigaciones';
 $lang['spy_tech']				= 'Tecnología de espionaje';
@@ -151,7 +151,7 @@ $lang['graviton_tech']			= 'Tecnología de gravitón';
 //###########################################################//
 
 
-//---------------	OFICIALES - OFFICIERS	------------------------// 
+//---------------	OFICIALES - OFFICIERS	------------------------//
 $lang['officiers_title']		= 'Oficiales';
 $lang['officiers_count']		= 'Cantidad de oficiales';
 $lang['geologist']				= 'Geólogo';
@@ -401,7 +401,7 @@ $lang['ow_special_thanks']			= 'Special Thanks';
 $lang['ow_install_file_detected']	= 'Se detecto el directorio install/. Por razones se seguridad recomendamos eliminarlo.';
 $lang['ow_config_file_writable']	= 'El archivo config.php puede ser escrito, es recomendable que sea colocado en chmod 440 (sólo lectura).';
 $lang['ow_database_errors']			= 'Hay errores en tu base de datos. Puedes verlos haciendo <a href="ErrorPage.php">click aquí</a>';
-$lang['ow_old_version']				= 'Hay una nueva versión disponible. Haz click <a href="http://xtreme-gamez.com.ar/foros/showthread.php?t=2126" target="_blank">aquí</a> para descargarla';
+$lang['ow_old_version']				= 'Hay una nueva versión disponible. Haz click <a href="http://www.xgproyect.net/downloads.php" target="_blank">aquí</a> para descargarla';
 $lang['ow_none']					= 'No hay actualizaciones ni advertencias';
 //###########################################################//
 

@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -61,9 +61,9 @@ class debug
 			die($lang['cdg_mysql_not_available']);
 
 		$query = "INSERT INTO {{table}} SET
-		`error_sender` = '{$user['id']}' ,
+		`error_sender` = '".intval($user['id'])."' ,
 		`error_time` = '".time()."' ,
-		`error_type` = '{$title}' ,
+		`error_type` = '".mysql_escape_string($title)."' ,
 		`error_text` = '".mysql_escape_string($message)."';";
 
 		$sqlquery = mysql_query(str_replace("{{table}}", $dbsettings["prefix"].'errors',$query)) or die($lang['cdg_fatal_error']);

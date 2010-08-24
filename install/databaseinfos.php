@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -80,7 +80,7 @@ $QryTableConfig     .= ") ENGINE=MyISAM;";
 
 $QryInsertConfig     = "INSERT INTO `{{table}}` ";
 $QryInsertConfig    .= "(`config_name`           , `config_value`) VALUES ";
-$QryInsertConfig    .= "('VERSION'          	 , '2.9.5'), ";
+$QryInsertConfig    .= "('VERSION'          	 , '2.9.6'), ";
 $QryInsertConfig    .= "('users_amount'          , '0'), ";
 $QryInsertConfig    .= "('moderation'            , '1,0,0,1,1;1,1,0,1,1;1;'), ";
 $QryInsertConfig    .= "('game_speed'            , '2500'), ";
@@ -104,7 +104,7 @@ $QryInsertConfig    .= "('LastSettedPlanetPos'   , '3'), ";
 $QryInsertConfig    .= "('noobprotection'        , '1'), ";
 $QryInsertConfig    .= "('noobprotectiontime'    , '5000'), ";
 $QryInsertConfig    .= "('noobprotectionmulti'   , '5'), ";
-$QryInsertConfig    .= "('forum_url'             , 'http://www.xtreme-gamez.com.ar/' ), ";
+$QryInsertConfig    .= "('forum_url'             , 'http://www.xgproyect.net/' ), ";
 $QryInsertConfig    .= "('adm_attack'         	 , '0' ), ";
 $QryInsertConfig    .= "('debug'                 , '0'), ";
 $QryInsertConfig    .= "('lang'                  , 'spanish'), ";

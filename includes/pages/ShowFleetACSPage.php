@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -32,7 +32,7 @@ function ShowFleetACSPage($CurrentUser, $CurrentPlanet)
 	if(isset($_POST['add_member_to_aks']) && !empty($_POST['add_member_to_aks']))
 	{
 		$added_user_id_mr 	= 0;
-		$member_qry_mr 		= doquery("SELECT `id` FROM {{table}} WHERE `username` ='".$_POST['addtogroup']."' ;",'users');
+		$member_qry_mr 		= doquery("SELECT `id` FROM {{table}} WHERE `username` ='".mysql_escape_string($_POST['addtogroup'])."' ;",'users');
 
 		while($row = mysql_fetch_array($member_qry_mr))
 		{
@@ -41,7 +41,7 @@ function ShowFleetACSPage($CurrentUser, $CurrentPlanet)
 
 		if($added_user_id_mr > 0)
 		{
-			$new_eingeladen_mr = $_POST['aks_invited_mr'].','.$added_user_id_mr;
+			$new_eingeladen_mr = mysql_escape_string($_POST['aks_invited_mr']).','.$added_user_id_mr;
 			doquery("UPDATE {{table}} SET `eingeladen` = '".$new_eingeladen_mr."' ;",'aks');
 			$add_user_message_mr = "<font color=\"lime\">".$lang['fl_player']." ".$_POST['addtogroup']." ". $lang['fl_Add_to_attack'];
 		}
@@ -54,7 +54,7 @@ function ShowFleetACSPage($CurrentUser, $CurrentPlanet)
 		SendSimpleMessage ($added_user_id_mr, $CurrentUser['id'], time(), 1, $CurrentUser['username'], $lang['fl_acs_invitation_title'], $invite_message);
 	}
 
-	$query = doquery("SELECT * FROM {{table}} WHERE fleet_id = '" . $fleetid . "'", 'fleets');
+	$query = doquery("SELECT * FROM {{table}} WHERE fleet_id = '" . intval($fleetid) . "'", 'fleets');
 
 	if (mysql_num_rows($query) != 1)
 		exit(header("Location: game.".$phpEx."?page=fleet"));
@@ -68,17 +68,17 @@ function ShowFleetACSPage($CurrentUser, $CurrentPlanet)
 	{
 		SetSelectedPlanet($CurrentUser);
 
-		$galaxyrow 		= doquery("SELECT * FROM {{table}} WHERE `id_planet` = '".$CurrentPlanet['id']."';", 'galaxy', true);
-		$maxfleet  		= doquery("SELECT COUNT(fleet_owner) as ilosc FROM {{table}} WHERE fleet_owner='{$CurrentUser['id']}'", 'fleets', true);
+		$galaxyrow 		= doquery("SELECT * FROM {{table}} WHERE `id_planet` = '".intval($CurrentPlanet['id'])."';", 'galaxy', true);
+		$maxfleet  		= doquery("SELECT COUNT(fleet_owner) as ilosc FROM {{table}} WHERE fleet_owner='".intval($CurrentPlanet['id'])."'", 'fleets', true);
 		$maxfleet_count = $maxfleet["ilosc"];
 
-		$fleet = doquery("SELECT * FROM {{table}} WHERE fleet_id = '" . $fleetid . "'", 'fleets', true);
+		$fleet = doquery("SELECT * FROM {{table}} WHERE fleet_id = '" . intval($fleetid) . "'", 'fleets', true);
 
 		if (empty($fleet['fleet_group']))
 		{
 			$rand 			= mt_rand(100000, 999999999);
 			$aks_code_mr 	= "AG".$rand;
-			$aks_invited_mr = $CurrentUser['id'];
+			$aks_invited_mr = intval($CurrentUser['id']);
 
 			doquery(
 			"INSERT INTO {{table}} SET
@@ -103,7 +103,7 @@ function ShowFleetACSPage($CurrentUser, $CurrentPlanet)
 			`galaxy` = '" . $fleet['fleet_end_galaxy'] . "' AND
 			`system` = '" . $fleet['fleet_end_system'] . "' AND
 			`planet` = '" . $fleet['fleet_end_planet'] . "' AND
-			`eingeladen` = '" . $CurrentUser['id'] . "'
+			`eingeladen` = '" . intval($CurrentUser['id']) . "'
 			", 'aks', true);
 
 			$aks_madnessred = doquery(
@@ -115,19 +115,19 @@ function ShowFleetACSPage($CurrentUser, $CurrentPlanet)
 			`galaxy` = '" . $fleet['fleet_end_galaxy'] . "' AND
 			`system` = '" . $fleet['fleet_end_system'] . "' AND
 			`planet` = '" . $fleet['fleet_end_planet'] . "' AND
-			`eingeladen` = '" . $CurrentUser['id'] . "'
+			`eingeladen` = '" . intval($CurrentUser['id']) . "'
 			", 'aks');
 
 			doquery(
 			"UPDATE {{table}} SET
-			fleet_group = '" . $aks['id'] . "'
+			fleet_group = '" . intval($aks['id']) . "'
 			WHERE
-			fleet_id = '" . $fleetid . "'", 'fleets');
+			fleet_id = '" . intval($fleetid) . "'", 'fleets');
 		}
 		else
 		{
-			$aks = doquery("SELECT * FROM {{table}} WHERE id = '" . $fleet['fleet_group'] . "'", 'aks');
-			$aks_madnessred = doquery("SELECT * FROM {{table}} WHERE id = '" . $fleet['fleet_group'] . "'", 'aks');
+			$aks = doquery("SELECT * FROM {{table}} WHERE id = '" . intval($fleet['fleet_group']) . "'", 'aks');
+			$aks_madnessred = doquery("SELECT * FROM {{table}} WHERE id = '" . intval($fleet['fleet_group']) . "'", 'aks');
 
 			if (mysql_num_rows($aks) != 1)
 				exit(header("Location: game.".$phpEx."?page=fleet"));
@@ -182,7 +182,7 @@ function ShowFleetACSPage($CurrentUser, $CurrentPlanet)
 
 		$parse['ile']	= $ile;
 
-		$fq = doquery("SELECT * FROM {{table}} WHERE fleet_owner='$CurrentUser[id]' AND fleet_mission <> 10", "fleets");
+		$fq = doquery("SELECT * FROM {{table}} WHERE fleet_owner='".intval($CurrentUser['id'])."' AND fleet_mission <> 10", "fleets");
 
 		$i = 0;
 		while ($f = mysql_fetch_array($fq))
@@ -254,7 +254,7 @@ function ShowFleetACSPage($CurrentUser, $CurrentPlanet)
 		{
 			if ($b != '')
 			{
-				$member_qry_mr = doquery("SELECT `username` FROM {{table}} WHERE `id` ='".$b."' ;",'users');
+				$member_qry_mr = doquery("SELECT `username` FROM {{table}} WHERE `id` ='".intval($b)."' ;",'users');
 				while($row = mysql_fetch_array($member_qry_mr))
 				{
 					$pageDos .= "<option>".$row['username']."</option>";

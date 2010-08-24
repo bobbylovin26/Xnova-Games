@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -115,7 +115,7 @@ class ShowInfosPage
 			if ( $NextJumpTime == 0 )
 			{
 				$TargetPlanet = $_POST['jmpto'];
-				$TargetGate   = doquery ( "SELECT `id`, `sprungtor`, `last_jump_time` FROM {{table}} WHERE `id` = '". $TargetPlanet ."';", 'planets', true);
+				$TargetGate   = doquery ( "SELECT `id`, `sprungtor`, `last_jump_time` FROM {{table}} WHERE `id` = '". intval($TargetPlanet) ."';", 'planets', true);
 
 				if ($TargetGate['sprungtor'] > 0)
 				{
@@ -233,7 +233,7 @@ class ShowInfosPage
 	private function BuildJumpableMoonCombo ( $CurrentUser, $CurrentPlanet )
 	{
 		global $resource;
-		$QrySelectMoons  = "SELECT * FROM {{table}} WHERE `planet_type` = '3' AND `id_owner` = '". $CurrentUser['id'] ."';";
+		$QrySelectMoons  = "SELECT * FROM {{table}} WHERE `planet_type` = '3' AND `id_owner` = '". intval($CurrentUser['id']) ."';";
 		$MoonList        = doquery ( $QrySelectMoons, 'planets');
 		$Combo           = "";
 		while ( $CurMoon = mysql_fetch_assoc($MoonList) )

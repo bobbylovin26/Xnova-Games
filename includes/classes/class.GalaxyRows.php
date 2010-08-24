@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -57,17 +57,17 @@ class GalaxyRows
 	public function CheckAbandonMoonState($lunarow)
 	{
 		if (($lunarow['destruyed'] + 172800) <= time() && $lunarow['destruyed'] != 0)
-			$QryUpdateGalaxy  = "UPDATE {{table}} SET `id_luna` = '0' WHERE `galaxy` = '". $lunarow['galaxy'] ."' AND `system` = '". $lunarow['system'] ."' AND `planet` = '". $lunarow['planet'] ."' LIMIT 1;";
+			$QryUpdateGalaxy  = "UPDATE {{table}} SET `id_luna` = '0' WHERE `galaxy` = '". intval($lunarow['galaxy']) ."' AND `system` = '". intval($lunarow['system']) ."' AND `planet` = '". intval($lunarow['planet']) ."' LIMIT 1;";
 		doquery( $QryUpdateGalaxy , 'galaxy');
-		doquery("DELETE FROM {{table}} WHERE `id` = ".$lunarow['id']."", 'planets');
+		doquery("DELETE FROM {{table}} WHERE `id` = ".intval($lunarow['id'])."", 'planets');
 	}
 
 	public function CheckAbandonPlanetState(&$planet)
 	{
 		if ($planet['destruyed'] <= time())
 		{
-			doquery("DELETE FROM {{table}} WHERE `id_planet` = '".$planet['id']."' LIMIT 1;" , 'galaxy');
-			doquery("DELETE FROM {{table}} WHERE `id` = ".$planet['id']."", 'planets');
+			doquery("DELETE FROM {{table}} WHERE `id_planet` = '".intval($planet['id'])."' LIMIT 1;" , 'galaxy');
+			doquery("DELETE FROM {{table}} WHERE `id` = ".intval($planet['id'])."", 'planets');
 		}
 	}
 
@@ -163,10 +163,10 @@ class GalaxyRows
 		$Result  = "<th width=80>";
 		if ($GalaxyRowUser['ally_id'] && $GalaxyRowUser['ally_id'] != 0)
 		{
-			$allyquery = doquery("SELECT * FROM {{table}} WHERE id=" . $GalaxyRowUser['ally_id'], "alliance", true);
+			$allyquery = doquery("SELECT * FROM {{table}} WHERE id=" . intval($GalaxyRowUser['ally_id']), "alliance", true);
 			if ($allyquery)
 			{
-				$members_count = doquery("SELECT COUNT(DISTINCT(id)) FROM {{table}} WHERE ally_id=" . $allyquery['id'] . ";", "users", true);
+				$members_count = doquery("SELECT COUNT(DISTINCT(id)) FROM {{table}} WHERE ally_id=" . intval($allyquery['id']) . ";", "users", true);
 
 				if ($members_count[0] > 1)
 					$add = $lang['gl_member_add'];
@@ -447,7 +447,7 @@ class GalaxyRows
 			elseif ($GalaxyRowUser['id'] == $user['id'])
 				$MissionType1Link = "";
 
-			if ($GalaxyRowUser['id'] != $user['id'] AND $game_config['allow_acs'] == 1 AND $Buddy)
+			if ($GalaxyRowUser['id'] == $user['id'])
 				$MissionType5Link = "<a href=game.php?page=fleet&galaxy=".$Galaxy."&system=".$System."&planet=".$Planet."&planettype=".$PlanetType."&target_mission=5>".$lang['type_mission'][5]."</a><br />";
 			elseif ($GalaxyRowUser['id'] == $user['id'])
 				$MissionType5Link = "";

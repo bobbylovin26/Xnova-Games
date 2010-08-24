@@ -3,7 +3,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By Neko from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By Neko from xgproyect.net	         #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -42,7 +42,7 @@ if ($user['authlevel'] == 1)
 	$ToolsCanUse	=	$Moderator[3];
 	$LogCanWork		=	$Moderator[4];
 }
-	
+
 if ($user['authlevel'] == 2)
 {
 	$Observation	=	$Operator[0];

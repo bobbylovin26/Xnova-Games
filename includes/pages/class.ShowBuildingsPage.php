@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -166,7 +166,7 @@ class ShowBuildingsPage
 			$QueueID      = false;
 		}
 
-		if ( $QueueID != false )
+		if ( $QueueID != false && IsElementBuyable ($CurrentUser, $CurrentPlanet, $Element, true, false) && IsTechnologieAccessible($CurrentUser, $CurrentPlanet, $Element) )
 		{
 			if ($QueueID > 1)
 			{
@@ -395,8 +395,14 @@ class ShowBuildingsPage
 				}
 			}
 
-			header ("Location: game.php?page=buildings&mode=buildings");
-
+			if ( $_GET['r'] == 'overview' )
+			{
+				header('location:game.php?page=overview');
+			}
+			else
+			{
+				header ("Location: game.php?page=buildings&mode=buildings");
+			}
 		}
 
 		SetNextQueueElementOnTop($CurrentPlanet, $CurrentUser);

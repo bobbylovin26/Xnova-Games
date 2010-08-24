@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -23,7 +23,7 @@ class ShowOptionsPage
 {
 	private function CheckIfIsBuilding($CurrentUser)
 	{
-		$query = doquery("SELECT * FROM {{table}} WHERE id_owner = '{$CurrentUser['id']}'", 'planets');
+		$query = doquery("SELECT * FROM {{table}} WHERE id_owner = '".intval($CurrentUser['id'])."'", 'planets');
 
 		while($id = mysql_fetch_array($query))
 		{
@@ -43,7 +43,7 @@ class ShowOptionsPage
 					return true;
 			}
 		}
-		$fleets = doquery("SELECT * FROM {{table}} WHERE `fleet_owner` = '{$CurrentUser['id']}'", 'fleets',true);
+		$fleets = doquery("SELECT * FROM {{table}} WHERE `fleet_owner` = '".intval($CurrentUser['id'])."'", 'fleets',true);
 		if($fleets != 0)
 			return true;
 
@@ -65,7 +65,7 @@ class ShowOptionsPage
 				doquery("UPDATE {{table}} SET
 				`urlaubs_modus` = '0',
 				`urlaubs_until` = '0'
-				WHERE `id` = '".$CurrentUser['id']."' LIMIT 1", "users");
+				WHERE `id` = '".intval($CurrentUser['id'])."' LIMIT 1", "users");
 
 				die(header("location:game.php?page=options"));
 			}
@@ -81,9 +81,9 @@ class ShowOptionsPage
 			if ($CurrentUser['authlevel'] > 0)
 			{
 				if ($_POST['adm_pl_prot'] == 'on')
-					doquery ("UPDATE {{table}} SET `id_level` = '".$CurrentUser['authlevel']."' WHERE `id_owner` = '".$CurrentUser['id']."';", 'planets');
+					doquery ("UPDATE {{table}} SET `id_level` = '".intval($CurrentUser['authlevel'])."' WHERE `id_owner` = '".intval($CurrentUser['id'])."';", 'planets');
 				else
-					doquery ("UPDATE {{table}} SET `id_level` = '0' WHERE `id_owner` = '".$CurrentUser['id']."';", 'planets');
+					doquery ("UPDATE {{table}} SET `id_level` = '0' WHERE `id_owner` = '".intval($CurrentUser['id'])."';", 'planets');
 			}
 			// < ------------------------------------------------------------------- EL SKIN ------------------------------------------------------------------- >
 			if (isset($_POST["design"]) && $_POST["design"] == 'on')
@@ -110,7 +110,7 @@ class ShowOptionsPage
 			}
 			else
 			{
-				$username = $CurrentUser['username'];
+				$username = mysql_escape_string ( $CurrentUser['username'] );
 			}
 			// < ------------------------------------------------------------- DIRECCION DE EMAIL ------------------------------------------------------------- >
 
@@ -120,12 +120,12 @@ class ShowOptionsPage
 			}
 			else
 			{
-				$db_email = $CurrentUser['email'];
+				$db_email = mysql_escape_string ( $CurrentUser['email'] );
 			}
 			// < ------------------------------------------------------------- CANTIDAD DE SONDAS ------------------------------------------------------------- >
 			if (isset($_POST["spio_anz"]) && is_numeric($_POST["spio_anz"]))
 			{
-				$spio_anz = $_POST["spio_anz"];
+				$spio_anz = intval($_POST["spio_anz"]);
 			}
 			else
 			{
@@ -134,7 +134,7 @@ class ShowOptionsPage
 			// < ------------------------------------------------------------- TIEMPO TOOLTIP ------------------------------------------------------------- >
 			if (isset($_POST["settings_tooltiptime"]) && is_numeric($_POST["settings_tooltiptime"]))
 			{
-				$settings_tooltiptime = $_POST["settings_tooltiptime"];
+				$settings_tooltiptime = intval($_POST["settings_tooltiptime"]);
 			}
 			else
 			{
@@ -143,7 +143,7 @@ class ShowOptionsPage
 			// < ------------------------------------------------------------- MENSAJES DE FLOTAS ------------------------------------------------------------- >
 			if (isset($_POST["settings_fleetactions"]) && is_numeric($_POST["settings_fleetactions"]))
 			{
-				$settings_fleetactions = $_POST["settings_fleetactions"];
+				$settings_fleetactions = intval($_POST["settings_fleetactions"]);
 			}
 			else
 			{
@@ -207,9 +207,9 @@ class ShowOptionsPage
 				doquery("UPDATE {{table}} SET
 				`urlaubs_modus` = '$urlaubs_modus',
 				`urlaubs_until` = '$time'
-				WHERE `id` = '".$CurrentUser["id"]."' LIMIT 1", "users");
+				WHERE `id` = '".intval($CurrentUser["id"])."' LIMIT 1", "users");
 
-				$query = doquery("SELECT * FROM {{table}} WHERE id_owner = '{$CurrentUser['id']}'", 'planets');
+				$query = doquery("SELECT * FROM {{table}} WHERE id_owner = '".intval($CurrentUser['id'])."'", 'planets');
 
 				while($id = mysql_fetch_array($query))
 				{
@@ -241,8 +241,8 @@ class ShowOptionsPage
 				$db_deaktjava = "0";
 			}
 
-			$SetSort  = $_POST['settings_sort'];
-			$SetOrder = $_POST['settings_order'];
+			$SetSort  = mysql_escape_string($_POST['settings_sort']);
+			$SetOrder = mysql_escape_string($_POST['settings_order']);
 			// < ---------------------------------------------------- ACTUALIZAR TODO LO SETEADO ANTES ---------------------------------------------------- >
 			doquery("UPDATE {{table}} SET
 			`email` = '$db_email',
@@ -271,7 +271,7 @@ class ShowOptionsPage
 					if ($_POST["newpass1"] != "")
 					{
 						$newpass = md5($_POST["newpass1"]);
-						doquery("UPDATE {{table}} SET `password` = '{$newpass}' WHERE `id` = '{$CurrentUser['id']}' LIMIT 1", "users");
+						doquery("UPDATE {{table}} SET `password` = '{$newpass}' WHERE `id` = '".intval($CurrentUser['id'])."' LIMIT 1", "users");
 						setcookie(COOKIE_NAME, "", time()-100000, "/", "", 0);
 						message($lang['op_password_changed'],"index.php",1);
 					}
@@ -280,11 +280,11 @@ class ShowOptionsPage
 			// < ------------------------------------------------------- CAMBIO DE NOMBRE DE USUARIO ------------------------------------------------------ >
 			if ($CurrentUser['username'] != $_POST["db_character"])
 			{
-				$query = doquery("SELECT id FROM {{table}} WHERE username='{$_POST["db_character"]}'", 'users', true);
+				$query = doquery("SELECT id FROM {{table}} WHERE username='".mysql_escape_string ($_POST["db_character"])."'", 'users', true);
 
 				if (!$query)
 				{
-					doquery("UPDATE {{table}} SET username='{$username}' WHERE id='{$CurrentUser['id']}' LIMIT 1", "users");
+					doquery("UPDATE {{table}} SET username='".mysql_escape_string ($username)."' WHERE id='".intval($CurrentUser['id'])."' LIMIT 1", "users");
 					setcookie(COOKIE_NAME, "", time()-100000, "/", "", 0);
 					message($lang['op_username_changed'], "index.php", 1);
 				}
@@ -314,7 +314,7 @@ class ShowOptionsPage
 
 				if ($CurrentUser['authlevel'] > 0)
 				{
-					$IsProtOn = doquery ("SELECT `id_level` FROM {{table}} WHERE `id_owner` = '".$CurrentUser['id']."' LIMIT 1;", 'planets', true);
+					$IsProtOn = doquery ("SELECT `id_level` FROM {{table}} WHERE `id_owner` = '".intval($CurrentUser['id'])."' LIMIT 1;", 'planets', true);
 					$parse['adm_pl_prot_data']    = ($IsProtOn['id_level'] > 0) ? " checked='checked'/":'';
 					$parse['opt_adm_frame']      = parsetemplate(gettemplate('options/options_admadd'), $parse);
 				}

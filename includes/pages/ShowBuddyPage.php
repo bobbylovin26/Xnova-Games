@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -35,21 +35,21 @@ function ShowBuddyPage($CurrentUser)
 			switch($sm)
 			{
 				case 1:
-					doquery("DELETE FROM {{table}} WHERE `id`='{$bid}'","buddy");
+					doquery("DELETE FROM {{table}} WHERE `id`='".intval($bid)."'","buddy");
 					header("location:game.php?page=buddy");
 				break;
 
 				case 2:
-					doquery("UPDATE {{table}} SET `active` = '1' WHERE `id` ='{$bid}'","buddy");
+					doquery("UPDATE {{table}} SET `active` = '1' WHERE `id` ='".intval($bid)."'","buddy");
 					header("location:game.php?page=buddy");
 				break;
 
 				case 3:
-					$test = doquery("SELECT `id` FROM {{table}} WHERE `sender`='{$CurrentUser[id]}' AND `owner`='{$_POST}' OR `owner`='{$CurrentUser[id]}' AND `sender`='{$_POST[u]}'","buddy",true);
+					$test = doquery("SELECT `id` FROM {{table}} WHERE `sender`='".intval($CurrentUser[id])."' AND `owner`='".intval($_POST)."' OR `owner`='".intval($CurrentUser[id])."' AND `sender`='".intval($_POST[u])."'","buddy",true);
 					if($test == array())
 					{
 						$text = mysql_escape_string( strip_tags( $_POST['text'] ) );
-						doquery("INSERT INTO {{table}} SET `sender`='{$CurrentUser[id]}' ,`owner`='{$_POST[u]}' ,`active`='0' ,`text`='{$text}'","buddy");
+						doquery("INSERT INTO {{table}} SET `sender`='".intval($CurrentUser[id])."' ,`owner`='".intval($_POST[u])."' ,`active`='0' ,`text`='{$text}'","buddy");
 						header("location:game.php?page=buddy");
 					}
 					else
@@ -67,7 +67,7 @@ function ShowBuddyPage($CurrentUser)
 			}
 			else
 			{
-				$player=doquery("SELECT `username` FROM {{table}} WHERE `id`='{$u}'","users",true);
+				$player=doquery("SELECT `username` FROM {{table}} WHERE `id`='".intval($u)."'","users",true);
 				$page="<script src=scripts/cntchar.js type=text/javascript></script>
 				<center>
 				<form action=game.php?page=buddy&mode=1&sm=3 method=post>
@@ -83,7 +83,7 @@ function ShowBuddyPage($CurrentUser)
 		break;
 		default:
 
-			$liste=doquery("SELECT * FROM {{table}} WHERE `sender`='{$CurrentUser[id]}' OR `owner`='{$CurrentUser[id]}'","buddy");
+			$liste=doquery("SELECT * FROM {{table}} WHERE `sender`='".intval($CurrentUser[id])."' OR `owner`='".intval($CurrentUser[id])."'","buddy");
 
 			while($buddy	=	mysql_fetch_assoc($liste))
 			{
@@ -91,7 +91,7 @@ function ShowBuddyPage($CurrentUser)
 				{
 					if($buddy['sender']==$CurrentUser['id'])
 					{
-						$owner=doquery("SELECT `id`, `username`, `galaxy`, `system`, `planet`,`ally_id`, `ally_name` FROM {{table}} WHERE `id`='{$buddy[owner]}'","users",true);
+						$owner=doquery("SELECT `id`, `username`, `galaxy`, `system`, `planet`,`ally_id`, `ally_name` FROM {{table}} WHERE `id`='".intval($buddy[owner])."'","users",true);
 						$myrequest.="<tr><th><a href=game.php?page=messages&mode=write&id={$owner[id]}>{$owner[username]}</a></th>
 						<th><a href=game.php?page=alliance&mode=ainfo&a={$owner[ally_id]}>{$owner[ally_name]}</a></th>
 						<th><a href=game.php?page=galaxy&mode=3&galaxy={$owner[galaxy]}&system={$owner[system]}>{$owner[galaxy]}:{$owner[system]}:{$owner[planet]}</a></th>
@@ -100,7 +100,7 @@ function ShowBuddyPage($CurrentUser)
 					}
 					else
 					{
-						$sender=doquery("SELECT `id`, `username`, `galaxy`, `system`, `planet`,`ally_id`, `ally_name` FROM {{table}} WHERE `id`='{$buddy[sender]}'","users",true);
+						$sender=doquery("SELECT `id`, `username`, `galaxy`, `system`, `planet`,`ally_id`, `ally_name` FROM {{table}} WHERE `id`='".intval($buddy[sender])."'","users",true);
 						$outrequest.="<tr><th><a href=game.php?page=messages&mode=write&id={$sender[id]}>{$sender[username]}</a></th>
 						<th><a href=game.php?page=alliance&mode=ainfo&a={$sender[ally_id]}>{$sender[ally_name]}</a></th>
 						<th><a href=game.php?page=galaxy&mode=3&galaxy={$sender[galaxy]}&system={$sender[system]}>{$sender[galaxy]}:{$sender[system]}:{$sender[planet]}</a></th>
@@ -111,9 +111,9 @@ function ShowBuddyPage($CurrentUser)
 				else
 				{
 					if($buddy['sender']==$CurrentUser['id'])
-						$owner = doquery("SELECT `id`, `username`, `onlinetime`, `galaxy`, `system`, `planet`,`ally_id`, `ally_name` FROM {{table}} WHERE `id`='{$buddy[owner]}'","users",true);
+						$owner = doquery("SELECT `id`, `username`, `onlinetime`, `galaxy`, `system`, `planet`,`ally_id`, `ally_name` FROM {{table}} WHERE `id`='".intval($buddy[owner])."'","users",true);
 					else
-						$owner = doquery("SELECT `id`, `username`, `onlinetime`, `galaxy`, `system`, `planet`,`ally_id`, `ally_name` FROM {{table}} WHERE `id`='{$buddy[sender]}'","users",true);
+						$owner = doquery("SELECT `id`, `username`, `onlinetime`, `galaxy`, `system`, `planet`,`ally_id`, `ally_name` FROM {{table}} WHERE `id`='".intval($buddy[sender])."'","users",true);
 
 						$myfriends.="<tr><th><a href=game.php?page=messages&mode=write&id={$owner[id]}>{$owner[username]}</a></th>
 						<th><a href=game.php?page=alliance&mode=ainfo&a={$owner[ally_id]}>{$owner[ally_name]}</a></th>

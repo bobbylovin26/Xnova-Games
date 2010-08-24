@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -68,10 +68,19 @@ function ShowPhalanxPage($CurrentUser, $CurrentPlanet)
 
 		if ($DoScan == true)
 		{
-			$Galaxy  = $_GET["galaxy"];
-			$System  = $_GET["system"];
-			$Planet  = $_GET["planet"];
-			$PlType  = $_GET["planettype"];
+			$Galaxy  = intval($_GET["galaxy"]);
+			$System  = intval($_GET["system"]);
+			$Planet  = intval($_GET["planet"]);
+			$PlType  = intval($_GET["planettype"]);
+
+			if ( $PlType == 1 )
+			{
+
+			}
+			else
+			{
+				die(header("Location: game.php?page=galaxy"));
+			}
 
 			$TargetInfo = doquery("SELECT * FROM {{table}} WHERE `galaxy` = '". $Galaxy ."' AND `system` = '". $System ."' AND `planet` = '". $Planet ."' AND `planet_type` = '". $PlType ."';", 'planets', true);
 			$TargetName = $TargetInfo['name'];

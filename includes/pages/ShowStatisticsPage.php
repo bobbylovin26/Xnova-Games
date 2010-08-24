@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -129,7 +129,7 @@ function ShowStatisticsPage($CurrentUser)
 			if ( $StatRow[ $OldRank ] == 0 || $StatRow[ $Rank ] == 0)
 			{
 				$rank_old				= $start;
-				$QryUpdRank				= doquery("UPDATE {{table}} SET `".$Rank."` = '".$start."', `".$OldRank."` = '".$start."' WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $StatRow['id_owner'] ."';" , "statpoints");
+				$QryUpdRank				= doquery("UPDATE {{table}} SET `".$Rank."` = '".$start."', `".$OldRank."` = '".$start."' WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". intval($StatRow['id_owner']) ."';" , "statpoints");
 				$StatRow[ $OldRank ]	= $start;
 				$StatRow[ $Rank ]		= $start;
 			}
@@ -205,7 +205,7 @@ function ShowStatisticsPage($CurrentUser)
 			if ( $StatRow[ $OldRank ] == 0 || $StatRow[ $Rank ] == 0)
 			{
 				$rank_old				= $start;
-				$QryUpdRank				= doquery("UPDATE {{table}} SET `".$Rank."` = '".$start."', `".$OldRank."` = '".$start."' WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $StatRow['id_owner'] ."';" , "statpoints");
+				$QryUpdRank				= doquery("UPDATE {{table}} SET `".$Rank."` = '".$start."', `".$OldRank."` = '".$start."' WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". intval($StatRow['id_owner']) ."';" , "statpoints");
 				$StatRow[ $OldRank ]	= $start;
 				$StatRow[ $Rank ]		= $start;
 			}
