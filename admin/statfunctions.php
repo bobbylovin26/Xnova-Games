@@ -7,13 +7,13 @@
  * @copyright 2008 by Chlorel for XNova
  */
 
-function GetFlyingFleetPoints($CurrentUser) {
+function GetFlyingFleetPoints($CurUser) {
    global $resource, $pricelist, $reslist;
 
    // PADA FUNCTION
    // USE AT YOUR OWN RISK :3
 
-   $OwnFleets = doquery("SELECT * FROM {{table}} WHERE `fleet_owner` = '". $CurrentUser['id'] ."';", 'fleets');
+   $OwnFleets = doquery("SELECT * FROM {{table}} WHERE `fleet_owner` = '". $CurUser['id'] ."';", 'fleets');
    $Record = 0;
    while ($FleetRow = mysql_fetch_array($OwnFleets)) {
 
@@ -38,14 +38,14 @@ function GetFlyingFleetPoints($CurrentUser) {
 
 }
 
-function GetTechnoPoints ( $CurrentUser ) {
+function GetTechnoPoints ( $CurUser ) {
 	global $resource, $pricelist, $reslist;
 
 	$TechCounts = 0;
 	$TechPoints = 0;
 	foreach ( $reslist['tech'] as $n => $Techno ) {
-		if ( $CurrentUser[ $resource[ $Techno ] ] > 0 ) {
-			for ( $Level = 1; $Level < $CurrentUser[ $resource[ $Techno ] ]; $Level++ ) {
+		if ( $CurUser[ $resource[ $Techno ] ] > 0 ) {
+			for ( $Level = 1; $Level < $CurUser[ $resource[ $Techno ] ]; $Level++ ) {
 				$Units       = $pricelist[ $Techno ]['metal'] + $pricelist[ $Techno ]['crystal'] + $pricelist[ $Techno ]['deuterium'];
 				$LevelMul    = pow( $pricelist[ $Techno ]['factor'], $Level );
 				$TechPoints += ($Units * $LevelMul);
@@ -59,14 +59,14 @@ function GetTechnoPoints ( $CurrentUser ) {
 	return $RetValue;
 }
 
-function GetBuildPoints ( $CurrentPlanet ) {
+function GetBuildPoints ( $CurPlanet ) {
 	global $resource, $pricelist, $reslist;
 
 	$BuildCounts = 0;
 	$BuildPoints = 0;
 	foreach($reslist['build'] as $n => $Building) {
-		if ( $CurrentPlanet[ $resource[ $Building ] ] > 0 ) {
-			for ( $Level = 1; $Level < $CurrentPlanet[ $resource[ $Building ] ]; $Level++ ) {
+		if ( $CurPlanet[ $resource[ $Building ] ] > 0 ) {
+			for ( $Level = 1; $Level < $CurPlanet[ $resource[ $Building ] ]; $Level++ ) {
 				$Units        = $pricelist[ $Building ]['metal'] + $pricelist[ $Building ]['crystal'] + $pricelist[ $Building ]['deuterium'];
 				$LevelMul     = pow( $pricelist[ $Building ]['factor'], $Level );
 				$BuildPoints += ($Units * $LevelMul);
@@ -80,16 +80,16 @@ function GetBuildPoints ( $CurrentPlanet ) {
 	return $RetValue;
 }
 
-function GetDefensePoints ( $CurrentPlanet ) {
+function GetDefensePoints ( $CurPlanet ) {
 	global $resource, $pricelist, $reslist;
 
 	$DefenseCounts = 0;
 	$DefensePoints = 0;
 	foreach($reslist['defense'] as $n => $Defense) {
-		if ($CurrentPlanet[ $resource[ $Defense ] ] > 0) {
+		if ($CurPlanet[ $resource[ $Defense ] ] > 0) {
 			$Units          = $pricelist[ $Defense ]['metal'] + $pricelist[ $Defense ]['crystal'] + $pricelist[ $Defense ]['deuterium'];
-			$DefensePoints += ($Units * $CurrentPlanet[ $resource[ $Defense ] ]);
-			$DefenseCounts += $CurrentPlanet[ $resource[ $Defense ] ];
+			$DefensePoints += ($Units * $CurPlanet[ $resource[ $Defense ] ]);
+			$DefenseCounts += $CurPlanet[ $resource[ $Defense ] ];
 		}
 	}
 	$RetValue['DefenseCount'] = $DefenseCounts;
@@ -98,16 +98,16 @@ function GetDefensePoints ( $CurrentPlanet ) {
 	return $RetValue;
 }
 
-function GetFleetPoints ( $CurrentPlanet ) {
+function GetFleetPoints ( $CurPlanet ) {
 	global $resource, $pricelist, $reslist;
 
 	$FleetCounts = 0;
 	$FleetPoints = 0;
 	foreach($reslist['fleet'] as $n => $Fleet) {
-		if ($CurrentPlanet[ $resource[ $Fleet ] ] > 0) {
+		if ($CurPlanet[ $resource[ $Fleet ] ] > 0) {
 			$Units          = $pricelist[ $Fleet ]['metal'] + $pricelist[ $Fleet ]['crystal'] + $pricelist[ $Fleet ]['deuterium'];
-			$FleetPoints   += ($Units * $CurrentPlanet[ $resource[ $Fleet ] ]);
-			$FleetCounts   += $CurrentPlanet[ $resource[ $Fleet ] ];
+			$FleetPoints   += ($Units * $CurPlanet[ $resource[ $Fleet ] ]);
+			$FleetCounts   += $CurPlanet[ $resource[ $Fleet ] ];
 		}
 	}
 	$RetValue['FleetCount'] = $FleetCounts;

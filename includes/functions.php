@@ -120,7 +120,7 @@ function StdFooter() {
 function CalculateMaxPlanetFields (&$planet) {
 	global $resource;
 
-	return $planet["field_max"] + ($planet[ $resource[33] ] * 5);
+	return $planet["field_max"] + ($planet[ $resource[33] ] * FIELDS_BY_TERRAFORMER) + ($planet[ $resource[45] ] * FIELDS_BY_S_TERRAFORMER);
 }
 
 ?>

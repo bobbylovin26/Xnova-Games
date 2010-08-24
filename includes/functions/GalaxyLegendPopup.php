@@ -31,9 +31,10 @@ function GalaxyLegendPopup () {
 	$Result .= "</tr><tr>";
 	$Result .= "<td width=220>Admin</td><td><font color=lime><blink>A</blink></font></td>";
 	$Result .= "</tr>";
-	$Result .= "</table>";
-	$Result .= "\");' onmouseout='return nd();'>";
-	$Result .= $lang['Legend']."</a>";
+	$Result .= "</table>\"";
+    $Result .= ", STICKY, MOUSEOFF, DELAY, 750, CENTER, OFFSETX, -150, OFFSETY, -150 );'";
+    $Result .= " onmouseout='return nd();'>";
+   $Result .= $lang['Legend']."</a>";
 
 
 

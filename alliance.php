@@ -389,7 +389,7 @@ array(1 =>
       $allianz_raenge = unserialize($ally['ally_ranks']);
       // $user_can_watch_memberlist
       // comprobamos el permiso
-      if ($ally['ally_owner'] != $user['id'] && !$user_can_watch_memberlist) {
+      if ($ally['ally_owner'] != $user['id'] && !$user_can_kick && $ally_ranks[$user['ally_rank_id']-1]['administrieren'] != 1 ) {
          message($lang['Denied_access'], $lang['Members_list']);
       }
       // El orden de aparicion
@@ -515,9 +515,7 @@ array(1 =>
             ", "messages");
             $list .= "<br>{$u['username']} ";
          }
-         // doquery("SELECT id,username FROM {{table}} WHERE ally_id='{$user['ally_id']}' ORDER BY `id`","users");
-         doquery("UPDATE {{table}} SET `new_message`=new_message+1 WHERE ally_id='{$user['ally_id']}' AND ally_rank_id='{$_POST['r']}'", "users");
-         doquery("UPDATE {{table}} SET `mnl_alliance`=mnl_alliance+1 WHERE ally_id='{$user['ally_id']}' AND ally_rank_id='{$_POST['r']}'", "users");
+
          /*
         Aca un mensajito diciendo que a quien se mando.
       */
@@ -798,8 +796,8 @@ array(1 =>
      En la administrar a los miembros se pueden establecer los rangos
      para dar los diferentes derechos "Leyes"
    */
-      // comprobamos el permiso
-      if ($ally['ally_owner'] != $user['id'] && !$user_can_kick) {
+	// comprobamos el permiso
+      if ($ally['ally_owner'] != $user['id'] && $user_admin == false) {
          message($lang['Denied_access'], $lang['Members_list']);
       }
 
@@ -814,7 +812,7 @@ array(1 =>
          $u = doquery("SELECT * FROM {{table}} WHERE id='{$kick}' LIMIT 1", 'users', true);
          // kickeamos!
          if ($u['ally_id'] == $ally['id'] && $u['id'] != $ally['ally_owner']) {
-            doquery("UPDATE {{table}} SET `ally_id`='0' WHERE `id`='{$u['id']}'", 'users');
+            doquery("UPDATE {{table}} SET `ally_id`='0', `ally_name`='' WHERE `id`='{$u['id']}' LIMIT 1;", 'users');
          }
       } elseif (isset($_POST['newrang'])) {
          $q = doquery("SELECT * FROM {{table}} WHERE id='{$u}' LIMIT 1", 'users', true);
@@ -879,17 +877,23 @@ array(1 =>
         Aca viene la parte jodida...
       */
          if ($ally['ally_owner'] == $u['id'] || $rank == $u['id']) {
-            $u["functions"] = '';
-         } elseif ($ally_ranks[$user['ally_rank_id']-1][5] == 1 || $ally['ally_owner'] == $user['id']) {
-            $f['dpath'] = $dpath;
-            $f['Expel_user'] = $lang['Expel_user'];
-            $f['Set_range'] = $lang['Set_range'];
-            $f['You_are_sure_want_kick_to'] = str_replace("%s", $u['username'], $lang['You_are_sure_want_kick_to']);
-            $f['id'] = $u['id'];
-            $u["functions"] = parsetemplate($f_template, $f);
-         } else {
-            $u["functions"] = '';
-         }
+				$u["functions"] = '';
+			} elseif ($ally_ranks[$user['ally_rank_id']-1]['kick'] == 1  &&  $ally_ranks[$user['ally_rank_id']-1]['administrieren'] == 1 || $ally['ally_owner'] == $user['id']) {
+				$f['dpath'] = $dpath;
+				$f['Expel_user'] = $lang['Expel_user'];
+				$f['Set_range'] = $lang['Set_range'];
+				$f['You_are_sure_want_kick_to'] = str_replace("%s", $u['username'], $lang['You_are_sure_want_kick_to']);
+				$f['id'] = $u['id'];
+				$u["functions"] = parsetemplate($f_template, $f);
+			}elseif ($ally_ranks[$user['ally_rank_id']-1]['administrieren'] == 1 ){
+				$f['dpath'] = $dpath;
+				$f['Expel_user'] = $lang['Expel_user'];
+				$f['Set_range'] = $lang['Set_range'];
+				$f['id'] = $u['id'];
+				$u["functions"] = parsetemplate($f_template, $f);
+			}else{
+				$u["functions"] = '';
+			}
          $u["dpath"] = $dpath;
          // por el formulario...
          if ($rank != $u['id']) {
@@ -954,14 +958,12 @@ array(1 =>
          ally_members=ally_members+1
          WHERE id='{$ally['id']}'", 'alliance');
 
-         doquery("UPDATE {{table}} SET
-         ally_name='{$ally['ally_name']}',
-         ally_request_text='',
-         ally_request='0',
-         ally_id='{$ally['id']}',
-         new_message=new_message+1,
-         mnl_alliance=mnl_alliance+1
-         WHERE id='{$show}'", 'users');
+		doquery("UPDATE {{table}} SET
+             ally_name='{$ally['ally_name']}',
+             ally_request_text='',
+             ally_request='0',
+             ally_id='{$ally['id']}'
+             WHERE id='{$show}'", 'users');
          // Se envia un mensaje avizando...
 
          doquery("INSERT INTO {{table}} SET
@@ -981,7 +983,7 @@ array(1 =>
       } elseif ($_POST['action'] == "Refuser" && $_POST['action'] != '') {
          $_POST['text'] = mysql_escape_string(strip_tags($_POST['text']));
 
-         doquery("UPDATE {{table}} SET ally_request_text='',ally_request='0',ally_id='0',new_message=new_message+1, mnl_alliance=mnl_alliance+1 WHERE id='{$show}'", 'users');
+        doquery("UPDATE {{table}} SET ally_request_text='',ally_request='0',ally_id='0' WHERE id='{$show}'", 'users');
          // Se envia un mensaje avizando...
          doquery("INSERT INTO {{table}} SET
          `message_owner`='{$show}',

@@ -67,6 +67,16 @@
 	$QryTableBuddy      .= "PRIMARY KEY  (`id`) ";
 	$QryTableBuddy      .= ") ENGINE=MyISAM;";
 
+	// Table chat
+	$QryTableChat		 =  "CREATE TABLE `{{table}}` (";
+	$QryTableChat		.=  "`messageid` int(5) unsigned NOT NULL auto_increment,";
+	$QryTableChat		.=  "`user` varchar(255) NOT NULL default '',";
+	$QryTableChat		.=  "`message` text NOT NULL,";
+	$QryTableChat		.=  "`timestamp` int(11) NOT NULL default '0',";
+	$QryTableChat		.=  "`ally_id` int(11) NOT NULL default '0',";
+	$QryTableChat		.=  "PRIMARY KEY  (`messageid`)";
+	$QryTableChat		.=  ") TYPE=MyISAM AUTO_INCREMENT=16 AUTO_INCREMENT=16 ;";
+
 	// Table config
 	$QryTableConfig      = "CREATE TABLE `{{table}}` ( ";
 	$QryTableConfig     .= "`config_name` varchar(64) character set latin1 NOT NULL default '', ";
@@ -76,7 +86,7 @@
 	// Valeurs de base de la config
 	$QryInsertConfig     = "INSERT INTO `{{table}}` ";
 	$QryInsertConfig    .= "(`config_name`           , `config_value`) VALUES ";
-	$QryInsertConfig    .= "('Actualizacion'         , '0000000001'), ";
+	$QryInsertConfig    .= "('actualizar_puntos'     , '0'), ";
 	$QryInsertConfig    .= "('users_amount'          , '0'), ";
 	$QryInsertConfig    .= "('game_speed'            , '2500'), ";
 	$QryInsertConfig    .= "('fleet_speed'           , '2500'), ";
@@ -179,6 +189,13 @@
 	$QryTableGalaxy     .= "KEY `planet` (`planet`) ";
 	$QryTableGalaxy     .= ") ENGINE=MyISAM;";
 
+	// Table loteria
+	$QryTableLoteria 	 = "CREATE TABLE `{{table}}` (";
+	$QryTableLoteria 	.= "`ID` int(11) NOT NULL,";
+	$QryTableLoteria 	.= "`user` varchar(255) collate latin1_spanish_ci NOT NULL,";
+	$QryTableLoteria 	.= "`tickets` int(5) NOT NULL";
+	$QryTableLoteria 	.= ") ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;";
+
 	// Table lunas
 	$QryTableLunas       = "CREATE TABLE `{{table}}` ( ";
 	$QryTableLunas      .= "`id` bigint(11) NOT NULL auto_increment, ";
@@ -206,6 +223,7 @@
 	$QryTableMessages   .= "`message_from` varchar(48) character set latin1 default NULL, ";
 	$QryTableMessages   .= "`message_subject` varchar(48) character set latin1 default NULL, ";
 	$QryTableMessages   .= "`message_text` text character set latin1, ";
+	$QryTableMessages   .= "`leido` int(11) NOT NULL default '1', ";
 	$QryTableMessages   .= "PRIMARY KEY  (`message_id`) ";
 	$QryTableMessages   .= ") ENGINE=MyISAM;";
 
@@ -271,6 +289,7 @@
 	$QryTablePlanets    .= "`deuterium_store` int(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`laboratory` int(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`terraformer` int(11) NOT NULL default '0', ";
+	$QryTablePlanets    .= "`super_terraformer` int(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`ally_deposit` int(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`silo` int(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`small_ship_cargo` bigint(11) NOT NULL default '0', ";
@@ -288,6 +307,14 @@
 	$QryTablePlanets    .= "`dearth_star` bigint(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`battleship` bigint(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`supernova` bigint(11) NOT NULL default '0', ";
+	$QryTablePlanets    .= "`interceptor` bigint(11) NOT NULL default '0', ";
+	$QryTablePlanets    .= "`cazacrucero` bigint(11) NOT NULL default '0', ";
+	$QryTablePlanets    .= "`transportador` bigint(11) NOT NULL default '0', ";
+	$QryTablePlanets    .= "`titan` bigint(11) NOT NULL default '0', ";
+	$QryTablePlanets    .= "`nave_humano` BIGINT( 11 ) NOT NULL DEFAULT '0' ";
+	$QryTablePlanets    .= "`nave_alien` BIGINT( 11 ) NOT NULL DEFAULT '0'";
+	$QryTablePlanets    .= "`nave_predator` BIGINT( 11 ) NOT NULL DEFAULT '0'";
+	$QryTablePlanets    .= "`nave_dark` BIGINT( 11 ) NOT NULL DEFAULT '0'";
 	$QryTablePlanets    .= "`misil_launcher` bigint(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`small_laser` bigint(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`big_laser` bigint(11) NOT NULL default '0', ";
@@ -296,6 +323,8 @@
 	$QryTablePlanets    .= "`buster_canyon` bigint(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`small_protection_shield` int(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`planet_protector` int(11) NOT NULL default '0', ";
+	$QryTablePlanets    .= "`fotocanyon` bigint(11) NOT NULL default '0', ";
+	$QryTablePlanets    .= "`baseespacial` int(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`big_protection_shield` int(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`interceptor_misil` int(11) NOT NULL default '0', ";
 	$QryTablePlanets    .= "`interplanetary_misil` int(11) NOT NULL default '0', ";
@@ -369,6 +398,10 @@
 	$QryTableUsers      .= "`email` varchar(64) character set latin1 NOT NULL default '', ";
 	$QryTableUsers      .= "`email_2` varchar(64) character set latin1 NOT NULL default '', ";
 	$QryTableUsers      .= "`lang` varchar(8) character set latin1 NOT NULL default 'es', ";
+	$QryTableUsers      .= "`humano` BIGINT( 11 ) NOT NULL DEFAULT '0', ";
+	$QryTableUsers      .= "`alien` BIGINT( 11 ) NOT NULL DEFAULT '0', ";
+	$QryTableUsers      .= "`predator` BIGINT( 11 ) NOT NULL DEFAULT '0', ";
+	$QryTableUsers      .= "`dark` BIGINT( 11 ) NOT NULL DEFAULT '0', ";
 	$QryTableUsers      .= "`authlevel` tinyint(4) NOT NULL default '0', ";
 	$QryTableUsers      .= "`id_planet` int(11) NOT NULL default '0', ";
 	$QryTableUsers      .= "`galaxy` int(11) NOT NULL default '0', ";
@@ -416,7 +449,12 @@
 	$QryTableUsers      .= "`buster_tech` int(11) NOT NULL default '0', ";
 	$QryTableUsers      .= "`intergalactic_tech` int(11) NOT NULL default '0', ";
 	$QryTableUsers      .= "`expedition_tech` int(11) NOT NULL default '0', ";
+	$QryTableUsers      .= "`desarrollo_tech` int(11) NOT NULL default '0', ";
 	$QryTableUsers      .= "`graviton_tech` int(11) NOT NULL default '0', ";
+	$QryTableUsers      .= "`humano_tech` int(11) NOT NULL default '0', ";
+	$QryTableUsers      .= "`alien_tech` int(11) NOT NULL default '0', ";
+	$QryTableUsers      .= "`predator_tech` int(11) NOT NULL default '0', ";
+	$QryTableUsers      .= "`dark_tech` int(11) NOT NULL default '0', ";
 	$QryTableUsers      .= "`ally_id` int(11) NOT NULL default '0', ";
 	$QryTableUsers      .= "`ally_name` varchar(32) character set latin1 default '', ";
 	$QryTableUsers      .= "`ally_request` int(11) NOT NULL default '0', ";

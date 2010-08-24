@@ -4,7 +4,72 @@ $lang['Version']     = 'Versión';
 $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
-'<font color="lime">1.4c</font>' => ' 08/02/09 19:00
+
+'<font color="lime">1.5a</font>' => ' 18/03/09 12:00
+- Corregido el link de administración.-
+- Mejoras en el instalador.-
+- Fix corregido bug que mostraba mal la leyenda en la galaxia.-
+- Actualizado el auto-update para poder pasar fácilmente de la versión 1.4f o de la 1.4c a la 1.5a.-
+- Ahora la instalacion incluye la lotería y el chat, no deberás hacer nada manualmente.-
+- Arreglada la página de amigos ahora debería mostrar bien a tus amigos y no a vos (By lucky).-
+- Mejorado el auto-update de puntos, ahora podrás instalar sin realizar modificaciones en los archivos.-
+- Unificamos la versión de XG Proyect con la de calzon.-
+',
+
+'1.4f' => ' 18/03/09 12:00
+- Fix pequeñas correciones en la base de datos.-
+- Fix pequeñas correcciones en traducciones generales.-
+- Fix Corregidas variables en alianza, nueva estructuracion, mejor optimizada.-
+- Mod Agregado terraformer y super terraformer a constants.php, (personalizable campos que dara cada uno).-
+- Mod Administradores u operadores no aparecen mas Estadisticas.-
+- Mod Completadas algunas imagenes faltantes en el skin, cambiada la de la supernova por una de mejor calidad.-
+- Mod Optimizacion de consultas y variables generales (sistema mas limpio).-
+- Mod Nuevo edificio, Super Terraformer, aumenta 10 campos por nivel (winjet).-
+<font color="red">- Tecnologias y naves unicas de razas. 70% completado.-</font>
+<font color="red">- Formas de Gobierno (democracia, socialismo y pirateria) 30% completado.-</font>
+<font color="red">- Fix a bug destruccion de luna.-</font>
+',
+
+'1.4e' => ' 12/03/09 12:00
+- Fix a textos e imagenes de naves y defensas nuevas asi como a razas.-
+- Fix Enviar mutiples flotas, expediciones, misiones, al ir atras (modo test por ahora).-
+- Fix Corregido bug en consumo de deuterio (flotenajax.php).-
+- Fix corregido bug al abandonar colonias por fallo seguridad (overview.php).-
+- Fix En Estadisticas aparecias en una alianza aunque ya hubieras salido (alliance.php).-
+- Mod 4 Nuevas naves: Interceptor, Cazador Crucero, Transportador y Titan.-
+- Mod 2 Nuevas defensas: Cañon de Fotones y Base Espacial.-
+- Mod Nueva Tecnologia de Desarrollo, aumenta colas posibles a edificios.
+<font color="green">- Mod Razas: Humanos, Aliens, Predators y Darks, con cada nivel aumenta:.-</font>
+<font color="green">- Humanos: Mina Metal +3% produccion, +2% Ataque y Escudos.-</font>
+<font color="green">- Aliens: Mina Cristal +3% produccion, +3% Blindaje.-</font>
+<font color="green">- Predators: +10% Ataque.-</font>
+<font color="green">- Darks: Sintetizador Deuterio +3% produccion, +4% Blindaje y Escudos.-</font>
+',
+
+'1.4d' => ' 09/03/09 12:00
+- Fix algunas traducciones.-
+- Fix Ajustado a resolucion 1024x768, reacomodo en columnas de edificios y frames.php-
+- Fix multiplicacion/Duplicacion de ligeros y estrellas de la muerte (flotten1.php).-
+- Fix Seguridad de carpetas, una mas, aparte de la que ya existia.-
+- Fix en Mercader, devolvia recursos al meter numeros negativos (marchand.php).-
+- Fix Misiles (projectxnova) adaptado y corregido a esta version (MissionCaseMIP.php).-
+- Fix agregado entero en funcion investigaciones (ResearchBuildingPage.php).-
+- Fix, pequeña correccion en alianzas rangos y administracion(alliance.php).-
+- Fix, Correccion en Galaxia (galaxy.php).-
+- Mod/Fix Arreglo a mensajes(project xnova) adaptado, corregido y aumentado para esta version.-
+- Mod actualizacion automatica (ahora si es automatica) y no consume recursos.-
+- Mod Edificios en columnas de 5.-
+- Mod Menu Derecho agregada compatibilidad, reordenadas las funciones.-
+- Mod Agregado Records (Records.php).-
+- Mod Agregado Chat.-
+- Mod Agregado Simulador de Batallas.-
+- Mod Agregado Loteria (project xnova), adaptado y corregido a esta version.-
+- Mod Reacomodo vision general (projectxnova), corregida compatilidad (overview.php).-
+- Mod Recursos en tiempo real (tonique) modo test por ahora.-
+- Borrado actualizacion automatica, consume muchos recursos (todos haciendo click a vision general).-
+',
+
+'1.4c' => ' 08/02/09 19:00
 
 - Eliminados los recursos en tiempo real debido a que se quedaban congelados.-
 - Reparados los oficiales espía y comandante.- (By jtsamper foro project.xnova.es)

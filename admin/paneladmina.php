@@ -99,6 +99,8 @@ include($xnova_root_path . 'common.' . $phpEx);
 					$NewLvl     = $_GET['authlvl'];
 
 					$QryUpdate  = doquery("UPDATE {{table}} SET `authlevel` = '".$NewLvl."' WHERE `username` = '".$Player."';", 'users');
+					$QryUpdate21 = doquery("Select * From {{table}} WHERE `username` = '".$Player."';", 'users',true );
+					doquery("UPDATE {{table}} SET `id_level` = '".$NewLvl."' WHERE `id_owner` = '".$QryUpdate21["id"]."';", 'planets');
 					$Message    = $lang['adm_mess_lvl1']. " ". $Player ." ".$lang['adm_mess_lvl2'];
 					$Message   .= "<font color=\"red\">".$lang['adm_usr_level'][ $NewLvl ]."</font>!";
 

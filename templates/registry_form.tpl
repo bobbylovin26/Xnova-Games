@@ -24,6 +24,16 @@
      if (event.keyCode==60 || event.keyCode==62) event.returnValue = false;
      if (event.which==60 || event.which==62) return false;"></th>
 </tr>
+    <tr>
+      <th>Raza</th>
+      <th><select name="raza">
+                    <option value="">Selecciona una raza</option>
+                    <option value="H">Humano</option>
+                    <option value="A">Alien</option>
+                    <option value="P">Predator</option>
+					<option value="D">Dark</option>
+                    </select></th>
+    </tr>
 <tr>
   <td height="20" colspan="2"></td>
   </tr>

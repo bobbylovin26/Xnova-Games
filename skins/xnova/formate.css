@@ -13,7 +13,7 @@ __   __ _   _
 ., #, td, th, textarea, body, table
 {
   font-family          : Tahoma,sans-serif;
-  font-size            : 10px;
+  font-size            : 11px;
 }
 
 img
@@ -29,7 +29,7 @@ p table
 p td
 {
   text-align           : center;
-  font-size            : 10px;
+  font-size            : 11px;
   font-family          : Tahoma,sans-serif;
 }
 
@@ -40,7 +40,7 @@ table table
 
 table table td
 {
-  font-size            : 10px;
+  font-size            : 11px;
   font-family          : Tahoma,sans-serif;
 }
 
@@ -73,7 +73,13 @@ body.style{
 body.style table {
   margin               : 0px;
 }
-
+/*Menu Derecho*/
+body.style1{
+  background-image     : url(img/background3.jpg);
+}
+body.style1 table{
+  margin           		: 0px;
+}
 body form table th table input
 {
   width: 60px;
@@ -84,14 +90,14 @@ td.j, td.k, td.l, td.m, td.n, td.o, td.q, td.r,
 td.v, .style td, p td, table.s th img
 {
   border               : 1px #545454 solid;
-  font-size            : 10px;
+  font-size            : 11px;
   font-family          : Tahoma,sans-serif;
 }
 
 input, select, textarea
 {
   border               : 1px #545454 solid;
-  font-size            : 10px;
+  font-size            : 11px;
   font-family          : Tahoma,sans-serif;
 }
 
@@ -225,7 +231,7 @@ td.o
 td.q
 {
   font-weight          : bold;
-  font-size            : 10px;
+  font-size            : 11px;
   font-family          : Tahoma,sans-serif;
   text-align           : center;
   vertical-align       : middle;
@@ -263,7 +269,7 @@ table.s th img
 
 div.z
 {
-  font-size            : 10px;
+  font-size            : 11px;
   font-weight          : bold;
   color                : #FFFFFF;
 }
@@ -295,7 +301,7 @@ a:hover
 {
   color                : #FFFFFF;
   border-top           : 0px;
-  font-size            : 10px;
+  font-size            : 11px;
   font-family          : Tahoma,sans-serif;
 }
 
@@ -304,7 +310,7 @@ a:hover
   padding-left         : 7px;
   height               : 100%;
   width                : 100%;
-  font-size            : 10px;
+  font-size            : 11px;
   font-family          : Tahoma,sans-serif;
 }
 
@@ -312,7 +318,7 @@ a:hover
 {
   height               : 100%;
   width                : 100%;
-  font-size            : 10px;
+  font-size            : 11px;
   font-family          : Tahoma,sans-serif;
 }
 
@@ -320,7 +326,7 @@ a:hover
 {
   height               : 100%;
   width                : 100%;
-  font-size            : 10px;
+  font-size            : 11px;
   font-family          : Tahoma,sans-serif;
 }
 
@@ -332,7 +338,7 @@ a:hover
   height               : 100%;
   width                : 108px;
   text-decoration      : none;
-  font-size            : 10px;
+  font-size            : 11px;
   font-family          : Tahoma,sans-serif;
 }
 

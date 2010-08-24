@@ -46,10 +46,12 @@ function GalaxyRowAlly ( $GalaxyRow, $GalaxyRowPlanet, $GalaxyRowUser, $Galaxy, 
 			$Result .= ", STICKY, MOUSEOFF, DELAY, 750, CENTER, OFFSETX, -40, OFFSETY, -40 );'";
 			$Result .= " onmouseout='return nd();'>";
 			if ($user['ally_id'] == $GalaxyRowPlayer['ally_id']) {
-				$Result .= "<span class=\"allymember\">". $allyquery['ally_tag'] ."</span></a>";
-			} else {
-				$Result .= $allyquery['ally_tag'] ."</a>";
-			}
+            $Result .= "<span class=\"allymember\">". $allyquery['ally_tag'] ."</span></a>";
+         } elseif ($GalaxyRowUser['ally_id'] == $user['ally_id']) {
+            $Result .= "<font color=lime>".$allyquery['ally_tag'] ."</font></a>";
+         } else {
+            $Result .= $allyquery['ally_tag'] ."</a>";
+         }
 		}
 	}
 	$Result .= "</th>";

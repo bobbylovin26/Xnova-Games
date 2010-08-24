@@ -135,7 +135,15 @@ include($xnova_root_path . 'common.' . $phpEx);
 				$_POST['ship213'] >= 1 ||
 				$_POST['ship214'] >= 1 ||
 				$_POST['ship215'] >= 1 ||
-                $_POST['ship216'] >= 1) {
+                $_POST['ship216'] >= 1 ||
+				$_POST['ship217'] >= 1 ||
+				$_POST['ship218'] >= 1 ||
+				$_POST['ship219'] >= 1 ||
+				$_POST['ship220'] >= 1 ||
+				$_POST['ship221'] >= 1 ||
+				$_POST['ship222'] >= 1 ||
+				$_POST['ship223'] >= 1 ||
+				$_POST['ship224'] >= 1) {
 				if (!$YourPlanet) {
 					$missiontype[1] = $lang['type_mission'][1];
 				}

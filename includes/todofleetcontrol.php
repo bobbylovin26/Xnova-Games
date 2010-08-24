@@ -87,5 +87,7 @@ include($xnova_root_path . 'includes/functions/IsVacationMode.'.$phpEx);
 include($xnova_root_path . 'includes/functions/CheckIfIsBuilding.'.$phpEx);
 include($xnova_root_path . 'includes/raketenangriff.' . $phpEx);
 include($xnova_root_path . 'includes/functions/MissionCaseMIP.'.$phpEx);
+include($xnova_root_path . 'includes/calculateAttack.'.$phpEx);
+include($xnova_root_path . 'includes/formatCR.'.$phpEx);
 
 ?>

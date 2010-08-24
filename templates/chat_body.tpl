@@ -1,6 +1,6 @@
 <script language="JavaScript" type="text/javascript" src="scripts/chat.js"></script>
 
-<br><br>
+<br /><br />
 
 <table align="center"><tbody>
 
@@ -12,7 +12,7 @@
 
 </tbody></table>
 
-<br>
+<br />
 <table width="355" align="center"><tbody>
 
 <tr><td colspan="2" class="c"><b>{chat_short}</b></td></tr>
@@ -30,8 +30,8 @@
 		    <img src="images/smileys/wink.png" align="absmiddle" title=";)" alt=";)" width="12" height="12" onClick="addSmiley(';)')">
 		    <img src="images/smileys/shit.png" align="absmiddle" title=":s" alt=":s" width="12" height="12" onClick="addSmiley(':s')"></th></tr>
 
-<tr><th width="60"><b>{chat_text}</b><br><i>{chat_text}</i><br><u>{chat_text}</u><br><a href="http://www.site.com" target="_blank">{chat_text}</a><br><font color="red">{chat_text}</font></th>
+<tr><th width="60"><b>{chat_text}</b><br /><i>{chat_text}</i><br /><u>{chat_text}</u><br /><a href="http://www.site.com" target="_blank">{chat_text}</a><br /><font color="red">{chat_text}</font></th>
 
-<th>[b]{chat_text}[/b]<br>[i]{chat_text}[/i]<br>[u]{chat_text}[/u]<br>[a=http://www.site.com]{chat_text}[/a]<br>[c=blue|yellow|green|pink|red|orange]{chat_text}[/c]</th></tr>
+<th>[b]{chat_text}[/b]<br />[i]{chat_text}[/i]<br />[u]{chat_text}[/u]<br />[a=http://www.site.com]{chat_text}[/a]<br />[c=blue|yellow|green|pink|red|orange]{chat_text}[/c]</th></tr>
 
 </tbody></table>

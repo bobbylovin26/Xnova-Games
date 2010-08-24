@@ -28,9 +28,9 @@ function PlanetResourceUpdate ( $CurrentUser, &$CurrentPlanet, $UpdateTime, $Sim
 		if ( in_array( $ProdID, $reslist['prod']) ) {
 			$BuildLevelFactor = $CurrentPlanet[ $resource[$ProdID]."_porcent" ];
 			$BuildLevel       = $CurrentPlanet[ $resource[$ProdID] ];
-			$Caps['metal_perhour']     +=  floor( eval  ( $ProdGrid[$ProdID]['formule']['metal']     ) * ( $game_config['resource_multiplier'] ) * ( 1 + ( $CurrentUser['rpg_geologue']  * 0.05 ) ) );
-			$Caps['crystal_perhour']   +=  floor( eval  ( $ProdGrid[$ProdID]['formule']['crystal']   ) * ( $game_config['resource_multiplier'] ) * ( 1 + ( $CurrentUser['rpg_geologue']  * 0.05 ) ) );
-			$Caps['deuterium_perhour'] +=  floor( eval  ( $ProdGrid[$ProdID]['formule']['deuterium'] ) * ( $game_config['resource_multiplier'] ) * ( 1 + ( $CurrentUser['rpg_geologue']  * 0.05 ) ) );
+			$Caps['metal_perhour']     +=  floor( eval  ( $ProdGrid[$ProdID]['formule']['metal']     ) * ( $game_config['resource_multiplier'] ) * ( 1 + ( $CurrentUser['rpg_geologue']  * 0.05 ) ) * ( 1 + ( $CurrentUser['humano_tech']  * 0.03 ) ) );
+			$Caps['crystal_perhour']   +=  floor( eval  ( $ProdGrid[$ProdID]['formule']['crystal']   ) * ( $game_config['resource_multiplier'] ) * ( 1 + ( $CurrentUser['rpg_geologue']  * 0.05 ) ) * ( 1 + ( $CurrentUser['alien_tech']   * 0.03 ) ) );
+			$Caps['deuterium_perhour'] +=  floor( eval  ( $ProdGrid[$ProdID]['formule']['deuterium'] ) * ( $game_config['resource_multiplier'] ) * ( 1 + ( $CurrentUser['rpg_geologue']  * 0.05 ) ) * ( 1 + ( $CurrentUser['dark_tech']    * 0.03 ) ) );
 			 // Prise en compte du bonus de l'ingénieur :
          if ($ProdID < 4) {
             $Caps['energy_used']   +=  floor( eval  ( $ProdGrid[$ProdID]['formule']['energy']    ) * ( $game_config['resource_multiplier'] ) );

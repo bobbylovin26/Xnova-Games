@@ -70,7 +70,15 @@ include($xnova_root_path . 'common.' . $phpEx);
 			$_POST['ship213'] >= 1 ||
 			$_POST['ship214'] >= 1 ||
 			$_POST['ship215'] >= 1 ||
-			$_POST['ship216'] >= 1) {
+			$_POST['ship216'] >= 1 ||
+            $_POST['ship217'] >= 1 ||
+			$_POST['ship218'] >= 1 ||
+			$_POST['ship219'] >= 1 ||
+			$_POST['ship220'] >= 1 ||
+			$_POST['ship221'] >= 1 ||
+			$_POST['ship222'] >= 1 ||
+			$_POST['ship223'] >= 1 ||
+            $_POST['ship224'] >= 1) {
 			if (!$YourPlanet) {
 				$missiontype[1] = $lang['type_mission'][1];
 			}
@@ -152,7 +160,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$page .= "}\n";
 	$page .= "</script>\n";
 	$page .= "<br><center>";
-	$page .= "<form action=\"floten3.php\" method=\"post\">\n";
+	$page .= "<form action=\"floten3.php\" method=\"post\" onsubmit='this.submit.disabled = true;'>\n";
 	$page .= "<input type=\"hidden\" name=\"thisresource1\"  value=\"". floor($planetrow["metal"]) ."\" />\n";
 	$page .= "<input type=\"hidden\" name=\"thisresource2\"  value=\"". floor($planetrow["crystal"]) ."\" />\n";
 	$page .= "<input type=\"hidden\" name=\"thisresource3\"  value=\"". floor($planetrow["deuterium"]) ."\" />\n";
@@ -257,7 +265,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$page .= "</table>\n";
 	$page .= "</th>\n";
 	$page .= "</tr><tr height=\"20\">\n";
-	$page .= "<th colspan=\"2\"><input accesskey=\"z\" value=\"". $lang['fl_continue'] ."\" type=\"submit\"></th>\n";
+	$page .= "<th colspan=\"2\"><input value=\"". $lang['fl_continue'] ."\" type=\"submit\" name=\"submit\"></th>\n";
 	$page .= "</tr>\n";
 	$page .= "</tbody>\n";
 	$page .= "</table>\n";

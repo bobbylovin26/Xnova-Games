@@ -30,7 +30,13 @@ function DisplayGameSettingsPage ( $CurrentUser ) {
 				$game_config['game_disable']         = "0";
 				$game_config['close_reason']         = "";
 			}
-
+			if (isset($_POST['stat']) && $_POST['stat'] == 'on') {
+            $game_config['stat']         = "1";
+            $game_config['stat_level']         = addslashes( $_POST['stat_level'] );
+			} else {
+            $game_config['stat']         = "0";
+            $game_config['stat_level']         = "";
+			}
 			// Y a un News Frame ? !
 			if (isset($_POST['newsframe']) && $_POST['newsframe'] == 'on') {
 				$game_config['OverviewNewsFrame']     = "1";
@@ -165,7 +171,8 @@ $game_config['banner_source_post'] = $_POST['banner_source_post'];
 
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['stat_settings']              ."' WHERE `config_name` = 'stat_settings';", 'config');
 
-
+			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['stat']           ."' WHERE `config_name` = 'stat';", 'config');
+			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['stat_level']           ."' WHERE `config_name` = 'stat_level';", 'config');
 				// Configuration du Jeu
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['game_name']              ."' WHERE `config_name` = 'game_name';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['forum_url']              ."' WHERE `config_name` = 'forum_url';", 'config');
@@ -226,6 +233,8 @@ $game_config['banner_source_post'] = $_POST['banner_source_post'];
 			$parse['crystal_basic_income']   = $game_config['crystal_basic_income'];
 			$parse['deuterium_basic_income'] = $game_config['deuterium_basic_income'];
 			$parse['energy_basic_income']    = $game_config['energy_basic_income'];
+			$parse['actived']                = ($game_config['stat'] == 1) ? " checked = 'checked' ":"";
+			$parse['stat_level']             = $game_config['stat_level'] == 1;
 			$parse['enable_link']    = $game_config['link_enable'];
 			$parse['name_link']    = $game_config['link_name'];
 			$parse['url_link']    = $game_config['link_url'];

@@ -51,8 +51,13 @@ function MissionCaseMIP ($FleetRow)
             5 => 406,
             6 => 407,
             7 => 408,
+			
             8 => 502,
-            9 => 503);
+            9 => 503,
+			
+            10 => 409,
+            11 => 410,
+            12 => 411);
 
          $def =   array(
             0 => $planet['misil_launcher'],
@@ -64,7 +69,10 @@ function MissionCaseMIP ($FleetRow)
             6 => $planet['small_protection_shield'],
             7 => $planet['big_protection_shield'],
             8 => $planet['interceptor_misil'],
-            9 => $planet['interplanetary_misil']);
+            9 => $planet['interplanetary_misil'],
+            10 => $planet['planet_protector'],
+            11 => $planet['fotocanyon'],
+            12 => $planet['baseespacial']);
 
          $DefenseLabel =   array(0 => $lang['tech'][401],
             1 => $lang['tech'][402],
@@ -75,7 +83,10 @@ function MissionCaseMIP ($FleetRow)
             6 => $lang['tech'][407],
             7 => $lang['tech'][408],
             8 => $lang['tech'][502],
-            9 => $lang['tech'][503]);
+            9 => $lang['tech'][503],
+            10 => $lang['tech'][409],
+            11 => $lang['tech'][410],
+            12 => $lang['tech'][411]);
             $irak = raketenangriff($verteidiger, $angreifer, $FleetRow['fleet_amount'], $def, $FleetRow['fleet_target_obj']);
             $message = '';
             if ($planet['interceptor_misil'] >= $FleetRow['fleet_amount']) {
@@ -83,40 +94,45 @@ function MissionCaseMIP ($FleetRow)
                $x = $resource[$ids[8]];
                doquery("UPDATE {{table}} SET " . $x . " = " . $x . "-" . $FleetRow['fleet_amount'] . " WHERE id = " . $planet['id'], 'planets');
             } else {
-               if ($planet['interceptor_misil'] > 0) {
-                  $x = $resource[$ids[8]];
-                  doquery("UPDATE {{table}} SET " . $x . " = '0' WHERE id = " . $planet['id'], 'planets');
-                  $message = $planet['interceptor_misil'] . " misiles de intercepci&oacute;n fueron destruidos por misiles interplanetarios.<br>";
-               }
 
                foreach ($irak['zerstoert'] as $id => $anzahl) {
-                  if (!empty($anzahl) && $id < 10) {
+                       if ($id < 10) {
                      if ($id != 8) $message .= $DefenseLabel[$id] . " (- " . $anzahl . ")<br>";
-                     $x = $resource[$ids[$id]];
-                     doquery("UPDATE {{table}} SET " . $x . " = " . $x . "-" . $anzahl . " WHERE id = " . $planet['id'], 'planets');
+					$x = $resource[$ids[$id]];
+                       $x1 = $x ."-". $anzahl;
+                             doquery("UPDATE {{table}} SET " . $x . " = " . $x1 . " WHERE id = " . $planet['id'], 'planets');
                   }
                }
             }
             $UserPlanet = doquery("SELECT name FROM {{table}} WHERE id = '" . $FleetRow['fleet_owner'] . "'", 'planets',true);
             $name = $UserPlanet['name'];
-            $name_deffer = $$QryTargetPlanet['name'];
+			$name_deffer = $QryTargetPlanet['name'];
             $message_vorlage  = 'Un ataque con misiles (' .$FleetRow['fleet_amount']. ') de ' .$name. ' ';
 			$message_vorlage .= 'al planeta ' .$name_deffer.'<br><br>';
 
             if (empty($message))$message = "Tu planeta no tenia defensa !";
 
-			doquery("INSERT INTO {{table}} SET
-                  `message_owner`='" . $FleetRow['fleet_target_owner'] . "',
-                  `message_sender`='',
-                  `message_time`= ".$FleetRow['fleet_start_time'].",
-                  `message_type`='0',
-                  `message_from`='Torre de Control',
-                  `message_subject`='Ataque con misiles',
-                  `message_text`='" . $message_vorlage . $message . "'" , 'messages');
-            doquery("UPDATE {{table}} SET new_message=new_message+1 WHERE id='" . $FleetRow['fleet_target_owner'] . "'", 'users');
-            doquery("DELETE FROM {{table}} WHERE fleet_id = '" . $FleetRow['fleet_id'] . "'", 'fleets');
-
+    doquery("INSERT INTO {{table}} SET
+                          `message_owner`='" . $FleetRow['fleet_target_owner'] . "',
+                          `message_sender`='".$UserPlanet['id']."',
+                          `message_time`=UNIX_TIMESTAMP(),
+                          `message_type`='3',
+                          `message_from`='Torre de Control',
+                          `message_subject`='Ataque con misiles',
+                          `message_text`='" . $message_vorlage . $message . "'" , 'messages');
+                doquery("INSERT INTO {{table}} SET
+                          `message_owner`='" . $UserPlanet['id'] . "',
+                          `message_sender`='".$FleetRow['fleet_target_owner']."',
+                          `message_time`=UNIX_TIMESTAMP(),
+                          `message_type`='3',
+                          `message_from`='Torre de Control',
+                          `message_subject`='Ataque con misiles',
+                          `message_text`='" . $message_vorlage . $message . "'" , 'messages');
+                    doquery("UPDATE {{table}} SET new_message=new_message+1 WHERE id='" . $FleetRow['fleet_target_owner'] . "'", 'users');
+                doquery("UPDATE {{table}} SET new_message=new_message+1 WHERE id='" . $UserPlanet['id'] . "'", 'users');
+                    doquery("DELETE FROM {{table}} WHERE fleet_id = '" . $FleetRow['fleet_id'] . "'", 'fleets');
       }
-   } // END $FleetRow['fleet_start_time'] <= time()
+   } 
+   $FleetRow['fleet_start_time'] <= time();
 } //END FUNCTION
 ?>

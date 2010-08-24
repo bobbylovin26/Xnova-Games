@@ -1,7 +1,7 @@
 <?php         
 
 $lang['cred_link']    = 'Enlaces';
-$lang['cred_site']    = 'Lugar';
+$lang['cred_site']    = 'Pagina';
 $lang['cred_forum']   = 'Foro';
 $lang['cred_credit']  = 'Cr&eacute;ditos';
 $lang['cred_creat']   = 'Fundador';
@@ -10,10 +10,10 @@ $lang['cred_master']  = 'Jefe';
 $lang['cred_design']  = 'Dise&ntilde;ador';
 $lang['cred_web']     = 'Webmaster';
 $lang['cred_thx']     = 'Agradecimientos';
-$lang['cred_based']   = 'Quien sirbio como soporte y traduccion';
+$lang['cred_based']   = 'Quien sirvio como soporte y traduccion';
 $lang['cred_start']   = '';
 
-$lang['cred_ext']     = 'Ampliar CopyRights';
+$lang['cred_ext']     = 'Creditos';
 $lang['cred_info']    = 'Informacion';
 $lang['cred_infotxt'] = 'La sección de créditos no esta destinada a ser modificada, ya que garantiza el derecho a utilizar XNova para su propio servidor. No necesitas permiso para cambiar lo que contiene por defecto. Sin embargo, gracias al amplio sistema de derechos de autor, puede mostrar su nombre debajo de los desarrolladores oficiales y proteger sus innovaciones.';
 $lang['cred_added']   = 'Será visible en la página de crédito';

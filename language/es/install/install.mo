@@ -75,11 +75,13 @@ $lang['create_aks'] = "Creaci&#243;n de la tabla \"aks\"........<b><font color=\
 $lang['create_alliance'] = "Creaci&#243;n de la tabla \"alliance\"........<b><font color=\"lime\">Realizado!</font></b>";
 $lang['create_banned'] = "Creaci&#243;n de la tabla \"banned\"........<b><font color=\"lime\">Realizado!</font></b>";
 $lang['create_buddy'] = "Creaci&#243;n de la tabla \"buddy\"........<b><font color=\"lime\">Realizado!</font></b>";
+$lang['create_chat'] = "Creaci&#243;n de la tabla \"chat\"........<b><font color=\"lime\">Realizado!</font></b>";
 $lang['create_config'] = "Creaci&#243;n de la tabla \"config\"........<b><font color=\"lime\">Realizado!</font></b>";
 $lang['populate_config'] = "Creaci&#243;n de la tabl \"config\"........<b><font color=\"lime\">Realizado!</font></b>";
 $lang['create_errors'] = "Creaci&#243;n de la tabla \"errors\"........<b><font color=\"lime\">Realizado!</font></b>";
 $lang['create_fleets'] = "Creaci&#243;n de la tabla \"fleets\"........<b><font color=\"lime\">Realizado!</font></b>";
 $lang['create_galaxy'] = "Creaci&#243;n de la tabla \"galaxy\"........<b><font color=\"lime\">Realizado!</font></b>";
+$lang['create_loteria'] = "Creaci&#243;n de la tabla \"loteria\"........<b><font color=\"lime\">Realizado!</font></b>";
 $lang['create_lunas'] = "Creaci&#243;n de la tabla \"lunas\"........<b><font color=\"lime\">Realizado!</font></b>";
 $lang['create_messages'] = "Creaci&#243;n de la tabla \"messages\"........<b><font color=\"lime\">Realizado!</font></b>";
 $lang['create_notes'] = "Creaci&#243;n de la tabla \"notes\"........<b><font color=\"lime\">Realizado!</font></b>";

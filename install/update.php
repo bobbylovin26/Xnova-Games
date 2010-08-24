@@ -8,13 +8,6 @@
  *
  */
 
-define('INSIDE'  , true);
-define('INSTALL'  , false);
-
-$xnova_root_path = './../';
-include($xnova_root_path . 'extension.inc');
-include($xnova_root_path . 'common.'.$phpEx);
-
 echo "<center>";
 if ($_POST)
 {
@@ -30,110 +23,208 @@ if ($_POST[continuar] && !$_POST[aceptar] or empty($_POST[modo]) or empty($_POST
 
 		switch($_POST[modo])
 		{
-		case '1.3b':
-		$Qry15 = mysql_query("ALTER TABLE `$_POST[prefix]_users` DROP `sign`;");
-		$Qry16 = mysql_query(" ALTER TABLE `$_POST[prefix]_users` CHANGE `rpg_points` `darkmatter` INT( 11 ) NOT NULL DEFAULT '0' ");
-		$Qry17 = mysql_query("ALTER TABLE `$_POST[prefix]_fleets` ADD `fleet_resource_darkmatter` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `fleet_resource_deuterium` ;");
-		$Qry18 = mysql_query("ALTER TABLE `$_POST[prefix]_users` DROP `avatar`;");
-		$Qry19 = mysql_query("DROP TABLE `$_POST[prefix]_chat`;");
-		$Qry20 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT( `$_POST[prefix]_config`.`config_name` USING utf8 ) = 'OverviewExternChat' AND CONVERT( `$_POST[prefix]_config`.`config_value` USING utf8 ) = '0' LIMIT 1 ;");
-		$Qry21 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT( `$_POST[prefix]_config`.`config_name` USING utf8 ) = 'OverviewExternChatCmd' AND CONVERT( `$_POST[prefix]_config`.`config_value` USING utf8 ) = '' LIMIT 1 ;");
-		$Qry22 = mysql_query("DROP TABLE `$_POST[prefix]_multi`, `$_POST[prefix]_declared`, `$_POST[prefix]_annonce`;");
-		$Qry23 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_announces' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '1' LIMIT 1;");
-
-		if ($Qry15)
-			$msg .=  "<font color=\"green\"><-HECHO Qry15-></font><br>";
-		else
-			$msg .=  "<font color=\"red\"><-ERROR Qry15-></font><br>";
-
-		if ($Qry16)
-			$msg .=  "<font color=\"green\"><-HECHO Qry16-></font><br>";
-		else
-			$msg .=  "<font color=\"red\"><-ERROR Qry16-></font><br>";
-		if ($Qry17)
-			$msg .=  "<font color=\"green\"><-HECHO Qry17-></font><br>";
-		else
-			$msg .=  "<font color=\"red\"><-ERROR Qry17-></font><br>";
-		if ($Qry18)
-			$msg .=  "<font color=\"green\"><-HECHO Qry18-></font><br>";
-		else
-			$msg .=  "<font color=\"red\"><-ERROR Qry18-></font><br>";
-		if ($Qry19)
-			$msg .=  "<font color=\"green\"><-HECHO Qry19-></font><br>";
-		else
-			$msg .=  "<font color=\"red\"><-ERROR Qry19-></font><br>";
-		if ($Qry20)
-			$msg .=  "<font color=\"green\"><-HECHO Qry20-></font><br>";
-		else
-			$msg .=  "<font color=\"red\"><-ERROR Qry20-></font><br>";
-		if ($Qry21)
-			$msg .=  "<font color=\"green\"><-HECHO Qry21-></font><br>";
-		else
-			$msg .=  "<font color=\"red\"><-ERROR Qry21-></font><br>";
-		if ($Qry22)
-			$msg .=  "<font color=\"green\"><-HECHO Qry22-></font><br>";
-		else
-			$msg .=  "<font color=\"red\"><-ERROR Qry22-></font><br>";
-		if ($Qry23)
-			$msg .=  "<font color=\"green\"><-HECHO Qry23-></font><br>";
-		else
-			$msg .=  "<font color=\"red\"><-ERROR Qry23-></font><br>";
-			break;
-		case '1.3c':
-		$Qry18 = mysql_query("ALTER TABLE `$_POST[prefix]_users` DROP `avatar`;");
-		$Qry19 = mysql_query("DROP TABLE `$_POST[prefix]_chat`;");
-		$Qry20 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT( `$_POST[prefix]_config`.`config_name` USING utf8 ) = 'OverviewExternChat' AND CONVERT( `$_POST[prefix]_config`.`config_value` USING utf8 ) = '0' LIMIT 1 ;");
-		$Qry21 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT( `$_POST[prefix]_config`.`config_name` USING utf8 ) = 'OverviewExternChatCmd' AND CONVERT( `$_POST[prefix]_config`.`config_value` USING utf8 ) = '' LIMIT 1 ;");
-		$Qry22 = mysql_query("DROP TABLE `$_POST[prefix]_multi`, `$_POST[prefix]_declared`, `$_POST[prefix]_annonce`;");
-		$Qry23 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_announces' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '1' LIMIT 1;");
-
-		if ($Qry18)
-			$msg .=  "<font color=\"green\"><-HECHO Qry18-></font><br>";
-		else
-			$msg .=  "<font color=\"red\"><-ERROR Qry18-></font><br>";
-		if ($Qry19)
-			$msg .=  "<font color=\"green\"><-HECHO Qry19-></font><br>";
-		else
-			$msg .=  "<font color=\"red\"><-ERROR Qry19-></font><br>";
-		if ($Qry20)
-			$msg .=  "<font color=\"green\"><-HECHO Qry20-></font><br>";
-		else
-			$msg .=  "<font color=\"red\"><-ERROR Qry20-></font><br>";
-		if ($Qry21)
-			$msg .=  "<font color=\"green\"><-HECHO Qry21-></font><br>";
-		else
-			$msg .=  "<font color=\"red\"><-ERROR Qry21-></font><br>";
-		if ($Qry22)
-			$msg .=  "<font color=\"green\"><-HECHO Qry22-></font><br>";
-		else
-			$msg .=  "<font color=\"red\"><-ERROR Qry22-></font><br>";
-		if ($Qry23)
-			$msg .=  "<font color=\"green\"><-HECHO Qry23-></font><br>";
-		else
-			$msg .=  "<font color=\"red\"><-ERROR Qry23-></font><br>";
-			break;
-
 		case '1.4b':
-		$Qry22 = mysql_query("DROP TABLE `$_POST[prefix]_annonce`");
-		$Qry23 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_announces' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '1' LIMIT 1;");
+			$Qry1 = mysql_query("DROP TABLE `$_POST[prefix]_annonce`");
+			$Qry2 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_announces' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '1' LIMIT 1;");
+			$Qry3 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `super_terraformer`int(11) NOT NULL AFTER `terraformer`; ");
+			$Qry4 = mysql_query("ALTER TABLE `$_POST[prefix]_messages` ADD `leido` INT( 11 ) NOT NULL DEFAULT '1';");
+			$Qry5 = mysql_query("
+			CREATE TABLE `$_POST[prefix]_loteria` (
+			  `ID` int(11) NOT NULL,
+			  `user` varchar(255) collate latin1_spanish_ci NOT NULL,
+			  `tickets` int(5) NOT NULL
+			) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;");
+			$Qry6 = mysql_query("
+			CREATE TABLE `$_POST[prefix]_chat` (
+			  `messageid` int(5) unsigned NOT NULL auto_increment,
+			  `user` varchar(255) NOT NULL default '',
+			  `message` text NOT NULL,
+			  `timestamp` int(11) NOT NULL default '0',
+			  `ally_id` int(11) NOT NULL default '0',
+			  PRIMARY KEY  (`messageid`)
+			) TYPE=MyISAM AUTO_INCREMENT=16 AUTO_INCREMENT=16 ;");
 
-		if ($Qry22)
-			$msg .=  "<font color=\"green\"><-HECHO Qry22-></font><br>";
-		else
-			$msg .=  "<font color=\"red\"><-ERROR Qry22-></font><br>";
+			$Qry7 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'Actualizacion';");
+			$Qry8 = mysql_query("
+			INSERT INTO `$_POST[prefix]_config` (
+			`config_name` ,
+			`config_value`
+			)
+			VALUES (
+			'actualizar_puntos', '0'
+			);");
 
-		if ($Qry23)
-			$msg .=  "<font color=\"green\"><-HECHO Qry23-></font><br>";
-		else
-			$msg .=  "<font color=\"red\"><-ERROR Qry23-></font><br>";
-			break;
+			$Qry9 = mysql_query("
+			ALTER TABLE `$_POST[prefix]_planets` ADD `interceptor` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `supernova` ,
+			ADD `cazacrucero` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `interceptor` ,
+			ADD `transportador` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `cazacrucero` ,
+			ADD `titan` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `transportador` ;");
+
+			$Qry10 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `fotocanyon` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `planet_protector` ,
+ADD `baseespacial` INT( 11 ) NOT NULL DEFAULT '0' AFTER `fotocanyon` ;");
+
+			$Qry11 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `humano` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `lang` ,
+ADD `alien` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `humano` ,
+ADD `predator` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `alien` ,
+ADD `dark` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `predator` ;");
+
+			$Qry12 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `humano_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `graviton_tech` ,
+ADD `alien_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `humano_tech` ,
+ADD `predator_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `alien_tech` ,
+ADD `dark_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `predator_tech` ;");
+
+			$Qry13 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `desarrollo_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `expedition_tech` ;");
+			$Qry14 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_humano` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `titan` ;");
+			$Qry15 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_alien` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `nave_humano` ;");
+			$Qry16 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_predator` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `nave_alien` ;");
+			$Qry17 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_dark` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `nave_predator` ; ");
+		break;
+
+		case '1.4f':
+			$Qry3 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `super_terraformer`int(11) NOT NULL AFTER `terraformer`; ");
+			$Qry4 = mysql_query("ALTER TABLE `$_POST[prefix]_messages` ADD `leido` INT( 11 ) NOT NULL DEFAULT '1';");
+			$Qry5 = mysql_query("
+			CREATE TABLE `$_POST[prefix]_loteria` (
+			  `ID` int(11) NOT NULL,
+			  `user` varchar(255) collate latin1_spanish_ci NOT NULL,
+			  `tickets` int(5) NOT NULL
+			) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;");
+			$Qry6 = mysql_query("
+			CREATE TABLE `$_POST[prefix]_chat` (
+			  `messageid` int(5) unsigned NOT NULL auto_increment,
+			  `user` varchar(255) NOT NULL default '',
+			  `message` text NOT NULL,
+			  `timestamp` int(11) NOT NULL default '0',
+			  `ally_id` int(11) NOT NULL default '0',
+			  PRIMARY KEY  (`messageid`)
+			) TYPE=MyISAM AUTO_INCREMENT=16 AUTO_INCREMENT=16 ;");
+
+			$Qry7 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'Actualizacion';");
+			$Qry8 = mysql_query("
+			INSERT INTO `$_POST[prefix]_config` (
+			`config_name` ,
+			`config_value`
+			)
+			VALUES (
+			'actualizar_puntos', '0'
+			);");
+
+			$Qry9 = mysql_query("
+			ALTER TABLE `$_POST[prefix]_planets` ADD `interceptor` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `supernova` ,
+			ADD `cazacrucero` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `interceptor` ,
+			ADD `transportador` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `cazacrucero` ,
+			ADD `titan` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `transportador` ;");
+
+			$Qry10 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `fotocanyon` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `planet_protector` ,
+ADD `baseespacial` INT( 11 ) NOT NULL DEFAULT '0' AFTER `fotocanyon` ;");
+
+			$Qry11 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `humano` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `lang` ,
+ADD `alien` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `humano` ,
+ADD `predator` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `alien` ,
+ADD `dark` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `predator` ;");
+
+			$Qry12 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `humano_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `graviton_tech` ,
+ADD `alien_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `humano_tech` ,
+ADD `predator_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `alien_tech` ,
+ADD `dark_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `predator_tech` ;");
+
+			$Qry13 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `desarrollo_tech` INT( 11 ) NOT NULL DEFAULT '0' AFTER `expedition_tech` ;");
+			$Qry14 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_humano` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `titan` ;");
+			$Qry15 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_alien` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `nave_humano` ;");
+			$Qry16 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_predator` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `nave_alien` ;");
+			$Qry17 = mysql_query("ALTER TABLE `$_POST[prefix]_planets` ADD `nave_dark` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `nave_predator` ; ");
+		break;
 		}
 
+			if ($Qry1)
+				$msg .=  "<font color=\"green\"><-HECHO Qry1-></font><br>";
+			else
+				$msg .=  "<font color=\"red\"><-ERROR Qry1-></font><br>";
+
+			if ($Qry2)
+				$msg .=  "<font color=\"green\"><-HECHO Qry2-></font><br>";
+			else
+				$msg .=  "<font color=\"red\"><-ERROR Qry2-></font><br>";
+
+			if ($Qry3)
+				$msg .=  "<font color=\"green\"><-HECHO Qry3-></font><br>";
+			else
+				$msg .=  "<font color=\"red\"><-ERROR Qry3-></font><br>";
+
+			if ($Qry4)
+				$msg .=  "<font color=\"green\"><-HECHO Qry4-></font><br>";
+			else
+				$msg .=  "<font color=\"red\"><-ERROR Qry4-></font><br>";
+
+			if ($Qry5)
+				$msg .=  "<font color=\"green\"><-HECHO Qry5-></font><br>";
+			else
+				$msg .=  "<font color=\"red\"><-ERROR Qry5-></font><br>";
+
+			if ($Qry6)
+				$msg .=  "<font color=\"green\"><-HECHO Qry6-></font><br>";
+			else
+				$msg .=  "<font color=\"red\"><-ERROR Qry6-></font><br>";
+
+			if ($Qry7)
+				$msg .=  "<font color=\"green\"><-HECHO Qry7-></font><br>";
+			else
+				$msg .=  "<font color=\"red\"><-ERROR Qry7-></font><br>";
+
+			if ($Qry8)
+				$msg .=  "<font color=\"green\"><-HECHO Qry8-></font><br>";
+			else
+				$msg .=  "<font color=\"red\"><-ERROR Qry8-></font><br>";
+
+			if ($Qry9)
+				$msg .=  "<font color=\"green\"><-HECHO Qry9-></font><br>";
+			else
+				$msg .=  "<font color=\"red\"><-ERROR Qry9-></font><br>";
+
+			if ($Qry10)
+				$msg .=  "<font color=\"green\"><-HECHO Qry10-></font><br>";
+			else
+				$msg .=  "<font color=\"red\"><-ERROR Qry10-></font><br>";
+
+			if ($Qry11)
+				$msg .=  "<font color=\"green\"><-HECHO Qry11-></font><br>";
+			else
+				$msg .=  "<font color=\"red\"><-ERROR Qry11-></font><br>";
+
+			if ($Qry12)
+				$msg .=  "<font color=\"green\"><-HECHO Qry12-></font><br>";
+			else
+				$msg .=  "<font color=\"red\"><-ERROR Qry12-></font><br>";
+
+			if ($Qry13)
+				$msg .=  "<font color=\"green\"><-HECHO Qry13-></font><br>";
+			else
+				$msg .=  "<font color=\"red\"><-ERROR Qry13-></font><br>";
+
+			if ($Qry14)
+				$msg .=  "<font color=\"green\"><-HECHO Qry14-></font><br>";
+			else
+				$msg .=  "<font color=\"red\"><-ERROR Qry14-></font><br>";
+
+			if ($Qry15)
+				$msg .=  "<font color=\"green\"><-HECHO Qry15-></font><br>";
+			else
+				$msg .=  "<font color=\"red\"><-ERROR Qry15-></font><br>";
+
+			if ($Qry16)
+				$msg .=  "<font color=\"green\"><-HECHO Qry16-></font><br>";
+			else
+				$msg .=  "<font color=\"red\"><-ERROR Qry16-></font><br>";
+
+			if ($Qry17)
+				$msg .=  "<font color=\"green\"><-HECHO Qry17-></font><br>";
+			else
+				$msg .=  "<font color=\"red\"><-ERROR Qry17-></font><br>";
 		echo $msg;
 		echo "<br>";
 		echo "<font color=\"red\"><strong>Recuerda borrar la carpeta install y este archivo tambien</strong></font>";
 
-		mysql_close($link);
+		mysql_close($conexion);
 	}
 }
 else
@@ -188,22 +279,20 @@ Soy conciente de que este script no es perfecto, y que solo funciona con instala
 						<th align="center" colspan="5">Tengo la versi&oacute;n:<br><br><br></th>
 					</tr>
 					<tr>
-						<th align="center">v9.0a/v1.0a/v1.0b/v1.1a/v1.1b/v1.1c/v1.2a/v1.2b/v1.2c/v1.3a</th>
-						<th align="center">v1.3b/v1.3b EU</th>
-						<th align="center">v1.3c DMV</th>
-						<th align="center">v1.4a/v1.4b</th>
+						<th align="center">v9.0a/v1.0a/v1.0b/v1.1a/v1.1b/v1.1c/v1.2a/v1.2b/v1.2c/v1.3a/v1.3b/v1.3b EU/v1.3c DMV</th>
+						<th align="center">v1.4a/v1.4b/1.4c</th>
+						<th align="center">1.4d/1.4e/1.4f</th>
 					</tr>
 					<tr>
-						<th align="center"><font color="red"><strong>Versiones ya NO soportadas [Utiliza un auto-update viejo]</strong></red></th>
-						<th align="center"><input type="radio" name="modo" value="1.3b"/></th>
-						<th align="center"><input type="radio" name="modo" value="1.3c"/></th>
+						<th align="center"><font color="red"><strong>Versiones ya NO soportadas, recomendamos siempre mantener al d&iacute;a tu juego</strong></red></th>
 						<th align="center"><input type="radio" name="modo" value="1.4b"/></th>
+						<th align="center"><input type="radio" name="modo" value="1.4f"/></th>
 					</tr>
 				</table>
 			</th>
 		</tr>
 		<tr>
-			<th align="center" colspan="2"><br><input type="submit" name="continuar" value="Actualizar a la 1.4c"/></th>
+			<th align="center" colspan="2"><br><input type="submit" name="continuar" value="Actualizar a la 1.5a"/></th>
 		</tr>
 	</table>
 </form>

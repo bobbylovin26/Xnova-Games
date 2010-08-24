@@ -7,7 +7,7 @@
  * @copyright 2008 by ??????? for XNova
  */
 
-define('VERSION','1.4c');
+define('VERSION','1.4 d .');
 
 set_magic_quotes_runtime(0);
 $phpEx = "php";
@@ -60,6 +60,14 @@ if (INSTALL != true) {
 	includeLang ("system");
 	includeLang ('tech');
 
+	$Time = time()+(30*30); //CAMBIAR ESTOS VALORES PARA CAMBIAR EL TIEMPO DE ACTUALIZACION
+
+	if($game_config['actualizar_puntos'] < time())
+	{
+		include($xnova_root_path . 'admin/statbuilder.'.$phpEx);
+		doquery("UPDATE {{table}} SET `config_value` = '". $Time ."' WHERE `config_name` = 'actualizar_puntos';", "config");
+	}
+
 	if ( isset ($user) ) {
 		$_fleets = doquery("SELECT * FROM {{table}} WHERE `fleet_start_time` <= '".time()."';", 'fleets'); //  OR fleet_end_time <= ".time()
 		while ($row = mysql_fetch_array($_fleets)) {
@@ -111,5 +119,4 @@ if (INSTALL != true) {
 } else {
 	$dpath     = "../" . DEFAULT_SKINPATH;
 }
-
 ?>

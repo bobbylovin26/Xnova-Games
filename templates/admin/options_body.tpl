@@ -61,7 +61,11 @@
 </tr><tr>
 	<th>{bot_ban_duration}</th>
 	<th><input name="duration_ban" size="20" value="{ban_duration}" type="text"></th>
-</tr><tr>
+</tr>
+<tr><th>Desactivar estadisticas<br></th>
+   <th><input name="stat" {actived} type="checkbox" /><input name="stat_level" type="text" value='{stat_level}'></th>
+</tr>
+<tr>
 	<td class="c" colspan="2">{adm_opt_plan_settings}</td>
 </tr><tr>
 	<th>{adm_opt_plan_initial}</th>

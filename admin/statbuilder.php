@@ -11,14 +11,10 @@ define('INSIDE'  , true);
 define('INSTALL' , false);
 define('IN_ADMIN', true);
 
-$xnova_root_path = './../';
-include($xnova_root_path . 'extension.inc');
-include($xnova_root_path . 'common.' . $phpEx);
+$xnova_root_path = './'; 
 
 include($xnova_root_path . 'admin/statfunctions.' . $phpEx);
 
-
-	if ($user['authlevel'] >= 1) {
 	includeLang('admin');
 
 	$StatDate   = time();
@@ -26,12 +22,11 @@ include($xnova_root_path . 'admin/statfunctions.' . $phpEx);
 	doquery ( "DELETE FROM {{table}} WHERE `stat_code` = '2';" , 'statpoints');
 	doquery ( "UPDATE {{table}} SET `stat_code` = `stat_code` + '1';" , 'statpoints');
 
-	$GameUsers  = doquery("SELECT * FROM {{table}}", 'users');
+	$GameUsers  = doquery("SELECT * FROM {{table}} WHERE `authlevel` = '0';", 'users');
 
 	while ($CurUser = mysql_fetch_assoc($GameUsers)) {
 		// Recuperation des anciennes statistiques
-		$OldStatRecord  = doquery ("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `id_owner` = '".$CurrentUser['id']."';",'statpoints', true);
-
+		$OldStatRecord  = doquery ("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `id_owner` = '".$CurUser['id']."';",'statpoints', true);
 		if ($OldStatRecord) {
 			$OldTotalRank = $OldStatRecord['total_rank'];
 			$OldTechRank  = $OldStatRecord['tech_rank'];
@@ -92,12 +87,12 @@ include($xnova_root_path . 'admin/statfunctions.' . $phpEx);
 
 		// FLYING FLEET TO ADD
 		// PADA
-		$Points = GetFlyingFleetPoints ( $CurrentUser );
+		$Points = GetFlyingFleetPoints ( $CurUser );
 		$TFleetCount  += $Points['FleetCount'];
 		$GCount  += $Points['FleetCount'];
-		$TFleetPoints += ($Points['FleetPoint'] / 1000);
-		$GPoints += ($Points['FleetPoint'] / 1000);
-
+		$TFleetPoints += ($Points['FleetPoint'] / $game_config['stat_settings']);
+		$GPoints += ($Points['FleetPoint'] / $game_config['stat_settings']);
+		
 		$QryInsertStats  = "INSERT INTO {{table}} SET ";
 		$QryInsertStats .= "`id_owner` = '". $CurUser['id'] ."', ";
 		$QryInsertStats .= "`id_ally` = '". $CurUser['ally_id'] ."', ";
@@ -120,6 +115,13 @@ include($xnova_root_path . 'admin/statfunctions.' . $phpEx);
 		$QryInsertStats .= "`total_old_rank` = '". $OldTotalRank ."', ";
 		$QryInsertStats .= "`stat_date` = '". $StatDate ."';";
 		doquery ( $QryInsertStats , 'statpoints');
+		if($game_config['stat']==1){
+      if ($CurUser['authlevel'] >= $game_config['stat_level']) {
+         doquery("UPDATE {{table}} SET `tech_rank`='0', `tech_old_rank`='0',   `tech_points`='0', `tech_count`='0', `build_rank`='0', `build_old_rank`='0', `build_points`='0',
+         `build_count`='0',   `defs_rank`='0', `defs_old_rank`='0', `defs_points`='0', `defs_count`='0', `fleet_rank`='0', `fleet_old_rank`='0', `fleet_points`='0', `fleet_count`='0',
+         `total_rank`='0', `total_old_rank`='0',  `total_points`='0',    `total_count`='0' WHERE `id_owner`='".$CurUser['id']."'", "statpoints");
+         }
+       }
 	}
 
 	$Rank           = 1;
@@ -252,10 +254,6 @@ include($xnova_root_path . 'admin/statfunctions.' . $phpEx);
 		doquery ( $QryInsertStats , 'statpoints');
 	}
 
-	AdminMessage ( $lang['adm_done'], $lang['adm_stat_title'] );
-
-	} else {
-		AdminMessage ( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
-	}
+	//AdminMessage ( $lang['adm_done'], $lang['adm_stat_title'] );
 
 ?>

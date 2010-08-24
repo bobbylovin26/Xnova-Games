@@ -121,6 +121,10 @@ $lang['res']['fleet'] = array(
 214 => "Estrella de la muerte",
 215 => "Acorazado",
 216 => "Supernova",
+217 => "Interceptor",
+218 => "Cazador Crucero",
+219 => "Transportador",
+220 => "Titan",
 );
 
 ?>

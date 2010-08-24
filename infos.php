@@ -203,6 +203,9 @@ function ShowBuildingInfoPage ($CurrentUser, $CurrentPlanet, $BuildID) {
 		// Silo de missiles
 		$PageTPL              = gettemplate('info_buildings_general');
 		$DestroyTPL           = gettemplate('info_buildings_destroy');
+	} elseif ($BuildID ==  45) {
+        // Super Terraformer
+        $PageTPL              = gettemplate('info_buildings_general');
 	} elseif ($BuildID ==  41) {
 		// Batiments lunaires
 		$PageTPL              = gettemplate('info_buildings_general');
@@ -220,7 +223,7 @@ function ShowBuildingInfoPage ($CurrentUser, $CurrentPlanet, $BuildID) {
 	} elseif ($BuildID >= 106 && $BuildID <= 199) {
 		// Laboratoire
 		$PageTPL              = gettemplate('info_buildings_general');
-	} elseif ($BuildID >= 202 && $BuildID <= 216) {
+	} elseif ($BuildID >= 202 && $BuildID <= 224) {
 		// Flotte
 		$PageTPL              = gettemplate('info_buildings_fleet');
 		$parse['element_typ'] = $lang['tech'][200];
@@ -238,7 +241,7 @@ function ShowBuildingInfoPage ($CurrentUser, $CurrentPlanet, $BuildID) {
 		} elseif ($BuildID == 211) {
 			$parse['upd_speed']   = "<font color=\"yellow\">(". pretty_number ($pricelist[$BuildID]['speed2']) .")</font>";       // Vitesse rééquipée
 		}
-	} elseif ($BuildID >= 401 && $BuildID <= 409) {
+	} elseif ($BuildID >= 401 && $BuildID <= 411) {
 		// Defenses
 		$PageTPL              = gettemplate('info_buildings_defense');
 		$parse['element_typ'] = $lang['tech'][400];

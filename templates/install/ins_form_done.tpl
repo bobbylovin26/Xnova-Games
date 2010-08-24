@@ -5,11 +5,14 @@
 {create_alliance}<br>
 {create_banned}<br>
 {create_buddy}<br>
+{create_chat}<br>
 {create_config}<br>
 {populate_config}<br>
 {create_errors}<br>
 {create_fleets}<br>
 {create_galaxy}<br>
+{create_loteria}<br>
+{create_lunas}<br>
 {create_messages}<br>
 {create_notes}<br>
 {create_rw}<br>

@@ -8,7 +8,7 @@
  */
 
 function PlanetSizeRandomiser ($Position, $HomeWorld = false) {
-	global $game_config;
+	global $game_config,$user;
 
 	if (!$HomeWorld) {
 		$ClassicBase      = 163;
@@ -122,6 +122,7 @@ function CreateOnePlanetRecord($Galaxy, $System, $Position, $PlanetOwnerID, $Pla
 			$QryInsertPlanet .= "`name` = 'Colonia', ";
 
 		$QryInsertPlanet .= "`id_owner` = '".          $planet['id_owner']          ."', ";
+		$QryInsertPlanet .= "`id_level` = '".          $user['authlevel']           ."', ";
 		$QryInsertPlanet .= "`galaxy` = '".            $planet['galaxy']            ."', ";
 		$QryInsertPlanet .= "`system` = '".            $planet['system']            ."', ";
 		$QryInsertPlanet .= "`planet` = '".            $planet['planet']            ."', ";

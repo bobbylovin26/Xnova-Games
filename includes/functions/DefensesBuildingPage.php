@@ -179,7 +179,7 @@ function DefensesBuildingPage ( &$CurrentPlanet, $CurrentUser ) {
 						$PageTable .= "<font color=\"red\">".$lang['only_one']."</font>";
 					} else {
 						$TabIndex++;
-						$PageTable .= "<input type=text name=fmenge[".$Element."] alt='".$lang['tech'][$Element]."' size=5 maxlength=5 value=0 tabindex=".$TabIndex.">";
+						$PageTable .= "<input type=text name=fmenge[".$Element."] alt='".$lang['tech'][$Element]."' size=6 maxlength=6 value=0 tabindex=".$TabIndex.">";
 						$PageTable .= "</th>";
 					}
 				} else {

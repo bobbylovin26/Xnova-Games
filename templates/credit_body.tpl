@@ -40,10 +40,11 @@
     </tr>
     <tr>
       <th width="278">lucky<br />lucky<br />
-      PowerMaster<br />tarta<br /></th>
+      PowerMaster<br />Calzon<br />tarta<br /></th>
       <th width="279">{cred_creat} / {cred_prog}<br />
         {cred_master} {cred_prog}<br />
         {cred_design} / {cred_prog}<br />
+		{cred_design} / {cred_prog}<br />
         Colaborador </th>
     </tr>
     <tr>

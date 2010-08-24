@@ -246,6 +246,9 @@ include($xnova_root_path . 'common.' . $phpEx);
 	doquery( $QryInsertFleet, 'fleets');
 
 	$UserDeuterium   -= $consumption;
+        if($UserDeuterium < 0){
+        exit();
+        }
 	$QryUpdatePlanet  = "UPDATE {{table}} SET ";
 	$QryUpdatePlanet .= $FleetSubQRY;
 	$QryUpdatePlanet .= "`deuterium` = '".$UserDeuterium."' " ;

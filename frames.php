@@ -21,9 +21,9 @@ $XNova_URI     = implode ('/', $Uri_Array);
 
 $XNovaRootURL  = "http://". $XNova_Host ."/". $XNova_URI ."/";
 
-$ugamela_root_path = './';
-include($ugamela_root_path . 'extension.inc');
-include($ugamela_root_path . 'common.'.$phpEx);
+$xnova_root_path = './';
+include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'common.'.$phpEx);
 
 	$page  = "<html>";
 	$page .= "<head>";
@@ -32,10 +32,12 @@ include($ugamela_root_path . 'common.'.$phpEx);
 	$page .= "<title>". $game_config['game_name'] ."</title>";
 	$page .= "</head>";
 
-	$page .= "<frameset framespacing=\"0\" border=\"0\" cols=\"190,*\" frameborder=\"0\">";
+	$page .= "</head>";
+	$page .= "<frameset framespacing=\"0\" border=\"0\" cols=\"140,*,140\" frameborder=\"0\">";
 	$page .= "<frame name=\"LeftMenu\" target=\"Mainframe\" src=\"leftmenu.php\" noresize scrolling=\"no\" marginwidth=\"0\" marginheight=\"0\">";
 	$page .= "<frame name=\"Hauptframe\" src=\"overview.php\">";
-	$page .= "<noframes>";
+	$page .= "<frame name=\"RightMenu\" target=\"Mainframe\" src=\"rightmenu.php\" noresize scrolling=\"no\" marginwidth=\"0\" marginheight=\"0\">";
+	$page .= "</frameset>";
 	$page .= "<body>";
 	$page .= "<p>". $lang['NoFrames']."</p>";
 	$page .= "</noframes>";

@@ -14,11 +14,12 @@ define('INSTALL' , false);
 $xnova_root_path = './';
 include($xnova_root_path . 'extension.inc');
 include($xnova_root_path . 'common.' . $phpEx);
-
+/**
 $Tiempo    = time();
 $resto = $Tiempo - $game_config['Actualizacion'];
 $proxactu = 30; //Son segundos 30 = 30 Segundos , es el tiempo que tarda en actualizar
 if($resto > $proxactu) { include("actualiza.php");   }
+*/
 
 $lunarow = doquery("SELECT * FROM {{table}} WHERE `id_owner` = '" . $planetrow['id_owner'] . "' AND `galaxy` = '" . $planetrow['galaxy'] . "' AND `system` = '" . $planetrow['system'] . "' AND `lunapos` = '" . $planetrow['planet'] . "';", 'lunas', true);
 
@@ -102,15 +103,23 @@ case 'renameplanet':
             display($page, $lang['rename_and_abandon_planet']);
         } elseif ($_POST['kolonieloeschen'] == 1 && $_POST['deleteid'] == $user['current_planet']) {
 
-            if (md5($_POST['pw']) == $user["password"] && $user['id_planet'] != $user['current_planet']) {
-                $destruyed = time() + 60 * 60 * 24;
+if (md5($_POST['pw']) == $user["password"] && $user['id_planet'] != $user['current_planet']) {
 
-                $QryUpdatePlanet = "UPDATE {{table}} SET ";
-                $QryUpdatePlanet .= "`destruyed` = '" . $destruyed . "', ";
-                $QryUpdatePlanet .= "`id_owner` = '0' ";
-                $QryUpdatePlanet .= "WHERE ";
-                $QryUpdatePlanet .= "`id` = '" . $user['current_planet'] . "' LIMIT 1;";
-                doquery($QryUpdatePlanet , 'planets');
+                    $QryUpdatePlanet  = "DELETE FROM {{table}} ";
+                    $QryUpdatePlanet .= "WHERE ";
+                    $QryUpdatePlanet .= "`id` = '".mysql_real_escape_string($user['current_planet'])."' LIMIT 1;";
+                    doquery( $QryUpdatePlanet , 'planets');
+                    
+                    $QryUpdatePlanet2  = "DELETE FROM {{table}} ";
+                    $QryUpdatePlanet2 .= "WHERE ";
+                    $QryUpdatePlanet2 .= "`id_planet` = '".mysql_real_escape_string($user['current_planet'])."' LIMIT 1;";
+                    doquery( $QryUpdatePlanet2 , 'galaxy');
+
+					$QryUpdateUser    = "UPDATE {{table}} SET ";
+					$QryUpdateUser   .= "`current_planet` = `id_planet` ";
+					$QryUpdateUser   .= "WHERE ";
+					$QryUpdateUser   .= "`id` = '". mysql_real_escape_string($user['id']) ."' LIMIT 1";
+					doquery( $QryUpdateUser, "users");
 
                 $QryUpdateUser = "UPDATE {{table}} SET ";
                 $QryUpdateUser .= "`current_planet` = `id_planet` ";
@@ -144,21 +153,21 @@ case 'renameplanet':
 
     default:
         if ($user['id'] != '') {
-            // --- Gestion des messages ----------------------------------------------------------------------
-            $Have_new_message = "";
-            if ($user['new_message'] != 0) {
+    // --- Gestion des messages ----------------------------------------------------------------------
+             $mensajes= doquery ("SELECT * FROM {{table}} WHERE `message_owner`='" . $user['id'] . " ' AND `leido`='1' ", "messages",true);
+    $mensajes2= doquery ("SELECT * FROM {{table}} WHERE `message_owner`='" . $user['id'] . "' AND `leido`='1'", "messages");
+          // Message
+          
+             $Have_new_message = "";
+             if ($mensajes['leido'] != 0) {
                 $Have_new_message .= "<tr>";
-                if ($user['new_message'] == 1) {
-                    $Have_new_message .= "<th colspan=4><a href=messages.$phpEx>" . $lang['Have_new_message'] . "</a></th>";
-                } elseif ($user['new_message'] > 1) {
-                    $Have_new_message .= "<th colspan=4><a href=messages.$phpEx>";
-                    $m = pretty_number($user['new_message']);
-                    $Have_new_message .= str_replace('%m', $m, $lang['Have_new_messages']);
-                    $Have_new_message .= "</a></th>";
-                }
+                $Have_new_message .= "<th colspan=4><a href=messages.$phpEx>";
+                $m = pretty_number(mysql_num_rows($mensajes2));
+                $Have_new_message .= str_replace('%m', $m, $lang['Have_new_messages']);
+                $Have_new_message .= "</a></th>";
                 $Have_new_message .= "</tr>";
-            }
-            // -----------------------------------------------------------------------------------------------
+             }
+             // -----------------------------------------------------------------------------------------------
             // --- Gestion Officiers -------------------------------------------------------------------------
             // Passage au niveau suivant, ajout du point de compétence et affichage du passage au nouveau level
             $XpMinierUp = $user['lvl_minier'] * 5000;
@@ -248,58 +257,46 @@ case 'renameplanet':
                 }
             }
             // -----------------------------------------------------------------------------------------------
-            // --- Gestion de la liste des planetes ----------------------------------------------------------
-            // Planetes ...
-            $Order = ($user['planet_sort_order'] == 1) ? "DESC" : "ASC" ;
-            $Sort = $user['planet_sort'];
+			// --- Gestion de la liste des planetes ----------------------------------------------------------
+			// Planetes ...
+			$planets_query = doquery("SELECT * FROM {{table}} WHERE id_owner='{$user['id']}'", "planets");
+			$Colone  = 1;
+			$Coloneshow = 0;
+			$AllPlanets = "<tr style=\"background-color: transparent;\">";
+			while ($UserPlanet = mysql_fetch_array($planets_query)) {
+				if ($UserPlanet["id"] != $user["current_planet"] && $UserPlanet['planet_type'] != 3) {
+					$Coloneshow++;	
+ 					$AllPlanets .= "<th style=\"background-color: transparent;\">". $UserPlanet['name'] ."<br>";
+					$AllPlanets .= "<a href=\"?cp=". $UserPlanet['id'] ."&re=0\" title=\"". $UserPlanet['name'] ."\"><img src=\"". $dpath ."planeten/small/s_". $UserPlanet['image'] .".jpg\" height=\"50\" width=\"50\"></a><br>";
+					$AllPlanets .= "<center>";
 
-            $QryPlanets = "SELECT * FROM {{table}} WHERE `id_owner` = '" . $user['id'] . "' ORDER BY ";
-            if ($Sort == 0) {
-                $QryPlanets .= "`id` " . $Order;
-            } elseif ($Sort == 1) {
-                $QryPlanets .= "`galaxy`, `system`, `planet`, `planet_type` " . $Order;
-            } elseif ($Sort == 2) {
-                $QryPlanets .= "`name` " . $Order;
-            }
-            $planets_query = doquery ($QryPlanets, 'planets');
-            $Colone = 1;
-            $AllPlanets = "<tr>";
-            while ($UserPlanet = mysql_fetch_array($planets_query)) {
-                PlanetResourceUpdate ($user, $UserPlanet, time());
-                if ($UserPlanet["id"] != $user["current_planet"] && $UserPlanet['planet_type'] != 3) {
-                    $AllPlanets .= "<th>" . $UserPlanet['name'] . "<br>";
-                    $AllPlanets .= "<a href=\"?cp=" . $UserPlanet['id'] . "&re=0\" title=\"" . $UserPlanet['name'] . "\"><img src=\"" . $dpath . "planeten/small/s_" . $UserPlanet['image'] . ".jpg\" height=\"50\" width=\"50\"></a><br>";
-                    $AllPlanets .= "<center>";
-
-                    if ($UserPlanet['b_building'] != 0) {
-                        UpdatePlanetBatimentQueueList ($UserPlanet, $user);
-                        if ($UserPlanet['b_building'] != 0) {
-                            $BuildQueue = $UserPlanet['b_building_id'];
-                            $QueueArray = explode (";", $BuildQueue);
-                            $CurrentBuild = explode (",", $QueueArray[0]);
-                            $BuildElement = $CurrentBuild[0];
-                            $BuildLevel = $CurrentBuild[1];
-                            $BuildRestTime = pretty_time($CurrentBuild[3] - time());
-                            $AllPlanets .= '' . $lang['tech'][$BuildElement] . ' (' . $BuildLevel . ')';
-                            $AllPlanets .= "<br><font color=\"#7f7f7f\">(" . $BuildRestTime . ")</font>";
-                        } else {
-                            CheckPlanetUsedFields ($UserPlanet);
-                            $AllPlanets .= $lang['Free'];
-                        }
-                    } else {
-                        $AllPlanets .= $lang['Free'];
-                    }
-
-                    $AllPlanets .= "</center></th>";
-                    if ($Colone <= 1) {
-                        $Colone++;
-                    } else {
-                        $AllPlanets .= "</tr><tr>";
-                        $Colone = 1;
-                    }
-                }
-            }
-            // -----------------------------------------------------------------------------------------------
+					if ($UserPlanet['b_building'] != 0) {
+						UpdatePlanetBatimentQueueList ( $UserPlanet, $user );
+						if ( $UserPlanet['b_building'] != 0 ) {
+							$BuildQueue      = $UserPlanet['b_building_id'];
+							$QueueArray      = explode ( ";", $BuildQueue );
+							$CurrentBuild    = explode ( ",", $QueueArray[0] );
+							$BuildElement    = $CurrentBuild[0];
+							$BuildLevel      = $CurrentBuild[1];
+							$BuildRestTime   = pretty_time( $CurrentBuild[3] - time() );
+							$AllPlanets     .= '' . $lang['tech'][$BuildElement] . ' (' . $BuildLevel . ')';
+							$AllPlanets     .= "<br><font color=\"#7f7f7f\">(". $BuildRestTime .")</font>";
+						} else {
+							CheckPlanetUsedFields ($UserPlanet);
+							$AllPlanets     .= $lang['Free'];
+						}
+					} else {
+						$AllPlanets    .= $lang['Free'];
+					}
+					$AllPlanets .= "</center></th>";
+					if ($Coloneshow > 4) {
+					$AllPlanets .= "</tr><tr>";
+					$Coloneshow =0;
+					}
+				}
+			}
+			$AllPlanets .= "</tr>";	
+			// -----------------------------------------------------------------------------------------------
             $parse = $lang;
             // -----------------------------------------------------------------------------------------------
             // News Frame ...

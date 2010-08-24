@@ -3,8 +3,9 @@
 /**
  * leftmenu.php
  *
- * @version 1.1
- * @copyright 2008 By Chlorel for XNova
+ * @version 1.2
+ * @copyright 2008 By Dr.Isaacs for XNova-Germany
+ * Darf nicht entfernt werden, für das entfernen der Copyright berechne ich eine Arbeits Pauschale von 1€  pro mod
  */
 
 define('INSIDE'  , true);
@@ -42,7 +43,7 @@ function ShowLeftMenu ( $Level , $Template = 'left_menu') {
 	} else {
 		$parse['ADMIN_LINK']  = "";
 	}
-
+	//Lien supplémentaire déterminé dans le panel admin
 	if ($game_config['link_enable'] == 1) {
 		$parse['added_link']  = "
 		<tr>
@@ -51,7 +52,18 @@ function ShowLeftMenu ( $Level , $Template = 'left_menu') {
 	} else {
 		$parse['added_link']  = "";
 	}
-
+	
+	//Maintenant on vérifie si les annonces sont activées ou non
+	if ($game_config['enable_announces'] == 1) {
+		$parse['announce_link']  = "
+		<tr>
+			<td colspan=\"2\"><div><a href=\"annonces.php\" target=\"Hauptframe\">Anuncios</a></div></td>
+		</tr>";
+	} else {
+		$parse['announce_link']  = "";
+	}
+	
+		//Maintenant le marchand
 	if ($game_config['enable_marchand'] == 1) {
 		$parse['marchand_link']  = "
 		<tr>
@@ -60,13 +72,12 @@ function ShowLeftMenu ( $Level , $Template = 'left_menu') {
 	} else {
 		$parse['marchand_link']  = "";
 	}
-
+			//Maintenant les notes
 	if ($game_config['enable_notes'] == 1) {
 		$parse['notes_link']  = "
 		<tr>
-			<td colspan=\"2\"><div><a href=\"#\" onClick=\"f('notes.php', 'Report');\" accesskey=\"n\">Notas</a></div></td>
+			<td colspan=\"2\"><div><a href=\"#\" onClick=\"f(\'notes.php\', \'Report\');\" accesskey=\"n\">Notas</a></div></td>
 		</tr>";
-
 	} else {
 		$parse['notes_link']  = "";
 	}
@@ -78,4 +89,9 @@ function ShowLeftMenu ( $Level , $Template = 'left_menu') {
 	$Menu = ShowLeftMenu ( $user['authlevel'] );
 	display ( $Menu, "Menu", '', false );
 
+// -----------------------------------------------------------------------------------------------------------
+// History version
+// 1.0 - Passage en fonction pour XNova version future
+// 1.1 - Modification pour gestion Admin / Game OP / Modo
+// 1.2 - Modification 1.2.3 menü by dr.isaacs.    
 ?>

@@ -95,7 +95,15 @@ if ($_POST) {
         $errorlist .= $lang['error_emailexist'];
         $errors++;
     }
-
+	    if ($_POST['raza'] != ''  &&
+          $_POST['raza'] != 'H' &&
+		  $_POST['raza'] != 'A' &&
+		  $_POST['raza'] != 'P' &&
+          $_POST['raza'] != 'D') {
+          $errorlist .= $lang['error_raza'];
+          $errors++;
+        }
+					
     if ($errors != 0) {
         message ($errorlist, $lang['Register'], "reg.php", "3");
     } else {
@@ -177,7 +185,12 @@ if ($_POST) {
             }
         }
         // Recherche de la reference de la nouvelle planete (qui est unique normalement !
-        $PlanetID = doquery("SELECT `id` FROM {{table}} WHERE `id_owner` = '" . $NewUser['id'] . "' LIMIT 1;", 'planets', true);
+        $PlanetID = doquery("SELECT `id` FROM {{table}} WHERE `id_owner` = '". $NewUser['id'] ."' LIMIT 1;" , 'planets', true);
+                  if ($_POST[raza] == 'H') {doquery("UPDATE {{table}} SET `Humano` = '1' WHERE `id` = '". $NewUser['id'] ."' LIMIT 1;", 'users'  );
+			} elseif ($_POST[raza] == 'A'){doquery("UPDATE {{table}} SET `Alien` = '1' WHERE `id` = '". $NewUser['id'] ."' LIMIT 1;", 'users'  );
+			} elseif ($_POST[raza] == 'P'){doquery("UPDATE {{table}} SET `Predator` = '1' WHERE `id` = '". $NewUser['id'] ."' LIMIT 1;", 'users'  );
+			} elseif ($_POST[raza] == 'D'){doquery("UPDATE {{table}} SET `Dark` = '1' WHERE `id` = '". $NewUser['id'] ."' LIMIT 1;", 'users'  );
+        }
         // Mise a jour de l'enregistrement utilisateur avec les infos de sa planete mere
         $QryUpdateUser = "UPDATE {{table}} SET ";
         $QryUpdateUser .= "`id_planet` = '" . $PlanetID['id'] . "', ";

@@ -53,7 +53,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$FleetHiddenBlock  = "";
 	foreach ($reslist['fleet'] as $n => $i) {
 		if ($i > 200 && $i < 300 && $_POST["ship$i"] > "0") {
-			if ($_POST["ship$i"] > $planetrow[$resource[$i]]) {
+			if (($_POST["ship$i"] > $planetrow[$resource[$i]]) OR (!ctype_digit( $_POST["ship$i"] ))) {
 				$page .= $lang['fl_noenought'];
 				$speedalls[$i]             = GetFleetMaxSpeed ( "", $i, $user );
 			} else {
@@ -83,7 +83,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$page .= "	return 1\n";
 	$page .= "}\n";
 	$page .= "</script>\n";
-	$page .= "<form action=\"floten2.php\" method=\"post\">";
+	$page .= "<form action=\"floten2.php\" method=\"post\" onsubmit='this.submit.disabled = true;'>";
 	$page .= $FleetHiddenBlock;
 	$page .= "<input type=\"hidden\" name=\"speedallsmin\"   value=\"". $speedallsmin ."\" />";
 	$page .= "<input type=\"hidden\" name=\"usedfleet\"      value=\"". str_rot13(base64_encode(serialize($fleet['fleetarray']))) ."\" />";
@@ -255,7 +255,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$page .= "<th colspan=\"2\">-</th>";
 	$page .= "</tr>";
 	$page .= "<tr height=\"20\">";
-	$page .= "<th colspan=\"2\"><input type=\"submit\" value=\"". $lang['fl_continue'] ."\" /></th>";
+	$page .= "<th colspan=\"2\"><input type=\"submit\" name=\"submit\" value=\"". $lang['fl_continue'] ."\" /></th>";
 	$page .= "</tr>";
 	$page .= "</table>";
 	$page .= "</div></center>";

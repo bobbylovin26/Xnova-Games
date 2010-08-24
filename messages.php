@@ -34,19 +34,33 @@ if($user['authlevel']!="1"&$user['authlevel']!="2"&$user['authlevel']!="3"&$user
 	$TitleColor    = array ( 0 => '#FFFF00', 1 => '#FF6699', 2 => '#FF3300', 3 => '#FF9900', 4 => '#773399', 5 => '#009933', 15 => '#030070', 99 => '#007070', 100 => '#ABABAB'  );
 	$BackGndColor  = array ( 0 => '#663366', 1 => '#336666', 2 => '#000099', 3 => '#666666', 4 => '#999999', 5 => '#999999', 15 => '#999999', 99 => '#999999', 100 => '#999999'  );
 
-	for ($MessType = 0; $MessType < 101; $MessType++) {
-		if ( in_array($MessType, $MessageType) ) {
-			$WaitingMess[$MessType] = $UnRead[$messfields[$MessType]];
-			$TotalMess[$MessType]   = 0;
-		}
-	}
-
 	while ($CurMess = mysql_fetch_array($UsrMess)) {
 		$MessType              = $CurMess['message_type'];
 		$TotalMess[$MessType] += 1;
 		$TotalMess[100]       += 1;
 	}
+             
+    $page .= "<center>
+               <table width=\"569\">";
+       $page .= "<tr><td class=\"c\" colspan=\"9\">". $lang['title'] ."</td>
+             </tr>";
+             
+             for ($MessType = 0; $MessType < 100; $MessType++) {
+                if ( in_array($MessType, $MessageType) ) {
+                   $page .= "<th width=\"100\"><a href=\"messages.php?mode=show&amp;messcat=". $MessType ."&amp;lista_id=1 \"><font color=\"". $TitleColor[$MessType] ."\">". $lang['type'][$MessType] ."</a></th>";}}
+                   $page .= "</tr><tr>";
+          for ($MessType = 0; $MessType < 100; $MessType++) {
+                if ( in_array($MessType, $MessageType) ) {
+    $pruebas      = doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".$user['id']."' AND `message_type`='".$MessType."' AND `leido`='1' ORDER BY `message_time` DESC ;", 'messages');
+    $pruebas2      = doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".$user['id']."' AND `message_type`='".$MessType."' ORDER BY `message_time` DESC ;", 'messages');
 
+                       $page .= "<th width=\"100\" >
+          <font color=\"". $TitleColor[$MessType] ."\">". mysql_num_rows($pruebas) ."</font>/<font color=\"". $TitleColor[$MessType] ."\">". mysql_num_rows($pruebas2) ."</font></th>";
+                }
+             }
+             $page .= "</tr></table>";
+             $page .= "</center>";
+			 
 	switch ($MessPageMode) {
 		case 'write':
 			if ( !is_numeric( $OwnerID ) ) {
@@ -142,170 +156,164 @@ $Message = trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) ); }
 			}
 			$MessCategory = $_POST['category'];
 
-		case 'show':
+    case 'show':
+          
+          
+             // -------------------------------------------------------------------------------------------------------
+    $sql=doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".$user['id']."' AND  `message_type`='".$MessCategory."';", 'messages');
+    $cant=mysql_num_rows($sql);
+    $final=$cant/10;
 
-			$page  = "<script language=\"JavaScript\">\n";
-			$page .= "function f(target_url, win_name) {\n";
-			$page .= "var new_win = window.open(target_url,win_name,'resizable=yes,scrollbars=yes,menubar=no,toolbar=no,width=550,height=280,top=0,left=0');\n";
-			$page .= "new_win.focus();\n";
-			$page .= "}\n";
-			$page .= "</script>\n";
-			$page .= "<center>";
-			$page .= "<table>";
-			$page .= "<tr>";
-			$page .= "<td></td>";
-			$page .= "<td>\n";
-			$page .= "<table width=\"519\">";
-			$page .= "<form action=\"messages.php\" method=\"post\"><table>";
-			$page .= "<tr>";
-			$page .= "<td></td>";
-			$page .= "<td>\n<input name=\"messages\" value=\"1\" type=\"hidden\">";
-			$page .= "<table width=\"519\">";
-			$page .= "<tr>";
-			$page .= "<th colspan=\"4\">";
-			$page .= "<select onchange=\"document.getElementById('deletemessages').options[this.selectedIndex].selected='true'\" id=\"deletemessages2\" name=\"deletemessages2\">";
-			$page .= "<option value=\"deletemarked\">".$lang['mess_deletemarked']."</option>";
-			$page .= "<option value=\"deleteunmarked\">".$lang['mess_deleteunmarked']."</option>";
-			$page .= "<option value=\"deleteall\">".$lang['mess_deleteall']."</option>";
-			$page .= "</select>";
-			$page .= "<input value=\"".$lang['mess_its_ok']."\" type=\"submit\">";
-			$page .= "</th>";
-			$page .= "</tr><tr>";
-			$page .= "<th style=\"color: rgb(242, 204, 74);\" colspan=\"4\">";
-			$page .= "<input name=\"category\" value=\"".$MessCategory."\" type=\"hidden\">";
-			$page .= "<input onchange=\"document.getElementById('fullreports').checked=this.checked\" id=\"fullreports2\" name=\"fullreports2\" type=\"checkbox\">".$lang['mess_partialreport']."</th>";
-			$page .= "</tr><tr>";
-			$page .= "<th>".$lang['mess_action']."</th>";
-			$page .= "<th>".$lang['mess_date']."</th>";
-			$page .= "<th>".$lang['mess_from']."</th>";
-			$page .= "<th>".$lang['mess_subject']."</th>";
-			$page .= "</tr>";
+    $array_cant=explode(".",$final);
 
-			if ($MessCategory == 100) {
-				$UsrMess       = doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".$user['id']."' ORDER BY `message_time` DESC;", 'messages');
-				$SubUpdateQry  = "";
-				for ($MessType = 0; $MessType < 101; $MessType++) {
-					if ( in_array($MessType, $MessageType) ) {
-						$SubUpdateQry .= "`". $messfields[$MessType] ."` = '0', ";
-					}
-				}
-				$QryUpdateUser  = "UPDATE {{table}} SET ";
-				$QryUpdateUser .= $SubUpdateQry;
-				$QryUpdateUser .= "`id` = '".$user['id']."' "; // Vraiment pas envie de me casser le fion a virer la derniere virgule du sub query
-				$QryUpdateUser .= "WHERE ";
-				$QryUpdateUser .= "`id` = '".$user['id']."';";
-				doquery ( $QryUpdateUser, 'users' );
+    $array_cant[0];
+    $array_cant[1];
+    if(!$array_cant[1]){
+    $fnl=$array_cant[0];
+    }else{
+    $fnl=$array_cant[0]+1;
+    }
+    if($_GET['lista_id']<>1){
+    $lista_pagina.="<a href='messages.php?mode=".$MessPageMode."&lista_id=1&messcat=".$MessCategory."'>&lt;&lt;</a> ";
+    }
+    if($_GET['lista_id']>1){
+    $lista_pagina.="<a href='messages.php?mode=".$MessPageMode."&lista_id=".($_GET['lista_id']-1)."&messcat=".$MessCategory."'>&lt;</a> ";
+    for ($i=1;$i<=$fnl;$i++){
+    if($i==$_GET['lista_id']){
+    $lista_pagina.="<strong><a style='color:#FF0000' href='messages.php?mode=".$MessPageMode."&&lista_id=".$i."&messcat=".$MessCategory."'>".$i."</a></strong> ";
+    }else{
+    $lista_pagina.="<a href='messages.php?mode=".$MessPageMode."&lista_id=".$i."&messcat=".$MessCategory."'>".$i."</a> ";
+    }
+    }
+    }
+    if($_GET['lista_id']<floor($fnl)){
+    $lista_pagina.="<a href='messages.php?mode=".$MessPageMode."&lista_id=".($_GET['lista_id']+1)."&messcat=".$MessCategory."'>&gt;</a> ";}
+    if($_GET['lista_id']<>floor($fnl)){
+    $lista_pagina.="<a href='messages.php?mode=".$MessPageMode."&lista_id=".floor($fnl)."&messcat=".$MessCategory."'>&gt;&gt;</a> ";}
 
-				while ($CurMess = mysql_fetch_array($UsrMess)) {
-					$page .= "\n<tr>";
-					$page .= "<input name=\"showmes". $CurMess['message_id'] . "\" type=\"hidden\" value=\"1\">";
-					$page .= "<th><input name=\"delmes". $CurMess['message_id'] . "\" type=\"checkbox\"></th>";
-					$page .= "<th>". date("m-d H:i:s O", $CurMess['message_time']) ."</th>";
-					$page .= "<th>". stripslashes( $CurMess['message_from'] ) ."</th>";
-					$page .= "<th>". stripslashes( $CurMess['message_subject'] ) ." ";
-					if ($CurMess['message_type'] == 1) {
-						$page .= "<a href=\"messages.php?mode=write&amp;id=". $CurMess['message_sender'] ."&amp;subject=".$lang['mess_answer_prefix'] . htmlspecialchars( $CurMess['message_subject']) ."\">";
-						$page .= "<img src=\"". $dpath ."img/m.gif\" alt=\"".$lang['mess_answer']."\" border=\"0\"></a></th>";
-					} else {
-						$page .= "</th>";
-					}
-					$page .= "</tr><tr>";
-					$page .= "<td style=\"background-color: ".$BackGndColor[$CurMess['message_type']]."; background-image: none;\"; class=\"b\"> </td>";
-					$page .= "<td style=\"background-color: ".$BackGndColor[$CurMess['message_type']]."; background-image: none;\"; colspan=\"3\" class=\"b\">". stripslashes( nl2br( $CurMess['message_text'] ) ) ."</td>";
-					$page .= "</tr>";
-				}
-			} else {
-				$UsrMess       = doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".$user['id']."' AND `message_type` = '".$MessCategory."' ORDER BY `message_time` DESC;", 'messages');
-				if ($WaitingMess[$MessCategory] <> '') {
-					$QryUpdateUser  = "UPDATE {{table}} SET ";
-					$QryUpdateUser .= "`".$messfields[$MessCategory]."` = '0', ";
-					$QryUpdateUser .= "`".$messfields[100]."` = `".$messfields[100]."` - '".$WaitingMess[$MessCategory]."' ";
-					$QryUpdateUser .= "WHERE ";
-					$QryUpdateUser .= "`id` = '".$user['id']."';";
-					doquery ( $QryUpdateUser, 'users' );
-				}
-				while ($CurMess = mysql_fetch_array($UsrMess)) {
-					if ($CurMess['message_type'] == $MessCategory) {
-						$page .= "\n<tr>";
-						$page .= "<input name=\"showmes". $CurMess['message_id'] . "\" type=\"hidden\" value=\"1\">";
-						$page .= "<th><input name=\"delmes". $CurMess['message_id'] ."\" type=\"checkbox\"></th>";
-						$page .= "<th>". date("m-d H:i:s O", $CurMess['message_time']) ."</th>";
-						$page .= "<th>". stripslashes( $CurMess['message_from'] ) ."</th>";
-						$page .= "<th>". stripslashes( $CurMess['message_subject'] ) ." ";
-						if ($CurMess['message_type'] == 1) {
-							$page .= "<a href=\"messages.php?mode=write&amp;id=". $CurMess['message_sender'] ."&amp;subject=".$lang['mess_answer_prefix'] . htmlspecialchars( $CurMess['message_subject']) ."\">";
-							$page .= "<img src=\"". $dpath ."img/m.gif\" alt=\"".$lang['mess_answer']."\" border=\"0\"></a></th>";
-						} else {
-							$page .= "</th>";
-						}
-						$page .= "</tr><tr>";
-						$page .= "<td class=\"b\"> </td>";
-						$page .= "<td colspan=\"3\" class=\"b\">". nl2br( stripslashes( $CurMess['message_text'] ) ) ."</td>";
-						$page .= "</tr>";
-					}
-				}
-			}
+    if(isset($_GET['lista_id'])){
+    if ($_GET['lista_id']==1){
+    $com=0;
+    $limit="LIMIT ".$com.", 10";
+    }else{
+    if($_GET['lista_id']!=0){
+    $com=10*($_GET['lista_id']-'1');
+    $limit="LIMIT ".$com.", 10";
+    }
+    }
+    }else{
+    }
 
+             
+             // Affichage de la page des messages
+             $page  .= "<script language=\"JavaScript\">\n";
+             $page .= "function f(target_url, win_name) {\n";
+             $page .= "var new_win = window.open(target_url,win_name,'resizable=yes,scrollbars=yes,menubar=no,toolbar=no,width=550,height=280,top=0,left=0');\n";
+             $page .= "new_win.focus();\n";
+             $page .= "}\n";
+             $page .= "</script>\n";
+             $page .= "<center>";
+             $page .= "<table>";
+             $page .= "<tr>";
+             $page .= "<td></td>";
+             $page .= "<td>\n";
+             $page .= "<table width=\"519\">";
+             $page .= "<form action=\"messages.php\" method=\"post\"><table>";
+             $page .= "<tr>";
+             $page .= "<td></td>";
+             $page .= "<td>\n<input name=\"messages\" value=\"1\" type=\"hidden\">";
+             $page .= "<table width=\"519\">";
+             $page .= "<tr>";
+             $page .= "<th colspan=\"9\">";
+             $page .= "<select onchange=\"document.getElementById('deletemessages').options[this.selectedIndex].selected='true'\" id=\"deletemessages2\" name=\"deletemessages2\">";
+             $page .= "<option value=\"deletemarked\">".$lang['mess_deletemarked']."</option>";
+             $page .= "<option value=\"deleteunmarked\">".$lang['mess_deleteunmarked']."</option>";
+             $page .= "<option value=\"deleteall\">".$lang['mess_deleteall']."</option>";
+             $page .= "</select>";
+             $page .= "<input value=\"".$lang['mess_its_ok']."\" type=\"submit\">";
+             $page .= "</th>";
+             $page .= "</tr><tr>";
+             $page .= "<th style=\"color: rgb(242, 204, 74);\" colspan=\"9\">";
+             $page .= "<input name=\"category\" value=\"".$MessCategory."\" type=\"hidden\">";
+             $page .= "<input onchange=\"document.getElementById('fullreports').checked=this.checked\" id=\"fullreports2\" name=\"fullreports2\" type=\"checkbox\">".$lang['mess_partialreport']." ".$lista_pagina."</th>";
+             $page .= "</tr><tr>";
+             
+             $page .= "<th>".$lang['mess_action']."</th>";
+             $page .= "<th>".$lang['mess_date']."</th>";
+             $page .= "<th>".$lang['mess_from']."</th>";
+             $page .= "<th>".$lang['mess_subject']."</th>";
+             $page .= "</tr>";
 
-			$page .= "<tr>";
-			$page .= "<th style=\"color: rgb(242, 204, 74);\" colspan=\"4\">";
-			$page .= "<input onchange=\"document.getElementById('fullreports2').checked=this.checked\" id=\"fullreports\" name=\"fullreports\" type=\"checkbox\">".$lang['mess_partialreport']."</th>";
-			$page .= "</tr><tr>";
-			$page .= "<th colspan=\"4\">";
-			$page .= "<select onchange=\"document.getElementById('deletemessages2').options[this.selectedIndex].selected='true'\" id=\"deletemessages\" name=\"deletemessages\">";
-			$page .= "<option value=\"deletemarked\">".$lang['mess_deletemarked']."</option>";
-			$page .= "<option value=\"deleteunmarked\">".$lang['mess_deleteunmarked']."</option>";
-			$page .= "<option value=\"deleteall\">".$lang['mess_deleteall']."</option>";
-			$page .= "</select>";
-			$page .= "<input value=\"".$lang['mess_its_ok']."\" type=\"submit\">";
-			$page .= "</th>";
-			$page .= "</tr><tr>";
-			$page .= "<td colspan=\"4\"></td>";
-			$page .= "</tr>";
-			$page .= "</table>\n";
-			$page .= "</td>";
-			$page .= "</tr>";
-			$page .= "</table>\n";
-			$page .= "</form>";
-			$page .= "</td>";
-			$page .= "</table>\n";
-			$page .= "</center>";
-			break;
+             
+                $UsrMess       = doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".$user['id']."' AND `message_type` = '".$MessCategory."' ORDER BY `message_time` DESC ".$limit, 'messages');
+                
+                while ($CurMess = mysql_fetch_array($UsrMess)) {
+                   if ($CurMess['message_type'] == $MessCategory) {
+                   $page .= "\n<tr>";
+                   $page .= "<input name=\"showmes". $CurMess['message_id'] . "\" type=\"hidden\" value=\"1\">";
+                   $page .= "<th><input name=\"delmes". $CurMess['message_id'] ."\" type=\"checkbox\"></th>";
+                   
+                   $page .= "<th>". date("m-d H:i:s O", $CurMess['message_time']) ."</th>";
+                   $page .= "<th>". stripslashes( $CurMess['message_from'] ) ."</th>";
+                   $page .= "<th> <a href='messages.php?mode=".$MessPageMode."&&lista_id=".$_GET['lista_id']."&messcat=".$MessCategory."&ver=".$CurMess['message_id']."'>". stripslashes( $CurMess['message_subject'] ) ."</a> ";
+                    if($CurMess['leido']==1){
+                   $color_style=" style='background-color:#FF0000'";
+                   }else{
+                   $color_style="";
+                   }
+					  if ($CurMess['message_type'] == 1) {
+                         $page .= "<a href=\"messages.php?mode=write&amp;id=". $CurMess['message_sender'] ."&amp;subject=".$lang['mess_answer_prefix'] . htmlspecialchars( $CurMess['message_subject']) ."\">";
+                         $page .= "<img src=\"". $dpath ."img/m.gif\" alt=\"".$lang['mess_answer']."\" border=\"0\"></a></th>";
+                      } else {
+                         $page .= "</th>";
+                      }
+                      
+                      $page .= "</tr>";
+                   }
+                }
+             
+    if($_GET["ver"]){
+    $CurMess=doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".$user['id']."' AND `message_id` = '".$_GET["ver"]."' ;", 'messages', true);
+    $page .= "<tr></tr><tr><th></th>";
+    $page .= "<th>". date("m-d H:i:s O", $CurMess['message_time']) ."</th>";
+                   $page .= "<th>". stripslashes( $CurMess['message_from'] ) ."</th>";
+                   $page .= "<th> <b>". stripslashes( $CurMess['message_subject'] ) ."</b></tr><tr>";
+                   $page .= "<td style=\"background-color: ".$BackGndColor[$CurMess['message_type']]."; background-image: none;\"; class=\"b\"> </td>";
+                   $page .= "<td style=\"background-color: ".$BackGndColor[$CurMess['message_type']]."; background-image: none;\"; colspan=\"4\" class=\"b\">". stripslashes( nl2br( $CurMess['message_text'] ) ) ."</td></tr>";
+                   
+                $QryUpdatemen  = "UPDATE {{table}} SET ";
+                $QryUpdatemen .= "`leido` = '0' "; // Vraiment pas envie de me casser le fion a virer la derniere virgule du sub query
+                $QryUpdatemen .= "WHERE ";
+                $QryUpdatemen .= "`message_id` = '".$_GET["ver"]."';";
+                doquery ( $QryUpdatemen, 'messages' );
 
-		default:
-			$page  = "<script language=\"JavaScript\">\n";
-			$page .= "function f(target_url, win_name) {\n";
-			$page .= "var new_win = window.open(target_url, win_name, 'resizable=yes, scrollbars=yes, menubar=no, toolbar=no, width=550, height=280, top=0, left=0');\n";
-			$page .= "new_win.focus();\n";
-			$page .= "}\n";
-			$page .= "</script>\n";
-			$page .= "<center>";
-			$page .= "<br>";
-			$page .= "<table width=\"569\">";
-			$page .= "<tr>";
-			$page .= "	<td class=\"c\" colspan=\"5\">". $lang['title'] ."</td>";
-			$page .= "</tr><tr>";
-			$page .= "	<th colspan=\"3\">". $lang['head_type'] ."</th>";
-			$page .= "	<th>". $lang['head_count'] ."</th>";
-			$page .= "	<th>". $lang['head_total'] ."</th>";
-			$page .= "</tr>";
-			$page .= "<tr>";
-			$page .= "	<th colspan=\"3\"><a href=\"messages.php?mode=show&amp;messcat=100\"><font color=\"". $TitleColor[100] ."\">". $lang['type'][100] ."</a></th>";
-			$page .= "	<th><font color=\"". $TitleColor[100] ."\">". $WaitingMess[100] ."</font></th>";
-			$page .= "	<th><font color=\"". $TitleColor[100] ."\">". $TotalMess[100] ."</font></th>";
-			$page .= "</tr>";
-			for ($MessType = 0; $MessType < 100; $MessType++) {
-				if ( in_array($MessType, $MessageType) ) {
-					$page .= "<tr>";
-					$page .= "	<th colspan=\"3\"><a href=\"messages.php?mode=show&amp;messcat=". $MessType ." \"><font color=\"". $TitleColor[$MessType] ."\">". $lang['type'][$MessType] ."</a></th>";
-					$page .= "	<th><font color=\"". $TitleColor[$MessType] ."\">". $WaitingMess[$MessType] ."</font></th>";
-					$page .= "	<th><font color=\"". $TitleColor[$MessType] ."\">". $TotalMess[$MessType] ."</font></th>";
-					$page .= "</tr>";
-				}
-			}
-			$page .= "</table>";
-			$page .= "</center>";
-			break;
+    }
+
+             $page .= "<tr>";
+             $page .= "<th style=\"color: rgb(242, 204, 74);\" colspan=\"4\">";
+             $page .= "<input onchange=\"document.getElementById('fullreports2').checked=this.checked\" id=\"fullreports\" name=\"fullreports\" type=\"checkbox\">".$lang['mess_partialreport']."</th>";
+             $page .= "</tr><tr>";
+             $page .= "<th colspan=\"4\">";
+             $page .= "<select onchange=\"document.getElementById('deletemessages2').options[this.selectedIndex].selected='true'\" id=\"deletemessages\" name=\"deletemessages\">";
+             $page .= "<option value=\"deletemarked\">".$lang['mess_deletemarked']."</option>";
+             $page .= "<option value=\"deleteunmarked\">".$lang['mess_deleteunmarked']."</option>";
+             $page .= "<option value=\"deleteall\">".$lang['mess_deleteall']."</option>";
+             $page .= "</select>";
+             $page .= "<input value=\"".$lang['mess_its_ok']."\" type=\"submit\">";
+             $page .= "</th>";
+             $page .= "</tr><tr>";
+             $page .= "<td colspan=\"4\"></td>";
+             $page .= "</tr>";
+             $page .= "</table>\n";
+             $page .= "</td>";
+             $page .= "</tr>";
+             $page .= "</table>\n";
+             $page .= "</form>";
+             $page .= "</td>";
+             $page .= "</table>\n";
+             $page .= "</center>";
+             break;
+             
 	}
 
 	display($page, $lang['mess_pagetitle']);

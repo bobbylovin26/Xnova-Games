@@ -2,7 +2,7 @@
 
 
 $lang['Tech'] = 'Tecnologia';
-$lang['Requirements'] = 'Requerimientos';
+$lang['Requirements'] = 'Requiere';
 $lang['Metal']        = "Metal";
 $lang['Crystal']      = "Cristal";
 $lang['Deuterium']    = "Deuterio";
@@ -42,6 +42,16 @@ $lang['tech_rc'] = array (
 213 => "Destructor",
 214 => "Estrella de la muerte",
 215 => "Acorazado",
+216 => "Supernova",
+217 => "Interceptor",
+218 => "Cazador Crucero",
+219 => "Transportador",
+220 => "Titan",
+221 => "Nave Humana",
+222 => "Nave Alien",
+223 => "Nave Predator",
+224 => "Nave Dark",
+
 401 => "Lanzamisiles",
 402 => "L&aacute;ser peque&ntilde;o",
 403 => "L&aacute;ser grande",
@@ -51,6 +61,8 @@ $lang['tech_rc'] = array (
 407 => "C&uacute;pula peque&ntilde;a de protecci&oacute;n",
 408 => "C&uacute;pula grande de protecci&oacute;n",
 409 => 'Proteccion Planetaria',
+410 => "Ca&ntilde;&oacute;n de Fotones",
+411 => "Base Espacial",
 );
 
 $lang['tech'] = array(
@@ -74,6 +86,7 @@ $lang['tech'] = array(
 42 => "Sensor Phalanx",
 43 => "Salto cu&aacute;ntico",
 44 => "Silo",
+45 => "Super Terraformer",
 
 // Technologies
 100 => "Investigaci&oacute;n",
@@ -92,6 +105,11 @@ $lang['tech'] = array(
 122 => "Tecnolog&iacute;a de plasma",
 123 => "Red de investigaci&oacute;n intergal&aacute;ctica",
 124 => 'Tecnologia de expedicion',
+125 => 'Tecnologias Unicas de Humanos',
+126 => 'Tecnologias Unicas de Aliens',
+127 => 'Tecnologias Unicas de Predators',
+128 => 'Tecnologias Unicas de Darks',
+129 => 'Tecnologia de Desarrollo',
 199 => "Tecnolog&iacute;a de gravit&oacute;n",
 
 200 => "Naves espaciales",
@@ -109,7 +127,15 @@ $lang['tech'] = array(
 213 => "Destructor",
 214 => "Estrella de la muerte",
 215 => "Acorazado",
-216 => 'Super nave de Batalla',
+216 => 'SuperNova',
+217 => "Interceptor",
+218 => "Cazador Crucero",
+219 => "Transportador",
+220 => "Titan",
+221 => "Nave Humana",
+222 => "Nave Alien",
+223 => "Nave Predator",
+224 => "Nave Dark",
 
 400 => "Sistemas de defensa",
 401 => "Lanzamisiles",
@@ -121,6 +147,9 @@ $lang['tech'] = array(
 407 => "C&uacute;pula peque&ntilde;a de protecci&oacute;n",
 408 => "C&uacute;pula grande de protecci&oacute;n",
 409 => 'Proteccion Planetaria',
+410 => "Ca&ntilde;&oacute;n de Fotones",
+411 => "Base Espacial",
+
 502 => "Misil de intercepci&oacute;n",
 503 => "Misil interplanetario",
 600 => "Oficial",
@@ -143,24 +172,25 @@ $lang['tech'] = array(
 );
 
 $lang['res']['descriptions'] = array(
-1 => "Las minas de metal proveen los recursos b&aacute;sicos de un imperio emergente, y permiten la construcci&oacute;n de edificios y naves.",
-2 => "Los cristales son el recurso principal usado para construir circuitos electr&oacute;nicos y ciertas aleaciones.",
-3 => "El deuterio se usa como combustible para naves, y se recolecta en el mar profundo. Es una sustancia muy escasa, y por ello, relativamente cara.",
-4 => "Las plantas de energ&iacute;a solar convierten energ&iacute;a fot&oacute;nica en energ&iacute;a el&eacute;ctrica, para su uso en casi todos los edificios y estructuras.",
-12 => "Un reactor de fusi&oacute;n nuclear que produce un &aacute;tomo de helio a partir de dos &aacute;tomos de deuterio usando una presi&oacute;n extremadamente alta y una elevad&iacute;sima temperatura.",
-14 => "Las f&aacute;bricas de robots proporcionan unidades baratas y de f&aacute;cil construcci&oacute;n que pueden ser usadas para mejorar o construir cualquier estructura planetaria. Cada nivel de mejora de la f&aacute;brica aumenta la eficiencia y el numero de unidades rob&oacute;ticas que ayudan en la construcci&oacute;n.",
-15 => "La f&aacute;brica de nanobots es la &uacute;ltima evoluci&oacute;n de la rob&oacute;tica. Cada mejora proporciona nanobots m&aacute;s y m&aacute;s eficientes que incrementan la velocidad de construcci&oacute;n.",
-21 => "El hangar es el lugar donde se construyen naves y estructuras de defensa planetaria.",
-22 => "Almac&eacute;n de metal sin procesar.",
-23 => "Almac&eacute;n de cristal sin procesar.",
-24 => "Contenedores enormes para almacenar deuterio.",
-31 => "Se necesita un laboratorio de investigaci&oacute;n para conducir la investigaci&oacute;n en nuevas tecnolog&iacute;as.",
-33 => "Terraformer...",
-34 => "El dep&oacute;sito de la alianza ofrece la posibilidad de repostar a las flotas aliadas que est&eacute;n estacionadas en la &oacute;rbita ayudando a defender.",
-41 => "Dado que la luna no tiene atm&oacute;sfera, se necesita una base lunar para generar espacio habitable.",
-42 => "Usando el sensor phalanx, las flotas de otros imperios pueden ser descubiertas y observadas. Cuanto mayor sea la cadena de sensores phalanx, mayor el rango que pueda escanear.",
-43 => "El salto cu&aacute;ntico usa portales transmisores-receptores capaces de enviar incluso la mayor flota instantaneamente a un portal lejano.",
-44 => "El silo es un lugar de almacenamiento y lanzamiento de misiles planetarios.",
+1 => "",
+2 => "",
+3 => "",
+4 => "",
+12 => "",
+14 => "",
+15 => "",
+21 => "",
+22 => "",
+23 => "",
+24 => "",
+31 => "",
+33 => "",
+34 => "",
+41 => "",
+42 => "",
+43 => "",
+44 => "",
+45 => "",
 
 106 => "Usando esta tecnolog&iacute;a, puede obtenerse informaci&oacute;n sobre otros planetas.",
 108 => "Cuanto m&aacute;s elevado sea el nivel de tecnolog&iacute;a de computaci&oacute;n, m&aacute;s flotas podr&aacute;s controlar simultaneamente. Cada nivel adicional de esta tecnologia, aumenta el numero de flotas en 1.",
@@ -173,11 +203,16 @@ Cada nivel de esta tecnolog&iacute;a aumenta el escudo efectivo en un 10% (basad
 115 => "Ejecutar investigaciones en esta tecnolog&iacute;a proporciona motores de combusti&oacute;n siempre m&aacute;s rapido, aunque cada nivel aumenta solamente la velocidad en un 10% de la velocidad base de una nave dada.",
 117 => "El sistema del motor de impulso se basa en el principio de la repulsi&oacute;n de part&iacute;culas. La materia repelida es basura generada por el reactor de fusi&oacute;n usado para proporcionar la energ&iacute;a necesaria para este tipo de motor de propulsi&oacute;n.",
 118 => "Los motores de hiperespacio permiten entrar al mismo a trav&eacute;s de una ventana hiperespacial para reducir dr&aacute;sticamente el tiempo de viaje. El hiperespacio es un espacio alternativo con m&aacute;s de 3 dimensiones.",
-120 => "La tecnolog&iacute;a l&aacute;ser es un importante conocimiento; conduce a la luz monocrom&aacute;tica firmemente enfocada sobre un objetivo. El da&ntilde;o puede ser ligero o moderado dependiendo de la potencia del rayo...",
-121 => "La tecnolog&iacute;a i&oacute;nica enfoca un rayo de iones acelerados en un objetivo, lo que puede provocar un gran da&ntilde;o debido a su naturaleza de electrones cargados de energ&iacute;a.",
+120 => "La Tecnolog&iacute;a l&aacute;ser es un importante conocimiento; conduce a la luz monocrom&aacute;tica firmemente enfocada sobre un objetivo. El da&ntilde;o puede ser ligero o moderado dependiendo de la potencia del rayo...",
+121 => "La Tecnolog&iacute;a i&oacute;nica enfoca un rayo de iones acelerados en un objetivo, lo que puede provocar un gran da&ntilde;o debido a su naturaleza de electrones cargados de energ&iacute;a.",
 122 => "Las armas de plasma son incluso m&aacute;s peligrosas que cualquier otro sistema de armamento conocido, debido a la naturaleza agresiva del plasma.",
 123 => "Los cient&iacute;ficos de tus planetas pueden comunicarse entre ellos a trav&eacute;s de esta red.",
 124 => "Las naves son equipadas con equipo cientifico para tomar datos en largas expediciones.",
+125 => "Tecnologias Unicas de Humanos, Con cada nivel aumenta un 2% los escudos  y poder de ataque de naves y defensas y aumenta 3% la produccion de minas de metal y se tiene acceso a nuevas tecnologias y naves unicas de su raza.",
+126 => "Tecnologias Unicas de Aliens, Con cada nivel aumenta un 5% el blindaje de las naves y defensas y las minas de cristal aumentan un 3% su produccion, se tiene acceso a nuevas tecnologias y naves unicas de su raza.",
+127 => "Tecnologias Unicas de Predators, Con cada nivel aumenta un 10% el poder de ataque de naves y defensas y se tiene acceso a nuevas tecnologias y naves unicas de su raza.",
+128 => "Tecnologias Unicas de Darks, Con cada nivel aumenta un 4% los escudos y blindaje de naves y los sintetizadores de deuterio producen un 3% mas, se tiene acceso a nuevas tecnologias y naves unicas de su raza.",
+129 => "La Tecnolog&iacute;a de desarrollo permite aumentar con cada nivel, una cola mas a la cola de construccion de edificios.",
 199 => "A trav&eacute;s del disparo de part&iacute;culas concentradas de gravit&oacute;n se genera un campo gravitacional artificial con suficiente potencia y poder de atracci&oacute;n para destruir no solo naves, sino lunas enteras.",
 
 202 => "Las naves peque&ntilde;as de carga son naves muy &aacute;giles usadas para transportar recursos desde un planeta a otro",
@@ -195,6 +230,14 @@ Cada nivel de esta tecnolog&iacute;a aumenta el escudo efectivo en un 10% (basad
 214 => "No hay nada tan grande y peligroso como una estrella de la muerte aproxim&aacute;ndose.",
 215 => "El Acorazado es una nave altamente especializada en la intercepci&oacute;n de flotas hostiles.",
 216 => "La Super nave de Batalla es la mas poderosa nunca antes creada, con gran poder ofencivo.. que ninguna nave podra resistir a su ataque...",
+217 => "El Interceptor tiene una alta velocidad, esta diseñado para dar caza inclusive a los destructores.",
+218 => "El Cazador Crucero tiene los mejores fuegos rapidos contra las naves mas comunes del espacio.",
+219 => "El Transportador puede mover altas cantidades de recursos.",
+220 => "El Titan es la nave espacial mas poderosa jamas creada.",
+221 => "Nave Humana es...",
+222 => "Nave Alien es...",
+223 => "Nave Predator es...",
+224 => "Nave Dark es...",
 
 401 => "El lanzamisiles es un sistema de defensa sencillo, pero barato.",
 402 => "Por medio de un rayo l&aacute;ser concentrado, se puede provocar m&aacute;s da&ntilde;o que con las armas bal&iacute;sticas normales.",
@@ -204,8 +247,10 @@ Cada nivel de esta tecnolog&iacute;a aumenta el escudo efectivo en un 10% (basad
 406 => "Los ca&ntilde;ones de plasma liberan la energ&iacute;a de una peque&ntilde;a erupci&oacute;n solar en una bala de plasma. La energ&iacute;a destructiva es incluso superior a la del Destructor.",
 407 => "La c&uacute;pula peque&ntilde;a de protecci&oacute;n cubre el planeta con un delgado campo protector que puede absorber inmensas cantidades de energ&iacute;a.",
 408 => "La c&uacute;pula grande de protecci&oacute;n proviene de una tecnolog&iacute;a de defensa mejorada que absorbe incluso m&aacute;s energ&iacute;a antes de colapsarse.",
-
 409 => "La maxima proteccion para los planetas",
+410 => "Ca&ntilde;&oacute;n de Fotones... ",
+411 => "Base Espacial... ",
+
 502 => "Los misiles de intercepci&oacute;n destruyen los misiles interplanetarios.",
 503 => "Los misiles interplanetarios destruyen los sistemas de defensa del enemigo.",
 );

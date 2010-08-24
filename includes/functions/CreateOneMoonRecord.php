@@ -11,7 +11,7 @@
 // Creation d'une lune (coté enregistrement dans la BDD)
 //
 function CreateOneMoonRecord ( $Galaxy, $System, $Planet, $Owner, $MoonID, $MoonName, $Chance ) {
-	global $lang;
+	global $lang,$user;
 
 	$PlanetName            = "";
 
@@ -71,6 +71,7 @@ function CreateOneMoonRecord ( $Galaxy, $System, $Planet, $Owner, $MoonID, $Moon
 			$QryInsertMoonInPlanet  = "INSERT INTO {{table}} SET ";
 			$QryInsertMoonInPlanet .= "`name` = '" .$lang['sys_moon'] ."', ";
 			$QryInsertMoonInPlanet .= "`id_owner` = '". $Owner ."', ";
+			$QryInsertMoonInPlanet .= "`id_level` = '".          $user['authlevel']          ."', ";
 			$QryInsertMoonInPlanet .= "`galaxy` = '". $Galaxy ."', ";
 			$QryInsertMoonInPlanet .= "`system` = '". $System ."', ";
 			$QryInsertMoonInPlanet .= "`planet` = '". $Planet ."', ";

@@ -102,7 +102,7 @@ function FleetBuildingPage ( &$CurrentPlanet, $CurrentUser ) {
 				// Si ... Et Seulement si je peux construire je mets la p'tite zone de saisie
 				if ($CanBuildOne) {
 					$TabIndex++;
-					$PageTable .= "<input type=text name=fmenge[".$Element."] alt='".$lang['tech'][$Element]."' size=5 maxlength=5 value=0 tabindex=".$TabIndex.">";
+					$PageTable .= "<input type=text name=fmenge[".$Element."] alt='".$lang['tech'][$Element]."' size=6 maxlength=6 value=0 tabindex=".$TabIndex.">";
 				}
 				$PageTable .= "</th>";
 
