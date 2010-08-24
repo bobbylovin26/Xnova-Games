@@ -21,8 +21,14 @@ th.lic{border:0px;}</style>
         <td class="c">{ow_support}</td>
     </tr>
     <tr>
-        <th><a href="http://www.xtreme-gamez.com.ar/" target="_blank">Xtreme-gameZ.com.ar</a><br />
-        <a href="http://www.xtreme-gamez.com.ar/foros/" target="_blank">Xtreme-gameZ.com.ar - {ow_forum}</a></th>
+        <th>
+        	<br />
+            <a href="http://sourceforge.net/apps/mantisbt/xgproyect/bug_report_page.php" target="_blank">Bug Report</a>
+        	<br />
+        	<a href="http://www.xtreme-gamez.com.ar/" target="_blank">Xtreme-gameZ {ow_forum}</a>
+        	<br />
+            <br />
+        </th>
     </tr>   
     <tr>
     	<td class="c">{ow_credits}</td>

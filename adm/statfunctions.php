@@ -138,7 +138,7 @@ function MakeStats()
 	//Change the last stats time
 	$stats_time   = time();
 	//Delete old messages
-	$del_before 	= time() - (24 * 60 * 60); // 1 DAY
+	$del_before 	= time() - (60 * 60 * 24); // 1 DAY
 	$del_inactive 	= time() - (60 * 60 * 24 * 30); // 1 MONTH
 	$del_deleted 	= time() - (60 * 60 * 24 * 7); // 1 WEEK
 

@@ -75,4 +75,7 @@ if ( !defined('INSIDE') ) die(header("location:../"));
 	define('GEOLOGUE'				  ,   0.05);
 	define('INGENIEUR'				  ,   0.05);
 
+	// TRADER DARK MATTER DEFAULT VALUE
+	define('TR_DARK_MATTER'			  ,   2500);
+
 ?>

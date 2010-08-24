@@ -80,7 +80,7 @@ function PluginAct($name)
 {
     $Exists = doquery("SELECT status FROM {{table}} WHERE `plugin` = '" . $name . "' LIMIT 1;", "plugins", true);
 	if(!$Exists) doquery("INSERT INTO {{table}} SET `plugin` = '" . $name . "';", "plugins");
-	
+
 	return ($Exists[0]);
 }
 /**
@@ -92,10 +92,10 @@ function PluginAct($name)
  */
 function AdmPlugin($name, $desc)
 {
-$page   =   $_GET['modo'];    
-if(is_phpself('adm/SettingsPage') && $page=='plugins'){ 
-    $activado          = PluginAct($name);   
-    $config_line .= "<tr>";    
+$page   =   $_GET['modo'];
+if(is_phpself('adm/SettingsPage') && $page=='plugins'){
+    $activado          = PluginAct($name);
+    $config_line .= "<tr>";
     if($activado == "1") { //if the plugin is on
     $config_line .= "<td class=\"c\" style=\"color:#FFFFFF\">".$name."</td>";
     $config_line .= "<td align=\"left\" class=\"c\" style=\"color:green\"><b>On</b></td>";
@@ -117,15 +117,6 @@ $plugins_path = $game_root.'includes/plugins/';
 $plugins_version = '0.3';
 // this array is used to store code for actions trigger in some hooks
 $plugins_hooks = array();
-
-if($game_config['plugins']== ''){
-doquery("INSERT INTO {{table}} (`config_name`, `config_value`) VALUES ('plugins', 1)","config");
-$QryTablePlugins    = "CREATE TABLE `{{table}}` ( ";
-$QryTablePlugins   .= "`status` tinyint(11) NOT NULL default '0', ";
-$QryTablePlugins   .= "`plugin` varchar(32) character set latin1 NOT NULL ";
-$QryTablePlugins   .= ") ENGINE=MyISAM;";
-doquery ($QryTablePlugins, 'plugins');
-}
 
 // open all files inside plugins folder
 $dir = opendir($plugins_path);
@@ -159,11 +150,11 @@ if ( defined('IN_ADMIN') )
 
 
 
-$page   =   $_GET['modo'];    
-if(is_phpself('adm/SettingsPage') && $page=='plugins'){ 
-    
+$page   =   $_GET['modo'];
+if(is_phpself('adm/SettingsPage') && $page=='plugins'){
+
     //Si existe activar, activamos el plugin, xD
-     if($_GET['activate']) { 
+     if($_GET['activate']) {
     $plugin = $_GET['activate'];
     //Verificamos que exista
     $ex = doquery("SELECT status FROM {{table}} WHERE `plugin`='". $plugin ."' LIMIT 1", 'plugins', true);
@@ -172,7 +163,7 @@ if(is_phpself('adm/SettingsPage') && $page=='plugins'){
     $info = "<big>Plugin Activado</big>";}
     }
     //Si existe desactivar, lo desactivamos
-    if($_GET['desactivate']) { 
+    if($_GET['desactivate']) {
     $plugin = $_GET['desactivate'];
     //Verificamos que exista
     $ex = doquery("SELECT status FROM {{table}} WHERE `plugin`='". $plugin ."' LIMIT 1", 'plugins', true);
@@ -180,7 +171,7 @@ if(is_phpself('adm/SettingsPage') && $page=='plugins'){
     doquery("UPDATE {{table}} SET `status` = 0 WHERE `plugin`='". $plugin ."' LIMIT 1", "plugins");
     $info = "<h1>Plugin Desactivado</h1>";}
     }
-    
+
     $settingsplug ='       <br><br>';
     $settingsplug .=' <h2>Plugins Panel</h2>';
     $settingsplug .= $info;
@@ -189,7 +180,7 @@ if(is_phpself('adm/SettingsPage') && $page=='plugins'){
     $settingsplug .='     <td class="a" colspan="3" style="color:#FFFFFF"><strong> Plugins instalados </strong></td>';
     $settingsplug .=' </tr>';
     $settingsplug .= $config_line;
-    $settingsplug .=' </table>';  
+    $settingsplug .=' </table>';
 
     display($settingsplug, false, '', true, false);
         }

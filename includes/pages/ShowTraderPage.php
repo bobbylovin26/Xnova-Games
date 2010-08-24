@@ -21,11 +21,17 @@
 
 if(!defined('INSIDE')){ die(header("location:../../"));}
 
-function ShowTraderPage($CurrentPlanet)
+function ShowTraderPage($CurrentUser, $CurrentPlanet)
 {
 	global $phpEx, $lang;
 
 	$parse = $lang;
+
+	if($CurrentUser['darkmatter'] < TR_DARK_MATTER)
+	{
+		message(str_replace('%s',TR_DARK_MATTER,$lang['tr_darkmatter_needed']), '', '', true);
+		die();
+	}
 
 	if (isset($_POST['ress']) && $_POST['ress'] != '')
 	{
@@ -55,7 +61,7 @@ function ShowTraderPage($CurrentPlanet)
 						$planetrow['metal']     -= $necessaire;
 						$CurrentPlanet['cristal']   += $_POST['cristal'];
 						$CurrentPlanet['deuterium'] += $_POST['deut'];
-
+						doquery("UPDATE `{{table}}` SET `darkmatter` = `darkmatter` - ".TR_DARK_MATTER." WHERE `id` = ".$CurrentUser['id']."", 'users');
 					}
 					else
 					{
@@ -88,6 +94,7 @@ function ShowTraderPage($CurrentPlanet)
 						$CurrentPlanet['metal']     += $_POST['metal'];
 						$CurrentPlanet['cristal']   -= $necessaire;
 						$CurrentPlanet['deuterium'] += $_POST['deut'];
+						doquery("UPDATE `{{table}}` SET `darkmatter` = `darkmatter` - ".TR_DARK_MATTER." WHERE `id` = ".$CurrentUser['id']."", 'users');
 					}
 					else
 					{
@@ -120,6 +127,7 @@ function ShowTraderPage($CurrentPlanet)
 						$CurrentPlanet['metal']     += $_POST['metal'];
 						$CurrentPlanet['cristal']   += $_POST['cristal'];
 						$CurrentPlanet['deuterium'] -= $necessaire;
+						doquery("UPDATE `{{table}}` SET `darkmatter` = `darkmatter` - ".TR_DARK_MATTER." WHERE `id` = ".$CurrentUser['id']."", 'users');
 					}
 					else
 					{

@@ -313,14 +313,17 @@ function maxResource(id) {
 		thisresource=0;
 	}
 
-	var storCap = storage();
-	if (id==3){
-		thisresource -= consumption();
-	}
+var storCap = storage();
+    if (id==3){        
+        if ((thisresource - consumption()) < 0)
+            thisresource = 0;
+        else
+            thisresource -= consumption();
+    }
 
-	var metalToTransport = parseInt(document.getElementsByName("resource1")[0].value);
-	var crystalToTransport = parseInt(document.getElementsByName("resource2")[0].value);
-	var deuteriumToTransport = parseInt(document.getElementsByName("resource3")[0].value);
+	var metalToTransport = document.getElementsByName("resource1")[0].value;
+	var crystalToTransport = document.getElementsByName("resource2")[0].value;
+	var deuteriumToTransport = document.getElementsByName("resource3")[0].value;
 
 	if (isNaN(metalToTransport)){
 		metalToTransport=0;

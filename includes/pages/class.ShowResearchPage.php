@@ -229,6 +229,9 @@ class ShowResearchPage
 			{
 				$bContinue = false;
 			}
+
+			header ("Location: game.php?page=buildings&mode=research");
+
 		}
 
 		$TechRowTPL = gettemplate('buildings/buildings_research_row');

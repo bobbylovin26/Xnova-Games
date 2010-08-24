@@ -147,6 +147,9 @@ class ShowShipyardPage
 					}
 				}
 			}
+
+			header ("Location: game.php?page=buildings&mode=fleet");
+
 		}
 
 		if ($CurrentPlanet[$resource[21]] == 0)
@@ -354,6 +357,9 @@ class ShowShipyardPage
 					}
 				}
 			}
+
+			header ("Location: game.php?page=buildings&mode=defense");
+
 		}
 
 		if ($CurrentPlanet[$resource[21]] == 0)

@@ -63,22 +63,22 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 		doquery ( "DELETE FROM {{table}} WHERE `id` = '" . $UserID . "';", 'users' );
 		doquery ( "UPDATE `{{table}}` SET `config_value` = `config_value` - '1' WHERE `config_name` = 'users_amount' LIMIT 1 ;", "config" );
 	}
-	
-function DeleteSelectedPlanet ($ID)
-{
-	global $lang;
-	
-	$QueryPlanet = doquery ("SELECT galaxy,planet,system,planet_type FROM {{table}} WHERE id = '".$ID."'", 'planets', true );
-	
-	if ($QueryPlanet['planet_type'] == '3')
+
+	function DeleteSelectedPlanet ($ID)
 	{
-		doquery("DELETE FROM {{table}} WHERE id = '".$ID."'", "planets");
-		doquery("UPDATE {{table}} SET id_luna = 0 WHERE id_luna = '".$ID."'", "galaxy");
+		global $lang;
+
+		$QueryPlanet = doquery ("SELECT galaxy,planet,system,planet_type FROM {{table}} WHERE id = '".$ID."'", 'planets', true );
+
+		if ($QueryPlanet['planet_type'] == '3')
+		{
+			doquery("DELETE FROM {{table}} WHERE id = '".$ID."'", "planets");
+			doquery("UPDATE {{table}} SET id_luna = 0 WHERE id_luna = '".$ID."'", "galaxy");
+		}
+		else
+		{
+			doquery("DELETE FROM {{table}} WHERE galaxy = '".$QueryPlanet['galaxy']."' AND system = '".$QueryPlanet['system']."' AND planet = '".$QueryPlanet['planet']."'", "planets");
+			doquery("DELETE FROM {{table}} WHERE id_planet = '".$ID."'", "galaxy");
+		}
 	}
-	else
-	{
-		doquery("DELETE FROM {{table}} WHERE galaxy = '".$QueryPlanet['galaxy']."' AND system = '".$QueryPlanet['system']."' AND planet = '".$QueryPlanet['planet']."'", "planets");
-		doquery("DELETE FROM {{table}} WHERE id_planet = '".$ID."'", "galaxy");
-	}
-}
 ?>

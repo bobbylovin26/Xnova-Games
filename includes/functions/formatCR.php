@@ -29,6 +29,7 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 		$bbc 		= "";
 		$html 		.= $lang['sys_attack_title']." ".date("D M j H:i:s", time()).".<br /><br />";
 		$round_no 	= 1;
+		$destroyed	= 0;
 
 		foreach( $result_array['rw'] as $round => $data1)
 		{
@@ -64,8 +65,19 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 					$fl_info1 	.= $lang['sys_ship_weapon']." ".$weap."% - ".$lang['sys_ship_shield']." ".$shie."% - ".$lang['sys_ship_armour']." ".$armr."%";
 					$table1  	= "<table border=1 align=\"center\">";
 
-					if (number_format($data1['attack']['total']) > 0)
+					if (number_format($data1['attack']['total']) >= 0 && $round_no == 1)
 					{
+						if(number_format($data1['attack']['total']) == 0)
+						{
+							$ships1 = "<tr><br /><br />". $lang['sys_destroyed']."<br /></tr>";
+							$count1 = "";
+							$destroyed = 1;
+						}
+						else
+						{
+							$destroyed = 0;
+						}
+
 						$ships1  = "<tr><th>".$lang['sys_ship_type']."</th>";
 						$count1  = "<tr><th>".$lang['sys_ship_count']."</th>";
 
@@ -76,6 +88,23 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 						       $ships1 .= "<th>[ship[".$ship_id1."]]</th>";
 						       $count1 .= "<th>".number_format($ship_count1)."</th>";
 						   }
+						}
+
+						$ships1 .= "</tr>";
+						$count1 .= "</tr>";
+					}
+					elseif(number_format($data1['attack']['total']) > 0)
+					{
+						$ships1  = "<tr><th>".$lang['sys_ship_type']."</th>";
+						$count1  = "<tr><th>".$lang['sys_ship_count']."</th>";
+
+						foreach( $data2['detail'] as $ship_id1 => $ship_count1)
+						{
+							if ($ship_count1 > 0)
+							{
+								$ships1 .= "<th>[ship[".$ship_id1."]]</th>";
+								$count1 .= "<th>".number_format($ship_count1)."</th>";
+							}
 						}
 
 						$ships1 .= "</tr>";
@@ -231,6 +260,6 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 		$html .= $lang['sys_moonproba']." ".floor($moon_int)." %<br />";
 		$html .= $moon_string."<br /><br />";
 
-		return array('html' => $html, 'bbc' => $bbc);
+		return array('html' => $html, 'bbc' => $bbc, 'destroyed' => $destroyed);
 	}
 ?>

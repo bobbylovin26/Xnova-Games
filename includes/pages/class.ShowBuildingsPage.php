@@ -394,6 +394,9 @@ class ShowBuildingsPage
 					break;
 				}
 			}
+
+			header ("Location: game.php?page=buildings&mode=buildings");
+
 		}
 
 		SetNextQueueElementOnTop($CurrentPlanet, $CurrentUser);

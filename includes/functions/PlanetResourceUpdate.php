@@ -169,6 +169,16 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 			}
 		}
 
+		if( $CurrentPlanet['metal'] < 0 )
+		{
+			$CurrentPlanet['metal']  = 0;
+		}
+
+		if( $CurrentPlanet['crystal'] < 0 )
+		{
+			$CurrentPlanet['crystal']  = 0;
+		}
+
 		if( $CurrentPlanet['deuterium'] < 0 )
 		{
 			$CurrentPlanet['deuterium']  = 0;

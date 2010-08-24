@@ -375,6 +375,7 @@ $lang['tr_resource']						= 'Recurso';
 $lang['tr_amount']							= 'Cantidad';
 $lang['tr_quota_exchange']					= 'Cuota de intercambio';
 $lang['tr_exchange']						= 'Intercambiar';
+$lang['tr_darkmatter_needed']				= 'Necesitas <font color="#FF8900">%s de materia oscura</font> para visitar al Mercader.';
 
 //----------------------------------------------------------------------------//
 //TECHTREE
@@ -774,7 +775,6 @@ $lang['mg_type'][5]    						= 'Informes de tranporte';
 $lang['mg_type'][15]   						= 'Informes de expedición';
 $lang['mg_type'][99]   						= 'Informes de construcción';
 $lang['mg_type'][100]  						= 'Ver todos los Mensajes';
-$lang['mg_no_subject']						= 'Falta el asunto';
 $lang['mg_no_text']							= 'Falta el mensaje';
 $lang['mg_msg_sended']						= 'Mensaje enviado';
 $lang['mg_no_subject']						= 'Sin asunto';

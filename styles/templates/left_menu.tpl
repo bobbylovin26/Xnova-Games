@@ -220,7 +220,7 @@ function f(target_url,win_name) {
  <tr>
   <td>
    <div align="center"><font color="#FFFFFF">
-     <a href="#" title="Copyright (C) 2008 - 2009 GNU General Public License">&copy; 2008 - 2009</a>
+     <a href="#" title="Copyright (C) 2008 - 2010 GNU General Public License">&copy; 2008 - 2010</a>
     </font></div>
   </td>
  </tr>

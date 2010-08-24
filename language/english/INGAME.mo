@@ -375,6 +375,7 @@ $lang['tr_resource']						= 'Resource';
 $lang['tr_amount']							= 'Quantity';
 $lang['tr_quota_exchange']					= 'Exchange rate';
 $lang['tr_exchange']						= 'Swap';
+$lang['tr_darkmatter_needed']				= 'You need at least <font color="#FF8900">%s of dark matter</font> too visit the dealer.';
 
 //----------------------------------------------------------------------------//
 //TECHTREE
@@ -766,7 +767,6 @@ $lang['mg_type'][100]  						= 'View all Messages';
 $lang['mg_no_subject']						= 'No Subject';
 $lang['mg_no_text']							= 'No message';
 $lang['mg_msg_sended']						= 'Message sent';
-$lang['mg_no_subject']						= 'No Subject';
 $lang['mg_delete_marked']					= 'Delete marked messages';
 $lang['mg_delete_unmarked']					= 'Delete all unmarked messages';
 $lang['mg_delete_all']						= 'Delete all messages';

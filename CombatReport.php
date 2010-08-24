@@ -31,7 +31,10 @@ $Page .= "<div id=\"content\">";
 
 $raportrow 	= doquery("SELECT * FROM {{table}} WHERE `rid` = '".(mysql_escape_string($_GET["raport"]))."';", 'rw', true);
 
-if (($raportrow["owners"] == $user["id"]) && ($raportrow["a_zestrzelona"] == 1))
+
+$owners	= explode(",", $raportrow["owners"]);
+
+if (($owners[0] == $user["id"]) && ($raportrow["a_zestrzelona"] == 1))
 {
 	$Page .= "<td>".$lang['cr_lost_contact']."<br>";
 	$Page .= $lang['cr_first_round']."</td>";

@@ -4,12 +4,47 @@ $lang['Version']     = 'Versión';
 $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
-'2.9.3' => ' 01/12/09
+'2.9.4' => ' 02/03/10
+- [Novedad] Ahora el mercader requiere materia oscura (2500), configurable desde constants.php.-
+
+- [Seguridad] Limitado desde la base de datos la cantidad de cupulas que pueden ser contruidas (Gracias a medel).-
+- [Seguridad] Mejora de seguridad en el formulario de los misiles.-
+
+- [Fix][Bug #0000031] Misión expedición da escuadron fantasma.-
+- [Fix][Bug #0000035] Se pueden enviar misiles interplanetarios a usuarios en vacaciones (By Neurus).- 
+- [Fix][Bug #0000036] Se pueden enviar misiles interplanetarios en negativo.-
+- [Fix][Bug #0000037] Se puede atacar con misiles interplanetarios a usuarios fuertes y debiles (By Neurus).-
+- [Fix][Bug #0000038] Luego de un error o advertencia en el envio de misiles no se vuelve a galaxia.-
+- [Fix][Bug #0000039] Al colonizar con recursos estos desaparecen.-
+- [Fix][Bug #0000043] En INGAME.mo hay 2 entradas iguales.-
+- [Fix][Bug #0000044] Varias cupulas de protección (By Neko).-
+- [Fix][Bug #0000047] Error en template estadisticas.-
+- [Fix][Bug #0000048] Recursos negativos.-
+- [Fix][Bug #0000050] Ataques con sondas de espionaje.-
+- [Fix][Bug #0000056] Error al editar usuario en el panel administrativo (By Neko).-
+- [Fix][Bug #0000059] Solucionado el error que mostraba registros dobles en las estadísticas.-
+- [Fix][Bug #-------] Fallo producido al recargar la página de los edificios, defensas, tecnologias y naves (By Neko).-
+- [Fix][Bug #-------] Corregido un bug que no instalaba la tabla para los plugins.-
+- [Fix][Bug #-------] Corregido un bug que no tenía en cuenta a la supernova en las expediciones.-
+- [Fix][Bug #-------] Corregido un bug que ocurria por tener menos deuterio que combustible a gastar (By Neko).-
+- [Fix][Bug #-------] No se mostraba correctamente el mensaje de modo vacaciones (By Neko).-
+- [Fix][Bug #-------] Si la cuenta está en modo borrar y en modo vacaciones, en el overview se le da prioridad al mensaje de borrado de la cuenta.-
+- [Fix][Bug #-------] Corregido un bug menor en la creación de planetas (By Kloud).-
+- [Fix][Bug #-------] Corregido un bug menor en el js que maneja los recursos al enviar una flota (By Neko).-
+
+- [Cambio] Actualizados los links de soporte y reporte de bugs del overview en el panel administrativo.-
+- [Cambio] Mejoras en los reportes.-
+----------- Ahora en la primer ronda siempre se listan las flotas completas.-
+----------- Ahora las sondas son destruidas en la primer ronda; al atacante le sale destrucción en la primer ronda, al defensor el reporte completo.-
+----------- Ya no se duplica la primer ronda en las batallas de 2 rondas; en la primera se muestran las flotas completas y en la segunda el mensaje destruido.-
+- [Cambio] Modificada la licencia para el 2010.-
+',
+
+'2.9.3' => ' 12/02/10
 - [Seguridad] Mejoras de seguridad en el movimiento de recursos (By calzon).-
 
-- [Fix][Bug #-------] Multiplicación de recicladores (By tomtom).-
+- [Fix][Bug #0000040] Multiplicación de recicladores (By tomtom).-
 - [Fix][Bug #-------] Bug que permitía el incremento de naves en el salto cuántico (By war4head).-
-
 
 - [Cambio] Nuevamente se volvio al viejo reloj en la visión general.-
 

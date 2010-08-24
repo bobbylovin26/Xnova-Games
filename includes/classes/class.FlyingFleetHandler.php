@@ -1319,6 +1319,7 @@ class FlyingFleetHandler
 
 			$QryInsertRapport .= '`owners` = "'.implode(',', $users2).'", ';
 			$QryInsertRapport .= '`rid` = "'. $rid .'", ';
+			$QryInsertRapport .= '`a_zestrzelona` = "'.$formatted_cr['destroyed'].'", ';
 			$QryInsertRapport .= '`raport` = "'. mysql_real_escape_string( $raport ) .'"';
 			doquery($QryInsertRapport,'rw') or die("Error inserting CR to database".mysql_error()."<br /><br />Trying to execute:".mysql_query());
 
@@ -1854,9 +1855,13 @@ class FlyingFleetHandler
 						$TheMessage = $lang['sys_colo_arrival'] . $TargetAdress . $lang['sys_colo_allisok'];
 						SendSimpleMessage ( $FleetRow['fleet_owner'], '', $FleetRow['fleet_start_time'], 0, $lang['sys_colo_mess_from'], $lang['sys_colo_mess_report'], $TheMessage);
 						if ($FleetRow['fleet_amount'] == 1)
+						{
+							$this->StoreGoodsToPlanet ($FleetRow);
 							doquery("DELETE FROM {{table}} WHERE fleet_id=" . $FleetRow["fleet_id"], 'fleets');
+						}
 						else
 						{
+							$this->StoreGoodsToPlanet ($FleetRow);
 							$CurrentFleet = explode(";", $FleetRow['fleet_array']);
 							$NewFleet     = "";
 							foreach ($CurrentFleet as $Item => $Group)
@@ -1883,6 +1888,9 @@ class FlyingFleetHandler
 							$QryUpdateFleet  = "UPDATE {{table}} SET ";
 							$QryUpdateFleet .= "`fleet_array` = '". $NewFleet ."', ";
 							$QryUpdateFleet .= "`fleet_amount` = `fleet_amount` - 1, ";
+							$QryUpdateFleet .= "`fleet_resource_metal` = '0' , ";
+							$QryUpdateFleet .= "`fleet_resource_crystal` = '0' , ";
+							$QryUpdateFleet .= "`fleet_resource_deuterium` = '0' , ";
 							$QryUpdateFleet .= "`fleet_mess` = '1' ";
 							$QryUpdateFleet .= "WHERE `fleet_id` = '". $FleetRow["fleet_id"] ."';";
 							doquery( $QryUpdateFleet, 'fleets');
@@ -2536,6 +2544,7 @@ class FlyingFleetHandler
 				213 => 3.5,
 				214 => 5.0,
 				215 => 3.2,
+				216 => 3.5,
 				);
 
 				$RatioGain = array (
@@ -2553,6 +2562,7 @@ class FlyingFleetHandler
 				213 => 0.0625,
 				214 => 0.03125,
 				215 => 0.0625,
+				216 => 0.03125,
 				);
 
 				$FleetStayDuration 	= ($FleetRow['fleet_end_stay'] - $FleetRow['fleet_start_time']) / 3600;
@@ -2651,7 +2661,7 @@ class FlyingFleetHandler
 					{
 						if ($LaFlotte[$Ship] != 0)
 						{
-							$FoundShip[$Ship] = round($LaFlotte[$Ship] * $RatioGain[$Ship]);
+							$FoundShip[$Ship] = round($LaFlotte[$Ship] * $RatioGain[$Ship]) + 1;
 							if ($FoundShip[$Ship] > 0)
 								$LaFlotte[$Ship] += $FoundShip[$Ship];
 						}

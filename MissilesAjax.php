@@ -26,18 +26,36 @@ $xgp_root = './';
 include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.'.$phpEx);
 
-$g = intval($_GET['galaxy']);
-$s = intval($_GET['system']);
-$i = intval($_GET['planet']);
-$anz = intval($_POST['SendMI']);
-$pziel = $_POST['Target'];
+$g 		= intval($_GET['galaxy']);
+$s 		= intval($_GET['system']);
+$i 		= intval($_GET['planet']);
+$anz 	= intval($_POST['SendMI']);
+$pziel 	= $_POST['Target'];
+
+if ($anz < 0)
+{
+	$anz = 0;
+}
 
 
-$currentplanet 	= doquery("SELECT * FROM {{table}} WHERE id={$user['current_planet']}",'planets',true);
-$iraks 			= $currentplanet['interplanetary_misil'];
-$tempvar1 		= abs($s - $currentplanet['system']);
-$tempvar2 		= ($user['impulse_motor_tech'] * 2) - 1;
-$tempvar3 		= doquery("SELECT * FROM {{table}} WHERE galaxy = ".$g." AND system = ".$s." AND planet = ".$i." AND planet_type = 1 limit 1", 'planets',true);
+$currentplanet 		= doquery("SELECT * FROM {{table}} WHERE id={$user['current_planet']}",'planets',true);
+$iraks 				= $currentplanet['interplanetary_misil'];
+$tempvar1 			= abs($s - $currentplanet['system']);
+$tempvar2 			= ($user['impulse_motor_tech'] * 2) - 1;
+$tempvar3 			= doquery("SELECT * FROM {{table}} WHERE galaxy = ".$g." AND system = ".$s." AND planet = ".$i." AND planet_type = 1 limit 1", 'planets',true);
+$tempvar4 			= doquery("SELECT * FROM {{table}} WHERE id = ".$tempvar3['id_owner']. " limit 1",'users', true);
+
+$protection 		= $game_config['noobprotection'];
+$protectiontime 	= $game_config['noobprotectiontime'];
+$protectionmulti 	= $game_config['noobprotectionmulti'];
+
+$UserPoints 		= doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $user['id'] ."';", 'statpoints', true);
+$User2Points 		= doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $tempvar3['id_owner'] ."';", 'statpoints', true);
+
+$CurrentPoints 		= $UserPoints['total_points'];
+$RowUserPoints 		= $User2Points['total_points'];
+$MyGameLevel 		= $CurrentPoints * $protectionmulti['config_value'];
+$HeGameLevel 		= $RowUserPoints * $protectionmulti['config_value'];
 
 if ($currentplanet['silo'] < 4)
 	$error = $lang['ma_silo_level'];
@@ -55,9 +73,15 @@ elseif ($iraks==0)
 	$error = $lang['ma_no_missiles'];
 elseif ($anz==0)
 	$error = $lang['ma_add_missile_number'];
+elseif (($MyGameLevel > ($HeGameLevel * $protectionmulti)) && $protection == 1 && ($HeGameLevel < ($protectiontime * 1000)))
+	$error = $lang['fl_week_player'];
+elseif ((($MyGameLevel * $protectionmulti) < $HeGameLevel) && $protection == 1 && ($MyGameLevel < ($protectiontime * 1000)))
+	$error = $lang['fl_strong_player'];
+elseif ($tempvar4['urlaubs_modus']==1)
+	$error = $lang['fl_in_vacation_player'];
 
 if ($error != "")
-	exit(message($error));
+	exit ( message ( $error, "game.php?page=galaxy&mode=2&galaxy=".$g."&system=".$s."&planet=".$i."&current=".$user['current_planet']."", 2 ) );
 
 $ziel_id = $tempvar3["id_owner"];
 

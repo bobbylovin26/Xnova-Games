@@ -108,7 +108,7 @@ function ShowStatisticsPage($CurrentUser)
 		{
 			$PageValue      = ($Page * 100) + 1;
 			$PageRange      = $PageValue + 99;
-			$parse['range'] .= "<option value=\"". $PageValue ."\"". (($range == $PageValue) ? " SELECTED" : "") .">". $PageValue ."-". $PageRange ."</option>";
+			$parse['range'] .= "<option value=\"". $PageValue ."\"". (($range >= $PageValue && $range <= $PageRange) ? " SELECTED" : "") .">". $PageValue ."-". $PageRange ."</option>";
 		}
 
 		$parse['stat_header'] = parsetemplate(gettemplate('stat/stat_alliancetable_header'), $parse);
@@ -164,6 +164,7 @@ function ShowStatisticsPage($CurrentUser)
 	else
 	{
 		$MaxUsers = doquery ("SELECT COUNT(*) AS `count` FROM {{table}} WHERE `db_deaktjava` = '0';", 'users', true);
+
 		if ($MaxUsers['count'] > 100)
 		{
 			$LastPage = floor($MaxUsers['count'] / 100);
@@ -175,8 +176,10 @@ function ShowStatisticsPage($CurrentUser)
 		{
 			$PageValue      = ($Page * 100) + 1;
 			$PageRange      = $PageValue + 99;
-			$parse['range'] .= "<option value=\"". $PageValue ."\"". (($range == $PageValue) ? " SELECTED" : "") .">". $PageValue ."-". $PageRange ."</option>";
+
+			$parse['range'] .= "<option value=\"". $PageValue ."\"". (($range >= $PageValue && $range <= $PageRange) ? " SELECTED" : "") .">". $PageValue ."-". $PageRange ."</option>";
 		}
+
 
 		$parse['stat_header'] = parsetemplate(gettemplate('stat/stat_playertable_header'), $parse);
 
@@ -194,6 +197,8 @@ function ShowStatisticsPage($CurrentUser)
 		$parse['stat_date']   = date("Y-m-d, H:i:s",$game_config['stat_last_update']);
 		$parse['stat_values'] = "";
 
+		$previusId = 0;
+
 		while ($StatRow = mysql_fetch_assoc($query))
 		{
 			$parse['player_rank']     = $start;
@@ -207,38 +212,43 @@ function ShowStatisticsPage($CurrentUser)
 
 			$ranking                  = $StatRow[ $OldRank ] - $StatRow[ $Rank ];
 
-			if ($ranking == 0)
+			if ($StatRow['id'] != $previusId)
 			{
-				$parse['player_rankplus'] = "<font color=#87CEEB>*</font>";
+				$previusId 			= $StatRow['id'];
+
+				if ($ranking == 0)
+				{
+					$parse['player_rankplus'] = "<font color=#87CEEB>*</font>";
+				}
+
+				if ($ranking < 0)
+					$parse['player_rankplus'] = "<font color=red>".$ranking."</font>";
+
+				if ($ranking > 0)
+					$parse['player_rankplus'] = "<font color=green>+".$ranking."</font>";
+
+				if ($StatRow['id'] == $CurrentUser['id'])
+					$parse['player_name']     = "<font color=\"lime\">".$StatRow['username']."</font>";
+				else
+					$parse['player_name']     = $StatRow['username'];
+
+				if ($StatRow['id'] != $CurrentUser['id'])
+					$parse['player_mes']      = "<a href=\"game.php?page=messages&mode=write&id=" . $StatRow['id'] . "\"><img src=\"" . $dpath . "img/m.gif\" border=\"0\" title=\"Escribir un mensaje\" /></a>";
+				else
+					$parse['player_mes']      = "";
+
+				if ($UsrRow['ally_name'] == $CurrentUser['ally_name'])
+				{
+					$parse['player_alliance'] = "<a href=\"game.php?page=alliance&mode=ainfo&a=".$StatRow['ally_id']."\"><font color=\"#33CCFF\">".$StatRow['ally_name']."</font></a>";
+				}
+				else
+				{
+					$parse['player_alliance'] = "<a href=\"game.php?page=alliance&mode=ainfo&a=".$StatRow['ally_id']."\">".$StatRow['ally_name']."</a>";
+				}
+				$parse['player_points']   = pretty_number( $StatRow[ $Order ] );
+				$parse['stat_values']    .= parsetemplate(gettemplate('stat/stat_playertable'), $parse);
+				$start++;
 			}
-
-			if ($ranking < 0)
-				$parse['player_rankplus'] = "<font color=red>".$ranking."</font>";
-
-			if ($ranking > 0)
-				$parse['player_rankplus'] = "<font color=green>+".$ranking."</font>";
-
-			if ($StatRow['id'] == $CurrentUser['id'])
-				$parse['player_name']     = "<font color=\"lime\">".$StatRow['username']."</font>";
-			else
-				$parse['player_name']     = $StatRow['username'];
-
-			if ($StatRow['id'] != $CurrentUser['id'])
-				$parse['player_mes']      = "<a href=\"game.php?page=messages&mode=write&id=" . $StatRow['id'] . "\"><img src=\"" . $dpath . "img/m.gif\" border=\"0\" title=\"Escribir un mensaje\" /></a>";
-			else
-				$parse['player_mes']      = "";
-
-			if ($UsrRow['ally_name'] == $CurrentUser['ally_name'])
-			{
-				$parse['player_alliance'] = "<a href=\"game.php?page=alliance&mode=ainfo&a=".$StatRow['ally_id']."\"><font color=\"#33CCFF\">".$StatRow['ally_name']."</font></a>";
-			}
-			else
-			{
-				$parse['player_alliance'] = "<a href=\"game.php?page=alliance&mode=ainfo&a=".$StatRow['ally_id']."\">".$StatRow['ally_name']."</a>";
-			}
-			$parse['player_points']   = pretty_number( $StatRow[ $Order ] );
-			$parse['stat_values']    .= parsetemplate(gettemplate('stat/stat_playertable'), $parse);
-			$start++;
 		}
 	}
 
