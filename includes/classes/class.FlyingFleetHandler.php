@@ -123,7 +123,8 @@ class FlyingFleetHandler
 
 	private function walka ($CurrentSet, $TargetSet, $CurrentTechno, $TargetTechno)
 	{
-		global $pricelist, $CombatCaps, $game_config;
+		global $pricelist, $CombatCaps, $game_config, $user;
+
 		$runda       = array();
 		$atakujacy_n = array();
 		$wrog_n      = array();
@@ -763,7 +764,10 @@ class FlyingFleetHandler
 				$MoonChance 		= $FleetDebris / 100000;
 
 				if($FleetDebris > 2000000)
+				{
 					$MoonChance = 20;
+					$ChanceMoon = sprintf ($lang['sys_moonproba'], $MoonChance);
+				}
 				elseif($FleetDebris < 100000)
 				{
 					$UserChance = 0;
@@ -1751,7 +1755,10 @@ class FlyingFleetHandler
 				$MoonChance       = $FleetDebris / 100000;
 
 				if ($FleetDebris > 2000000)
+				{
 					$MoonChance = 20;
+					$ChanceMoon = sprintf ($lang['sys_moonproba'], $MoonChance);
+				}
 				elseif ($FleetDebris < 100000)
 				{
 					$UserChance = 0;

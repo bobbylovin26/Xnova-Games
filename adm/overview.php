@@ -37,7 +37,7 @@ function check_updates()
 	{
 		$current = @file_get_contents('http://www.xtreme-gamez.com.ar/xgproyect/current.php');
 
-		if ($current !== $game_config['VERSION'])
+		if ($current > $game_config['VERSION'])
 		{
 			return true;
 		}
@@ -66,7 +66,7 @@ $Errors = doquery("SELECT COUNT(*) AS `errors` FROM {{table}} WHERE 1;", 'errors
 
 if($Errors['errors'] != 0)
 {
-	$Message	.= "<font color=\"red\">".$lang['ow_database_errors']."Versión antigua</font><br/><br/>";
+	$Message	.= "<font color=\"red\">".$lang['ow_database_errors']."</font><br/><br/>";
 	$error++;
 }
 

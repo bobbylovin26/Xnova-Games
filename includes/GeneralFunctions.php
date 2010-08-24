@@ -45,15 +45,19 @@ function is_email($email)
 
 function message ($mes, $dest = "", $time = "3", $topnav = false, $menu = true)
 {
-	$parse['color'] = $color;
 	$parse['mes']   = $mes;
 
 	$page .= parsetemplate(gettemplate('message_body'), $parse);
 
 	if (!defined('IN_ADMIN'))
+	{
 		display ($page, $topnav, (($dest != "") ? "<meta http-equiv=\"refresh\" content=\"$time;URL=$dest\">" : ""), false, $menu);
+	}
 	else
-		display ($page, $topnav, (($dest != "") ? "<meta http-equiv=\"refresh\" content=\"$time;URL=$dest\">" : ""), false, false);
+	{
+		display ($page, $topnav, (($dest != "") ? "<meta http-equiv=\"refresh\" content=\"$time;URL=$dest\">" : ""), true, false);
+	}
+
 }
 
 function display ($page, $topnav = true, $metatags = '', $AdminPage = false, $menu = true)
@@ -79,7 +83,7 @@ function display ($page, $topnav = true, $metatags = '', $AdminPage = false, $me
 
 	$DisplayPage .= "\n<center>\n". $page ."\n</center>\n";
 
-	if($_GET['page'] != '' && $_GET['page'] != 'galaxy')
+	if(!defined('LOGIN') && $_GET['page'] != 'galaxy')
 		$DisplayPage .= parsetemplate(gettemplate('footer'), $parse);
 
 	if ($link)
@@ -121,10 +125,12 @@ function StdUserHeader ($metatags = '')
 function AdminUserHeader ($metatags = '')
 {
 	global $game_config;
+
 	if (!defined('IN_ADMIN'))
 		$parse['-title-'] 	.= 	"XG Proyect - Install";
 	else
 		$parse['-title-'] 	.= 	$game_config['game_name'] . " - Admin CP";
+
 	$parse['-favi-']	.= 	"<link rel=\"shortcut icon\" href=\"./../favicon.ico\">\n";
 	$parse['-style-']	.=	"<link rel=\"stylesheet\" type=\"text/css\" href=\"./../styles/css/admin.css\">\n";
 	$parse['-meta-']	.= 	"<script type=\"text/javascript\" src=\"./../scripts/overlib.js\"></script>\n";

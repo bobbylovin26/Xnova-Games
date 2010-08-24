@@ -152,7 +152,7 @@ function f(target_url,win_name) {
   <td>
    <div align="center"><font color="#FFFFFF">
 
-  <a href='game.php?page=statistics'>{lm_statistics}</a>
+  <a href='game.php?page=statistics&range={user_rank}'>{lm_statistics}</a>
     </font></div>
   </td>
  </tr>

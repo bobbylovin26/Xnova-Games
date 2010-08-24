@@ -27,6 +27,7 @@ include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.'.$phpEx);
 
 includeLang('INGAME');
+$Page .= "<div id=\"content\">";
 
 $raportrow 	= doquery("SELECT * FROM {{table}} WHERE `rid` = '".(mysql_escape_string($_GET["raport"]))."';", 'rw', true);
 

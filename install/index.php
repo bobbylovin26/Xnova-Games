@@ -317,7 +317,8 @@ switch ($Mode) {
 						$Qry51 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'actualizar_puntos' LIMIT 1;");
 						$Qry52 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsFrame' LIMIT 1;");
 						$Qry53 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsText' LIMIT 1;");
-						$Qry54 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.5');");
+						$Qry54 = mysql_query("DELETE FROM `$_POST[prefix]xgp_config` WHERE `config_name` = 'VERSION' LIMIT 1");
+						$Qry55 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.6');");
 						break;
 					case'2.3':
 						$Qry36 = mysql_query("ALTER TABLE `$_POST[prefix]users`
@@ -358,7 +359,8 @@ switch ($Mode) {
 						$Qry51 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'actualizar_puntos' LIMIT 1;");
 						$Qry52 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsFrame' LIMIT 1;");
 						$Qry53 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsText' LIMIT 1;");
-						$Qry54 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.5');");
+						$Qry54 = mysql_query("DELETE FROM `$_POST[prefix]xgp_config` WHERE `config_name` = 'VERSION' LIMIT 1");
+						$Qry55 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.6');");
 						break;
 					case'2.4':
 						$Qry39 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '1' LIMIT 1;");
@@ -383,12 +385,18 @@ switch ($Mode) {
 						$Qry51 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'actualizar_puntos' LIMIT 1;");
 						$Qry52 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsFrame' LIMIT 1;");
 						$Qry53 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsText' LIMIT 1;");
-						$Qry54 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.5');");
+						$Qry54 = mysql_query("DELETE FROM `$_POST[prefix]xgp_config` WHERE `config_name` = 'VERSION' LIMIT 1");
+						$Qry55 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.6');");
 						break;
 					case'2.5':
 						$Qry52 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsFrame' LIMIT 1;");
 						$Qry53 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsText' LIMIT 1;");
-						$Qry54 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.5');");
+						$Qry54 = mysql_query("DELETE FROM `$_POST[prefix]xgp_config` WHERE `config_name` = 'VERSION' LIMIT 1");
+						$Qry55 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.6');");
+						break;
+					case'2.6':
+						$Qry54 = mysql_query("DELETE FROM `$_POST[prefix]xgp_config` WHERE `config_name` = 'VERSION' LIMIT 1");
+						$Qry55 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.6');");
 						break;
 				}
 				message("XG Proyect finalizó la actualización con éxito, para finalizar borra el directorio install y luego haz <a href=\"./../\">click aqui</a>", "", "", false, false);

@@ -34,7 +34,8 @@ function HandleElementBuildingQueue ( $CurrentUser, &$CurrentPlanet, $Production
 			if ($Array != '')
 			{
 				$Item              = explode(',', $Array);
-				$BuildArray[$Node] = array($Item[0], $Item[1], GetBuildingTime ($CurrentUser, $CurrentPlanet, $Item[0]));
+				$AcumTime		   += GetBuildingTime ($CurrentUser, $CurrentPlanet, $Item[0]);
+				$BuildArray[$Node] = array($Item[0], $Item[1], $AcumTime);
 			}
 		}
 

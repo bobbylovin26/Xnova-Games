@@ -25,16 +25,18 @@
 						<th align="center" colspan="4"><font color="lime"><h2>Tengo la versi&oacute;n:</h2></font><br></th>
 					</tr>
 					<tr>
-						<th width="25%" align="center">v1.5a/v1.5b</th>
-						<th width="25%" align="center">2.0/2.1/2.2</th>
-						<th width="25%" align="center">2.3</th>
-                        <th width="25%" align="center">2.4</th>
+						<th width="20%" align="center">v1.5a/v1.5b</th>
+						<th width="20%" align="center">2.0/2.1/2.2</th>
+						<th width="20%" align="center">2.3</th>
+                        <th width="20%" align="center">2.4</th>
+                        <th width="20%" align="center">2.5</th>
 					</tr>
 					<tr>
 						<th align="center"><input type="radio" name="modo" value="1.5a"/></th>
 						<th align="center"><input type="radio" name="modo" value="2.3"/></th>
 						<th align="center"><input type="radio" name="modo" value="2.4"/></th>
                         <th align="center"><input type="radio" name="modo" value="2.5"/></th>
+                        <th align="center"><input type="radio" name="modo" value="2.6"/></th>
 					</tr>
                     <tr>
                     	<th align="center" colspan="4" height="50px"><font color="red"><u><h2>CUALQUIER VERSI&Oacute;N QUE NO EST&Eacute; EN ESTA LISTA, YA NO ES SOPORTADA.</h2></u></font></th>
@@ -43,5 +45,5 @@
 			</th>
 		</tr>
 		<tr>
-			<th align="center" colspan="2"><input type="submit" name="continuar" value="Actualizar a la versi&oacute;n 2.5"/></th>
+			<th align="center" colspan="2"><input type="submit" name="continuar" value="Actualizar a la versi&oacute;n 2.6"/></th>
 		</tr>

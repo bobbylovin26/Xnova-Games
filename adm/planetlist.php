@@ -30,7 +30,7 @@ include($xgp_root . 'common.' . $phpEx);
 if ($user['authlevel'] < 2) die(message ($lang['not_enough_permissions']));
 
 	$parse	= $lang;
-	$query 	= doquery("SELECT * FROM {{table}} WHERE planet_type='1'", "planets");
+	$query 	= doquery("SELECT * FROM {{table}} WHERE planet_type='1' ORDER BY `id` ASC", "planets");
 	$i 		= 0;
 
 	while ($u = mysql_fetch_array($query))

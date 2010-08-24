@@ -53,7 +53,7 @@ function GetElementPrice ($user, $planet, $Element, $userfactor = true)
 				$is_buyeable = false;
 			}
 			else
-				$text .= "<b style=\"color:lime;\"> <span class=\"noresources\">" . pretty_number($cost) . "</span></b> ";
+				$text .= "<b style=\"color:lime;\">" . pretty_number($cost) . "</b> ";
 		}
 	}
 	return $text;

@@ -134,7 +134,7 @@ class ShowBuildingsPage
 		$Queue 				= $this->ShowBuildingQueue($CurrentPlanet, $CurrentUser);
 		$CurrentMaxFields  	= CalculateMaxPlanetFields($CurrentPlanet);
 
-		if ($CurrentPlanet["field_current"] >= ($CurrentMaxFields - $Queue['lenght']))
+		if ($CurrentPlanet["field_current"] >= ($CurrentMaxFields - $Queue['lenght']) && $_GET['cmd'] != 'destroy')
 			die(header("location:game.php?page=buildings"));
 
 		if ($CurrentQueue != 0)
@@ -428,23 +428,6 @@ class ShowBuildingsPage
 					$parse['click']        	= '';
 					$NextBuildLevel        	= $CurrentPlanet[$resource[$Element]] + 1;
 
-					if ($Element == 31)
-					{
-						if ($CurrentUser["b_tech_planet"] != 0)
-						{
-							$parse['click'] = "<font color=#FF0000>".$lang['bd_working']."</font>";
-						}
-					}
-
-					if ($Element == 21)
-					{
-						if ($CurrentPlanet["b_hangar"] != 0)
-						{
-							$parse['click'] = "<font color=#FF0000>".$lang['bd_working']."</font>";
-						}
-					}
-
-
 					if ($RoomIsOk && $CanBuildElement)
 					{
 						if ($Queue['lenght'] == 0)
@@ -478,6 +461,16 @@ class ShowBuildingsPage
 					}
 					else
 						$parse['click'] = "<font color=#FF0000>".$lang['bd_no_more_fields']."</font>";
+
+					if ($Element == 31 && $CurrentUser["b_tech_planet"] != 0)
+					{
+						$parse['click'] = "<font color=#FF0000>".$lang['bd_working']."</font>";
+					}
+
+					if ($Element == 21 && $CurrentPlanet["b_hangar"] != 0)
+					{
+						$parse['click'] = "<font color=#FF0000>".$lang['bd_working']."</font>";
+					}
 
 					$BuildingPage .= parsetemplate(gettemplate('buildings/buildings_builds_row'), $parse);
 				}

@@ -156,18 +156,28 @@ class ShowShipyardPage
 
 		if ($CurrentPlanet['b_building_id'] != 0)
 		{
-			$BuildQueueCheck = $CurrentPlanet['b_building_id'];
-			if (strpos ($BuildQueueCheck, ";"))
+			$CurrentQueue = $CurrentPlanet['b_building_id'];
+			if (strpos ($CurrentQueue, ";"))
 			{
-				$Queue = explode (";", $BuildQueueCheck);
-				$CurrentBuilding = $Queue[0];
+				// FIX BY LUCKY - IF THE SHIPYARD IS IN QUEUE THE USER CANT RESEARCH ANYTHING...
+				$QueueArray		= explode (";", $CurrentQueue);
+
+				for($i = 0; $i < MAX_BUILDING_QUEUE_SIZE; $i++)
+				{
+					$ListIDArray	= explode (",", $QueueArray[$i]);
+					$Element		= $ListIDArray[0];
+
+					if($Element == 21)
+						break;
+				}
+				// END - FIX
 			}
 			else
 			{
 				$CurrentBuilding = $BuildQueueCheck;
 			}
 
-			if ($CurrentBuilding == 21)
+			if ($CurrentBuilding == 21 or $Element == 21) // ADDED (or $Element == 21) BY LUCKY
 			{
 				$parse[message] = "<font color=\"red\">".$lang['bd_building_shipyard']."</font>";
 				$NotBuilding = false;
@@ -351,22 +361,34 @@ class ShowShipyardPage
 
 		if ($CurrentPlanet['b_building_id'] != 0)
 		{
-			$BuildQueueCheck = $CurrentPlanet['b_building_id'];
-			if (strpos ($BuildQueueCheck, ";"))
+			$CurrentQueue = $CurrentPlanet['b_building_id'];
+			if (strpos ($CurrentQueue, ";"))
 			{
-				$Queue = explode (";", $BuildQueueCheck);
-				$CurrentBuilding = $Queue[0];
+				// FIX BY LUCKY - IF THE SHIPYARD IS IN QUEUE THE USER CANT RESEARCH ANYTHING...
+				$QueueArray		= explode (";", $CurrentQueue);
+
+				for($i = 0; $i < MAX_BUILDING_QUEUE_SIZE; $i++)
+				{
+					$ListIDArray	= explode (",", $QueueArray[$i]);
+					$Element		= $ListIDArray[0];
+
+					if($Element == 21)
+						break;
+				}
+				// END - FIX
 			}
 			else
 			{
 				$CurrentBuilding = $BuildQueueCheck;
 			}
 
-			if ($CurrentBuilding == 21)
+			if ($CurrentBuilding == 21 or $Element == 21) // ADDED (or $Element == 21) BY LUCKY
 			{
 				$parse[message] = "<font color=\"red\">".$lang['bd_building_shipyard']."</font>";
 				$NotBuilding = false;
 			}
+
+
 		}
 
 		$TabIndex  = 0;

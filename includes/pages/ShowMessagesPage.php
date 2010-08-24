@@ -57,7 +57,7 @@ function ShowMessagesPage($CurrentUser)
 
 	$page  .= "<script language=\"JavaScript\">\n";
 	$page .= "function f(target_url, win_name) {\n";
-	$page .= "var new_win = window.open(target_url,win_name,'resizable=yes,scrollbars=yes,menubar=no,toolbar=no,width=550,height=280,top=0,left=0');\n";
+	$page .= "var new_win = window.open(target_url,win_name,'resizable=yes,scrollbars=yes,menubar=no,toolbar=no,width=800,height=600,top=0,left=0');\n";
 	$page .= "new_win.focus();\n";
 	$page .= "}\n";
 	$page .= "</script>\n";

@@ -8,8 +8,6 @@
     {third}
     <br />
     <br />
-    <font color="red">Antes de continuar cambie los permisos del archivo config.php a "CHMOD 640"</font>
-    <br />
     </th>
 </tr>
 <tr>

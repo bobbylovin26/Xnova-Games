@@ -23,9 +23,9 @@ function PlanetResourceUpdate ( $CurrentUser, &$CurrentPlanet, $UpdateTime, $Sim
 {
 	global $ProdGrid, $resource, $reslist, $game_config;
 
-	$CurrentPlanet['metal_max']		=	BASE_STORAGE_SIZE + 50000 * (roundUp(pow(1.6,$CurrentPlanet[ $resource[22] ])) -1) * (1 + ($CurrentUser['rpg_stockeur'] * 0.5));
-	$CurrentPlanet['crystal_max']	=	BASE_STORAGE_SIZE + 50000 * (roundUp(pow(1.6,$CurrentPlanet[ $resource[23] ])) -1) * (1 + ($CurrentUser['rpg_stockeur'] * 0.5));
-	$CurrentPlanet['deuterium_max']	=	BASE_STORAGE_SIZE + 50000 * (roundUp(pow(1.6,$CurrentPlanet[ $resource[24] ])) -1) * (1 + ($CurrentUser['rpg_stockeur'] * 0.5));
+	$CurrentPlanet['metal_max']		=	(BASE_STORAGE_SIZE + 50000 * (roundUp(pow(1.6,$CurrentPlanet[ $resource[22] ])) -1)) * (1 + ($CurrentUser['rpg_stockeur'] * 0.5));
+	$CurrentPlanet['crystal_max']	=	(BASE_STORAGE_SIZE + 50000 * (roundUp(pow(1.6,$CurrentPlanet[ $resource[23] ])) -1)) * (1 + ($CurrentUser['rpg_stockeur'] * 0.5));
+	$CurrentPlanet['deuterium_max']	=	(BASE_STORAGE_SIZE + 50000 * (roundUp(pow(1.6,$CurrentPlanet[ $resource[24] ])) -1)) * (1 + ($CurrentUser['rpg_stockeur'] * 0.5));
 
 	$MaxMetalStorage                = $CurrentPlanet['metal_max']     * MAX_OVERFLOW;
 	$MaxCristalStorage              = $CurrentPlanet['crystal_max']   * MAX_OVERFLOW;

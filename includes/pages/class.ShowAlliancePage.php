@@ -478,7 +478,7 @@ class ShowAlliancePage
 					} elseif ($sort2 == 2) {
 					$sort .= " ASC;";
 					}
-					$listuser = doquery("SELECT * FROM `{{table}}users` inner join `{{table}}statpoints` on {{table}}.`id`=`{{table}}statpoints`.`id_owner` WHERE ally_id='{$CurrentUser['ally_id']}' AND STAT_type=1 $sort", '');
+					$listuser = doquery("SELECT * FROM `{{table}}users` inner join `{{table}}statpoints` on `{{table}}users`.`id`=`{{table}}statpoints`.`id_owner` WHERE ally_id='{$CurrentUser['ally_id']}' AND STAT_type=1 $sort", '');
 				}
 				else
 					$listuser = doquery("SELECT * FROM {{table}} WHERE ally_id='{$CurrentUser['ally_id']}'", 'users');
@@ -880,7 +880,7 @@ class ShowAlliancePage
 					} elseif ($sort2 == 2) {
 					$sort .= " ASC;";
 					}
-					$listuser = doquery("SELECT * FROM `{{table}}users` inner join `{{table}}statpoints` on `{{table}}`.`id`=`{{table}}statpoints`.`id_owner` WHERE ally_id='{$CurrentUser['ally_id']}' AND STAT_type=1 $sort", '');
+					$listuser = doquery("SELECT * FROM `{{table}}users` inner join `{{table}}statpoints` on `{{table}}users`.`id`=`{{table}}statpoints`.`id_owner` WHERE ally_id='{$CurrentUser['ally_id']}' AND STAT_type=1 $sort", '');
 				}
 				else
 				{

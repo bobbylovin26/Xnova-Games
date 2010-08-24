@@ -5,6 +5,27 @@ $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
 
+'2.6' => ' 24/08/09
+
+- [Fix][Varios] Varios bugs menores de estilo, plantillas y lenguaje reparados.-
+- [Fix][Bug #28] Bug en la cola de produccion del hangar.-
+- [Fix][Bug #73] Problemas con el reporte de porcetaje de luna.-
+- [Fix][Bug #78] Problemas con la lista de construcción.-
+- [Fix][Bug #82] Se pueden mover flotas desde la galaxia cuando un jugador esta en modo vacaciones.-
+- [Fix][Bug #83] Los reportes de ataque muy largos no se pueden ver completos.-
+- [Fix][Bug #85] La cantidad de recursos para construir siempre se queda en rojo.-
+- [Fix][Bug #84] Si la luna esta llena, no te permite desmontar edificios.-
+- [Fix][Bug #86] Bug que provoca errores en las alianzas.-
+- [Fix][Bug #87] Bug en el estilo del panel de administración, mostrando imagenes del juego.-
+- [Fix][Bug #88] Bug menor que muestra un texto que fue utilizado para debug.-
+- [Fix][Bug #89] Bug que permite la ampliacion del hangar cuando se estan construyendo flotas y defensas.-
+- [Fix][Bug #90] Problemas con la misión de destrucción.-
+- [Fix][Bug #91] No funciona correctamente el almirante.-
+- [Fix][Bug #92] No funciona correctamente el almacenista.-
+
+- [Cambio] Ahora la lista de planetas se muestra en el panel de admnistración por id de menor a mayor.-
+',
+
 '2.5' => ' 18/08/09
 
 - [Novedad] Sistema de advertencias y errores en el panel de administración (también informa la existencia de una nueva versión).-
@@ -40,7 +61,7 @@ $lang['changelog']   = array(
 - [Fix][Bug #80] Bug en el limite de envio máximo de expediciones.-
 - [Fix][Bug #81] Bug en la visión general de la alianza, mantiene el nombre "Fundador" del fundador de la alianza.-
 
-- [Cambio] Ahora el número de la versión de obtiene de la base de datos.-
+- [Cambio] Ahora el número de la versión se obtiene de la base de datos.-
 - [Cambio] Mejoras de seguridad en la página de la alianza.-
 - [Cambio] Noticias removidas.-
 - [Cambio] Mejorada la velocidad en que se genera la página de estadísticas y algunos cambios menores.-

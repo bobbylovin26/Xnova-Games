@@ -1215,6 +1215,7 @@ $lang['fa_strong_player']					= 'Error, el jugador es demasiado fuerte';
 $lang['fa_not_spy_yourself']				= 'Error, no puedes espiarte a ti mismo';
 $lang['fa_not_attack_yourself']				= 'Error, no puedes atacarte a ti mismo';
 $lang['fa_action_not_allowed']				= 'Error, acción no permitida';
+$lang['fa_vacation_mode_current']			= 'Error, te encuentras en modo vacaciones';
 $lang['fa_sending']							= 'Enviando';
 
 //----------------------------------------------------------------------------//

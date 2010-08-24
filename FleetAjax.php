@@ -123,6 +123,7 @@ $User2Points   = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `s
 
 $CurrentPoints = $UserPoints['total_points'];
 $TargetPoints  = $User2Points['total_points'];
+
 $TargetVacat   = $TargetUser['urlaubs_modus'];
 
 if ((($user[$resource[108]] + 1) + ($user['rpg_commandant'] * 3)) <= $CurrentFlyingFleets)
@@ -160,6 +161,13 @@ if ($TargetVacat && $_POST['mission'] != 8)
 	$ResultMessage = "605; ".$lang['fa_vacation_mode']." |".$CurrentFlyingFleets." ".$UserSpyProbes." ".$UserRecycles." ".$UserMissiles;
 	die ($ResultMessage);
 }
+
+if($user['urlaubs_modus'])
+{
+	$ResultMessage = "620; ".$lang['fa_vacation_mode_current']." |".$CurrentFlyingFleets." ".$UserSpyProbes." ".$UserRecycles." ".$UserMissiles;
+	die ($ResultMessage);
+}
+
 if($TargetUser['onlinetime'] >= (time()-60 * 60 * 24 * 7))
 {
 	if ($CurrentPoints > ($TargetPoints * $PrNoobMulti) && $TargetRow['id_owner'] != '' && $_POST['mission'] == 6  && $PrNoob == 1  && $TargetPoints < ($PrNoobTime * 1000))

@@ -23,7 +23,7 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 
 function ShowOverviewPage($CurrentUser, $CurrentPlanet)
 {
-	global $xgp_root, $phpEx, $dpath, $game_config, $lang;
+	global $xgp_root, $phpEx, $dpath, $game_config, $lang, $planetrow, $user;
 
 	include_once($xgp_root . 'includes/functions/InsertJavaScriptChronoApplet.' . $phpEx);
 	include_once($xgp_root . 'includes/classes/class.FlyingFleetsTable.' . $phpEx);
@@ -267,7 +267,7 @@ function ShowOverviewPage($CurrentUser, $CurrentPlanet)
 			{
 				include($xgp_root . 'includes/functions/InsertBuildListScript.' . $phpEx);
 
-				UpdatePlanetBatimentQueueList ($CurrentPlanet, $CurrentUser);
+				UpdatePlanetBatimentQueueList ($planetrow, $user);
 				if ($CurrentPlanet['b_building'] != 0)
 				{
 					$BuildQueue  		 = explode (";", $CurrentPlanet['b_building_id']);
