@@ -110,7 +110,7 @@ class ShowResearchPage
 		return $text;
 	}
 
-	public function ShowResearchPage (&$CurrentPlanet, $CurrentUser, $InResearch, $ThePlanet)
+	public function __construct (&$CurrentPlanet, $CurrentUser, $InResearch, $ThePlanet)
 	{
 		global $lang, $resource, $reslist, $phpEx, $dpath, $game_config, $_GET;
 

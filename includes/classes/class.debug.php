@@ -25,7 +25,7 @@ class debug
 {
 	var $log,$numqueries;
 
-	function debug()
+	function __construct()
 	{
 		$this->vars = $this->log = '';
 		$this->numqueries = 0;
@@ -40,7 +40,7 @@ class debug
 	function echo_log()
 	{
 		global $xgp_root;
-		echo  "<br><table><tr><td class=k colspan=4><a href=".$xgp_root."adm/settings.php>Debug Log</a>:</td></tr>".$this->log."</table>";
+		return  "<br><table><tr><td class=k colspan=4><a href=".$xgp_root."adm/settings.php>Debug Log</a>:</td></tr>".$this->log."</table>";
 		die();
 	}
 

@@ -4,6 +4,32 @@ $lang['Version']     = 'Versión';
 $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
+'2.9.5' => ' 29/07/10
+
+- [Seguridad] Corregidos varios bugs de seguridad (By slave7).-
+- [Seguridad] Corregidos varios bugs de seguridad (By jtsamper).-
+
+- [Cambio] Adaptado para que sea compatible con PHP 5.3.3.-
+- [Cambio] Aparecen todas las personas que aportaron algo en los créditos del panel administrativo.-
+
+
+- Vieja numeración
+- [Fix][Bug #5] Los sacs no coordinan los tiempos (By slave7).-
+
+- Numeración del viejo Bug Tracker (http://sourceforge.net/apps/mantisbt/xgproyect/view_all_bug_page.php)
+- [Fix][Bug #0000011] Los Sacs reparten los recursos (By slave7).-
+- [Fix][Bug #0000065] Todas las rondas aparecen como ganadas y a eventualmente empatan (By Nickolay).-
+- [Fix][Bug #-------] La planta de fusión funcionaba al 100% cuando el planeta no tenía deuterio (By slaver7)
+
+- Nueva numeración (Arctic Tracker)
+- [Fix][Bug #0000002] Corregido el link que da más información sobre la protección de novatos.-
+- [Fix][Bug #0000003] Corregido el bug en la alianza que causaba problemas para redirigir al sitio de la alianza.-
+- [Fix][Bug #0000004] Bug en la producción, produce más de lo que debe (By Calzon).-
+- [Fix][Bug #0000005] Bug en el incremento de puntos de las tecnologías (By Think).-
+- [Fix][Bug #0000006] Bug en el Debug Log (By Green).-
+
+',
+
 '2.9.4' => ' 02/03/10
 - [Novedad] Ahora el mercader requiere materia oscura (2500), configurable desde constants.php.-
 

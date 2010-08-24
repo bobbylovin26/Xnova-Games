@@ -50,7 +50,7 @@ class ShowOptionsPage
 		return false;
 	}
 
-	public function ShowOptionsPage($CurrentUser)
+	public function __construct($CurrentUser)
 	{
 		global $game_config, $dpath, $lang;
 

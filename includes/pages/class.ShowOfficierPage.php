@@ -52,7 +52,7 @@ class ShowOfficierPage
 		}
 	}
 
-	public function ShowOfficierPage ( &$CurrentUser )
+	public function __construct ( &$CurrentUser )
 	{
 		global $resource, $reslist, $lang;
 

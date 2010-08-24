@@ -315,7 +315,7 @@ class ShowBuildingsPage
 		return $RetValue;
 	}
 
-	public function ShowBuildingsPage (&$CurrentPlanet, $CurrentUser)
+	public function __construct (&$CurrentPlanet, $CurrentUser)
 	{
 		global $ProdGrid, $lang, $resource, $reslist, $phpEx, $dpath, $game_config, $_GET, $xgp_root;
 

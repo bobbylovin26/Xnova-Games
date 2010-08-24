@@ -108,7 +108,7 @@ class ShowAlliancePage
 	private function urlfix($url, $title)
 	{
 		$title = stripslashes($title);
-		return '<a href="' . $url . '" title="' . $title . '">' . $title . '</a>';
+		return (substr ($url, 0, 5) == 'data:' || substr ($url, 0, 5) ==  'file:' || substr ($url, 0, 11) == 'javascript:' || substr  ($url, 0, 4) == 'jar:' || substr ($url, 0, 1) == '#') ? '' : '<a  href="' . $url . '" title="'.htmlspecialchars($title,  ENT_QUOTES).'">'.htmlspecialchars($title, ENT_QUOTES).'</a>';
 	}
 
 	private function fontfix($font, $title)
@@ -152,7 +152,7 @@ class ShowAlliancePage
 		return $Form;
 	}
 
-	public function ShowAlliancePage($CurrentUser)
+	public function __construct($CurrentUser)
 	{
 		global $dpath, $phpEx, $lang;
 
@@ -217,7 +217,12 @@ class ShowAlliancePage
 				$ally_description = "<tr><th colspan=2 height=100>".$lang['al_description_message']	."</th></tr>";
 
 			if ($ally_web != "")
-				$ally_web = "<tr><th>".$lang['al_web_text']."</th><th><a href=\"{$ally_web}\">{$ally_web}</a></th></tr>";
+			{
+				$ally_web = str_replace ( "http://" , "" , $ally_web );
+
+				$ally_web = "<tr><th>".$lang['al_web_text']."</th><th><a href=\"http://$ally_web\">$ally_web</a></th></tr>";
+			}
+
 
 			$parse['ally_description'] 		= $ally_description;
 			$parse['ally_image'] 			= $ally_image;
@@ -1199,7 +1204,7 @@ class ShowAlliancePage
 				$lang['ally_text'] 			= nl2br($this->bbcode($ally['ally_text']));
 
 				if($ally['ally_web'] != '')
-					$lang['ally_web'] 		= $ally['ally_web'];
+					$lang['ally_web'] 		= str_replace ( "http://" , "" , $ally['ally_web'] );
 				else
 					$lang['ally_web']		= "-";
 

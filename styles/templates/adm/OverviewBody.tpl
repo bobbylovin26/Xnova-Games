@@ -23,9 +23,9 @@ th.lic{border:0px;}</style>
     <tr>
         <th>
         	<br />
-            <a href="http://sourceforge.net/apps/mantisbt/xgproyect/bug_report_page.php" target="_blank">Bug Report</a>
+            <a href="http://tracker.xgproyect.net/" target="_blank">Bug Report</a>
         	<br />
-        	<a href="http://www.xtreme-gamez.com.ar/" target="_blank">Xtreme-gameZ {ow_forum}</a>
+        	<a href="http://www.xgproyect.net/" target="_blank">Xtreme-gameZ {ow_forum}</a>
         	<br />
             <br />
         </th>
@@ -73,7 +73,16 @@ th.lic{border:0px;}</style>
                         <td>Fixs varios</td>
                       </tr>
                     </table>
-
+                  </th>
+                </tr>
+                <tr>
+                	<th class="lic"><h3>Other contributors</h3></th>
+                </tr>
+                <tr>
+                  <th class="lic" align="center">
+                  	<div align="justify">
+                    adri93, Alberto14, Anghelito, Arali, edering, Green, jtsamper, Kloud, medel, MSW, Neurus, Nickolay, Pada, privatethedawn, Tarta, Think, thyphoon, tomtom, Tonique, Trojan, Saint, shoghicp, slaver7, war4head
+                    </div>	
                   </th>
                 </tr>
                 <tr>

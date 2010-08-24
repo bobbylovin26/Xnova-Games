@@ -27,7 +27,7 @@ function GetTechnoPoints ( $CurrentUser ) {
 	foreach ( $reslist['tech'] as $n => $Techno )
 	{
 		if ( $CurrentUser[ $resource[ $Techno ] ] > 0 ) {
-			for ( $Level = 1; $Level < $CurrentUser[ $resource[ $Techno ] ]; $Level++ ) {
+			for ( $Level = 0; $Level < $CurrentUser[ $resource[ $Techno ] ]; $Level++ ) {
 				$Units       = $pricelist[ $Techno ]['metal'] + $pricelist[ $Techno ]['crystal'] + $pricelist[ $Techno ]['deuterium'];
 				$LevelMul    = pow( $pricelist[ $Techno ]['factor'], $Level );
 				$TechPoints += ($Units * $LevelMul);
@@ -49,7 +49,7 @@ function GetBuildPoints ( $CurrentPlanet ) {
 	foreach($reslist['build'] as $n => $Building) {
 		if ( $CurrentPlanet[ $resource[ $Building ] ] > 0 )
 		{
-			for ( $Level = 1; $Level < $CurrentPlanet[ $resource[ $Building ] ]; $Level++ ) {
+			for ( $Level = 0; $Level < $CurrentPlanet[ $resource[ $Building ] ]; $Level++ ) {
 				$Units        = $pricelist[ $Building ]['metal'] + $pricelist[ $Building ]['crystal'] + $pricelist[ $Building ]['deuterium'];
 				$LevelMul     = pow( $pricelist[ $Building ]['factor'], $Level );
 				$BuildPoints += ($Units * $LevelMul);

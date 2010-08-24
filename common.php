@@ -33,6 +33,7 @@ $IsUserChecked 	= false;
 
 include_once($xgp_root . 'includes/constants.'.$phpEx);
 include_once($xgp_root . 'includes/GeneralFunctions.'.$phpEx);
+include_once($xgp_root . 'includes/vendor/simplehtmldom/simple_html_dom.' . $phpEx);
 include_once($xgp_root . 'includes/classes/class.debug.'.$phpEx);
 $debug 		= new debug();
 

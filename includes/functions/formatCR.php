@@ -142,7 +142,7 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 
 					$info_part2[$fleet_id2] = $weap1.$shields1.$armour1.$endtable1;
 
-					if (number_format($data1['attack']['total']) > 0)
+					if (number_format($data1['attackA']['total']) > 0)
 					{
 						$html .= $info_part1[$fleet_id2].$info_part2[$fleet_id2];
 						$html .= "<br /><br />";
@@ -167,7 +167,7 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 
 					$table1  = "<table border=1 align=\"center\">";
 
-					if (number_format($data1['defense']['total']) > 0)
+					if (number_format($data1['defenseA']['total']) > 0)
 					{
 						$ships1  = "<tr><th>".$lang['sys_ship_type']."</th>";
 						$count1  = "<tr><th>".$lang['sys_ship_count']."</th>";
@@ -216,7 +216,7 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 
 					$info_part2[$fleet_id2] = $weap1.$shields1.$armour1.$endtable1;
 
-					if (number_format($data1['defense']['total']) > 0)
+					if (number_format($data1['defenseA']['total']) > 0)
 					{
 						$html .= $info_part1[$fleet_id2].$info_part2[$fleet_id2];
 						$html .= "<br /><br />";

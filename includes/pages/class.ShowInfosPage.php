@@ -361,7 +361,7 @@ class ShowInfosPage
 		return $ResultString;
 	}
 
-	public function ShowInfosPage ($CurrentUser, $CurrentPlanet, $BuildID)
+	public function __construct ($CurrentUser, $CurrentPlanet, $BuildID)
 	{
 		global $dpath, $lang, $resource, $pricelist, $CombatCaps, $phpEx, $xgp_root;
 

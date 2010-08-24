@@ -184,7 +184,7 @@ class ShowGalaxyPage extends GalaxyRows
 		return $Result;
 	}
 
-	public function ShowGalaxyPage($CurrentUser, $CurrentPlanet)
+	public function __construct($CurrentUser, $CurrentPlanet)
 	{
 		global $xgp_root, $phpEx, $dpath, $resource, $lang, $planetcount;
 

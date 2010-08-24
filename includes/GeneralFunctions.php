@@ -19,6 +19,29 @@
 # *																			 #
 ##############################################################################
 
+$_POST 		=	array_map ( 'deep' , $_POST );
+$_POST 		= 	array_map ( 'addslashes_deep' , $_POST );
+$_GET 		= 	array_map ( 'deep' ,  $_GET );
+$_GET 		= 	array_map ( 'addslashes_deep' , $_GET );
+$_REQUEST 	=  	array_map ( 'deep' , $_REQUEST );
+$_REQUEST 	= 	array_map ( 'addslashes_deep' ,  $_REQUEST );
+$_SERVER 	= 	array_map ( 'deep' , $_SERVER );
+$_SERVER	=  	array_map ( 'addslashes_deep' , $_SERVER );
+$_COOKIE 	= 	array_map ( 'deep' , $_COOKIE );
+$_COOKIE	= 	array_map ( 'addslashes_deep' , $_COOKIE );
+
+function deep ( $value )
+{
+	$value = is_array($value) ? array_map('deep', $value) :  addslashes(trim( nl2br( strip_tags($value ) ) ));
+	return $value;
+}
+
+function  addslashes_deep ( $value )
+{
+	$value = is_array($value) ?  array_map('addslashes_deep', $value) : addslashes($value);
+	return $value;
+}
+
 function unset_vars( $prefix )
 {
 	$vars = array_keys($GLOBALS);
@@ -91,12 +114,26 @@ function display ($page, $topnav = true, $metatags = '', $AdminPage = false, $me
 		mysql_close($link);
 	}
 
+	if ( $user['authlevel'] == 3 && $game_config['debug'] == 1 && !$AdminPage )
+	{
+		// Convertir a objeto dom
+		$DisplayPage = str_get_html($DisplayPage);
+
+		// Modificar div#content
+		$content = $DisplayPage->find("div#content", 0);
+
+		// Contenido debug
+		$content->innertext .= $debug->echo_log();
+	}
 
 	echo $DisplayPage;
 
-	if ($user['authlevel'] == 3 && $game_config['debug'] == 1)
+	if ( $user['authlevel'] == 3 && $game_config['debug'] == 1 && $AdminPage)
 	{
-		$debug->echo_log();
+
+		echo "<center>";
+		echo $debug->echo_log();
+		echo "</center>";
 	}
 
 	die();
@@ -401,25 +438,31 @@ function shortly_number($number)
 	// MAS DEL TRILLON
 	if ($number >= 1000000000000000000000000)
 		return pretty_number(($number/1000000000000000000))."&nbsp;<font color=lime>T+</font>";
-	
+
 	// TRILLON
 	elseif ($number >= 1000000000000000000 && $number < 1000000000000000000000000)
 		return pretty_number(($number/1000000000000000000))."&nbsp;<font color=lime>T</font>";
-		
+
 	// BILLON
 	elseif ($number >= 1000000000000 && $number < 1000000000000000000)
 		return pretty_number(($number/1000000000000))."&nbsp;<font color=lime>B</font>";
-	
+
 	// MILLON
 	elseif ($number >= 1000000 && $number < 1000000000000)
 		return pretty_number(($number/1000000))."&nbsp;<font color=lime>M</font>";
-		
+
 	// MIL
 	elseif ($number >= 1000 && $number < 1000000)
 		return pretty_number(($number/1000))."&nbsp;<font color=lime>K</font>";
-	
-	// NUMERO SIN DEFINIR	
+
+	// NUMERO SIN DEFINIR
 	else
 		return pretty_number($number);
 }
+
+function floattostring($Numeric, $Pro = 0, $Output = false)
+{
+	return ($Output) ? str_replace(",",".", sprintf("%.".$Pro."f", $Numeric)) : sprintf("%.".$Pro."f", $Numeric);
+}
+
 ?>

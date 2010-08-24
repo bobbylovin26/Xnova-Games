@@ -64,14 +64,18 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 				$BuildLevel = $CurrentPlanet[ $resource[$ProdID] ];
 				$Caps['metal_perhour']     += floor( eval ( $ProdGrid[$ProdID]['formule']['metal'] )     * (0.01 * $post_porcent) * ( $game_config['resource_multiplier'] ) * ( 1 + ( $CurrentUser['rpg_geologue'] * GEOLOGUE ) ) );
 				$Caps['crystal_perhour']   += floor( eval ( $ProdGrid[$ProdID]['formule']['crystal'] )   * (0.01 * $post_porcent) * ( $game_config['resource_multiplier'] ) * ( 1 + ( $CurrentUser['rpg_geologue'] * GEOLOGUE ) ) );
-				$Caps['deuterium_perhour'] += floor( eval ( $ProdGrid[$ProdID]['formule']['deuterium'] ) * (0.01 * $post_porcent) * ( $game_config['resource_multiplier'] ) * ( 1 + ( $CurrentUser['rpg_geologue'] * GEOLOGUE ) ) );
 
 				if ($ProdID < 4)
 				{
+					$Caps['deuterium_perhour'] += floor( eval ( $ProdGrid[$ProdID]['formule']['deuterium'] ) * (0.01 * $post_porcent) * ( $game_config['resource_multiplier'] ) * ( 1 + ( $CurrentUser['rpg_geologue'] * GEOLOGUE ) ) );
 					$Caps['energy_used']   +=  floor( eval  ( $ProdGrid[$ProdID]['formule']['energy']    ) * ( $game_config['resource_multiplier'] ) );
 				}
 				elseif ($ProdID >= 4 )
 				{
+					if($ProdID == 12 && $CurrentPlanet['deuterium'] == 0)
+						continue;
+
+					$Caps['deuterium_perhour'] += floor( eval ( $ProdGrid[$ProdID]['formule']['deuterium'] ) * (0.01 * $post_porcent) * ( $game_config['resource_multiplier'] ) * ( 1 + ( $CurrentUser['rpg_geologue'] * GEOLOGUE ) ) );
 					$Caps['energy_max']    +=  floor( eval  ( $ProdGrid[$ProdID]['formule']['energy']    ) * ( $game_config['resource_multiplier'] ) * ( 1 + ( $CurrentUser['rpg_ingenieur'] * INGENIEUR ) ) );
 				}
 			}
@@ -126,8 +130,8 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 
 		if ( $CurrentPlanet['metal'] <= $MaxMetalStorage )
 		{
-			$MetalProduction = (($ProductionTime * ($CurrentPlanet['metal_perhour'] / 3600)) * $game_config['resource_multiplier']) * (0.01 * $production_level);
-			$MetalBaseProduc = (($ProductionTime * ($game_config['metal_basic_income'] / 3600 )) * $game_config['resource_multiplier']);
+			$MetalProduction = (($ProductionTime * ($CurrentPlanet['metal_perhour'] / 3600))) * (0.01 * $production_level);
+			$MetalBaseProduc = (($ProductionTime * ($game_config['metal_basic_income'] / 3600 )));
 			$MetalTheorical  = $CurrentPlanet['metal'] + $MetalProduction  +  $MetalBaseProduc;
 			if ( $MetalTheorical <= $MaxMetalStorage )
 			{
@@ -141,8 +145,8 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 
 		if ( $CurrentPlanet['crystal'] <= $MaxCristalStorage )
 		{
-			$CristalProduction = (($ProductionTime * ($CurrentPlanet['crystal_perhour'] / 3600)) * $game_config['resource_multiplier']) * (0.01 * $production_level);
-			$CristalBaseProduc = (($ProductionTime * ($game_config['crystal_basic_income'] / 3600 )) * $game_config['resource_multiplier']);
+			$CristalProduction = (($ProductionTime * ($CurrentPlanet['crystal_perhour'] / 3600))) * (0.01 * $production_level);
+			$CristalBaseProduc = (($ProductionTime * ($game_config['crystal_basic_income'] / 3600 )));
 			$CristalTheorical  = $CurrentPlanet['crystal'] + $CristalProduction  +  $CristalBaseProduc;
 			if ( $CristalTheorical <= $MaxCristalStorage )
 			{
@@ -156,8 +160,8 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 
 		if ( $CurrentPlanet['deuterium'] <= $MaxDeuteriumStorage )
 		{
-			$DeuteriumProduction = (($ProductionTime * ($CurrentPlanet['deuterium_perhour'] / 3600)) * $game_config['resource_multiplier']) * (0.01 * $production_level);
-			$DeuteriumBaseProduc = (($ProductionTime * ($game_config['deuterium_basic_income'] / 3600 )) * $game_config['resource_multiplier']);
+			$DeuteriumProduction = (($ProductionTime * ($CurrentPlanet['deuterium_perhour'] / 3600))) * (0.01 * $production_level);
+			$DeuteriumBaseProduc = (($ProductionTime * ($game_config['deuterium_basic_income'] / 3600 )));
 			$DeuteriumTheorical  = $CurrentPlanet['deuterium'] + $DeuteriumProduction  +  $DeuteriumBaseProduc;
 			if ( $DeuteriumTheorical <= $MaxDeuteriumStorage )
 			{
