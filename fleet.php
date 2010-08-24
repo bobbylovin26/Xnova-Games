@@ -1,271 +1,269 @@
 <?php
 
-/*
-  Perberos escribio
-    por ahora solo se envian flotas fantasmas. (es decir, la cantidad que
-	hay en el planeta, no varia. Y cuando llegan al otro lado, Desaparecen)
-	
-	Corregi un pequeno bug en los tiempos que se muestran en la lista de flotas.
-	
-	Al enviar las flotas, solo tardan 60 segundos. pero creo que le erre en
-	el sistema...
-	Al parecer, fleet_start_time es para el primer arrivo... Y yo tome el fleet_end_time
-	como el arrivo...
-	
-	El seguro contra acciones o planetas que no existen, no esta. Por ahora.
-	
-	PD: las flotas se agregan desde sql. en la tabla planets.
-	PD2: las sondas se pueden enviar xD xD xD
+/**
+ * fleet.php
+ *
+ * @version 1.0
+ * @copyright 2008 by Chlorel for XNova
+ */
 
-*/
+define('INSIDE'  , true);
+define('INSTALL' , false);
 
-define('INSIDE', true);
-$ugamela_root_path = './';
-include($ugamela_root_path . 'extension.inc');
-include($ugamela_root_path . 'common.'.$phpEx);
-include('ban.php');
+$xnova_root_path = './';
+include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'common.' . $phpEx);
 
+	$maxfleet  = doquery("SELECT COUNT(fleet_owner) AS `actcnt` FROM {{table}} WHERE `fleet_owner` = '".$user['id']."';", 'fleets', true);
 
-if(!check_user()){ header("Location: login.php"); }
-//if($user['authlevel'] != 3){ message("Przebudowa","work","overview.php","3"); }
+	$MaxFlyingFleets     = $maxfleet['actcnt'];
 
+    //Compteur de flotte en expéditions et nombre d'expédition maximum
+    $MaxExpedition      = $user[$resource[124]];
+    if ($MaxExpedition >= 1) {
+		$maxexpde  = doquery("SELECT COUNT(fleet_owner) AS `expedi` FROM {{table}} WHERE `fleet_owner` = '".$user['id']."' AND `fleet_mission` = '15';", 'fleets', true);
+	    $ExpeditionEnCours  = $maxexpde['expedi'];
+		$EnvoiMaxExpedition = 1 + floor( $MaxExpedition / 3 );
+    }
 
-//
-// Esta funcion permite cambiar el planeta actual.
-//
-include($ugamela_root_path . 'includes/planet_toggle.'.$phpEx);
+	$MaxFlottes         = 1 + $user[$resource[108]];
 
-$planetrow = doquery("SELECT * FROM {{table}} WHERE id={$user['current_planet']}",'planets',true);
-$galaxyrow = doquery("SELECT * FROM {{table}} WHERE id_planet={$planetrow['id']}",'galaxy',true);
-$dpath = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
-$maxfleet = doquery("SELECT COUNT(fleet_owner) as ilosc FROM {{table}} WHERE fleet_owner='{$user['id']}'",'fleets',true);
-$maxfleet_count = $maxfleet["ilosc"];
-//$flota = doquery("SELECT * FROM {{table}} WHERE fleet_owner={$user['id']}",'flota',true);
+	CheckPlanetUsedFields($planetrow);
 
-check_field_current($planetrow);
-
-includeLang('fleet');
-includeLang('tech');
-
-{//info
+	includeLang('fleet');
 
 	$missiontype = array(
-		1 => 'Attack',
-		3 => 'Transport',
-		4 => 'Deploy',
-		5 => 'Destroy',
-		6 => 'Espionage',
-		8 => 'Harvest',
-		9 => 'Colonize',
-		);
-		
-	$speed = array(
-		10 => 100,
-		9 => 90,
-		8 => 80,
-		7 => 70,
-		6 => 60,
-		5 => 50,
-		4 => 40,
-		3 => 30,
-		2 => 20,
-		1 => 10,
-		);
-}
+		1 => $lang['type_mission'][1],
+		2 => $lang['type_mission'][2],
+		3 => $lang['type_mission'][3],
+		4 => $lang['type_mission'][4],
+		5 => $lang['type_mission'][5],
+		6 => $lang['type_mission'][6],
+		7 => $lang['type_mission'][7],
+		8 => $lang['type_mission'][8],
+		9 => $lang['type_mission'][9],
+		15 => $lang['type_mission'][15]
+	);
+
+	// Histoire de recuperer les infos passées par galaxy
+	$galaxy         = $_GET['galaxy'];
+	$system         = $_GET['system'];
+	$planet         = $_GET['planet'];
+	$planettype     = $_GET['planettype'];
+	$target_mission = $_GET['target_mission'];
+
+	if (!$galaxy) {
+		$galaxy = $planetrow['galaxy'];
+	}
+	if (!$system) {
+		$system = $planetrow['system'];
+	}
+	if (!$planet) {
+		$planet = $planetrow['planet'];
+	}
+	if (!$planettype) {
+		$planettype = $planetrow['planet_type'];
+	}
+
+	$page  = "<script language=\"JavaScript\" src=\"scripts/flotten.js\"></script>\n";
+	$page .= "<script language=\"JavaScript\" src=\"scripts/ocnt.js\"></script>\n";
+	$page .= "<br><center>";
+	$page .= "<table width='519' border='0' cellpadding='0' cellspacing='1'>";
+	$page .= "<tr height='20'>";
+	$page .= "<td colspan='9' class='c'>";
+	$page .= "<table border=\"0\" width=\"100%\">";
+	$page .= "<tbody><tr>";
+	$page .= "<td style=\"background-color: transparent;\">";
+	$page .= $lang['fl_title']." ".$MaxFlyingFleets." ".$lang['fl_sur']." ".$MaxFlottes;
+	$page .= "</td><td style=\"background-color: transparent;\" align=\"right\">";
+	$page .= $ExpeditionEnCours."/".$EnvoiMaxExpedition." ".$lang['fl_expttl'];
+	$page .= "</td>";
+	$page .= "</tr></tbody></table>";
+	$page .= "</td>";
+	$page .= "</tr><tr height='20'>";
+	$page .= "<th>".$lang['fl_id']."</th>";
+	$page .= "<th>".$lang['fl_mission']."</th>";
+	$page .= "<th>".$lang['fl_count']."</th>";
+	$page .= "<th>".$lang['fl_from']."</th>";
+	$page .= "<th>".$lang['fl_start_t']."</th>";
+	$page .= "<th>".$lang['fl_dest']."</th>";
+	$page .= "<th>".$lang['fl_dest_t']."</th>";
+//	$page .= "<th>".$lang['fl_back_t']."</th>";
+	$page .= "<th>".$lang['fl_back_in']."</th>";
+	$page .= "<th>".$lang['fl_order']."</th>";
+	$page .= "</tr>";
+
+	// Gestion des flottes du joueur actif
+	$fq = doquery("SELECT * FROM {{table}} WHERE fleet_owner={$user[id]}", "fleets");
+	$i  = 0;
 
 
-
-	if(!$galaxy){$galaxy = $planetrow['galaxy'];}
-	if(!$system){$system = $planetrow['system'];}
-	if(!$planet){$planet = $planetrow['planet'];}
-	if(!$planettype){$planettype = $planetrow['planet_type'];}
-	$ile = ''.++$user[$resource[108]].'';	
-	$page = '<script language="JavaScript" src="scripts/flotten.js"></script>
-<script language="JavaScript" src="scripts/ocnt.js"></script>
-  <center>
-    <table width="519" border="0" cellpadding="0" cellspacing="1">
-      <tr height="20">
-        <td colspan="9" class="c">Fleet (Max. '.$ile.')</td>
-      </tr>
-      <tr height="20">
-        <th>ID</th>
-        <th>Mission</th>
-        <th>Ships (Total)</th>
-		 <th>???</th>
-        <th>Origin</th>
-        <th>Depart</th>
-        <th>Target</th>
-        <th>Arrive</th>
-        <th>Commands</th>
-      </tr>';
-	/*
-	  Here must show the fleet movings of owner player.
-	*/
-
-	$fq = doquery("SELECT * FROM {{table}} WHERE fleet_owner={$user[id]}",'fleets');
-
-	$i=0;
-	while($f = mysql_fetch_array($fq)){
+	while ($f = mysql_fetch_array($fq)) {
 		$i++;
-		
-		$page .= "<tr height=20><th>$i</th><th>";
-		$page .= "<a title=\"\">{$missiontype[$f[fleet_mission]]}</a>";
-		$page .= "<a title=\"Flot� na planecie\">(F)</a>";
-		$page .= "</th><th><a title=\"";
-		/*
-		  Se debe hacer una lista de las tropas
-		*/
-		$fleet = explode(";",$f['fleet_array']);
-		$e=0;
-		foreach($fleet as $a =>$b){
-			if($b != ''){
+		$page .= "<tr height=20>";
+		// (01) Fleet ID
+		$page .= "<th>".$i."</th>";
+		// (02) Fleet Mission
+		$page .= "<th>";
+		$page .= "<a>". $missiontype[$f[fleet_mission]] ."</a>";
+		if (($f['fleet_start_time'] + 1) == $f['fleet_end_time']) {
+			$page .= "<br><a title=\"".$lang['fl_back_to_ttl']."\">".$lang['fl_back_to']."</a>";
+		} else {
+			$page .= "<br><a title=\"".$lang['fl_get_to_ttl']."\">".$lang['fl_get_to']."</a>";
+		}
+		$page .= "</th>";
+		// (03) Fleet Mission
+		$page .= "<th><a title=\"";
+		// Fleet details (commentaire)
+		$fleet = explode(";", $f['fleet_array']);
+		$e = 0;
+		foreach ($fleet as $a => $b) {
+			if ($b != '') {
 				$e++;
-				$a = explode(",",$b);
-				$page .= "{$lang['tech']{$a[0]}}: {$a[1]}\n";
-				if($e>1){$page .= "\t";}
+				$a = explode(",", $b);
+				$page .= $lang['tech'][$a[0]]. ":". $a[1] ."\n";
+				if ($e > 1) {
+					$page .= "\t";
+				}
 			}
 		}
-		$page .= "\">{$f[fleet_amount]}</a></th>";
-		$page .= "<th>".gmdate("D M d H:i:s",$f['fleet_start_hour']+2*60*60)."</th>";
-		$page .= "<th>[{$f[fleet_start_galaxy]}:{$f[fleet_start_system]}:{$f[fleet_start_planet]}]</th>";
-		$page .= "<th>".gmdate("D M d H:i:s",$f['fleet_start_time']+2*60*60)."</th>";
-		$page .= "<th>[{$f[fleet_end_galaxy]}:{$f[fleet_end_system]}:{$f[fleet_end_planet]}]</th>";
-		$page .= "<th>".gmdate("D M d H:i:s",$f['fleet_end_time']+2*60*60)."</th>";
-		 $page .= " </form><th>";
-     	if ($f['fleet_mess'] == 0) {
-     		$page .= "     <form action=\"fleetback.php\" method=\"post\">
-      <input name=\"zawracanie\" value=".$f['fleet_id']." type=hidden>
-         <input value=\"Recall\" type=\"submit\">
-       </form>";
-     	}
-            $page .= "<font color=\"lime\"><div id=\"time_0\"><font>".pretty_time(floor($f['fleet_end_time']+1-time()))."</font></div></font></th>
-            </tr>";
-	/*if($_POST['order_return'] = 1){	
-doquery("UPDATE {{table}} SET
-	`fleet_owner`='{$user['id']}',
-	`fleet_mission`='4',
-	`fleet_start_galaxy`='{$f[fleet_end_galaxy]}',
-	`fleet_start_system`='{$f[fleet_end_system]}',
-	`fleet_start_planet`='{$f[fleet_end_planet]}',
-	`fleet_end_galaxy`='{$f[fleet_start_galaxy]}',
-	`fleet_end_system`='{$f[fleet_start_system]}',
-	`fleet_end_planet`='{$f[fleet_start_planet]}',
-	`fleet_ofiara`='{$user['id']}' WHERE `fleet_id` = '{$f['fleet_id']}'" ,"fleets");}*/
-		
+		$page .= "\">". pretty_number($f[fleet_amount]) ."</a></th>";
+		// (04) Fleet From (Planete d'origine)
+		$page .= "<th>[".$f[fleet_start_galaxy].":".$f[fleet_start_system].":".$f[fleet_start_planet]."]</th>";
+		// (05) Fleet Start Time
+		$page .= "<th>". gmdate("d. M Y H:i:s", $f['fleet_start_time']) ."</th>";
+		// (06) Fleet Target (Planete de destination)
+		$page .= "<th>[".$f[fleet_end_galaxy].":".$f[fleet_end_system].":".$f[fleet_end_planet]."]</th>";
+		// (07) Fleet Target Time
+		$page .= "<th>". gmdate("d. M Y H:i:s", $f['fleet_end_time']) ."</th>";
+		// (08) Fleet Back Time
+//		$page .= "<th><font color=\"lime\"><div id=\"time_0\"><font>". pretty_time(floor($f['fleet_end_time'] + 1 - time())) ."</font></th>";
+		// (09) Fleet Back In
+		$page .= "<th><font color=\"lime\"><div id=\"time_0\"><font>". pretty_time(floor($f['fleet_end_time'] + 1 - time())) ."</font></th>";
+		// (10) Orders
+		$page .= "<th>";
+		if ($f['fleet_mess'] == 0) {
+				$page .= "<form action=\"fleetback.php\" method=\"post\">";
+				$page .= "<input name=\"fleetid\" value=\"". $f['fleet_id'] ."\" type=\"hidden\">";
+				$page .= "<input value=\" ".$lang['fl_back_to_ttl']." \" type=\"submit\" name=\"send\">";
+				$page .= "</form>";
+			if ($f[fleet_mission] == 1) {
+				$page .= "<form action=\"verband.php\" method=\"post\">";
+				$page .= "<input name=\"fleetid\" value=\"". $f['fleet_id'] ."\" type=\"hidden\">";
+				$page .= "<input value=\" ".$lang['fl_associate']." \" type=\"submit\">";
+				$page .= "</form>";
+			}
+		} else {
+			$page .= "&nbsp;-&nbsp;";
+		}
+		$page .= "</th>";
+		// Fin de ligne
+		$page .= "</tr>";
 	}
 
-	if($i==0){$page .= "<th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th>";}
-		 /*      <tr height="20">
-			<th>2</th>
-			<th> <a title="">Recolectar</a> <a title="Volver al planeta">(V)</a> </th>
-			<th> <a title="Reciclador: 1">1</a></th>
-			<th>[5:328:12]</th>
-			<th>Thu Jun 29 1:52:13</th>
-			<th>[5:328:13]</th>
-			<th>Thu Jun 29 4:44:59</th>
-			<th> </th>
-		  </tr> */
-		if($ile == $maxfleet_count){$maxflot = '<tr height="20"><th colspan="9"><font color="red">Maximum Fleet are currently being  used!</font></th></tr>';}
-		$page .= '
-		'.$maxflot.'</table>
-	  </center>
-	  <center>
-		<form action="floten1.php" method="post">
-		<table width="519" border="0" cellpadding="0" cellspacing="1">
-		  <tr height="20">
-			<td colspan="4" class="c">Please select your ships for this mission:</td>
-		  </tr>
-		  <tr height="20">
-			<th>Ship Type</th>
-			<th>Avaliable</th>';
-			//<!--    <th>Gesch.</th> -->
-			$page .= '
-			<th>-</th>
-			<th>-</th>
-		  </tr>';
-	if(!$planetrow){message('WTF! ERROR!','ERROR');}//uno nunca sabe xD
-	/*
-	  Peque?o loop para mostrar las naves que se encuentran en el planeta.
-	*/
-	
-	foreach($reslist['fleet'] as $n => $i){
-		  
-		if($planetrow[$resource[$i]] > 0){
-		  if($i == 202 or $i == 203 or $i == 204 or $i == 209 or $i == 210)
-		{$pricelist[$i]['speed'] = $pricelist[$i]['speed']+(($pricelist[$i]['speed']*$user['combustion_tech'])*0.1);}
-		  if($i == 205 or $i == 206 or $i == 208 or $i == 211)
-		{$pricelist[$i]['speed'] = $pricelist[$i]['speed']+(($pricelist[$i]['speed']*$user['impulse_motor_tech'])*0.2);}
-		  if($i == 207 or $i == 213 or $i == 214 or $i == 215 or $i == 216)
-		{$pricelist[$i]['speed'] = $pricelist[$i]['speed']+(($pricelist[$i]['speed']*$user['hyperspace_motor_tech'])*0.3);}
-			$page .= '<tr height="20">
-			<th><a title="Szybko??: '.$pricelist[$i]['speed'].'">'.$lang['tech'][$i].'</a></th>
-			<th>'.$planetrow[$resource[$i]].'
-			  <input type="hidden" name="maxship'.$i.'" value="'.$planetrow[$resource[$i]].'"/></th>
-			<!--    <th>28000 -->
-			<input type="hidden" name="consumption'.$i.'" value="'.$pricelist[$i]['consumption'].'"/>
-			
-			<input type="hidden" name="speed'.$i.'" value="'.$pricelist[$i]['speed'].'" />
-			<input type="hidden" name="galaxy" value="'.$galaxy.'"/>
-			
-			<input type="hidden" name="system" value="'.$system.'"/>
-			<input type="hidden" name="planet" value="'.$planet.'"/>
-			<input type="hidden" name="planet_type" value="'.$planettype.'"/>
-			<input type="hidden" name="mission" value="'.$target_mission.'"/>
-			</th>
-			<input type="hidden" name="capacity'.$i.'" value="'.$pricelist[$i]['capacity'].'" />
-			</th>';
-			if ($i == 212){
-			$page .= '<th></th><th></th></tr>';
+	// Y a pas de flottes en vol ... on met des '-'
+	if ($i == 0) {
+		$page .= "<tr>";
+		$page .= "<th>-</th>";
+		$page .= "<th>-</th>";
+		$page .= "<th>-</th>";
+		$page .= "<th>-</th>";
+		$page .= "<th>-</th>";
+		$page .= "<th>-</th>";
+		$page .= "<th>-</th>";
+//		$page .= "<th>-</th>";
+		$page .= "<th>-</th>";
+		$page .= "<th>-</th>";
+		$page .= "</tr>";
+	}
+
+	if ($MaxFlottes == $MaxFlyingFleets) {
+		$page .= "<tr height=\"20\"><th colspan=\"9\"><font color=\"red\">".$lang['fl_noslotfree']."</font></th></tr>";
+	}
+
+	$page .= "</table></center>";
+
+	$page .= "<center>";
+
+	// Selection d'une nouvelle mission
+	$page .= "<form action=\"floten1.php\" method=\"post\">";
+	$page .= "<table width=\"519\" border=\"0\" cellpadding=\"0\" cellspacing=\"1\">";
+	$page .= "<tr height=\"20\">";
+	$page .= "<td colspan=\"4\" class=\"c\">".$lang['fl_new_miss']."</td>";
+	$page .= "</tr>";
+	$page .= "<tr height=\"20\">";
+	$page .= "<th>".$lang['fl_fleet_typ']."</th>";
+	$page .= "<th>".$lang['fl_fleet_disp']."</th>";
+	$page .= "<th>-</th>";
+	$page .= "<th>-</th>";
+	$page .= "</tr>";
+
+	if (!$planetrow) {
+		message($lang['fl_noplanetrow'], $lang['fl_error']);
+	}
+
+	// Prise des coordonnées sur la ligne de commande
+	$galaxy         = intval($_GET['galaxy']);
+	$system         = intval($_GET['system']);
+	$planet         = intval($_GET['planet']);
+	$planettype     = intval($_GET['planettype']);
+	$target_mission = intval($_GET['target_mission']);
+	$ShipData       = "";
+
+	foreach ($reslist['fleet'] as $n => $i) {
+		if ($planetrow[$resource[$i]] > 0) {
+			$page .= "<tr height=\"20\">";
+			$page .= "<th><a title=\"". $lang['fl_fleetspeed'] . $CurrentShipSpeed ."\">" . $lang['tech'][$i] . "</a></th>";
+			$page .= "<th>". pretty_number ($planetrow[$resource[$i]]);
+			$ShipData .= "<input type=\"hidden\" name=\"maxship". $i ."\" value=\"". $planetrow[$resource[$i]] ."\" />";
+			$ShipData .= "<input type=\"hidden\" name=\"consumption". $i ."\" value=\"". GetShipConsumption ( $i, $user ) ."\" />";
+			$ShipData .= "<input type=\"hidden\" name=\"speed" .$i ."\" value=\"" . GetFleetMaxSpeed ("", $i, $user) . "\" />";
+			$ShipData .= "<input type=\"hidden\" name=\"capacity". $i ."\" value=\"". $pricelist[$i]['capacity'] ."\" />";
+			$page .= "</th>";
+			// Satelitte Solaire (eux ne peuvent pas bouger !)
+			if ($i == 212) {
+				$page .= "<th></th><th></th>";
 			} else {
-				$page .= '<th><a href="javascript:maxShip(\'ship'.$i.'\'); shortInfo();">max</a> </th>
-				<th><input name="ship'.$i.'" size="10" value="0" onfocus="javascript:if(this.value == \'0\') this.value=\'\';" onblur="javascript:if(this.value == \'\') this.value=\'0\';" alt="'.$lang['tech'][$i].$planetrow[$resource[$i]].'"  onChange="shortInfo()" onKeyUp="shortInfo()"/></th>
-				</tr>';
-				$aaaaaaa = $pricelist[$i]['consumption'];
+				$page .= "<th><a href=\"javascript:maxShip('ship". $i ."'); shortInfo();\">".$lang['fl_selmax']."</a> </th>";
+				$page .= "<th><input name=\"ship". $i ."\" size=\"10\" value=\"0\" onfocus=\"javascript:if(this.value == '0') this.value='';\" onblur=\"javascript:if(this.value == '') this.value='0';\" alt=\"". $lang['tech'][$i] . $planetrow[$resource[$i]] ."\" onChange=\"shortInfo()\" onKeyUp=\"shortInfo()\" /></th>";
 			}
-			$have_ships = true;
+			$page .= "</tr>";
 		}
-
+		$have_ships = true;
 	}
 
-	if(!$have_ships){
-		/*
-		  En caso de que no se tenga nunguna nave, solo se cambia el boton
-		  por uno que no tenga submit, y la propiedad disabled
-		*/
-		$page .= '<tr height="20">
-		<th colspan="4">No fleets</th>
-		</tr>
-		<tr height="20">
-		<th colspan="4">
-		<input type="button" value="Continue" enabled/></th>
-		</tr>
-		</table>
-		</center>
-		</form>';
+	$btncontinue = "<tr height=\"20\"><th colspan=\"4\"><input type=\"submit\" value=\" ".$lang['fl_continue']." \" /></th>";
+	$page .= "<tr height=\"20\">";
+	if (!$have_ships) {
+		// Il n'y a pas de vaisseaux sur cette planete
+		$page .= "<th colspan=\"4\">". $lang['fl_noships'] ."</th>";
+		$page .= "</tr>";
+		$page .= $btncontinue;
+	} else {
+		$page .= "<th colspan=\"2\"><a href=\"javascript:noShips();shortInfo();noResources();\" >". $lang['fl_unselectall'] ."</a></th>";
+		$page .= "<th colspan=\"2\"><a href=\"javascript:maxShips();shortInfo();\" >". $lang['fl_selectall'] ."</a></th>";
+		$page .= "</tr>";
+
+		if ($MaxFlottes > $MaxFlyingFleets) {
+			$page .= $btncontinue;
+		}
 	}
-	else{
-		$page .= '
-		  <tr height="20">
-			<th colspan="2"><a href="javascript:noShips();shortInfo();noResources();" >No ships</a></th>
-			<th colspan="2"><a href="javascript:maxShips();shortInfo();" >All ships</a></th>
-		  </tr>';
-		  
-		$przydalej = '<tr height="20"><th colspan="4"><input type="submit" value="Continue" /><br></th></tr>';
-if($ile == $maxfleet_count){$przydalej = '';}
-		$page .= '
-		'.$przydalej.'
-		<tr><th colspan="4">
-		<br><center></center><br>
-		</th></tr>
-		</table>
-	  </center>
-	</form>';
-	
+	$page .= "</tr>";
+	$page .= "</table>";
+	$page .= $ShipData;
+	$page .= "<input type=\"hidden\" name=\"galaxy\" value=\"". $galaxy ."\" />";
+	$page .= "<input type=\"hidden\" name=\"system\" value=\"". $system ."\" />";
+	$page .= "<input type=\"hidden\" name=\"planet\" value=\"". $planet ."\" />";
+	$page .= "<input type=\"hidden\" name=\"planet_type\" value=\"". $planettype ."\" />";
+	$page .= "<input type=\"hidden\" name=\"mission\" value=\"". $target_mission ."\" />";
+	$page .= "<input type=\"hidden\" name=\"maxepedition\" value=\"". $EnvoiMaxExpedition ."\" />";
+	$page .= "<input type=\"hidden\" name=\"curepedition\" value=\"". $ExpeditionEnCours ."\" />";
+	$page .= "<input type=\"hidden\" name=\"target_mission\" value=\"". $target_mission ."\" />";
+	$page .= "</form>";
+	$page .= "</center>";
 
+	display($page, $lang['fl_title']);
 
-	}
-	display($page,"Flota");
-
-
+// Updated by Chlorel. 16 Jan 2008 (String extraction, bug corrections, code uniformisation
 // Created by Perberos. All rights reversed (C) 2006
 ?>

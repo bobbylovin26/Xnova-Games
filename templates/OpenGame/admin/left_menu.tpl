@@ -1,56 +1,95 @@
-<html>
-<head>
-<meta http-equiv="content-type" content="text/html; charset={ENCODING}">
-<link rel="stylesheet" type="text/css" href="{dpath}formate.css">
+<div id='leftmenu'>
 <script language="JavaScript">
 function f(target_url,win_name) {
   var new_win = window.open(target_url,win_name,'resizable=yes,scrollbars=yes,menubar=no,toolbar=no,width=550,height=280,top=0,left=0');
   new_win.focus();
 }
+parent.frames['Hauptframe'].location.replace("overview.php");
 </script>
-</head>
-<body  class="style" topmargin="0" leftmargin="0" marginwidth="0" marginheight="0"> 
+<body  class="style" topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
 <center>
-<p>[<a href="http://www.hostcuyum.net/" title="Lütfen Ýletiþim Kurunuz"  target="{mf}">+</a>]
- {Multiverse} (<a href="changelog.php" target={mf}>v {VERSION}</a>)</p>
-
-<!-- Menu  -->
-<table width="110" cellspacing="0" cellpadding="0"><tr><td><img src="{dpath}gfx/ogame-produktion.jpg" width="110" height="40"/></td></tr>
-
-
-<tr><td><div align="center"><font color="#FFFFFF"><a href="overview.php" accesskey="v" target="{mf}">{Overview}</a></font></div></td></tr>
-<tr><td><div align="center"><font color="#FFFFFF"><a href="activeplanet.php" accesskey="a" target="{mf}">Active Planets</a></font></div></td></tr>
-<tr><td><div align="center"><font color="#FFFFFF"><a href="paneladmina.php" accesskey="a" target="{mf}">Admin Panel</a></font></div></td></tr>
-<tr><td><div align="center"><font color="red"><a href="messall.php" accesskey="k" target="{mf}">Message All</a></font></div></td></tr>
-
-<tr><td><img src="{dpath}gfx/info-help.jpg" width="110" height="19"/></td></tr>
-
-
-<tr><td><div align="center"><font color="#FFFFFF"><a href="errors.php" accesskey="a" target="{mf}">Error List</a></font></div></td></tr>
-<tr><td><div align="center"><font color="#FFFFFF"><a href="settings.php" accesskey="a" target="{mf}">Server Settings</a></font></div></td></tr>
-<tr><td><div align="center"><font color="#FFFFFF"><a href="userlist.php" accesskey="a" target="{mf}">User List</a></font></div></td></tr>
-<tr><td><div align="center"><font color="#FFFFFF"><a href="planetlist.php" accesskey="a" target="{mf}">Planet List</a></font></div></td></tr>
-<tr><td><div align="center"><font color="#FFFFFF"><a href="moonlist.php" accesskey="a" target="{mf}">Moon List</a></font></div></td></tr>
-<tr><td><div align="center"><font color="#FFFFFF"><a href="messagelist.php" accesskey="a" target="{mf}">Message List</a></font></div></td></tr>
-<tr><td><div align="center"><font color="#FFFFFF"><a href="banned.php" accesskey="a" target="{mf}">Banned List</a></font></div></td></tr>
-<tr><td><div align="center"><font color="#FFFFFF"><a href="unbanned.php" accesskey="a" target="{mf}">Unbanned</a></font></div></td></tr>
-<tr><td><div align="center"><font color="#FFFFFF"><a href="addmoon.php" accesskey="a" target="{mf}">Add Moon</a></font></div></td></tr>
-<tr><td><div align="center"><font color="#FFFFFF"><a href="http://gameo.ath.cx:8080/pointupdate.php" accesskey="a" target="{mf}">Update User Points</a></font></div></td></tr>
-<tr><td><div align="center"><font color="#FFFFFF"><a href="http://gameo.ath.cx:8080/rankupdate.php" accesskey="a" target="{mf}">Update User Rankings</a></font></div></td></tr>
-
-
-
-<tr><td><img src="{dpath}gfx/user-menu.jpg" width="110" height="35"/></td></tr>
-<tr><td><div align="center"><font color="#FFFFFF"><a href="../guncelleme/" accesskey="e" target="{mf}">Fix Section</a></font></div></td></tr>
-<tr><td><div align="center"><font color="#FFFFFF"><a href="../" accesskey="i" target="_top" style="color:red">Logout</a></font></div></td></tr>
+<div id='menu'>
+<br>
+<table width="130" cellspacing="0" cellpadding="0">
+<tr>
+	<td style="border-top: 1px #545454 solid"><div><center>{servername}<br>(<a href="changelog.php" target={mf}><font color=red>{XNovaRelease}</font></a>)<center></div></td>
+</tr><tr>
+	<td background="{dpath}img/bg1.gif"><center>{admin}</center></td>
+</tr><tr>
+	<td><div><a href="overview.php" accesskey="v" target="{mf}">{adm_over}</a></div></td>
+</tr><tr>
+	<td><div><a href="settings.php" accesskey="e" target="{mf}">{adm_conf}</a></div></td>
+</tr><tr>
+	<td><div><a href="XNovaResetUnivers.php" accesskey="e" target="{mf}">{adm_reset}</a></div></td>
+</tr><tr>
+	<td><div><a href="credit.php" accesskey="e" target="{mf}">{adm_extcopy}</a></div></td>
+</tr><tr>
+	<td background="{dpath}img/bg1.gif"><center>{player}</center></td>
+</tr><tr>
+	<td><div><a href="userlist.php" accesskey="a" target="{mf}">{adm_plrlst}</a></div></td>
+</tr><tr>
+    <td><div><a href="multi.php" accesskey="a" target="{mf}">{adm_multi}</a></div></td>
+</tr><tr>
+	<td><div><a href="paneladmina.php" accesskey="k" target="{mf}">{adm_plrsch}</a></div></td>
+</tr><tr>
+	<td><div><a href="QueryExecute.php" accesskey="k" target="{mf}">{qry}</a></div></td>
+</tr><tr>
+	<td><div><a href="variables.php" accesskey="k" target="{mf}">PhpInfo</a></div></td>
+</tr><tr>
+	<td><div><a href="add_money.php" accesskey="k" target="{mf}">{adm_addres}</a></div></td>
+</tr><tr>
+	<td style="background-color:#FFFFFF" height="1px"></td>
+</tr><tr>
+	<td><div><a href="planetlist.php" accesskey="1" target="{mf}">{adm_pltlst}</a></div></td>
+</tr><tr>
+	<td><div><a href="activeplanet.php" accesskey="k" target="{mf}">{adm_actplt}</a></div></td>
+</tr><tr>
+	<td style="background-color:#FFFFFF" height="1px"></td>
+</tr><tr>
+	<td><div><a href="moonlist.php" accesskey="k" target="{mf}">{adm_moonlst}</a></div></td>
+</tr><tr>
+	<td><div><a href="declare_list.php" accesskey="k" target="{mf}">{multis_declared}</a></div></td>
+</tr><tr>
+	<td><div><a href="add_moon.php" accesskey="k" target="{mf}">{adm_addmoon}</a></div></td>
+</tr><tr>
+	<td style="background-color:#FFFFFF" height="1px"></td>
+</tr><tr>
+	<td><div><a href="ShowFlyingFleets.php" accesskey="k" target="{mf}">{adm_fleet}</a></div></td>
+</tr><tr>
+	<td style="background-color:#FFFFFF" height="1px"></td>
+</tr><tr>
+	<td><div><a href="banned.php" accesskey="k" target="{mf}">{adm_ban}</a></div></td>
+</tr><tr>
+	<td><div><a href="md5changepass.php" accesskey="k" target="{mf}">{change_pass}</a></div></td>
+</tr><tr>
+	<td><div><a href="unbanned.php" accesskey="k" target="{mf}">{adm_unban}</a></div></td>
+</tr><tr>
+	<td background="{dpath}img/bg1.gif"><center>{tool}</center></td>
+</tr><tr>
+	<td><div><a href="chat.php" accesskey="p" target="{mf}">{adm_chat}</a></div></td>
+</tr><tr>
+	<td><div><a href="statbuilder.php" accesskey="p" target="{mf}">{adm_updpt}</a></div></td>
+</tr><tr>
+	<td><div><a href="messagelist.php" accesskey="k" target="{mf}">{adm_msg}</a></div></td>
+</tr><tr>
+	<td><div><a href="md5enc.php" accesskey="p" target="{mf}">{adm_md5}</a></div></td>
+</tr><tr>
+	<td><div><a href="ElementQueueFixer.php" accesskey="p" target="{mf}">{adm_build}</a></div></td>
+</tr><tr>
+	<td style="background-color:#FFFFFF" height="1px"></td>
+</tr><tr>
+	<td><div><a href="errors.php" accesskey="e" target="{mf}">{adm_error}</a></div></td>
+</tr><tr>
+	<td><div><a href="http://www.xnova.fr/forum/index.php" accesskey="3" target="{mf}">{adm_help}</a></div></td>
+</tr><tr>
+	<td><div><a href="../frames.php" accesskey="i" target="_top" style="color:red">{adm_back}</a></div></td>
+</tr><tr>
+	<td background="{dpath}img/bg1.gif"><center>{infog}</center></td>
+</tr><tr>
+	<td><div><center><a href="../credit.php" accesskey="T" target="{mf}">XNova Team</a><br>&copy; Copyright 2008</center></div></td>
+</tr>
 </table>
-<p>
-<!-- una moneda pa' la torre? -->
-
-</form></p>
-
+</div>
 </center>
-
 </body>
-
-</html>
+</div>

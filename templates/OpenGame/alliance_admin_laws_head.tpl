@@ -1,4 +1,4 @@
-
+<br>
 <form action="alliance.php?mode=admin&edit=rights" method=POST>
 	<tr>
 	  <th></th>

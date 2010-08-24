@@ -1,4 +1,4 @@
-
+<br>
 <table width=519>
 	<tr>
 	  <td class=c colspan=8>{Members_list} ({Ammount}: {i})</td>

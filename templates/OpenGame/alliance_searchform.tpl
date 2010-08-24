@@ -1,4 +1,4 @@
-
+<br>
 <table width="519">
 	<tr>
 	  <td class="c" colspan="2">{search_alliance}</td>

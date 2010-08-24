@@ -1,7 +1,8 @@
-
+<br>
 	<tr>
 	  <th>{delete}</th>
 	  <th>&nbsp;{r0}&nbsp;</th>
+	  <input type="hidden" name="id[]" value="{a}">
 	  <th>{r1}</th>
 	  <th>{r2}</th>
 	  <th>{r3}</th>

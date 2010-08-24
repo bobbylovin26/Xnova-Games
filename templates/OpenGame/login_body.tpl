@@ -1,56 +1,69 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon"><title>SERVERNAME HERE</title>
-
-<link rel="stylesheet" type="text/css" href="css/styles.css">
-<link rel="stylesheet" type="text/css" href="css/about.css">
-<script src="../scripts/functions.js" type="text/javascript"></script>
-<script language="JavaScript" src="../scripts/tw-sack.js"></script>
-<script language="JavaScript" src="../scripts/registration.js"></script>
-</head><body>
-<a href="#pustekuchen" style="display: none;">Loginlink</a>
-
 <div id="main">
-    
+<script type="text/javascript">
+var lastType = "";
+function changeAction(type) {
+	if (document.formular.Uni.value == '') {
+		alert('{log_univ}');
+	} else {
+		if(type == "login" && lastType == "") {
+			var url = "http://" + document.formular.Uni.value + "";
+			document.formular.action = url;
+		} else {
+			var url = "http://" + document.formular.Uni.value + "/reg.php";
+			document.formular.action = url;
+			document.formular.submit();
+		}
+	}
+}
+</script>
 <div id="login">
-     <a name="pustekuchen"></a>
-     <div id="login_text_1">
-        <div style="position: absolute; left: 12px; width: 110px;">Username</div>
-        <div style="position: absolute; left: 195px; width: 50px;">Password</div>
-	     </div>
-     <div id="login_input">
-     <table border="0" cellpadding="0" cellspacing="0"><tbody><tr style="vertical-align: top;"><td style="padding-right: 4px;">
-	<form name="formular" action="login.php" method="post">
-    <input type="hidden" name="v" value="2">
-      <script type="text/javascript"> document.formular.Uni.focus(); </script>
-	<input name="username" style="width: 180px" type="text" value="" class="eingabe" />
-	<input name="password" style="width: 180px" type="password" value="" class="eingabe" /> 
-  	<input name="submit" style="width: 62px" type="submit" value="Login" />
-	         
-     </td></tr></tbody></table>
-     </div>
-     <div id="downmenu">
-
-	
-     </div>    
+<div id="login_input">
+<form name="formular" action="" method="post" onsubmit="changeAction('login');">
+<table width="400" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr style="vertical-align: top;">
+	<td style="padding-right: 4px;">
+		{User_name} <input name="username" value="" type="text">
+		{Password} <input name="password" value="" type="password">
+	</td>
+</tr><tr>
+	<td style="padding-right: 4px;">
+		{Remember_me} <input name="rememberme" type="checkbox"> <script type="text/javascript">document.formular.Uni.focus(); </script><input name="submit" value="{Login}" type="submit">
+	</td>
+</tr><tr>
+	<td style="padding-right: 4px;">
+		<a href="lostpassword.php">{PasswordLost}</a>
+	</td>
+</tr>
+</tbody>
+</table>
+</form>
 </div>
-
-
-
-<div id="mainmenu">
-    <div class="menupoint">:: Menu ::</div>
-    <a href="reg.php">Register!</a>
-    <a href="about.php">About GameO</a>
-    <a href="pics.php">Screenshots</a>
-    <a href="story.php">Ogame Story</a>
 </div>
-
+<div id="mainmenu" style="margin-top: 20px;">
+<a href="reg.php">{log_reg}</a>
+<a href="{forum_url}">Forum</a>
+<a href="contact.php">Contact</a>
+<a href="credit.php">{log_cred}</a>
+</div>
 <div id="rightmenu" class="rightmenu">
-    <div id="title">SERVERNAME HERE</div>
-    <div id="content">
-        <div id="text1"><strong>OGame is a strategic space simulation game with thousands of players across the world competing with each other simultaneously. All you need to play is a standard web browser.</div>
-        <div id="register" class="bigbutton" onclick="document.location.href='./reg.php';">Register now!</div>
-        <div id="text2"><!--istatistikler!-->
-          <div class="eingabe" align="center"><b>Players online: <font color="red">{online_users}</font> - Newest User: <font color="red">{last_user}</font> - Accounts created: <font color="red">{users_amount}</font></b><!-- - <a href="./reg.php"><font color=lime>Uyelik</font></a>--></div></div>
+<div id="title">{log_welcome} {servername}</div>
+<div id="content">
+<center>
+<div id="text1">
+<div style="text-align: left;"><strong>{servername}</strong> {log_desc} {servername}.
 </div>
-</div></body></html>
+</div>
+<div id="register" class="bigbutton" onclick="document.location.href='reg.php';"><font color="#cc0000">{log_toreg}</font></div>
+<div id="text2">
+<div id="text3">
+<center><b><font color="#00cc00">{log_online}: </font>
+<font color="#c6c7c6">{online_users}</font> - <font color="#00cc00">{log_lastreg}: </font>
+<font color="#c6c7c6">{last_user}</font> - <font color="#00cc00">{log_numbreg}:</font> <font color="#c6c7c6">{users_amount}</font>
+</b></center>
+</div>
+</div>
+</center>
+</div>
+</div>
+</div>

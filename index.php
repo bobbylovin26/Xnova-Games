@@ -1,19 +1,20 @@
-<?php //index.php :: Pagina inicial
-ob_start(); 
+<?php
 
-define('INSIDE', true);
-$ugamela_root_path = './';
-include($ugamela_root_path . 'extension.inc');
-include($ugamela_root_path . 'common.'.$phpEx);
+/**
+ * index.php
+ *
+ * @version 1.0
+ * @copyright 2008 by e-Zobar for XNova
+ */
 
+if (filesize('config.php') == 0) {
+	header('location: install/');
+	exit();
+}
 
-if(!check_user()){ header("Location: login.php"); }
+header('location: login.php');
 
-//Index con dos frames
-echo parsetemplate(gettemplate('index_frames'), $lang);
-
-
-
-ob_end_flush();
-// Created by Perberos. All rights reserved (C) 2006
+// -----------------------------------------------------------------------------------------------------------
+// History version
+// 1.0 - Creation avec redirection vers l'installeur si pas de config.php
 ?>

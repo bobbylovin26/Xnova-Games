@@ -1,294 +1,521 @@
-<?
-define('INSIDE', true);
-$ugamela_root_path = './';
-include($ugamela_root_path . 'extension.inc');
-include($ugamela_root_path . 'common.'.$phpEx);
-include('ban.php');
-if(!check_user()){ header("Location: login.php"); }
+<?php
 
-//
-// Esta funcion permite cambiar el planeta actual.
-//
-include($ugamela_root_path . 'includes/planet_toggle.'.$phpEx);
+/**
+ * floten3.php
+ *
+ * @version 1.0
+ * @copyright 2008 by Chlorel for XNova
+ */
 
-$planetrow = doquery("SELECT * FROM {{table}} WHERE id={$user['current_planet']}",'planets',true);
-$enemyrow =doquery("SELECT * FROM {{table}} WHERE galaxy={$_POST['galaxy']} AND system={$_POST['system']} AND planet={$_POST['planet']}",'planets',true);
-$galaxyrow = doquery("SELECT * FROM {{table}} WHERE id_planet={$planetrow['id']}",'galaxy',true);
-$mnoznik = $game_config['resource_multiplier'];
-$protection = $game_config['noobprotection'];
-$protectiontime = $game_config['noobprotectiontime'];
-$protectionmulti = $game_config['noobprotectionmulti'];
-$galaxy = $_POST['galaxy'];
-$system = $_POST['system'];
-$planet = $_POST['planet'];
-$flota = unserialize(base64_decode($_POST["flota"]));
-foreach ($flota as $a => $b){
-	if ($b > $planetrow[$resource[$a]]){
-	message("<font color=\"red\"><b>Filoda Hata","error","fleet.".$phpEx,2);
+define('INSIDE'  , true);
+define('INSTALL' , false);
+
+$xnova_root_path = './';
+include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'common.' . $phpEx);
+
+	$dpath     = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
+
+	includeLang('fleet');
+
+	$CurrentPlanet = doquery("SELECT * FROM {{table}} WHERE `id` = '". $user['current_planet'] ."'", 'planets', true);
+	$TargetPlanet  = doquery("SELECT * FROM {{table}} WHERE `galaxy` = '". $_POST['galaxy'] ."' AND `system` = '". $_POST['system'] ."' AND `planet` = '". $_POST['planet'] ."' AND `planet_type` = '". $_POST['planettype'] ."';", 'planets', true);
+	$MyDBRec       = doquery("SELECT * FROM {{table}} WHERE `id` = '". $user['id']."';", 'users', true);
+
+	$protection      = $game_config['noobprotection'];
+	$protectiontime  = $game_config['noobprotectiontime'];
+	$protectionmulti = $game_config['noobprotectionmulti'];
+	if ($protectiontime < 1) {
+		$protectiontime = 9999999999999999;
 	}
-}
-if($protectiontime < 1){
-	$protectiontime = 9999999999999999;
-}
-check_field_current($planetrow);
-//$flota = doquery("SELECT * FROM {{table}} WHERE fleet_owner={$user['id']}",'flota',true);
-$dpath = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
-$enemyrow =doquery("SELECT * FROM {{table}} WHERE galaxy={$_POST['galaxy']} AND system={$_POST['system']} AND planet={$_POST['planet']}",'planets',true);
-$idja = doquery("SELECT * FROM {{table}} WHERE id={$user['id']}",'users',true);
-if($enemyrow['id_owner'] == ''){
-	$idty = $idja;
-} elseif($enemyrow['id_owner'] != ''){
-	$idty = doquery("SELECT * FROM {{table}} WHERE id={$enemyrow['id_owner']}",'users',true);
-}
-$noobja = $idja['points_points'];
-$noobty = $idty['points_points'];
-	
-$ilosc_flot_w_powietrzu =mysql_fetch_assoc(doquery("SELECT COUNT(fleet_id) as ilosc FROM {{table}} WHERE `fleet_owner`='{$user['id']}'",'fleets'));
-$ilosc_flot_w_powietrzu = $ilosc_flot_w_powietrzu["ilosc"];
-if (($user[$resource[108]] + 1) <= $ilosc_flot_w_powietrzu){
-	message("Nie jestes w stanie utrzymac takiej ilosci lecacych flot.","Ilosc flot","fleet.".$phpEx,1);
-}
 
-if($noobja > ($noobty*$protectionmulti) and $enemyrow['id_owner'] != '' and $_POST['mission'] == 1 and $protection == 1 and $noobty < ($protectiontime*1000)){
-	message("<font color=\"lime\"><b>Bu Oyuncu Sizin icin cok gucsuz!!!","Noobprotection-Attack","fleet.".$phpEx,2);
-}
-	
-if($noobja > ($noobty*$protectionmulti) and $enemyrow['id_owner'] != '' and $_POST['mission'] == 5 and $protection == 1 and $noobty < ($protectiontime*1000))
-{
-	message("<font color=\"lime\"><b>Bu Player Sizin icin cok gucsuz!!!","Noobprotection-Yok Etme","fleet.".$phpEx,2);
-}
-	
-if($noobja > ($noobty*$protectionmulti) and $enemyrow['id_owner'] != '' and $_POST['mission'] == 6 and $protection == 1 and $noobty < ($protectiontime*1000))
-{
-	message("<font color=\"lime\"><b>Bu Player Sizin icin cok gucsuz!!!","Noobprotection-Casusluk","fleet.".$phpEx,2);
-}
-	
-if(($noobja*$protectionmulti) < $noobty and $enemyrow['id_owner'] != '' and $_POST['mission'] == 1 and $protection == 1 and $noobja < ($protectiontime*1000))
-{
-	message("<font color=\"red\"><b>Bu Player Sizin icin cok guclu!!!","Noobprotection-Attack","fleet.".$phpEx,2);
-}
+	$fleetarray  = unserialize(base64_decode(str_rot13($_POST["usedfleet"])));
 
-if(($noobja*$protectionmulti) < $noobty and $enemyrow['id_owner'] != '' and $_POST['mission'] == 5 and $protection == 1 and $noobja < ($protectiontime*1000))
-{
-	message("<font color=\"red\"><b>Bu Player Sizin icin cok guclu!!!","Noobprotection-Yok Etme","fleet.".$phpEx,2);
-}
+	if (!is_array($fleetarray)) {
+		message ("<font color=\"red\"><b>". $lang['fl_fleet_err'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+	}
 
-if(($noobja*$protectionmulti) < $noobty and $enemyrow['id_owner'] != '' and $_POST['mission'] == 6 and $protection == 1 and $noobja < ($protectiontime*1000))
-{
-	message("<font color=\"red\"><b>Bu Player Sizin icin cok guclu!!!","Noobprotection-Casuluk","fleet.".$phpEx,10);
-}
+	// On verifie s'il y a assez de vaisseaux sur la planete !
+	foreach ($fleetarray as $Ship => $Count) {
+		if ($Count > $CurrentPlanet[$resource[$Ship]]) {
+			message ("<font color=\"red\"><b>". $lang['fl_fleet_err'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+		}
+	}
 
-if ($_POST['resource1'] + $_POST['resource2'] + $_POST['resource3'] < 1 and $_POST['mission'] == 3){
-	message("Bu Transport Sadece hammadeler icin.","Transport","fleet.".$phpEx,1);
-}
+	$error              = 0;
+	$galaxy             = intval($_POST['galaxy']);
+	$system             = intval($_POST['system']);
+	$planet             = intval($_POST['planet']);
+    $planettype         = intval($_POST['planettype']);
+    $fleetmission       = $_POST['mission'];
 
-if ($enemyrow['id_owner'] == '' and $_POST['mission'] < 9){
-	message("Bu Gezegen Terkedilmis.","error","fleet.".$phpEx,1);
-}
-		
-if ($enemyrow['id_owner'] != '' and $_POST['mission'] == 9){
-	message("Bu Gezegen Cok Dolu.","error","fleet.".$phpEx,1);
-}
-	
-if($idty['ally_id'] != $idja['ally_id'] and $_POST['mission'] == 4){
-	message("Oyuncular Ayni ittifakta.","B³±d","fleet.".$phpEx,1);
-}
+	if ($planettype != 1 && $planettype != 2 && $planettype != 3) {
+		message ("<font color=\"red\"><b>". $lang['fl_fleet_err_pl'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+	}
 
-if($enemyrow['ally_deposit'] < 1 and $idty != $idja and $_POST['mission'] == 4){
-	message("oyuncular ayni ittifakta olmali.","B³±d","fleet.".$phpEx,1);
-}
-if (($enemyrow["id_owner"] == $planetrow["id_owner"]) and ($_POST["mission"] == 1)) {
-	message("Nie mozna atakowac samego siebie.","Error");
-}
-if (($enemyrow["id_owner"] == $planetrow["id_owner"]) and ($_POST["mission"] == 6)) {
-	message("Nie mozna szpiegowaæ samego siebie.","Error");
-}
-if (($enemyrow["id_owner"] != $planetrow["id_owner"]) and ($_POST["mission"] == 4)) {
-	message("Nie stacjonowac floty u kogos.","Error");
-}
+	if ($fleetmission == 8) {
+		$YourPlanet = false;
+		$UsedPlanet = false;
+		$select     = doquery("SELECT * FROM {{table}} WHERE galaxy = '". $galaxy ."' AND system = '". $system ."' AND planet = '". $planet ."'", "planets");
+	} else {
+		$YourPlanet = false;
+		$UsedPlanet = false;
+		$select     = doquery("SELECT * FROM {{table}} WHERE galaxy = '". $galaxy ."' AND system = '". $system ."' AND planet = '". $planet ."' AND planet_type = '". $planettype ."'", "planets");
+	}
 
-includeLang('fleet');
-includeLang('tech');
+	if ($CurrentPlanet['galaxy'] == $galaxy &&
+		$CurrentPlanet['system'] == $system &&
+		$CurrentPlanet['planet'] == $planet &&
+		$CurrentPlanet['planet_type'] == $planettype) {
+		message ("<font color=\"red\"><b>". $lang['fl_ownpl_err'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+	}
 
-{//info
+	// Test d'existance de l'enregistrement dans la gaalxie !
+	if ($_POST['mission'] != 15) {
+		if (mysql_num_rows($select) < 1 && $fleetmission != 7) {
+			message ("<font color=\"red\"><b>". $lang['fl_unknow_target'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+		} elseif ($fleetmission == 9 && mysql_num_rows($select) < 1) {
+			message ("<font color=\"red\"><b>". $lang['fl_used_target'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+		}
+	} else {
+	    $EnvoiMaxExpedition = $_POST['maxepedition'];
+	    $Expedition         = $_POST['curepedition'];
+
+	    if       ($EnvoiMaxExpedition == 0 ) {
+			message ("<font color=\"red\"><b>". $lang['fl_expe_notech'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+		} elseif ($Expedition >= $EnvoiMaxExpedition ) {
+			message ("<font color=\"red\"><b>". $lang['fl_expe_max'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+		}
+	}
+
+	$select = mysql_fetch_array($select);
+
+	if ($select['id_owner'] == $user['id']) {
+		$YourPlanet = true;
+		$UsedPlanet = true;
+	} elseif (!empty($select['id_owner'])) {
+		$YourPlanet = false;
+		$UsedPlanet = true;
+	} else {
+		$YourPlanet = false;
+		$UsedPlanet = false;
+	}
+
+	// Determinons les type de missions possibles par rapport a la planete cible
+	if ($fleetmission == 15) {
+		// Gestion des Expï¿½ditions
+		$missiontype = array(15 => $lang['type_mission'][15]);
+	} else {
+		if ($_POST['planettype'] == "2") {
+			if ($_POST['ship209'] >= 1) {
+				$missiontype = array(8 => $lang['type_mission'][8]);
+			} else {
+				$missiontype = array();
+			}
+		} elseif ($_POST['planettype'] == "1" || $_POST['planettype'] == "3") {
+			if ($_POST['ship208'] >= 1 && !$UsedPlanet) {
+				$missiontype = array(7 => $lang['type_mission'][7]);
+			} elseif ($_POST['ship210'] >= 1 && !$YourPlanet) {
+				$missiontype = array(6 => $lang['type_mission'][6]);
+			}
+
+			if ($_POST['ship202'] >= 1 ||
+				$_POST['ship203'] >= 1 ||
+				$_POST['ship204'] >= 1 ||
+				$_POST['ship205'] >= 1 ||
+				$_POST['ship206'] >= 1 ||
+				$_POST['ship207'] >= 1 ||
+				$_POST['ship210'] >= 1 ||
+				$_POST['ship211'] >= 1 ||
+				$_POST['ship213'] >= 1 ||
+				$_POST['ship214'] >= 1 ||
+				$_POST['ship215'] >= 1) {
+				if (!$YourPlanet) {
+					$missiontype[1] = $lang['type_mission'][1];
+				}
+				$missiontype[3] = $lang['type_mission'][3];
+				$missiontype[5] = $lang['type_mission'][5];
+			}
+
+
+		} elseif ($_POST['ship209'] >= 1 || $_POST['ship208']) {
+			$missiontype[3] = $lang['type_mission'][3];
+		}
+		if ($YourPlanet)
+			$missiontype[4] = $lang['type_mission'][4];
+
+		if ( $_POST['planettype'] == 3 &&
+			($_POST['ship214']         ||
+			 $_POST['ship213'])        &&
+			 !$YourPlanet              &&
+			 $UsedPlanet) {
+			$missiontype[2] = $lang['type_mission'][2];
+		}
+        if ( $_POST['planettype'] == 3 &&
+	     $_POST['ship214'] >= 1    &&
+           !$YourPlanet            &&
+           $UsedPlanet) {
+          $missiontype[9] = $lang['type_mission'][9];
+        }
+	}
+
+	if (empty($missiontype[$fleetmission])) {
+		message ("<font color=\"red\"><b>". $lang['fl_bad_mission'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+	}
+
+	CheckPlanetUsedFields($CurrentPlanet);
+
+	if ($TargetPlanet['id_owner'] == '') {
+		$HeDBRec = $MyDBRec;
+	} elseif ($TargetPlanet['id_owner'] != '') {
+		$HeDBRec = doquery("SELECT * FROM {{table}} WHERE `id` = '". $TargetPlanet['id_owner'] ."';", 'users', true);
+	}
+
+	$UserPoints    = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $MyDBRec['id'] ."';", 'statpoints', true);
+	$User2Points   = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $HeDBRec['id'] ."';", 'statpoints', true);
+
+	$MyGameLevel  = $UserPoints['total_points'];
+	$HeGameLevel  = $User2Points['total_points'];
+	$VacationMode = $HeDBRec['urlaubs_modus'];
+
+	if ($MyGameLevel > ($HeGameLevel * $protectionmulti) AND
+		$TargetPlanet['id_owner'] != '' AND
+		$_POST['mission']     == 1  AND
+		$protection           == 1  AND
+		$HeGameLevel < ($protectiontime * 1000)) {
+		message("<font color=\"lime\"><b>".$lang['fl_noob_mess_n']."</b></font>", $lang['fl_noob_title'], "fleet." . $phpEx, 2);
+	}
+
+	if ($MyGameLevel > ($HeGameLevel * $protectionmulti) AND
+		$TargetPlanet['id_owner'] != '' AND
+		$_POST['mission']     == 5  AND
+		$protection           == 1  AND
+		$HeGameLevel < ($protectiontime * 1000)) {
+		message("<font color=\"lime\"><b>".$lang['fl_noob_mess_n']."</b></font>", $lang['fl_noob_title'], "fleet." . $phpEx, 2);
+	}
+
+	if ($MyGameLevel > ($HeGameLevel * $protectionmulti) AND
+		$TargetPlanet['id_owner'] != '' AND
+		$_POST['mission']     == 6  AND
+		$protection           == 1  AND
+		$HeGameLevel < ($protectiontime * 1000)) {
+		message("<font color=\"lime\"><b>".$lang['fl_noob_mess_n']."</b></font>", $lang['fl_noob_title'], "fleet." . $phpEx, 2);
+	}
+
+	if (($MyGameLevel * $protectionmulti) < $HeGameLevel AND
+		$TargetPlanet['id_owner'] != '' AND
+		$_POST['mission']     == 1  AND
+		$protection           == 1  AND
+		$MyGameLevel < ($protectiontime * 1000)) {
+		message("<font color=\"lime\"><b>".$lang['fl_noob_mess_n']."</b></font>", $lang['fl_noob_title'], "fleet." . $phpEx, 2);
+	}
+
+	if (($MyGameLevel * $protectionmulti) < $HeGameLevel AND
+		$TargetPlanet['id_owner'] != '' AND
+		$_POST['mission']     == 5  AND
+		$protection           == 1  AND
+		$MyGameLevel < ($protectiontime * 1000)) {
+		message("<font color=\"lime\"><b>".$lang['fl_noob_mess_n']."</b></font>", $lang['fl_noob_title'], "fleet." . $phpEx, 2);
+	}
+
+	if (($MyGameLevel * $protectionmulti) < $HeGameLevel AND
+		$TargetPlanet['id_owner'] != '' AND
+		$_POST['mission']     == 6  AND
+		$protection           == 1  AND
+		$MyGameLevel < ($protectiontime * 1000)) {
+		message("<font color=\"lime\"><b>".$lang['fl_noob_mess_n']."</b></font>", $lang['fl_noob_title'], "fleet." . $phpEx, 2);
+	}
+
+	if ($VacationMode AND $_POST['mission'] != 8) {
+		message("<font color=\"lime\"><b>".$lang['fl_vacation_pla']."</b></font>", $lang['fl_vacation_ttl'], "fleet." . $phpEx, 2);
+	}
+
+	$FlyingFleets = mysql_fetch_assoc(doquery("SELECT COUNT(fleet_id) as Number FROM {{table}} WHERE `fleet_owner`='{$user['id']}'", 'fleets'));
+	$ActualFleets = $FlyingFleets["Number"];
+	if (($user[$resource[108]] + 1) <= $ActualFleets) {
+		message("Pas de slot disponible", "Erreur", "fleet." . $phpEx, 1);
+	}
+
+	if ($_POST['resource1'] + $_POST['resource2'] + $_POST['resource3'] < 1 AND $_POST['mission'] == 3) {
+		message("<font color=\"lime\"><b>".$lang['fl_noenoughtgoods']."</b></font>", $lang['type_mission'][3], "fleet." . $phpEx, 1);
+	}
+	if ($_POST['mission'] != 15) {
+		if ($TargetPlanet['id_owner'] == '' AND $_POST['mission'] < 7) {
+			message ("<font color=\"red\"><b>". $lang['fl_bad_planet01'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+		}
+		if ($TargetPlanet['id_owner'] != '' AND $_POST['mission'] == 7) {
+			message ("<font color=\"red\"><b>". $lang['fl_bad_planet02'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+		}
+		if ($HeDBRec['ally_id'] != $MyDBRec['ally_id'] AND $_POST['mission'] == 4) {
+			message ("<font color=\"red\"><b>". $lang['fl_dont_stay_here'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+		}
+		if ($TargetPlanet['ally_deposit'] < 1 AND $HeDBRec != $MyDBRec AND $_POST['mission'] == 5) {
+			message ("<font color=\"red\"><b>". $lang['fl_no_allydeposit'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+		}
+		if (($TargetPlanet["id_owner"] == $CurrentPlanet["id_owner"]) AND ($_POST["mission"] == 1)) {
+			message ("<font color=\"red\"><b>". $lang['fl_no_self_attack'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+		}
+		if (($TargetPlanet["id_owner"] == $CurrentPlanet["id_owner"]) AND ($_POST["mission"] == 6)) {
+			message ("<font color=\"red\"><b>". $lang['fl_no_self_spy'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+		}
+		if (($TargetPlanet["id_owner"] != $CurrentPlanet["id_owner"]) AND ($_POST["mission"] == 4)) {
+			message ("<font color=\"red\"><b>". $lang['fl_only_stay_at_home'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+		}
+	}
 
 	$missiontype = array(
-		1 => 'Attack',
-		3 => 'Transport',
-		4 => 'Deploy',
-		5 => 'Destroy',
-		6 => 'Espionage',
-		8 => 'Harvest',
-		9 => 'Colonize',
+		1 => $lang['type_mission'][1],
+		2 => $lang['type_mission'][2],
+		3 => $lang['type_mission'][3],
+		4 => $lang['type_mission'][4],
+		5 => $lang['type_mission'][5],
+		6 => $lang['type_mission'][6],
+		7 => $lang['type_mission'][7],
+		8 => $lang['type_mission'][8],
+		9 => $lang['type_mission'][9],
+		15 => $lang['type_mission'][15],
 		);
-		
-	$speed = array(
-		10 => 100,
-		9 => 90,
-		8 => 80,
-		7 => 70,
-		6 => 60,
-		5 => 50,
-		4 => 40,
-		3 => 30,
-		2 => 20,
-		1 => 10,
-		);
-}
 
+	$speed_possible = array(10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
 
-	if(!$g){$g = $planetrow['galaxy'];}
-	if(!$s){$s = $planetrow['system'];}
-	if(!$p){$p = $planetrow['planet'];}
-	if(!$t){$t = $planetrow['planet_type'];}
-	
-	/*
-	  UUURRRRGGGGGG!!!!
-	*/
-	//en caso de que no exista el tipo de planeta destino
-	if(!$_POST['planettype']){message('Debes elegir el tipo de destino.'."Error");}
+	$AllFleetSpeed  = GetFleetMaxSpeed ($fleetarray, 0, $user);
+	$GenFleetSpeed  = $_POST['speed'];
+	$SpeedFactor    = $_POST['speedfactor'];
+	$MaxFleetSpeed  = min($AllFleetSpeed);
 
-	//para las coordenadas del planeta destino
-	if(!$_POST['galaxy']){$error++;$errorlist .= 'Debes elegir la galaxia destino.';}
-	if(!$_POST['system']){$error++;$errorlist .= 'Debes elegir el sistema destino.';}
-	if(!$_POST['planet']){$error++;$errorlist .= 'Debes elegir la posicion destino.';}
-
-	//Para comprobar de que la flota que se envia, sea la misma del planeta
-    if($_POST['thisgalaxy'] != $planetrow['galaxy']|$_POST['thissystem'] != $planetrow['system']|$_POST['thisplanet'] != $planetrow['planet']|$_POST['thisplanettype'] != $planetrow['planet_type']){message('...',"WTF!");}
-	//Se comprueba de que se tengan los recursos.
-	/*
-	  Ahora se debe obtener la lista de naves, para agregarlas a la array
-	  Solo un megaloop comprobando si esta la nave, y cuantas.
-	*/
-/*	$pquery = str_replace("'","^",$pquery);
-	$query = "`query`='{$pquery}',";
-	doquery("INSERT INTO {{table}} SET
-	$query
-	`fleet_owner`='{$user['id']}',
-	`fleet_amount`='{$fleet['amount']}',
-	`fleet_array`='{$fleet['fleetlist']}'"
-	,'flota');
-	
-*/
-	
-if(!isset($flota)){message("Gemi Sec.","Error");}
-
-if (($_POST['thisgalaxy'] - $_POST['galaxy']) != 0){
-	$dista = abs($_POST['thisgalaxy'] - $_POST['galaxy']) * 20000;
-}
-elseif (($_POST['thissystem'] - $_POST['system']) != 0){
-	$dista = abs($_POST['thissystem'] - $_POST['system']) * 95 + 2700;
-}	
-elseif (($_POST['thisplanet'] - $_POST['planet']) != 0){
-	$dista = abs($_POST['thisplanet'] - $_POST['planet']) * 5 + 1000;
-} else {
-	$dista = 5;
-}
-$fleet['fly_time'] = round(35000 / $_POST['speed'] * sqrt($dista * 10 / $_POST['speedallsmin'] )) / ($game_config['fleet_speed']/2500);
-$fleet['start_time'] = round(35000 / $_POST['speed'] * sqrt($dista * 10 / $_POST['speedallsmin'] )) / ($game_config['fleet_speed']/2500) + time();
-$fleet['end_time'] = 2*(round(35000 / $_POST['speed'] * sqrt($dista * 10 / $_POST['speedallsmin'] )) / ($game_config['fleet_speed']/2500) ) + time();
-$consumption = 0;
-$pojemosc = 0;
-$ilosc_floty = 0;
-$fleet_array="";
-$pquery="";
-foreach($flota as $a =>$b){
-	$shipSpeed = $pricelist[$a]["speed"];
-	$spd = 35000 / ($fleet['fly_time'] * ($game_config['fleet_speed']/2500) - 10) * sqrt($dista * 10 / $shipSpeed);
-	$basicConsumption = $pricelist[$a]["consumption"] * $b ;
-	$spidq = (($spd/10) + 1) * (($spd/10) + 1);
-	$consumption = $consumption + $basicConsumption * $dista / 35000 * $spidq;
-//	echo "dista: ".$dista." spd: ".$spd." spidq: ".$spidq." consumption: ".$basicConsumption." sumcons: ".$consumption."\n";
-	$pojemosc = $pojemosc + $pricelist[$a]["capacity"]*$b;
-	$ilosc_floty = $ilosc_floty + $b;
-	$fleet_array .= $a.",".$b.";";
-	$pquery .= $resource[$a]." = ".$resource[$a]." - ".$b." , ";
-}
-$consumption = round($consumption) + 1;
-
-//echo $consumption."\n";
-//die();
-
-if($_POST['resource1'] > $planetrow['metal']|$_POST['resource2'] > $planetrow['crystal']|$_POST['resource3'] > ($planetrow['deuterium'] - $consumption)){
-	message("Bu Gezegende Yeterli Hammadde yok.","Error");
-}
-if(($_POST['resource1'] + $_POST['resource2'] + $_POST['resource3']) > ($pojemosc - $consumption)){
-	message("Yeterli Gemi Yok.:".(($_POST['resource1'] + $_POST['resource2'] + $_POST['resource3']) - ($pojemosc - $consumption)),"Error");
-}
-//$fleetlist contiene la lista de flotas, Esta se colocara en una row
-//dentro de la sql
-doquery("INSERT INTO {{table}} SET
-	`fleet_owner`='{$user['id']}',
-	`fleet_mission`='{$_POST['mission']}',
-	`fleet_amount`='{$ilosc_floty}',
-	`fleet_array`='{$fleet_array}',
-	`fleet_start_time`= '{$fleet['start_time']}',
-	`fleet_start_galaxy`='{$_POST['thisgalaxy']}',
-	`fleet_start_system`='{$_POST['thissystem']}',
-	`fleet_start_planet`='{$_POST['thisplanet']}',
-	`fleet_start_type`='{$_POST['planettype']}',
-	`fleet_end_time`='{$fleet['end_time']}',
-	`fleet_end_galaxy`='{$_POST['galaxy']}',
-	`fleet_end_system`='{$_POST['system']}',
-	`fleet_end_planet`='{$_POST['planet']}',
-	`fleet_end_type`='{$_POST['thisplanettype']}',
-	`fleet_resource_metal` = '{$_POST['resource1']}',
-	`fleet_resource_crystal` = '{$_POST['resource2']}',
-	`fleet_resource_deuterium` = '{$_POST['resource3']}',
-	`fleet_ofiara`='{$enemyrow['id_owner']}'",'fleets');
-
-	if ($_POST['resource1'] < 1){
-		$transport["metal"] = 0;
-	} else {
-		$transport["metal"] = $_POST['resource1'];
+	if (!in_array($GenFleetSpeed, $speed_possible)) {
+		message ("<font color=\"red\"><b>". $lang['fl_cheat_speed'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
 	}
-	if ($_POST['resource2'] < 1){
-		$transport["crystal"] = 0;
-	} else {
-		$transport["crystal"] = $_POST['resource2'];
+
+	$CurrentPlanet = doquery("SELECT * FROM {{table}} WHERE `id` = '".$user['current_planet']."';", 'planets', true);
+
+	if ($MaxFleetSpeed != $_POST['speedallsmin']) {
+		message ("<font color=\"red\"><b>". $lang['fl_cheat_speed'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
 	}
-	if ($_POST['resource3'] < 1){
-		$transport["deuterium"] = 0 + $consumption;
-	} else {
-		$transport["deuterium"] = $_POST['resource3'] + $consumption;
+
+	if (!$_POST['planettype']) {
+		message ("<font color=\"red\"><b>". $lang['fl_no_planet_type'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
 	}
-	$planetrow["metal"] = $planetrow["metal"] - $transport["metal"];
-	$planetrow["crystal"] = $planetrow["crystal"] - $transport["crystal"];
-	$planetrow["deuterium"] = $planetrow["deuterium"] - $transport["deuterium"];
-	$query = "UPDATE {{table}} SET
-	metal=metal - '{$transport["metal"]}',
-	crystal=crystal - '{$transport["crystal"]}',
-	deuterium=deuterium - '{$transport["deuterium"]}',
-	$pquery
-	id_owner='{$planetrow['id_owner']}'
-	WHERE id={$planetrow['id']}";
-	doquery($query,"planets");
 
-	//ahora se deven quitar las naves correspondientes
-	//o mejor dicho. actualizar el row del planet
+	// Test de coherance de la destination (voir si elle se trouve dans les limites de l'univers connu
+	$error     = 0;
+	$errorlist = "";
+	if (!$_POST['galaxy'] || !is_numeric($_POST['galaxy']) || $_POST['galaxy'] > 9 || $_POST['galaxy'] < 1) {
+		$error++;
+		$errorlist .= $lang['fl_limit_galaxy'];
+	}
+	if (!$_POST['system'] || !is_numeric($_POST['system']) || $_POST['system'] > 499 || $_POST['system'] < 1) {
+		$error++;
+		$errorlist .= $lang['fl_limit_system'];
+	}
+	if (!$_POST['planet'] || !is_numeric($_POST['planet']) || $_POST['planet'] > 16 || $_POST['planet'] < 1) {
+		$error++;
+		$errorlist .= $lang['fl_limit_planet'];
+	}
 
-	//$missiontype corresponde al tipo de accion a tomar.
+	if ($error > 0) {
+		message ("<font color=\"red\"><ul>" . $errorlist . "</ul></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+	}
+
+	// La flotte part bien de la planete courrante ??
+	if ($_POST['thisgalaxy'] != $CurrentPlanet['galaxy'] |
+		$_POST['thissystem'] != $CurrentPlanet['system'] |
+		$_POST['thisplanet'] != $CurrentPlanet['planet'] |
+		$_POST['thisplanettype'] != $CurrentPlanet['planet_type']) {
+		message ("<font color=\"red\"><b>". $lang['fl_cheat_origine'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+	}
+
+	if (!isset($fleetarray)) {
+		message ("<font color=\"red\"><b>". $lang['fl_no_fleetarray'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+	}
+
+	$distance      = GetTargetDistance ( $_POST['thisgalaxy'], $_POST['galaxy'], $_POST['thissystem'], $_POST['system'], $_POST['thisplanet'], $_POST['planet'] );
+	$duration      = GetMissionDuration ( $GenFleetSpeed, $MaxFleetSpeed, $distance, $SpeedFactor );
+	$consumption   = GetFleetConsumption ( $fleetarray, $SpeedFactor, $duration, $distance, $MaxFleetSpeed, $user );
+
+	$fleet['start_time'] = $duration + time();
+	if ($_POST['mission'] == 15) {
+		$StayDuration    = $_POST['expeditiontime'] * 3600;
+		$StayTime        = $fleet['start_time'] + $_POST['expeditiontime'] * 3600;
+	} elseif ($_POST['mission'] == 5) {
+		$StayDuration    = $_POST['holdingtime'] * 3600;
+		$StayTime        = $fleet['start_time'] + $_POST['holdingtime'] * 3600;
+	} else {
+		$StayDuration    = 0;
+		$StayTime        = 0;
+	}
+	$fleet['end_time']   = $StayDuration + (2 * $duration) + time();
+	$FleetStorage        = 0;
+	$FleetShipCount      = 0;
+	$fleet_array         = "";
+	$FleetSubQRY         = "";
+
+	foreach ($fleetarray as $Ship => $Count) {
+		$FleetStorage    += $pricelist[$Ship]["capacity"] * $Count;
+		$FleetShipCount  += $Count;
+		$fleet_array     .= $Ship .",". $Count .";";
+		$FleetSubQRY     .= "`".$resource[$Ship] . "` = `" . $resource[$Ship] . "` - " . $Count . " , ";
+	}
+
+	$FleetStorage        -= $consumption;
+	$StorageNeeded        = 0;
+	if ($_POST['resource1'] < 1) {
+		$TransMetal      = 0;
+	} else {
+		$TransMetal      = $_POST['resource1'];
+		$StorageNeeded  += $TransMetal;
+	}
+	if ($_POST['resource2'] < 1) {
+		$TransCrystal    = 0;
+	} else {
+		$TransCrystal    = $_POST['resource2'];
+		$StorageNeeded  += $TransCrystal;
+	}
+	if ($_POST['resource3'] < 1) {
+		$TransDeuterium  = 0;
+	} else {
+		$TransDeuterium  = $_POST['resource3'];
+		$StorageNeeded  += $TransDeuterium;
+	}
+
+	$StockMetal      = $CurrentPlanet['metal'];
+	$StockCrystal    = $CurrentPlanet['crystal'];
+	$StockDeuterium  = $CurrentPlanet['deuterium'];
+	$StockDeuterium -= $consumption;
+
+	$StockOk         = false;
+	if ($StockMetal >= $TransMetal) {
+		if ($StockCrystal >= $TransCrystal) {
+			if ($StockDeuterium >= $TransDeuterium) {
+				$StockOk         = true;
+			}
+		}
+	}
+	if ( !$StockOk ) {
+		message ("<font color=\"red\"><b>". $lang['fl_noressources'] . pretty_number($consumption) ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+	}
+
+	if ( $StorageNeeded > $FleetStorage) {
+		message ("<font color=\"red\"><b>". $lang['fl_nostoragespa'] . pretty_number($StorageNeeded - $FleetStorage) ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+	}
+
+	if ($TargetPlanet['id_level'] > $user['authlevel']) {
+		$Allowed = true;
+		switch ($_POST['mission']){
+			case 1:
+			case 2:
+			case 6:
+			case 9:
+				$Allowed = false;
+				break;
+			case 3:
+			case 4:
+			case 5:
+			case 7:
+			case 8:
+			case 15:
+				break;
+			default:
+		}
+		if ($Allowed == false) {
+			message ("<font color=\"red\"><b>". $lang['fl_adm_attak'] ."</b></font>", $lang['fl_warning'], "fleet." . $phpEx, 2);
+		}
+	}
+
+	// ecriture de l'enregistrement de flotte (a partir de lï¿½, y a quelque chose qui vole et c'est toujours sur la planete d'origine)
+	$QryInsertFleet  = "INSERT INTO {{table}} SET ";
+	$QryInsertFleet .= "`fleet_owner` = '". $user['id'] ."', ";
+	$QryInsertFleet .= "`fleet_mission` = '". $_POST['mission'] ."', ";
+	$QryInsertFleet .= "`fleet_amount` = '". $FleetShipCount ."', ";
+	$QryInsertFleet .= "`fleet_array` = '". $fleet_array ."', ";
+	$QryInsertFleet .= "`fleet_start_time` = '". $fleet['start_time'] ."', ";
+	$QryInsertFleet .= "`fleet_start_galaxy` = '". intval($_POST['thisgalaxy']) ."', ";
+	$QryInsertFleet .= "`fleet_start_system` = '". intval($_POST['thissystem']) ."', ";
+	$QryInsertFleet .= "`fleet_start_planet` = '". intval($_POST['thisplanet']) ."', ";
+	$QryInsertFleet .= "`fleet_start_type` = '". intval($_POST['thisplanettype']) ."', ";
+	$QryInsertFleet .= "`fleet_end_time` = '". $fleet['end_time'] ."', ";
+	$QryInsertFleet .= "`fleet_end_stay` = '". $StayTime ."', ";
+	$QryInsertFleet .= "`fleet_end_galaxy` = '". intval($_POST['galaxy']) ."', ";
+	$QryInsertFleet .= "`fleet_end_system` = '". intval($_POST['system']) ."', ";
+	$QryInsertFleet .= "`fleet_end_planet` = '". intval($_POST['planet']) ."', ";
+	$QryInsertFleet .= "`fleet_end_type` = '". intval($_POST['planettype']) ."', ";
+	$QryInsertFleet .= "`fleet_resource_metal` = '". $TransMetal ."', ";
+	$QryInsertFleet .= "`fleet_resource_crystal` = '". $TransCrystal ."', ";
+	$QryInsertFleet .= "`fleet_resource_deuterium` = '". $TransDeuterium ."', ";
+	$QryInsertFleet .= "`fleet_target_owner` = '". $TargetPlanet['id_owner'] ."', ";
+	$QryInsertFleet .= "`start_time` = '". time() ."';";
+	doquery( $QryInsertFleet, 'fleets');
 
 
-	$page = '<table border="0" cellpadding="0" cellspacing="1" width="519"><br>';
-	$page .= '<tr height="20"><td class="c" colspan="2">';
-	$page .= '<span class="success">Details:</span>';
-	$page .= '</td></tr>';
-	$misja = $missiontype[$_POST['mission']]  ;
-	$page .= "<tr height=20><th>Mission</th><th>{$misja}</th></tr>";
-	$page .= "<tr height=20><th>Distance</th><th>{$dista}</th></tr>";
-	$page .= "<tr height=20><th>Speed</th><th>".$_POST['speedallsmin']."</th></tr>";
-	$page .= "<tr height=20><th>Deuterium Consumption</th><th>{$consumption}</th></tr>";
-	$page .= "<tr height=20><th>Start</th><th>{$_POST['thisgalaxy']}:{$_POST['thissystem']}:{$_POST['thisplanet']}</th></tr>";
-	$page .= "<tr height=20><th>Target.</th><th>{$_POST['galaxy']}:{$_POST['system']}:{$_POST['planet']}</th></tr>";
-	$page .= "<tr height=20><th>Begin</th><th>";
-	//hora de lleada
-	$page .= date("M D d H:i:s",$fleet['start_time']).'</th></tr>';
-	$page .= '<tr height="20"><th>End</th><th>';
-	//Hora de vuelta
-	$page .= date("M D d H:i:s",$fleet['end_time']).'</th></tr>';
-	$page .= '<tr height="20"><td class="c" colspan="2">Fleet</td></tr>';
-	$page .= '</table>';
-	display($page,'Flotas');
+	$CurrentPlanet["metal"]     = $CurrentPlanet["metal"] - $TransMetal;
+	$CurrentPlanet["crystal"]   = $CurrentPlanet["crystal"] - $TransCrystal;
+	$CurrentPlanet["deuterium"] = $CurrentPlanet["deuterium"] - $TransDeuterium;
+	$CurrentPlanet["deuterium"] = $CurrentPlanet["deuterium"] - $consumption;
+
+	$QryUpdatePlanet  = "UPDATE {{table}} SET ";
+	$QryUpdatePlanet .= $FleetSubQRY;
+	$QryUpdatePlanet .= "`metal` = '". $CurrentPlanet["metal"] ."', ";
+	$QryUpdatePlanet .= "`crystal` = '". $CurrentPlanet["crystal"] ."', ";
+	$QryUpdatePlanet .= "`deuterium` = '". $CurrentPlanet["deuterium"] ."' ";
+	$QryUpdatePlanet .= "WHERE ";
+	$QryUpdatePlanet .= "`id` = '". $CurrentPlanet['id'] ."'";
+
+	// Mise a jours de l'enregistrement de la planete de depart (a partir de lÃ , y a quelque chose qui vole et ce n'est plus sur la planete de depart)
+	doquery("LOCK TABLE {{table}} WRITE", 'planets');
+	doquery ($QryUpdatePlanet, "planets");
+	doquery("UNLOCK TABLES", '');
+//	doquery("FLUSH TABLES", '');
+
+	// Un peu de blabla pour l'utilisateur, affichage d'un joli tableau de la flotte expediï¿½e
+	$page  = "<br><div><center>";
+	$page .= "<table border=\"0\" cellpadding=\"0\" cellspacing=\"1\" width=\"519\">";
+	$page .= "<tr height=\"20\">";
+	$page .= "<td class=\"c\" colspan=\"2\"><span class=\"success\">". $lang['fl_fleet_send'] ."</span></td>";
+	$page .= "</tr><tr height=\"20\">";
+	$page .= "<th>". $lang['fl_mission'] ."</th>";
+	$page .= "<th>". $missiontype[$_POST['mission']] ."</th>";
+	$page .= "</tr><tr height=\"20\">";
+	$page .= "<th>". $lang['fl_dist'] ."</th>";
+	$page .= "<th>". pretty_number($distance) ."</th>";
+	$page .= "</tr><tr height=\"20\">";
+	$page .= "<th>". $lang['fl_speed'] ."</th>";
+	$page .= "<th>". pretty_number($_POST['speedallsmin']) ."</th>";
+	$page .= "</tr><tr height=\"20\">";
+	$page .= "<th>". $lang['fl_deute_need'] ."</th>";
+	$page .= "<th>". pretty_number($consumption) ."</th>";
+	$page .= "</tr><tr height=\"20\">";
+	$page .= "<th>". $lang['fl_from'] ."</th>";
+	$page .= "<th>". $_POST['thisgalaxy'] .":". $_POST['thissystem']. ":". $_POST['thisplanet'] ."</th>";
+	$page .= "</tr><tr height=\"20\">";
+	$page .= "<th>". $lang['fl_dest'] ."</th>";
+	$page .= "<th>". $_POST['galaxy'] .":". $_POST['system'] .":". $_POST['planet'] ."</th>";
+	$page .= "</tr><tr height=\"20\">";
+	$page .= "<th>". $lang['fl_time_go'] ."</th>";
+	$page .= "<th>". date("M D d H:i:s", $fleet['start_time']) ."</th>";
+	$page .= "</tr><tr height=\"20\">";
+	$page .= "<th>". $lang['fl_time_back'] ."</th>";
+	$page .= "<th>". date("M D d H:i:s", $fleet['end_time']) ."</th>";
+	$page .= "</tr><tr height=\"20\">";
+	$page .= "<td class=\"c\" colspan=\"2\">". $lang['fl_title'] ."</td>";
+
+	foreach ($fleetarray as $Ship => $Count) {
+		$page .= "</tr><tr height=\"20\">";
+		$page .= "<th>". $lang['tech'][$Ship] ."</th>";
+		$page .= "<th>". pretty_number($Count) ."</th>";
+	}
+	$page .= "</tr></table></div></center>";
+
+	// Provisoire
+	sleep (1);
+
+	$planetrow = doquery ("SELECT * FROM {{table}} WHERE `id` = '". $CurrentPlanet['id'] ."';", 'planets', true);
+
+	display($page, $lang['fl_title']);
+
+// Updated by Chlorel. 16 Jan 2008 (String extraction, bug corrections, code uniformisation
+// Updated by -= MoF =- for Deutsches Ugamela Forum
+// 06.12.2007 - 08:39
+// Open Source
+// (c) by MoF
 
 ?>

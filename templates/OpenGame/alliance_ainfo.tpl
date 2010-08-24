@@ -1,4 +1,4 @@
-
+<br>
 <table width="519">
 	<tr>
 	  <td class="c" colspan="2">{Alliance_information}</td>
@@ -20,5 +20,6 @@
 
 {ally_web}
 
+{bewerbung}
 </table>
 	

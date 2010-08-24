@@ -1,9 +1,9 @@
-
+<br>
  <form action="search.php" method="post">
 
  <table width="519">
   <tr>
-   <td class="c">Search</td>
+   <td class="c">{Search_in_all_game}</td>
   </tr>
   <tr>
    <th>

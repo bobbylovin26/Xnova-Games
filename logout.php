@@ -1,16 +1,25 @@
-<?php // logout.php :: Establece el tiempo de expiración de las cookies.
+<?php
 
-define('INSIDE', true);
+/**
+ * logout.php
+ *
+ * @version 1.0
+ * @copyright 2008 by ?????? for XNova
+ */
 
-$ugamela_root_path = './';
-include($ugamela_root_path . 'extension.inc');
-include($ugamela_root_path . 'common.'.$phpEx);
+define('INSIDE'  , true);
+define('INSTALL' , false);
 
-includeLang('logout');
+$xnova_root_path = './';
+include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'common.'.$phpEx);
 
-//setcookie($game_config['COOKIE_NAME'], "", time()-100000, "/", "", 0);//le da el expire
+	includeLang('logout');
 
-message($lang['see_you'],$lang['session_closed'],"login.".$phpEx);
+	setcookie($game_config['COOKIE_NAME'], "", time()-100000, "/", "", 0);
 
-// Created by Perberos. All rights reversed (C) 2006
+	message ( $lang['see_you'], $lang['session_closed'], "login.".$phpEx );
+
+// -----------------------------------------------------------------------------------------------------------
+// History version
 ?>

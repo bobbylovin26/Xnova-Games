@@ -1,12 +1,14 @@
-<?php  //db.php
+<?php
 
+/**
+ * db.php
+ *
+ * @version 1.0
+ * @copyright 2008 by Chlorel for XNova
+ */
 
-if ( !defined('INSIDE') )
-{
-	die("Hacking attempt");
+if ( defined('INSIDE') ) {
+	include($xnova_root_path . 'db/mysql.'.$phpEx);
 }
-
-
-include($ugamela_root_path . 'db/mysql.'.$phpEx);
 
 ?>

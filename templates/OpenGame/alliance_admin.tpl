@@ -1,4 +1,5 @@
-
+<script src="scripts/cntchar.js" type="text/javascript"></script>
+<br>
 <table width=519>
 	<tr>
 	  <td class=c colspan=2>{Alliance_admin}</td>
@@ -20,14 +21,14 @@
 </table>
 <br>
 <form action="" method="POST">
+<input type="hidden" name="t" value="{t}">
 <table width=519>
 	<tr>
-	  <td class="c" colspan=3>{Texts}</td>
+	  <td class="c" colspan=2>{Texts}</td>
 	</tr>
 	<tr>
 	  <th><a href="?mode=admin&edit=ally&t=1">{External_text}</a></th>
 	  <th><a href="?mode=admin&edit=ally&t=2">{Internal_text}</a></th>
-	  <th><a href="?mode=admin&edit=ally&t=3">{Request_text}</a></th>
 	</tr>
 	<tr>
 	  <td class=c colspan=3>{Show_of_request_text} (<span id="cntChars">0</span> / 5000 {characters})</td>

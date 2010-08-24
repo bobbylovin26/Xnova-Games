@@ -150,13 +150,13 @@ if (ResForm) {
 '<th><font color="#00ff00">'+formatNmb(XMetal[2])+'</font></th>'+
 '</tr>'+
 '<tr>'+
-'<td class="c">Kryszta\u0142</td>'+
+'<td class="c">Cristal</td>'+
 '<th><font color="#00ff00">'+formatNmb(XCrystal[0])+'</font></th>'+
 '<th><font color="#00ff00">'+formatNmb(XCrystal[1])+'</font></th>'+
 '<th><font color="#00ff00">'+formatNmb(XCrystal[2])+'</font></th>'+
 '</tr>'+
 '<tr>'+
-'<td class="c">Deuter</td>'+
+'<td class="c">Deut</td>'+
 '<th><font color="#00ff00">'+formatNmb(XDeut[0])+'</font></th>'+
 '<th><font color="#00ff00">'+formatNmb(XDeut[1])+'</font></th>'+
 '<th><font color="#00ff00">'+formatNmb(XDeut[2])+'</font></th>'+

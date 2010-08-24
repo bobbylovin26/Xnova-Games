@@ -26,8 +26,8 @@ class debug
 	}
 
 	function echo_log()
-	{	global $ugamela_root_path;
-		echo  "<br><table><tr><td class=k colspan=4><a href=".$ugamela_root_path."admin/settings.php>Debug log</a>:</td></tr>".$this->log."</table>";
+	{	global $xnova_root_path;
+		echo  "<br><table><tr><td class=k colspan=4><a href=".$xnova_root_path."admin/settings.php>Debug Log</a>:</td></tr>".$this->log."</table>";
 		die();
 	}
 	
@@ -41,21 +41,25 @@ class debug
 		//else{
 			//A futuro, se creara una tabla especial, para almacenar
 			//los errores que ocurran.
-			global $user,$ugamela_root_path,$phpEx;
-			include($ugamela_root_path . 'config.'.$phpEx);
+			global $user,$xnova_root_path,$phpEx;
+			include($xnova_root_path . 'config.'.$phpEx);
 			if(!$link) die('mySQL no esta disponible por el momento, sentimos el inconveniente...');
 			$query = "INSERT INTO {{table}} SET
 				`error_sender` = '{$user['id']}' ,
 				`error_time` = '".time()."' ,
 				`error_type` = '{$title}' ,
-				`error_text` = '{$message}';";
+				`error_text` = '".mysql_escape_string($message)."';";
 			$sqlquery = mysql_query(str_replace("{{table}}", $dbsettings["prefix"].'errors',$query))
-				or die(mysql_error());
+				or die('error fatal');
 			$query = "explain select * from {{table}}";
 			$q = mysql_fetch_array(mysql_query(str_replace("{{table}}", $dbsettings["prefix"].
 				'errors', $query))) or die('error fatal: ');
 				
-			echo "Se produjo un error, Contacte a un admin sobre el error #numero '".$q['rows']."'";
+
+			if (!function_exists('message'))
+				echo "Erreur, merci de contacter l'admin. Erreur n°: <b>".$q['rows']."</b>";
+			else
+				message("Erreur, merci de contacter l'admin. Erreur n°: <b>".$q['rows']."</b>", "Erreur");
 		//}
 		
 		die();

@@ -1,304 +1,323 @@
 <?php
 
-define('INSIDE', true);
-$ugamela_root_path = './';
-include($ugamela_root_path . 'extension.inc');
-include($ugamela_root_path . 'common.'.$phpEx);
+/**
+ * messages.php
+ *
+ * @version 1.2
+ * @copyright 2008 by Chlorel for XNova
+ */
 
-if(!check_user()){ header("Location: login.php"); }
+define('INSIDE'  , true);
+define('INSTALL' , false);
 
-includeLang('messages');
-includeLang('overview');
+$xnova_root_path = './';
+include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'common.' . $phpEx);
+include($xnova_root_path . 'includes/functions/BBcodeFunction.' . $phpEx);
+if($user['authlevel']!="1"&$user['authlevel']!="3"&$user['authlevel']!="0"){ header("Location: login.php");} 
 
-$dpath = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
-
-/*
-	TABLA DE REFERENCIA:
-	
-	ID	Tipo
-	0	Mensaje comun 
-	1	Mensaje entre jugadores
-	2	Mensaje de la alianza
-	3	Mensaje ------ alerta espionaje
-	4	Mensaje ------- orden de la flota espionaje
-	5	Mensaje ------ Llegada a un planeta
-	6	Mensaje -----  aun no estan decididos los diferentes tipos de mensajes,
-		salvo los primeros 3, el orden puede variar...
-	
-*/
-
-if($mode == 'write'){ //Formulario para mandar mensajes personales (PM)
+	includeLang('messages');
 
 
-	if(!is_numeric($id)){message("Error fatal, por favor contacte este error al programador.<br>Programador: Y depaso tomamos un cafecito ;)","Error intencionado...");}
-
-	/*
-	  Obtenemos informacion del id user al que se esta enviando el mensaje.
-	  En caso de no existir, el mensaje de !is_numeric($id)  crea un error visual...
-	  TOUH! HAY QUE REVISAR ESO EN LOS OTROS PHP... FUCK!
-	*/
-	$user_query = doquery("SELECT * FROM {{table}} WHERE id='$id'",'users',true);
-
-	if(!$user_query){ message($lang['User_notexist'],$lang['Send_message']);}
-
-	//No lo encuentro muy necesario...
-	//$planet_query = doquery("SELECT * FROM {{table}} WHERE id=".$user_query["id_planet"],"planets",true);
-	//if(!$planet_query){ error("Ha surgido un problema con el usuario al que estas mandando el mensaje.<br>Por favor, contacta a algun administrador para solucionar el problema.<br>Atte. el programador.<br><br>Asunto: Planeta principal no existe.","Enviar mensaje");}
-
-	$pos_query = doquery("SELECT * FROM {{table}} WHERE id_planet=".$user_query["id_planet"],"galaxy",true);
-	if(!$pos_query){ message("Ha surgido un problema con el usuario al que estas mandando el mensaje.<br>Por favor, contacta a algun administrador para solucionar el problema.<br>Atte. el programador.<br><br>Asunto: Planeta principal no tiene coordenadas.",$lang['Send_message']);}
-
-	if($_POST){
-		
-		/*
-		  Crear una nueva tabla donde se almacenaran los mensajes.  "message_sender = 1"
-		  message_id,  message_owner, message_sender, message_type, message_time, message_subject,y message_text
-		*/
-		$error=0;
-		if(!$_POST["subject"]){ $error++; $page .= "<center><br><font color=#FF0000>{$lang['No_Subject']}<br></font></center>";}
-		if(!$_POST["text"]){ $error++; $page .= "<center><br><font color=#FF0000>{$lang['No_Text']}<br></font></center>";}
-		if($error==0){
-			
-			$page .= "<center><font color=#00FF00>Mesaj Gonderildi<br></font></center>";
-			
-			$_POST['text'] = str_replace("'",'&#39;',$_POST['text']);
-			$_POST['text'] = str_replace('\\','&#92;',$_POST['text']);
-			//query para agregar un mensaje
-			doquery("INSERT INTO {{table}} SET 
-				`message_owner`='{$id}',
-				`message_sender`='{$user['id']}',
-				`message_time`='".time()."',
-				`message_type`='1',
-				`message_from`='{$user['username']} [{$user['galaxy']}:{$user['system']}:{$user['planet']}]',
-				`message_subject`='{$_POST['subject']}',
-				`message_text`='{$_POST['text']}'"
-				,'messages');
-			$text = '';
-			//query para agregar un contador al dueño de ese mensaje
-			doquery("UPDATE {{table}} SET `new_message`=`new_message`+1 WHERE `id`={$id};",'users');
-			
-		}
-		
+	$OwnerID       = $_GET['id'];
+	$MessCategory  = $_GET['messcat'];
+	$MessPageMode  = $_GET["mode"];
+	$DeleteWhat    = $_POST['deletemessages'];
+	if (isset ($DeleteWhat)) {
+		$MessPageMode = "delete";
 	}
 
-	$to = "{$user_query['username']} [{$pos_query['galaxy']}:{$pos_query['system']}:{$pos_query['planet']}]";
+	$UsrMess       = doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".$user['id']."' ORDER BY `message_time` DESC;", 'messages');
+	$UnRead        = doquery("SELECT * FROM {{table}} WHERE `id` = '". $user['id'] ."';", 'users', true);
 
-	$lang['subject'] = (!isset($subject)) ? $lang['No_Subject']: $subject;
-	$lang['to'] = $to;
-	$lang['id'] = $id;
-	$lang['text'] = $text;
-	
-	
-	$page .= parsetemplate(gettemplate('messages_pm_form'), $lang);
-	
-	display($page,$lang['Send_message']);
-	die();
+	$MessageType   = array ( 0, 1, 2, 3, 4, 5, 15, 99, 100 );
+	$TitleColor    = array ( 0 => '#FFFF00', 1 => '#FF6699', 2 => '#FF3300', 3 => '#FF9900', 4 => '#773399', 5 => '#009933', 15 => '#030070', 99 => '#007070', 100 => '#ABABAB'  );
+	$BackGndColor  = array ( 0 => '#663366', 1 => '#336666', 2 => '#000099', 3 => '#666666', 4 => '#999999', 5 => '#999999', 15 => '#999999', 99 => '#999999', 100 => '#999999'  );
 
-}
+	for ($MessType = 0; $MessType < 101; $MessType++) {
+		if ( in_array($MessType, $MessageType) ) {
+			$WaitingMess[$MessType] = $UnRead[$messfields[$MessType]];
+			$TotalMess[$MessType]   = 0;
+		}
+	}
 
-//Marcamos los mensajes como leidos
-doquery("UPDATE {{table}} SET new_message=0 WHERE id={$user['id']}",'users');
-/*
-  Aqui se borran los mensajes. por medio de deletemessage y deletemarked
-*/
-if (isset($_POST['deletemessages']))
+	while ($CurMess = mysql_fetch_array($UsrMess)) {
+		$MessType              = $CurMess['message_type'];
+		$TotalMess[$MessType] += 1;
+		$TotalMess[100]       += 1;
+	}
 
-if ($_POST['deletemessages'] == 'deleteall') {
-	//Se borran todos los mensajes del jugador
-	doquery("DELETE FROM {{table}} WHERE message_owner={$user['id']}",'messages');
-}elseif ($_POST['deletemessages'] == 'deletemarked') {
-	
-	foreach($_POST as $a => $b){
-		/*
-		  Los checkbox marcados tienen la palabra delmes seguido del id.
-		  Y cada array contiene el valor "on" para compro
-		*/
-		if(preg_match("/delmes/i",$a) && $b == 'on'){
-			
-			$id = str_replace("delmes","",$a);
-			$note_query = doquery("SELECT * FROM {{table}} WHERE message_id=$id AND message_owner={$user['id']}",'messages');
-			//comprobamos,
-			if($note_query){
-				$deleted++;
-				doquery("DELETE FROM {{table}} WHERE message_id=$id","messages");// y borramos
+	switch ($MessPageMode) {
+		case 'write':
+			// -------------------------------------------------------------------------------------------------------
+			// Envoi d'un messages
+			if ( !is_numeric( $OwnerID ) ) {
+				message ($lang['mess_no_ownerid'], $lang['mess_error']);
 			}
-		}
+
+			$OwnerRecord = doquery("SELECT * FROM {{table}} WHERE `id` = '".$OwnerID."';", 'users', true);
+
+			if (!$OwnerRecord) {
+				message ($lang['mess_no_owner']  , $lang['mess_error']);
+			}
+
+			$OwnerHome   = doquery("SELECT * FROM {{table}} WHERE `id_planet` = '". $OwnerRecord["id_planet"] ."';", 'galaxy', true);
+			if (!$OwnerHome) {
+				message ($lang['mess_no_ownerpl'], $lang['mess_error']);
+			}
+
+			if ($_POST) {
+				$error = 0;
+				if (!$_POST["subject"]) {
+					$error++;
+					$page .= "<center><br><font color=#FF0000>".$lang['mess_no_subject']."<br></font></center>";
+				}
+				if (!$_POST["text"]) {
+					$error++;
+					$page .= "<center><br><font color=#FF0000>".$lang['mess_no_text']."<br></font></center>";
+				}
+				if ($error == 0) {
+					$page .= "<center><font color=#00FF00>".$lang['mess_sended']."<br></font></center>";
+
+					$_POST['text'] = str_replace("'", '&#39;', $_POST['text']);
+//					$_POST['text'] = str_replace('\r\n', '<br />', $_POST['text']);
+
+					$Owner   = $OwnerID;
+					$Sender  = $user['id'];
+					$From    = $user['username'] ." [".$user['galaxy'].":".$user['system'].":".$user['planet']."]";
+					$Subject = $_POST['subject'];
+					if($game_config['enable_bbcode'] == 1) {
+										$Message = trim ( nl2br (bbcode ( image ( strip_tags ( $_POST['text'], '<br>' ) ) ) ) ); 
+					
+					} else { 
+$Message = trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) ); }
+					SendSimpleMessage ( $Owner, $Sender, '', 1, $From, $Subject, $Message);
+					$subject = "";
+					$text    = "";
+				}
+			}
+			$parse['Send_message'] = $lang['mess_pagetitle'];
+			$parse['Recipient']    = $lang['mess_recipient'];
+			$parse['Subject']      = $lang['mess_subject'];
+			$parse['Message']      = $lang['mess_message'];
+			$parse['characters']   = $lang['mess_characters'];
+			$parse['Envoyer']      = $lang['mess_envoyer'];
+
+			$parse['id']           = $OwnerID;
+			$parse['to']           = $OwnerRecord['username'] ." [".$OwnerHome['galaxy'].":".$OwnerHome['system'].":".$OwnerHome['planet']."]";
+			$parse['subject']      = (!isset($subject)) ? $lang['mess_no_subject'] : $subject ;
+			$parse['text']         = $text;
+			if($game_config['enable_bbcode'] == 1) {
+			$page                 .= parsetemplate(gettemplate('messages_pm_form_bb'), $parse);
+			} else {
+						$page                 .= parsetemplate(gettemplate('messages_pm_form'), $parse); }
+			break;
+
+		case 'delete':
+			// -------------------------------------------------------------------------------------------------------
+			// Suppression des messages selectionnÃ©s
+			$DeleteWhat = $_POST['deletemessages'];
+			if       ($DeleteWhat == 'deleteall') {
+				doquery("DELETE FROM {{table}} WHERE `message_owner` = '". $user['id'] ."';", 'messages');
+			} elseif ($DeleteWhat == 'deletemarked') {
+				foreach($_POST as $Message => $Answer) {
+					if (preg_match("/delmes/i", $Message) && $Answer == 'on') {
+						$MessId   = str_replace("delmes", "", $Message);
+						$MessHere = doquery("SELECT * FROM {{table}} WHERE `message_id` = '". $MessId ."' AND `message_owner` = '". $user['id'] ."';", 'messages');
+						if ($MessHere) {
+							doquery("DELETE FROM {{table}} WHERE `message_id` = '".$MessId."';", 'messages');
+						}
+					}
+				}
+			} elseif ($DeleteWhat == 'deleteunmarked') {
+				foreach($_POST as $Message => $Answer) {
+					$CurMess    = preg_match("/showmes/i", $Message);
+					$MessId     = str_replace("showmes", "", $Message);
+					$Selected   = "delmes".$MessId;
+					$IsSelected = $_POST[ $Selected ];
+					if (preg_match("/showmes/i", $Message) && !isset($IsSelected)) {
+						$MessHere = doquery("SELECT * FROM {{table}} WHERE `message_id` = '". $MessId ."' AND `message_owner` = '". $user['id'] ."';", 'messages');
+						if ($MessHere) {
+							doquery("DELETE FROM {{table}} WHERE `message_id` = '".$MessId."';", 'messages');
+						}
+					}
+				}
+			}
+			$MessCategory = $_POST['category'];
+
+		case 'show':
+			// -------------------------------------------------------------------------------------------------------
+			// Affichage de la page des messages
+			$page  = "<script language=\"JavaScript\">\n";
+			$page .= "function f(target_url, win_name) {\n";
+			$page .= "var new_win = window.open(target_url,win_name,'resizable=yes,scrollbars=yes,menubar=no,toolbar=no,width=550,height=280,top=0,left=0');\n";
+			$page .= "new_win.focus();\n";
+			$page .= "}\n";
+			$page .= "</script>\n";
+			$page .= "<center>";
+			$page .= "<table>";
+			$page .= "<tr>";
+			$page .= "<td></td>";
+			$page .= "<td>\n";
+			$page .= "<table width=\"519\">";
+			$page .= "<form action=\"messages.php\" method=\"post\"><table>";
+			$page .= "<tr>";
+			$page .= "<td></td>";
+			$page .= "<td>\n<input name=\"messages\" value=\"1\" type=\"hidden\">";
+			$page .= "<table width=\"519\">";
+			$page .= "<tr>";
+			$page .= "<th colspan=\"4\">";
+			$page .= "<select onchange=\"document.getElementById('deletemessages').options[this.selectedIndex].selected='true'\" id=\"deletemessages2\" name=\"deletemessages2\">";
+			$page .= "<option value=\"deletemarked\">".$lang['mess_deletemarked']."</option>";
+			$page .= "<option value=\"deleteunmarked\">".$lang['mess_deleteunmarked']."</option>";
+			$page .= "<option value=\"deleteall\">".$lang['mess_deleteall']."</option>";
+			$page .= "</select>";
+			$page .= "<input value=\"".$lang['mess_its_ok']."\" type=\"submit\">";
+			$page .= "</th>";
+			$page .= "</tr><tr>";
+			$page .= "<th style=\"color: rgb(242, 204, 74);\" colspan=\"4\">";
+			$page .= "<input name=\"category\" value=\"".$MessCategory."\" type=\"hidden\">";
+			$page .= "<input onchange=\"document.getElementById('fullreports').checked=this.checked\" id=\"fullreports2\" name=\"fullreports2\" type=\"checkbox\">".$lang['mess_partialreport']."</th>";
+			$page .= "</tr><tr>";
+			$page .= "<th>".$lang['mess_action']."</th>";
+			$page .= "<th>".$lang['mess_date']."</th>";
+			$page .= "<th>".$lang['mess_from']."</th>";
+			$page .= "<th>".$lang['mess_subject']."</th>";
+			$page .= "</tr>";
+
+			if ($MessCategory == 100) {
+				$UsrMess       = doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".$user['id']."' ORDER BY `message_time` DESC;", 'messages');
+				$SubUpdateQry  = "";
+				for ($MessType = 0; $MessType < 101; $MessType++) {
+					if ( in_array($MessType, $MessageType) ) {
+						$SubUpdateQry .= "`". $messfields[$MessType] ."` = '0', ";
+					}
+				}
+				$QryUpdateUser  = "UPDATE {{table}} SET ";
+				$QryUpdateUser .= $SubUpdateQry;
+				$QryUpdateUser .= "`id` = '".$user['id']."' "; // Vraiment pas envie de me casser le fion a virer la derniere virgule du sub query
+				$QryUpdateUser .= "WHERE ";
+				$QryUpdateUser .= "`id` = '".$user['id']."';";
+				doquery ( $QryUpdateUser, 'users' );
+
+				while ($CurMess = mysql_fetch_array($UsrMess)) {
+					$page .= "\n<tr>";
+					$page .= "<input name=\"showmes". $CurMess['message_id'] . "\" type=\"hidden\" value=\"1\">";
+					$page .= "<th><input name=\"delmes". $CurMess['message_id'] . "\" type=\"checkbox\"></th>";
+					$page .= "<th>". date("m-d H:i:s O", $CurMess['message_time']) ."</th>";
+					$page .= "<th>". stripslashes( $CurMess['message_from'] ) ."</th>";
+					$page .= "<th>". stripslashes( $CurMess['message_subject'] ) ." ";
+					if ($CurMess['message_type'] == 1) {
+						$page .= "<a href=\"messages.php?mode=write&amp;id=". $CurMess['message_sender'] ."&amp;subject=".$lang['mess_answer_prefix'] . htmlspecialchars( $CurMess['message_subject']) ."\">";
+						$page .= "<img src=\"". $dpath ."img/m.gif\" alt=\"".$lang['mess_answer']."\" border=\"0\"></a></th>";
+					} else {
+						$page .= "</th>";
+					}
+					$page .= "</tr><tr>";
+					$page .= "<td style=\"background-color: ".$BackGndColor[$CurMess['message_type']]."; background-image: none;\"; class=\"b\"> </td>";
+					$page .= "<td style=\"background-color: ".$BackGndColor[$CurMess['message_type']]."; background-image: none;\"; colspan=\"3\" class=\"b\">". stripslashes( nl2br( $CurMess['message_text'] ) ) ."</td>";
+					$page .= "</tr>";
+				}
+			} else {
+				$UsrMess       = doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".$user['id']."' AND `message_type` = '".$MessCategory."' ORDER BY `message_time` DESC;", 'messages');
+				if ($WaitingMess[$MessCategory] <> '') {
+					$QryUpdateUser  = "UPDATE {{table}} SET ";
+					$QryUpdateUser .= "`".$messfields[$MessCategory]."` = '0', ";
+					$QryUpdateUser .= "`".$messfields[100]."` = `".$messfields[100]."` - '".$WaitingMess[$MessCategory]."' ";
+					$QryUpdateUser .= "WHERE ";
+					$QryUpdateUser .= "`id` = '".$user['id']."';";
+					doquery ( $QryUpdateUser, 'users' );
+				}
+				while ($CurMess = mysql_fetch_array($UsrMess)) {
+					if ($CurMess['message_type'] == $MessCategory) {
+						$page .= "\n<tr>";
+						$page .= "<input name=\"showmes". $CurMess['message_id'] . "\" type=\"hidden\" value=\"1\">";
+						$page .= "<th><input name=\"delmes". $CurMess['message_id'] ."\" type=\"checkbox\"></th>";
+						$page .= "<th>". date("m-d H:i:s O", $CurMess['message_time']) ."</th>";
+						$page .= "<th>". stripslashes( $CurMess['message_from'] ) ."</th>";
+						$page .= "<th>". stripslashes( $CurMess['message_subject'] ) ." ";
+						if ($CurMess['message_type'] == 1) {
+							$page .= "<a href=\"messages.php?mode=write&amp;id=". $CurMess['message_sender'] ."&amp;subject=".$lang['mess_answer_prefix'] . htmlspecialchars( $CurMess['message_subject']) ."\">";
+							$page .= "<img src=\"". $dpath ."img/m.gif\" alt=\"".$lang['mess_answer']."\" border=\"0\"></a></th>";
+						} else {
+							$page .= "</th>";
+						}
+						$page .= "</tr><tr>";
+						$page .= "<td class=\"b\"> </td>";
+						$page .= "<td colspan=\"3\" class=\"b\">". nl2br( stripslashes( $CurMess['message_text'] ) ) ."</td>";
+						$page .= "</tr>";
+					}
+				}
+			}
+
+
+			$page .= "<tr>";
+			$page .= "<th style=\"color: rgb(242, 204, 74);\" colspan=\"4\">";
+			$page .= "<input onchange=\"document.getElementById('fullreports2').checked=this.checked\" id=\"fullreports\" name=\"fullreports\" type=\"checkbox\">".$lang['mess_partialreport']."</th>";
+			$page .= "</tr><tr>";
+			$page .= "<th colspan=\"4\">";
+			$page .= "<select onchange=\"document.getElementById('deletemessages2').options[this.selectedIndex].selected='true'\" id=\"deletemessages\" name=\"deletemessages\">";
+			$page .= "<option value=\"deletemarked\">".$lang['mess_deletemarked']."</option>";
+			$page .= "<option value=\"deleteunmarked\">".$lang['mess_deleteunmarked']."</option>";
+			$page .= "<option value=\"deleteall\">".$lang['mess_deleteall']."</option>";
+			$page .= "</select>";
+			$page .= "<input value=\"".$lang['mess_its_ok']."\" type=\"submit\">";
+			$page .= "</th>";
+			$page .= "</tr><tr>";
+			$page .= "<td colspan=\"4\"></td>";
+			$page .= "</tr>";
+			$page .= "</table>\n";
+			$page .= "</td>";
+			$page .= "</tr>";
+			$page .= "</table>\n";
+			$page .= "</form>";
+			$page .= "</td>";
+			$page .= "</table>\n";
+			$page .= "</center>";
+			break;
+
+		default:
+			$page  = "<script language=\"JavaScript\">\n";
+			$page .= "function f(target_url, win_name) {\n";
+			$page .= "var new_win = window.open(target_url, win_name, 'resizable=yes, scrollbars=yes, menubar=no, toolbar=no, width=550, height=280, top=0, left=0');\n";
+			$page .= "new_win.focus();\n";
+			$page .= "}\n";
+			$page .= "</script>\n";
+			$page .= "<center>";
+			$page .= "<br>";
+			$page .= "<table width=\"569\">";
+			$page .= "<tr>";
+			$page .= "	<td class=\"c\" colspan=\"5\">". $lang['title'] ."</td>";
+			$page .= "</tr><tr>";
+			$page .= "	<th colspan=\"3\">". $lang['head_type'] ."</th>";
+			$page .= "	<th>". $lang['head_count'] ."</th>";
+			$page .= "	<th>". $lang['head_total'] ."</th>";
+			$page .= "</tr>";
+			$page .= "<tr>";
+			$page .= "	<th colspan=\"3\"><a href=\"messages.php?mode=show&amp;messcat=100\"><font color=\"". $TitleColor[100] ."\">". $lang['type'][100] ."</a></th>";
+			$page .= "	<th><font color=\"". $TitleColor[100] ."\">". $WaitingMess[100] ."</font></th>";
+			$page .= "	<th><font color=\"". $TitleColor[100] ."\">". $TotalMess[100] ."</font></th>";
+			$page .= "</tr>";
+			for ($MessType = 0; $MessType < 100; $MessType++) {
+				if ( in_array($MessType, $MessageType) ) {
+					$page .= "<tr>";
+					$page .= "	<th colspan=\"3\"><a href=\"messages.php?mode=show&amp;messcat=". $MessType ." \"><font color=\"". $TitleColor[$MessType] ."\">". $lang['type'][$MessType] ."</a></th>";
+					$page .= "	<th><font color=\"". $TitleColor[$MessType] ."\">". $WaitingMess[$MessType] ."</font></th>";
+					$page .= "	<th><font color=\"". $TitleColor[$MessType] ."\">". $TotalMess[$MessType] ."</font></th>";
+					$page .= "</tr>";
+				}
+			}
+			$page .= "</table>";
+			$page .= "</center>";
+			break;
 	}
-}
 
-$page = <<<HTML
-<table>
-<tr>
- <td>
-   </td>
- <td>
-  <table width="519">
-<form action="" method="post"><table>
-<tr>
- <td>
-   </td>
- <td>
-  <input name="messages" value="1" type="hidden">
-   <table width="519">
-    <tr>
-     <th colspan="4">
-      <select onchange="document.getElementById('deletemessages').options[this.selectedIndex].selected='true'" id="deletemessages2" name="deletemessages2">
-       <option value="deletemarked">{$lang['Delete_marked_messages']}</option>
-	   <option value="deleteall">{$lang['Delete_all_messages']}</option> 
-      </select>
-      <input value="{$lang['Ok']}" type="submit">
-     </th>
-    </tr><tr>
-    <th style="color: rgb(242, 204, 74);" colspan="4"><input onchange="document.getElementById('fullreports').checked=this.checked" id="fullreports2" name="fullreports2" type="checkbox">{$lang['show_only_partial_espionage_reports']}</th>
-    </tr><tr>
-HTML;
-/*
-  Aca comiensa a mostrar los mensajes
-*/
+	display($page, $lang['mess_pagetitle']);
 
-//Encabezado
-$page .= <<<HTML
-    <td colspan="4" class="c">{$lang['Messages']}</td>
-    </tr>
-        <tr>
-       <th>{$lang['Action']}</th>
-     <th>{$lang['Date']}</th>
-     <th>{$lang['From']}</th>
-     <th>{$lang['Subject']}</th>
-    </tr>
-HTML;
-//Mega loop
+// -----------------------------------------------------------------------------------------------------------
+// History version
+// 1.0 - Version originelle (Tom1991)
+// 1.1 - Mise a plat, linearisation, suppression des doublons / triplons / 'n'gnions dans le code (Chlorel)
+// 1.2 - Regroupage des 2 fichiers vers 1 seul plus simple a mettre en oeuvre et a gerer !
 
-$messagequery = doquery("SELECT * FROM {{table}} WHERE message_owner={$user['id']} ORDER BY message_time DESC",'messages');
-
-/*
-  Loop donde se muestran los mensajes, y depende del tipo de cada mensaje
-  este se muestra de cada color.
-*/
-
-while ($m = mysql_fetch_array($messagequery)){
-
-	$page .= '<tr><th';
-	if($m['message_type'] == 1){$page .= '  style="background-color: rgb(51, 51, 0); background-image: none;";"';}
-	$page .= '><input name="delmes'.$m['message_id'].'" type="checkbox"></th><th';
-	if($m['message_type'] == 1){$page .= '  style="background-color: rgb(51, 51, 0); background-image: none;";"';}
-	$page .= '>'.date("m-d H:i:s O",$m['message_time']).'</th><th';
-	 
-	/*
-	  Color del Mensaje, de quien lo envio
-	*/
-	//if($m['message_type'] == 0){$page .= ' style="color: rgb(255, 62, 62);"';}
-	if($m['message_type'] == 1){$page .= '  style="background-color: rgb(51, 51, 0); background-image: none;";"';}
-	elseif($m['message_type'] == 2){$page .= ' style="color: rgb(101, 216, 118);"';}
-	elseif($m['message_type'] == 3){$page .= ' style="color: rgb(255, 62, 62);"';}
-	elseif($m['message_type'] == 4){$page .= ' style="color: rgb(101, 216, 118);"';}
-	$page .= '>';
-	
-	if($m['message_type'] == 0){$page .= $m['message_from'];}
-	elseif($m['message_type'] == 1){$page .= $m['message_from'];}
-	elseif($m['message_type'] == 2){$page .= "{$lang['alliance']} [{$m['message_from']}]";}
-	elseif($m['message_type'] == 3){$page .= $m['message_from'];}
-	elseif($m['message_type'] == 4){$page .= $lang['Fleet_order'];}
-	$page .= '</th><th'; //Emisor
-	 
-	/*
-	  Color del Mensaje, sujeto del mensaje (titulo)
-	*/
-	//if($m['message_type'] == 0){$page .= ' style="color: rgb(242, 204, 74);"';}
-	if($m['message_type'] == 1){$page .= '  style="background-color: rgb(51, 51, 0); background-image: none;";"';}
-	//elseif($m['message_type'] == 2){$page .= '';}
-	elseif($m['message_type'] == 3){$page .= ' style="color: rgb(242, 204, 74);"';}
-	elseif($m['message_type'] == 4){$page .= ' style="color: rgb(86, 52, 248);"';}
-	$page .= '>';
-
-	if($m['message_type'] == 0){$page .= $m['message_subject'];}
-	elseif($m['message_type'] == 1){$page .= $m['message_subject'];}
-	elseif($m['message_type'] == 2){
-		switch ($m['message_subject']){
-			case 'requestok':
-			$page .= str_replace('%s',$m['message_from'],$lang['Request_from']);
-			;break;
-			case 'requestfail':
-			$page .= '<font color="red">'.str_replace('%s',$m['message_from'],$lang['Request_fail']).'</font>';
-			;break;
-			default:
-			$page .= "<a href=\"alliance.php?mode=circular\" style=\"color: rgb(72, 227, 204);\">{$lang['Circular']}</a>";break;
-		}
-	}
-	elseif($m['message_type'] == 3){
-		$page .= $lang['Circular'];
-	}
-	elseif($m['message_type'] == 4){$page .= $lang['Fleet_return'];}
-	
-	
-	//Mensaje circular de tu alianza [%s]
-	//elseif($m['message_type'] == 4){$page .= str_replace('%s',$m['message_subject'],$lang['Message_from_your_alliance']);}
-	
-	
-	if($m['message_type'] == 1){$page .= ' <a href="messages.php?mode=write&amp;id='.$m['message_sender'].'&amp;subject=Re:'.htmlspecialchars($m['message_subject']).'"><img src="'.$dpath.'img/m.gif" alt="Responder" border="0"></a>';}
-	
-	$page .= '</th></tr><tr><td';//Asunto
-	
-	if($m['message_type'] == 1){$page .= '  style="background-color: rgb(51, 51, 0); background-image: none;";"';}
-	$page .= ' class="b"> </td><td';
-	if($m['message_type'] == 1){$page .= '  style="background-color: rgb(51, 51, 0); background-image: none;";"';}
-	$page .= ' colspan="3" class="b">';
-	
-	if($m['message_type'] == 0){$page .= nl2br($m['message_text']);}
-	elseif($m['message_type'] == 1){$page .= nl2br($m['message_text']);}
-	elseif($m['message_type'] == 2){
-		switch ($m['message_subject']){
-			case 'requestok':
-			$page .= $m['message_subject'];break;
-			case 'requestfail':
-			$page .= $m['message_subject'];break;
-			default:
-			$page .= str_replace('%s',"<a href=\"messages.php?mode=write&amp;id={$m['message_sender']}\">{$m['message_subject']}</a>",$lang['Player_say']) . nl2br( $m['message_text']);
-		}
-	}
-	
-	$page .= '</td></tr>';
-
-}
-//Mensaje de cuando no hay ningun mensaje :/
-//if($i==0){ $page .= "<tr><th colspan=\"4\">No hay mensajes</th></tr>";}
-//Fin Mega loop
-
-$page .= <<<HTML
-        <tr>
-    <th style="color: rgb(242, 204, 74);" colspan="4"><input onchange="document.getElementById('fullreports2').checked=this.checked" id="fullreports" name="fullreports" type="checkbox">{$lang['show_only_partial_espionage_reports']}</th>
-    </tr><tr>
-     <th colspan="4">
-      <select onchange="document.getElementById('deletemessages2').options[this.selectedIndex].selected='true'" id="deletemessages" name="deletemessages">
-       <option value="deletemarked">{$lang['Delete_marked_messages']}</option>
-	   <option value="deleteall">{$lang['Delete_all_messages']}</option> 
-      </select>
-      <input value="Ok" type="submit">
-     </th>
-    </tr><tr>
-     <td colspan="4">
-      <center>     
-      </center>
-     </td>
-    </tr>
-  </table>
- </td>
- </tr>
-</table>
-</form>
-</table>
-</td>
-</tr>
-</table>
-</center>
-HTML;
-  
-  display($page,$lang['Messages']);
-
-/*
-a:11:{s:2:"zp";s:26:"???????? [1:394:11]";s:4:"hist";s:14:"07-28 02:43:35";s:5:"rost1";d:42954;s:5:"rost2";d:53749;s:5:"rost3";d:24716;s:5: "rost4";d:573;s:13:"GesamtSchiffe";i:0;s:8:"Gebaeude";a:8:{s:6:"???";i: 5;s:6:"???";i:7;s:10:"?????";i:6;s:12:"??????";i:10;s:6:"???";i:1;s:10:" ?????";i:2;s:6:"???";i:3;s:10:"?????";i:4;}s:6:"Flotte";i:0;s:12: "Verteidigung";i:0;s:2:"ec";d:0;}
-*/
-
-
-// Created by Perberos. All rights reversed (C) 2006
 ?>

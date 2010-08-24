@@ -1,187 +1,198 @@
 <?php
 
-define('INSIDE', true);
-$ugamela_root_path = './';
-include($ugamela_root_path . 'extension.inc');
-include($ugamela_root_path . 'common.'.$phpEx);
+/**
+ * stat.php
+ *
+ * @version 1.0
+ * @copyright 2008 by Chlorel for XNova
+ */
 
-if(!check_user()){ header("Location: login.php"); }
+define('INSIDE'  , true);
+define('INSTALL' , false);
 
-includeLang('stat');
+$xnova_root_path = './';
+include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'common.' . $phpEx);
 
-$dpath = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
+	includeLang('stat');
 
-$parse = $lang;
-$who = (isset($_POST["who"]))?$_POST["who"]:$_GET["who"];
-$type = (isset($_POST["type"]))?$_POST["type"]:$_GET["type"];
-$start = (isset($_POST["start"]))?$_POST["start"]:$_GET["start"];
-//
-//  Formulario donde se muestran los diferentes tipos de categoria
-//  y los rangos
-//
-$parse['who'] = '<option value="player"'.
-	(($who == "player") ? " SELECTED" : "").'>Player</option>
-  <option value="ally"'.
-	(($who == "ally") ? " SELECTED" : "").'>Alliance</option>';
-  
-  
-$parse['type'] = '
-  <option value="pts"'.
-	(($type == "pts") ? " SELECTED" : "").'>Points</option>
-<option value="flt"'.
-	(($type == "flt") ? " SELECTED" : "").'>Fleets</option>
-  <option value="res"'.
-	(($type == "res") ? " SELECTED" : "").'>Research</option>
-  <option value="bl"'.
-	(($type == "bl") ? " SELECTED" : "").'>Building</option>';
-  
-$parse['start'] = '
-	   <option value="1"'.
-	(($start == "1") ? " SELECTED" : "").'>1-100</option>
-	   <option value="101"'.
-	(($start == "101") ? " SELECTED" : "").'>101-200</option>
-	   <option value="201"'.
-	(($start == "201") ? " SELECTED" : "").'>201-300</option>
-	   <option value="301"'.
-	(($start == "301") ? " SELECTED" : "").'>301-400</option>
-	   <option value="401"'.
-	(($start == "401") ? " SELECTED" : "").'>401-500</option>
-	   <option value="501"'.
-	(($start == "501") ? " SELECTED" : "").'>501-600</option>
-	   <option value="601"'.
-	(($start == "601") ? " SELECTED" : "").'>601-700</option>
-	   <option value="701"'.
-	(($start == "701") ? " SELECTED" : "").'>701-800</option>
-	   <option value="801"'.
-	(($start == "801") ? " SELECTED" : "").'>801-900</option>
-	   <option value="901"'.
-	(($start == "901") ? " SELECTED" : "").'>901-1000</option>
-	   <option value="1001"'.
-	(($start == "1001") ? " SELECTED" : "").'>1001-1100</option>
-	   <option value="1101"'.
-	(($start == "1101") ? " SELECTED" : "").'>1101-1200</option>
-	   <option value="1201"'.
-	(($start == "1201") ? " SELECTED" : "").'>1201-1300</option>
-	   <option value="1301"'.
-	(($start == "1301") ? " SELECTED" : "").'>1301-1400</option>
-	   <option value="1401"'.
-	(($start == "1401") ? " SELECTED" : "").'>1401-1500</option>';
-
-//
-//  Parece que fuera ayer, que solo el juego era una fachada.
-//  Bueno, Here we go!
-//
-
-
-if($who == "ally"){
-	
-	$parse['body_table'] = parsetemplate(gettemplate('stat_alliancetable_header'), $parse);
-	//pequeÔøΩ fix para prevenir desastres
-	$start = (is_numeric($start)&&$start>1)?round($start):1;
-	//peque√±a condicion
-	$start = floor($start / 100 % 100)*100;
-	//Realizamos la quiery en la table de jugadores
-	$query = doquery('SELECT * FROM {{table}} ORDER BY ally_points DESC LIMIT '.($start).',100','alliance');
-	$start++;
-	$parse['body_values'] = '';//en caso de que no hubieran datos...
-	$parse['data'] = $game_config['stats'];
-	while ($row = mysql_fetch_assoc($query)){
-		$parse['ally_rank'] = $start;
-		
-		$parse['ally_rankplus'] = '<font color="lime">?</font>';
-		$parse['ally_name'] = '<a href="alliance.php?mode=ainfo&tag='.$row['ally_tag'].'">'.$row['ally_name'].'</a>';
-		$parse['ally_mes'] = '';//'<a href="alliance.php?mode=apply&tag='.$row['ally_tag'].'">
-	  //<img src="Images/img/m.gif" border="0" alt="Escribir mensaje" /></a>';
-		$parse['ally_members'] = $row['ally_members'];
-		if($type == "res"){
-			$ally_points = $row['ally_points_tech'];
-		}elseif($type == "flt"){
-			$ally_points = $row['ally_points_fleet'];
-		}else{
-			$ally_points = floor($row['ally_points']/1000);
-		}
-	
-		$parse['ally_points'] = pretty_number($ally_points);
-		$parse['ally_members_points'] = @floor($ally_points/$row['ally_members']);
-		$parse['body_values'] .= parsetemplate(gettemplate('stat_alliancetable'), $parse);
-		$start++;
+	$parse = $lang;
+	$who   = (isset($_POST['who']))   ? $_POST['who']   : $_GET['who'];
+	if (!isset($who)) {
+		$who   = 1;
 	}
-	
-	
-}
-else{
-	
-	$parse['body_table'] = parsetemplate(gettemplate('stat_playertable_header'), $parse);
-	
-	//pequeÔøΩ fix para prevenir desastres
-	$start = (is_numeric($start)&&$start>1)?round($start):1;
-
-	//peque√±a condicion
-	$start = floor($start / 100 % 100)*100;
-	//Realizamos la quiery en la table de jugadores
-		if($type == "res"){
-				$query = doquery('SELECT * FROM {{table}} ORDER BY points_tech_old DESC LIMIT '.$start.',100','users');
-		}elseif($type == "flt"){
-				$query = doquery('SELECT * FROM {{table}} ORDER BY points_fleet_old DESC LIMIT '.$start.',100','users');
-
-                            }elseif($type == "bl"){
-				$query = doquery('SELECT * FROM {{table}} ORDER BY points_builds DESC LIMIT '.$start.',100','users');
-		}else{
-			$query = doquery('SELECT * FROM {{table}} ORDER BY points_points DESC LIMIT '.$start.',100','users');
-		}
-
-
-	$start++;
-	$parse['data'] = $game_config['stats'];
-	$parse['body_values'] = '';//en caso de que no hubieran datos...
-	while ($row = mysql_fetch_assoc($query)){
-		$playername_rank =  $row['username'];
-		$rank_old = $row['rank_old'];
-//		$query_rank = doquery("UPDATE {{table}} SET `rank_old`='{$rank_old}' WHERE `username` = '{$playername_rank}'" ,"users");		
-		$parse['player_rank'] = $start;
-		$rank_new = $start;
-		$ranking = $rank_old - $rank_new;
-		if ($ranking == "0")
-		{
-		$parse['player_rankplus'] = "<font color=\"#87CEEB\">0</font>";
-		}
-		if ($ranking < "0")
-		{
-		$parse['player_rankplus'] = "<font color=\"red\">$ranking</font>";
-		}
-		if ($ranking > "0")
-		{
-		$parse['player_rankplus'] = "<font color=\"green\">+$ranking</font>";
-		}
-//		$query_rank = doquery("UPDATE {{table}} SET `rank`='{$start}' WHERE `username` = '{$playername_rank}'" ,"users");
-		//$parse['player_rankplus'] = '<font color="#87CEEB">?</font>';
-		$parse['player_name'] = $row['username'];
-		$parse['player_mes'] = '<a href="messages.php?mode=write&id='.$row['id'].'">
-		<img src="'.$dpath.'img/m.gif" border="0" alt="Napisz Wiadomo∂Ê" /></a>';
-		$parse['player_alliance'] = $row['ally_name'];
-
-		if($type == "res"){
-			$parse['player_points'] = pretty_number($row['points_tech_old']);
-		}elseif($type == "flt"){
-			$parse['player_points'] = pretty_number($row['points_fleet_old']);
-                            }elseif($type == "bl"){
-			$parse['player_points'] = pretty_number($row['points_builds']); 
-		}else{
-			$parse['player_points'] = pretty_number($row['points_points']/1000);
-		}
-
-		
-		$parse['body_values'] .= parsetemplate(gettemplate('stat_playertable'), $parse);
-		$start++;
+	$type  = (isset($_POST['type']))  ? $_POST['type']  : $_GET['type'];
+	if (!isset($type)) {
+		$type  = 1;
 	}
-	
-}
+	$range = (isset($_POST['range'])) ? $_POST['range'] : $_GET['range'];
+	if (!isset($range)) {
+		$range = 1;
+	}
 
-$page = parsetemplate(gettemplate('stat_body'), $parse);
+	$parse['who']    = "<option value=\"1\"". (($who == "1") ? " SELECTED" : "") .">". $lang['stat_player'] ."</option>";
+	$parse['who']   .= "<option value=\"2\"". (($who == "2") ? " SELECTED" : "") .">". $lang['stat_allys']  ."</option>";
 
-display($page,$lang['Resources']);
-//
-//  bueno, no se pudo hacer mucho que digamos ...
-//
-// Created by Perberos. All rights reversed (C) 2006
+	$parse['type']   = "<option value=\"1\"". (($type == "1") ? " SELECTED" : "") .">". $lang['stat_main']     ."</option>";
+	$parse['type']  .= "<option value=\"2\"". (($type == "2") ? " SELECTED" : "") .">". $lang['stat_fleet']    ."</option>";
+	$parse['type']  .= "<option value=\"3\"". (($type == "3") ? " SELECTED" : "") .">". $lang['stat_research'] ."</option>";
+	$parse['type']  .= "<option value=\"4\"". (($type == "4") ? " SELECTED" : "") .">". $lang['stat_building'] ."</option>";
+	$parse['type']  .= "<option value=\"5\"". (($type == "5") ? " SELECTED" : "") .">". $lang['stat_defenses'] ."</option>";
+
+	if       ($type == 1) {
+		$Order   = "total_points";
+		$Points  = "total_points";
+		$Counts  = "total_count";
+		$Rank    = "total_rank";
+		$OldRank = "total_old_rank";
+	} elseif ($type == 2) {
+		$Order   = "fleet_count";
+		$Points  = "fleet_points";
+		$Counts  = "fleet_count";
+		$Rank    = "fleet_rank";
+		$OldRank = "fleet_old_rank";
+	} elseif ($type == 3) {
+		$Order   = "tech_count";
+		$Points  = "tech_points";
+		$Counts  = "tech_count";
+		$Rank    = "tech_rank";
+		$OldRank = "tech_old_rank";
+	} elseif ($type == 4) {
+		$Order   = "build_points";
+		$Points  = "build_points";
+		$Counts  = "build_count";
+		$Rank    = "build_rank";
+		$OldRank = "build_old_rank";
+	} elseif ($type == 5) {
+		$Order   = "defs_points";
+		$Points  = "defs_points";
+		$Counts  = "defs_count";
+		$Rank    = "defs_rank";
+		$OldRank = "defs_old_rank";
+	}
+
+	if ($who == 2) {
+		$MaxAllys = doquery ("SELECT COUNT(*) AS `count` FROM {{table}} WHERE 1;", 'alliance', true);
+		if ($MaxAllys['count'] > 100) {
+			$LastPage = floor($MaxAllys['count'] / 100);
+		}
+		$parse['range'] = "";
+		for ($Page = 0; $Page <= $LastPage; $Page++) {
+			$PageValue      = ($Page * 100) + 1;
+			$PageRange      = $PageValue + 99;
+			$parse['range'] .= "<option value=\"". $PageValue ."\"". (($range == $PageValue) ? " SELECTED" : "") .">". $PageValue ."-". $PageRange ."</option>";
+		}
+
+		$parse['stat_header'] = parsetemplate(gettemplate('stat_alliancetable_header'), $parse);
+
+		$start = floor($range / 100 % 100) * 100;
+		$query = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '2' AND `stat_code` = '1' ORDER BY `". $Order ."` DESC LIMIT ". $start .",100;", 'statpoints');
+
+		$start++;
+		$parse['stat_date']   = $game_config['stats'];
+		$parse['stat_values'] = "";
+		while ($StatRow = mysql_fetch_assoc($query)) {
+			$parse['ally_rank']       = $start;
+
+			$AllyRow                  = doquery("SELECT * FROM {{table}} WHERE `id` = '". $StatRow['id_owner'] ."';", 'alliance',true);
+
+			$rank_old                 = $StatRow[ $OldRank ];
+			if ( $rank_old == 0) {
+				$rank_old             = $start;
+				$QryUpdRank           = doquery("UPDATE {{table}} SET `".$Rank."` = '".$start."', `".$OldRank."` = '".$start."' WHERE `stat_type` = '2' AND `stat_code` = '1' AND `id_owner` = '". $StatRow['id_owner'] ."';" , "statpoints");
+			} else {
+				$QryUpdRank           = doquery("UPDATE {{table}} SET `".$Rank."` = '".$start."' WHERE `stat_type` = '2' AND `stat_code` = '1' AND `id_owner` = '". $StatRow['id_owner'] ."';" , "statpoints");
+			}
+			$rank_new                 = $start;
+			$ranking                  = $rank_old - $rank_new;
+			if ($ranking == "0") {
+				$parse['ally_rankplus']   = "<font color=\"#87CEEB\">*</font>";
+			}
+			if ($ranking < "0") {
+				$parse['ally_rankplus']   = "<font color=\"red\">".$ranking."</font>";
+			}
+			if ($ranking > "0") {
+				$parse['ally_rankplus']   = "<font color=\"green\">+".$ranking."</font>";
+			}
+			$parse['ally_tag']        = $AllyRow['ally_tag'];
+			$parse['ally_name']       = $AllyRow['ally_name'];
+			$parse['ally_mes']        = '';
+			$parse['ally_members']    = $AllyRow['ally_members'];
+			$parse['ally_points']     = pretty_number( $StatRow[ $Order ] );
+			$parse['ally_members_points'] =  pretty_number( floor($StatRow[ $Order ] / $AllyRow['ally_members']) );
+
+			$parse['stat_values']    .= parsetemplate(gettemplate('stat_alliancetable'), $parse);
+			$start++;
+		}
+	} else {
+		$MaxUsers = doquery ("SELECT COUNT(*) AS `count` FROM {{table}} WHERE `db_deaktjava` = '0';", 'users', true);
+		if ($MaxUsers['count'] > 100) {
+			$LastPage = floor($MaxUsers['count'] / 100);
+		}
+		$parse['range'] = "";
+		for ($Page = 0; $Page <= $LastPage; $Page++) {
+			$PageValue      = ($Page * 100) + 1;
+			$PageRange      = $PageValue + 99;
+			$parse['range'] .= "<option value=\"". $PageValue ."\"". (($start == $PageValue) ? " SELECTED" : "") .">". $PageValue ."-". $PageRange ."</option>";
+		}
+
+		$parse['stat_header'] = parsetemplate(gettemplate('stat_playertable_header'), $parse);
+
+		$start = floor($range / 100 % 100) * 100;
+		$query = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' ORDER BY `". $Order ."` DESC LIMIT ". $start .",100;", 'statpoints');
+
+		$start++;
+		$parse['stat_date']   = $game_config['stats'];
+		$parse['stat_values'] = "";
+		while ($StatRow = mysql_fetch_assoc($query)) {
+			$parse['stat_date']       = date("d M Y - H:i:s", $StatRow['stat_date']);
+			$parse['player_rank']     = $start;
+
+			$UsrRow                   = doquery("SELECT * FROM {{table}} WHERE `id` = '". $StatRow['id_owner'] ."';", 'users',true);
+
+			$QryUpdateStats .= "`stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $TheRank['id_owner'] ."';";
+
+
+			$rank_old                 = $StatRow[ $OldRank ];
+			if ( $rank_old == 0) {
+				$rank_old             = $start;
+				$QryUpdRank           = doquery("UPDATE {{table}} SET `".$Rank."` = '".$start."', `".$OldRank."` = '".$start."' WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $StatRow['id_owner'] ."';" , "statpoints");
+			} else {
+				$QryUpdRank           = doquery("UPDATE {{table}} SET `".$Rank."` = '".$start."' WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $StatRow['id_owner'] ."';" , "statpoints");
+			}
+			$rank_new                 = $start;
+			$ranking                  = $rank_old - $rank_new;
+			if ($ranking == "0") {
+				$parse['player_rankplus'] = "<font color=\"#87CEEB\">*</font>";
+			}
+			if ($ranking < "0") {
+				$parse['player_rankplus'] = "<font color=\"red\">".$ranking."</font>";
+			}
+			if ($ranking > "0") {
+				$parse['player_rankplus'] = "<font color=\"green\">+".$ranking."</font>";
+			}
+			if ($UsrRow['id'] == $user['id']) {
+				$parse['player_name']     = "<font color=\"lime\">".$UsrRow['username']."</font>";
+			} else {
+				$parse['player_name']     = $UsrRow['username'];
+			}
+			$parse['player_mes']      = "<a href=\"messages.php?mode=write&id=" . $UsrRow['id'] . "\"><img src=\"" . $dpath . "img/m.gif\" border=\"0\" alt=\"". $lang['Ecrire'] ."\" /></a>";
+			if ($UsrRow['ally_name'] == $user['ally_name']) {
+				$parse['player_alliance'] = "<font color=\"#33CCFF\">".$UsrRow['ally_name']."</font>";
+			} else {
+				$parse['player_alliance'] = $UsrRow['ally_name'];
+			}
+			$parse['player_points']   = pretty_number( $StatRow[ $Order ] );
+			$parse['stat_values']    .= parsetemplate(gettemplate('stat_playertable'), $parse);
+			$start++;
+		}
+	}
+
+	$page = parsetemplate( gettemplate('stat_body'), $parse );
+
+	display($page, $lang['stat_title']);
+
+// -----------------------------------------------------------------------------------------------------------
+// History version
+// 1.0 - RÈÈcriture module
 ?>

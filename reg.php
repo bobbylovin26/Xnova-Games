@@ -1,255 +1,239 @@
-<?php  //reg.php :: Registro v1.0 beta build.3
+<?php
 
+/**
+ * reg.php
+ *
+ * @version 1.1
+ * @copyright 2008 by Chlorel for XNova
+ */
 
-define('INSIDE', true);
-$ugamela_root_path = './';
-include($ugamela_root_path . 'extension.inc');
-include($ugamela_root_path . 'common.'.$phpEx);
+define('INSIDE' , true);
+define('INSTALL' , false);
 
-define('ADMINEMAIL',"nsasuke@suddenlink.net");
-define('GAMEURL',"http://".$_SERVER['HTTP_HOST']."/");
+$xnova_root_path = './';
+include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'common.' . $phpEx);
 
 includeLang('reg');
 
+function sendpassemail($emailaddress, $password)
+{
+    global $lang;
 
-function sendpassemail($emailaddress, $password) {
-
-$gamename = "GameO";
-$staff = "Game System ";
-$email = ADMINEMAIL;
-$gameurl = GAMEURL;
-
-$email = "($gameurl) GameO Registration processed!.
-
-gameo.exofire.net!
-
-Password: $password
-
-Yours truly, $staff.
-$gameurl";
-
-$status = mymail($emailaddress, "OgameTr.Net �yeliginiz", $email);
-return $status;     
+    $parse['gameurl'] = GAMEURL;
+    $parse['password'] = $password;
+    $email = parsetemplate($lang['mail_welcome'], $parse);
+    $status = mymail($emailaddress, $lang['mail_title'], $email);
+    return $status;
 }
 
-function mymail($to, $title, $body, $from = '') {
+function mymail($to, $title, $body, $from = '')
+{
+    $from = trim($from);
 
-  $from = trim($from);
+    if (!$from) {
+        $from = ADMINEMAIL;
+    }
 
-  if (!$from) {
-     $from = '<'. ADMINEMAIL .'>';
-   }
-       
- $rp    = ADMINEMAIL;
- $org    = GAMEURL;
- $mailer = 'PHP';
+    $rp = ADMINEMAIL;
 
-  $head  = '';
-  $head  .= "Content-Type: text/plain \r\n";
-  $head  .= "Date: ". date('r'). " \r\n";
-  $head  .= "Return-Path: $rp \r\n";
-  $head  .= "From: $from \r\n";
-  $head  .= "Sender: $from \r\n";
-  $head  .= "Reply-To: $from \r\n";
-  $head  .= "Organization: $org \r\n";
-  $head  .= "X-Sender: $from \r\n";
-  $head  .= "X-Priority: 3 \r\n";
-  $head  .= "X-Mailer: $mailer \r\n";
+    $head = '';
+    $head .= "Content-Type: text/plain \r\n";
+    $head .= "Date: " . date('r') . " \r\n";
+    $head .= "Return-Path: $rp \r\n";
+    $head .= "From: $from \r\n";
+    $head .= "Sender: $from \r\n";
+    $head .= "Reply-To: $from \r\n";
+    $head .= "Organization: $org \r\n";
+    $head .= "X-Sender: $from \r\n";
+    $head .= "X-Priority: 3 \r\n";
+    $body = str_replace("\r\n", "\n", $body);
+    $body = str_replace("\n", "\r\n", $body);
 
-  $body  = str_replace("\r\n", "\n", $body);
-  $body  = str_replace("\n", "\r\n", $body);
-
-
-  
+    return mail($to, $title, $body, $head);
 }
 
-if($_POST){
+if ($_POST) {
+    $errors = 0;
+    $errorlist = "";
 
-	/*include("common.php");*/
+    $_POST['email'] = strip_tags($_POST['email']);
+    if (!is_email($_POST['email'])) {
+        $errorlist .= "\"" . $_POST['email'] . "\" " . $lang['error_mail'];
+        $errors++;
+    }
 
-	$errors = 0;
-	$errorlist = "";
+    if (!$_POST['planet']) {
+        $errorlist .= $lang['error_planet'];
+        $errors++;
+    }
 
-	//Diferentes errores que pueden surgir
-	if(!is_email($_POST['email'])){
-		
-		$errorlist .= "\"".$_POST['email']."\" ".$lang['error_mail'];
-		$errors++;
-		
-	}
-	if(!$_POST['hplanet']){
-		$errorlist .= $lang['error_hplanet'];
-		$errors++;
-	}
-	if(preg_match("/[^A-z0-9_\-]/", $_POST['hplanet'])==1) {
-		$errorlist .= $lang['error_hplanetnum'];
-		$errors++;
-	}
-	if(!$_POST['character']){
-		$errorlist .= $lang['error_character'];
-		$errors++;
-	}
-	if (preg_match("/[^A-z0-9_\-]/", $_POST['character'])==1){
-		$errorlist .= "Bu Tur Karakterleri Kullanmayiniz.<br />";
-		$errors++;
-	}
-	if($_POST['v'] != 2){
-		$errorlist .= $lang['error_v'];
-		$errors++;
-	}
-	if($_POST['agb'] != 'on'){
-		$errorlist .= $lang['error_agb'];
-		$errors++;
-	}
-	//Comprueba el nombre de usuario
-	$user_array = doquery("SELECT `username` FROM {{table}} WHERE `username` = '".mysql_escape_string($_POST['character'])."' LIMIT 1","users",true);
-	
-	if($user_array){
-		$errorlist .= $lang['error_userexist'];
-		$errors++;
-	}
-	//Comprueba el E-Mail
-	$user_array = doquery("SELECT `email` FROM {{table}} WHERE `email` = '{$_POST['email']}' LIMIT 1","users",true);
-	
-	if($user_array){
-		$errorlist .= $lang['error_emailexist'];
-		$errors++;
-	}
-	
-	if($_POST['sex'] != '' && $_POST['sex'] != 'F' && $_POST['sex'] != 'M'){
-		$errorlist .= $lang['error_sex'];
-		$errors++;
-	}
-	if($errors != 0){
-		//se muestra los errores
-		message($errorlist,$lang['Register']);
-		
-	}else{
-		//creamos la contraseña
-		$newpass = $_POST['haslo']; 
-		}
-		$md5newpass = md5($newpass);
-		//creamos temporalmente el user
-		doquery("INSERT INTO {{table}} SET 
-			`username`='{$_POST['character']}',
-			`password`='{$md5newpass}',
-			`email`='{$_POST['email']}',
-			`email_2`='{$_POST['email']}',
-			`sex`='{$_POST['sex']}',
-			`id_planet`='',
-			`register_time`='".time()."'"
-			,'users');
-		//obtenemos el id del user
-		$iduser_array = doquery("SELECT `id` FROM {{table}} WHERE `username` = '{$_POST['character']}' LIMIT 1","users",true);
-		$iduser = $iduser_array['id'];
-		//Seleccionamos una posicion
-		while(!isset($newpos_checked)){
-			
-			//$g = round(rand(1,9));
-			//$s = round(rand(1,499));
-			//$p = round(rand(4,12));
-			
-			$id_g = $game_config['id_g'];
-			$id_s = $game_config['id_s'];
-			$id_p = $game_config['id_p'];
-			
-			for($x=$id_g;$x<=10;$x++)
-			{
-				for($y=$id_s;$y<=500;$y++)
-				{									
-					for($z=id_p;$z<=4;$z++)
-					{
-						$g = $x;
-						$s = $y;
-						$p = round(rand(4,12));
-						
-						
-						switch($id_p)
-						{
-							case 1: $id_p = $id_p +1;break;
-							case 2: $id_p = $id_p +1;break;
-							case 3: if($id_s == 499)
-									{
-										$id_g = $id_g +1;	
-										$id_s = 1;
-										$id_p = 1;break;
-									}else 
-									$id_p =1;
-									$id_s=$id_s+1;break;
-									
-						}
-						
-						
-						
-						break;
-					}
-					break;
-				}
-				break;
-			}
-			
-			
-			doquery("UPDATE {{table}} SET `config_value`='{$id_g}' WHERE `config_name`='id_g'",'config');
-			doquery("UPDATE {{table}} SET `config_value`='{$id_s}' WHERE `config_name`='id_s'",'config');
-			doquery("UPDATE {{table}} SET `config_value`='{$id_p}' WHERE `config_name`='id_p'",'config');
-			
-			$newpos = doquery("SELECT * FROM {{table}} WHERE `galaxy` = '$g' AND `system` = '$s' AND `planet` = '$p'  LIMIT 1","galaxy",true);
-			
-			if($newpos["id_planet"] == "0"){$newpos_checked = true;}
-			
-			if(!$newpos){
-				//esta funcion crea un planeta? o una colonia?
-				make_planet($g,$s,$p,$iduser,$_POST['hplanet']);
-				$newpos_checked = true;
-			}
-			
-		}
-		//Ahora agregamos los campos maximos
-		$diameter = ($game_config['initial_fields'] ^ (14 / 1.5)) * 75 ;
-		doquery("UPDATE {{table}} SET
-			diameter='{$diameter}',
-			field_max='{$game_config['initial_fields']}'
-			WHERE id_owner='{$iduser}' LIMIT 1",'planets');
-		//
-		//obtenemos el id planet
-		$idplanet_array = doquery("SELECT `id` FROM {{table}} WHERE id_owner='{$iduser}' LIMIT 1",'planets',true);
-		
-		$idplanet = $idplanet_array['id'];
-		//actualizamos el id planet del user
-		doquery("UPDATE {{table}} SET
-			id_planet='{$idplanet}',
-			current_planet='{$idplanet}',
-			galaxy='{$g}',
-			system='{$s}',
-			planet='{$p}'
-			WHERE `id` = '{$iduser}' LIMIT 1","users");
-		//agregamos un contador de usuario,
-		doquery("UPDATE {{table}} SET config_value=config_value+1 WHERE config_name='users_amount' LIMIT 1","config");
-		
-		//nos fijamos si es una cuenta admin
-		//		if($_POST['character'] == 'admin'){
-		//	doquery("UPDATE {{table}} SET `authlevel` = '1' WHERE `username` = 'admin' LIMIT 1","users");
-		//}
-		
-		
-		if(sendpassemail($_POST['email'],"$newpass"))
-		//mostramos el mensaje de que se creo correctamente
-		message($lang['thanksforregistry']." ({$_POST["email"]})",$lang['reg_welldone']);
-		else
-		
-		//mostramos el mensaje de que se creo correctamente
-		message($lang['thanksforregistry']." ({$_POST["email"]})",$lang['reg_welldone']);
-		
-	}
+    if (preg_match("/[^A-z0-9_\-]/", $_POST['hplanet']) == 1) {
+        $errorlist .= $lang['error_planetnum'];
+        $errors++;
+    }
 
-else{ //Formulario simple de registro
+    if (!$_POST['character']) {
+        $errorlist .= $lang['error_character'];
+        $errors++;
+    }
 
-	$parse = $lang;
-	$page = parsetemplate(gettemplate('registry_form'), $parse);
-	
-	display($page,$lang['registry']);
+    if (strlen($_POST['passwrd']) < 4) {
+        $errorlist .= $lang['error_password'];
+        $errors++;
+    }
+
+    if (preg_match("/[^A-z0-9_\-]/", $_POST['character']) == 1) {
+        $errorlist .= $lang['error_charalpha'];
+        $errors++;
+    }
+
+    if ($_POST['rgt'] != 'on') {
+        $errorlist .= $lang['error_rgt'];
+        $errors++;
+    }
+    // Le meilleur moyen de voir si un nom d'utilisateur est pris c'est d'essayer de l'appeler !!
+    $ExistUser = doquery("SELECT `username` FROM {{table}} WHERE `username` = '" . mysql_escape_string($_POST['character']) . "' LIMIT 1;", 'users', true);
+    if ($ExistUser) {
+        $errorlist .= $lang['error_userexist'];
+        $errors++;
+    }
+    // Si l'on verifiait que l'adresse email n'existe pas encore ???
+    $ExistMail = doquery("SELECT `email` FROM {{table}} WHERE `email` = '" . mysql_escape_string($_POST['email']) . "' LIMIT 1;", 'users', true);
+    if ($ExistMail) {
+        $errorlist .= $lang['error_emailexist'];
+        $errors++;
+    }
+
+    if ($_POST['sex'] != '' && $_POST['sex'] != 'F' && $_POST['sex'] != 'M') {
+        $errorlist .= $lang['error_sex'];
+        $errors++;
+    }
+
+    if ($errors != 0) {
+        message ($errorlist, $lang['Register']);
+    } else {
+        $newpass = $_POST['passwrd'];
+        $UserName = CheckInputStrings ($_POST['character']);
+        $UserEmail = CheckInputStrings ($_POST['email']);
+        $UserPlanet = CheckInputStrings (addslashes($_POST['planet']));
+
+        $md5newpass = md5($newpass);
+        // Creation de l'utilisateur
+        $QryInsertUser = "INSERT INTO {{table}} SET ";
+        $QryInsertUser .= "`username` = '" . mysql_escape_string(strip_tags($UserName)) . "', ";
+        $QryInsertUser .= "`email` = '" . mysql_escape_string($UserEmail) . "', ";
+        $QryInsertUser .= "`email_2` = '" . mysql_escape_string($UserEmail) . "', ";
+        $QryInsertUser .= "`sex` = '" . mysql_escape_string($_POST['sex']) . "', ";
+		$QryInsertUser .= "`ip_at_reg` = '" . $_SERVER["REMOTE_ADDR"] . "', ";
+        $QryInsertUser .= "`id_planet` = '0', ";
+        $QryInsertUser .= "`register_time` = '" . time() . "', ";
+        $QryInsertUser .= "`password`='" . $md5newpass . "';";
+        doquery($QryInsertUser, 'users');
+        // On cherche le numero d'enregistrement de l'utilisateur fraichement créé
+        $NewUser = doquery("SELECT `id` FROM {{table}} WHERE `username` = '" . mysql_escape_string($_POST['character']) . "' LIMIT 1;", 'users', true);
+        $iduser = $NewUser['id'];
+        // Recherche d'une place libre !
+        $LastSettedGalaxyPos = $game_config['LastSettedGalaxyPos'];
+        $LastSettedSystemPos = $game_config['LastSettedSystemPos'];
+        $LastSettedPlanetPos = $game_config['LastSettedPlanetPos'];
+        while (!isset($newpos_checked)) {
+            for ($Galaxy = $LastSettedGalaxyPos; $Galaxy <= MAX_GALAXY_IN_WORLD; $Galaxy++) {
+                for ($System = $LastSettedSystemPos; $System <= MAX_SYSTEM_IN_GALAXY; $System++) {
+                    for ($Posit = $LastSettedPlanetPos; $Posit <= 4; $Posit++) {
+                        $Planet = round (rand (4, 12));
+
+                        switch ($LastSettedPlanetPos) {
+                            case 1:
+                                $LastSettedPlanetPos += 1;
+                                break;
+                            case 2:
+                                $LastSettedPlanetPos += 1;
+                                break;
+                            case 3:
+                                if ($LastSettedSystemPos == MAX_SYSTEM_IN_GALAXY) {
+                                    $LastSettedGalaxyPos += 1;
+                                    $LastSettedSystemPos = 1;
+                                    $LastSettedPlanetPos = 1;
+                                    break;
+                                } else {
+                                    $LastSettedPlanetPos = 1;
+                                }
+                                $LastSettedSystemPos += 1;
+                                break;
+                        }
+                        break;
+                    }
+                    break;
+                }
+                break;
+            }
+
+            $QrySelectGalaxy = "SELECT * ";
+            $QrySelectGalaxy .= "FROM {{table}} ";
+            $QrySelectGalaxy .= "WHERE ";
+            $QrySelectGalaxy .= "`galaxy` = '" . $Galaxy . "' AND ";
+            $QrySelectGalaxy .= "`system` = '" . $System . "' AND ";
+            $QrySelectGalaxy .= "`planet` = '" . $Planet . "' ";
+            $QrySelectGalaxy .= "LIMIT 1;";
+            $GalaxyRow = doquery($QrySelectGalaxy, 'galaxy', true);
+
+            if ($GalaxyRow["id_planet"] == "0") {
+                $newpos_checked = true;
+            }
+
+            if (!$GalaxyRow) {
+                CreateOnePlanetRecord ($Galaxy, $System, $Planet, $NewUser['id'], $UserPlanet, true);
+                $newpos_checked = true;
+            }
+            if ($newpos_checked) {
+                doquery("UPDATE {{table}} SET `config_value` = '" . $LastSettedGalaxyPos . "' WHERE `config_name` = 'LastSettedGalaxyPos';", 'config');
+                doquery("UPDATE {{table}} SET `config_value` = '" . $LastSettedSystemPos . "' WHERE `config_name` = 'LastSettedSystemPos';", 'config');
+                doquery("UPDATE {{table}} SET `config_value` = '" . $LastSettedPlanetPos . "' WHERE `config_name` = 'LastSettedPlanetPos';", 'config');
+            }
+        }
+        // Recherche de la reference de la nouvelle planete (qui est unique normalement !
+        $PlanetID = doquery("SELECT `id` FROM {{table}} WHERE `id_owner` = '" . $NewUser['id'] . "' LIMIT 1;", 'planets', true);
+        // Mise a jour de l'enregistrement utilisateur avec les infos de sa planete mere
+        $QryUpdateUser = "UPDATE {{table}} SET ";
+        $QryUpdateUser .= "`id_planet` = '" . $PlanetID['id'] . "', ";
+        $QryUpdateUser .= "`current_planet` = '" . $PlanetID['id'] . "', ";
+        $QryUpdateUser .= "`galaxy` = '" . $Galaxy . "', ";
+        $QryUpdateUser .= "`system` = '" . $System . "', ";
+        $QryUpdateUser .= "`planet` = '" . $Planet . "' ";
+        $QryUpdateUser .= "WHERE ";
+        $QryUpdateUser .= "`id` = '" . $NewUser['id'] . "' ";
+        $QryUpdateUser .= "LIMIT 1;";
+        doquery($QryUpdateUser, 'users');
+        // Envois d'un message in-game sympa ^^
+        $from = $lang['sender_message_ig'];
+        $sender = "Admin";
+        $Subject = $lang['subject_message_ig'];
+        $message = $lang['text_message_ig'];
+        SendSimpleMessage($iduser, $sender, $Time, 1, $from, $Subject, $message);
+
+        // Mise a jour du nombre de joueurs inscripts
+        doquery("UPDATE {{table}} SET `config_value` = `config_value` + '1' WHERE `config_name` = 'users_amount' LIMIT 1;", 'config');
+
+        $Message = $lang['thanksforregistry'];
+        if (sendpassemail($_POST['email'], "$newpass")) {
+            $Message .= " (" . htmlentities($_POST["email"]) . ")";
+        } else {
+            $Message .= " (" . htmlentities($_POST["email"]) . ")";
+            $Message .= "<br><br>" . $lang['error_mailsend'] . " <b>" . $newpass . "</b>";
+        }
+        message($Message, $lang['reg_welldone']);
+    }
+} else {
+    // Afficher le formulaire d'enregistrement
+    $parse = $lang;
+    $parse['servername'] = $game_config['game_name'];
+    $page = parsetemplate(gettemplate('registry_form'), $parse);
+
+    display ($page, $lang['registry'], false);
 }
-
-
-// Created by Perberos. All rights reversed (C) 2006
+// -----------------------------------------------------------------------------------------------------------
+// History version
+// 1.0 - Version originelle
+// 1.1 - Menage + rangement + utilisation fonction de creation planete nouvelle generation
 ?>

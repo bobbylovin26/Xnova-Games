@@ -1,9 +1,10 @@
 <html>
 <head>
 <title>{title}</title>
-<link rel="SHORTCUT ICON" href="favicon.ico">
-<link rel="stylesheet" type="text/css" href="{dpath}formate.css" />
+<link rel="shortcut icon" href="favicon.ico">
+{-style-}
 <meta http-equiv="content-type" content="text/html; charset={ENCODING}" />
-{META_TAG}
+{-meta-}
+<script type="text/javascript" src="scripts/overlib.js"></script>
 </head>
-<body>
+{-body-}

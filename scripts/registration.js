@@ -56,7 +56,7 @@ function remoteCheckUsername() {
 	ajax.requestFile = "check_registration.php";
 
 	// turn on its execute flag
-    ajax.ruNumesponse = wheNumesponse;
+    ajax.runResponse = whenResponse;
     ajax.execute = true;
 
     ajax.setVar("action", "check_username");
@@ -69,7 +69,7 @@ function remoteCheckEmail() {
 	ajax.requestFile = "check_registration.php";
 
 	// turn on its execute flag
-    ajax.ruNumesponse = wheNumesponse;
+    ajax.runResponse = whenResponse;
     ajax.execute = true;
 
     ajax.setVar("action", "check_email");
@@ -127,7 +127,7 @@ function whenLoaded(){
 function whenInteractive(){
 }
 
-function wheNumesponse(){
+function whenResponse(){
 	retVals = this.response.split(" ");
 	switch (retVals[0]) {
 		case "1": // check username

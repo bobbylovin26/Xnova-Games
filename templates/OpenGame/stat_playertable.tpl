@@ -1,10 +1,8 @@
-
-                                              <tr>
-        <th>{player_rank}</th>
-        <th style="text-align: left;">{player_name}</th>
-                <th>
-                {player_mes}
-                &nbsp;
-        </th>
-        <th style="text-align: right;">{player_points}</th>   
-       </tr>
+<tr>
+	<th align="center">{player_rank}</th>
+	<th align="center">{player_rankplus}</th>
+	<th align="left">{player_name}</th>
+	<th align="center">{player_mes}</th>
+	<th align="left">{player_alliance}</th>
+	<th align="right">{player_points}</th>
+</tr>

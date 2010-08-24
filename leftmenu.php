@@ -1,39 +1,95 @@
-<?PHP //leftmenu.php :: Menu de la izquierda
+<?PHP
 
+/**
+ * leftmenu.php
+ *
+ * @version 1.1
+ * @copyright 2008 By Chlorel for XNova
+ */
 
-define('INSIDE', true);
-$ugamela_root_path = './';
-include($ugamela_root_path . 'extension.inc');
-include($ugamela_root_path . 'common.'.$phpEx);
-include('ban.php');
+define('INSIDE'  , true);
+define('INSTALL' , false);
 
-if(!check_user()){ header("Location: login.php"); }
+$xnova_root_path = './';
+include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'common.'.$phpEx);
 
-$dpath = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
+function ShowLeftMenu ( $Level , $Template = 'left_menu') {
+	global $lang, $dpath, $game_config;
 
-includeLang('leftmenu');
+	includeLang('leftmenu');
 
-$mf = "Mainframe";//nombre del frame
+	$MenuTPL                  = gettemplate( $Template );
+	$InfoTPL                  = gettemplate( 'serv_infos' );
+	$parse                    = $lang;
+	$parse['lm_tx_serv']      = $game_config['resource_multiplier'];
+	$parse['lm_tx_game']      = $game_config['game_speed'] / 2500;
+	$parse['lm_tx_fleet']     = $game_config['fleet_speed'] / 2500;
+	$parse['lm_tx_queue']     = MAX_FLEET_OR_DEFS_PER_ROW;
+	$SubFrame                 = parsetemplate( $InfoTPL, $parse );
+	$parse['server_info']     = $SubFrame;
+	$parse['XNovaRelease']    = VERSION;
+	$parse['dpath']           = $dpath;
+	$parse['forum_url']       = $game_config['forum_url'];
+	$parse['mf']              = "Hauptframe";
+	$rank                     = doquery("SELECT `total_rank` FROM {{table}} WHERE `stat_code` = '1' AND `stat_type` = '1' AND `id_owner` = '". $user['id'] ."';",'statpoints',true);
+	$parse['user_rank']       = $rank['total_rank'];
+	if ($Level > 0) {
+		$parse['ADMIN_LINK']  = "
+		<tr>
+			<td colspan=\"2\"><div><a href=\"admin/leftmenu.php\"><font color=\"lime\">".$lang['user_level'][$Level]."</font></a></div></td>
+		</tr>";
+	} else {
+		$parse['ADMIN_LINK']  = "";
+	}
+	//Lien supplémentaire déterminé dans le panel admin
+	if ($game_config['link_enable'] == 1) {
+		$parse['added_link']  = "
+		<tr>
+			<td colspan=\"2\"><div><a href=\"".$game_config['link_url']."\" target=\"_blank\">".stripslashes($game_config['link_name'])."</a></div></td>
+		</tr>";
+	} else {
+		$parse['added_link']  = "";
+	}
+	
+	//Maintenant on vérifie si les annonces sont activées ou non
+	if ($game_config['enable_announces'] == 1) {
+		$parse['announce_link']  = "
+		<tr>
+			<td colspan=\"2\"><div><a href=\"annonces.php\" target=\"{mf}\">Annonces</a></div></td>
+		</tr>";
+	} else {
+		$parse['announce_link']  = "";
+	}
+	
+		//Maintenant le marchand
+	if ($game_config['enable_marchand'] == 1) {
+		$parse['marchand_link']  = "
+		<tr>
+			<td colspan=\"2\"><div><a href=\"marchand.php\" target=\"{mf}\">Marchand</a></div></td>
+		</tr>";
+	} else {
+		$parse['marchand_link']  = "";
+	}
+			//Maintenant les notes
+	if ($game_config['enable_notes'] == 1) {
+		$parse['notes_link']  = "
+		<tr>
+			<td colspan=\"2\"><div><a href=\"#\" onClick=\"f(\'notes.php\', \'Report\');\" accesskey=\"n\">Notes</a></div></td>
+		</tr>";
+	} else {
+		$parse['notes_link']  = "";
+	}
+	$parse['servername']   = $game_config['game_name'];
+	$Menu                  = parsetemplate( $MenuTPL, $parse);
 
-$parse = $lang;
-$parse['dpath'] = $dpath;
-$parse['mf'] = $mf;
-$parse['VERSION'] = VERSION;
-$rank = doquery("SELECT COUNT(*) FROM {{table}} WHERE points_points>={$user['points_points']}","users",true);
-$parse['user_rank'] = $rank[0];
+	return $Menu;
+}
+	$Menu = ShowLeftMenu ( $user['authlevel'] );
+	display ( $Menu, "Menu", '', false );
 
-//
-//  TODO:
-//	Hay que revisar el codigo para crear el link de admin
-//
-$parse['ADMIN_LINK'] = ($user['authlevel'] == 1||$user['authlevel'] == 3)?'<tr><td><div align="center"><a href="administrator/leftmenu.php"><font color="lime">Administrator</font></a></div></td></tr>':'';
-
-$parse['GO_LINK'] = ($user['authlevel'] == 4||$user['authlevel'] == 4)?'<tr><td><div align="center"><a href="oparator/leftmenu.php"><font color="lime">Operator</font></a></div></td></tr>':'';
-
-$parse['SGO_LINK'] = ($user['authlevel'] == 5||$user['authlevel'] == 5)?'<tr><td><div align="center"><a href="administrator/leftmenu.php"><font color="lime">Administrator</font></a></div></td></tr>':'';
-
-echo parsetemplate(gettemplate('left_menu'), $parse);
-
-
-// Created by Perberos. All rights reversed (C) 2006
+// -----------------------------------------------------------------------------------------------------------
+// History version
+// 1.0 - Passage en fonction pour XNova version future
+// 1.1 - Modification pour gestion Admin / Game OP / Modo
 ?>

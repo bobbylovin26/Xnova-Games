@@ -1,11 +1,6 @@
-
 <br>
 <center>
-
-<table width="470">
-
-{techtree_list}
-
+<table width="569">
+	{techtree_list}
 </table>
-
-<br><br></center>
+</center>

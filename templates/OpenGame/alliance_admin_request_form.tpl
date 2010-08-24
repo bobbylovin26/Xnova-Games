@@ -1,4 +1,4 @@
-
+<br>
 	<form action="alliance.php?mode=admin&edit=requests&show={id}&sort=0" method="POST">
 	<tr>
 	  <th colspan=2>{Request_from}</th>
@@ -7,11 +7,11 @@
 	  <th colspan=2>{ally_request_text}</th>
 	</tr>
 	<tr>
-	  <td class="c" colspan=2>Masvurunun Mesajý</td>
+	  <td class="c" colspan=2>{Request_responde}</td>
 	</tr>
 	<tr>
 	  <th>&#160;</th>
-	  <th><input type="submit" name="action" value="{Ok}"></th>
+	  <th><input type="submit" name="action" value="Akzeptieren"></th>
 	</tr>
 	<tr>
 	  <th>{Motive_optional} <span id="cntChars">0</span> / 500 {characters}</th>
@@ -19,7 +19,7 @@
 	</tr>
 	<tr>
 	  <th>&#160;</th>
-	  <th><input type="submit" name="action" value="{Repel}"></th>
+	  <th><input type="submit" name="action" value="Ablehnen"></th>
 	</tr>
 	<tr>
 	  <td colspan=2>&#160;</td>

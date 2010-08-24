@@ -1,27 +1,34 @@
 <?php
 
 function doquery($query, $table, $fetch = false){
-  global $link,$debug,$ugamela_root_path;
+  global $link, $debug, $xnova_root_path;
 //    echo $query."<br />";
-	require($ugamela_root_path.'config.php');
+	require($xnova_root_path.'config.php');
+
+
 
 	if(!$link)
 	{
-		$link = mysql_connect($dbsettings["server"], $dbsettings["user"], 
+		$link = mysql_connect($dbsettings["server"], $dbsettings["user"],
 				$dbsettings["pass"]) or
 				$debug->error(mysql_error()."<br />$query","SQL Error");
 				//message(mysql_error()."<br />$query","SQL Error");
-		
+
 		mysql_select_db($dbsettings["name"]) or $debug->error(mysql_error()."<br />$query","SQL Error");
-		mysql_query("SET NAMES latin2");
 		echo mysql_error();
 	}
 	// por el momento $query se mostrara
 	// pero luego solo se vera en modo debug
-	$sqlquery = mysql_query(str_replace("{{table}}", $dbsettings["prefix"].
-				$table, $query)) or 
-				$debug->error(mysql_error()."<br />$query","SQL Error");
+
+
+
+	$sql = str_replace("{{table}}", $dbsettings["prefix"].$table, $query);
+
+
+	$sqlquery = mysql_query($sql) or
+				$debug->error(mysql_error()."<br />$sql<br />","SQL Error");
 				//print(mysql_error()."<br />$query"."SQL Error");
+
 
 	unset($dbsettings);//se borra la array para liberar algo de memoria
 
@@ -37,7 +44,7 @@ function doquery($query, $table, $fetch = false){
 	}else{ //devuelve el $sqlquery ("sin fetch")
 		return $sqlquery;
 	}
-	
+
 }
 
 

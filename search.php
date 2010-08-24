@@ -1,18 +1,28 @@
 <?php
 
-define('INSIDE', true);
-$ugamela_root_path = './';
-include($ugamela_root_path . 'extension.inc');
-include($ugamela_root_path . 'common.'.$phpEx);
+/**
+ * search.php
+ *
+ * @version 1.0
+ * @copyright 2008 by ??????? for XNova
+ */
 
-if(!check_user()){ header("Location: login.php"); }
+define('INSIDE'  , true);
+define('INSTALL' , false);
+
+$xnova_root_path = './';
+include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'common.'.$phpEx);
+
+$searchtext = mysql_escape_string($_POST['searchtext']);
+$type = $_POST['type'];
 
 $dpath = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
 
-include($ugamela_root_path.'includes/planet_toggle.'.$phpEx);//Esta funcion permite cambiar el planeta actual.
 includeLang('search');
 $i = 0;
 //creamos la query
+$searchtext = mysql_escape_string($_POST["searchtext"]);
 switch($type){
 	case "playername":
 		$table = gettemplate('search_user_table');
@@ -47,13 +57,14 @@ switch($type){
 if(isset($searchtext) && isset($type)){
 
 	while($r = mysql_fetch_array($search, MYSQL_BOTH)){
-		
+
 		if($type=='playername'||$type=='planetname'){
 			$s=$r;
 			//para obtener el nombre del planeta
 			if ($type == "planetname")
 			{
 			$pquery = doquery("SELECT * FROM {{table}} WHERE id = {$s['id_owner']}","users",true);
+/*			$farray = mysql_fetch_array($pquery);*/
 			$s['planet_name'] = $s['name'];
 			$s['username'] = $pquery['username'];
 			$s['ally_name'] = ($pquery['ally_name']!='')?"<a href=\"alliance.php?mode=ainfo&tag={$pquery['ally_name']}\">{$pquery['ally_name']}</a>":'';
@@ -70,7 +81,8 @@ if(isset($searchtext) && isset($type)){
 			}
 
 
-			$s['position'] = ($s['points']==0)?'':"<a href=\"stat.php?start={$s['points']}\">{$s['points']}</a>";
+
+			$s['position'] = "<a href=\"stat.php?start=".$s['rank']."\">".$s['rank']."</a>";
 			$s['dpath'] = $dpath;
 			$s['coordinated'] = "{$s['galaxy']}:{$s['system']}:{$s['planet']}";
 			$s['buddy_request'] = $lang['buddy_request'];
@@ -78,6 +90,9 @@ if(isset($searchtext) && isset($type)){
 			$result_list .= parsetemplate($row, $s);
 		}elseif($type=='allytag'||$type=='allyname'){
 			$s=$r;
+
+			$s['ally_points'] = pretty_number($s['ally_points']);
+
 			$s['ally_tag'] = "<a href=\"alliance.php?mode=ainfo&tag={$s['ally_tag']}\">{$s['ally_tag']}</a>";
 			$result_list .= parsetemplate($row, $s);
 		}
@@ -98,10 +113,4 @@ $lang['search_results'] = $search_results;
 //esto es algo repetitivo ... w
 $page = parsetemplate(gettemplate('search_body'), $lang);
 display($page,$lang['Search']);
-
-/*
-  bueno, no se pudo hacer mucho que digamos ... La proxima vez, será~
-*/
-
-// Created by Perberos. All rights reversed (C) 2006
 ?>

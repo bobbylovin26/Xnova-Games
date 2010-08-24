@@ -1,68 +1,46 @@
-<?  //mboss
+<?php
 
-define('INSIDE', true);
-$ugamela_root_path = './';
-include($ugamela_root_path . 'extension.inc');
-include($ugamela_root_path . 'common.'.$phpEx);
+/**
+ * banned.php
+ *
+ * @version 1.0
+ * @copyright 2008 by ??????? for XNova
+ */
 
-if(!check_user()){ header("Location: login.php"); }
+define('INSIDE'  , true);
+define('INSTALL' , false);
+
+$xnova_root_path = './';
+include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'common.'.$phpEx);
 
 
-$dpath = (!$userrow["dpath"]) ? DEFAULT_SKINPATH : $userrow["dpath"];
+includeLang('banned');
 
-$i = (is_numeric($from)&&isset($from)) ? $from : 0;
+$parse = $lang;
+$parse['dpath'] = $dpath;
+$parse['mf'] = $mf;
 
-echo_head("Suspensiones en Ugamela");
-if($userrow){echo_topnav();}
-echo "<center>\n";
 
-echo '   <b>--=={[ Banned List ]}==--</b>
-
-   <p>This is dedicated to the losers of GameO</p>
-
-   <table border="0" cellpadding="2" cellspacing="1">
-    <tr height="20">
-     <td class="c">User</td>
-     <td class="c">?</td>
-     <td class="c">Ban Start</td>
-     <td class="c">Ban End</td>
-     <td class="c">Banned by:</td>
-    </tr>';
-
-$count = 0;
-$banned = doquery("SELECT * FROM {{table}} ORDER BY `id` DESC LIMIT $i,50","banned");
-while($b = mysql_fetch_array($banned)){
-	echo "<tr height=20>";
-	echo "<th>".$b["who"]."</th>";
-	echo "<th>".$b["theme"]."</th>";
-	echo "<th>".gmdate("d.m.Y G:i:s",$b['time'])."</th>";
-	echo "<th>".gmdate("d.m.Y G:i:s",$b['longer'])."</th>";
-	echo '<th><a href="mailto:'.$b["email"].'?subject=banned:'.$b["who"].'">'.$b["author"]."</a></th>";
-	echo "</tr>";
-	$count++;
+$query = doquery("SELECT * FROM {{table}} ORDER BY `id`;",'banned');
+$i=0;
+while($u = mysql_fetch_array($query)){
+	$parse['banned'] .=
+        "<tr><td class=b><center><b>".$u[1]."</center></td></b>".
+	"<td class=b><center><b>".$u[2]."</center></b></td>".
+	"<td class=b><center><b>".gmdate("d/m/Y G:i:s",$u[4])."</center></b></td>".
+	"<td class=b><center><b>".gmdate("d/m/Y G:i:s",$u[5])."</center></b></td>".
+	"<td class=b><center><b>".$u[6]."</center></b></td></tr>";
+	$i++;
 }
 
-if($count == 0){echo "<tr height=20><th colspan=\"5\">No users on this page.</th></tr>";}
-$ia=$i-50;
-$i+=50;
-echo "<tr>";
-echo '<th colspan="5">';
-if($i >50){echo "<a href=\"?from=$ia\">&lt;&lt; Last 50</a>&nbsp;&nbsp;&nbsp;&nbsp;";}
-echo "<a href=\"?from=$i\">Next 50 >></a>";
-echo "</th>";
-echo "</tr>";
+if ($i=="0")
+ $parse['banned'] .= "<tr><th class=b colspan=6>Il n'y a pas de joueurs bannis</th></tr>";
+else
+  $parse['banned'] .= "<tr><th class=b colspan=6>Il y a {$i} joueurs bannis</th></tr>";
 
-echo "</table></center></body></html>";
+display(parsetemplate(gettemplate('banned_body'), $parse),'Banned',true);
 
 
-if($userrow['authlevel'] == 3){
-	$tiempo = microtime();
-	$tiempo = explode(" ",$tiempo);
-	$tiempo = $tiempo[1] + $tiempo[0];
-	$tiempoFin = $tiempo;
-	$tiempoReal = ($tiempoFin - $tiempoInicio);
-	echo $depurerwrote001.$tiempoReal.$depurerwrote002.$numqueries.$depurerwrote003;
-}
-
-
+// Created by e-Zobar (XNova Team). All rights reversed (C) 2008
 ?>

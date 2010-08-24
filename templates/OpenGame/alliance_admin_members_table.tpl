@@ -1,7 +1,7 @@
-
+<br>
 <table width="519">
 	<tr>
-	  <td class="c" colspan="9">{Members_list} ({Ammount}: 1)</td>
+	  <td class="c" colspan="9">{Members_list} ({Ammount}: {memberzahl})</td>
 	</tr>
 	<tr>
 	  <th>{Number}</th>
@@ -11,8 +11,8 @@
 	  <th><a href="alliance.php?mode=admin&edit=members&sort1=3&sort2={s}">{Points}</a></th>
 	  <th><a href="alliance.php?mode=admin&edit=members&sort1=0&sort2={s}">{Coordinated}</a></th>
 	  <th><a href="alliance.php?mode=admin&edit=members&sort1=4&sort2={s}">{Member_from}</a></th>
-	  <th><a href="alliance.php?mode=admin&edit=members&sort1=5&sort2={s}">{Inactive}</a></th>
-	  <th>{Function}</th>
+	  <th><a href="alliance.php?mode=admin&edit=members&sort1=5&sort2={s}">Inaktiv seit</a></th>
+	  <th>Funktionen</th>
 	</tr>
 	{memberslist}
 	<tr>

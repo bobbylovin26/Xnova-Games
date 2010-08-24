@@ -58,7 +58,7 @@ function sack(file){
 	return varArray.join('&');
 	}
 	
-	this.ruNumesponse = function(){
+	this.runResponse = function(){
 		eval(this.response);
 	}
 	
@@ -95,7 +95,7 @@ function sack(file){
 				}
 
 				this.xmlhttp.send(this.URLString);
-				this.xmlhttp.oNumeadystatechange = function() {
+				this.xmlhttp.onreadystatechange = function() {
 					switch (self.xmlhttp.readyState){
 						case 1:
 							self.onLoading();
@@ -112,7 +112,7 @@ function sack(file){
 							self.responseStatus[0] = self.xmlhttp.status;
 							self.responseStatus[1] = self.xmlhttp.statusText;
 							self.onCompletion();
-							if(self.execute){ self.ruNumesponse(); }
+							if(self.execute){ self.runResponse(); }
 							if (self.elementObj) {
 								var elemNodeName = self.elementObj.nodeName;
 								elemNodeName.toLowerCase();

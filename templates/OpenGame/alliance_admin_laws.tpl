@@ -1,4 +1,4 @@
-
+<br>
 <table width=519><tr><td class=c colspan=11>{Configure_laws}</td></tr>
 
 {list}

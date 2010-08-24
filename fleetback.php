@@ -1,34 +1,80 @@
-<?php //fleetback.php
-define('INSIDE', true);
-$ugamela_root_path = './';
-include($ugamela_root_path . 'extension.inc');
-include($ugamela_root_path . 'common.'.$phpEx);
-include('ban.php');
-if(!check_user()){ header("Location: login.php"); }
-$fq = doquery("SELECT * FROM {{table}} WHERE fleet_id={$_POST['zawracanie']}",'fleets');
-$i=0;
-while($f = mysql_fetch_array($fq)){
-	$i++;
-	$fleet['end_pow'] = time()+$f['fleet_start_planet']-$f['fleet_start_planet'];
-	if($f['fleet_mess'] == 0){
-		$czas_lotu = $f['fleet_end_time']-$f['fleet_start_time'];
-		$ile_juz_leci = $czas_lotu - ($f['fleet_start_time'] - time());
-		$czas_powrotu = $ile_juz_leci + time();
-		doquery("UPDATE {{table}} SET
-			`fleet_mission`='4',
-			`fleet_start_time`='{$czas_powrotu}',
-			`fleet_end_time`='".($czas_powrotu+1)."',
-			`fleet_ofiara`='{$user['id']}',
-			`fleet_end_galaxy`=fleet_start_galaxy,
-			`fleet_end_system`=fleet_start_system,
-			`fleet_end_planet`=fleet_start_planet,
-			`fleet_mess`='1'
-			WHERE `fleet_id` = '{$_POST['zawracanie']}'" ,"fleets");
-		message("<font color=\"lime\">Geri Donduruldu","Tamam","fleet.".$phpEx,2);
-	} elseif($f['fleet_mess'] == 1){
-		message("<font color=\"red\">Geri Donemedi","error","fleet.".$phpEx,2);
-	}
-}
+<?php
 
+/**
+ * fleetback.php
+ *
+ * @version 1.0
+ * @copyright 2008 by Chlorel for XNova
+ */
+
+define('INSIDE'  , true);
+define('INSTALL' , false);
+
+	$xnova_root_path = './';
+	include($xnova_root_path . 'extension.inc');
+	include($xnova_root_path . 'common.' . $phpEx);
+
+	includeLang('fleet');
+
+	$BoxTitle   = $lang['fl_error'];
+	$TxtColor   = "red";
+	$BoxMessage = $lang['fl_notback'];
+	if ( is_numeric($_POST['fleetid']) ) {
+		$fleetid  = intval($_POST['fleetid']);
+
+		$FleetRow = doquery("SELECT * FROM {{table}} WHERE `fleet_id` = '". $fleetid ."';", 'fleets', true);
+		$i = 0;
+
+		if ($FleetRow['fleet_owner'] == $user['id']) {
+			if ($FleetRow['fleet_mess'] == 0) {
+				if ($FleetRow['fleet_end_stay'] != 0) {
+					// Faut calculer le temps reel de retour
+					if ($FleetRow['fleet_start_time'] < time()) {
+						// On a pas encore entamé le stationnement
+						// Il faut calculer la parcelle de temps ecoulée depuis le lancement de la flotte
+						$CurrentFlyingTime = time() - $FleetRow['start_time'];
+					} else {
+						// On est deja en stationnement
+						// Il faut donc directement calculer la durée d'un vol aller ou retour
+						$CurrentFlyingTime = $FleetRow['fleet_start_time'] - $FleetRow['start_time'];
+					}
+				} else {
+					// C'est quoi le stationnement ??
+					// On calcule sagement la parcelle de temps ecoulée depuis le depart
+					$CurrentFlyingTime = time() - $FleetRow['start_time'];
+				}
+				// Allez houste au bout du compte y a la maison !! (E.T. phone home.............)
+				$ReturnFlyingTime  = $CurrentFlyingTime + time();
+
+				$QryUpdateFleet  = "UPDATE {{table}} SET ";
+				$QryUpdateFleet .= "`fleet_start_time` = '". (time() - 1) ."', ";
+				$QryUpdateFleet .= "`fleet_end_stay` = '0', ";
+				$QryUpdateFleet .= "`fleet_end_time` = '". ($ReturnFlyingTime + 1) ."', ";
+				$QryUpdateFleet .= "`fleet_target_owner` = '". $user['id'] ."', ";
+				$QryUpdateFleet .= "`fleet_mess` = '1' ";
+				$QryUpdateFleet .= "WHERE ";
+				$QryUpdateFleet .= "`fleet_id` = '" . $fleetid . "';";
+				doquery( $QryUpdateFleet, 'fleets');
+
+				$BoxTitle   = $lang['fl_sback'];
+				$TxtColor   = "lime";
+				$BoxMessage = $lang['fl_isback'];
+			} elseif ($FleetRow['fleet_mess'] == 1) {
+				$BoxMessage = $lang['fl_notback'];
+			}
+		} else {
+			$BoxMessage = $lang['fl_onlyyours'];
+		}
+	}
+
+	message ("<font color=\"".$TxtColor."\">". $BoxMessage ."</font>", $BoxTitle, "fleet.". $phpEx, 2);
+
+// -----------------------------------------------------------------------------------------------------------
+// History version
+// Updated by Chlorel. 22 Jan 2008 (String extraction, bug corrections, code uniformisation
 // Created by DxPpLmOs. All rights reversed (C) 2007
+// Updated by -= MoF =- for Deutsches Ugamela Forum
+// 06.12.2007 - 08:41
+// Open Source
+// (c) by MoF
 ?>

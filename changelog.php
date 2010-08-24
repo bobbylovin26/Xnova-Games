@@ -1,21 +1,20 @@
-<?php //changelog.php
+<?php
 
-define('INSIDE', true);
-$ugamela_root_path = './';
-include($ugamela_root_path . 'extension.inc');
-include($ugamela_root_path . 'common.'.$phpEx);
+/**
+ * changelog.php
+ *
+ * @version 1.0
+ * @copyright 2008 by ??????? for XNova
+ */
 
-if(!check_user()){ header("Location: login.php"); }
+define('INSIDE'  , true);
+define('INSTALL' , false);
+
+$xnova_root_path = './';
+include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'common.'.$phpEx);
 
 includeLang('changelog');
-//
-// Esta funcion permite cambiar el planeta actual.
-//
-include($ugamela_root_path . 'includes/planet_toggle.'.$phpEx);
-
-/*
-	simple array donde se iran colocando las diferentes versiones del juego
-*/
 
 $template = gettemplate('changelog_table');
 

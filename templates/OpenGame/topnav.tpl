@@ -1,52 +1,53 @@
-
+<div id="header_top">
 <center>
-<table>
-	<tr>
-	  <td></td>
-	  <td>
-	    <center>
-		<table>
-			<tr>
-			  <td><img src="{dpath}planeten/small/s_{image}.jpg" height="50" width="50"></td>
-			  <td>
-			  <select size="1" onChange="eval('location=\''+this.options[this.selectedIndex].value+'\'');">
-			  <!-- pequeño loop para agregar todos los planetas disponibles del mismo jugador... -->
+<table class="header">
+<tbody>
+<tr class="header">
+	<td class="header">
+		<center>
+		<table class="header">
+		<tbody>
+		<tr class="header">
+			<td class="header"><img src="{dpath}planeten/small/s_{image}.jpg" height="50" width="50"></td>
+			<td  class="header" valign="middle">
+				<select size="1" onChange="eval('location=\''+this.options[this.selectedIndex].value+'\'');">
 				{planetlist}
-			  </select>
-				<table border="1"></table>
-			  </td>
-			</tr>
+				</select>
+			</td>
+		</tr>
+		</tbody>
 		</table>
 		</center>
-	  </td>
-	  <td>
-		<table border="0" cellpadding="0" cellspacing="0" width="100%">
-			<tr>
-			  <td align="center"></td>
-			  <td align="center" width="85"><img src="{dpath}images/metall.gif" border="0" height="22" width="42"></td>
-			  <td align="center" width="85"><img src="{dpath}images/kristall.gif" border="0" height="22" width="42"></td>
-			  <td align="center" width="85"><img src="{dpath}images/deuterium.gif" border="0" height="22" width="42"></td>
-			  <td align="center" width="85"><img src="{dpath}images/energie.gif" border="0" height="22" width="42"></td>
-     <td align="center"></td>
-    </tr>
-    <tr>
-     <td align="center"><i><b>&nbsp;&nbsp;</b></i></td>
-     <td align="center" width="85"><i><b style="color: rgb(173, 174, 173);">{Metal}</b></i></td>
-     <td align="center" width="85"><i><b style="color: rgb(239, 81, 239);">{Crystal}</b></i></td>
-     <td align="center" width="85"><i><b style="color: rgb(247, 117, 66);">{Deuterium}</b></i></td>
-     <td align="center" width="85"><i><b style="color: rgb(156, 113, 198);">{Energy}</b></i></td>
-     <td align="center"><i><b>&nbsp;&nbsp;</b></i></td>
-    </tr>
-    <tr>
-     <td align="center"></td>
-     <td align="center" width="85">{metal}</td>
-     <td align="center" width="85">{crystal}</td>
-     <td align="center" width="85">{deuterium}</td>
-     <td align="center" width="85">{energy}</td>
-     <td align="center"></td>
-    </tr>
-   </table>
-  </td>
-  </tr>
+	</td>
+	<td class="header">
+		<table style="width: 508px;" class="header" id="resources" padding-right="30" border="0" cellpadding="0" cellspacing="0">
+		<tbody>
+		<tr class="header">
+			<td class="header" align="center" width="140"><img src="{dpath}images/metall.gif" border="0" height="22" width="42"></td>
+			<td class="header" align="center" width="140"><img src="{dpath}images/kristall.gif" border="0" height="22" width="42"></td>
+			<td class="header" align="center" width="140"><img src="{dpath}images/deuterium.gif" border="0" height="22" width="42"></td>
+			<td class="header" align="center" width="140"><img src="{dpath}images/energie.gif" border="0" height="22" width="42"></td>
+			<td class="header" align="center" width="140"><img src="{dpath}images/message.gif" border="0" height="22" width="42"></td>
+		</tr>
+		<tr class="header">
+			<td class="header" align="center" width="140"><i><b><font color="#ffffff">{Metal}</font></b></i></td>
+			<td class="header" align="center" width="140"><i><b><font color="#ffffff">{Crystal}</font></b></i></td>
+			<td class="header" align="center" width="140"><i><b><font color="#ffffff">{Deuterium}</font></b></i></td>
+			<td class="header" align="center" width="140"><i><b><font color="#ffffff">{Energy}</font></b></i></td>
+			<td class="header" align="center" width="140"><i><b><font color="#ffffff">{Message}</font></b></i></td>
+		</tr>
+		<tr class="header">
+			<td class="header" align="center" width="140"><font>{metal}</font></td>
+			<td class="header" align="center" width="140"><font>{crystal}</font></td>
+			<td class="header" align="center" width="140"><font>{deuterium}</font></td>
+			<td class="header" align="center" width="140"><font>{energy}</font></td>
+			<td class="header" align="center" width="140"><font>{message}</font></td>
+		</tr>
+		</tbody>
+		</table>
+	</td>
+</tr>
+</tbody>
 </table>
 </center>
+</div>

@@ -1,9 +1,9 @@
 <?php
 
 function doquery($query, $table, $fetch = false){
-  global $link,$debug,$ugamela_root_path;
+  global $link,$debug,$xnova_root_path;
 
-	@include($ugamela_root_path.'config.php');
+	@include($xnova_root_path.'config.php');
 
 	if(!$link)
 	{

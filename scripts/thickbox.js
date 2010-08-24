@@ -117,9 +117,13 @@ function tb_show(caption, url, imageGroup) {//function called when the user clic
 			}
 			// End Resizing
 			
-			TB_WIDTH = imageWidth + 30;
-			TB_HEIGHT = imageHeight + 60;
-			$("#TB_window").append("<a href='' id='TB_ImageOff' title='Close'><img id='TB_Image' src='"+url+"' width='"+imageWidth+"' height='"+imageHeight+"' alt='"+caption+"'/></a>" + "<div id='TB_caption'>"+caption+"<div id='TB_secondLine'>" + TB_imageCount + TB_PrevHTML + TB_NextHTML + "</div></div><div id='TB_closeWindow'><a href='#' id='TB_closeWindowButton' title='Close'>close</a> or Esc Key</div>"); 		
+
+
+			TB_WIDTH = ((imageWidth + 30) + (imageWidth / 2));
+			TB_HEIGHT = ((imageHeight + 60) + (imageHeight / 2));
+			imageWidth = (imageWidth + (imageWidth / 2));
+			imageHeight = (imageHeight + (imageHeight / 2));
+			$("#TB_window").append("<a href='' id='TB_ImageOff' title='Close'><img id='TB_Image' src='"+url+"' width='"+imageWidth+"' height='"+imageHeight+"' alt='"+caption+"'/></a>" + "<div id='TB_caption'>"+caption+"<div id='TB_secondLine'>" + TB_imageCount + TB_PrevHTML + TB_NextHTML + "</div></div><div id='TB_closeWindow'><a href='#' id='TB_closeWindowButton' title='Close'>Schliessen</a> oder dr&uml;cke ESC</div>"); 		
 			
 			$("#TB_closeWindowButton").click(tb_remove);
 			
@@ -185,7 +189,7 @@ function tb_show(caption, url, imageGroup) {//function called when the user clic
 			
 			if(url.indexOf('TB_iframe') != -1){				
 					urlNoQuery = url.split('TB_');		
-					$("#TB_window").append("<div id='TB_title'><div id='TB_ajaxWindowTitle'>"+caption+"</div><div id='TB_closeAjaxWindow'><a href='#' id='TB_closeWindowButton' title='Close'>close</a> or Esc Key</div></div><iframe frameborder='0' hspace='0' src='"+urlNoQuery[0]+"' id='TB_iframeContent' name='TB_iframeContent' style='width:"+(ajaxContentW + 29)+"px;height:"+(ajaxContentH + 17)+"px;' onload='tb_showIframe()'> </iframe>");
+					$("#TB_window").append("<div id='TB_title'><div id='TB_ajaxWindowTitle'>"+caption+"</div><div id='TB_closeAjaxWindow'><a href='#' id='TB_closeWindowButton' title='Close'>close</a> or Esc Key</div></div><iframe frameborder='0' hspace='0' src='"+urlNoQuery[0]+"' id='TB_iframeContent' name='TB_iframeContent' style='width:"+(ajaxContentW + 29 + 250)+"px;height:"+(ajaxContentH + 17 + 300)+"px;' onload='tb_showIframe()'> </iframe>");
 				}else{
 					if($("#TB_window").css("display") != "block"){
 						if(params['modal'] != "true"){

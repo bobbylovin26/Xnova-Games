@@ -1,11 +1,21 @@
-
 <center>
-<br>
-<table width="600">
-	<td colspan="5" class="c"> <b>Contact</b></td>
-  </tr>
-<tr><font color="lime"><th colspan="5"><font color="orange">
-<tr><th><font color="lime">Rang</th><th><font color="lime">Ingame Name</th><th><font color="lime">Extra</th><th><font color="lime">Contact Email</th><th><font color="lime">Extra</th>
-
-<tr><th>RANG HERE</th><th><a href="messages.php?mode=write&id=1">NAME HERE</a></th><th>&nbsp;</th><th>
-	<a href="mailto:Kor711@Gmail.com?subject=Yardým">EMAIL HERE</a></th><th>&nbsp;</th>
+<br><br>
+<table width="569">
+<tbody>
+<tr>
+	<td colspan="3" class="c"><b>{ctc_title}</b></td>
+</tr><tr>
+	<th colspan="3">
+		<font color="orange">{ctc_intro}</font>
+	</th>
+</tr><tr>
+	<th><font color="lime">{ctc_name}</font></th>
+	<th><font color="lime">{ctc_rank}</font></th>
+	<th><font color="lime">{ctc_mail}</font></th>
+</tr>
+	{ctc_admin_list}
+<tr>
+</tr>
+</tbody>
+</table>
+</center>

@@ -1,10 +1,19 @@
-
 <center>
-  <br />
-  <form action="buildings.php?mode=defense" method="post">
-  <table align="top"><tr><td>  
-  <table width="530">
-
-
-	{buildinglist}
-<br>
+<br />
+<table align="top">
+<tr>
+	<td>
+		<form action="buildings.php?mode=defense" method="post">
+		<table width=530>
+		{buildlist}
+		<tr>
+			<td class="c" colspan=2 align="center"><input type="submit" value="{Construire}"></td>
+		</tr>
+		</table>
+		</form>
+	</td>
+	  <td valign="top"></td>
+	</tr>
+</table>
+{buildinglist}
+</center>

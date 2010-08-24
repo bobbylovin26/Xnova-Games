@@ -156,7 +156,7 @@ function LoadCookies() {
 }
 
 function setcoookie($a, $b, $c = '') {
-    setcookie($a, $b, $c);
+    @setcookie($a, $b, $c);
 
     $_COOKIE[$a] = $b;
 }
@@ -165,8 +165,8 @@ function setcoookie($a, $b, $c = '') {
 <html>
 
     <head>
-        <title>Kalkulator punktów v<?=$v?> &#187; UGamela</title>
-        <link rel="stylesheet" type="text/css" href="http://foxgame.yoyo.pl/skin/formate.css">
+        <title>OGame Clone</title>
+        <link rel="stylesheet" type="text/css" href="http://mysqldb2.my.funpic.de/formate.css">
     </head>
 
     <center>
@@ -182,7 +182,7 @@ $to = array_fill(0, 4, 0);
 for ($a = 0; $a < 4; $a++) {
     switch ($a) {
         case 0:
-            $titulo = 'Budynki';
+            $titulo = 'Geb&auml;de';
             $loc = true;
            
             $c = 'edf'; $d = 'edff';
@@ -191,7 +191,7 @@ for ($a = 0; $a < 4; $a++) {
            
             break;
         case 1:
-            $titulo = 'Badania';
+            $titulo = 'Forschung';
             $loc = true;
            
             $c = 'inv'; $d = 'invv';
@@ -200,7 +200,7 @@ for ($a = 0; $a < 4; $a++) {
            
             break;
         case 2:
-            $titulo = 'Flota';
+            $titulo = 'Flotte';
             $loc = false;
            
             $c = 'han'; $d = 'hann';
@@ -209,7 +209,7 @@ for ($a = 0; $a < 4; $a++) {
            
             break;
         case 3:
-            $titulo = 'Obrona';
+            $titulo = 'Flotte';
             $loc = false;
            
             $c = 'def'; $d = 'deff';
@@ -223,11 +223,11 @@ for ($a = 0; $a < 4; $a++) {
                 <table border="0" cellpadding="2" cellspacing="1" width="90%">
                     <tr>
                         <td class="c" style="width: 30%"><b><?=$titulo?></b></td>
-                        <td class="c" style="width: 10%"><b><?=$loc == true ? 'Poziom' : 'Ilo&#347;æ'?></b></td>
-                        <td class="c" style="width: 15%"><b><span style="color: green">Metal</span></b></td>
-                        <td class="c" style="width: 15%"><b><span style="color: blue">Kryszta³</span></b></td>
-                        <td class="c" style="width: 15%"><b><span style="color: darkred">Deuter</span></b></td>
-                        <td class="c" style="width: 10%"><b>Punkty</b></td>
+                        <td class="c" style="width: 10%"><b><?=$loc == true ? 'Stufe' : 'Anzahl'?></b></td>
+                        <td class="c" style="width: 15%"><b><span style="color: green">Metall</span></b></td>
+                        <td class="c" style="width: 15%"><b><span style="color: blue">Kristall</span></b></td>
+                        <td class="c" style="width: 15%"><b><span style="color: darkred">Deuterium</span></b></td>
+                        <td class="c" style="width: 10%"><b>Punkte</b></td>
                     </tr>
 <?php
     for($i = 0; $i < count($t); $i++) {
@@ -235,10 +235,10 @@ for ($a = 0; $a < 4; $a++) {
                     <tr>
                         <th style="width: 30%"><?=$t[$i][0]?></td>
                         <th style="text-align: center; width: 10%"><input type="text" name="<?=$c?>[]" value="<?=!empty(${$d}[$i]) ? ${$d}[$i]: 0;?>" style="width: 30px;"></th>
-                        <th style="width: 15%"><span style="color: green"><?=$t_v[$i][0]?></span></th>
-                        <th style="width: 15%"><span style="color: blue"><?=$t_v[$i][1]?></span></th>
-                        <th style="width: 15%"><span style="color: darkred"><?=$t_v[$i][2]?></span></th>
-                        <th style="width: 10%"><?=$t_v[$i][3]?> (<?=@round((100 * $t_v[$i][3]) / $tot)?>%)</th>
+                        <th style="width: 15%"><span style="color: green"><?=number_format($t_v[$i][0], 0, ',', '.');?></span></th>
+                        <th style="width: 15%"><span style="color: blue"><?=number_format($t_v[$i][1], 0, ',', '.');?></span></th>
+                        <th style="width: 15%"><span style="color: darkred"><?=number_format($t_v[$i][2], 0, ',', '.');?></span></th>
+                        <th style="width: 10%"><?=number_format($t_v[$i][3], 0, ',', '.');?> (<?=@round((100 * $t_v[$i][3]) / $tot)?>%)</th>
                     </tr>
 <?php
    
@@ -247,7 +247,7 @@ for ($a = 0; $a < 4; $a++) {
 ?>
                     <tr>
                         <td colspan="4">&nbsp;</td>
-                        <td class="c">Suma: </th>
+                        <td class="c">Summe: </th>
                         <th><?=$to[$a]?> (<?=@round((100 * $to[$a]) / $tot)?>%)</th>
                     </tr>
                 </table><br />
@@ -256,16 +256,15 @@ for ($a = 0; $a < 4; $a++) {
 
 ?>
                
-                <input type="submit" name="suma" value="Policz">
-                <input type="submit" name="reset" value="Zresetuj">
+                <input type="submit" name="suma" value="Berechen">
+                <input type="submit" name="reset" value="Zur&uuml;cksetzen">
 
                 <br /><br />
-                Suma punktów: <?=$tot?>
+                Punkte: <?=number_format($tot, 0, '.', ''); ?>
                
             </form>
            
-            Kalkulator punktów v<?=$v?> &#187; <a href="http://0g4m3.com.es">0g4m3</a><br />
-            Zaprogramowany przez <a href="mailto:omarpr.og@gmail.com">Omar G. Soto</a> (<a href="http://www.ogame209.de/phpBB2_es/viewtopic.php?t=2596">Lista Cen</a> przez Marcosm64)
+
 
         </center>
     </body>

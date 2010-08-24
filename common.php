@@ -1,220 +1,121 @@
-<?php  //common.php :: Contain common functions
+<?php
 
-ob_start(); 
+/**
+ * common.php
+ *
+ * @version 1.0
+ * @copyright 2008 by ??????? for XNova
+ */
 
-/*
+define('VERSION','0.8e');       // Afficher la version d'XNova utilisée...
 
-	OGame v0.01
+set_magic_quotes_runtime(0);
+$phpEx = "php";
 
-	
+$game_config   = array();
+$user          = array();
+$lang          = array();
+$link          = "";            // Lien pour liaison MySQL :)
+$IsUserChecked = false;
 
-	martinm93@interia.pl
+define('DEFAULT_SKINPATH' , 'skins/xnova/');
+define('TEMPLATE_DIR'     , 'templates/');
+define('TEMPLATE_NAME'    , 'OpenGame');
+define('DEFAULT_LANG'     , 'fr');
 
-*/
+$HTTP_ACCEPT_LANGUAGE = DEFAULT_LANG;
 
+include($xnova_root_path . 'includes/debug.class.'.$phpEx);
+$debug = new debug();
 
+include($xnova_root_path . 'includes/constants.'.$phpEx);
+include($xnova_root_path . 'includes/functions.'.$phpEx);
+include($xnova_root_path . 'includes/unlocalised.'.$phpEx);
+include($xnova_root_path . 'includes/todofleetcontrol.'.$phpEx);
+include($xnova_root_path . 'language/'. DEFAULT_LANG .'/lang_info.cfg');
 
-if ( !defined('INSIDE') )
+if (INSTALL != true) {
+    include($xnova_root_path . 'includes/vars.'.$phpEx);
+    include($xnova_root_path . 'includes/db.'.$phpEx);
+    include($xnova_root_path . 'includes/strings.'.$phpEx);
 
-{
+    // Lecture de la table de configuration
+    $query = doquery("SELECT * FROM {{table}}",'config');
+    while ( $row = mysql_fetch_assoc($query) ) {
+	    $game_config[$row['config_name']] = $row['config_value'];
+    }
 
-	die("Hacking attempt");
+	if ($InLogin != true) {
+		$Result        = CheckTheUser ( $IsUserChecked );
+		$IsUserChecked = $Result['state'];
+		$user          = $Result['record'];
+	} elseif ($InLogin == false) {
+		// Jeux en mode 'clos' ???
+		if( $game_config['game_disable']) {
+			if ($user['authlevel'] < 1) {
+				message ( stripslashes ( $game_config['close_reason'] ), $game_config['game_name'] );
+			}
+		}
+	}
 
+	includeLang ("system");
+	includeLang ('tech');
+
+	if ( isset ($user) ) {
+		$_fleets = doquery("SELECT * FROM {{table}} WHERE `fleet_start_time` <= '".time()."';", 'fleets'); //  OR fleet_end_time <= ".time()
+		while ($row = mysql_fetch_array($_fleets)) {
+			$array                = array();
+			$array['galaxy']      = $row['fleet_start_galaxy'];
+			$array['system']      = $row['fleet_start_system'];
+			$array['planet']      = $row['fleet_start_planet'];
+			$array['planet_type'] = $row['fleet_start_type'];
+
+			$temp = FlyingFleetHandler ($array);
+		}
+
+		$_fleets = doquery("SELECT * FROM {{table}} WHERE `fleet_end_time` <= '".time()."';", 'fleets'); //  OR fleet_end_time <= ".time()
+		while ($row = mysql_fetch_array($_fleets)) {
+			$array                = array();
+			$array['galaxy']      = $row['fleet_end_galaxy'];
+			$array['system']      = $row['fleet_end_system'];
+			$array['planet']      = $row['fleet_end_planet'];
+			$array['planet_type'] = $row['fleet_end_type'];
+
+			$temp = FlyingFleetHandler ($array);
+		}
+
+		unset($_fleets);
+
+		include($xnova_root_path . 'rak.'.$phpEx);
+		if ( defined('IN_ADMIN') ) {
+			$UserSkin  = $user['dpath'];
+			$local     = stristr ( $UserSkin, "http:");
+			if ($local === false) {
+				if (!$user['dpath']) {
+					$dpath     = "../". DEFAULT_SKINPATH  ;
+				} else {
+					$dpath     = "../". $user["dpath"];
+				}
+			} else {
+				$dpath     = $UserSkin;
+			}
+		} else {
+			$dpath     = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
+		}
+
+		SetSelectedPlanet ( $user );
+
+		$planetrow = doquery("SELECT * FROM {{table}} WHERE `id` = '".$user['current_planet']."';", 'planets', true);
+		$galaxyrow = doquery("SELECT * FROM {{table}} WHERE `id_planet` = '".$planetrow['id']."';", 'galaxy', true);
+
+		CheckPlanetUsedFields($planetrow);
+	} else {
+		// Bah si d�ja y a quelqu'un qui passe par l� et qu'a rien a faire de press� ...
+		// On se sert de lui pour mettre a jour tout les retardataires !!
+
+	}
+} else {
+	$dpath     = "../" . DEFAULT_SKINPATH;
 }
-
-	
-
-	
-
-//error_reporting  (E_ERROR | E_WARNING | E_PARSE);
-
-//set_magic_quotes_runtime(0);
-
-
-
-
-
-
-
-//header("Powered-By: azrail");
-
-define('VERSION','8.1a');
-
-error_reporting  (E_ERROR | E_WARNING | E_PARSE); // Para evitar que se reporten las variables no iniciadas
-
-set_magic_quotes_runtime(0); // Deshabilita magic_quotes_runtime
-
-
-
-extract($_POST,EXTR_SKIP);
-
-extract($_GET,EXTR_SKIP);
-
-extract($_COOKIE,EXTR_SKIP);
-
-
-
-
-
-//
-
-// Definimos algunas arrays de configuracion.
-
-//
-
-$game_config = array();
-
-$user = array();
-
-$theme = array();
-
-$images = array();
-
-$lang = array();
-
-
-
-//
-
-// Constantes
-
-//
-
-//http://80.237.203.201/download/use/reloaded/
-
-//http://people.freenet.de/kakashi/Maya/blueplanet
-
-define('DEFAULT_SKINPATH',"http://80.237.203.201/download/use/g3cko/");
-
-define('TEMPLATE_DIR',"templates/");
-
-define('TEMPLATE_NAME',"OpenGame");
-
-
-
-//
-
-//lenguaje...
-
-//
-
-if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])){
-
-	$HTTP_ACCEPT_LANGUAGE = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
-
-}else{
-
-	$HTTP_ACCEPT_LANGUAGE = "en";
-
-}//default language}
-
-if(is_dir($ugamela_root_path."language/".$HTTP_ACCEPT_LANGUAGE.'/')){
-
-	define('DEFAULT_LANG',$HTTP_ACCEPT_LANGUAGE);
-
-}else{
-
-	define('DEFAULT_LANG','en');
-
-}
-
-
-
-
-
-
-
-//include($ugamela_root_path . 'config.'.$phpEx);
-
-
-
-// no muy necesario ...
-
-//if( !defined("UGAMELA_INSTALLED") )
-
-//{
-
-//	header('Location: ' . $ugamela_root_path . 'install/install.' . $phpEx);
-
-//	exit;
-
-//}
-
-
-
-//--[ DEPURAR ]-------------------------------------------------------------
-
-//Objeto debug
-
-include($ugamela_root_path . 'includes/debug.class.'.$phpEx);
-
-$debug = new debug;
-
-//--[ /DEPURAR ]------------------------------------------------------------
-
-
-
-include($ugamela_root_path . 'includes/constants.'.$phpEx);
-
-include($ugamela_root_path . 'includes/functions.'.$phpEx);
-
-include($ugamela_root_path . 'includes/vars.'.$phpEx);
-
-include($ugamela_root_path . 'includes/db.'.$phpEx);
-
-include($ugamela_root_path . 'includes/planet_maker.'.$phpEx);
-
-include($ugamela_root_path . 'includes/rank_maker.'.$phpEx);
-
-include($ugamela_root_path . 'includes/strings.'.$phpEx);
-
-
-
-/*
-
-  Aqui realizamos la obtencion de datos de datos del juego.
-
-
-
-*/
-
-$query = doquery("SELECT * FROM {{table}}",'config');
-
-
-
-while ( $row = mysql_fetch_assoc($query) )
-
-{
-
-	$game_config[$row['config_name']] = $row['config_value'];
-
-}
-
-
-
-include($ugamela_root_path."language/".DEFAULT_LANG."/lang_info.cfg");
-
-
-
-//
-
-// Muestra un mensaje de Servidor cerrado.
-
-//
-
-if( $game_config['game_disable'] && !defined("IN_ADMIN") && !defined("IN_LOGIN") )
-
-{
-
-	//message('El juego ha sido cerrado, Intenta volver en otro momento.', 'Juego cerrado');
-
-}
-
-
-
-
-ob_end_flush();
-// Created by Perberos. All rights reversed (C) 2006
 
 ?>
-

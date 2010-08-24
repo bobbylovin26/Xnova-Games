@@ -1,56 +1,32 @@
-<br>
-<center>
-<h2>--</h2>
-
-<form action="?mode=change" method="post">
- <table width="519">
-
-     <tbody><tr>
-  <td class="c" colspan="2">Kullanici Banlama</td>
-  </tr>
-  <tr>
-   <th>Kullanici Adi</th>
-   <th><input name="Nick_Gracza" maxlength="80" size="10" value="" type="text"> Banlananin Adi
-   </th>
-  </tr>
-  <tr>
-   <th>Ban Nedeni</th>
-   <th><input name="Powod_kary" maxlength="200" size="100" value="" type="text">
-   </th>
-  </tr>
-  <tr>
-   <th>Ban Tarihi</th>
-   <th><input name="Data_nadania" maxlength="80" size="10" value="2007-00-00" type="data">
-  </tr>
-  <tr>
-   <th>Acilma Tarihi</th>
-   <th><input name="Ban_do" maxlength="80" size="10" value="2007-00-00" type="data">
-   </th>
-  </tr>
-  <tr>
-   <th>Kim Banladi</th>
-   <th><input name="Kto_nadal" maxlength="80" size="10" value="" type="text"> (Banlayanin Adi)
-   </th>
-  </tr>
-  <tr>
-   <th>Banlayanin Maili</th>
-   <th><input name="email" maxlength="80" size="20" value="" type="text"> (adminin maili)
-   </th>
-  </tr>
-  <tr>
-   <th>Ban Gun Sayisi</th>
-   <th><input name="dni" maxlength="80" size="10" value="" type="text"> Kac Gun Banlandigini Hesaplamalisin :P
-   </th>
-  </tr>
-  	  <tr>
-   <th colspan="2"><input value="BAN" type="submit"></th>
-  </tr>
-
-
-   
- </tbody></table>
-
- 
+<br><br>
+<h2>{adm_bn_ttle}</h2>
+<form action="banned.php" method="post">
+<input type="hidden" name="mode" value="banit">
+<table width="409">
+<tr>
+	<td class="c" colspan="2">{adm_bn_plto}</td>
+</tr><tr>
+	<th width="129">{adm_bn_name}</th>
+	<th width="268"><input name="name" type="text" size="25" /></th>
+</tr><tr>
+	<th>{adm_bn_reas}</th>
+	<th><input name="why" type="text" value="" size="25" maxlength="50"></th>
+</tr><tr>
+	<td class="c" colspan="2">{adm_bn_time}</td>
+</tr><tr>
+	<th>{adm_bn_days}</th>
+	<th><input name="days" type="text" value="0" size="5" /></th>
+</tr><tr>
+	<th>{adm_bn_hour}</th>
+	<th><input name="hour" type="text" value="0" size="5" /></th>
+</tr><tr>
+	<th>{adm_bn_mins}</th>
+	<th><input name="mins" type="text" value="0" size="5" /></th>
+</tr><tr>
+	<th>{adm_bn_secs}</th>
+	<th><input name="secs" type="text" value="0" size="5" /></th>
+</tr><tr>
+	<th colspan="2"><input type="submit" value="{adm_bn_bnbt}" /></th>
+</tr>
+</table>
 </form>
-
-</center>
