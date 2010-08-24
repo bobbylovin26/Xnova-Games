@@ -112,6 +112,7 @@ if ( defined('INSIDE'))
 
 		 42 => array(  41 =>   1),
 		 43 => array(  41 =>   1, 114 =>   7),
+		 44 => array(  21 =>   1),
 
 		106 => array(  31 =>   3),
 		108 => array(  31 =>   1),
@@ -155,8 +156,8 @@ if ( defined('INSIDE'))
 		407 => array( 110 =>   2,  21 =>   1),
 		408 => array( 110 =>   6,  21 =>   6),
 		409 => array( 609 =>   1),
-		502 => array(  44 =>   2),
-		503 => array(  44 =>   4),
+		502 => array(  44 =>   2,  21 =>   1),
+		503 => array(  44 =>   4,  21 =>   1, 117 =>   1),
 
 		603 => array( 601 =>   5),
 		604 => array( 602 =>   5),
@@ -217,7 +218,7 @@ if ( defined('INSIDE'))
 		206 => array ( 'metal' =>    20000, 'crystal' =>     7000, 'deuterium' =>    2000, 'energy' => 0, 'factor' => 1, 'consumption' => 150 , 'consumption2' => 150 , 'speed' =>     15000, 'speed2' =>     15000, 'capacity' =>      800 ),
 		207 => array ( 'metal' =>    45000, 'crystal' =>    15000, 'deuterium' =>       0, 'energy' => 0, 'factor' => 1, 'consumption' => 250 , 'consumption2' => 250 , 'speed' =>     10000, 'speed2' =>     10000, 'capacity' =>     1500 ),
 		208 => array ( 'metal' =>    10000, 'crystal' =>    20000, 'deuterium' =>   10000, 'energy' => 0, 'factor' => 1, 'consumption' => 500 , 'consumption2' => 500 , 'speed' =>      2500, 'speed2' =>      2500, 'capacity' =>     7500 ),
-		209 => array ( 'metal' =>    20000, 'crystal' =>    12000, 'deuterium' =>    4000, 'energy' => 0, 'factor' => 1, 'consumption' => 150 , 'consumption2' => 150 , 'speed' =>      2000, 'speed2' =>      2000, 'capacity' =>   100000 ),
+		209 => array ( 'metal' =>    20000, 'crystal' =>    12000, 'deuterium' =>    4000, 'energy' => 0, 'factor' => 1, 'consumption' => 150 , 'consumption2' => 150 , 'speed' =>      2000, 'speed2' =>      2000, 'capacity' =>    20000 ),
 		210 => array ( 'metal' =>        0, 'crystal' =>     1000, 'deuterium' =>       0, 'energy' => 0, 'factor' => 1, 'consumption' => 1   , 'consumption2' => 1   , 'speed' => 100000000, 'speed2' => 100000000, 'capacity' =>        5 ),
 		211 => array ( 'metal' =>    50000, 'crystal' =>    25000, 'deuterium' =>   15000, 'energy' => 0, 'factor' => 1, 'consumption' => 500 , 'consumption2' => 500 , 'speed' =>      4000, 'speed2' =>      5000, 'capacity' =>      500 ),
 		212 => array ( 'metal' =>        0, 'crystal' =>     2000, 'deuterium' =>     500, 'energy' => 0, 'factor' => 1, 'consumption' => 0   , 'consumption2' => 0   , 'speed' =>         0, 'speed2' =>         0, 'capacity' =>        0 ),

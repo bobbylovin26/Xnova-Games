@@ -245,6 +245,6 @@ else
 {
 	$parse['servername']   = $game_config['game_name'];
 	$parse['forum_url']    = $game_config['forum_url'];
-	display (parsetemplate(gettemplate('registry_form'), $parse), false, '',false, false);
+	display (parsetemplate(gettemplate('public/registry_form'), $parse), false, '',false, false);
 }
 ?>

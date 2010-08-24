@@ -1,9 +1,8 @@
 <html>
 <head>
-<link rel="shortcut icon" href="favicon.ico">
-<link rel="stylesheet" type="text/css" href="{dpath}formate.css" />
-<meta http-equiv="content-type" content="text/html; charset={ENCODING}" />
-{META_TAG}
-<script type="text/javascript" src="../scripts/overlib.js"></script>
+<title>{-title-}</title>
+{-favi-}
+{-style-}
+{-meta-}
 </head>
-<body>
+<body style="overflow: hidden;" onLoad="onBodyLoad();" onUnload="" >

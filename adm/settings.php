@@ -43,14 +43,6 @@ function DisplayGameSettingsPage ( $CurrentUser )
 		$game_config['close_reason']         = addslashes( $_POST['close_reason'] );
 		}
 
-		if (isset($_POST['newsframe']) && $_POST['newsframe'] == 'on') {
-		$game_config['OverviewNewsFrame']     = 1;
-		$game_config['OverviewNewsText']      = addslashes( $_POST['NewsText'] );
-		} else {
-		$game_config['OverviewNewsFrame']     = 0;
-		$game_config['OverviewNewsText']      = addslashes( $_POST['NewsText'] );
-		}
-
 		if (isset($_POST['debug']) && $_POST['debug'] == 'on') {
 		$game_config['debug'] = 1;
 		} else {
@@ -116,8 +108,6 @@ function DisplayGameSettingsPage ( $CurrentUser )
 		doquery("UPDATE {{table}} SET `config_value` = '". $game_config['game_speed']             ."' WHERE `config_name` = 'game_speed';", 'config');
 		doquery("UPDATE {{table}} SET `config_value` = '". $game_config['fleet_speed']            ."' WHERE `config_name` = 'fleet_speed';", 'config');
 		doquery("UPDATE {{table}} SET `config_value` = '". $game_config['resource_multiplier']    ."' WHERE `config_name` = 'resource_multiplier';", 'config');
-		doquery("UPDATE {{table}} SET `config_value` = '". $game_config['OverviewNewsFrame']      ."' WHERE `config_name` = 'OverviewNewsFrame';", 'config');
-		doquery("UPDATE {{table}} SET `config_value` = '". $game_config['OverviewNewsText']       ."' WHERE `config_name` = 'OverviewNewsText';", 'config');
 		doquery("UPDATE {{table}} SET `config_value` = '". $game_config['initial_fields']         ."' WHERE `config_name` = 'initial_fields';", 'config');
 		doquery("UPDATE {{table}} SET `config_value` = '". $game_config['metal_basic_income']     ."' WHERE `config_name` = 'metal_basic_income';", 'config');
 		doquery("UPDATE {{table}} SET `config_value` = '". $game_config['crystal_basic_income']   ."' WHERE `config_name` = 'crystal_basic_income';", 'config');
@@ -143,8 +133,6 @@ function DisplayGameSettingsPage ( $CurrentUser )
 		$parse['energy_basic_income']    	= $game_config['energy_basic_income'];
 		$parse['closed']                 	= ($game_config['game_disable'] == 1) ? " checked = 'checked' ":"";
 		$parse['close_reason']           	= stripslashes($game_config['close_reason']);
-		$parse['newsframe']              	= ($game_config['OverviewNewsFrame'] == 1) ? " checked = 'checked' ":"";
-		$parse['NewsTextVal']            	= stripslashes( $game_config['OverviewNewsText'] );
 		$parse['debug']                  	= ($game_config['debug'] == 1)        ? " checked = 'checked' ":"";
 		$parse['adm_attack']             	= ($game_config['adm_attack'] == 1)   ? " checked = 'checked' ":"";
 
@@ -162,7 +150,6 @@ function DisplayGameSettingsPage ( $CurrentUser )
 				$parse['language_settings'] .= " value=\"".$LangSubFolder."\">".$LangSubFolder."</option>";
 			}
 		}
-
 
 		return display (parsetemplate(gettemplate('adm/settings_body'),  $parse), false, '', true, false);
 	}

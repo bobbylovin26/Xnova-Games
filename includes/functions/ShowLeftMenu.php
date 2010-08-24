@@ -37,9 +37,12 @@ function ShowLeftMenu ($Level)
 	$parse['user_rank']     = $rank['total_rank'];
 
 	if ($Level > 0)
-		$parse['admin_link']  = "<tr><td colspan=\"2\"><div><a href=\"javascript:top.location.href='adm/index.php'\" <font color=\"lime\">" . $lang['lm_administration'] . "</font></a></div></td></tr>";
+		$parse['admin_link']	="<tr><td><div align=\"center\"><a href=\"javascript:top.location.href='adm/index.php'\"> <font color=\"lime\">" . $lang['lm_administration'] . "</font></a></div></td></tr>";
 	else
-		$parse['admin_link']  = "";
+		$parse['admin_link']  	= "";
+
+
+
 
 	return parsetemplate(gettemplate('left_menu'), $parse);
 }

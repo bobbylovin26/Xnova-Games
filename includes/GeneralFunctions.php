@@ -61,9 +61,9 @@ function display ($page, $topnav = true, $metatags = '', $AdminPage = false, $me
 	global $link, $game_config, $debug, $user, $planetrow, $xgp_root, $phpEx;
 
 	if (!$AdminPage)
-		$DisplayPage  = StdUserHeader ($metatags);
+		$DisplayPage  = StdUserHeader($metatags);
 	else
-		$DisplayPage  = AdminUserHeader ($metatags);
+		$DisplayPage  = AdminUserHeader($metatags);
 
 	if ($topnav)
 	{
@@ -71,13 +71,16 @@ function display ($page, $topnav = true, $metatags = '', $AdminPage = false, $me
 		$DisplayPage .= ShowTopNavigationBar( $user, $planetrow );
 	}
 
-	if ($menu)
+	if ($menu && !$AdminPage)
 	{
 		include_once($xgp_root . 'includes/functions/ShowLeftMenu.' . $phpEx);
 		$DisplayPage .= ShowLeftMenu ($user['authlevel']);
 	}
 
-	$DisplayPage .= "<center>\n". $page ."\n</center>\n";
+	$DisplayPage .= "\n<center>\n". $page ."\n</center>\n";
+
+	if($_GET['page'] != '' && $_GET['page'] != 'galaxy')
+		$DisplayPage .= parsetemplate(gettemplate('footer'), $parse);
 
 	if ($link)
 		mysql_close($link);
@@ -92,37 +95,40 @@ function display ($page, $topnav = true, $metatags = '', $AdminPage = false, $me
 
 function StdUserHeader ($metatags = '')
 {
-	global $user, $dpath, $game_config, $xgp_root;
+	global $dpath, $game_config;
 
-	$parse['-style-'] .= "<link rel=\"shortcut icon\" href=\"". $xgp_root . "favicon.ico\">";
-	$parse['-title-'] .= $game_config['game_name'];
+	$parse['-title-'] 	.= $game_config['game_name'];
+	$parse['-favi-']	.= "<link rel=\"shortcut icon\" href=\"./favicon.ico\">\n";
+	$parse['-meta-']	.= "<meta http-equiv=\"Content-Type\" content=\"text/html;charset=iso-8859-1\">\n";
 
-	if ( defined('LOGIN') )
+	if(!defined('LOGIN'))
 	{
-		$parse['dpath']    = "skins/xgproyect/";
-		$parse['-style-']  = "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/css/styles.css\">\n";
+		$parse['-style-']  	.= "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/css/default.css\">\n";
+		$parse['-style-']  	.= "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/css/formate.css\">\n";
+		$parse['-style-'] 	.= "<link rel=\"stylesheet\" type=\"text/css\" href=\"". $dpath ."formate.css\" />\n";
 	}
 	else
 	{
-		$parse['dpath']    = $dpath;
-		$parse['-style-']  = "<link rel=\"stylesheet\" type=\"text/css\" href=\"". $dpath ."default.css\" />";
-		$parse['-style-'] .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"". $dpath ."formate.css\" />";
-		$parse['-style-'] .= "<meta http-equiv=\"Content-Type\" content=\"text/html;charset=iso-8859-1\">";
+		$parse['-style-']  	.= "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/css/styles.css\">\n";
 	}
 
-	$parse['-meta-']  = ($metatags) ? $metatags : "";
-	$parse['-body-']  = "<body>";
+	$parse['-meta-']	.= ($metatags) ? $metatags : "";
+	$parse['-meta-']	.= "<script type=\"text/javascript\" src=\"scripts/overlib.js\"></script>\n";
 
 	return parsetemplate(gettemplate('simple_header'), $parse);
 }
 
 function AdminUserHeader ($metatags = '')
 {
-	global $user, $dpath;
-
-	$parse['dpath']  	= $dpath;
-	$parse['-meta-'] 	= ($metatags) ? $metatags : "";
-	$parse['-body-'] 	= "<body>";
+	global $game_config;
+	if (!defined('IN_ADMIN'))
+		$parse['-title-'] 	.= 	"XG Proyect - Install";
+	else
+		$parse['-title-'] 	.= 	$game_config['game_name'] . " - Admin CP";
+	$parse['-favi-']	.= 	"<link rel=\"shortcut icon\" href=\"./../favicon.ico\">\n";
+	$parse['-style-']	.=	"<link rel=\"stylesheet\" type=\"text/css\" href=\"./../styles/css/admin.css\">\n";
+	$parse['-meta-']	.= 	"<script type=\"text/javascript\" src=\"./../scripts/overlib.js\"></script>\n";
+	$parse['-meta-'] 	.= ($metatags) ? $metatags : "";
 	return parsetemplate(gettemplate('adm/simple_header'), $parse);
 }
 

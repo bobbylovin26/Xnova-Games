@@ -71,8 +71,7 @@ function ShowOverviewPage($CurrentUser, $CurrentPlanet)
 				if (md5($_POST['pw']) == $CurrentUser["password"] && $CurrentUser['id_planet'] != $CurrentUser['current_planet'])
 				{
 
-					doquery("DELETE FROM {{table}} WHERE `id` = '".mysql_real_escape_string($CurrentUser['current_planet'])."' LIMIT 1;" , 'planets');
-					doquery("DELETE FROM {{table}} WHERE `id_planet` = '".mysql_real_escape_string($CurrentUser['current_planet'])."' LIMIT 1;" , 'galaxy');
+					doquery("UPDATE {{table}} SET `destruyed` = '".(time()+ 86400)."' WHERE `id` = '".mysql_real_escape_string($CurrentUser['current_planet'])."' LIMIT 1;" , 'planets');
 					doquery("UPDATE {{table}} SET `current_planet` = `id_planet` WHERE `id` = '". mysql_real_escape_string($CurrentUser['id']) ."' LIMIT 1", "users");
 	                doquery("DELETE FROM {{table}} WHERE `galaxy` = '". $CurrentPlanet['galaxy'] ."' AND `system` = '". $CurrentPlanet['system'] ."' AND `planet` = '". $CurrentPlanet['planet'] ."' AND `planet_type` = 3;", 'planets');
 	                doquery("DELETE FROM {{table}} WHERE `galaxy` = '". $CurrentPlanet['galaxy'] ."' AND `system` = '". $CurrentPlanet['system'] ."' AND `lunapos` = '". $CurrentPlanet['planet'] ."';", 'lunas');
@@ -174,7 +173,7 @@ function ShowOverviewPage($CurrentUser, $CurrentPlanet)
 				}
 			}
 
-			$planets_query = doquery("SELECT * FROM `{{table}}` WHERE id_owner='{$CurrentUser['id']}'", "planets");
+			$planets_query = doquery("SELECT * FROM `{{table}}` WHERE id_owner='{$CurrentUser['id']}' AND `destruyed` = 0", "planets");
 			$Colone  	= 1;
 			$AllPlanets = "<tr>";
 			while ($CurrentUserPlanet = mysql_fetch_array($planets_query))
@@ -225,17 +224,13 @@ function ShowOverviewPage($CurrentUser, $CurrentPlanet)
 
 			$AllPlanets .= "</tr>";
 
-			if ($game_config['OverviewNewsFrame'] == '1')
-				$parse['NewsFrame'] = "<tr><th>". $lang['ov_news'] ."</th><th colspan=\"3\">" . stripslashes($game_config['OverviewNewsText']) . "</th></tr>";
-
-
-			if ($lunarow['id'] <> 0 && $lunarow['destruyed'] != 1)
+			if ($lunarow['id'] <> 0 && $lunarow['destruyed'] != 1 && $CurrentPlanet['planet_type'] != 3)
 			{
 				if ($CurrentPlanet['planet_type'] == 1 or $lunarow['id'] <> 0)
 				{
 					$moon = doquery ("SELECT `id`,`name`,`image` FROM {{table}} WHERE `galaxy` = '" . $CurrentPlanet['galaxy'] . "' AND `system` = '" . $CurrentPlanet['system'] . "' AND `planet` = '" . $CurrentPlanet['planet'] . "' AND `planet_type` = '3'", 'planets', true);
 					$parse['moon_img'] = "<a href=\"game.php?page=overview&cp=" . $moon['id'] . "&re=0\" title=\"" . $moon['name'] . "\"><img src=\"" . $dpath . "planeten/" . $moon['image'] . ".jpg\" height=\"50\" width=\"50\"></a>";
-					$parse['moon'] = $moon['name'];
+					$parse['moon'] = $moon['name'] ." (" . $lang['fcm_moon'] . ")";
 				}
 				else
 				{
@@ -307,9 +302,11 @@ function ShowOverviewPage($CurrentUser, $CurrentPlanet)
 			$parse['anothers_planets'] 		= $AllPlanets;
 			$parse["dpath"] 				= $dpath;
 			if($game_config['stat'] == 0)
-				$parse['user_rank']= pretty_number($StatRecord['total_points']) . " (". $lang['ov_place'] ." <a href=\"game.php?page=statistics&range=".$StatRecord['total_rank']."\">".$StatRecord['total_rank']."</a> ". $lang['ov_of'] ." ".$game_config['users_amount'].")";
+				$parse['user_rank']			= pretty_number($StatRecord['total_points']) . " (". $lang['ov_place'] ." <a href=\"game.php?page=statistics&range=".$StatRecord['total_rank']."\">".$StatRecord['total_rank']."</a> ". $lang['ov_of'] ." ".$game_config['users_amount'].")";
+			elseif($game_config['stat'] == 1 && $CurrentUser['authlevel'] < $game_config['stat_level'])
+				$parse['user_rank']			= pretty_number($StatRecord['total_points']) . " (". $lang['ov_place'] ." <a href=\"game.php?page=statistics&range=".$StatRecord['total_rank']."\">".$StatRecord['total_rank']."</a> ". $lang['ov_of'] ." ".$game_config['users_amount'].")";
 			else
-				$parse['user_rank'] 		= "-";
+				$parse['user_rank']			= "-";
 
 			$parse['date_time']				= date("D M j H:i:s", time());
 			return display(parsetemplate(gettemplate('overview/overview_body'), $parse));

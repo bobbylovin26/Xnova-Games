@@ -4,8 +4,6 @@
 $lang['index']				= 'Index';
 $lang['register']			= 'Register';
 $lang['forum']				= 'Forum';
-$lang['contact']			= 'Contact';
-$lang['credit']				= 'Credits';
 
 /* ------------------------------------------------------------------------------------------ */
 
@@ -26,12 +24,6 @@ $lang['lost_pass_title']		= 'Retrieve lost password';
 $lang['lost_pass_text'] 		= 'To retrieve your password, enter the email used for registration. You will receive a new password as soon as possible.';
 $lang['retrieve_pass']			= 'Retrieve lost password';
 $lang['email']				= 'Email adress';
-
-//contact_body.tpl
-$lang['contact_form_title']		= 'Contact';
-$lang['contact_form_user']		= 'Player';
-$lang['contact_form_rank']		= 'Rank';
-$lang['contact_form_email']		= 'Email adress';
 
 //index_body.tpl
 $lang['user']				= 'User';

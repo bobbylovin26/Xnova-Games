@@ -55,15 +55,15 @@ class GalaxyRows
 	public function CheckAbandonMoonState($lunarow)
 	{
 		if (($lunarow['destruyed'] + 172800) <= time() && $lunarow['destruyed'] != 0)
-			$query = doquery("DELETE FROM {{table}} WHERE id = '" . $lunarow['id'] . "'", "lunas");
+			doquery("DELETE FROM {{table}} WHERE id = '" . $lunarow['id'] . "'", "lunas");
 	}
 
 	public function CheckAbandonPlanetState(&$planet)
 	{
 		if ($planet['destruyed'] <= time())
 		{
-			doquery("DELETE FROM {{table}} WHERE id={$planet['id']}", 'planets');
-			doquery("UPDATE {{table}} SET id_planet=0 WHERE id_planet={$planet['id']}", 'galaxy');
+			doquery("DELETE FROM {{table}} WHERE `id_planet` = '".$planet['id']."' LIMIT 1;" , 'galaxy');
+			doquery("DELETE FROM {{table}} WHERE `id` = ".$planet['id']."", 'planets');
 		}
 	}
 
@@ -228,16 +228,6 @@ class GalaxyRows
 				else
 					$RecSended = $RecyclerCount;
 
-				$Result  = "<th style=\"";
-
-				if       (($GalaxyRow["metal"] + $GalaxyRow["crystal"]) >= 10000000)
-					$Result .= "background-color: rgb(100, 0, 0);";
-				elseif (($GalaxyRow["metal"] + $GalaxyRow["crystal"]) >= 1000000)
-					$Result .= "background-color: rgb(100, 100, 0);";
-				elseif (($GalaxyRow["metal"] + $GalaxyRow["crystal"]) >= 100000)
-					$Result .= "background-color: rgb(0, 100, 0);";
-
-				$Result .= "background-image: none;\" width=30>";
 				$Result .= "<a style=\"cursor: pointer;\"";
 				$Result .= " onmouseover='return overlib(\"";
 				$Result .= "<table width=240>";
@@ -508,22 +498,6 @@ class GalaxyRows
 		global $user, $lang;
 
 		$Result  = "<th style=\"white-space: nowrap;\" width=130>";
-
-		if ($GalaxyRowUser['ally_id'] == $user['ally_id'] && $GalaxyRowUser['id'] != $user['id'] && $user['ally_id'] != '')
-		{
-			$TextColor = "<font color=\"green\">";
-			$EndColor  = "</font>";
-		}
-		elseif ($GalaxyRowUser['id'] == $user['id'])
-		{
-			$TextColor = "<font color=\"red\">";
-			$EndColor  = "</font>";
-		}
-		else
-		{
-			$TextColor = '';
-			$EndColor  = "";
-		}
 
 		if ($GalaxyRowPlanet['last_update'] > (time()-59 * 60) && $GalaxyRowUser['id'] != $user['id'])
 			$Inactivity = pretty_time_hour(time() - $GalaxyRowPlanet['last_update']);

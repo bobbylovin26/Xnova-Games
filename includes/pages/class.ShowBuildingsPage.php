@@ -496,9 +496,7 @@ class ShowBuildingsPage
 			$parse['BuildListScript']  = "";
 			$parse['BuildList']        = "";
 		}
-		$parse['planet_field_current'] = $CurrentPlanet["field_current"];
-		$parse['planet_field_max']     = $CurrentPlanet['field_max'] + ($CurrentPlanet[$resource[33]] * FIELDS_BY_TERRAFORMER);
-		$parse['field_libre']          = $parse['planet_field_max']  - $CurrentPlanet['field_current'];
+
 		$parse['BuildingsList']        = $BuildingPage;
 
 		display(parsetemplate(gettemplate('buildings/buildings_builds'), $parse));

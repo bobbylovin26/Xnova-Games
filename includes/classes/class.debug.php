@@ -75,7 +75,7 @@ class debug
 		if (!function_exists('message'))
 			echo $lang['cdg_error_message']." <b>".$q['rows']."</b>";
 		else
-			message($lang['cdg_error_message']." <b>".$q['rows']."</b>");
+			message($lang['cdg_error_message']." <b>".$q['rows']."</b>", '', '', false, false);
 
 		die();
 	}

@@ -124,10 +124,10 @@ class ShowOfficierPage
 						$bloc['off_link'] = "<font color=\"red\">".$lang['of_max_lvl']."</font>";
 					}
 
-					$parse['disp_off_tbl'] .= parsetemplate( gettemplate('officier_rows'), $bloc );
+					$parse['disp_off_tbl'] .= parsetemplate( gettemplate('officier/officier_row'), $bloc );
 				}
 			}
-			$page = parsetemplate( gettemplate('officier_body'), $parse);
+			$page = parsetemplate( gettemplate('officier/officier_table'), $parse);
 		}
 
 		display($page);

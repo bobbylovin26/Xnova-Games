@@ -51,8 +51,8 @@ switch($_GET[page])
 	break;
 // ----------------------------------------------------------------------------------------------------------------------------------------------//
 	case'galaxy':
-		include_once($xgp_root . 'includes/pages/ShowGalaxyPage.' . $phpEx);
-		ShowGalaxyPage($user, $planetrow);
+		include_once($xgp_root . 'includes/pages/class.ShowGalaxyPage.' . $phpEx);
+		$ShowGalaxyPage = new ShowGalaxyPage($user, $planetrow);
 	break;
 	case'phalanx':
 		include_once($xgp_root . 'includes/pages/ShowPhalanxPage.' . $phpEx);
@@ -183,7 +183,7 @@ switch($_GET[page])
 // ----------------------------------------------------------------------------------------------------------------------------------------------//
 	case'logout':
 		setcookie($game_config['COOKIE_NAME'], "", time()-100000, "/", "", 0);
-		message($lang['see_you_soon'], $xgp_root, 2, false, false);
+		message($lang['see_you_soon'], $xgp_root, 1, false, false);
 	break;
 // ----------------------------------------------------------------------------------------------------------------------------------------------//
 	default:

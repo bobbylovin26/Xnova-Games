@@ -133,7 +133,7 @@ class ShowResearchPage
 		if (isset($_GET['cmd']))
 		{
 			$TheCommand 	= $_GET['cmd'];
-			$Techno     	= $_GET['tech'];
+			$Techno     	= intval($_GET['tech']);
 
 			if ( isset ($Techno) )
 			{

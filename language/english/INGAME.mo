@@ -66,17 +66,6 @@ $lang['tn_vacation_mode']					= 'Vacation mode active until ';
 
 //----------------------------------------------------------------------------//
 //LEFT MENU
-//TITLES
-$lang['lm_Navigation']						= 'Navigation';
-$lang['lm_Constructions']					= 'Constructions';
-$lang['lm_Economy']							= 'Economy';
-$lang['lm_Relations']						= 'Relations';
-$lang['lm_Observation']						= 'Observation';
-$lang['lm_Other']							= 'Others';
-$lang['lm_Comunication']					= 'Comunication';
-$lang['lm_server_rates']					= 'Server rates';
-
-//CONTENT
 $lang['lm_overview']						= 'Overview';
 $lang['lm_galaxy']							= 'Galaxy';
 $lang['lm_empire']							= 'Empire';
@@ -167,6 +156,7 @@ $lang['gl_avaible_spyprobes']				= 'probes available';
 $lang['gl_missil_launch']					= 'Missile Launch';
 $lang['gl_missil_to_launch']				= 'Number of missiles (<b>%d</b> left):';
 $lang['gl_all_defenses']					= 'All';
+$lang['gl_objective']						= 'Objective';
 $lang['gl_missil_launch_action']			= 'OK';
 $lang['gl_galaxy']							= 'Galaxy';
 $lang['gl_solar_system']					= 'System';
@@ -343,10 +333,6 @@ $lang['bd_completed']						= 'Completado';
 $lang['bd_operating']						= '(En funcionamiento)';
 $lang['bd_continue']						= 'continue';
 $lang['bd_ready']							= 'finished';
-$lang['bd_you_are_using']					= 'You are using';
-$lang['bd_fields_totaling']					= 'fields of total of';
-$lang['bd_fields_left']						= 'you have';
-$lang['bd_free_fields']						= 'free fields';
 $lang['bd_finished']						= 'finished';
 
 //----------------------------------------------------------------------------//
@@ -778,19 +764,20 @@ $lang['mg_type'][100]  						= 'View all Messages';
 $lang['mg_no_subject']						= 'No Subject';
 $lang['mg_no_text']							= 'No message';
 $lang['mg_msg_sended']						= 'Message sent';
-$lang['ms_no_subject']						= 'No Subject';
-$lang['ms_delete_marked']					= 'Delete marked messages';
-$lang['ms_delete_unmarked']					= 'Delete all unmarked messages';
-$lang['ms_delete_all']						= 'Delete all messages';
-$lang['ms_show_only_header_spy_reports']	= 'show only partial espionage reports ';
-$lang['ms_action']							= 'Action';
-$lang['ms_date']							= 'Date';
-$lang['ms_from']							= 'From';
-$lang['ms_subject']							= 'Subject';
-$lang['ms_confirm_delete']					= 'Confirm';
-$lang['ms_message_title']					= 'Messages';
-$lang['ms_message_type']					= 'Message type';
-$lang['ms_total']							= 'Total';
+$lang['mg_no_subject']						= 'No Subject';
+$lang['mg_delete_marked']					= 'Delete marked messages';
+$lang['mg_delete_unmarked']					= 'Delete all unmarked messages';
+$lang['mg_delete_all']						= 'Delete all messages';
+$lang['mg_show_only_header_spy_reports']	= 'show only partial espionage reports ';
+$lang['mg_action']							= 'Action';
+$lang['mg_date']							= 'Date';
+$lang['mg_from']							= 'From';
+$lang['mg_subject']							= 'Subject';
+$lang['mg_confirm_delete']					= 'Confirm';
+$lang['mg_message_title']					= 'Messages';
+$lang['mg_message_type']					= 'Message type';
+$lang['mg_total']							= 'Total';
+$lang['mg_game_operators']					= 'Game operators';
 
 //----------------------------------------------------------------------------//
 //ALLIANCE
@@ -920,6 +907,9 @@ $lang['al_legend_admin_alliance']			= 'Manage Alliance';
 $lang['al_legend_see_connected_users']		= 'Show online status in member list';
 $lang['al_legend_create_circular']			= 'Write circular message';
 $lang['al_legend_right_hand']				= '"Right Hand" (necessary to transfer founder rank)';
+$lang['al_requests']						= 'Requests';
+$lang['al_circular_message']				= 'Circular message';
+$lang['al_leave_alliance']					= 'Leave this alliance';
 
 //----------------------------------------------------------------------------//
 //BUDDY

@@ -18,7 +18,6 @@
           <th colspan=2><a href="game.php?page=alliance&mode=admin&edit=name">{al_manage_change_name}</a></th>
         </tr>
     </table>
-    <br>
     <form action="" method="POST">
     <input type="hidden" name="t" value="{t}">
     <table width=519>
@@ -46,9 +45,6 @@
         </tr>
     </table>
     </form>
-    
-    <br>
-    
     <form action="" method="POST">
     <table width=519>
         <tr>
@@ -78,8 +74,20 @@
         </tr>
     </table>
     </form>
-    <br />
-    {Disolve_alliance}
-    <br />
-    {Transfer_alliance}
+     <table width=519>
+     	<tr>
+        	<td class="c">{al_disolve_alliance}</td>
+        </tr>
+        <tr>
+          <th><input type="button" onclick="javascript:location.href='game.php?page=alliance&mode=admin&edit=exit';" value="{al_continue}"/></th>
+        </tr>  
+     </table>
+     <table width=519>
+     	<tr>
+        	<td class="c">{al_transfer_alliance}</td>
+        </tr>
+        <tr>
+          <th><input type="button" onclick="javascript:location.href='game.php?page=alliance&mode=admin&edit=transfer';" value="{al_continue}"/></th>
+        </tr>  
+     </table>
 </div>

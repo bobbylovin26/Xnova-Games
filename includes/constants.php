@@ -19,13 +19,10 @@
 # *																			 #
 ##############################################################################
 
-if ( defined('INSIDE') )
-{
-	// PROYECT VERSION
-	define('VERSION'            	  ,'v2.4');
+if ( !defined('INSIDE') ) die(header("location:../"));
 
 	//TEMPLATES DEFAULT SETTINGS
-	define('DEFAULT_SKINPATH' 		 , 'styles/skins/xgproyect/');
+	define('DEFAULT_SKINPATH' 		 , 'styles/skins/evolution/');
 	define('TEMPLATE_DIR'     		 , 'styles/templates/');
 
 	// ADMINISTRATOR EMAIL AND GAME URL - THIS DATA IS REQUESTED BY REG.PHP
@@ -64,9 +61,4 @@ if ( defined('INSIDE') )
 	define('BUILD_METAL'              ,    500);
 	define('BUILD_CRISTAL'            ,    500);
 	define('BUILD_DEUTERIUM'          , 	 0);
-}
-else
-{
-	die(header("location:../"));
-}
 ?>

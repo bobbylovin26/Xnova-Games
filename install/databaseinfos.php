@@ -79,6 +79,7 @@ $QryTableConfig     .= ") ENGINE=MyISAM;";
 
 $QryInsertConfig     = "INSERT INTO `{{table}}` ";
 $QryInsertConfig    .= "(`config_name`           , `config_value`) VALUES ";
+$QryInsertConfig    .= "('VERSION'          	 , '2.5'), ";
 $QryInsertConfig    .= "('users_amount'          , '0'), ";
 $QryInsertConfig    .= "('game_speed'            , '2500'), ";
 $QryInsertConfig    .= "('fleet_speed'           , '2500'), ";
@@ -102,8 +103,6 @@ $QryInsertConfig    .= "('noobprotection'        , '1'), ";
 $QryInsertConfig    .= "('noobprotectiontime'    , '5000'), ";
 $QryInsertConfig    .= "('noobprotectionmulti'   , '5'), ";
 $QryInsertConfig    .= "('forum_url'             , 'http://www.xtreme-gamez.com.ar/foros' ), ";
-$QryInsertConfig    .= "('OverviewNewsFrame'     , '1' ), ";
-$QryInsertConfig    .= "('OverviewNewsText'      , '¡Bienvenidos al nuevo servidor de XG Proyect!' ), ";
 $QryInsertConfig    .= "('adm_attack'         	 , '0' ), ";
 $QryInsertConfig    .= "('debug'                 , '0'), ";
 $QryInsertConfig    .= "('lang'                  , 'spanish'), ";

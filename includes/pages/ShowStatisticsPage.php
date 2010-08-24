@@ -113,52 +113,50 @@ function ShowStatisticsPage($CurrentUser)
 
 		$parse['stat_header'] = parsetemplate(gettemplate('stat/stat_alliancetable_header'), $parse);
 		$start = floor($range / 100 % 100) * 100;
-		$query = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '2' AND `stat_code` = '1' ORDER BY `". $Order ."` DESC LIMIT ". $start .",100;", 'statpoints');
+		$stats_sql	=	'SELECT s.*, a.id, a.ally_members, a.ally_tag, a.ally_name FROM {{table}}statpoints as s
+		INNER JOIN {{table}}alliance as a ON a.id = s.id_owner
+		WHERE `stat_type` = 2 AND `stat_code` = 1
+		ORDER BY `'. $Order .'` DESC LIMIT '. $start .',100;';
+
 		$start++;
-		$parse['stat_date']   = $game_config['stats'];
+		$parse['stat_date']   = date("Y-m-d, H:i:s",$game_config['stat_last_update']);
 		$parse['stat_values'] = "";
+		$query = doquery($stats_sql, '');
 
 		while ($StatRow = mysql_fetch_assoc($query))
 		{
 			$parse['ally_rank']       = $start;
-
-			$AllyRow                  = doquery("SELECT * FROM {{table}} WHERE `id` = '". $StatRow['id_owner'] ."';", 'alliance',true);
-
-			$rank_old                 = $StatRow[ $OldRank ];
-			if ( $rank_old == 0)
+			if ( $StatRow[ $OldRank ] == 0 || $StatRow[ $Rank ] == 0)
 			{
-				$rank_old             = $start;
-				$QryUpdRank           = doquery("UPDATE {{table}} SET `".$Rank."` = '".$start."', `".$OldRank."` = '".$start."' WHERE `stat_type` = '2' AND `stat_code` = '1' AND `id_owner` = '". $StatRow['id_owner'] ."';" , "statpoints");
-			}
-			else
-			{
-				$QryUpdRank           = doquery("UPDATE {{table}} SET `".$Rank."` = '".$start."' WHERE `stat_type` = '2' AND `stat_code` = '1' AND `id_owner` = '". $StatRow['id_owner'] ."';" , "statpoints");
+				$rank_old				= $start;
+				$QryUpdRank				= doquery("UPDATE {{table}} SET `".$Rank."` = '".$start."', `".$OldRank."` = '".$start."' WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $StatRow['id_owner'] ."';" , "statpoints");
+				$StatRow[ $OldRank ]	= $start;
+				$StatRow[ $Rank ]		= $start;
 			}
 
-			$rank_new                 = $start;
-			$ranking                  = $rank_old - $rank_new;
+			$ranking                  = $StatRow[ $OldRank ] - $StatRow[ $Rank ];
 
-			if ($ranking == "0")
+			if ($ranking == 0)
 			{
 				$parse['ally_rankplus']   = "<font color=#87CEEB>*</font>";
 			}
 
-			if ($ranking < "0")
+			if ($ranking < 0)
 			{
-				$parse['ally_rankplus']   = "<font color=red>".$ranking."</font>";
+				$parse['ally_rankplus']   = "<font color=red>-".$ranking."</font>";
 			}
 
-			if ($ranking > "0")
+			if ($ranking > 0)
 			{
 				$parse['ally_rankplus']   = "<font color=green>+".$ranking."</font>";
 			}
 
-			$parse['ally_tag']        	  = $AllyRow['ally_tag'];
-			$parse['ally_name']       	  = $AllyRow['ally_name'];
+			$parse['ally_tag']        	  = $StatRow['ally_tag'];
+			$parse['ally_name']       	  = $StatRow['ally_name'];
 			$parse['ally_mes']        	  = '';
-			$parse['ally_members']    	  = $AllyRow['ally_members'];
+			$parse['ally_members']    	  = $StatRow['ally_members'];
 			$parse['ally_points']     	  = pretty_number( $StatRow[ $Order ] );
-			$parse['ally_members_points'] =  pretty_number( floor($StatRow[ $Order ] / $AllyRow['ally_members']) );
+			$parse['ally_members_points'] =  pretty_number( floor($StatRow[ $Order ] / $StatRow['ally_members']) );
 			$parse['stat_values']    	 .= parsetemplate(gettemplate('stat/stat_alliancetable'), $parse);
 			$start++;
 		}
@@ -183,52 +181,61 @@ function ShowStatisticsPage($CurrentUser)
 		$parse['stat_header'] = parsetemplate(gettemplate('stat/stat_playertable_header'), $parse);
 
 		$start = floor($range / 100 % 100) * 100;
-		$query = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' ORDER BY `". $Order ."` DESC LIMIT ". $start .",100;", 'statpoints');
+
+		$stats_sql	=	'SELECT s.*, u.id, u.username, u.ally_id, u.ally_name FROM {{table}}statpoints as s
+		INNER JOIN {{table}}users as u ON u.id = s.id_owner
+		WHERE `stat_type` = 1 AND `stat_code` = 1
+		ORDER BY `'. $Order .'` DESC LIMIT '. $start .',100;';
+
+		$query = doquery($stats_sql, '');
 
 		$start++;
-		$parse['stat_date']   = $game_config['stats'];
+
+		$parse['stat_date']   = date("Y-m-d, H:i:s",$game_config['stat_last_update']);
 		$parse['stat_values'] = "";
 
 		while ($StatRow = mysql_fetch_assoc($query))
 		{
-			$parse['stat_date']       = date("d M Y - H:i:s", $StatRow['stat_date']);
 			$parse['player_rank']     = $start;
-			$UsrRow                   = doquery("SELECT * FROM {{table}} WHERE `id` = '". $StatRow['id_owner'] ."';", 'users',true);
-			$QryUpdateStats 		 .= "`stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $TheRank['id_owner'] ."';";
-			$rank_old                 = $StatRow[ $OldRank ];
-			if ( $rank_old == 0)
+			if ( $StatRow[ $OldRank ] == 0 || $StatRow[ $Rank ] == 0)
 			{
-				$rank_old             = $start;
-				$QryUpdRank           = doquery("UPDATE {{table}} SET `".$Rank."` = '".$start."', `".$OldRank."` = '".$start."' WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $StatRow['id_owner'] ."';" , "statpoints");
+				$rank_old				= $start;
+				$QryUpdRank				= doquery("UPDATE {{table}} SET `".$Rank."` = '".$start."', `".$OldRank."` = '".$start."' WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $StatRow['id_owner'] ."';" , "statpoints");
+				$StatRow[ $OldRank ]	= $start;
+				$StatRow[ $Rank ]		= $start;
 			}
-			else
-			{
-				$QryUpdRank           = doquery("UPDATE {{table}} SET `".$Rank."` = '".$start."' WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $StatRow['id_owner'] ."';" , "statpoints");
-			}
-			$rank_new                 = $start;
-			$ranking                  = $rank_old - $rank_new;
 
-			if ($ranking == "0")
+			$ranking                  = $StatRow[ $OldRank ] - $StatRow[ $Rank ];
+
+			if ($ranking == 0)
+			{
 				$parse['player_rankplus'] = "<font color=#87CEEB>*</font>";
+			}
 
-			if ($ranking < "0")
+			if ($ranking < 0)
 				$parse['player_rankplus'] = "<font color=red>".$ranking."</font>";
 
-			if ($ranking > "0")
+			if ($ranking > 0)
 				$parse['player_rankplus'] = "<font color=green>+".$ranking."</font>";
 
-			if ($UsrRow['id'] == $CurrentUser['id'])
-				$parse['player_name']     = "<font color=\"lime\">".$UsrRow['username']."</font>";
+			if ($StatRow['id'] == $CurrentUser['id'])
+				$parse['player_name']     = "<font color=\"lime\">".$StatRow['username']."</font>";
 			else
-				$parse['player_name']     = $UsrRow['username'];
+				$parse['player_name']     = $StatRow['username'];
 
-			$parse['player_mes']      = "<a href=\"game.php?page=messages&mode=write&id=" . $UsrRow['id'] . "\"><img src=\"" . $dpath . "img/m.gif\" border=\"0\" title=\"Escribir un mensaje\" /></a>";
+			if ($StatRow['id'] != $CurrentUser['id'])
+				$parse['player_mes']      = "<a href=\"game.php?page=messages&mode=write&id=" . $StatRow['id'] . "\"><img src=\"" . $dpath . "img/m.gif\" border=\"0\" title=\"Escribir un mensaje\" /></a>";
+			else
+				$parse['player_mes']      = "";
 
 			if ($UsrRow['ally_name'] == $CurrentUser['ally_name'])
-				$parse['player_alliance'] = "<font color=\"#33CCFF\">".$UsrRow['ally_name']."</font>";
+			{
+				$parse['player_alliance'] = "<a href=\"game.php?page=alliance&mode=ainfo&a=".$StatRow['ally_id']."\"><font color=\"#33CCFF\">".$StatRow['ally_name']."</font></a>";
+			}
 			else
-				$parse['player_alliance'] = $UsrRow['ally_name'];
-
+			{
+				$parse['player_alliance'] = "<a href=\"game.php?page=alliance&mode=ainfo&a=".$StatRow['ally_id']."\">".$StatRow['ally_name']."</a>";
+			}
 			$parse['player_points']   = pretty_number( $StatRow[ $Order ] );
 			$parse['stat_values']    .= parsetemplate(gettemplate('stat/stat_playertable'), $parse);
 			$start++;

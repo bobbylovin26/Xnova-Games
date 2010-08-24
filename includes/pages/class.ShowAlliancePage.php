@@ -131,7 +131,7 @@ class ShowAlliancePage
 
 	private function MessageForm($Title, $Message, $Goto = '', $Button = ' ok ', $TwoLines = false)
 	{
-		$Form .= "<form action=\"". $Goto ."\" method=\"post\">";
+		$Form .= "<div id=\"content\"><form action=\"". $Goto ."\" method=\"post\">";
 		$Form .= "<table width=\"519\">";
 		$Form .= "<tr>";
 		$Form .= "<td class=\"c\" colspan=\"2\">". $Title ."</td>";
@@ -147,21 +147,16 @@ class ShowAlliancePage
 		$Form .= "</tr>";
 		$Form .= "</table>";
 		$Form .= "</form>";
+		$Form .= "</div>";
 
 		return $Form;
 	}
 
 	public function ShowAlliancePage($CurrentUser)
 	{
-		global $dpath, $phpEx, $lang, $xgp_root;
+		global $dpath, $phpEx, $lang;
 
 		$parse = $lang;
-
-		require($xgp_root . "config." . $phpEx);
-
-		$prefix = $dbsettings['prefix'];
-
-		unset($dbsettings);
 
 		//MODO PRINCIPAL
 		$mode = $_GET['mode'];
@@ -449,7 +444,7 @@ class ShowAlliancePage
 				else
 				{
 					$lang['Want_go_out'] = str_replace("%s", $ally_name, $lang['al_do_you_really_want_to_go_out']);
-					$page = $this->MessageForm($lang['Want_go_out'], "<br>", "?mode=exit&yes=1", $lang['al_go_out_yes']);
+					$page = $this->MessageForm($lang['Want_go_out'], "<br>", "game.php?page=alliance&mode=exit&yes=1", $lang['al_go_out_yes']);
 				}
 				display($page);
 			}
@@ -483,7 +478,7 @@ class ShowAlliancePage
 					} elseif ($sort2 == 2) {
 					$sort .= " ASC;";
 					}
-					$listuser = doquery("SELECT * FROM {{table}} inner join `".$prefix."statpoints` on {{table}}.`id`=`".$prefix."statpoints`.`id_owner` WHERE ally_id='{$CurrentUser['ally_id']}' AND STAT_type=1 $sort", 'users');
+					$listuser = doquery("SELECT * FROM `{{table}}users` inner join `{{table}}statpoints` on {{table}}.`id`=`{{table}}statpoints`.`id_owner` WHERE ally_id='{$CurrentUser['ally_id']}' AND STAT_type=1 $sort", '');
 				}
 				else
 					$listuser = doquery("SELECT * FROM {{table}} WHERE ally_id='{$CurrentUser['ally_id']}'", 'users');
@@ -545,7 +540,7 @@ class ShowAlliancePage
 				if ($sendmail == 1)
 				{
 					$_POST['r'] 	= intval($_POST['r']);
-					$_POST['text']  = mysql_escape_string(strip_tags($_POST['text']));
+					$_POST['text']  = trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) );
 
 					if ($_POST['r'] == 0)
 						$sq = doquery("SELECT id,username FROM {{table}} WHERE ally_id='{$CurrentUser['ally_id']}'", "users");
@@ -561,7 +556,7 @@ class ShowAlliancePage
 						$list .= "<br>{$u['username']} ";
 					}
 
-					$page = $this->MessageForm($lang['al_circular_sended'] . $list, "game.php?page=alliance", $lang['al_continue'], true);
+					$page = $this->MessageForm($lang['al_circular_sended'],$list, "game.php?page=alliance", $lang['al_continue'], true);
 
 					display($page);
 				}
@@ -835,11 +830,7 @@ class ShowAlliancePage
 				$lang['ally_request_notallow_0'] 	= (($ally['ally_request_notallow'] == 1) ? ' SELECTED' : '');
 				$lang['ally_request_notallow_1'] 	= (($ally['ally_request_notallow'] == 0) ? ' SELECTED' : '');
 				$lang['ally_owner_range'] 			= $ally['ally_owner_range'];
-				$lang['Transfer_alliance'] 			= $this->MessageForm($lang['al_transfer_alliance'], "", "game.php?page=alliance&mode=admin&edit=transfer", $lang['al_continue']);
-				$lang['Disolve_alliance'] 			= $this->MessageForm($lang['al_disolve_alliance'], "", "game.php?page=alliance&mode=admin&edit=exit", $lang['al_continue']);
-
-				$page .= parsetemplate(gettemplate('alliance/alliance_admin'), $lang);
-				display($page);
+				display(parsetemplate(gettemplate('alliance/alliance_admin'), $lang));
 			}
 		// < -------------------------------------------------------- EDICION DE LOS MIEMBROS -------------------------------------------------------- >
 			if ($mode == 'admin' && $edit == 'members')
@@ -889,16 +880,17 @@ class ShowAlliancePage
 					} elseif ($sort2 == 2) {
 					$sort .= " ASC;";
 					}
-					$listuser = doquery("SELECT * FROM {{table}} inner join `".$prefix."statpoints` on `{{table}}`.`id`=`".$prefix."statpoints`.`id_owner` WHERE ally_id='{$CurrentUser['ally_id']}' AND STAT_type=1 $sort", 'users');
+					$listuser = doquery("SELECT * FROM `{{table}}users` inner join `{{table}}statpoints` on `{{table}}`.`id`=`{{table}}statpoints`.`id_owner` WHERE ally_id='{$CurrentUser['ally_id']}' AND STAT_type=1 $sort", '');
 				}
 				else
 				{
 					$listuser = doquery("SELECT * FROM {{table}} WHERE ally_id='{$CurrentUser['ally_id']}'", 'users');
 				}
 
-				$i = 0;
-
-				$lang['i'] = mysql_num_rows($listuser);
+				$i 				= 0;
+				$r				= $lang;
+				$s				= $lang;
+				$lang['i'] 		= mysql_num_rows($listuser);
 
 				while ($u = mysql_fetch_array($listuser))
 				{
@@ -940,7 +932,7 @@ class ShowAlliancePage
 
 						foreach($ally_ranks as $a => $b)
 						{
-							$r['options'] .= "<option onclick=\"document.editar_usu_rango.submit();\" value=\"" . ($a + 1) . "\"";
+							$r['options'] 	.= "<option onclick=\"document.editar_usu_rango.submit();\" value=\"" . ($a + 1) . "\"";
 
 							if ($u['ally_rank_id']-1 == $a)
 							{
@@ -983,9 +975,9 @@ class ShowAlliancePage
 
 				if ($_POST['action'] == $lang['al_acept_request'])
 				{
-					$_POST['text'] = mysql_escape_string(strip_tags($_POST['text']));
+					$_POST['text']  = trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) );
 
-					doquery("UPDATE {{table}} SET ally_members = ally_members+1 WHERE id='{$ally['id']}'", 'alliance');
+					doquery("UPDATE {{table}} SET `ally_members` = `ally_members` + 1 WHERE id='{$ally['id']}'", 'alliance');
 
 					doquery("UPDATE {{table}} SET
 					ally_name='{$ally['ally_name']}',
@@ -995,16 +987,18 @@ class ShowAlliancePage
 					WHERE id='{$show}'", 'users');
 
 					SendSimpleMessage($show,$CurrentUser['id'],'', 2,$ally['ally_tag'],$lang['al_you_was_acceted'] . $ally['ally_name'], $lang['al_hi_the_alliance'] . $ally['ally_name'] . $lang['al_has_accepted'] . $_POST['text']);
+
+					exit(header('Location:game.php?page=alliance&mode=admin&edit=ally'));
 				}
 				elseif($_POST['action'] == $lang['al_decline_request'] && $_POST['action'] != '')
 				{
-					$_POST['text'] = mysql_escape_string(strip_tags($_POST['text']));
+					$_POST['text']  = trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) );
 
 					doquery("UPDATE {{table}} SET ally_request_text='',ally_request='0',ally_id='0' WHERE id='{$show}'", 'users');
 
 					SendSimpleMessage($show,$CurrentUser['id'],'', 2,$ally['ally_tag'],$lang['al_you_was_declined'] . $ally['ally_name'], $lang['al_hi_the_alliance'] . $ally['ally_name'] . $lang['al_has_declined'] . $_POST['text']);
 
-					die(header('Location:game.php?page=alliance&mode=admin&edit=requests'));
+					exit(header('Location:game.php?page=alliance&mode=admin&edit=ally'));
 				}
 
 				$i = 0;
@@ -1108,7 +1102,8 @@ class ShowAlliancePage
 					header("location:game.". $phpEx . "?page=alliance",2);
 				else
 				{
-					$listuser = doquery("SELECT * FROM {{table}} WHERE ally_id='{$CurrentUser['ally_id']}'", 'users');
+					$listuser 		= doquery("SELECT * FROM {{table}} WHERE ally_id='{$CurrentUser['ally_id']}'", 'users');
+					$righthand		= $lang;
 
 					while ($u = mysql_fetch_array($listuser))
 					{
@@ -1129,7 +1124,7 @@ class ShowAlliancePage
 						$righthand["dpath"] = $dpath;
 					}
 
-					$page_list 	   .= parsetemplate(gettemplate('alliance/alliance_admin_transfer_row'), $righthand);;
+					$page_list 	   .= parsetemplate(gettemplate('alliance/alliance_admin_transfer_row'), $righthand);
 					$parse['s'] 	= $s;
 					$parse['list'] 	= $page_list;
 
@@ -1144,7 +1139,7 @@ class ShowAlliancePage
 
 				//RANGOS
 				if ($ally['ally_owner'] == $CurrentUser['id'])
-					$range = ($ally['ally_owner_range'] != '')?$lang['al_founder_rank_text']:$ally['ally_owner_range'];
+					$range = ($ally['ally_owner_range'] != '') ? $ally['ally_owner_range'] : $lang['al_founder_rank_text'];
 				elseif ($CurrentUser['ally_rank_id'] != 0 && isset($ally_ranks[$CurrentUser['ally_rank_id']-1]['name']))
 					$range = $ally_ranks[$CurrentUser['ally_rank_id']-1]['name'];
 				else
@@ -1164,7 +1159,7 @@ class ShowAlliancePage
 
 				// CORREO CIRCULAR
 				if ($ally['ally_owner'] == $CurrentUser['id'] || $ally_ranks[$CurrentUser['ally_rank_id']-1]['mails'] != 0)
-					$lang['send_circular_mail'] = "<tr><th>Correo circular</th><th><a href=\"game.php?page=alliance&mode=circular\">".$lang['al_send_circular_message']."</a></th></tr>";
+					$lang['send_circular_mail'] = "<tr><th>".$lang['al_circular_message']."</th><th><a href=\"game.php?page=alliance&mode=circular\">".$lang['al_send_circular_message']."</a></th></tr>";
 				else
 					$lang['send_circular_mail'] = '';
 
@@ -1174,11 +1169,17 @@ class ShowAlliancePage
 				if ($request_count != 0)
 				{
 					if ($ally['ally_owner'] == $CurrentUser['id'] || $ally_ranks[$CurrentUser['ally_rank_id']-1]['bewerbungen'] != 0)
-						$lang['requests'] = "<tr><th>Solicitudes</th><th><a href=\"game.php?page=alliance&mode=admin&edit=requests\">{$request_count} ".$lang['al_new_requests']."</a></th></tr>";
+						$lang['requests'] = "<tr><th>".$lang['al_requests']."</th><th><a href=\"game.php?page=alliance&mode=admin&edit=requests\">{$request_count} ".$lang['al_new_requests']."</a></th></tr>";
 				}
 				// SALIR DE LA ALIANZA
 				if ($ally['ally_owner'] != $CurrentUser['id'])
-					$lang['ally_owner'] .= $this->MessageForm("Abandonar la alianza", "", "game.php?page=alliance&mode=exit", $lang['al_continue']);
+				{
+					$lang['ally_owner'] .= "<table width=\"519\">";
+					$lang['ally_owner'] .= "<tr><td class=\"c\">".$lang['al_leave_alliance']."</td>";
+					$lang['ally_owner'] .= "</tr><tr>";
+					$lang['ally_owner'] .= "<th><input type=\"button\" onclick=\"javascript:location.href='game.php?page=alliance&mode=exit';\" value=\"".$lang['al_continue']."\"/></th>";
+					$lang['ally_owner'] .= "</tr></table>";
+				}
 				else
 					$lang['ally_owner'] .= '';
 

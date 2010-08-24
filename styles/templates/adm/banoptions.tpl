@@ -24,6 +24,9 @@
 	<th>{bo_seconds}</th>
 	<th><input name="secs" type="text" value="0" size="5" /></th>
 </tr><tr>
+	<th>{bo_vacation_mode}</th>
+	<th><input name="vacat" type="checkbox"/></th>
+</tr><tr>
 	<th colspan="2"><input type="submit" value="{bo_ban_player_button}" /></th>
 </tr>
 </table>

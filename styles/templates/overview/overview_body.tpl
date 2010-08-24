@@ -9,7 +9,6 @@
         	<th>{ov_server_time}</th>
         	<th colspan="3">{date_time}</th>
         </tr>
-        	{NewsFrame}
         <tr>
         	<td colspan="4" class="c">{ov_events}</td>
         </tr>

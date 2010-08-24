@@ -2,6 +2,9 @@
 
 //GENERAL
 $lang['not_enough_permissions']				= 'No tienes permisos suficientes';
+$lang['adm_cp_title']						= 'Panel de Control de administración';
+$lang['adm_cp_index']						= 'Inicio';
+$lang['adm_cp_logout']						= 'Salir';
 
 //----------------------------------------------------------------------------//
 //activeplanets.php
@@ -118,6 +121,7 @@ $lang['bo_days']							= 'Días';
 $lang['bo_hours']							= 'Horas';
 $lang['bo_minutes']							= 'Minutos';
 $lang['bo_seconds']							= 'Segundos';
+$lang['bo_vacation_mode']					= 'Modo vacaciones';
 $lang['bo_ban_player_button']				= 'Banear jugador';
 $lang['bo_unban_player']					= 'Desbanear jugador';
 $lang['bo_unban_button']					= 'Desbanear jugador';
@@ -221,20 +225,37 @@ $lang['od_opt_db']							= 'Optimizar base de datos';
 $lang['od_optimize']						= 'Optimizar';
 
 //----------------------------------------------------------------------------//
+//onlineusers.php
+$lang['ou_not_banned']						= 'No';
+$lang['ou_players_connected']				= 'Jugadores conectados:';
+$lang['ou_private_message']					= 'MP';
+$lang['ou_user_id']							= 'Usuario (ID)';
+$lang['ou_ip_address']						= 'IP';
+$lang['ou_alliance']						= 'Alianza';
+$lang['ou_points']							= 'Puntos';
+$lang['ou_inactivity']						= 'Inactividad';
+$lang['ou_email']							= 'Email';
+$lang['ou_vacation_mode']					= 'Modo vacaciones';
+$lang['ou_banned']							= 'Baneado';
+$lang['ou_planet']							= 'Planeta';
+$lang['ou_actual_page']						= 'Viendo página';
+
+//----------------------------------------------------------------------------//
 //overview.php
-$lang['ow_not_banned']						= 'No';
-$lang['ow_players_connected']				= 'Jugadores conectados:';
-$lang['ow_private_message']					= 'MP';
-$lang['ow_user_id']							= 'Usuario (ID)';
-$lang['ow_ip_address']						= 'IP';
-$lang['ow_alliance']						= 'Alianza';
-$lang['ow_points']							= 'Puntos';
-$lang['ow_inactivity']						= 'Inactividad';
-$lang['ow_email']							= 'Email';
-$lang['ow_vacation_mode']					= 'Modo vacaciones';
-$lang['ow_banned']							= 'Baneado';
-$lang['ow_planet']							= 'Planeta';
-$lang['ow_actual_page']						= 'Viendo página';
+$lang['ow_title']							= 'Bienvenido a XG Proyect';
+$lang['ow_welcome_text']					= 'Gracias por elegir XG Proyect. Día a día trabajamos por ser el OGame OpenSource Nº1 de la red. A continuación tienes un "vistazo" general del juego. Podrás realizar todos los cambios que desees navegando por el menú de la izquierda.';
+$lang['ow_warnings']						= 'Advertencias';
+$lang['ow_support']							= 'Soporte';
+$lang['ow_credits']							= 'Créditos';
+$lang['ow_forum']							= 'Forum';
+$lang['ow_proyect_leader']					= 'Proyect Leader';
+$lang['ow_principal_contributors']			= 'Principal contributors';
+$lang['ow_special_thanks']					= 'Special Thanks';
+$lang['ow_install_file_detected']			= 'Se detecto el directorio install/. Por razones se seguridad recomendamos eliminarlo.';
+$lang['ow_config_file_writable']			= 'El archivo config.php puede ser escrito, es recomendable que sea colocado en chmod 440 (sólo lectura).';
+$lang['ow_database_errors']					= 'Hay errores en tu base de datos. Puedes verlos haciendo <a href="errors.php">click aquí</a>';
+$lang['ow_old_version']						= 'Hay una nueva versión disponible. Haz click <a href="http://xtreme-gamez.com.ar/foros/showthread.php?t=2126" target="_blanck">aquí</a> para descargarla';
+$lang['ow_none']							= 'Ninguna';
 
 //----------------------------------------------------------------------------//
 //paneladmina.php
@@ -276,10 +297,6 @@ $lang['pl_system']							= 'Sistema';
 $lang['pl_planet']							= 'Planeta';
 
 //----------------------------------------------------------------------------//
-//ResetUniverse.php
-$lang['ru_success']							= 'Universo reiniciado con éxito.';
-
-//----------------------------------------------------------------------------//
 //settings.php
 $lang['se_server_parameters']				= 'Parámetros del servidor';
 $lang['se_name']							= 'Nombre';
@@ -303,7 +320,6 @@ $lang['se_energy_production']				= 'Producción de energía';
 $lang['se_several_parameters']				= 'Parámetros varios';
 $lang['se_title_admins_protection']			= 'Marcá la casilla para activar la protección y evitar que los administradores y moderadores reciban ataques o cualquier otro tipo de acción de las flotas.';
 $lang['se_admin_protection']				= 'Protección de admins/mods';
-$lang['se_show_news']						= 'Mostrar noticias';
 $lang['se_debug_mode']						= 'Modo debug';
 $lang['se_save_parameters']					= 'Guardar parámetros';
 
@@ -358,7 +374,6 @@ $lang['mu_settings']						= 'Configuración';
 $lang['mu_global_message']					= 'Mensaje Global';
 $lang['mu_reset_universe']					= 'Reiniciar Universo';
 $lang['mu_reset_universe_confirmation']		= 'Al pulsar Aceptar, se reiniciara a cero tu universo. Las cuentas no serán borradas. Esta operación no puede ser revertida, y es tu responsabilidad hacerle un backup a la base de datos.';
-$lang['mu_logout']							= 'Salir';
 $lang['mu_users_settings']					= 'Usuarios';
 $lang['mu_add_delete_resources']			= 'Añadir/eliminar recursos';
 $lang['mu_change_pass']						= 'Cambiar clave';

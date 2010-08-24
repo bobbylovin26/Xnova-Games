@@ -36,16 +36,26 @@ if ( is_numeric($_POST['fleetid']) )
 	{
 		if ($FleetRow['fleet_mess'] == 0)
 		{
+			$CurrentFlyingTime = time() - $FleetRow['start_time'];
+			/*
 			if ($FleetRow['fleet_end_stay'] != 0)
 			{
 				if ($FleetRow['fleet_start_time'] < time())
+				{
 					$CurrentFlyingTime = time() - $FleetRow['start_time'];
+				}
 				else
-					$CurrentFlyingTime = $FleetRow['fleet_start_time'] - $FleetRow['start_time'];
+				{
+					$CurrentFlyingTime = time() - $FleetRow['start_time'];
+				}
+
 			}
 			else
-				$CurrentFlyingTime = time() - $FleetRow['start_time'];
-
+			{
+				$CurrentFlyingTime = time() - $FleetRow['start_time']; 	// LO QUE ESTA COMO COMENTARIO ES EL BETA DEL FIX PARA
+			}															// LOS TIEMPOS DE REGRESO DE LAS FLOTAS
+																		// FUNCIONABA BIEN PERO FALLABA PARA LA MISION MATENER POSICION
+			*/
 			$ReturnFlyingTime  = $CurrentFlyingTime + time();
 
 			$QryUpdateFleet  = "UPDATE {{table}} SET ";
@@ -58,14 +68,6 @@ if ( is_numeric($_POST['fleetid']) )
 			$QryUpdateFleet .= "`fleet_id` = '" . $fleetid . "';";
 			doquery( $QryUpdateFleet, 'fleets');
 		}
-		elseif ($FleetRow['fleet_mess'] == 1)
-		{
-			header("location:game.php?page=fleet");
-		}
-	}
-	else
-	{
-		header("location:game.php?page=fleet");
 	}
 }
 header("location:game.php?page=fleet");

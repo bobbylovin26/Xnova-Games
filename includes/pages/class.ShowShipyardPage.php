@@ -132,7 +132,7 @@ class ShowShipyardPage
 							$Count = $MaxElements;
 
 						$Ressource = $this->GetElementRessources ( $Element, $Count );
-						$BuildTime = GetBuildingTime($CurrentUser, $CurrentPlanet, $Element);
+
 						if ($Count >= 1)
 						{
 							$CurrentPlanet['metal']          -= $Ressource['metal'];
@@ -246,11 +246,14 @@ class ShowShipyardPage
 			for ($QElement = 0; $QElement < count($BuildArray); $QElement++)
 			{
 				$ElmentArray = explode (",", $BuildArray[$QElement] );
-				if       ($ElmentArray[0] == 502)
+				if($ElmentArray[0] == 502)
+				{
 					$Missiles[502] += $ElmentArray[1];
+				}
 				elseif($ElmentArray[0] == 503)
+				{
 					$Missiles[503] += $ElmentArray[1];
-
+				}
 			}
 
 
@@ -270,13 +273,22 @@ class ShowShipyardPage
 					$IsBuildpp = ($CurrentPlanet[$resource[409]] >= 1) ? TRUE : FALSE;
 
 					if ( $Element == 407 && !$IsBuildp && $InQueue === FALSE )
+					{
 						$Count = 1;
+					}
+
 
 					if ( $Element == 408 && !$IsBuildg && $InQueue === FALSE )
+					{
 						$Count = 1;
+					}
+
 
 					if ( $Element == 409 && !$IsBuildpp && $InQueue === FALSE )
+					{
 						$Count = 1;
+					}
+
 
 					if (IsTechnologieAccessible($CurrentUser, $CurrentPlanet, $Element))
 					{
@@ -287,26 +299,39 @@ class ShowShipyardPage
 							$ActuMissiles  = $Missiles[502] + ( 2 * $Missiles[503] );
 							$MissilesSpace = $MaxMissiles - $ActuMissiles;
 							if ($Element == 502)
+							{
 								if ( $Count > $MissilesSpace )
+								{
 									$Count = $MissilesSpace;
+								}
+
+							}
 							else
+							{
 								if ( $Count > floor( $MissilesSpace / 2 ) )
+								{
 									$Count = floor( $MissilesSpace / 2 );
+								}
+							}
 
 							if ($Count > $MaxElements)
+							{
 								$Count = $MaxElements;
+							}
 
 							$Missiles[$Element] += $Count;
 						}
 						else
 						{
 							if ($Count > $MaxElements)
+							{
 								$Count = $MaxElements;
+							}
 
 						}
 
 						$Ressource = $this->GetElementRessources ( $Element, $Count );
-						$BuildTime = GetBuildingTime($CurrentUser, $CurrentPlanet, $Element);
+
 						if ($Count >= 1)
 						{
 							$CurrentPlanet['metal']           -= $Ressource['metal'];

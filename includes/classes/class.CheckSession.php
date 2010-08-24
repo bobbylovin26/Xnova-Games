@@ -97,11 +97,11 @@ class CheckSession
 		return $Return;
 	}
 
-	public static function CheckUser($IsUserChecked)
+	public function CheckUser($IsUserChecked)
 	{
 		global $user, $xgp_root, $lang;
 
-		$Result        = CheckSession::CheckCookies($IsUserChecked);
+		$Result        = $this->CheckCookies($IsUserChecked);
 		$IsUserChecked = $Result['state'];
 
 		if ($Result['record'] != false)

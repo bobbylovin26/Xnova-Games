@@ -19,7 +19,12 @@
 # *																			 #
 ##############################################################################
 
-$phpEx 			= "php";
+if(filesize($xgp_root . 'config.php') == 0 && INSTALL != true)
+{
+	exit ( header ( "location:" . $xgp_root .  "install/" ) );
+}
+
+$phpEx			= "php";
 $game_config   	= array();
 $user          	= array();
 $lang          	= array();
@@ -45,7 +50,8 @@ if (INSTALL != true)
 		$game_config[$row['config_name']] = $row['config_value'];
 	}
 
-	define('DEFAULT_LANG', ($game_config['lang'] == '') ? "spanish" : $game_config['lang']);
+	define('DEFAULT_LANG'	, (	$game_config['lang'] 	== ''	) ? "spanish" : 	$game_config['lang']	);
+	define('VERSION'		, (	$game_config['VERSION'] == ''	) ? "		" : "v".$game_config['VERSION']	);
 
 	includeLang('INGAME');
 
@@ -53,9 +59,10 @@ if (INSTALL != true)
 	{
 		include($xgp_root . 'includes/classes/class.CheckSession.'.$phpEx);
 
-		$Result        = CheckSession::CheckUser($IsUserChecked);
-		$IsUserChecked = $Result['state'];
-		$user          = $Result['record'];
+		$Result        	= new CheckSession();
+		$Result			= $Result->CheckUser($IsUserChecked);
+		$IsUserChecked 	= $Result['state'];
+		$user          	= $Result['record'];
 
 		if($game_config['game_disable'] == 0 && $user['authlevel'] == 0)
 		{
@@ -100,23 +107,8 @@ if (INSTALL != true)
 		if ( defined('IN_ADMIN') )
 		{
 			includeLang('ADMIN');
-			$UserSkin  = $user['dpath'];
-			$local     = stristr ( $UserSkin, "http:");
-			if ($local === false)
-			{
-				if (!$user['dpath'])
-				{
-					$dpath     = "../". DEFAULT_SKINPATH  ;
-				}
-				else
-				{
-					$dpath     = "../". $user["dpath"];
-				}
-			}
-			else
-			{
-				$dpath     = $UserSkin;
-			}
+
+			$dpath     = "../". DEFAULT_SKINPATH  ;
 		}
 		else
 		{
@@ -126,7 +118,7 @@ if (INSTALL != true)
 		include($xgp_root . 'includes/functions/SetSelectedPlanet.' . $phpEx);
 		SetSelectedPlanet ($user);
 
-		$planetrow = doquery("SELECT * FROM {{table}} WHERE `id` = '".$user['current_planet']."';", 'planets', true);
+		$planetrow = doquery("SELECT * FROM `{{table}}` WHERE `id` = '".$user['current_planet']."';", "planets", true);
 
 		include($xgp_root . 'includes/functions/CheckPlanetUsedFields.' . $phpEx);
 		CheckPlanetUsedFields($planetrow);

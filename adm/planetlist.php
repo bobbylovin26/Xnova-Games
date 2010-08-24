@@ -36,11 +36,11 @@ if ($user['authlevel'] < 2) die(message ($lang['not_enough_permissions']));
 	while ($u = mysql_fetch_array($query))
 	{
 		$parse['lista_planetas'] .= "<tr>"
-		. "<td class=b><center><b>" . $u[0] . "</center></b></td>"
-		. "<td class=b><center><b>" . $u[1] . "</center></b></td>"
-		. "<td class=b><center><b>" . $u[4] . "</center></b></td>"
-		. "<td class=b><center><b>" . $u[5] . "</center></b></td>"
-		. "<td class=b><center><b>" . $u[6] . "</center></b></td>"
+		. "<th>" . $u[0] . "</th>"
+		. "<th>" . $u[1] . "</th>"
+		. "<th>" . $u[4] . "</th>"
+		. "<th>" . $u[5] . "</th>"
+		. "<th>" . $u[6] . "</th>"
 		. "</tr>";
 		$i++;
 	}

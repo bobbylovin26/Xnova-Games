@@ -36,12 +36,12 @@ if ($user['authlevel'] < 2) die(message ($lang['not_enough_permissions']));
 	while ($u = mysql_fetch_array($query))
 	{
 		$parse['moon'] .= "<tr>"
-		. "<td class=b><center><b>" . $u[0] . "</center></b></td>"
-		. "<td class=b><center><b>" . $u[2] . "</center></b></td>"
-		. "<td class=b><center><b>" . $u[5] . "</center></b></td>"
-		. "<td class=b><center><b>" . $u[6] . "</center></b></td>"
-		. "<td class=b><center><b>" . $u[7] . "</center></b></td>"
-		. "<td class=b><center><b>" . $u[8] . "</center></b></td>"
+		. "<th>" . $u[0] . "</th>"
+		. "<th>" . $u[2] . "</th>"
+		. "<th>" . $u[5] . "</th>"
+		. "<th>" . $u[6] . "</th>"
+		. "<th>" . $u[7] . "</th>"
+		. "<th>" . $u[8] . "</th>"
 		. "</tr>";
 		$i++;
 	}

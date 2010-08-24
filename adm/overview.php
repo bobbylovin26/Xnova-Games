@@ -29,63 +29,58 @@ include($xgp_root . 'common.' . $phpEx);
 
 if ($user['authlevel'] < 1) die(message ($lang['not_enough_permissions']));
 
-	$parse	= $lang;
+function check_updates()
+{
+	global $game_config;
 
-	if ($_GET['cmd'] == 'sort')
-		$TypeSort = $_GET['type'];
-	else
-		$TypeSort = "id";
-
-	$queryuser 	= "u.id, u.username, u.user_agent, u.current_page, u.user_lastip, u.ally_name, u.onlinetime, u.email, u.galaxy, u.system, u.planet";
-	$querystat 	= "s.total_points";
-	$Last15Mins = doquery("SELECT ". $queryuser .", ". $querystat ." FROM  {{table}}users as u, {{table}}statpoints as s
-							WHERE u.onlinetime >= '". (time() - 15 * 60) ."' AND u.id=s.id_owner AND s.stat_type=1
-							ORDER BY `". mysql_escape_string($TypeSort) ."` ASC;", '');
-
-
-	$Count      = 0;
-	$Color      = "lime";
-
-	while ($TheUser = mysql_fetch_array($Last15Mins) )
+	if (function_exists('file_get_contents'))
 	{
-		if ($PrevIP != "")
-			if ($PrevIP == $TheUser['user_lastip'])
-				$Color = "red";
-			else
-				$Color = "lime";
+		$current = @file_get_contents('http://www.xtreme-gamez.com.ar/xgproyect/current.php');
 
-		$Bloc['dpath']              = $dpath;
-		$Bloc['adm_ov_data_id']     = $TheUser['id'];
-		$Bloc['adm_ov_data_name']   = $TheUser['username'];
-		$Bloc['adm_ov_data_agen']   = $TheUser['user_agent'];
-		$Bloc['current_page']    	= $TheUser['current_page'];
-		$Bloc['usr_s_id']    		= $TheUser['id'];
-		$Bloc['adm_ov_data_clip']   = $Color;
-		$Bloc['adm_ov_data_adip']   = $TheUser['user_lastip'];
-		$Bloc['adm_ov_data_ally']   = $TheUser['ally_name'];
-		$Bloc['adm_ov_data_point']  = pretty_number ( $TheUser['total_points'] );
-		$Bloc['adm_ov_data_activ']  = pretty_time ( time() - $TheUser['onlinetime'] );
-		$Bloc['adm_ov_data_pict']   = "m.gif";
-		$PrevIP                     = $TheUser['user_lastip'];
-		$Bloc['usr_email']    		= $TheUser['email'];
-		if ($TheUser['urlaubs_modus'] == 1)
-			$Bloc['state_vacancy']  = "<img src=\"../styles/images/true.png\" >";
+		if ($current !== $game_config['VERSION'])
+		{
+			return true;
+		}
 		else
-			$Bloc['state_vacancy']  = "<img src=\"../styles/images/false.png\">";
-		if ($TheUser['bana'] == 1)
-			$Bloc['is_banned']  	= "<img src=\"../styles/images/banned.png\" >";
-		else
-			$Bloc['is_banned']  	= $lang['ow_not_banned'];
-
-		$Bloc['usr_planet_gal']    	= $TheUser['galaxy'];
-		$Bloc['usr_planet_sys']    	= $TheUser['system'];
-		$Bloc['usr_planet_pos']    	= $TheUser['planet'];
-		$parse['adm_ov_data_table'] .= parsetemplate( gettemplate('adm/overview_rows'), $Bloc );
-		$Count++;
+		{
+			return false;
+		}
 	}
+}
 
-	$parse['adm_ov_data_count']  = $Count;
+$parse	=	$lang;
 
-	display ( parsetemplate(gettemplate('adm/overview_body'), $parse), false, '', true, false);
+if(file_exists($xgp_root . 'install/') && defined('IN_ADMIN'))
+{
+	$Message	.= "<font color=\"red\">".$lang['ow_install_file_detected']."</font><br/><br/>";
+	$error++;
+}
+
+if(@fopen("./../config.php", "a"))
+{
+	$Message	.= "<font color=\"red\">".$lang['ow_config_file_writable']."</font><br/><br/>";
+	$error++;
+}
+
+$Errors = doquery("SELECT COUNT(*) AS `errors` FROM {{table}} WHERE 1;", 'errors', true);
+
+if($Errors['errors'] != 0)
+{
+	$Message	.= "<font color=\"red\">".$lang['ow_database_errors']."Versión antigua</font><br/><br/>";
+	$error++;
+}
+
+if(check_updates())
+{
+	$Message	.= "<font color=\"red\">".$lang['ow_old_version']."</font><br/><br/>";
+	$error++;
+}
+
+if($error != 0)
+	$parse['error_message']		=	$Message;
+else
+	$parse['error_message']		= 	$lang['ow_none'];
+
+	display( parsetemplate(gettemplate('adm/overview_body'), $parse), false, '', true, false);
 
 ?>

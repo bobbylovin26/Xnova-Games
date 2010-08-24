@@ -36,7 +36,7 @@ function ShowImperiumPage($CurrentUser)
 	`colonizer`,`recycler`,`spy_sonde`,`bomber_ship`,`solar_satelit`,`destructor`,`dearth_star`,
 	`battleship`,`supernova`,`misil_launcher`,`small_laser`,`big_laser`,`gauss_canyon`,`ionic_canyon`,
 	`buster_canyon`,`small_protection_shield`,`planet_protector`,`big_protection_shield`,`interceptor_misil`,
-	`interplanetary_misil`, `mondbasis`, `phalanx`, `sprungtor` FROM {{table}} WHERE `id_owner` = '" . $CurrentUser['id'] . "';", 'planets');
+	`interplanetary_misil`, `mondbasis`, `phalanx`, `sprungtor` FROM {{table}} WHERE `id_owner` = '" . $CurrentUser['id'] . "' AND `destruyed` = 0;", 'planets');
 
 	$parse 	= $lang;
 	$planet = array();
@@ -55,13 +55,13 @@ function ShowImperiumPage($CurrentUser)
 		for ($k = 0; $k < 8; $k++)
 		{
 			$data['text'] = $datat[$k];
-			$parse[$f[$k]] .= parsetemplate(gettemplate('imperium_row'), $data);
+			$parse[$f[$k]] .= parsetemplate(gettemplate('empire/empire_row'), $data);
 		}
 
 		foreach ($resource as $i => $res)
 		{
 			$data['text'] = ($p[$resource[$i]] == 0 && $CurrentUser[$resource[$i]] == 0) ? '-' : ((in_array($i, $reslist['build'])) ? "<a href=\"game.php?page=buildings&cp={$p['id']}&amp;re=0&amp;planettype={$p['planet_type']}\">{$p[$resource[$i]]}</a>" : ((in_array($i, $reslist['tech'])) ? "<a href=\"game.php?page=buildings&mode=research&cp={$p['id']}&amp;re=0&amp;planettype={$p['planet_type']}\">{$CurrentUser[$resource[$i]]}</a>" : ((in_array($i, $reslist['fleet'])) ? "<a href=\"game.php?page=buildings&mode=fleet&cp={$p['id']}&amp;re=0&amp;planettype={$p['planet_type']}\">{$p[$resource[$i]]}</a>" : ((in_array($i, $reslist['defense'])) ? "<a href=\"game.php?page=buildings&mode=defense&cp={$p['id']}&amp;re=0&amp;planettype={$p['planet_type']}\">{$p[$resource[$i]]}</a>" : '-'))));
-			$r[$i] .= parsetemplate(gettemplate('imperium_row'), $data);
+			$r[$i] .= parsetemplate(gettemplate('empire/empire_row'), $data);
 		}
 	}
 
@@ -74,10 +74,10 @@ function ShowImperiumPage($CurrentUser)
 		foreach ($reslist[$m[$j]] as $a => $i)
 		{
 			$data['text'] = $lang['tech'][$i];
-			$parse[$n[$j]] .= "<tr>" . parsetemplate(gettemplate('imperium_row'), $data) . $r[$i] . "</tr>";
+			$parse[$n[$j]] .= "<tr>" . parsetemplate(gettemplate('empire/empire_row'), $data) . $r[$i] . "</tr>";
 		}
 	}
 
-	return display(parsetemplate(gettemplate('imperium_table'), $parse), false);
+	return display(parsetemplate(gettemplate('empire/empire_table'), $parse), false);
 }
 ?>

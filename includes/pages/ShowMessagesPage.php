@@ -38,7 +38,6 @@ function ShowMessagesPage($CurrentUser)
 
 	$MessageType   = array ( 0, 1, 2, 3, 4, 5, 15, 99, 100 );
 	$TitleColor    = array ( 0 => '#FFFF00', 1 => '#FF6699', 2 => '#FF3300', 3 => '#FF9900', 4 => '#773399', 5 => '#009933', 15 => '#030070', 99 => '#007070', 100 => '#ABABAB'  );
-	$BackGndColor  = array ( 0 => '#663366', 1 => '#336666', 2 => '#000099', 3 => '#666666', 4 => '#999999', 5 => '#999999', 15 => '#999999', 99 => '#999999', 100 => '#999999'  );
 
 	for ($MessType = 0; $MessType < 101; $MessType++)
 	{
@@ -55,6 +54,15 @@ function ShowMessagesPage($CurrentUser)
 		$TotalMess[$MessType] += 1;
 		$TotalMess[100]       += 1;
 	}
+
+	$page  .= "<script language=\"JavaScript\">\n";
+	$page .= "function f(target_url, win_name) {\n";
+	$page .= "var new_win = window.open(target_url,win_name,'resizable=yes,scrollbars=yes,menubar=no,toolbar=no,width=550,height=280,top=0,left=0');\n";
+	$page .= "new_win.focus();\n";
+	$page .= "}\n";
+	$page .= "</script>\n";
+	$page .= "<br />\n";
+	$page .= "<div id=\"content\">\n";
 
 	switch ($MessPageMode)
 	{
@@ -102,7 +110,7 @@ function ShowMessagesPage($CurrentUser)
 			}
 			$parse['id']           = $OwnerID;
 			$parse['to']           = $OwnerRecord['username'] ." [".$OwnerHome['galaxy'].":".$OwnerHome['system'].":".$OwnerHome['planet']."]";
-			$parse['subject']      = (!isset($subject)) ? $lang['ms_no_subject'] : $subject ;
+			$parse['subject']      = (!isset($subject)) ? $lang['mg_no_subject'] : $subject ;
 			$parse['text']         = $text;
 			$page                 .= parsetemplate(gettemplate('messages_pm_form'), $parse);
 		break;
@@ -145,41 +153,19 @@ function ShowMessagesPage($CurrentUser)
 			header("location:game.php?page=messages");
 		break;
 		case 'show':
-			$page  .= "<script language=\"JavaScript\">\n";
-			$page .= "function f(target_url, win_name) {\n";
-			$page .= "var new_win = window.open(target_url,win_name,'resizable=yes,scrollbars=yes,menubar=no,toolbar=no,width=550,height=280,top=0,left=0');\n";
-			$page .= "new_win.focus();\n";
-			$page .= "}\n";
-			$page .= "</script>\n";
-			$page .= "<br /><div id=\"content\"><table>";
-			$page .= "<tr>";
-			$page .= "<td></td>";
-			$page .= "<td>\n";
-			$page .= "<table width=\"519\">";
-			$page .= "<form action=\"game.php?page=messages\" method=\"post\"><table>";
-			$page .= "<tr>";
-			$page .= "<td></td>";
-			$page .= "<td>\n<input name=\"messages\" value=\"1\" type=\"hidden\">";
-			$page .= "<table width=\"519\">";
-			$page .= "<tr>";
-			$page .= "<th colspan=\"9\">";
-			$page .= "<select onchange=\"document.getElementById('deletemessages').options[this.selectedIndex].selected='true'\" id=\"deletemessages2\" name=\"deletemessages2\">";
-			$page .= "<option value=\"deletemarked\">".$lang['ms_delete_marked']."</option>";
-			$page .= "<option value=\"deleteunmarked\">".$lang['ms_delete_unmarked']."</option>";
-			$page .= "<option value=\"deleteall\">".$lang['ms_delete_all']."</option>";
-			$page .= "</select>";
-			$page .= "<input value=\"".$lang['ms_confirm_delete']."\" type=\"submit\">";
-			$page .= "</th>";
-			$page .= "</tr><tr>";
-			$page .= "<th style=\"color: rgb(242, 204, 74);\" colspan=\"9\">";
-			$page .= "<input name=\"category\" value=\"".$MessCategory."\" type=\"hidden\">";
-			$page .= "<input onchange=\"document.getElementById('fullreports').checked=this.checked\" id=\"fullreports2\" name=\"fullreports2\" type=\"checkbox\">".$lang['ms_show_only_header_spy_reports']."</th>";
-			$page .= "</tr><tr>";
-			$page .= "<th>".$lang['ms_action']."</th>";
-			$page .= "<th>".$lang['ms_date']."</th>";
-			$page .= "<th>".$lang['ms_from']."</th>";
-			$page .= "<th>".$lang['ms_subject']."</th>";
-			$page .= "</tr>";
+			$page .= "<table width=\"519\">\n";
+			$page .= "<form action=\"game.php?page=messages\" method=\"post\">\n";
+			$page .= "<table>\n";
+			$page .= "<tr>\n";
+			$page .= "<td>\n<input name=\"messages\" value=\"1\" type=\"hidden\">\n";
+			$page .= "<table width=\"519\">\n";
+			$page .= "<tr><td class=\"c\" colspan=\"4\">".$lang['mg_message_title']."</td></tr>";
+			$page .= "<tr>\n";
+			$page .= "<th>".$lang['mg_action']."</th>\n";
+			$page .= "<th>".$lang['mg_date']."</th>\n";
+			$page .= "<th>".$lang['mg_from']."</th>\n";
+			$page .= "<th>".$lang['mg_subject']."</th>\n";
+			$page .= "</tr>\n";
 
 			if ($MessCategory == 100)
 			{
@@ -194,24 +180,24 @@ function ShowMessagesPage($CurrentUser)
 
 				while ($CurMess = mysql_fetch_array($UsrMess))
 				{
-					$page .= "\n<tr>";
-					$page .= "<input name=\"showmes". $CurMess['message_id'] . "\" type=\"hidden\" value=\"1\">";
-					$page .= "<th><input name=\"delmes". $CurMess['message_id'] . "\" type=\"checkbox\"></th>";
-					$page .= "<th>". date("m-d H:i:s", $CurMess['message_time']) ."</th>";
-					$page .= "<th>". stripslashes( $CurMess['message_from'] ) ."</th>";
+					$page .= "<tr>\n";
+					$page .= "<input name=\"showmes". $CurMess['message_id'] . "\" type=\"hidden\" value=\"1\">\n";
+					$page .= "<th><input name=\"delmes". $CurMess['message_id'] . "\" type=\"checkbox\"></th>\n";
+					$page .= "<th>". date("m-d H:i:s", $CurMess['message_time']) ."</th>\n";
+					$page .= "<th>". stripslashes( $CurMess['message_from'] ) ."</th>\n";
 					$page .= "<th>". stripslashes( $CurMess['message_subject'] ) ." ";
 					if ($CurMess['message_type'] == 1)
 					{
 						$page .= "<a href=\"game.php?page=messages&mode=write&amp;id=". $CurMess['message_sender'] ."&amp;subject=Re: " . htmlspecialchars( $CurMess['message_subject']) ."\">";
-						$page .= "<img src=\"". $dpath ."img/m.gif\" alt=\"Responder\" border=\"0\"></a></th>";
+						$page .= "<img src=\"". $dpath ."img/m.gif\" border=\"0\"></a></th>\n";
 					}
 					else
 					{
 						$page .= "</th>";
 					}
 					$page .= "</tr><tr>";
-					$page .= "<td style=\"background-color: ".$BackGndColor[$CurMess['message_type']]."; background-image: none;\"; class=\"b\"> </td>";
-					$page .= "<td style=\"background-color: ".$BackGndColor[$CurMess['message_type']]."; background-image: none;\"; colspan=\"3\" class=\"b\">". stripslashes( nl2br( $CurMess['message_text'] ) ) ."</td>";
+					$page .= "<td>&nbsp;</td>";
+					$page .= "<td colspan=\"3\" class=\"b\">". stripslashes( nl2br( $CurMess['message_text'] ) ) ."</td>";
 					$page .= "</tr>";
 				}
 			}
@@ -253,44 +239,48 @@ function ShowMessagesPage($CurrentUser)
 
 
 			$page .= "<tr>";
-			$page .= "<th style=\"color: rgb(242, 204, 74);\" colspan=\"4\">";
-			$page .= "<input onchange=\"document.getElementById('fullreports2').checked=this.checked\" id=\"fullreports\" name=\"fullreports\" type=\"checkbox\">".$lang['ms_show_only_header_spy_reports']."</th>";
+			$page .= "<th colspan=\"4\">";
+			$page .= "<input id=\"fullreports\" name=\"fullreports\" type=\"checkbox\">".$lang['mg_show_only_header_spy_reports']."</th>";
 			$page .= "</tr><tr>";
 			$page .= "<th colspan=\"4\">";
-			$page .= "<select onchange=\"document.getElementById('deletemessages2').options[this.selectedIndex].selected='true'\" id=\"deletemessages\" name=\"deletemessages\">";
-			$page .= "<option value=\"deletemarked\">".$lang['ms_delete_marked']."</option>";
-			$page .= "<option value=\"deleteunmarked\">".$lang['ms_delete_unmarked']."</option>";
-			$page .= "<option value=\"deleteall\">".$lang['ms_delete_all']."</option>";
+			$page .= "<select id=\"deletemessages\" name=\"deletemessages\">";
+			$page .= "<option value=\"deletemarked\">".$lang['mg_delete_marked']."</option>";
+			$page .= "<option value=\"deleteunmarked\">".$lang['mg_delete_unmarked']."</option>";
+			$page .= "<option value=\"deleteall\">".$lang['mg_delete_all']."</option>";
 			$page .= "</select>";
-			$page .= "<input value=\"".$lang['ms_confirm_delete']."\" type=\"submit\">";
+			$page .= "<input value=\"".$lang['mg_confirm_delete']."\" type=\"submit\">";
 			$page .= "</th>";
 			$page .= "</tr><tr>";
 			$page .= "<td colspan=\"4\"></td>";
 			$page .= "</tr>";
 			$page .= "</table>\n";
+			$page .= "<table width=\"100%\">";
+			$page .= "<tr>";
+			$page .= "<td class=\"c\">".$lang['mg_game_operators']."</td>";
+			$page .= "</tr>";
+
+			$QrySelectUser  = "SELECT `username`, `email` ";
+			$QrySelectUser .= "FROM `{{table}}` ";
+			$QrySelectUser .= "WHERE `authlevel` != '0' ORDER BY `username` ASC;";
+			$GameOps = doquery ($QrySelectUser, 'users');
+
+			while($Ops = mysql_fetch_assoc($GameOps))
+				$page .= "<tr><th>".$Ops['username']." <a href=\"mailto:".$Ops['email']."\"><img src=\"". $dpath ."img/m.gif\" /></a></th></tr>";
+
+			$page .= "</table>";
 			$page .= "</td>";
 			$page .= "</tr>";
 			$page .= "</table>\n";
 			$page .= "</form>";
-			$page .= "</td>";
-			$page .= "</table>\n";
-			$page .= "</div>";
 		break;
 		default:
-			$page  = "<script language=\"JavaScript\">\n";
-			$page .= "function f(target_url, win_name) {\n";
-			$page .= "var new_win = window.open(target_url, win_name, 'resizable=yes, scrollbars=yes, menubar=no, toolbar=no, width=550, height=280, top=0, left=0');\n";
-			$page .= "new_win.focus();\n";
-			$page .= "}\n";
-			$page .= "</script>\n";
-			$page .= "<div id=\"content\">";
 			$page .= "<br>";
 			$page .= "<table width=\"569\">";
 			$page .= "<tr>";
-			$page .= "	<td class=\"c\" colspan=\"3\">".$lang['ms_message_title']."</td>";
+			$page .= "	<td class=\"c\" colspan=\"3\">".$lang['mg_message_title']."</td>";
 			$page .= "</tr><tr>";
-			$page .= "	<th colspan=\"2\">".$lang['ms_message_type']."</th>";
-			$page .= "	<th>".$lang['ms_total']."</th>";
+			$page .= "	<th colspan=\"2\">".$lang['mg_message_type']."</th>";
+			$page .= "	<th>".$lang['mg_total']."</th>";
 			$page .= "</tr>";
 			$page .= "<tr>";
 			$page .= "	<th colspan=\"2\"><a href=\"game.php?page=messages&mode=show&amp;messcat=100\"><font color=\"". $TitleColor[100] ."\">". $lang['mg_type'][100] ."</a></th>";
@@ -307,10 +297,10 @@ function ShowMessagesPage($CurrentUser)
 				}
 			}
 			$page .= "</table>";
-			$page .= "</div>";
+
 		break;
 	}
-
+	$page .= "</div>";
 	display($page);
 }
 ?>

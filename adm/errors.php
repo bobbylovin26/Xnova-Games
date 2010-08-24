@@ -48,10 +48,10 @@ if ($user['authlevel'] < 3) die(message ($lang['not_enough_permissions']));
 
 		$parse['errors_list'] .= "
 
-		<tr><td width=\"25\" class=n>". $u['error_id'] ."</td>
-		<td width=\"170\" class=n>". $u['error_type'] ."</td>
-		<td width=\"230\" class=n>". date('d/m/Y h:i:s', $u['error_time']) ."</td>
-		<td width=\"95\" class=n><a href=\"?delete=". $u['error_id'] ."\"><img src=\"../styles/images/r1.png\"></a></td></tr>
+		<tr><td width=\"25\">". $u['error_id'] ."</td>
+		<td width=\"170\">". $u['error_type'] ."</td>
+		<td width=\"230\">". date('d/m/Y h:i:s', $u['error_time']) ."</td>
+		<td width=\"95\"><a href=\"?delete=". $u['error_id'] ."\" border=\"0\"><img src=\"../styles/images/r1.png\" border=\"0\"></a></td></tr>
 		<tr><td colspan=\"4\" class=b>".  nl2br($u['error_text'])."</td></tr>";
 	}
 

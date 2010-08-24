@@ -214,7 +214,7 @@ class ShowInfosPage
 		if( $BuildID >= 4 )
 			$Prod[4] = (floor(eval($ProdGrid[$BuildID]['formule']['energy'])    * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_ingenieur'] * 0.05)));
 		else
-			$Prod[4] = (floor(eval($ProdGrid[$BuildID]['formule']['energy'])    * $game_config['resource_multiplier'])) * $BuildLevel       = "";
+			$Prod[4] = (floor(eval($ProdGrid[$BuildID]['formule']['energy'])    * $game_config['resource_multiplier']));
 
 		$ActualProd       = floor($Prod[$BuildID]);
 
@@ -230,7 +230,7 @@ class ShowInfosPage
 		$Table     = "";
 		$ProdFirst = 0;
 
-		for ( $BuildLevel = $BuildStartLvl; $BuildLevel < $BuildStartLvl + 10; $BuildLevel++ )
+		for ( $BuildLevel = $BuildStartLvl; $BuildLevel < $BuildStartLvl + 15; $BuildLevel++ )
 		{
 			if ($BuildID != 42)
 			{

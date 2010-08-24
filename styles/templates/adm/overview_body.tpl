@@ -1,20 +1,51 @@
-<br />
-<table width="100%">
-<tr>
-	<td class="c" colspan="13">{ow_players_connected} ({adm_ov_data_count})</td>
-</tr>
-<tr>
-	<th width="12px"><a href="?cmd=sort&type=id">{ow_private_message}</a></th>
-	<th><a href="?cmd=sort&type=username">{ow_user_id}</a></th>
-	<th><a href="?cmd=sort&type=user_lastip">{ow_ip_address}</a></th>
-	<th><a href="?cmd=sort&type=ally_name">{ow_alliance}</a></th>
-	<th>{ow_points}</th>
-	<th><a href="?cmd=sort&type=onlinetime">{ow_inactivity}</a></th>
-	<th>{ow_email}</th>
-	<th width="16px">{ow_vacation_mode}</th>
-	<th width="16px">{ow_banned}</th>
-	<th>{ow_planet}</th>
-	<th>{ow_actual_page}</th>
-</tr>
-	{adm_ov_data_table}
+<table width="90%">
+	<tr>
+    	<td>{ow_title}</td>
+    </tr>
+	<tr>
+    	<th height="20px"><div align="justify">{ow_welcome_text}</div></th>
+    </tr>
+    <tr>
+    	<td height="50px"></td>
+    </tr>
+	<tr>
+    	<td>{ow_warnings}</td>
+    </tr>    
+  	<tr>
+    	<th>{error_message}</th>
+    </tr>
+    <tr>
+        <td>{ow_support}</td>
+    </tr>
+    <tr>
+        <th><a href="http://www.xtreme-gamez.com.ar/" target="_blank">Xtreme-gameZ.com.ar</a><br />
+        <a href="http://www.xtreme-gamez.com.ar/foros/" target="_blank">Xtreme-gameZ.com.ar - {ow_forum}</a></th>
+    </tr>   
+    <tr>
+    	<td>{ow_credits}</td>
+    </tr>
+    <tr>
+    	<th align="center">
+            <table width="475">
+                <tr>
+                  <th><h3>{ow_proyect_leader}</h3></th>
+                </tr>
+                <tr>
+                  <th><h3><font color="red">lucky</font></h3></th>
+                </tr>
+                <tr>
+                  <th><h3>{ow_principal_contributors}</h3></th>
+                </tr>
+                <tr>
+                  <th>angelus_ira<br />Calzon<br />PowerMaster<br />zorro2666<br /><br /></th>
+                </tr>
+                <tr>
+                  <th><h3>{ow_special_thanks}</h3></th>
+                </tr>
+                <tr>
+                    <th>Raito<br />Chlorel<br />e-Zobar<br />Flousedid<br /><br /></th>
+                </tr>    
+            </table>
+        </th>
+    </tr>
 </table>

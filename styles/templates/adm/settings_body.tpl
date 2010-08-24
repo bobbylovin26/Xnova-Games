@@ -51,11 +51,6 @@
 	<th><a href="#" title="{se_title_admins_protection}">{se_admin_protection}</a><br></th>
     <th><input name="adm_attack" {adm_attack} type="checkbox" /></th>
 </tr><tr>
-	<th>{se_show_news}</th>
-	<th><input name="newsframe"{newsframe} type="checkbox" /></th>
-</tr><tr>
-	<th colspan="2"><textarea name="NewsText" cols="80" rows="5" size="80" >{NewsTextVal}</textarea></th>
-</tr><tr>
 	<th>{se_debug_mode}</a></th>
 	<th><input name="debug"{debug} type="checkbox" /></th>
 </tr></tr>

@@ -5,6 +5,55 @@ $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
 
+'2.5' => ' 18/08/09
+
+- [Novedad] Sistema de advertencias y errores en el panel de administración (también informa la existencia de una nueva versión).-
+- [Novedad] Ahora puedes determinar si al banear un jugador este debe entrar o no en modo vacaciones.-
+- [Novedad] Gracias a 3R1K que tradujo el panel de administración en su totalidad al idioma inglés.-
+- [Novedad] Rediseñado el panel de administración.-
+- [Novedad] Ahora la página de mensajes respeta el formato del OGame original, mostrando a los operadores del juego.- 
+- [Novedad] Ahora cuando borras un planeta aparece planeta destruido como en el OGame original.-
+- [Novedad] El misil interplanetario ahora requiere el hangar en nivel 1 y el motor de impulso en 1 como en el OGame original.-
+- [Novedad] El misil de intercepción ahora requiere el hangar en nivel 1 como en el OGame original.-
+- [Novedad] El silo ahora requiere el hangar en nivel 1 como en el OGame original.-
+
+- [Fix][Varios] Varios bugs menores de estilo, plantillas y lenguaje reparados.-
+- [Fix][Bug #14] No se pueden usar skins externos.-
+- [Fix][Bug #47] Bug que provoca en IE que no se vea el menu y quede desplazado hacia arriba al bajar demasiado en una página.-
+- [Fix][Bug #61] Problemas en el conteo de los jugadores en la visión general.-
+- [Fix][Bug #62] Pequeño bug que no muestra los stats correctamente en el overview.-
+- [Fix][Bug #63] Bug en la función del manejo de las sesiones.-
+- [Fix][Bug #64] Bug con los permisos y con las lunas, evitando que sean atacadas.-
+- [Fix][Bug #65] Bug que no permite espiar desde flota pero si desde la galaxia.-
+- [Fix][Bug #66] Problemas en los niveles del phalanx.-
+- [Fix][Bug #67] Producción ilimitada de misiles.-
+- [Fix][Bug #68] Bug en el link para Continuar/Volver luego de enviar un mensaje circular en la alianza.-
+- [Fix][Bug #69] Bug que muestra mal los mensajes de error cuando un usuario no esta logueado.-
+- [Fix][Bug #70] Problemas con el salto de línea en los mensajes circulares.-
+- [Fix][Bug #71] Problemas con la misión estacionar aliado, muestra un mensaje de que el jugador es muy fuerte.-
+- [Fix][Bug #72] Bug en la diferencia de energía consumida actual, anterior y posterior.-
+- [Fix][Bug #74] No se puede abandonar la alianza.-
+- [Fix][Bug #75] Problemas en la actualización de puntos de algunos jugadores.-
+- [Fix][Bug #76] La misión de espionaje ignora el estado de vacaciones desde la visión de galaxia.-
+- [Fix][Bug #77] Al hacer regresar una flota con misión mantener posición no descuenta los tiempos correctamente.-
+- [Fix][Bug #79] Bug que permite incrementar las tecnologías (Gracias a mikey302 y death).-
+- [Fix][Bug #80] Bug en el limite de envio máximo de expediciones.-
+- [Fix][Bug #81] Bug en la visión general de la alianza, mantiene el nombre "Fundador" del fundador de la alianza.-
+
+- [Cambio] Ahora el número de la versión de obtiene de la base de datos.-
+- [Cambio] Mejoras de seguridad en la página de la alianza.-
+- [Cambio] Noticias removidas.-
+- [Cambio] Mejorada la velocidad en que se genera la página de estadísticas y algunos cambios menores.-
+- [Cambio] Nuevas alertas de presencia del directorio install y de escritura del archivo config.php.-
+- [Cambio] Los recicladores ahora sólo pueden transportar 20.000 unidades de recursos como en el OGame original.-
+- [Cambio] Removida la página de contacto, ahora puedes encontrar a los adms/mods/oper en el panel de mensajes como en el OGame.-
+- [Cambio] Ahora a la derecha del nombre de la luna aparece la referencia (Luna) como en el OGame original.-
+- [Cambio] Ahora si en la visión general tienes seleccionada la luna no se mostrará esta otra vez a la izquierda.-
+- [Cambio] Reformas en la galaxia en código y organización de las clases y plantillas.-
+- [Cambio] Juego adaptado al skin original del OGame, ahora el juego será a su vez compatible con cualquier skin.-
+',
+
+
 '2.4' => ' 25/07/09
 
 - [Seguridad] Protección con .htaccess de la carpeta includes, language y templates.-

@@ -26,13 +26,9 @@ function IsTechnologieAccessible($user, $planet, $Element)
 	if (isset($requeriments[$Element]))
 	{
 		$enabled = true;
+
 		foreach($requeriments[$Element] as $ReqElement => $EleLevel)
 		{
-			if ($ReqElement >= 1000 && $ReqElement <= 1200)
-			{
-				if ($ReqElement == $user['id_race'] + 1000)
-					return true;
-			}
 			if (@$user[$resource[$ReqElement]] && $user[$resource[$ReqElement]] >= $EleLevel)
 			{
 				//BREAK
@@ -42,11 +38,15 @@ function IsTechnologieAccessible($user, $planet, $Element)
 				$enabled = true;
 			}
 			else
+			{
 				return false;
+			}
 		}
 		return $enabled;
 	}
 	else
+	{
 		return true;
+	}
 }
 ?>

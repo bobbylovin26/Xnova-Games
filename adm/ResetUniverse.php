@@ -29,7 +29,7 @@ include($xgp_root . 'common.'.$phpEx);
 
 function ResetUniverse ( $CurrentUser )
 {
-	global $lang;
+	global $phpEx;
 
 	if ($CurrentUser['authlevel'] < 3) die(message ($lang['not_enough_permissions']));
 
@@ -96,13 +96,9 @@ function ResetUniverse ( $CurrentUser )
 		doquery("DROP TABLE {{table}}", 'planets_s');
 		doquery("DROP TABLE {{table}}", 'users_s');
 
-		message ($lang['ru_success']);
-
-	return $Page;
+		header( "location:overview." . $phpEx);
 }
 
-
 ResetUniverse ( $user );
-
 
 ?>

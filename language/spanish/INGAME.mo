@@ -66,17 +66,6 @@ $lang['tn_vacation_mode']					= 'Modo vacaciones activo hasta el ';
 
 //----------------------------------------------------------------------------//
 //LEFT MENU
-//TITLES
-$lang['lm_Navigation']						= 'Navegación';
-$lang['lm_Constructions']					= 'Construcciones';
-$lang['lm_Economy']							= 'Economía';
-$lang['lm_Relations']						= 'Relaciones';
-$lang['lm_Observation']						= 'Observación';
-$lang['lm_Other']							= 'Otros';
-$lang['lm_Comunication']					= 'Comunicación';
-$lang['lm_server_rates']					= 'Rates del servidor';
-
-//CONTENT
 $lang['lm_overview']						= 'Visión general';
 $lang['lm_galaxy']							= 'Galaxia';
 $lang['lm_empire']							= 'Imperio';
@@ -166,6 +155,7 @@ $lang['gl_avaible_recyclers']				= 'recicladores disponibles';
 $lang['gl_avaible_spyprobes']				= 'sondas disponibles';
 $lang['gl_missil_launch']					= 'Lanzamiento de Misiles';
 $lang['gl_missil_to_launch']				= 'Número de misiles (<b>%d</b> restantes):';
+$lang['gl_objective']						= 'Objetivo';
 $lang['gl_all_defenses']					= 'Todo';
 $lang['gl_missil_launch_action']			= 'OK';
 $lang['gl_galaxy']							= 'Galaxia';
@@ -343,10 +333,6 @@ $lang['bd_completed']						= 'Completado';
 $lang['bd_operating']						= '(En funcionamiento)';
 $lang['bd_continue']						= 'Continuar';
 $lang['bd_ready']							= 'Listo';
-$lang['bd_you_are_using']					= 'Estas utilizando';
-$lang['bd_fields_totaling']					= 'campos de un total de';
-$lang['bd_fields_left']						= 'te quedan';
-$lang['bd_free_fields']						= 'campos libres';
 $lang['bd_finished']						= 'Terminado';
 
 //----------------------------------------------------------------------------//
@@ -789,19 +775,20 @@ $lang['mg_type'][100]  						= 'Ver todos los Mensajes';
 $lang['mg_no_subject']						= 'Falta el asunto';
 $lang['mg_no_text']							= 'Falta el mensaje';
 $lang['mg_msg_sended']						= 'Mensaje enviado';
-$lang['ms_no_subject']						= 'Sin asunto';
-$lang['ms_delete_marked']					= 'Borrar mensajes marcados';
-$lang['ms_delete_unmarked']					= 'Borrar todos los mensajes sin marcar';
-$lang['ms_delete_all']						= 'Borrar todos los mensajes';
-$lang['ms_show_only_header_spy_reports']	= 'Mostrar unicamente encabezado de los informes de espionaje';
-$lang['ms_action']							= 'Acción';
-$lang['ms_date']							= 'Fecha';
-$lang['ms_from']							= 'De';
-$lang['ms_subject']							= 'Asunto';
-$lang['ms_confirm_delete']					= 'OK';
-$lang['ms_message_title']					= 'Menú de Mensajes';
-$lang['ms_message_type']					= 'Tipo del mensaje';
-$lang['ms_total']							= 'Total';
+$lang['mg_no_subject']						= 'Sin asunto';
+$lang['mg_delete_marked']					= 'Borrar mensajes marcados';
+$lang['mg_delete_unmarked']					= 'Borrar todos los mensajes sin marcar';
+$lang['mg_delete_all']						= 'Borrar todos los mensajes';
+$lang['mg_show_only_header_spy_reports']	= 'Mostrar unicamente encabezado de los informes de espionaje';
+$lang['mg_action']							= 'Acción';
+$lang['mg_date']							= 'Fecha';
+$lang['mg_from']							= 'De';
+$lang['mg_subject']							= 'Asunto';
+$lang['mg_confirm_delete']					= 'OK';
+$lang['mg_message_title']					= 'Mensajes';
+$lang['mg_message_type']					= 'Tipo del mensaje';
+$lang['mg_total']							= 'Total';
+$lang['mg_game_operators']					= 'Operadores del juego';
 
 //----------------------------------------------------------------------------//
 //ALLIANCE
@@ -825,7 +812,7 @@ $lang['al_founder_cant_leave_alliance']		= 'El fundador no puede abandonar la al
 $lang['al_leave_sucess']					= 'Abandonaste la alianza %s con éxito.';
 $lang['al_do_you_really_want_to_go_out']	= '¿Realmente deseas salir de la alianza %s?';
 $lang['al_go_out_yes']						= 'Si';
-$lang['al_circular_sended']					= 'Mensaje circular enviado", "Los siguiente(s) miembro(s) recibieron tu mensaje:';
+$lang['al_circular_sended']					= 'Mensaje circular enviado, Los siguiente(s) miembro(s) recibieron tu mensaje:';
 $lang['al_all_players']						= 'Todos los jugadores';
 $lang['al_no_ranks_defined']				= 'No se definieron rangos.';
 $lang['al_request_text']					= 'Texto de la solicitud';
@@ -931,6 +918,9 @@ $lang['al_legend_admin_alliance']			= 'Administrar la alianza';
 $lang['al_legend_see_connected_users']		= 'Ver los miembros conectados';
 $lang['al_legend_create_circular']			= 'Crear un correo circular';
 $lang['al_legend_right_hand']				= '"Mano Derecha" (Necesario para transferir la alianza)';
+$lang['al_requests']						= 'Solicitudes';
+$lang['al_circular_message']				= 'Correo circular';
+$lang['al_leave_alliance']					= 'Abandonar la alianza';
 
 //----------------------------------------------------------------------------//
 //BUDDY

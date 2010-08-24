@@ -61,7 +61,12 @@ if ($user['authlevel'] < 1) die(message ($lang['not_enough_permissions']));
 		$QryUpdateUser     = "UPDATE {{table}} SET ";
 		$QryUpdateUser    .= "`bana` = '1', ";
 		$QryUpdateUser    .= "`banaday` = '". $BannedUntil ."', ";
-		$QryUpdateUser    .= "`urlaubs_modus` = '1'";
+
+		if(isset($_POST['vacat']))
+			$QryUpdateUser    .= "`urlaubs_modus` = '1'";
+		else
+			$QryUpdateUser    .= "`urlaubs_modus` = '0'";
+
 		$QryUpdateUser    .= "WHERE ";
 		$QryUpdateUser    .= "`username` = \"". $name ."\";";
 		doquery( $QryUpdateUser, 'users');

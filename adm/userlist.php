@@ -72,6 +72,7 @@ if ($user['authlevel'] < 2) die(message ($lang['not_enough_permissions']));
 		doquery ( "DELETE FROM {{table}} WHERE `sender` = '" . $UserID . "';", 'buddy' );
 		doquery ( "DELETE FROM {{table}} WHERE `owner` = '" . $UserID . "';", 'buddy' );
 		doquery ( "DELETE FROM {{table}} WHERE `id` = '" . $UserID . "';", 'users' );
+		doquery ( "UPDATE `{{table}}` SET `config_value` = `config_value` - 1 WHERE CONVERT( `config_name` USING utf8 ) = 'users_amount' LIMIT 1 ;", "config" );
 	}
 
 	$parse	= $lang;
@@ -87,7 +88,7 @@ if ($user['authlevel'] < 2) die(message ($lang['not_enough_permissions']));
 
 	$parse['adm_ul_table'] = "";
 	$i                     = 0;
-	$Color                 = "lime";
+	$Color                 = "green ";
 	while ($u = mysql_fetch_assoc($query))
 	{
 		if ($PrevIP != "")
@@ -95,7 +96,7 @@ if ($user['authlevel'] < 2) die(message ($lang['not_enough_permissions']));
 			if ($PrevIP == $u['user_lastip'])
 				$Color = "red";
 			else
-				$Color = "lime";
+				$Color = "green";
 		}
 
 		$Bloc['adm_ul_data_id']     		= $u['id'];
@@ -106,12 +107,12 @@ if ($user['authlevel'] < 2) die(message ($lang['not_enough_permissions']));
 		$Bloc['adm_ul_data_regd']   		= gmdate ( "d/m/Y G:i:s", $u['register_time'] );
 		$Bloc['adm_ul_data_lconn']  		= gmdate ( "d/m/Y G:i:s", $u['onlinetime'] );
 		$Bloc['adm_ul_data_banna']  		= ($u['bana'] == 1) ? "<a href # title=\"". gmdate ( "d/m/Y G:i:s", $u['banaday']) ."\">".$lang['ul_yes']."</a>" : $lang['ul_no'];
-		$Bloc['adm_ul_data_actio']  		= ($u['id'] != $user['id'] && $user['authlevel'] >= 3) ? "<a href=\"userlist.php?cmd=dele&user=".$u['id']."\" onclick=\"return confirm('".$lang['ul_sure_you_want_dlte']."  $u[username]?');\"><img src=\"../styles/images/r1.png\"></a>" : "-";
+		$Bloc['adm_ul_data_actio']  		= ($u['id'] != $user['id'] && $user['authlevel'] >= 3) ? "<a href=\"userlist.php?cmd=dele&user=".$u['id']."\" border=\"0\" onclick=\"return confirm('".$lang['ul_sure_you_want_dlte']."  $u[username]?');\"><img border=\"0\" src=\"../styles/images/r1.png\"></a>" : "-";
 		$PrevIP                     		= $u['user_lastip'];
 		$parse['adm_ul_table']     			.= parsetemplate(gettemplate('adm/userlist_rows'), $Bloc);
 		$i++;
 	}
-	$parse['adm_ul_count'] = $i;
+	$parse['adm_ul_count'] 					= $i;
 
 	display( parsetemplate( gettemplate('adm/userlist_body'), $parse ), false, '', true, false);
 

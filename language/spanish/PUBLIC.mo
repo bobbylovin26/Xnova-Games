@@ -4,8 +4,6 @@
 $lang['index']				= 'Inicio';
 $lang['register']			= 'Registrarse';
 $lang['forum']				= 'Foros';
-$lang['contact']			= 'Contacto';
-$lang['credit']				= 'Créditos';
 
 /* ------------------------------------------------------------------------------------------ */
 
@@ -23,14 +21,9 @@ $lang['login_error']			= '¡Datos ingresados incorrectos! <br /><a href="index.ph
 
 //lostpassword.tpl
 $lang['lost_pass_title']		= 'Recuperar clave perdida';
-$lang['lost_pass_text'] 		= 'Para recuperar tu contraseña, ingresa el email utilizado en el registro. Recibirás una nueva clave en la mayor brevedad posible.';
+$lang['lost_pass_text'] 		= 'Para recuperar tu contraseña, ingresa el email utilizado en el registro. Recibirás una nueva clave a la brevedad.';
 $lang['retrieve_pass']			= 'Recuperar clave';
 $lang['email']				= 'Correo electrónico';
-
-//contact_body.tpl
-$lang['contact_form_title']		= 'Contacto';
-$lang['contact_form_user']		= 'Jugador';
-$lang['contact_form_email']		= 'Correo electrónico';
 
 //index_body.tpl
 $lang['user']				= 'Usuario';

@@ -83,7 +83,6 @@ function CreateOneMoonRecord ( $Galaxy, $System, $Planet, $Owner, $MoonID, $Moon
 			$QryInsertMoonInPlanet  = "INSERT INTO {{table}} SET ";
 			$QryInsertMoonInPlanet .= "`name` = '". ( ($MoonName == '') ? $lang['fcm_moon'] : $MoonName ) ."', ";
 			$QryInsertMoonInPlanet .= "`id_owner` = '". $Owner ."', ";
-			$QryInsertMoonInPlanet .= "`id_level` = '".          $user['authlevel']          ."', ";
 			$QryInsertMoonInPlanet .= "`galaxy` = '". $Galaxy ."', ";
 			$QryInsertMoonInPlanet .= "`system` = '". $System ."', ";
 			$QryInsertMoonInPlanet .= "`planet` = '". $Planet ."', ";

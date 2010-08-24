@@ -48,7 +48,7 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 		$_POST['mission'] = 1;
 
 
-	$TargetPlanet  		= doquery("SELECT `id_owner`,`id_level`,`ally_deposit` FROM {{table}} WHERE `galaxy` = '". $_POST['galaxy'] ."' AND `system` = '". $_POST['system'] ."' AND `planet` = '". $_POST['planet'] ."' AND `planet_type` = '". $_POST['planettype'] ."';", 'planets', true);
+	$TargetPlanet  		= doquery("SELECT `id_owner`,`id_level`,`destruyed`,`ally_deposit` FROM {{table}} WHERE `galaxy` = '". $_POST['galaxy'] ."' AND `system` = '". $_POST['system'] ."' AND `planet` = '". $_POST['planet'] ."' AND `planet_type` = '". $_POST['planettype'] ."';", 'planets', true);
 	$MyDBRec       		= doquery("SELECT `id`,`onlinetime`,`ally_id`,`urlaubs_modus` FROM {{table}} WHERE `id` = '". $CurrentUser['id']."';", 'users', true);
 
 	$protection      	= $game_config['noobprotection'];
@@ -59,6 +59,9 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 		$protectiontime = 9999999999999999;
 
 	$fleetarray  = unserialize(base64_decode(str_rot13($_POST["usedfleet"])));
+
+	if($TargetPlanet["destruyed"] != 0)
+		exit(header("Location: game.php?page=fleet"));
 
 	if (!is_array($fleetarray))
 		exit(header("Location: game.php?page=fleet"));
@@ -105,12 +108,23 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 	}
 	else
 	{
-		$EnvoiMaxExpedition = $_POST['maxepedition'];
-		$Expedition         = $_POST['curepedition'];
+		$MaxExpedition      = $CurrentUser[$resource[124]];
+
+		if ($MaxExpedition >= 1)
+		{
+			$maxexpde  			= doquery("SELECT COUNT(fleet_owner) AS `expedi` FROM {{table}} WHERE `fleet_owner` = '".$CurrentUser['id']."' AND `fleet_mission` = '15';", 'fleets', true);
+			$ExpeditionEnCours  = $maxexpde['expedi'];
+			$EnvoiMaxExpedition = 1 + floor( $MaxExpedition / 3 );
+		}
+		else
+		{
+			$ExpeditionEnCours 	= 0;
+			$EnvoiMaxExpedition = 0;
+		}
 
 		if($EnvoiMaxExpedition == 0 )
 			message ("<font color=\"red\"><b>".$lang['fl_expedition_tech_required']."</b></font>", "game." . $phpEx . "?page=fleet", 2);
-		elseif ($Expedition >= $EnvoiMaxExpedition )
+		elseif ($ExpeditionEnCours >= $EnvoiMaxExpedition )
 			message ("<font color=\"red\"><b>".$lang['fl_expedition_fleets_limit']."</b></font>", "game." . $phpEx . "?page=fleet", 2);
 	}
 
@@ -150,14 +164,14 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 	{
 		if ($MyGameLevel > ($HeGameLevel * $protectionmulti)
 			&& $TargetPlanet['id_owner'] != ''
-			&& $_POST['mission'] == 1 or $_POST['mission'] == 6 or $_POST['mission'] == 9
+			&& ($_POST['mission'] == 1 or $_POST['mission'] == 6 or $_POST['mission'] == 9)
 			&& $protection == 1
 			&& $HeGameLevel < ($protectiontime * 1000))
 			message("<font color=\"lime\"><b>".$lang['fl_week_player']."</b></font>", "game." . $phpEx . "?page=fleet", 2);
 
 		if (($MyGameLevel * $protectionmulti) < $HeGameLevel
 			&& $TargetPlanet['id_owner'] != ''
-			&& $_POST['mission'] == 1 or $_POST['mission'] == 5 or $_POST['mission'] == 6 or $_POST['mission'] == 9
+			&& ($_POST['mission'] == 1 or $_POST['mission'] == 5 or $_POST['mission'] == 6 or $_POST['mission'] == 9)
 			&& $protection == 1
 			&& $MyGameLevel < ($protectiontime * 1000))
 			message("<font color=\"red\"><b>".$lang['fl_strong_player']."</b></font>", "game." . $phpEx . "?page=fleet", 2);

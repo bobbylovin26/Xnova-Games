@@ -32,223 +32,226 @@ $Page     = $_GET['page'];
 $phpself  = $_SERVER['PHP_SELF'];
 $nextpage = $Page + 1;
 
-	if (empty($Mode)) { $Mode = 'intro'; }
-	if (empty($Page)) { $Page = 1;       }
+if(version_compare(PHP_VERSION, "5.2.5", "<"))
+	die("Error! Tu servidor debe tener al menos php 5.2.5");
 
-	switch ($Mode) {
-		case'license':
-			$frame  = parsetemplate(gettemplate('install/ins_license'), false);
+if (empty($Mode)) { $Mode = 'intro'; }
+if (empty($Page)) { $Page = 1;       }
+
+switch ($Mode) {
+	case'license':
+		$frame  = parsetemplate(gettemplate('install/ins_license'), false);
 		break;
-		case 'intro':
-			$frame  = parsetemplate(gettemplate('install/ins_intro'), false);
+	case 'intro':
+		$frame  = parsetemplate(gettemplate('install/ins_intro'), false);
 		break;
-		case 'ins':
-			if ($Page == 1) {
-				if ($_GET['error'] == 1) {
+	case 'ins':
+		if ($Page == 1) {
+			if ($_GET['error'] == 1) {
 				message ("La conexi&oacute;n a la base de datos a fallado","?mode=ins&page=1", 3, false, false);
-				}
-				elseif ($_GET['error'] == 2) {
+			}
+			elseif ($_GET['error'] == 2) {
 				message ("El fichero config.php no puede ser sustituido, no tenia acceso chmod 777","?mode=ins&page=1", 3, false, false);
-				}
-
-				$frame  = parsetemplate ( gettemplate ('install/ins_form'), false);
 			}
-			elseif ($Page == 2) {
-				$host   = $_POST['host'];
-				$user   = $_POST['user'];
-				$pass   = $_POST['passwort'];
-				$prefix = $_POST['prefix'];
-				$db     = $_POST['db'];
 
-				$connection = @mysql_connect($host, $user, $pass);
-					if (!$connection) {
-					header("Location: ?mode=ins&page=1&error=1");
-					exit();
-					}
+			$frame  = parsetemplate ( gettemplate ('install/ins_form'), false);
+		}
+		elseif ($Page == 2) {
+			$host   = $_POST['host'];
+			$user   = $_POST['user'];
+			$pass   = $_POST['passwort'];
+			$prefix = $_POST['prefix'];
+			$db     = $_POST['db'];
 
-				$dbselect = @mysql_select_db($db);
-					if (!$dbselect) {
-					header("Location: ?mode=ins&page=1&error=1");
-					exit();
-					}
-
-				$numcookie = mt_rand(1000, 1234567890);
-				$dz = fopen("../config.php", "w");
-					if (!$dz)
-					{
-						header("Location: ?mode=ins&page=1&error=2");
-						exit();
-					}
-
-				$parse[first]	= "Conexión establecida con éxito...";
-
-				fwrite($dz, "<?php\n");
-				fwrite($dz, "if(!defined(\"INSIDE\")){ header(\"location:".$xgp_root."\"); }\n");
-				fwrite($dz, "\$dbsettings = Array(\n");
-				fwrite($dz, "\"server\"     => \"".$host."\", // MySQL server name.\n");
-				fwrite($dz, "\"user\"       => \"".$user."\", // MySQL username.\n");
-				fwrite($dz, "\"pass\"       => \"".$pass."\", // MySQL password.\n");
-				fwrite($dz, "\"name\"       => \"".$db."\", // MySQL database name.\n");
-				fwrite($dz, "\"prefix\"     => \"".$prefix."\", // Tables prefix.\n");
-				fwrite($dz, "\"secretword\" => \"XGProyect".$numcookie."\"); // Cookies.\n");
-				fwrite($dz, "?>");
-				fclose($dz);
-
-				$parse[second]	= "Archivo config.php creado con éxito...";
-
-				doquery ($QryTableAks        , 'aks'    	);
-				doquery ($QryTableAlliance   , 'alliance'   );
-				doquery ($QryTableBanned     , 'banned'     );
-				doquery ($QryTableBuddy      , 'buddy'      );
-				doquery ($QryTableConfig     , 'config'     );
-				doquery ($QryInsertConfig    , 'config'     );
-				doquery ($QryTableErrors     , 'errors'     );
-				doquery ($QryTableFleets     , 'fleets'     );
-				doquery ($QryTableGalaxy     , 'galaxy'     );
-				doquery ($QryTableLunas      , 'lunas'      );
-				doquery ($QryTableMessages   , 'messages'   );
-				doquery ($QryTableNotes      , 'notes'      );
-				doquery ($QryTablePlanets    , 'planets'    );
-				doquery ($QryTableRw         , 'rw'         );
-				doquery ($QryTableStatPoints , 'statpoints'	);
-				doquery ($QryTableUsers      , 'users'  	);
-
-				$parse[third]	= "Tablas creadas con éxito...";
-
-				$frame  = parsetemplate(gettemplate('install/ins_form_done'), $parse);
+			$connection = @mysql_connect($host, $user, $pass);
+			if (!$connection) {
+				header("Location: ?mode=ins&page=1&error=1");
+				exit();
 			}
-			elseif ($Page == 3)
+
+			$dbselect = @mysql_select_db($db);
+			if (!$dbselect) {
+				header("Location: ?mode=ins&page=1&error=1");
+				exit();
+			}
+
+			$numcookie = mt_rand(1000, 1234567890);
+			$dz = fopen("../config.php", "w");
+			if (!$dz)
 			{
-				if ($_GET['error'] == 3)
-					message ("¡Debes completar todos los campos!","?mode=ins&page=3", 2, false, false);
-
-				$frame  = parsetemplate(gettemplate('install/ins_acc'), false);
+				header("Location: ?mode=ins&page=1&error=2");
+				exit();
 			}
-			elseif ($Page == 4)
+
+			$parse[first]	= "Conexión establecida con éxito...";
+
+			fwrite($dz, "<?php\n");
+			fwrite($dz, "if(!defined(\"INSIDE\")){ header(\"location:".$xgp_root."\"); }\n");
+			fwrite($dz, "\$dbsettings = Array(\n");
+			fwrite($dz, "\"server\"     => \"".$host."\", // MySQL server name.\n");
+			fwrite($dz, "\"user\"       => \"".$user."\", // MySQL username.\n");
+			fwrite($dz, "\"pass\"       => \"".$pass."\", // MySQL password.\n");
+			fwrite($dz, "\"name\"       => \"".$db."\", // MySQL database name.\n");
+			fwrite($dz, "\"prefix\"     => \"".$prefix."\", // Tables prefix.\n");
+			fwrite($dz, "\"secretword\" => \"XGProyect".$numcookie."\"); // Cookies.\n");
+			fwrite($dz, "?>");
+			fclose($dz);
+
+			$parse[second]	= "Archivo config.php creado con éxito...";
+
+			doquery ($QryTableAks        , 'aks'    	);
+			doquery ($QryTableAlliance   , 'alliance'   );
+			doquery ($QryTableBanned     , 'banned'     );
+			doquery ($QryTableBuddy      , 'buddy'      );
+			doquery ($QryTableConfig     , 'config'     );
+			doquery ($QryInsertConfig    , 'config'     );
+			doquery ($QryTableErrors     , 'errors'     );
+			doquery ($QryTableFleets     , 'fleets'     );
+			doquery ($QryTableGalaxy     , 'galaxy'     );
+			doquery ($QryTableLunas      , 'lunas'      );
+			doquery ($QryTableMessages   , 'messages'   );
+			doquery ($QryTableNotes      , 'notes'      );
+			doquery ($QryTablePlanets    , 'planets'    );
+			doquery ($QryTableRw         , 'rw'         );
+			doquery ($QryTableStatPoints , 'statpoints'	);
+			doquery ($QryTableUsers      , 'users'  	);
+
+			$parse[third]	= "Tablas creadas con éxito...";
+
+			$frame  = parsetemplate(gettemplate('install/ins_form_done'), $parse);
+		}
+		elseif ($Page == 3)
+		{
+			if ($_GET['error'] == 3)
+				message ("¡Debes completar todos los campos!","?mode=ins&page=3", 2, false, false);
+
+			$frame  = parsetemplate(gettemplate('install/ins_acc'), false);
+		}
+		elseif ($Page == 4)
+		{
+			$adm_user   = $_POST['adm_user'];
+			$adm_pass   = $_POST['adm_pass'];
+			$adm_email  = $_POST['adm_email'];
+			$md5pass    = md5($adm_pass);
+
+			if (!$_POST['adm_user'])
 			{
-				$adm_user   = $_POST['adm_user'];
-				$adm_pass   = $_POST['adm_pass'];
-				$adm_email  = $_POST['adm_email'];
-				$md5pass    = md5($adm_pass);
-
-				if (!$_POST['adm_user'])
-				{
-					header("Location: ?mode=ins&page=3&error=3");
-					exit();
-				}
-				if (!$_POST['adm_pass'])
-				 {
-					header("Location: ?mode=ins&page=3&error=3");
-					exit();
-				}
-				if (!$_POST['adm_email'])
-				{
-					header("Location: ?mode=ins&page=3&error=3");
-					exit();
-				}
-
-				$QryInsertAdm  = "INSERT INTO {{table}} SET ";
-				$QryInsertAdm .= "`id`                = '1', ";
-				$QryInsertAdm .= "`username`          = '". $adm_user ."', ";
-				$QryInsertAdm .= "`email`             = '". $adm_email ."', ";
-				$QryInsertAdm .= "`email_2`           = '". $adm_email ."', ";
-				$QryInsertAdm .= "`authlevel`         = '3', ";
-				$QryInsertAdm .= "`id_planet`         = '1', ";
-				$QryInsertAdm .= "`galaxy`            = '1', ";
-				$QryInsertAdm .= "`system`            = '1', ";
-				$QryInsertAdm .= "`planet`            = '1', ";
-				$QryInsertAdm .= "`current_planet`    = '1', ";
-				$QryInsertAdm .= "`register_time`     = '". time() ."', ";
-				$QryInsertAdm .= "`password`          = '". $md5pass ."';";
-				doquery($QryInsertAdm, 'users');
-
-				$QryAddAdmPlt  = "INSERT INTO {{table}} SET ";
-				$QryAddAdmPlt .= "`id_owner`          = '1', ";
-				$QryAddAdmPlt .= "`galaxy`            = '1', ";
-				$QryAddAdmPlt .= "`system`            = '1', ";
-				$QryAddAdmPlt .= "`planet`            = '1', ";
-				$QryAddAdmPlt .= "`last_update`       = '". time() ."', ";
-				$QryAddAdmPlt .= "`planet_type`       = '1', ";
-				$QryAddAdmPlt .= "`image`             = 'normaltempplanet02', ";
-				$QryAddAdmPlt .= "`diameter`          = '12750', ";
-				$QryAddAdmPlt .= "`field_max`         = '163', ";
-				$QryAddAdmPlt .= "`temp_min`          = '47', ";
-				$QryAddAdmPlt .= "`temp_max`          = '87', ";
-				$QryAddAdmPlt .= "`metal`             = '500', ";
-				$QryAddAdmPlt .= "`metal_perhour`     = '0', ";
-				$QryAddAdmPlt .= "`metal_max`         = '1000000', ";
-				$QryAddAdmPlt .= "`crystal`           = '500', ";
-				$QryAddAdmPlt .= "`crystal_perhour`   = '0', ";
-				$QryAddAdmPlt .= "`crystal_max`       = '1000000', ";
-				$QryAddAdmPlt .= "`deuterium`         = '500', ";
-				$QryAddAdmPlt .= "`deuterium_perhour` = '0', ";
-				$QryAddAdmPlt .= "`deuterium_max`     = '1000000';";
-				doquery($QryAddAdmPlt, 'planets');
-
-				$QryAddAdmGlx  = "INSERT INTO {{table}} SET ";
-				$QryAddAdmGlx .= "`galaxy`            = '1', ";
-				$QryAddAdmGlx .= "`system`            = '1', ";
-				$QryAddAdmGlx .= "`planet`            = '1', ";
-				$QryAddAdmGlx .= "`id_planet`         = '1'; ";
-				doquery($QryAddAdmGlx, 'galaxy');
-
-				doquery("UPDATE {{table}} SET `config_value` = '1' WHERE `config_name` = 'LastSettedGalaxyPos';", 'config');
-				doquery("UPDATE {{table}} SET `config_value` = '1' WHERE `config_name` = 'LastSettedSystemPos';", 'config');
-				doquery("UPDATE {{table}} SET `config_value` = '1' WHERE `config_name` = 'LastSettedPlanetPos';", 'config');
-				doquery("UPDATE {{table}} SET `config_value` = `config_value` + '1' WHERE `config_name` = 'users_amount' LIMIT 1;", 'config');
-
-				$frame  = parsetemplate(gettemplate('install/ins_acc_done'), $parse);
+				header("Location: ?mode=ins&page=3&error=3");
+				exit();
 			}
-			break;
-			case'upgrade':
-				if ($_POST)
+			if (!$_POST['adm_pass'])
+			{
+				header("Location: ?mode=ins&page=3&error=3");
+				exit();
+			}
+			if (!$_POST['adm_email'])
+			{
+				header("Location: ?mode=ins&page=3&error=3");
+				exit();
+			}
+
+			$QryInsertAdm  = "INSERT INTO {{table}} SET ";
+			$QryInsertAdm .= "`id`                = '1', ";
+			$QryInsertAdm .= "`username`          = '". $adm_user ."', ";
+			$QryInsertAdm .= "`email`             = '". $adm_email ."', ";
+			$QryInsertAdm .= "`email_2`           = '". $adm_email ."', ";
+			$QryInsertAdm .= "`authlevel`         = '3', ";
+			$QryInsertAdm .= "`id_planet`         = '1', ";
+			$QryInsertAdm .= "`galaxy`            = '1', ";
+			$QryInsertAdm .= "`system`            = '1', ";
+			$QryInsertAdm .= "`planet`            = '1', ";
+			$QryInsertAdm .= "`current_planet`    = '1', ";
+			$QryInsertAdm .= "`register_time`     = '". time() ."', ";
+			$QryInsertAdm .= "`password`          = '". $md5pass ."';";
+			doquery($QryInsertAdm, 'users');
+
+			$QryAddAdmPlt  = "INSERT INTO {{table}} SET ";
+			$QryAddAdmPlt .= "`id_owner`          = '1', ";
+			$QryAddAdmPlt .= "`galaxy`            = '1', ";
+			$QryAddAdmPlt .= "`system`            = '1', ";
+			$QryAddAdmPlt .= "`planet`            = '1', ";
+			$QryAddAdmPlt .= "`last_update`       = '". time() ."', ";
+			$QryAddAdmPlt .= "`planet_type`       = '1', ";
+			$QryAddAdmPlt .= "`image`             = 'normaltempplanet02', ";
+			$QryAddAdmPlt .= "`diameter`          = '12750', ";
+			$QryAddAdmPlt .= "`field_max`         = '163', ";
+			$QryAddAdmPlt .= "`temp_min`          = '47', ";
+			$QryAddAdmPlt .= "`temp_max`          = '87', ";
+			$QryAddAdmPlt .= "`metal`             = '500', ";
+			$QryAddAdmPlt .= "`metal_perhour`     = '0', ";
+			$QryAddAdmPlt .= "`metal_max`         = '1000000', ";
+			$QryAddAdmPlt .= "`crystal`           = '500', ";
+			$QryAddAdmPlt .= "`crystal_perhour`   = '0', ";
+			$QryAddAdmPlt .= "`crystal_max`       = '1000000', ";
+			$QryAddAdmPlt .= "`deuterium`         = '500', ";
+			$QryAddAdmPlt .= "`deuterium_perhour` = '0', ";
+			$QryAddAdmPlt .= "`deuterium_max`     = '1000000';";
+			doquery($QryAddAdmPlt, 'planets');
+
+			$QryAddAdmGlx  = "INSERT INTO {{table}} SET ";
+			$QryAddAdmGlx .= "`galaxy`            = '1', ";
+			$QryAddAdmGlx .= "`system`            = '1', ";
+			$QryAddAdmGlx .= "`planet`            = '1', ";
+			$QryAddAdmGlx .= "`id_planet`         = '1'; ";
+			doquery($QryAddAdmGlx, 'galaxy');
+
+			doquery("UPDATE {{table}} SET `config_value` = '1' WHERE `config_name` = 'LastSettedGalaxyPos';", 'config');
+			doquery("UPDATE {{table}} SET `config_value` = '1' WHERE `config_name` = 'LastSettedSystemPos';", 'config');
+			doquery("UPDATE {{table}} SET `config_value` = '1' WHERE `config_name` = 'LastSettedPlanetPos';", 'config');
+			doquery("UPDATE {{table}} SET `config_value` = `config_value` + '1' WHERE `config_name` = 'users_amount' LIMIT 1;", 'config');
+
+			$frame  = parsetemplate(gettemplate('install/ins_acc_done'), $parse);
+		}
+		break;
+	case'upgrade':
+		if ($_POST)
+		{
+			$conexion = mysql_connect($_POST[servidor], $_POST[usuario], $_POST[clave])
+			or die ('<font color=red><strong>Problemas en la conexión con el servidor, es probable que el <u>nombre del servidor, usuario o clave sean incorrectas o que mysql no esta funcionando.</u></strong></font>');
+			@mysql_select_db($_POST[base],$conexion)
+			or die ('<font color=red><strong>Problemas en la conexión con la base de datos. Este error puede deberse a que <u>la base de datos no existe o escribiste mal el nombre de la misma.</u></strong></font>');
+
+			if ($_POST[continuar] && (empty($_POST[modo]) or empty($_POST[servidor]) or empty($_POST[usuario]) or empty($_POST[clave]) or empty($_POST[base]) or empty($_POST[prefix])))
+			{
+				message("Debes aceptar los terminos, y rellenar todos los campos<br><a href=\"./index.php\">Volver</a>","", "", false, false);
+			}
+			else
+			{
+				if(filesize('../config.php') == 0)
 				{
-					$conexion = mysql_connect($_POST[servidor], $_POST[usuario], $_POST[clave])
-					or die ('<font color=red><strong>Problemas en la conexión con el servidor, es probable que el <u>nombre del servidor, usuario o clave sean incorrectas o que mysql no esta funcionando.</u></strong></font>');
-					@mysql_select_db($_POST[base],$conexion)
-					or die ('<font color=red><strong>Problemas en la conexión con la base de datos. Este error puede deberse a que <u>la base de datos no existe o escribiste mal el nombre de la misma.</u></strong></font>');
+					die(message("Error!, tu archivo config.php se encuentra vació o no configurado. En caso de no ser así verifica que su chmod sea de 777","", "", false, false));
+				}
+				else
+				{
+					include_once("../config.php");
 
-					if ($_POST[continuar] && empty($_POST[modo]) or empty($_POST[servidor]) or empty($_POST[usuario]) or empty($_POST[clave]) or empty($_POST[base]) or empty($_POST[prefix]))
+					if($_POST[prefix] != $dbsettings["prefix"])
 					{
-						message("Debes aceptar los terminos, y rellenar todos los campos<br><a href=\"./index.php\">Volver</a>","", "", false, false);
+						die(message("Error!, el prefix seleccionado (<font color=\"red\"><strong>".$_POST[prefix]."</strong></font>) no coincide con el de la base de datos.","", "", false, false));
 					}
-					else
-					{
-						if(filesize('../config.php') == 0)
-						{
-							die(message("Error!, tu archivo config.php se encuentra vació o no configurado. En caso de no ser así verifica que su chmod sea de 777","", "", false, false));
-						}
-						else
-						{
-							include_once("../config.php");
+				}
 
-							if($_POST[prefix]."_" != $dbsettings["prefix"])
-							{
-								die(message("Error!, el prefix seleccionado (<font color=\"red\"><strong>".$_POST[prefix]."</strong></font>) no coincide con el de la base de datos. Recuerda no utilizar guión bajo ( _ )","", "", false, false));
-							}
-						}
-
-						switch($_POST[modo])
-						{
-							case'1.5a':
-								$Qry18 = mysql_query("DROP TABLE `$_POST[prefix]_chat`, `$_POST[prefix]_loteria`;");
-								$Qry19 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'OverviewBanner' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
-								$Qry20 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'OverviewClickBanner' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
-								$Qry21 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ExtCopyFrame' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
-								$Qry22 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ExtCopyOwner' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
-								$Qry23 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ExtCopyFunct' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
-								$Qry24 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ForumBannerFrame' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
-								$Qry25 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'link_enable' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
-								$Qry26 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'link_name' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
-								$Qry27 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'link_url' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '' LIMIT 1;");
-								$Qry28 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_marchand' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '1' LIMIT 1;");
-								$Qry29 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_notes' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '1' LIMIT 1;");
-								$Qry30 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'banner_source_post' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '../images/bann.png' LIMIT 1;");
-								$Qry31 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'bot_name' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = 'XNoviana Reali' LIMIT 1;");
-								$Qry32 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'bot_adress' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = 'xnova@xnova.fr' LIMIT 1;");
-								$Qry33 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_bot' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
-								$Qry34 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'ban_duration' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '30' LIMIT 1;");
-								$Qry35 = mysql_query("ALTER TABLE `$_POST[prefix]_planets`
+				switch($_POST[modo])
+				{
+					case'1.5a':
+						$Qry18 = mysql_query("DROP TABLE `$_POST[prefix]chat`, `$_POST[prefix]loteria`;");
+						$Qry19 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewBanner' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '0' LIMIT 1;");
+						$Qry20 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewClickBanner' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '' LIMIT 1;");
+						$Qry21 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'ExtCopyFrame' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '0' LIMIT 1;");
+						$Qry22 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'ExtCopyOwner' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '' LIMIT 1;");
+						$Qry23 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'ExtCopyFunct' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '' LIMIT 1;");
+						$Qry24 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'ForumBannerFrame' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '0' LIMIT 1;");
+						$Qry25 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'link_enable' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '0' LIMIT 1;");
+						$Qry26 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'link_name' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '' LIMIT 1;");
+						$Qry27 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'link_url' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '' LIMIT 1;");
+						$Qry28 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'enable_marchand' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '1' LIMIT 1;");
+						$Qry29 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'enable_notes' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '1' LIMIT 1;");
+						$Qry30 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'banner_source_post' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '../images/bann.png' LIMIT 1;");
+						$Qry31 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'bot_name' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = 'XNoviana Reali' LIMIT 1;");
+						$Qry32 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'bot_adress' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = 'xnova@xnova.fr' LIMIT 1;");
+						$Qry33 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'enable_bot' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '0' LIMIT 1;");
+						$Qry34 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'ban_duration' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '30' LIMIT 1;");
+						$Qry35 = mysql_query("ALTER TABLE `$_POST[prefix]planets`
 			  DROP `super_terraformer`,
 			  DROP `interceptor`,
 			  DROP `cazacrucero`,
@@ -260,7 +263,7 @@ $nextpage = $Page + 1;
 			  DROP `nave_dark`,
 			  DROP `fotocanyon`,
 			  DROP `baseespacial`;");
-								$Qry36 = mysql_query("ALTER TABLE `$_POST[prefix]_users`
+						$Qry36 = mysql_query("ALTER TABLE `$_POST[prefix]users`
 			  DROP `humano`,
 			  DROP `alien`,
 			  DROP `predator`,
@@ -291,19 +294,19 @@ $nextpage = $Page + 1;
 			  DROP `mnl_buildlist`,
 			  DROP `multi_validated`,
 			  DROP `new_message`;");
-								$Qry37 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'urlaubs_modus_erz' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '1' LIMIT 1;");
-								$Qry39 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '1' LIMIT 1;");
-								$Qry40 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
-								$Qry41 = mysql_query("ALTER TABLE `$_POST[prefix]_users` DROP `lvl_minier`, DROP `lvl_raid`, DROP `xpraid`, DROP `xpminier`;");
-								$Qry42 = mysql_query("INSERT INTO `$_POST[prefix]_config` (`config_name`, `config_value`) VALUES ('adm_attack', '0');");
-								$Qry43 = mysql_query("INSERT INTO `$_POST[prefix]_config` (`config_name`, `config_value`) VALUES ('stat', '1');");
-								$Qry44 = mysql_query("ALTER TABLE `$_POST[prefix]_users` DROP `lang`;");
-								$Qry45 = mysql_query("INSERT INTO `$_POST[prefix]_config` (`config_name` ,`config_value`)VALUES ('lang', 'spanish');");
-								$Qry46 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `new_message` INT( 11 ) NOT NULL DEFAULT '0' AFTER `db_deaktjava` ;");
-								$Qry47 = mysql_query("ALTER TABLE `$_POST[prefix]_messages` DROP `leido`");
-								$Qry48 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'stat_level' LIMIT 1;");
-								$Qry49 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'stat' LIMIT 1;");
-								$Qry50 = mysql_query("INSERT INTO `$_POST[prefix]_config` (`config_name`, `config_value`) VALUES
+						$Qry37 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'urlaubs_modus_erz' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '1' LIMIT 1;");
+						$Qry39 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '1' LIMIT 1;");
+						$Qry40 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '0' LIMIT 1;");
+						$Qry41 = mysql_query("ALTER TABLE `$_POST[prefix]users` DROP `lvl_minier`, DROP `lvl_raid`, DROP `xpraid`, DROP `xpminier`;");
+						$Qry42 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('adm_attack', '0');");
+						$Qry43 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('stat', '1');");
+						$Qry44 = mysql_query("ALTER TABLE `$_POST[prefix]users` DROP `lang`;");
+						$Qry45 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name` ,`config_value`)VALUES ('lang', 'spanish');");
+						$Qry46 = mysql_query("ALTER TABLE `$_POST[prefix]users` ADD `new_message` INT( 11 ) NOT NULL DEFAULT '0' AFTER `db_deaktjava` ;");
+						$Qry47 = mysql_query("ALTER TABLE `$_POST[prefix]messages` DROP `leido`");
+						$Qry48 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'stat_level' LIMIT 1;");
+						$Qry49 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'stat' LIMIT 1;");
+						$Qry50 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES
 								('stat', 1),
 								('stat_level', 2),
 								('stat_last_update', 1),
@@ -311,10 +314,13 @@ $nextpage = $Page + 1;
 								('stat_amount', 25),
 								('stat_update_time', 15),
 								('stat_flying', 1);");
-								$Qry51 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'actualizar_puntos' LIMIT 1;");
-							break;
-							case'2.3':
-								$Qry36 = mysql_query("ALTER TABLE `$_POST[prefix]_users`
+						$Qry51 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'actualizar_puntos' LIMIT 1;");
+						$Qry52 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsFrame' LIMIT 1;");
+						$Qry53 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsText' LIMIT 1;");
+						$Qry54 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.5');");
+						break;
+					case'2.3':
+						$Qry36 = mysql_query("ALTER TABLE `$_POST[prefix]users`
 					  DROP `new_message`,
 					  DROP `raids`,
 					  DROP `p_infligees`,
@@ -329,19 +335,19 @@ $nextpage = $Page + 1;
 					  DROP `mnl_buildlist`,
 					  DROP `multi_validated`;");
 
-								$Qry37 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'urlaubs_modus_erz' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '1' LIMIT 1;");
-								$Qry39 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '1' LIMIT 1;");
-								$Qry40 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
-								$Qry41 = mysql_query("ALTER TABLE `$_POST[prefix]_users` DROP `lvl_minier`, DROP `lvl_raid`, DROP `xpraid`, DROP `xpminier`;");
-								$Qry42 = mysql_query("INSERT INTO `$_POST[prefix]_config` (`config_name`, `config_value`) VALUES ('adm_attack', '0');");
-								$Qry43 = mysql_query("INSERT INTO `$_POST[prefix]_config` (`config_name`, `config_value`) VALUES ('stat', '1');");
-								$Qry44 = mysql_query("ALTER TABLE `$_POST[prefix]_users` DROP `lang`;");
-								$Qry45 = mysql_query("INSERT INTO `$_POST[prefix]_config` (`config_name` ,`config_value`)VALUES ('lang', 'spanish');");
-								$Qry46 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `new_message` INT( 11 ) NOT NULL DEFAULT '0' AFTER `db_deaktjava` ;");
-								$Qry47 = mysql_query("ALTER TABLE `$_POST[prefix]_messages` DROP `leido`");
-								$Qry48 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'stat_level' LIMIT 1;");
-								$Qry49 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'stat' LIMIT 1;");
-								$Qry50 = mysql_query("INSERT INTO `$_POST[prefix]_config` (`config_name`, `config_value`) VALUES
+						$Qry37 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'urlaubs_modus_erz' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '1' LIMIT 1;");
+						$Qry39 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '1' LIMIT 1;");
+						$Qry40 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '0' LIMIT 1;");
+						$Qry41 = mysql_query("ALTER TABLE `$_POST[prefix]users` DROP `lvl_minier`, DROP `lvl_raid`, DROP `xpraid`, DROP `xpminier`;");
+						$Qry42 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('adm_attack', '0');");
+						$Qry43 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('stat', '1');");
+						$Qry44 = mysql_query("ALTER TABLE `$_POST[prefix]users` DROP `lang`;");
+						$Qry45 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name` ,`config_value`)VALUES ('lang', 'spanish');");
+						$Qry46 = mysql_query("ALTER TABLE `$_POST[prefix]users` ADD `new_message` INT( 11 ) NOT NULL DEFAULT '0' AFTER `db_deaktjava` ;");
+						$Qry47 = mysql_query("ALTER TABLE `$_POST[prefix]messages` DROP `leido`");
+						$Qry48 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'stat_level' LIMIT 1;");
+						$Qry49 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'stat' LIMIT 1;");
+						$Qry50 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES
 								('stat', 1),
 								('stat_level', 2),
 								('stat_last_update', 1),
@@ -349,21 +355,24 @@ $nextpage = $Page + 1;
 								('stat_amount', 25),
 								('stat_update_time', 15),
 								('stat_flying', 1);");
-								$Qry51 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'actualizar_puntos' LIMIT 1;");
-							break;
-							case'2.4':
-								$Qry39 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '1' LIMIT 1;");
-								$Qry40 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]_config`.`config_value` USING utf8) = '0' LIMIT 1;");
-								$Qry41 = mysql_query("ALTER TABLE `$_POST[prefix]_users` DROP `lvl_minier`, DROP `lvl_raid`, DROP `xpraid`, DROP `xpminier`;");
-								$Qry42 = mysql_query("INSERT INTO `$_POST[prefix]_config` (`config_name`, `config_value`) VALUES ('adm_attack', '0');");
-								$Qry43 = mysql_query("INSERT INTO `$_POST[prefix]_config` (`config_name`, `config_value`) VALUES ('stat', '1');");
-								$Qry44 = mysql_query("ALTER TABLE `$_POST[prefix]_users` DROP `lang`;");
-								$Qry45 = mysql_query("INSERT INTO `$_POST[prefix]_config` (`config_name` ,`config_value`)VALUES ('lang', 'spanish');");
-								$Qry46 = mysql_query("ALTER TABLE `$_POST[prefix]_users` ADD `new_message` INT( 11 ) NOT NULL DEFAULT '0' AFTER `db_deaktjava` ;");
-								$Qry47 = mysql_query("ALTER TABLE `$_POST[prefix]_messages` DROP `leido`");
-								$Qry48 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'stat_level' LIMIT 1;");
-								$Qry49 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'stat' LIMIT 1;");
-								$Qry50 = mysql_query("INSERT INTO `$_POST[prefix]_config` (`config_name`, `config_value`) VALUES
+						$Qry51 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'actualizar_puntos' LIMIT 1;");
+						$Qry52 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsFrame' LIMIT 1;");
+						$Qry53 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsText' LIMIT 1;");
+						$Qry54 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.5');");
+						break;
+					case'2.4':
+						$Qry39 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '1' LIMIT 1;");
+						$Qry40 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '0' LIMIT 1;");
+						$Qry41 = mysql_query("ALTER TABLE `$_POST[prefix]users` DROP `lvl_minier`, DROP `lvl_raid`, DROP `xpraid`, DROP `xpminier`;");
+						$Qry42 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('adm_attack', '0');");
+						$Qry43 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('stat', '1');");
+						$Qry44 = mysql_query("ALTER TABLE `$_POST[prefix]users` DROP `lang`;");
+						$Qry45 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name` ,`config_value`)VALUES ('lang', 'spanish');");
+						$Qry46 = mysql_query("ALTER TABLE `$_POST[prefix]users` ADD `new_message` INT( 11 ) NOT NULL DEFAULT '0' AFTER `db_deaktjava` ;");
+						$Qry47 = mysql_query("ALTER TABLE `$_POST[prefix]messages` DROP `leido`");
+						$Qry48 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'stat_level' LIMIT 1;");
+						$Qry49 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'stat' LIMIT 1;");
+						$Qry50 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES
 								('stat', 1),
 								('stat_level', 2),
 								('stat_last_update', 1),
@@ -371,19 +380,27 @@ $nextpage = $Page + 1;
 								('stat_amount', 25),
 								('stat_update_time', 15),
 								('stat_flying', 1);");
-								$Qry51 = mysql_query("DELETE FROM `$_POST[prefix]_config` WHERE CONVERT(`$_POST[prefix]_config`.`config_name` USING utf8) = 'actualizar_puntos' LIMIT 1;");
-							break;
-						}
-						message("XG Proyect finalizó la actualización con éxito, para finalizar borra el directorio install y luego haz <a href=\"./../\">click aqui</a>", "", "", false, false);
-					}
+						$Qry51 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'actualizar_puntos' LIMIT 1;");
+						$Qry52 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsFrame' LIMIT 1;");
+						$Qry53 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsText' LIMIT 1;");
+						$Qry54 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.5');");
+						break;
+					case'2.5':
+						$Qry52 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsFrame' LIMIT 1;");
+						$Qry53 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsText' LIMIT 1;");
+						$Qry54 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.5');");
+						break;
 				}
-				else
-					$frame  = parsetemplate(gettemplate('install/ins_update'), false);
-			break;
-		default:
-	}
-	$parse['ins_state']    = $Page;
-	$parse['ins_page']     = $frame;
-	$parse['dis_ins_btn']  = "?mode=$Mode&page=$nextpage";
-	display (parsetemplate (gettemplate('install/ins_body'), $parse), false, '', true, false);
+				message("XG Proyect finalizó la actualización con éxito, para finalizar borra el directorio install y luego haz <a href=\"./../\">click aqui</a>", "", "", false, false);
+			}
+		}
+		else
+			$frame  = parsetemplate(gettemplate('install/ins_update'), false);
+		break;
+	default:
+}
+$parse['ins_state']    = $Page;
+$parse['ins_page']     = $frame;
+$parse['dis_ins_btn']  = "?mode=$Mode&page=$nextpage";
+display (parsetemplate (gettemplate('install/ins_body'), $parse), false, '', true, false);
 ?>

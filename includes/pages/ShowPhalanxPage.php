@@ -133,6 +133,6 @@ function ShowPhalanxPage($CurrentUser, $CurrentPlanet)
 		header("location:game.php?page=overview");
 	}
 
-	return display(parsetemplate(gettemplate('phalanx_body'), $parse), false, '', false, false);
+	return display(parsetemplate(gettemplate('galaxy/phalanx_body'), $parse), false, '', false, false);
 }
 ?>
