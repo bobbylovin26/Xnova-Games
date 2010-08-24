@@ -5,6 +5,48 @@ $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
 
+'2.3' => ' 30/05/09
+
+- Corregido un bug que no permitía cambiar el rango a los miembros dentro de las alianzas.-
+- Varios cambios en el panel del admin:
+
+-------- Integrados todos los archivos de lenguaje.-
+-------- Renombrado el archivo para el reset del universo.-
+-------- Unos cuantos cambios en mats.php, tanto de estilos como limpieza de código.-
+-------- Cambios en el left-menu del panel de administración.-
+-------- Renombrados algunos archivos y realizadas algunas correciones menores.-
+-------- Unos cuantos ajustes en los textos y plantillas de varios archivos.-
+-------- Mensaje de confirmación al intentar eliminar a un jugador del servidor.-
+-------- El archivo mats.php ahora se llama adminresources.php, ademas se le integro todos los archivos que manejaban las tecnologías y recursos.-
+-------- Solucionado el bug de la actualización de puntos.-
+-------- Nueva función (optimizar tablas) (By Saint).-
+-------- Corregido un bug que al crear una luna no le asignaba el nombre seleccionado.-
+-------- Nueva función (eliminar luna) (By tonique).-
+-------- Corregido un bug que en la lista de lunas no mostraba el id real de la luna.-
+-------- Si el usuario no tiene nivel 1 al menos no podrá ver nada del panel de administración.-
+-------- Optimizadas algunas querys en messall.php
+-------- Eliminado el QueryExecuter.php	
+
+- Se finalizá el soporte a las versiones v1.4d/v1.4e/v1.4f y también el auto-update de las mismas.-
+- Eliminadas algunas querys innecesarias de MissionCaseMIP.php.-
+- Se elimino una query innecesario de MissionCaseRecycling.php.-
+- Limpieza de la base de datos de campos innecesarios dentro de la tabla users.-
+- Algunos cambios y mejoras en el update.php.-
+- Ahora sólo sumarán puntos de guerrero los jugadores que realicen batallas y no ambos.-
+- Reparado un bug que mostraba el mensaje de la flota al finalizar la misión.-
+- La experiencia del minero ya no se muestra más con decimales.-
+- Se volvió al antiguo diseño de la construcción de edificios.-
+- Corregido un bug que en al finalizar una construcción en el overview aparecía Construcción() en vez de Libre.-
+- Algunas modificaciones en los créditos.-
+- Modificados algunos aspectos en el aspecto interno del juego.-
+- Cambiada la imagen dentro del juego.-
+- Rediseñado el index, espero que les guste.-
+- Agregado un favicon, cada uno podrá cambiarlo por el que quiera.-
+- Eliminados algunos residuos provenientes de otras versiones.-
+- Eliminados los frames, ahora el menu se muestra con la función ShowLeftMenu.php y algo de estilos css para ajustar todo.-
+- Cambiados todos los $xnova_root_path por $xgp_root.-
+',
+
 '2.2' => ' 06/05/09
 
 - Se reemplazo el menú derecho e izquierdo por el original, y la imagen del fondo también.-

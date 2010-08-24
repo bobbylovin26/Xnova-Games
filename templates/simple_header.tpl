@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>{title}</title>
+<title>{-title-}</title>
 <link rel="shortcut icon" href="favicon.ico">
 {-style-}
 <meta http-equiv="content-type" content="text/html; charset={ENCODING}" />

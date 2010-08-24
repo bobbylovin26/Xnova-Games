@@ -18,9 +18,9 @@
 //
 // Reponse        -> boolean (oui / non)
 function IsElementBuyable ($CurrentUser, $CurrentPlanet, $Element, $Incremental = true, $ForDestroy = false) {
-	global $pricelist, $resource, $xnova_root_path, $phpEx;
+	global $pricelist, $resource, $xgp_root, $phpEx;
 
-	include_once($xnova_root_path . 'includes/funciones_A/IsVacationMode.' . $phpEx);
+	include_once($xgp_root . 'includes/funciones_A/IsVacationMode.' . $phpEx);
 
     if (IsVacationMode($CurrentUser)){
        return false;

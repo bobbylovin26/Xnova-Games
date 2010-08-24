@@ -13,8 +13,6 @@
 function MissionCaseSpy ( $FleetRow ) {
 	global $lang, $resource;
 
-	include("includes/functions/SpyTarget.php");
-
 	if ($FleetRow['fleet_start_time'] <= time()) {
 		$CurrentUser         = doquery("SELECT * FROM {{table}} WHERE `id` = '".$FleetRow['fleet_owner']."';", 'users', true);
 		$CurrentUserID       = $FleetRow['fleet_owner'];

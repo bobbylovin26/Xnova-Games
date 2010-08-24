@@ -1,20 +1,17 @@
-<br><br>
-<h2>{adm_researchadd1}</h2>
-<form action="add_research.php" method="post">
+<br />
+<form action="" method="post">
 <input type="hidden" name="mode" value="addit">
-<table width="404">
+<table width="400">
 <tbody>
 <tr>
-	<td class="c" colspan="7">{adm_researchadd2}</td>
+	<td class="c" colspan="7">Agregar niveles de investigación</td>
 </tr><tr>
-	<th width="130" colspan="2">{adm_am_plid}</th>
-	<th width="300"><input name="id" type="text" value="0" size="3" /></th>
+	<th width="200" colspan="2">ID del planeta</th>
+	<th width="200"><input name="id" type="text" value="0" size="3" /></th>
 </tr><tr>
-	<td class="c" colspan="6">&nbsp;</td>
-</tr><tr>
-	<th>{nr}</th>
-	<th>Recherche</th>
-	<th>{hinz}</th>
+	<td class="c" align="center">Nº</td>
+	<td class="c" align="center">Investigación</td>
+	<td class="c" align="center">Cantidad de niveles</td>
 </tr><tr>
 	<th>1</td>
 	<th>Tecnología de espionaje</th>
@@ -69,8 +66,7 @@
 	<th><input name="buster_tech" type="text" value="0" /></th>
 </tr><tr>
 	<th>14</td>
-	<th>Red de investigación intergaláctica<br>
-intergalactique</td>
+	<th>Red de investigación intergaláctica</td>
 	<th><input name="intergalactic_tech" type="text" value="0" /></th>
 </tr><tr>
 	<th>15</td>
@@ -81,7 +77,7 @@ intergalactique</td>
 	<th>Tecnología de gravitón</td>
 	<th><input name="graviton_tech" type="text" value="0" /></th>
 </tr><tr>
-	<th colspan="3"><input type="Submit" value="{adm_am_add}" /></th>
+	<th colspan="3"><input type="Submit" value="Añadir niveles" /></th>
 </tbody>
 </tr>
 </table>

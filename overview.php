@@ -12,11 +12,11 @@
 define('INSIDE'  , true);
 define('INSTALL' , false);
 
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.' . $phpEx);
-include($xnova_root_path . 'includes/funciones_A/InsertJavaScriptChronoApplet.' . $phpEx);
-include($xnova_root_path . 'includes/funciones_A/BuildFleetEventTable.' . $phpEx);
+$xgp_root = './';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.' . $phpEx);
+include($xgp_root . 'includes/funciones_A/InsertJavaScriptChronoApplet.' . $phpEx);
+include($xgp_root . 'includes/funciones_A/BuildFleetEventTable.' . $phpEx);
 
 
 $lunarow 			= doquery("SELECT * FROM {{table}} WHERE `id_owner` = '" . $planetrow['id_owner'] . "' AND `galaxy` = '" . $planetrow['galaxy'] . "' AND `system` = '" . $planetrow['system'] . "' AND `lunapos` = '" . $planetrow['planet'] . "';", 'lunas', true);
@@ -312,25 +312,31 @@ switch ($_GET['mode'])
 
 			if ($planetrow['b_building'] != 0)
 			{
-				include($xnova_root_path . 'includes/funciones_A/InsertBuildListScript.' . $phpEx);
+				include($xgp_root . 'includes/funciones_A/InsertBuildListScript.' . $phpEx);
 
 				UpdatePlanetBatimentQueueList ($planetrow, $user);
-
-				$BuildQueue  		 = explode (";", $planetrow['b_building_id']);
-				$CurrBuild 	 		 = explode (",", $BuildQueue[0]);
-				$RestTime 	 		 = $planetrow['b_building'] - time();
-				$PlanetID 	 		 = $planetrow['id'];
-				$Build 		 		 = InsertBuildListScript ("overview");
-				$Build 	   			.= $lang['tech'][$CurrBuild[0]] . ' (' . ($CurrBuild[1]) . ')';
-				$Build 				.= "<br /><div id=\"blc\" class=\"z\">" . pretty_time($RestTime) . "</div>";
-				$Build 				.= "\n<script language=\"JavaScript\">";
-				$Build 				.= "\n	pp = \"" . $RestTime . "\";\n";
-				$Build 				.= "\n	pk = \"" . 1 . "\";\n";
-				$Build 				.= "\n	pm = \"cancel\";\n";
-				$Build 				.= "\n	pl = \"" . $PlanetID . "\";\n";
-				$Build 				.= "\n	t();\n";
-				$Build 				.= "\n</script>\n";
-				$parse['building'] 	 = $Build;
+				if ($planetrow['b_building'] != 0)
+				{
+					$BuildQueue  		 = explode (";", $planetrow['b_building_id']);
+					$CurrBuild 	 		 = explode (",", $BuildQueue[0]);
+					$RestTime 	 		 = $planetrow['b_building'] - time();
+					$PlanetID 	 		 = $planetrow['id'];
+					$Build 		 		 = InsertBuildListScript ("overview");
+					$Build 	   			.= $lang['tech'][$CurrBuild[0]] . ' (' . ($CurrBuild[1]) . ')';
+					$Build 				.= "<br /><div id=\"blc\" class=\"z\">" . pretty_time($RestTime) . "</div>";
+					$Build 				.= "\n<script language=\"JavaScript\">";
+					$Build 				.= "\n	pp = \"" . $RestTime . "\";\n";
+					$Build 				.= "\n	pk = \"" . 1 . "\";\n";
+					$Build 				.= "\n	pm = \"cancel\";\n";
+					$Build 				.= "\n	pl = \"" . $PlanetID . "\";\n";
+					$Build 				.= "\n	t();\n";
+					$Build 				.= "\n</script>\n";
+					$parse['building'] 	 = $Build;
+				}
+				else
+				{
+					$parse['building'] = "Libre";
+				}
 			}
 			else
 			{
@@ -368,7 +374,7 @@ switch ($_GET['mode'])
 				$parse['max_users'] 		= "-";
 			$parse['metal_debris'] 			= pretty_number($galaxyrow['metal']);
 			$parse['crystal_debris'] 		= pretty_number($galaxyrow['crystal']);
-			$parse['xpminier'] 				= $user['xpminier'];
+			$parse['xpminier'] 				= floor($user['xpminier']);
 			$parse['xpraid'] 				= $user['xpraid'];
 			$parse['lvl_minier'] 			= $user['lvl_minier'];
 			$parse['lvl_raid'] 				= $user['lvl_raid'];

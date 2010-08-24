@@ -19,8 +19,8 @@ class debug
 	}
 
 	function echo_log()
-	{	global $xnova_root_path;
-		echo  "<br><table><tr><td class=k colspan=4><a href=".$xnova_root_path."admin/settings.php>Debug Log</a>:</td></tr>".$this->log."</table>";
+	{	global $xgp_root;
+		echo  "<br><table><tr><td class=k colspan=4><a href=".$xgp_root."admin/settings.php>Debug Log</a>:</td></tr>".$this->log."</table>";
 		die();
 	}
 
@@ -35,8 +35,8 @@ class debug
 		//else{
 			//A futuro, se creara una tabla especial, para almacenar
 			//los errores que ocurran.
-			global $user,$xnova_root_path,$phpEx;
-			include($xnova_root_path . 'config.'.$phpEx);
+			global $user,$xgp_root,$phpEx;
+			include($xgp_root . 'config.'.$phpEx);
 			if(!$link) die('mySQL no esta disponible por el momento, sentimos el inconveniente...');
 			$query = "INSERT INTO {{table}} SET
 				`error_sender` = '{$user['id']}' ,

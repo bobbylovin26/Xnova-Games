@@ -12,9 +12,9 @@
 define('INSIDE'  , true);
 define('INSTALL' , false);
 
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.' . $phpEx);
+$xgp_root = './';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.' . $phpEx);
 
 $who   = (isset($_POST['who']))   ? $_POST['who']   : $_GET['who'];
 if (!isset($who)) {
@@ -39,35 +39,35 @@ $parse['type']  .= "<option value=\"4\"". (($type == "4") ? " SELECTED" : "") ."
 $parse['type']  .= "<option value=\"5\"". (($type == "5") ? " SELECTED" : "") .">Defensas</option>";
 
 if($type == 1) {
-$Order   = "total_points";
-$Points  = "total_points";
-$Counts  = "total_count";
-$Rank    = "total_rank";
-$OldRank = "total_old_rank";
+	$Order   = "total_points";
+	$Points  = "total_points";
+	$Counts  = "total_count";
+	$Rank    = "total_rank";
+	$OldRank = "total_old_rank";
 } elseif ($type == 2) {
-$Order   = "fleet_count";
-$Points  = "fleet_points";
-$Counts  = "fleet_count";
-$Rank    = "fleet_rank";
-$OldRank = "fleet_old_rank";
+	$Order   = "fleet_count";
+	$Points  = "fleet_points";
+	$Counts  = "fleet_count";
+	$Rank    = "fleet_rank";
+	$OldRank = "fleet_old_rank";
 } elseif ($type == 3) {
-$Order   = "tech_count";
-$Points  = "tech_points";
-$Counts  = "tech_count";
-$Rank    = "tech_rank";
-$OldRank = "tech_old_rank";
+	$Order   = "tech_count";
+	$Points  = "tech_points";
+	$Counts  = "tech_count";
+	$Rank    = "tech_rank";
+	$OldRank = "tech_old_rank";
 } elseif ($type == 4) {
-$Order   = "build_points";
-$Points  = "build_points";
-$Counts  = "build_count";
-$Rank    = "build_rank";
-$OldRank = "build_old_rank";
+	$Order   = "build_points";
+	$Points  = "build_points";
+	$Counts  = "build_count";
+	$Rank    = "build_rank";
+	$OldRank = "build_old_rank";
 } elseif ($type == 5) {
-$Order   = "defs_points";
-$Points  = "defs_points";
-$Counts  = "defs_count";
-$Rank    = "defs_rank";
-$OldRank = "defs_old_rank";
+	$Order   = "defs_points";
+	$Points  = "defs_points";
+	$Counts  = "defs_count";
+	$Rank    = "defs_rank";
+	$OldRank = "defs_old_rank";
 }
 
 if ($who == 2)

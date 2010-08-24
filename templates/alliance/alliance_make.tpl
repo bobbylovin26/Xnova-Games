@@ -1,18 +1,21 @@
-<form action="?mode=make&yes=1" method="POST">
-    <table width=519>
-        <tr>
-        	<td class="c" colspan=2>Fundar alianza</td>
-        </tr>
-        <tr>
-        	<th>Nombre de la alianza (De 3-8 caracteres)</th>
-        	<th><input type="text" name="atag" size=8 maxlength=8 value=""></th>
-        </tr>
-        <tr>
-        	<th>Etiqueta de la alianza (Máx. 35 caracteres)</th>
-        	<th><input type="text" name="aname" size=20 maxlength=30 value=""></th>
-        </tr>
-        <tr>
-        	<th colspan=2><input type="submit" value="Fundar"></th>
-        </tr>
-    </table>
-</form>
+<br />
+<div id="content">
+    <form action="?mode=make&yes=1" method="POST">
+        <table width=519>
+            <tr>
+                <td class="c" colspan=2>Fundar alianza</td>
+            </tr>
+            <tr>
+                <th>Etiqueta de la alianza (De 3-8 caracteres)</th>
+                <th><input type="text" name="atag" size=8 maxlength=8 value=""></th>
+            </tr>
+            <tr>
+                <th>Nombre de la alianza (Máx. 35 caracteres)</th>
+                <th><input type="text" name="aname" size=20 maxlength=30 value=""></th>
+            </tr>
+            <tr>
+                <th colspan=2><input type="submit" value="Fundar"></th>
+            </tr>
+        </table>
+    </form>
+</div>

@@ -3,26 +3,31 @@
 /**
  * functions.php
  *
- * @version 1
- * @copyright 2008 By Chlorel for XNova
+ * @version 2.0
+ * @copyright 2008 by Chlorel for XNova
+ * Reprogramado 2009 By lucky for XG PROYECT XNova - Argentina
+ *
  */
 
 function is_email($email) {
 	return(preg_match("/^[-_.[:alnum:]]+@((([[:alnum:]]|[[:alnum:]][[:alnum:]-]*[[:alnum:]])\.)+(ad|ae|aero|af|ag|ai|al|am|an|ao|aq|ar|arpa|as|at|au|aw|az|ba|bb|bd|be|bf|bg|bh|bi|biz|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|com|coop|cr|cs|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|edu|ee|eg|eh|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gh|gi|gl|gm|gn|gov|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|in|info|int|io|iq|ir|is|it|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|mg|mh|mil|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|museum|mv|mw|mx|my|mz|na|name|nc|ne|net|nf|ng|ni|nl|no|np|nr|nt|nu|nz|om|org|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|pro|ps|pt|pw|py|qa|re|ro|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)$|(([0-9][0-9]?|[0-1][0-9][0-9]|[2][0-4][0-9]|[2][5][0-5])\.){3}([0-9][0-9]?|[0-1][0-9][0-9]|[2][0-4][0-9]|[2][5][0-5]))$/i", $email));
 }
 
-function message ($mes, $title = 'Error', $dest = "", $time = "3") {
+function message ($mes, $title = 'Error', $dest = "", $time = "3", $topnav = false, $menu = true) {
 	$parse['color'] = $color;
 	$parse['title'] = $title;
 	$parse['mes']   = $mes;
 
 	$page .= parsetemplate(gettemplate('message_body'), $parse);
+	if (!defined('IN_ADMIN'))
+		display ($page, $title, $topnav, (($dest != "") ? "<meta http-equiv=\"refresh\" content=\"$time;URL=$dest\">" : ""), false, $menu);
+	else
+		display ($page, $title, $topnav, (($dest != "") ? "<meta http-equiv=\"refresh\" content=\"$time;URL=$dest\">" : ""), false, false);
 
-	display ($page, $title, false, (($dest != "") ? "<meta http-equiv=\"refresh\" content=\"$time;URL=$dest\">" : ""), false);
 }
 
-function display ($page, $title = '', $topnav = true, $metatags = '', $AdminPage = false) {
-   global $link, $game_config, $debug, $user, $planetrow;
+function display ($page, $title = '', $topnav = true, $metatags = '', $AdminPage = false, $menu = true) {
+   global $link, $game_config, $debug, $user, $planetrow, $xgp_root, $phpEx;
 
    if (!$AdminPage) {
       $DisplayPage  = StdUserHeader ($title, $metatags);
@@ -31,8 +36,12 @@ function display ($page, $title = '', $topnav = true, $metatags = '', $AdminPage
    }
 
    if ($topnav) {
-   	  include('includes/funciones_A/ShowTopNavigationBar.php');
+   	  include($xgp_root . 'includes/funciones_A/ShowTopNavigationBar.' . $phpEx);
       $DisplayPage .= ShowTopNavigationBar( $user, $planetrow );
+   }
+   if ($menu) {
+   	  include($xgp_root . 'includes/funciones_A/ShowLeftMenu.' . $phpEx);
+      $DisplayPage .= ShowLeftMenu ($user['authlevel']);
    }
    $DisplayPage .= "<center>\n". $page ."\n</center>\n";
 
@@ -50,10 +59,10 @@ function display ($page, $title = '', $topnav = true, $metatags = '', $AdminPage
 }
 
 function StdUserHeader ($title = '', $metatags = '') {
-	global $user, $dpath, $langInfos;
+	global $user, $dpath, $game_config, $xgp_root;
 
-	$parse             = $langInfos;
-	$parse['title']    = $title;
+	$parse['-style-'] .= "<link rel=\"shortcut icon\" href=\"". $xgp_root . "favicon.ico\">";
+	$parse['-title-'] .= $game_config['game_name'] . " - " . $title;
 	if ( defined('LOGIN') ) {
 		$parse['dpath']    = "skins/xnova/";
 		$parse['-style-']  = "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/styles.css\">\n";
@@ -61,6 +70,7 @@ function StdUserHeader ($title = '', $metatags = '') {
 		$parse['dpath']    = $dpath;
 		$parse['-style-']  = "<link rel=\"stylesheet\" type=\"text/css\" href=\"". $dpath ."default.css\" />";
 		$parse['-style-'] .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"". $dpath ."formate.css\" />";
+		$parse['-style-'] .= "<meta http-equiv=\"Content-Type\" content=\"text/html;charset=iso-8859-1\">";
 	}
 
 	$parse['-meta-']  = ($metatags) ? $metatags : "";
@@ -69,13 +79,12 @@ function StdUserHeader ($title = '', $metatags = '') {
 }
 
 function AdminUserHeader ($title = '', $metatags = '') {
-	global $user, $dpath, $langInfos;
+	global $user, $dpath;
 
-	$parse           = $langInfos;
-	$parse['dpath']  = $dpath;
-	$parse['title']  = $title;
-	$parse['-meta-'] = ($metatags) ? $metatags : "";
-	$parse['-body-'] = "<body>";
+	$parse['dpath']  	= $dpath;
+	$parse['title']  	= $title;
+	$parse['-meta-'] 	= ($metatags) ? $metatags : "";
+	$parse['-body-'] 	= "<body>";
 	return parsetemplate(gettemplate('admin/simple_header'), $parse);
 }
 
@@ -230,22 +239,22 @@ function parsetemplate ($template, $array) {
 }
 
 function gettemplate ($templatename) {
-	global $xnova_root_path;
+	global $xgp_root;
 
-	$filename = $xnova_root_path . TEMPLATE_DIR . '/' . $templatename . ".tpl";
+	$filename = $xgp_root . TEMPLATE_DIR . '/' . $templatename . ".tpl";
 
 	return ReadFromFile($filename);
 }
 
 function includeLang ($filename, $ext = '.mo') {
-	global $xnova_root_path, $lang, $user;
+	global $xgp_root, $lang, $user;
 
 	if ($user['lang'] != '') {
 		$SelLanguage = $user['lang'];
 	} else {
 		$SelLanguage = DEFAULT_LANG;
 	}
-	include ($xnova_root_path . "language/". $SelLanguage ."/". $filename.$ext);
+	include ($xgp_root . "language/". $SelLanguage ."/". $filename.$ext);
 }
 
 function GetStartAdressLink ( $FleetRow, $FleetType ) {
@@ -347,9 +356,9 @@ function CreateFleetPopupedMissionLink ( $FleetRow, $Texte, $FleetType ) {
 }
 
 function doquery($query, $table, $fetch = false){
-	global $link, $debug, $xnova_root_path;
+	global $link, $debug, $xgp_root;
 
-	require($xnova_root_path.'config.php');
+	require($xgp_root.'config.php');
 
 	if(!$link)
 	{

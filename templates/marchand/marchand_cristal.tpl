@@ -17,31 +17,32 @@ function calcul() {
 	}
 }
 </script>
-<br>
-<center>
-<form id="marchand" action="marchand.php" method="post">
-<input type="hidden" name="ress" value="cristal">
-<table width="569">
-<tr>
-	<td class="c" colspan="5"><b>Venta de cristal</b></td>
-</tr><tr>
-	<th>Recurso</th>
-	<th>Cantidad</th>
-	<th>Cuota de intercambio</th>
-</tr><tr>
-	<th>Cristal</th>
-	<th><span id='cristal'></span>&nbsp;</th>
-	<th>{mod_ma_res}</th>
-</tr><tr>
-	<th>Metal</th>
-	<th><input name="metal" type="text" value="0" onkeyup="calcul()"/></th>
-	<th>{mod_ma_res_a}</th>
-</tr><tr>
-	<th>Deuterio</th>
-	<th><input name="deut" type="text" value="0" onkeyup="calcul()"/></th>
-	<th>{mod_ma_res_b}</th>
-</tr><tr>
-	<th colspan="6"><input type="submit" value="Intercambiar" /></th>
-</tr>
-</table>
-</form>
+<br />
+<div id="content">
+    <form id="marchand" action="marchand.php" method="post">
+    <input type="hidden" name="ress" value="cristal">
+    <table width="569">
+    <tr>
+        <td class="c" colspan="5"><b>Venta de cristal</b></td>
+    </tr><tr>
+        <th>Recurso</th>
+        <th>Cantidad</th>
+        <th>Cuota de intercambio</th>
+    </tr><tr>
+        <th>Cristal</th>
+        <th><span id='cristal'></span>&nbsp;</th>
+        <th>{mod_ma_res}</th>
+    </tr><tr>
+        <th>Metal</th>
+        <th><input name="metal" type="text" value="0" onkeyup="calcul()"/></th>
+        <th>{mod_ma_res_a}</th>
+    </tr><tr>
+        <th>Deuterio</th>
+        <th><input name="deut" type="text" value="0" onkeyup="calcul()"/></th>
+        <th>{mod_ma_res_b}</th>
+    </tr><tr>
+        <th colspan="6"><input type="submit" value="Intercambiar" /></th>
+    </tr>
+    </table>
+    </form>
+</div>

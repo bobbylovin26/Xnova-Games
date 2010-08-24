@@ -14,9 +14,9 @@ define('INSTALL' , false);
 
 $InLogin = true;
 
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.' . $phpEx);
+$xgp_root = './';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.' . $phpEx);
 
 	$QrySelectUser  = "SELECT `username`, `email`, `authlevel` ";
 	$QrySelectUser .= "FROM {{table}} ";
@@ -32,6 +32,6 @@ include($xnova_root_path . 'common.' . $phpEx);
 	}
 
 	$page = parsetemplate(gettemplate('contact_body'), $parse);
-	display($page, "Contacto", false);
+	display($page, "Contacto", false, '',false, false);
 
 ?>

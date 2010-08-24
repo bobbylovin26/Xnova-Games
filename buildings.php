@@ -12,10 +12,10 @@
 define('INSIDE'  , true);
 define('INSTALL' , false);
 
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.' . $phpEx);
-include($xnova_root_path . 'includes/funciones_A/HandleTechnologieBuild.' . $phpEx);
+$xgp_root = './';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.' . $phpEx);
+include($xgp_root . 'includes/funciones_A/HandleTechnologieBuild.' . $phpEx);
 
 includeLang('buildings');
 
@@ -26,22 +26,22 @@ $IsWorking = HandleTechnologieBuild ( $planetrow, $user );
 switch ($_GET['mode'])
 {
 	case 'fleet':
-		include($xnova_root_path . 'includes/funciones_A/FleetBuildingPage.' . $phpEx);
+		include($xgp_root . 'includes/funciones_A/FleetBuildingPage.' . $phpEx);
 		FleetBuildingPage ( $planetrow, $user );
 	break;
 
 	case 'research':
-		include($xnova_root_path . 'includes/funciones_A/ResearchBuildingPage.' . $phpEx);
+		include($xgp_root . 'includes/funciones_A/ResearchBuildingPage.' . $phpEx);
 		ResearchBuildingPage ( $planetrow, $user, $IsWorking['OnWork'], $IsWorking['WorkOn'] );
 	break;
 
 	case 'defense':
-		include($xnova_root_path . 'includes/funciones_A/DefensesBuildingPage.' . $phpEx);
+		include($xgp_root . 'includes/funciones_A/DefensesBuildingPage.' . $phpEx);
 		DefensesBuildingPage ( $planetrow, $user );
 	break;
 
 	default:
-		include($xnova_root_path . 'includes/funciones_A/BatimentBuildingPage.' . $phpEx);
+		include($xgp_root . 'includes/funciones_A/BatimentBuildingPage.' . $phpEx);
 		BatimentBuildingPage ( $planetrow, $user );
 	break;
 }

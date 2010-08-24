@@ -27,9 +27,9 @@ elseif($_GET[modo] == "")
 
 	$InLogin = true;
 
-	$xnova_root_path = './';
-	include($xnova_root_path . 'extension.inc.php');
-	include($xnova_root_path . 'common.' . $phpEx);
+	$xgp_root = './';
+	include($xgp_root . 'extension.inc.php');
+	include($xgp_root . 'common.' . $phpEx);
 
 	if ($_POST)
 	{
@@ -61,20 +61,19 @@ elseif($_GET[modo] == "")
 			doquery("UPDATE {{table}} SET `current_planet`='".$login['id_planet']."' WHERE `id` ='".$login["id"]."'", 'users');
 
 			unset($dbsettings);
-			header("Location: ./game.php");
+			header("Location: ./overview.php");
 			exit;
 		}
 		else
 		{
-			message("¡Datos ingresados incorrectos! <br /><a href=\"index.php\" target=\"_top\">Volver al inicio</a>", "¡Error!", "./",2);
+			message("¡Datos ingresados incorrectos! <br /><a href=\"index.php\" target=\"_top\">Volver al inicio</a>", "¡Error!", "./",2, false, false);
 		}
 	}
 	else
 	{
 		$parse['servername']   = $game_config['game_name'];
 		$parse['forum_url']    = $game_config['forum_url'];
-
-		display(parsetemplate(gettemplate('index_body'), $parse), "Bienvenido");
+		display(parsetemplate(gettemplate('index_body'), $parse), "Bienvenido", false, '',false, false);
 	}
 }
 elseif($_GET[modo] == "claveperdida")
@@ -85,20 +84,20 @@ elseif($_GET[modo] == "claveperdida")
 
 	$InLogin = true;
 
-	$xnova_root_path = './';
-	include($xnova_root_path . 'extension.inc.php');
-	include($xnova_root_path . 'common.' . $phpEx);
-	include($xnova_root_path . 'includes/funciones_A/SendNewPassword.' . $phpEx);
+	$xgp_root = './';
+	include($xgp_root . 'extension.inc.php');
+	include($xgp_root . 'common.' . $phpEx);
+	include($xgp_root . 'includes/funciones_A/SendNewPassword.' . $phpEx);
 
 	if($_POST)
 	{
 		sendnewpassword($_POST['email']);
-		message('¡La nueva contraseña ha sido enviado con éxito!', "Enviada", "./",2);
+		message('¡La nueva contraseña ha sido enviado con éxito!', "Enviada", "./",2, false, false);
 	}
 	else
 	{
 		$parse['forum_url']    = $game_config['forum_url'];
-		display(parsetemplate(gettemplate('lostpassword'), $parse), "Recuperar clave", false);
+		display(parsetemplate(gettemplate('lostpassword'), $parse), "Recuperar clave", false, '',false, false);
 	}
 }
 elseif($_GET[modo] == "salir")
@@ -106,12 +105,12 @@ elseif($_GET[modo] == "salir")
 	define('INSIDE'  , true);
 	define('INSTALL' , false);
 
-	$xnova_root_path = './';
-	include($xnova_root_path . 'extension.inc.php');
-	include($xnova_root_path . 'common.'.$phpEx);
+	$xgp_root = './';
+	include($xgp_root . 'extension.inc.php');
+	include($xgp_root . 'common.'.$phpEx);
 
 	setcookie($game_config['COOKIE_NAME'], "", time()-100000, "/", "", 0);
 
-	message ("Esperamos volverte a ver muy pronto.", "Sesión terminada", "./",1);
+	message("¡Hasta la próxima!","Sesión terminada",$xgp_root,2, false, false);
 }
 ?>

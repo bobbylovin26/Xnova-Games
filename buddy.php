@@ -12,9 +12,9 @@
 define('INSIDE' , true );
 define('INSTALL' , false);
 
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.' . $phpEx);
+$xgp_root = './';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.' . $phpEx);
 
 foreach($_GET as $name => $value)
 {
@@ -118,7 +118,7 @@ switch($mode)
 		$nor='<th colspan=6></th>';
 		$outrequest=($outrequest!='')?$outrequest:$nor;
 		$myrequest=($myrequest!='')?$myrequest:$nor;
-		$page="<table width=520>
+		$page="<did=\"content\"><table width=520>
 		<tr><td class=c colspan=6>Lista de compañeros</td></tr>
 		<tr><td class=c colspan=6><center>Solicitudes</a></td></tr>
 		<tr><td class=c>Jugador</td>
@@ -144,7 +144,7 @@ switch($mode)
 		<td class=c>Acción</td>
 		</tr>
 		<tr>{$myfriends}</tr>
-		</table>";
+		</table></div>";
 
 		display ( $page, "Lista de compañeros");
 

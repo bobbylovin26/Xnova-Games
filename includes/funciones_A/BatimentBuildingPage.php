@@ -10,13 +10,13 @@
  */
 
 function BatimentBuildingPage (&$CurrentPlanet, $CurrentUser) {
-global $ProdGrid,$lang, $resource, $reslist, $phpEx, $dpath, $game_config, $_GET, $xnova_root_path;
+global $ProdGrid,$lang, $resource, $reslist, $phpEx, $dpath, $game_config, $_GET, $xgp_root;
 
-	include_once($xnova_root_path . 'includes/funciones_A/IsTechnologieAccessible.' . $phpEx);
-	include_once($xnova_root_path . 'includes/funciones_A/ShowBuildingQueue.' . $phpEx);
-	include_once($xnova_root_path . 'includes/funciones_A/GetElementPrice.' . $phpEx);
-	include_once($xnova_root_path . 'includes/funciones_A/BuildingSaveUserRecord.' . $phpEx);
-	include_once($xnova_root_path . 'includes/funciones_A/BuildingSavePlanetRecord.' . $phpEx);
+	include_once($xgp_root . 'includes/funciones_A/IsTechnologieAccessible.' . $phpEx);
+	include_once($xgp_root . 'includes/funciones_A/ShowBuildingQueue.' . $phpEx);
+	include_once($xgp_root . 'includes/funciones_A/GetElementPrice.' . $phpEx);
+	include_once($xgp_root . 'includes/funciones_A/BuildingSaveUserRecord.' . $phpEx);
+	include_once($xgp_root . 'includes/funciones_A/BuildingSavePlanetRecord.' . $phpEx);
 
 	CheckPlanetUsedFields ( $CurrentPlanet );
 	// ARRAYS CON LOS EDIFICIOS POSIBLES || MISMA ESTUPIDEZ Q EN EL OGAME ORIGINAL, ALMACENES EN UNA LUNA :S
@@ -64,7 +64,7 @@ global $ProdGrid,$lang, $resource, $reslist, $phpEx, $dpath, $game_config, $_GET
 					CancelBuildingFromQueue ( $CurrentPlanet, $CurrentUser );
 				break;
 				case 'remove':
-					include($xnova_root_path . 'includes/funciones_A/RemoveBuildingFromQueue.' . $phpEx);
+					include($xgp_root . 'includes/funciones_A/RemoveBuildingFromQueue.' . $phpEx);
 					RemoveBuildingFromQueue ( $CurrentPlanet, $CurrentUser, $ListID );
 				break;
 				case 'insert':
@@ -111,14 +111,6 @@ global $ProdGrid,$lang, $resource, $reslist, $phpEx, $dpath, $game_config, $_GET
 
 			if (IsTechnologieAccessible($CurrentUser, $CurrentPlanet, $Element))
 			{
-				if ($zaehler == 1 || $zaehler % 3 == 1)
-				{
-					$parse['tropen'] = '<tr>';
-				}
-				else
-				{
-					$parse['tropen'] = '';
-				}
 				$HaveRessources        = IsElementBuyable ($CurrentUser, $CurrentPlanet, $Element, true, false);
 				$parse                 = array();
 				$parse['dpath']        = $dpath;
@@ -178,17 +170,6 @@ global $ProdGrid,$lang, $resource, $reslist, $phpEx, $dpath, $game_config, $_GET
 				else
 					$parse['click'] = "<font color=#FF0000>No hay espacio en el planeta</font>";
 
-				if ($zaehler % 5 == 0)
-				{
-					$parse['trclose'] = '</tr>';
-					$zaehler++;
-				}
-				else
-				{
-					$parse['trclose'] = '';
-					$zaehler++;
-				}
-
 				$BuildingPage .= parsetemplate($SubTemplate, $parse);
 			}
 		}
@@ -197,7 +178,7 @@ global $ProdGrid,$lang, $resource, $reslist, $phpEx, $dpath, $game_config, $_GET
 	$parse                         = $lang;
 	if ($Queue['lenght'] > 0)
 	{
-		include($xnova_root_path . 'includes/funciones_A/InsertBuildListScript.' . $phpEx);
+		include($xgp_root . 'includes/funciones_A/InsertBuildListScript.' . $phpEx);
 
 		$parse['BuildListScript']  = InsertBuildListScript ( "buildings" );
 		$parse['BuildList']        = $Queue['buildlist'];
@@ -208,7 +189,7 @@ global $ProdGrid,$lang, $resource, $reslist, $phpEx, $dpath, $game_config, $_GET
 		$parse['BuildList']        = "";
 	}
 	$parse['planet_field_current'] = $CurrentPlanet["field_current"];
-	$parse['planet_field_max']     = $CurrentPlanet['field_max'] + ($CurrentPlanet[$resource[33]] * FIELDS_BY_TERRAFORMER) + ($CurrentPlanet[$resource[45]] * FIELDS_BY_S_TERRAFORMER);
+	$parse['planet_field_max']     = $CurrentPlanet['field_max'] + ($CurrentPlanet[$resource[33]] * FIELDS_BY_TERRAFORMER);
 	$parse['field_libre']          = $parse['planet_field_max']  - $CurrentPlanet['field_current'];
 	$parse['BuildingsList']        = $BuildingPage;
 

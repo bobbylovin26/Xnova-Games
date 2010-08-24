@@ -17,16 +17,16 @@
 function ResearchBuildingPage (&$CurrentPlanet, $CurrentUser, $InResearch, $ThePlanet) {
 	global $lang, $resource, $reslist, $phpEx, $dpath, $game_config, $_GET;
 
-	include_once($xnova_root_path . 'includes/funciones_A/IsTechnologieAccessible.' . $phpEx);
-	include_once($xnova_root_path . 'includes/funciones_A/CheckLabSettingsInQueue.'.$phpEx);
-	include_once($xnova_root_path . 'includes/funciones_A/GetRestPrice.'.$phpEx);
-	include_once($xnova_root_path . 'includes/funciones_A/GetElementPrice.' . $phpEx);
+	include_once($xgp_root . 'includes/funciones_A/IsTechnologieAccessible.' . $phpEx);
+	include_once($xgp_root . 'includes/funciones_A/CheckLabSettingsInQueue.'.$phpEx);
+	include_once($xgp_root . 'includes/funciones_A/GetRestPrice.'.$phpEx);
+	include_once($xgp_root . 'includes/funciones_A/GetElementPrice.' . $phpEx);
 
 	$NoResearchMessage = "";
 	$bContinue         = true;
 	// Deja est qu'il y a un laboratoire sur la planete ???
 	if ($CurrentPlanet[$resource[31]] == 0) {
-		message($lang['no_laboratory'], $lang['Research']);
+		message($lang['no_laboratory'], $lang['Research'], '', '', true);
 	}
 	// Ensuite ... Est ce que la labo est en cours d'upgrade ?
 	if (!CheckLabSettingsInQueue ( $CurrentPlanet )) {

@@ -10,9 +10,9 @@
 define('INSIDE'  , true);
 define('INSTALL' , false);
 
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.' . $phpEx);
+$xgp_root = './';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.' . $phpEx);
 
 	includeLang('fleet');
 
@@ -163,7 +163,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$page .= "    return 1;\n";
 	$page .= "}\n";
 	$page .= "</script>\n";
-	$page .= "<br><center>";
+	$page .= "<br>";
 	$page .= "<form action=\"floten3.php\" method=\"post\" onsubmit='this.submit.disabled = true;'>\n";
 	$page .= "<input type=\"hidden\" name=\"thisresource1\"  value=\"". floor($planetrow["metal"]) ."\" />\n";
 	$page .= "<input type=\"hidden\" name=\"thisresource2\"  value=\"". floor($planetrow["crystal"]) ."\" />\n";
@@ -194,7 +194,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 		$page .= "<input type=\"hidden\" name=\"speed". $Ship ."\"       value=\"". GetFleetMaxSpeed ( "", $Ship, $user ) ."\" />\n";
 
 	}
-	$page .= "<table border=\"0\" cellpadding=\"0\" cellspacing=\"1\" width=\"519\">\n";
+	$page .= "<br /><div id=\"content\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"1\" width=\"519\">\n";
 	$page .= "<tbody>\n";
 	$page .= "<tr align=\"left\" height=\"20\">\n";
 	$page .= "<td class=\"c\" colspan=\"2\">". $TableTitle ."</td>\n";
@@ -275,10 +275,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$page .= "</tr>\n";
 	$page .= "</tbody>\n";
 	$page .= "</table>\n";
-	$page .= "</form></center>\n";
+	$page .= "</form></div>\n";
 
 	display($page, $lang['fl_title']);
-
-// Updated by Chlorel. 16 Jan 2008 (String extraction, bug corrections, code uniformisation)
-// Created by Perberos. All rights reversed (C) 2006
 ?>

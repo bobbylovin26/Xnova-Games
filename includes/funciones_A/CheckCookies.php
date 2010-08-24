@@ -15,11 +15,11 @@
 // TheCookie[3] = 1rst Connexion time + 365 Dias
 
 function CheckCookies ( $IsUserChecked ) {
-	global $game_config, $xnova_root_path, $phpEx;
+	global $game_config, $xgp_root, $phpEx;
 
 	$UserRow = array();
 
-	include($xnova_root_path . 'config.' . $phpEx);
+	include($xgp_root . 'config.' . $phpEx);
 
 if (isset($_COOKIE[$game_config['COOKIE_NAME']]))
 {
@@ -28,19 +28,19 @@ if (isset($_COOKIE[$game_config['COOKIE_NAME']]))
 
 	if (mysql_num_rows($UserResult) != 1)
 	{
-		message( "¡Error de cookies! ¡Hay varios usuarios con este nombre!<a href=$xnova_root_path>Inicio</a> Debe eliminar sus cookies. En caso de problemas contactar con el admin." );
+		message( "¡Error de cookies! ¡Hay varios usuarios con este nombre!<a href=$xgp_root>Inicio</a> Debe eliminar sus cookies. En caso de problemas contacte al administrador.","","", false, false);
 	}
 
 	$UserRow    = mysql_fetch_array($UserResult);
 
 	if ($UserRow["id"] != $TheCookie[0])
 	{
-		message( "¡Error de cookies! ¡Su cookie no corresponde con el usuario!<a href=$xnova_root_path>Inicio</a> Debe eliminar sus cookies. En caso de problemas contactar con el admin." );
+		message( "¡Error de cookies! ¡Su cookie no corresponde con el usuario!<a href=$xgp_root>Inicio</a> Debe eliminar sus cookies. En caso de problemas contacte al administrador.","","",  false, false);
 	}
 
 	if (md5($UserRow["password"] . "--" . $dbsettings["secretword"]) !== $TheCookie[2])
 	{
-		message( "'¡Error de cookies! ¡Error de sesión, debe conectarse de nuevo!<a href=$xnova_root_path>Inicio</a> Debe eliminar sus cookies. En caso de problemas contactar con el admin." );
+		message( "¡Error de cookies! ¡Error de sesión, debe conectarse de nuevo!<a href=$xgp_root>Inicio</a> Debe eliminar sus cookies. En caso de problemas contacte al administrador.","","",  false, false);
 	}
 
 	$NextCookie = implode("/%/", $TheCookie);

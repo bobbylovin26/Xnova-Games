@@ -1,8 +1,7 @@
-<br><br>
-<h2>Lista de planetas</h2>
-<table width="450" style="color:#FFFFFF">
+<br />
+<table width="400" style="color:#FFFFFF">
 <tr>
-	<td class="c" colspan="5">Planetario del Universo</td>
+	<td class="c" colspan="5">Lista de planetas</td>
 </tr>
 <tr>
 	<th>ID</th>
@@ -11,5 +10,5 @@
 	<th>Sistema</th>
 	<th>Planeta</th>
 </tr>
-{planetes}
+{lista_planetas}
 </table>

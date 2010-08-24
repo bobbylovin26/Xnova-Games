@@ -12,10 +12,10 @@
 define('INSIDE'  , true);
 define('INSTALL' , false);
 
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.' . $phpEx);
-include($xnova_root_path . 'includes/funciones_A/CheckIfIsBuilding.' . $phpEx);
+$xgp_root = './';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.' . $phpEx);
+include($xgp_root . 'includes/funciones_A/CheckIfIsBuilding.' . $phpEx);
 
 $dpath = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
 
@@ -122,14 +122,6 @@ if ($_POST && $mode == "change")
 	else
 	{
 		$settings_fleetactions = "1";
-	}
-	// < ------------------------------------------------------------ MOSTRAR LOGO ALIANZA ------------------------------------------------------------ >
-	if (isset($_POST["settings_allylogo"]) && $_POST["settings_allylogo"] == 'on') {
-		$settings_allylogo = "1";
-	}
-	else
-	{
-		$settings_allylogo = "0";
 	}
 	// < ------------------------------------------------------------ SONDAS DE ESPIONAJE ------------------------------------------------------------ >
 	if (isset($_POST["settings_esp"]) && $_POST["settings_esp"] == 'on')
@@ -321,7 +313,7 @@ else
 		$parse['user_settings_mis'] = ($user['settings_mis'] == 1) ? " checked='checked'/":'';
 		$parse['user_settings_bud'] = ($user['settings_bud'] == 1) ? " checked='checked'/":'';
 
-		display(parsetemplate(gettemplate('options/options_body'), $parse), 'Opciones', false);
+		display(parsetemplate(gettemplate('options/options_body'), $parse), 'Opciones');
 	}
 }
 ?>

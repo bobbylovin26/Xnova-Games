@@ -15,7 +15,7 @@ function sendnewpassword($mail)
 
 	if (empty($ExistMail['email']))
 	{
-		message('¡La dirección de correo eléctronico no existe!','¡Error!',"index.php?modo=claveperdida",2);
+		message('¡La dirección de correo eléctronico no existe!','¡Error!',"index.php?modo=claveperdida",2, false, false);
 	}
 	else
 	{

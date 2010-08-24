@@ -41,7 +41,7 @@ function CreateOneMoonRecord ( $Galaxy, $System, $Planet, $Owner, $MoonID, $Moon
 			$size                   = rand ($SizeMin, $SizeMax);
 
 			$QryInsertMoonInLunas   = "INSERT INTO {{table}} SET ";
-			$QryInsertMoonInLunas  .= "`name` = '". ( ($MoonName == '') ? $lang['sys_moon'] : $MoonName ) ."', ";
+			$QryInsertMoonInLunas  .= "`name` = '". ( ($MoonName == '') ? "Luna" : $MoonName ) ."', ";
 			$QryInsertMoonInLunas  .= "`galaxy` = '".   $Galaxy  ."', ";
 			$QryInsertMoonInLunas  .= "`system` = '".   $System  ."', ";
 			$QryInsertMoonInLunas  .= "`lunapos` = '".  $Planet  ."', ";
@@ -69,7 +69,7 @@ function CreateOneMoonRecord ( $Galaxy, $System, $Planet, $Owner, $MoonID, $Moon
 			doquery( $QryUpdateMoonInGalaxy , 'galaxy');
 
 			$QryInsertMoonInPlanet  = "INSERT INTO {{table}} SET ";
-			$QryInsertMoonInPlanet .= "`name` = '" .$lang['sys_moon'] ."', ";
+			$QryInsertMoonInPlanet .= "`name` = '". ( ($MoonName == '') ? "Luna" : $MoonName ) ."', ";
 			$QryInsertMoonInPlanet .= "`id_owner` = '". $Owner ."', ";
 			$QryInsertMoonInPlanet .= "`id_level` = '".          $user['authlevel']          ."', ";
 			$QryInsertMoonInPlanet .= "`galaxy` = '". $Galaxy ."', ";

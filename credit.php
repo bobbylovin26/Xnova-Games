@@ -14,11 +14,11 @@ define('INSTALL' , false);
 
 $InLogin = true;
 
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.' . $phpEx);
+$xgp_root = './';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.' . $phpEx);
 
 
-display(parsetemplate(gettemplate('credit_body'), $parse), "Créditos", false);
+display(parsetemplate(gettemplate('credit_body'), $parse), "Créditos", false, '',false, false);
 
 ?>

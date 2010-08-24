@@ -10,9 +10,9 @@
 define('INSIDE'  , true);
 define('INSTALL' , false);
 
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.' . $phpEx);
+$xgp_root = './';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.' . $phpEx);
 
 	includeLang('fleet');
 
@@ -96,7 +96,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$page .= "<input type=\"hidden\" name=\"thisresource2\"  value=\"". floor($planetrow['crystal']) ."\" />";
 	$page .= "<input type=\"hidden\" name=\"thisresource3\"  value=\"". floor($planetrow['deuterium']) ."\" />";
 
-	$page .= "<br><div><center>";
+	$page .= "<br /><div id=\"content\">";
 	$page .= "<table width=\"519\" border=\"0\" cellpadding=\"0\" cellspacing=\"1\">";
 	$page .= "<tr height=\"20\">";
 	$page .= "<td colspan=\"2\" class=\"c\">". $lang['fl_floten1_ttl'] ."</td>";
@@ -287,7 +287,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$page .= "<th colspan=\"2\"><input type=\"submit\" name=\"submit\" value=\"". $lang['fl_continue'] ."\" /></th>";
 	$page .= "</tr>";
 	$page .= "</table>";
-	$page .= "</div></center>";
+	$page .= "</div></div>";
 	$page .= "<input type=\"hidden\" name=\"maxepedition\" value=\"". $_POST['maxepedition'] ."\" />";
 	$page .= "<input type=\"hidden\" name=\"curepedition\" value=\"". $_POST['curepedition'] ."\" />";
 	$page .= "<input type=\"hidden\" name=\"target_mission\" value=\"". $target_mission ."\" />";
@@ -295,7 +295,4 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$page .= "<script>javascript:shortInfo(); </script>";
 
 	display($page, $lang['fl_title']);
-
-// Updated by Chlorel. 16 Jan 2008 (String extraction, bug corrections, code uniformisation
-// Created by Perberos. All rights reversed (C) 2006
 ?>

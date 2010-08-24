@@ -13,9 +13,9 @@ define('LOGIN'   , true);
 
 $InLogin = true;
 
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.' . $phpEx);
+$xgp_root = './';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.' . $phpEx);
 
 function sendpassemail($emailaddress, $password)
 {
@@ -97,7 +97,7 @@ if ($_POST) {
     }
 
     if ($errors != 0) {
-        message ($errorlist, "<font color=\"red\">Error en el registro</font>", "reg.php", "3");
+        message ($errorlist, "Error en el registro", "reg.php", "3", false, false);
     } else {
     	$newpass	= $_POST['passwrd'];
         $UserName 	= $_POST['character'];
@@ -205,11 +205,11 @@ if ($_POST) {
             $Message .= " (" . htmlentities($_POST["email"]) . ")";
             $Message .= "<br><br>Un error se produjo en el env&iacute;o del e-mail. Tu contrase&ntilde;a es: <b>" . $newpass . "</b>";
         }
-        message( $Message, "&#161;Registro completado con &#233;xito!", "index.".$phpEx, "3" );
+        message( $Message, "&#161;Registro completado con &#233;xito!", "index.".$phpEx, "3", false, false);
     }
 } else {
 	$parse['servername']   = $game_config['game_name'];
 	$parse['forum_url']    = $game_config['forum_url'];
-    display (parsetemplate(gettemplate('registry_form'), $parse), "Registro", false);
+    display (parsetemplate(gettemplate('registry_form'), $parse), "Registro", false, '',false, false);
 }
 ?>

@@ -88,7 +88,6 @@
 	$QryInsertConfig    .= "('LastSettedGalaxyPos'   , '1'), ";
 	$QryInsertConfig    .= "('LastSettedSystemPos'   , '8'), ";
 	$QryInsertConfig    .= "('LastSettedPlanetPos'   , '3'), ";
-	$QryInsertConfig    .= "('urlaubs_modus_erz'     , '1'), ";
 	$QryInsertConfig    .= "('noobprotection'        , '1'), ";
 	$QryInsertConfig    .= "('noobprotectiontime'    , '5000'), ";
 	$QryInsertConfig    .= "('noobprotectionmulti'   , '5'), ";
@@ -365,7 +364,6 @@
 	$QryTableUsers      .= "`urlaubs_modus` tinyint(4) NOT NULL default '0', ";
 	$QryTableUsers      .= "`urlaubs_until` int(11) NOT NULL default '0', ";
 	$QryTableUsers      .= "`db_deaktjava` tinyint(4) NOT NULL default '0', ";
-	$QryTableUsers      .= "`new_message` int(11) NOT NULL default '0', ";
 	$QryTableUsers      .= "`fleet_shortcut` text character set latin1, ";
 	$QryTableUsers      .= "`b_tech_planet` int(11) NOT NULL default '0', ";
 	$QryTableUsers      .= "`spy_tech` int(11) NOT NULL default '0', ";
@@ -411,19 +409,7 @@
 	$QryTableUsers      .= "`lvl_raid` int(11) NOT NULL default '1', ";
 	$QryTableUsers      .= "`xpraid` int(11) NOT NULL default '0', ";
 	$QryTableUsers      .= "`xpminier` int(11) NOT NULL default '0', ";
-	$QryTableUsers      .= "`raids` bigint(20) NOT NULL default '0', ";
-	$QryTableUsers      .= "`p_infligees` bigint(20) NOT NULL default '0', ";
-	$QryTableUsers      .= "`mnl_alliance` INT( 11 ) NOT NULL , ";
-	$QryTableUsers      .= "`mnl_joueur` INT( 11 ) NOT NULL , ";
-	$QryTableUsers      .= "`mnl_attaque` INT( 11 ) NOT NULL , ";
-	$QryTableUsers      .= "`mnl_spy` INT( 11 ) NOT NULL , ";
-	$QryTableUsers      .= "`mnl_exploit` INT( 11 ) NOT NULL , ";
-	$QryTableUsers      .= "`mnl_transport` INT( 11 ) NOT NULL , ";
-	$QryTableUsers      .= "`mnl_expedition` INT( 11 ) NOT NULL , ";
-	$QryTableUsers      .= "`mnl_general` INT( 11 ) NOT NULL , ";
-	$QryTableUsers      .= "`mnl_buildlist` INT (11) NOT NULL , ";
 	$QryTableUsers      .= "`bana` int(11) default NULL , ";
-	$QryTableUsers      .= "`multi_validated` int(11) default NULL , ";
 	$QryTableUsers      .= "`banaday` int(11) NOT NULL default '0' ";
 	$QryTableUsers      .= ") ENGINE=MyISAM;";
 ?>

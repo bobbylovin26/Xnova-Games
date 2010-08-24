@@ -33,7 +33,7 @@
         <div id="content">
         	<center>
         		<div id="text1">
-        			<div style="text-align: left;"><strong>{servername}</strong> es un <strong>juego de simulacion estratégica espacial</strong> con <strong>miles de jugadores</strong> a lo largo del mundo compitiendo por ser el mejor <strong>simultáneamente</strong>. Todo lo que necesitas para jugar, es un navegador web estándar. 
+        			<div style="text-align: left;"><strong>{servername}</strong> es un <strong>juego de simulacion estratégica espacial</strong> con <strong>miles de jugadores</strong> a lo largo del mundo compitiendo por ser el mejor <strong>simultáneamente</strong>. Todo lo que necesitas para jugar, es un navegador web estándar.
 					</div>
 				</div>
         		<div id="register" class="bigbutton" onclick="document.location.href='reg.php';">¡Registrate!</div>

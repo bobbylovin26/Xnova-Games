@@ -49,18 +49,18 @@ global $lang;
 					$ListIDRow .= "<tr>";
 					if ($BuildMode == 'build')
 					{
-						$ListIDRow .= "	<td class=\"l\" colspan=\"4\">". $ListID .".: ". $ElementTitle ." ". $BuildLevel ."</td>";
+						$ListIDRow .= "	<td class=\"l\" colspan=\"2\">". $ListID .".: ". $ElementTitle ." ". $BuildLevel ."</td>";
 					}
 					else
 					{
-						$ListIDRow .= "	<td class=\"l\" colspan=\"4\">". $ListID .".: ". $ElementTitle ." ". $BuildLevel ." ". $lang['destroy'] ."</td>";
+						$ListIDRow .= "	<td class=\"l\" colspan=\"2\">". $ListID .".: ". $ElementTitle ." ". $BuildLevel ." Desmontar</td>";
 					}
 					$ListIDRow .= "	<td class=\"k\">";
 
 					if ($ListID == 1)
 					{
 						$ListIDRow .= "		<div id=\"blc\" class=\"z\">". $BuildTime ."<br>";
-						$ListIDRow .= "		<a href=\"buildings.php?listid=". $ListID ."&amp;cmd=cancel&amp;planet=". $PlanetID ."\">". $lang['DelFirstQueue'] ."</a></div>";
+						$ListIDRow .= "		<a href=\"buildings.php?listid=". $ListID ."&amp;cmd=cancel&amp;planet=". $PlanetID ."\">Interrumpir</a></div>";
 						$ListIDRow .= "		<script language=\"JavaScript\">";
 						$ListIDRow .= "			pp = \"". $BuildTime ."\";\n";
 						$ListIDRow .= "			pk = \"". $ListID ."\";\n";
@@ -73,7 +73,7 @@ global $lang;
 					else
 					{
 						$ListIDRow .= "		<font color=\"red\">";
-						$ListIDRow .= "		<a href=\"buildings.php?listid=". $ListID ."&amp;cmd=remove&amp;planet=". $PlanetID ."\">". $lang['DelFromQueue'] ."</a></font>";
+						$ListIDRow .= "		<a href=\"buildings.php?listid=". $ListID ."&amp;cmd=remove&amp;planet=". $PlanetID ."\">Cancelar</a></font>";
 					}
 					$ListIDRow .= "	</td>";
 					$ListIDRow .= "</tr>";

@@ -10,11 +10,11 @@
 define('INSIDE'  , true);
 define('INSTALL' , false);
 
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.' . $phpEx);
+$xgp_root = './';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.' . $phpEx);
 
-	include($xnova_root_path . 'includes/funciones_A/IsVacationMode.' . $phpEx);
+	include($xgp_root . 'includes/funciones_A/IsVacationMode.' . $phpEx);
 
 	if (IsVacationMode($user))
 	{
@@ -575,7 +575,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 //	doquery("FLUSH TABLES", '');
 
 	// Un peu de blabla pour l'utilisateur, affichage d'un joli tableau de la flotte expedi�e
-	$page  = "<br><div><center>";
+	$page  = "<br /><div id=\"content\">";
 	$page .= "<table border=\"0\" cellpadding=\"0\" cellspacing=\"1\" width=\"519\">";
 	$page .= "<tr height=\"20\">";
 	$page .= "<td class=\"c\" colspan=\"2\"><span class=\"success\">". $lang['fl_fleet_send'] ."</span></td>";
@@ -611,7 +611,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 		$page .= "<th>". $lang['tech'][$Ship] ."</th>";
 		$page .= "<th>". pretty_number($Count) ."</th>";
 	}
-	$page .= "</tr></table></div></center>";
+	$page .= "</tr></table></div></div>";
 	$page .= '<script type="text/javascript">
    var zeit = new Date();
    var ende = zeit.getTime();

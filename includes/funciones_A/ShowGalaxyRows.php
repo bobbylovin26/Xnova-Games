@@ -13,19 +13,19 @@ if (!defined('INSIDE'))die(header("location:../../"));
 
 function ShowGalaxyRows ($Galaxy, $System)
 {
-	global $planetcount, $CurrentRC, $dpath, $user, $xnova_root_path, $phpEx;
+	global $planetcount, $CurrentRC, $dpath, $user, $xgp_root, $phpEx;
 
-	include($xnova_root_path . "includes/funciones_A/GalaxyCheckFunctions." . $phpEx);
-	include($xnova_root_path . "includes/funciones_A/GalaxyRowActions." . $phpEx);
-	include($xnova_root_path . "includes/funciones_A/GalaxyRowAlly." . $phpEx);
-	include($xnova_root_path . "includes/funciones_A/GalaxyRowDebris." . $phpEx);
-	include($xnova_root_path . "includes/funciones_A/GalaxyRowMoon." . $phpEx);
-	include($xnova_root_path . "includes/funciones_A/GalaxyRowPlanet." . $phpEx);
-	include($xnova_root_path . "includes/funciones_A/GalaxyRowPlanetName." . $phpEx);
-	include($xnova_root_path . "includes/funciones_A/GalaxyRowPos." . $phpEx);
-	include($xnova_root_path . "includes/funciones_A/GalaxyRowUser." . $phpEx);
-	include($xnova_root_path . "includes/funciones_A/GetMissileRange." . $phpEx);
-	include($xnova_root_path . "includes/funciones_A/GetPhalanxRange." . $phpEx);
+	include($xgp_root . "includes/funciones_A/GalaxyCheckFunctions." . $phpEx);
+	include($xgp_root . "includes/funciones_A/GalaxyRowActions." . $phpEx);
+	include($xgp_root . "includes/funciones_A/GalaxyRowAlly." . $phpEx);
+	include($xgp_root . "includes/funciones_A/GalaxyRowDebris." . $phpEx);
+	include($xgp_root . "includes/funciones_A/GalaxyRowMoon." . $phpEx);
+	include($xgp_root . "includes/funciones_A/GalaxyRowPlanet." . $phpEx);
+	include($xgp_root . "includes/funciones_A/GalaxyRowPlanetName." . $phpEx);
+	include($xgp_root . "includes/funciones_A/GalaxyRowPos." . $phpEx);
+	include($xgp_root . "includes/funciones_A/GalaxyRowUser." . $phpEx);
+	include($xgp_root . "includes/funciones_A/GetMissileRange." . $phpEx);
+	include($xgp_root . "includes/funciones_A/GetPhalanxRange." . $phpEx);
 
 	$UserPoints    = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $user['id'] ."';", 'statpoints', true);
 

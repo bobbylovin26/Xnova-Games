@@ -1,7 +1,5 @@
 <?php
 
-$lang['Solar_system_at'] 		= 'Sistema solar a';
-
 //Enviar Flota
 
 $lang['Sending_fleet'] 			= 'Enviando flota';

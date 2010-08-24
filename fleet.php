@@ -10,9 +10,9 @@
 define('INSIDE'  , true);
 define('INSTALL' , false);
 
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.' . $phpEx);
+$xgp_root = './';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.' . $phpEx);
 
 	$maxfleet  = doquery("SELECT COUNT(fleet_owner) AS `actcnt` FROM {{table}} WHERE `fleet_owner` = '".$user['id']."';", 'fleets', true);
 
@@ -70,7 +70,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 
 	$page  = "<script language=\"JavaScript\" src=\"scripts/flotten.js\"></script>\n";
 	$page .= "<script language=\"JavaScript\" src=\"scripts/ocnt.js\"></script>\n";
-	$page .= "<br><center>";
+	$page .= "<br /><div id=\"content\">";
 	$page .= "<table width='519' border='0' cellpadding='0' cellspacing='1'>";
 	$page .= "<tr height='20'>";
 	$page .= "<td colspan='9' class='c'>";
@@ -176,10 +176,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 		$page .= "<tr height=\"20\"><th colspan=\"9\"><font color=\"red\">".$lang['fl_noslotfree']."</font></th></tr>";
 	}
 
-	$page .= "</table></center>";
-
-	$page .= "<center>";
-
+	$page .= "</table>";
 	$page .= "<form action=\"floten1.php\" method=\"post\">";
 	$page .= "<table width=\"519\" border=\"0\" cellpadding=\"0\" cellspacing=\"1\">";
 	$page .= "<tr height=\"20\">";
@@ -253,7 +250,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$page .= "<input type=\"hidden\" name=\"curepedition\" value=\"". $ExpeditionEnCours ."\" />";
 	$page .= "<input type=\"hidden\" name=\"target_mission\" value=\"". $target_mission ."\" />";
 	$page .= "</form>";
-	$page .= "</center>";
+	$page .= "</div>";
 
 	display($page, $lang['fl_title']);
 ?>

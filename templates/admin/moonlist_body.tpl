@@ -1,8 +1,7 @@
-<br><br>
-<h2>Lista de Lunas</h2>
-<table width="500" style="color:#FFFFFF">
+<br />
+<table width="400" style="color:#FFFFFF">
 <tr>
-	<td class="c" colspan="6">Lunas del Universo</td>
+	<td class="c" colspan="6">Lista de lunas</td>
 </tr>
 <tr>
 	<th>ID</th>

@@ -13,9 +13,9 @@ if (!defined('INSIDE'))die(header("location:../../"));
 
 function ShowGalaxyFooter ( $Galaxy, $System,  $CurrentMIP, $CurrentRC, $CurrentSP)
 {
-	global $maxfleet_count, $fleetmax, $planetcount, $xnova_root_path, $phpEx;
+	global $maxfleet_count, $fleetmax, $planetcount, $xgp_root, $phpEx;
 
-	include_once($xnova_root_path . "includes/funciones_A/GalaxyLegendPopup." . $phpEx);
+	include_once($xgp_root . "includes/funciones_A/GalaxyLegendPopup." . $phpEx);
 
 	$Result  = "";
 

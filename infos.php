@@ -10,10 +10,10 @@
 define('INSIDE'  , true);
 define('INSTALL' , false);
 
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.' . $phpEx);
-include($xnova_root_path . 'includes/funciones_A/InsertJavaScriptChronoApplet.' . $phpEx);
+$xgp_root = './';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.' . $phpEx);
+include($xgp_root . 'includes/funciones_A/InsertJavaScriptChronoApplet.' . $phpEx);
 
 function BuildFleetListRows ( $CurrentPlanet ) {
 	global $resource, $lang;
@@ -204,9 +204,6 @@ function ShowBuildingInfoPage ($CurrentUser, $CurrentPlanet, $BuildID) {
 		// Silo de missiles
 		$PageTPL              = gettemplate('info/info_buildings_general');
 		$DestroyTPL           = gettemplate('info/info_buildings_destroy');
-	} elseif ($BuildID ==  45) {
-        // Super Terraformer
-        $PageTPL              = gettemplate('info/info_buildings_general');
 	} elseif ($BuildID ==  41) {
 		// Batiments lunaires
 		$PageTPL              = gettemplate('info/info_buildings_general');

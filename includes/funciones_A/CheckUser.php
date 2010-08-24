@@ -8,9 +8,9 @@
  */
 
 function CheckTheUser ( $IsUserChecked ) {
-	global $user, $xnova_root_path;
+	global $user, $xgp_root;
 
-	include($xnova_root_path . "includes/funciones_A/CheckCookies.php");
+	include($xgp_root . "includes/funciones_A/CheckCookies.php");
 
 	$Result        = CheckCookies( $IsUserChecked );
 	$IsUserChecked = $Result['state'];
@@ -30,7 +30,7 @@ function CheckTheUser ( $IsUserChecked ) {
 	} else {
 		$RetValue['record'] = array();
 		$RetValue['state']  = false;
-		header("location:".$xnova_root_path);
+		header("location:".$xgp_root);
 	}
 
 	return $RetValue;

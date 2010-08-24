@@ -1,20 +1,20 @@
-<center>
-<br><br>
-<h2>{flt_title}</h2>
-<table width="569">
+<br />
+<table width="600">
 <tr>
-	<td class="c" >{flt_id}</td>
-	<td class="c" >{flt_fleet}</td>
-	<td class="c" >{flt_mission}</td>
-	<td class="c" >{flt_owner}</td>
-	<td class="c" >{flt_planet}</td>
-	<td class="c" >{flt_time_st}</td>
-	<td class="c" >{flt_e_owner}</td>
-	<td class="c" >{flt_planet}</td>
-	<td class="c" >{flt_staying}</td>
-	<td class="c" >{flt_time_en}</td>
-	<td class="c" >{flt_action}</td>
+	<td class="c" colspan="11">Flotas en vuelo</td>
+</tr>
+<tr>
+	<td class="c" >ID</td>
+	<td class="c" >Flota</td>
+	<td class="c" >Misión</td>
+	<td class="c" >Salida</td>
+	<td class="c" >Planeta</td>
+	<td class="c" >H. de salida</td>
+	<td class="c" >Llegada</td>
+	<td class="c" >Planeta</td>
+	<td class="c" >Mantener posición</td>
+	<td class="c" >H. de llegada</td>
+	<td class="c" >Acción</td>
 </tr>
 {flt_table}
 </table>
-</center>

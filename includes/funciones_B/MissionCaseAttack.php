@@ -11,7 +11,7 @@
 // Mission Case 1: -> Attaquer
 function MissionCaseAttack ($FleetRow)
 {
-    global $user, $phpEx, $xnova_root_path, $pricelist, $lang, $resource, $CombatCaps;
+    global $user, $phpEx, $xgp_root, $pricelist, $lang, $resource, $CombatCaps;
 
     if ($FleetRow['fleet_start_time'] <= time()) {
         if ($FleetRow['fleet_mess'] == 0) {
@@ -67,7 +67,7 @@ function MissionCaseAttack ($FleetRow)
                 }
             }
 
-            include_once($xnova_root_path . 'includes/funciones_A/ataki.' . $phpEx);
+            include_once($xgp_root . 'includes/funciones_A/ataki.' . $phpEx);
 
             // Calcul de la duree de traitement (initialisation)
             $mtime = microtime();

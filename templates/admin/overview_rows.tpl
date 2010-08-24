@@ -1,6 +1,6 @@
 <tr>
-	<th><a href="../messages.php?mode=write&id={adm_ov_data_id}"><img src="{dpath}img/{adm_ov_data_pict}" border="0"></a></th>
-	<th>{adm_ov_data_name} ({usr_s_id})</th>
+	<th><a href="../messages.php?mode=write&id={adm_ov_data_id}" title="Escribir mensaje privado"><img src="{dpath}img/{adm_ov_data_pict}" border="0"></a></th>
+	<th><a href="#" title="{adm_ov_data_agen}">{adm_ov_data_name} ({usr_s_id})</a></th>
 	<th><a href="http://network-tools.com/default.asp?prog=trace&host={adm_ov_data_adip}">{adm_ov_data_adip}</a></th>
 	<th>{adm_ov_data_ally}</th>
 	<th>{adm_ov_data_point}</th>

@@ -1,19 +1,21 @@
 <?php
 
 /**
-* messages.php
-*
-* @version 1.2
-* @copyright 2008 by Chlorel for XNova
-*/
+ * messages.php
+ *
+ * @version 2.0
+ * @copyright 2008 by Chlorel for XNova
+ * Reprogramado 2009 By lucky for XG PROYECT XNova - Argentina
+ *
+ */
 
 define('INSIDE'  , true);
 define('INSTALL' , false);
 
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.' . $phpEx);
-include($xnova_root_path . 'includes/funciones_A/BBcodeFunction.' . $phpEx);
+$xgp_root = './';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.' . $phpEx);
+include($xgp_root . 'includes/funciones_A/BBcodeFunction.' . $phpEx);
 
 $OwnerID       		= $_GET['id'];
 $MessCategory  		= (isset($_GET['messcat'])) ? $_GET['messcat'] : '100';
@@ -43,7 +45,7 @@ while ($CurMess = mysql_fetch_array($UsrMess))
 	$TotalMess[100]       += 1;
 }
 
-$page .= "<center><table width=\"569\">";
+$page .= "<br /><div id=\"content\"><table width=\"569\">";
 $page .= "<tr><td class=\"c\" colspan=\"9\">Mensajes de:</td></tr>";
 
 for ($MessType = 0; $MessType <= 16; $MessType++)
@@ -64,7 +66,6 @@ for ($MessType = 0; $MessType <= 16; $MessType++)
 	}
 }
 $page .= "</tr></table>";
-$page .= "</center>";
 
 switch ($MessPageMode)
 {
@@ -181,7 +182,6 @@ switch ($MessPageMode)
 		$page .= "new_win.focus();\n";
 		$page .= "}\n";
 		$page .= "</script>\n";
-		$page .= "<center>";
 		$page .= "<table>";
 		$page .= "<tr>";
 		$page .= "<td></td>";
@@ -281,7 +281,7 @@ switch ($MessPageMode)
 		$page .= "</form>";
 		$page .= "</td>";
 		$page .= "</table>\n";
-		$page .= "</center>";
+		$page .= "</div>";
 	break;
 }
 display($page, "Mensajes");

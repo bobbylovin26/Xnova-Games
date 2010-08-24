@@ -12,15 +12,15 @@
 define('INSIDE'  , true);
 define('INSTALL' , false);
 
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.' . $phpEx);
-include($xnova_root_path . 'includes/funciones_A/InsertGalaxyScripts.' . $phpEx);
-include($xnova_root_path . 'includes/funciones_A/ShowGalaxyFooter.'.$phpEx);
-include($xnova_root_path . 'includes/funciones_A/ShowGalaxyMISelector.'.$phpEx);
-include($xnova_root_path . 'includes/funciones_A/ShowGalaxyRows.'.$phpEx);
-include($xnova_root_path . 'includes/funciones_A/ShowGalaxySelector.'.$phpEx);
-include($xnova_root_path . 'includes/funciones_A/ShowGalaxyTitles.'.$phpEx);
+$xgp_root = './';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.' . $phpEx);
+include($xgp_root . 'includes/funciones_A/InsertGalaxyScripts.' . $phpEx);
+include($xgp_root . 'includes/funciones_A/ShowGalaxyFooter.'.$phpEx);
+include($xgp_root . 'includes/funciones_A/ShowGalaxyMISelector.'.$phpEx);
+include($xgp_root . 'includes/funciones_A/ShowGalaxyRows.'.$phpEx);
+include($xgp_root . 'includes/funciones_A/ShowGalaxySelector.'.$phpEx);
+include($xgp_root . 'includes/funciones_A/ShowGalaxyTitles.'.$phpEx);
 
 $CurrentPlanet 	= doquery("SELECT * FROM {{table}} WHERE `id` = '". $user['current_planet'] ."';", 'planets', true);
 $lunarow       	= doquery("SELECT * FROM {{table}} WHERE `id` = '". $user['current_luna'] ."';", 'lunas', true);
@@ -44,7 +44,7 @@ CheckPlanetUsedFields($CurrentPlanet);
 
 
 if ($UserDeuterium < 1)
-	die (message("¡No hay suficiente deuterio!","Error","overview.php",2));
+	die (message("&#161;No hay suficiente deuterio!","Error","overview.php",2));
 
 
 $QryGalaxyDeuterium   = "UPDATE {{table}} SET ";
@@ -192,7 +192,7 @@ $lunacount   = 0;
 
 $page  = InsertGalaxyScripts ( $CurrentPlanet );
 
-$page .= "<body style=\"overflow: auto;\" onUnload=\"\"><br><br>";
+$page .= "<body onUnload=\"\"><div id=\"content\">";
 $page .= ShowGalaxySelector ( $galaxy, $system );
 
 if ($mode == 2)
@@ -201,13 +201,13 @@ if ($mode == 2)
 	$page .= ShowGalaxyMISelector ( $galaxy, $system, $planet, $CurrentPlanetID, $CurrentMIP );
 }
 
-$page .= "<table width=569><tbody>";
+$page .= "<table width=569>";
 
 $page .= ShowGalaxyTitles ( $galaxy, $system );
 $page .= ShowGalaxyRows   ( $galaxy, $system );
 $page .= ShowGalaxyFooter ( $galaxy, $system,  $CurrentMIP, $CurrentRC, $CurrentSP);
 
-$page .= "</tbody></table></div>";
+$page .= "</table></div>";
 
 display ($page, "Galaxia", false, '', false);
 ?>

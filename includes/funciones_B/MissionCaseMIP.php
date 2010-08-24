@@ -11,7 +11,7 @@
 // Mission Case 10: -> MIP
 function MissionCaseMIP ($FleetRow)
 {
-    global $user, $phpEx, $xnova_root_path, $pricelist, $lang, $resource, $CombatCaps;
+    global $user, $phpEx, $xgp_root, $pricelist, $lang, $resource, $CombatCaps;
 
    if ($FleetRow['fleet_start_time'] <= time()) {
         if ($FleetRow['fleet_mess'] == 0) {
@@ -51,10 +51,10 @@ function MissionCaseMIP ($FleetRow)
             5 => 406,
             6 => 407,
             7 => 408,
-			
+
             8 => 502,
             9 => 503,
-			
+
             10 => 409,
             11 => 410,
             12 => 411);
@@ -112,7 +112,7 @@ function MissionCaseMIP ($FleetRow)
 
             if (empty($message))$message = "Tu planeta no tenia defensa !";
 
-    doquery("INSERT INTO {{table}} SET
+    			doquery("INSERT INTO {{table}} SET
                           `message_owner`='" . $FleetRow['fleet_target_owner'] . "',
                           `message_sender`='".$UserPlanet['id']."',
                           `message_time`=UNIX_TIMESTAMP(),
@@ -128,11 +128,10 @@ function MissionCaseMIP ($FleetRow)
                           `message_from`='Torre de Control',
                           `message_subject`='Ataque con misiles',
                           `message_text`='" . $message_vorlage . $message . "'" , 'messages');
-                    doquery("UPDATE {{table}} SET new_message=new_message+1 WHERE id='" . $FleetRow['fleet_target_owner'] . "'", 'users');
-                doquery("UPDATE {{table}} SET new_message=new_message+1 WHERE id='" . $UserPlanet['id'] . "'", 'users');
-                    doquery("DELETE FROM {{table}} WHERE fleet_id = '" . $FleetRow['fleet_id'] . "'", 'fleets');
+
+                doquery("DELETE FROM {{table}} WHERE fleet_id = '" . $FleetRow['fleet_id'] . "'", 'fleets');
       }
-   } 
+   }
    $FleetRow['fleet_start_time'] <= time();
-} //END FUNCTION
+}
 ?>

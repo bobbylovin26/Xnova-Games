@@ -13,10 +13,10 @@
 define('INSIDE'  , true);
 define('INSTALL' , true);
 
-$xnova_root_path = './../';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.'.$phpEx);
-include($xnova_root_path . 'install/databaseinfos.'.$phpEx);
+$xgp_root = './../';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.'.$phpEx);
+include($xgp_root . 'install/databaseinfos.'.$phpEx);
 
 $Mode     = $_GET['mode'];
 $Page     = $_GET['page'];
@@ -68,14 +68,14 @@ $nextpage = $Page + 1;
 					}
 
 				fwrite($dz, "<?php\n");
-				fwrite($dz, "if(!defined(\"INSIDE\")){ header(\"location:".$xnova_root_path."\"); }\n");
+				fwrite($dz, "if(!defined(\"INSIDE\")){ header(\"location:".$xgp_root."\"); }\n");
 				fwrite($dz, "\$dbsettings = Array(\n");
 				fwrite($dz, "\"server\"     => \"".$host."\", // MySQL server name.\n");
 				fwrite($dz, "\"user\"       => \"".$user."\", // MySQL username.\n");
 				fwrite($dz, "\"pass\"       => \"".$pass."\", // MySQL password.\n");
 				fwrite($dz, "\"name\"       => \"".$db."\", // MySQL database name.\n");
 				fwrite($dz, "\"prefix\"     => \"".$prefix."\", // Tables prefix.\n");
-				fwrite($dz, "\"secretword\" => \"XNova".$numcookie."\"); // Cookies.\n");
+				fwrite($dz, "\"secretword\" => \"XGProyect".$numcookie."\"); // Cookies.\n");
 				fwrite($dz, "?>");
 				fclose($dz);
 
@@ -199,6 +199,6 @@ $nextpage = $Page + 1;
 	$parse['dis_ins_btn']  = "?mode=$Mode&page=$nextpage";
 	$Displ                 = parsetemplate (gettemplate('install/ins_body'), $parse);
 
-	display ($Displ, "Instalacion de XG Proyect", false, '', true);
+	display ($Displ, "Instalacion de XG Proyect", false, '', true, false, false);
 
 ?>

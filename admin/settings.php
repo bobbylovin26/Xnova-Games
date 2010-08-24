@@ -13,9 +13,9 @@ define('INSIDE'  , true);
 define('INSTALL' , false);
 define('IN_ADMIN', true);
 
-$xnova_root_path = './../';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.' . $phpEx);
+$xgp_root = './../';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.' . $phpEx);
 
 function DisplayGameSettingsPage ( $CurrentUser ) {
 global $game_config, $_POST;
@@ -145,9 +145,9 @@ global $game_config, $_POST;
 			$parse['newsframe']              = ($game_config['OverviewNewsFrame'] == 1) ? " checked = 'checked' ":"";
 			$parse['NewsTextVal']            = stripslashes( $game_config['OverviewNewsText'] );
 			$parse['debug']                  = ($game_config['debug'] == 1)        ? " checked = 'checked' ":"";
-			$Page                           .= parsetemplate(gettemplate('admin/options_body'),  $parse );
+			$Page                           .= parsetemplate(gettemplate('admin/settings_body'),  $parse );
 
-			display ( $Page, "Configuraciones generales", false, '', true );
+			display ( $Page, "Configuraciones generales", false, '', true, false);
 		}
 	}
 	else

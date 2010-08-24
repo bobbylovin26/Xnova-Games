@@ -12,10 +12,10 @@
 define('INSIDE'  , true);
 define('INSTALL' , false);
 
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.' . $phpEx);
-include($xnova_root_path . 'includes/funciones_A/IsOfficierAccessible.' . $phpEx);
+$xgp_root = './';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.' . $phpEx);
+include($xgp_root . 'includes/funciones_A/IsOfficierAccessible.' . $phpEx);
 
 function ShowOfficierPage ( &$CurrentUser ) {
 	global $resource, $reslist, $_GET;

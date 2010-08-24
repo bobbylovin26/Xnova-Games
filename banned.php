@@ -10,9 +10,9 @@
 define('INSIDE'  , true);
 define('INSTALL' , false);
 
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.'.$phpEx);
+$xgp_root = './';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.'.$phpEx);
 
 $parse['dpath'] = $dpath;
 
@@ -36,6 +36,6 @@ if ($i=="0")
 else
   	$parse['banned'] .= "<tr><th class=b colspan=6>Existe {$i} jugador/es baneado/s</th></tr>";
 
-display(parsetemplate(gettemplate('banned_body'), $parse),'Jugador Baneados',false);
+display(parsetemplate(gettemplate('banned_body'), $parse),'Jugadores baneados');
 
 ?>

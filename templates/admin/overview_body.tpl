@@ -1,4 +1,4 @@
-<br /><br />
+<br />
 <table width="100%">
 <tr>
 	<td class="c" colspan="13">Jugadores conectados: ({adm_ov_data_count})</td>

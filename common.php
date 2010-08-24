@@ -9,7 +9,7 @@
  *
  */
 
-define('VERSION','v2.2');
+define('VERSION','v2.3');
 
 $phpEx = "php";
 
@@ -19,20 +19,20 @@ $lang          = array();
 $link          = "";
 $IsUserChecked = false;
 
-define('DEFAULT_SKINPATH' , 'skins/xnova/');
+define('DEFAULT_SKINPATH' , 'skins/xgproyect/');
 define('TEMPLATE_DIR'     , 'templates/');
 define('DEFAULT_LANG'     , 'es');
 
-include($xnova_root_path . 'includes/debug.class.'.$phpEx);
+include($xgp_root . 'includes/debug.class.'.$phpEx);
 $debug = new debug();
 
-include($xnova_root_path . 'includes/funciones.'.$phpEx);
+include($xgp_root . 'includes/funciones.'.$phpEx);
 
 if (INSTALL != true)
 {
 	//GENERALES
-	include($xnova_root_path . 'includes/vars.'.$phpEx);
-	include($xnova_root_path . 'includes/constantes.'.$phpEx);
+	include($xgp_root . 'includes/vars.'.$phpEx);
+	include($xgp_root . 'includes/constantes.'.$phpEx);
 
 	/**
 	* INICIO DEL BLOQUE
@@ -47,18 +47,18 @@ if (INSTALL != true)
 	* 		LAS FUNCIONES "A" ESTAN INCLUIDAS DIRECTAMENTE A SU ARCHIVO CORRESPONDIENTE.-
 	*  -----------------------------------------------------------------------------------
 	* 	- FUNCIONES "B"(funciones_B) = SUELEN ESTAR EN VARIOS ARCHIVOS Y GENERAN CONFLICTOS AL INCLUIRLAS INDIVIDUALMENTE.-
-	* 		ESTO SUCEDE A QUE VARIAS VECES SE HACEN VARIAS PETICIONES A UN MISMO ARCHIVO (EJ: MOVIMIENTOS DE FLOTAS, POR ENDE
+	* 		ESTO SUCEDE YA QUE VARIAS VECES SE HACEN VARIAS PETICIONES A UN MISMO ARCHIVO (EJ: MOVIMIENTOS DE FLOTAS, POR ENDE
 	* CON UN INCLUDE_ONCE NO SE SOLUCIONA ESTE ASPECTO).
 	*
 	*/
-	$carpeta = opendir($xnova_root_path . 'includes/funciones_B');
+	$carpeta = opendir($xgp_root . 'includes/funciones_B');
 
 	while (($archivo = readdir($carpeta)) !== false)
 	{
 		$extension = "." . substr($archivo, -3);
 
 		if ($extension == "." . $phpEx)
-			require_once $xnova_root_path . 'includes/funciones_B/' . $archivo;
+			require_once $xgp_root . 'includes/funciones_B/' . $archivo;
 	}
 	//FIN DEL BLOQUE QUE OBTIENE LAS FUNCIONES B
 
@@ -72,7 +72,7 @@ if (INSTALL != true)
 
 	if ($InLogin != true)
 	{
-		include($xnova_root_path . 'includes/funciones_A/CheckUser.'.$phpEx);
+		include($xgp_root . 'includes/funciones_A/CheckUser.'.$phpEx);
 
 		$Result        = CheckTheUser ( $IsUserChecked );
 		$IsUserChecked = $Result['state'];
@@ -96,19 +96,30 @@ if (INSTALL != true)
 
 	if($game_config['actualizar_puntos'] < time())
 	{
-		include($xnova_root_path . 'admin/statbuilder.'.$phpEx);
+		include($xgp_root . 'includes/funciones_A/StatFunctions.' . $phpEx);
+		include($xgp_root . 'StatBuilder.' . $phpEx);
 		doquery("UPDATE {{table}} SET `config_value` = '". $Time ."' WHERE `config_name` = 'actualizar_puntos';", "config");
 	}
 
 	if (isset($user))
 	{
-		include($xnova_root_path . 'includes/funciones_A/FlyingFleetHandler.'.$phpEx);
+		include($xgp_root . 'includes/funciones_A/FlyingFleetHandler.'.$phpEx);
 
-		$_fleets = doquery("SELECT * FROM {{table}} WHERE `fleet_end_time` <= '".time()."';", 'fleets');
-
+		$_fleets = doquery("SELECT * FROM {{table}} WHERE `fleet_start_time` <= '".time()."';", 'fleets'); //  OR fleet_end_time <= ".time()
 		while ($row = mysql_fetch_array($_fleets))
 		{
+			$array                = array();
+			$array['galaxy']      = $row['fleet_start_galaxy'];
+			$array['system']      = $row['fleet_start_system'];
+			$array['planet']      = $row['fleet_start_planet'];
+			$array['planet_type'] = $row['fleet_start_type'];
 
+			$temp = FlyingFleetHandler ($array);
+		}
+
+		$_fleets = doquery("SELECT * FROM {{table}} WHERE `fleet_end_time` <= '".time()."';", 'fleets'); //  OR fleet_end_time <= ".time()
+		while ($row = mysql_fetch_array($_fleets))
+		{
 			$array                = array();
 			$array['galaxy']      = $row['fleet_end_galaxy'];
 			$array['system']      = $row['fleet_end_system'];
@@ -116,19 +127,6 @@ if (INSTALL != true)
 			$array['planet_type'] = $row['fleet_end_type'];
 
 			$temp = FlyingFleetHandler ($array);
-
-			if($row['fleet_end_time'] <= time())
-			{
-				unset($array);
-				$array                = array();
-				$array['galaxy']      = $row['fleet_start_galaxy'];
-				$array['system']      = $row['fleet_start_system'];
-				$array['planet']      = $row['fleet_start_planet'];
-				$array['planet_type'] = $row['fleet_start_type'];
-
-				$temp = FlyingFleetHandler ($array);
-			}
-
 		}
 
 		unset($_fleets);

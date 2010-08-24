@@ -1,6 +1,6 @@
 <br>
-<center>
-<table width="569">
-	{techtree_list}
-</table>
-</center>
+<div id="content">
+    <table width="569">
+        {techtree_list}
+    </table>
+</div>

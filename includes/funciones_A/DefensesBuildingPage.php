@@ -15,13 +15,13 @@
 // $CurrentUser   -> Utilisateur qui a lancé la construction
 //
 function DefensesBuildingPage ( &$CurrentPlanet, $CurrentUser ) {
- 	global $lang, $resource, $phpEx, $dpath, $_POST,$xnova_root_path;
+ 	global $lang, $resource, $phpEx, $dpath, $_POST,$xgp_root;
 
-	include_once($xnova_root_path . 'includes/funciones_A/IsTechnologieAccessible.' . $phpEx);
-	include_once($xnova_root_path . 'includes/funciones_A/GetMaxConstructibleElements.' . $phpEx);
-	include_once($xnova_root_path . 'includes/funciones_A/GetElementRessources.' . $phpEx);
-	include_once($xnova_root_path . 'includes/funciones_A/GetElementPrice.' . $phpEx);
-	include_once($xnova_root_path . 'includes/funciones_A/ElementBuildListBox.' . $phpEx);
+	include_once($xgp_root . 'includes/funciones_A/IsTechnologieAccessible.' . $phpEx);
+	include_once($xgp_root . 'includes/funciones_A/GetMaxConstructibleElements.' . $phpEx);
+	include_once($xgp_root . 'includes/funciones_A/GetElementRessources.' . $phpEx);
+	include_once($xgp_root . 'includes/funciones_A/GetElementPrice.' . $phpEx);
+	include_once($xgp_root . 'includes/funciones_A/ElementBuildListBox.' . $phpEx);
 
 	if (isset($_POST['fmenge'])) {
 		// On vient de Cliquer ' Construire '
@@ -120,7 +120,7 @@ function DefensesBuildingPage ( &$CurrentPlanet, $CurrentUser ) {
 	// S'il n'y a pas de Chantier ...
 	if ($CurrentPlanet[$resource[21]] == 0) {
 		// Veuillez avoir l'obligeance de construire le Chantier Spacial !!
-		message($lang['need_hangar'], $lang['tech'][21]);
+		message($lang['need_hangar'], $lang['tech'][21], '', '', true);
 	}
 
 	// -------------------------------------------------------------------------------------------------------

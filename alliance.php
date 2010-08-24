@@ -12,10 +12,10 @@
 define('INSTALL' , false);
 define('INSIDE', true);
 
-$xnova_root_path = './';
-include($xnova_root_path . 'extension.inc.php');
-include($xnova_root_path . 'common.'.$phpEx);
-include($xnova_root_path . 'includes/funciones_A/MessageForm.'.$phpEx);
+$xgp_root = './';
+include($xgp_root . 'extension.inc.php');
+include($xgp_root . 'common.'.$phpEx);
+include($xgp_root . 'includes/funciones_A/MessageForm.'.$phpEx);
 
 //MODO PRINCIPAL
 $mode = $_GET['mode'];
@@ -273,15 +273,12 @@ if ($user['ally_id'] == 0)
 	}
 	else
 	{
-		$page .= parsetemplate(gettemplate('alliance/alliance_defaultmenu'), $lang);
-		display($page, "Alianza");
+		display(parsetemplate(gettemplate('alliance/alliance_defaultmenu'), $lang), "Alianza");
 	}
 }
 elseif ($user['ally_id'] != 0 && $user['ally_request'] == 0) // CUANDO YA ESTA EN UNA ALIANZA
 {
-
 	$ally = doquery("SELECT * FROM {{table}} WHERE id='{$user['ally_id']}'", "alliance", true);
-
 	$ally_ranks = unserialize($ally['ally_ranks']);
 
 	if ($ally_ranks[$user['ally_rank_id']-1]['onlinestatus'] == 1 || $ally['ally_owner'] == $user['id'])
@@ -363,7 +360,6 @@ elseif ($user['ally_id'] != 0 && $user['ally_request'] == 0) // CUANDO YA ESTA E
 // < ------------------------------------------------------------- LISTA DE MIEMBROS ------------------------------------------------------------- >
 	if ($mode == 'memberslist')
 	{
-
 		if ($ally['ally_owner'] != $user['id'] && !$user_can_kick && $ally_ranks[$user['ally_rank_id']-1]['administrieren'] != 1 )
 		{
 			message("Acceso Denegado, no puedes ver la lista de miembros.", "¡Error!", "alliance.php",2);
@@ -425,7 +421,6 @@ elseif ($user['ally_id'] != 0 && $user['ally_request'] == 0) // CUANDO YA ESTA E
 			{
 				$u["onlinetime"] = "\"orange\">-<";
 			}
-
 
 			if ($ally['ally_owner'] == $u['id'])
 			{
@@ -688,11 +683,9 @@ elseif ($user['ally_id'] != 0 && $user['ally_request'] == 0) // CUANDO YA ESTA E
 			}
 		}
 
-		$lang['list'] = $list;
-		$lang['dpath'] = $dpath;
-		$page .= parsetemplate(gettemplate('alliance/alliance_admin_laws'), $lang);
-
-		display($page, "Alianza - Administrar permisos");
+		$lang['list'] 	= $list;
+		$lang['dpath'] 	= $dpath;
+		display(parsetemplate(gettemplate('alliance/alliance_admin_laws'), $lang), "Alianza - Administrar permisos");
 	}
 // < ----------------------------------------------------- EDICIONES GENERALES DE LA ALIANZA ----------------------------------------------------- >
 	if ($mode == 'admin' && $edit == 'ally')
