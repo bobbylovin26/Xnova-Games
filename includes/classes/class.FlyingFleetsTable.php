@@ -59,37 +59,51 @@ class FlyingFleetsTable
 		$FleetRec     = explode(";", $FleetRow['fleet_array']);
 		$FleetPopup   = "<a href='#' onmouseover=\"return overlib('";
 		$FleetPopup  .= "<table width=200>";
+		if(!defined('IN_ADMIN'))
+		{
+			if($user['spy_tech'] < 2 && $FleetRow['fleet_owner'] != $user['id'])
+			{
+				$FleetPopup .= "<tr><td width=50% align=left><font color=white>".$lang['cff_no_fleet_data']."<font></td></tr>";
+			}
+			elseif($user['spy_tech'] >= 2 && $user['spy_tech'] < 4 && $FleetRow['fleet_owner'] != $user['id'])
+			{
+				$FleetPopup .= "<tr><td width=50% align=left><font color=white>".$lang['cff_aproaching'].$FleetRow[fleet_amount].$lang['cff_ships']."<font></td></tr>";
+			}
+			else
+			{
+				if($FleetRow['fleet_owner'] != $user['id'])
+					$FleetPopup .= "<tr><td width=100% align=left><font color=white>".$lang['cff_aproaching'].$FleetRow[fleet_amount].$lang['cff_ships'].":<font></td></tr>";
 
-		if($user['spy_tech'] < 2 && $FleetRow['fleet_owner'] != $user['id'])
-		{
-			$FleetPopup .= "<tr><td width=50% align=left><font color=white>".$lang['cff_no_fleet_data']."<font></td></tr>";
+				foreach($FleetRec as $Item => $Group)
+				{
+					if ($Group  != '')
+					{
+						$Ship    = explode(",", $Group);
+						if($FleetRow['fleet_owner'] == $user['id'])
+							$FleetPopup .= "<tr><td width=50% align=left><font color=white>". $lang['tech'][$Ship[0]] .":<font></td><td width=50% align=right><font color=white>". pretty_number($Ship[1]) ."<font></td></tr>";
+						elseif($FleetRow['fleet_owner'] != $user['id'])
+						{
+							if($user['spy_tech'] >= 4 && $user['spy_tech'] < 8)
+								$FleetPopup .= "<tr><td width=50% align=left><font color=white>". $lang['tech'][$Ship[0]] ."<font></td></tr>";
+							elseif($user['spy_tech'] >= 8)
+								$FleetPopup .= "<tr><td width=50% align=left><font color=white>". $lang['tech'][$Ship[0]] .":<font></td><td width=50% align=right><font color=white>". pretty_number($Ship[1]) ."<font></td></tr>";
+						}
+					}
+				}
+			}
 		}
-		elseif($user['spy_tech'] >= 2 && $user['spy_tech'] < 4 && $FleetRow['fleet_owner'] != $user['id'])
+		elseif(defined('IN_ADMIN'))
 		{
-			$FleetPopup .= "<tr><td width=50% align=left><font color=white>".$lang['cff_aproaching'].$FleetRow[fleet_amount].$lang['cff_ships']."<font></td></tr>";
-		}
-		else
-		{
-			if($FleetRow['fleet_owner'] != $user['id'])
-				$FleetPopup .= "<tr><td width=100% align=left><font color=white>".$lang['cff_aproaching'].$FleetRow[fleet_amount].$lang['cff_ships'].":<font></td></tr>";
-
 			foreach($FleetRec as $Item => $Group)
 			{
 				if ($Group  != '')
 				{
 					$Ship    = explode(",", $Group);
-					if($FleetRow['fleet_owner'] == $user['id'])
-						$FleetPopup .= "<tr><td width=50% align=left><font color=white>". $lang['tech'][$Ship[0]] .":<font></td><td width=50% align=right><font color=white>". pretty_number($Ship[1]) ."<font></td></tr>";
-					elseif($FleetRow['fleet_owner'] != $user['id'])
-					{
-						if($user['spy_tech'] >= 4 && $user['spy_tech'] < 8)
-							$FleetPopup .= "<tr><td width=50% align=left><font color=white>". $lang['tech'][$Ship[0]] ."<font></td></tr>";
-						elseif($user['spy_tech'] >= 8)
-							$FleetPopup .= "<tr><td width=50% align=left><font color=white>". $lang['tech'][$Ship[0]] .":<font></td><td width=50% align=right><font color=white>". pretty_number($Ship[1]) ."<font></td></tr>";
-					}
+					$FleetPopup .= "<tr><td width=50% align=left><font color=white>". $lang['tech'][$Ship[0]] .":<font></td><td width=50% align=right><font color=white>". pretty_number($Ship[1]) ."<font></td></tr>";
 				}
 			}
 		}
+
 		$FleetPopup  .= "</table>";
 		$FleetPopup  .= "');\" onmouseout=\"return nd();\" class=\"". $FleetType ."\">". $Texte ."</a>";
 

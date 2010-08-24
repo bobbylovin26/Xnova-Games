@@ -72,7 +72,7 @@ if ($user['authlevel'] < 2) die(message ($lang['not_enough_permissions']));
 		doquery ( "DELETE FROM {{table}} WHERE `sender` = '" . $UserID . "';", 'buddy' );
 		doquery ( "DELETE FROM {{table}} WHERE `owner` = '" . $UserID . "';", 'buddy' );
 		doquery ( "DELETE FROM {{table}} WHERE `id` = '" . $UserID . "';", 'users' );
-		doquery ( "UPDATE `{{table}}` SET `config_value` = `config_value` - 1 WHERE CONVERT( `config_name` USING utf8 ) = 'users_amount' LIMIT 1 ;", "config" );
+		doquery ( "UPDATE `{{table}}` SET `config_value` = `config_value` - '1' WHERE `config_name` = 'users_amount' LIMIT 1 ;", "config" );
 	}
 
 	$parse	= $lang;

@@ -36,7 +36,7 @@ if ($_GET['cmd'] == 'sort')
 else
 	$TypeSort = "id";
 
-$queryuser 	= "u.id, u.username, u.user_agent, u.current_page, u.user_lastip, u.ally_name, u.onlinetime, u.email, u.galaxy, u.system, u.planet";
+$queryuser 	= "u.id, u.username, u.user_agent, u.current_page, u.user_lastip, u.ally_name, u.onlinetime, u.email, u.galaxy, u.system, u.planet, u.urlaubs_modus, u.bana";
 $querystat 	= "s.total_points";
 $Last15Mins = doquery("SELECT ". $queryuser .", ". $querystat ." FROM  {{table}}users as u, {{table}}statpoints as s
 							WHERE u.onlinetime >= '". (time() - 15 * 60) ."' AND u.id=s.id_owner AND s.stat_type=1
@@ -68,10 +68,12 @@ while ($TheUser = mysql_fetch_array($Last15Mins) )
 	$Bloc['adm_ov_data_pict']   = "m.gif";
 	$PrevIP                     = $TheUser['user_lastip'];
 	$Bloc['usr_email']    		= $TheUser['email'];
+
 	if ($TheUser['urlaubs_modus'] == 1)
 		$Bloc['state_vacancy']  = "<img src=\"../styles/images/true.png\" >";
 	else
 		$Bloc['state_vacancy']  = "<img src=\"../styles/images/false.png\">";
+
 	if ($TheUser['bana'] == 1)
 		$Bloc['is_banned']  	= "<img src=\"../styles/images/banned.png\" >";
 	else
@@ -84,7 +86,7 @@ while ($TheUser = mysql_fetch_array($Last15Mins) )
 	$Count++;
 }
 
-$parse['adm_ov_data_count']  		 = $Count;
+$parse['adm_ov_data_count']  	= $Count;
 
 display ( parsetemplate(gettemplate('adm/onlineuser_table'), $parse), false, '', true, false);
 

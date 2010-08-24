@@ -36,6 +36,20 @@ if ( is_numeric($_POST['fleetid']) )
 	{
 		if ($FleetRow['fleet_mess'] == 0)
 		{
+			if ($FleetRow['fleet_group'] > 0)
+			{
+				$Aks = doquery("SELECT teilnehmer FROM {{table}} WHERE id = '". $FleetRow['fleet_group'] ."';", 'aks', true);
+				if ($Aks['teilnehmer'] == $FleetRow['fleet_owner'] AND $FleetRow['fleet_mission'] == 1)
+				{
+					doquery ("DELETE FROM {{table}} WHERE id ='". $FleetRow['fleet_group'] ."';", 'aks');
+					doquery ("UPDATE {{table}} SET `fleet_group` = '0' WHERE `fleet_group` = '". $FleetRow['fleet_group'] ."';", 'fleets');
+				}
+				if ($FleetRow['fleet_mission'] == 2)
+				{
+					doquery ("UPDATE {{table}} SET `fleet_group` = '0' WHERE `fleet_id` = '".  $fleetid ."';", 'fleets');
+				}
+			}
+
 			$CurrentFlyingTime = time() - $FleetRow['start_time'];
 			/*
 			if ($FleetRow['fleet_end_stay'] != 0)

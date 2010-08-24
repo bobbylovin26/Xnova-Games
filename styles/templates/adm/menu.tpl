@@ -47,6 +47,9 @@
     <tr>
         <th><a href="ShowFlyingFleets.php" target="Hauptframe">{mu_flying_fleets}</a></th>
     </tr>
+	<tr>
+        <th><a href="accountdata.php" target="Hauptframe">Información de cuentas</a></th>
+    </tr>
     <tr>
         <th><a href="userlist.php" target="Hauptframe">{mu_user_list}</a></th>
     </tr>

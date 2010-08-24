@@ -91,8 +91,8 @@ function CreateOneMoonRecord ( $Galaxy, $System, $Planet, $Owner, $MoonID, $Moon
 			$QryInsertMoonInPlanet .= "`image` = 'mond', ";
 			$QryInsertMoonInPlanet .= "`diameter` = '". $size ."', ";
 			$QryInsertMoonInPlanet .= "`field_max` = '1', ";
-			$QryInsertMoonInPlanet .= "`temp_min` = '". $maxtemp ."', ";
-			$QryInsertMoonInPlanet .= "`temp_max` = '". $mintemp ."', ";
+			$QryInsertMoonInPlanet .= "`temp_min` = '". $mintemp ."', ";
+			$QryInsertMoonInPlanet .= "`temp_max` = '". $maxtemp ."', ";
 			$QryInsertMoonInPlanet .= "`metal` = '0', ";
 			$QryInsertMoonInPlanet .= "`metal_perhour` = '0', ";
 			$QryInsertMoonInPlanet .= "`metal_max` = '".BASE_STORAGE_SIZE."', ";

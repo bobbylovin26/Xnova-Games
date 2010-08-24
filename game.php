@@ -26,7 +26,6 @@ $xgp_root = './';
 include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.' . $phpEx);
 
-include($xgp_root . 'includes/functions/RoundUp.' . $phpEx);
 include($xgp_root . 'includes/functions/CheckPlanetBuildingQueue.' . $phpEx);
 include($xgp_root . 'includes/functions/GetBuildingPrice.' . $phpEx);
 include($xgp_root . 'includes/functions/GetBuildingTime.' . $phpEx);

@@ -167,6 +167,11 @@ function PlanetResourceUpdate ( $CurrentUser, &$CurrentPlanet, $UpdateTime, $Sim
 		}
 	}
 
+	if( $CurrentPlanet['deuterium'] < 0 )
+	{
+		$CurrentPlanet['deuterium']  = 0;
+	}
+
 	if ($Simul == false)
 	{
 		$Builded          = HandleElementBuildingQueue ( $CurrentUser, $CurrentPlanet, $ProductionTime );

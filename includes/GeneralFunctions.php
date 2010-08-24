@@ -87,13 +87,18 @@ function display ($page, $topnav = true, $metatags = '', $AdminPage = false, $me
 		$DisplayPage .= parsetemplate(gettemplate('footer'), $parse);
 
 	if ($link)
+	{
 		mysql_close($link);
+	}
+
 
 	echo $DisplayPage;
 
-	if ($user['authlevel'] == 1 || $user['authlevel'] == 3)
-		if ($game_config['debug'] == 1)
-			$debug->echo_log();
+	if ($user['authlevel'] == 3 && $game_config['debug'] == 1)
+	{
+		$debug->echo_log();
+	}
+
 	die();
 }
 

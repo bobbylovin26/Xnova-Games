@@ -28,7 +28,8 @@ $QryTableAks        .= "`ankunft` int(32) default NULL, ";
 $QryTableAks        .= "`galaxy` int(2) default NULL, ";
 $QryTableAks        .= "`system` int(4) default NULL, ";
 $QryTableAks        .= "`planet` int(2) default NULL, ";
-$QryTableAks        .= "`eingeladen` int(11) default NULL, ";
+$QryTableAks        .= "`planet_type` tinyint(1) default NULL, ";
+$QryTableAks        .= "`eingeladen` text character set latin1 default NULL, ";
 $QryTableAks        .= "PRIMARY KEY  (`id`) ";
 $QryTableAks        .= ") ENGINE=MyISAM;";
 
@@ -79,7 +80,7 @@ $QryTableConfig     .= ") ENGINE=MyISAM;";
 
 $QryInsertConfig     = "INSERT INTO `{{table}}` ";
 $QryInsertConfig    .= "(`config_name`           , `config_value`) VALUES ";
-$QryInsertConfig    .= "('VERSION'          	 , '2.6'), ";
+$QryInsertConfig    .= "('VERSION'          	 , '2.7'), ";
 $QryInsertConfig    .= "('users_amount'          , '0'), ";
 $QryInsertConfig    .= "('game_speed'            , '2500'), ";
 $QryInsertConfig    .= "('fleet_speed'           , '2500'), ";
@@ -147,7 +148,7 @@ $QryTableFleets     .= "`fleet_resource_crystal` bigint(11) NOT NULL default '0'
 $QryTableFleets     .= "`fleet_resource_deuterium` bigint(11) NOT NULL default '0', ";
 $QryTableFleets     .= "`fleet_resource_darkmatter` bigint(11) NOT NULL default '0', ";
 $QryTableFleets     .= "`fleet_target_owner` int(11) NOT NULL default '0', ";
-$QryTableFleets     .= "`fleet_group` int (11) NOT NULL DEFAULT '0', ";
+$QryTableFleets     .= "`fleet_group` varchar (15) NOT NULL DEFAULT '0', ";
 $QryTableFleets     .= "`fleet_mess` int(11) NOT NULL default '0', ";
 $QryTableFleets     .= "`start_time` int(11) default NULL, ";
 $QryTableFleets     .= "PRIMARY KEY  (`fleet_id`) ";
@@ -297,15 +298,12 @@ $QryTablePlanets    .= "PRIMARY KEY  (`id`) ";
 $QryTablePlanets    .= ") ENGINE=MyISAM;";
 
 $QryTableRw          = "CREATE TABLE `{{table}}` ( ";
-$QryTableRw         .= "`id_owner1` int(11) NOT NULL default '0', ";
-$QryTableRw         .= "`id_owner2` int(11) NOT NULL default '0', ";
-$QryTableRw         .= "`rid` varchar(72) character set latin1 NOT NULL, ";
+$QryTableRw      	.= "`owners` VARCHAR(255) character set latin1 NOT NULL, ";
+$QryTableRw         .= "`rid` VARCHAR(72) character set latin1 NOT NULL, ";
 $QryTableRw         .= "`raport` text character set latin1 NOT NULL, ";
 $QryTableRw         .= "`a_zestrzelona` tinyint(3) unsigned NOT NULL default '0', ";
 $QryTableRw         .= "`time` int(10) unsigned NOT NULL default '0', ";
 $QryTableRw         .= "UNIQUE KEY `rid` (`rid`), ";
-$QryTableRw         .= "KEY `id_owner1` (`id_owner1`,`rid`), ";
-$QryTableRw         .= "KEY `id_owner2` (`id_owner2`,`rid`), ";
 $QryTableRw         .= "KEY `time` (`time`), ";
 $QryTableRw         .= "FULLTEXT KEY `raport` (`raport`) ";
 $QryTableRw         .= ") ENGINE=MyISAM;";

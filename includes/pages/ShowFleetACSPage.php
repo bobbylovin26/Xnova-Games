@@ -29,7 +29,7 @@ function ShowFleetACSPage($CurrentUser, $CurrentPlanet)
 	if (!is_numeric($fleetid) || empty($fleetid))
 		exit(header("Location: game.".$phpEx."?page=fleet"));
 
-	if($_POST['add_member_to_aks'] == "madnessred")
+	if(isset($_POST['add_member_to_aks']) && !empty($_POST['add_member_to_aks']))
 	{
 		$added_user_id_mr 	= 0;
 		$member_qry_mr 		= doquery("SELECT `id` FROM {{table}} WHERE `username` ='".$_POST['addtogroup']."' ;",'users');
@@ -89,6 +89,7 @@ function ShowFleetACSPage($CurrentUser, $CurrentPlanet)
 			`galaxy` = '" . $fleet['fleet_end_galaxy'] . "',
 			`system` = '" . $fleet['fleet_end_system'] . "',
 			`planet` = '" . $fleet['fleet_end_planet'] . "',
+			`planet_type` = '" . $fleet['fleet_end_type'] . "',
 			`eingeladen` = '" . $aks_invited_mr . "'
 			",
 			'aks');

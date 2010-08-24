@@ -72,12 +72,12 @@ function ShowBuddyPage($CurrentUser)
 				<center>
 				<form action=game.php?page=buddy&mode=1&sm=3 method=post>
 				<input type=hidden name=u value={$u}>
-				<table width=520>
+				<div id=\"content\"><table width=520>
 				<tr><td class=c colspan=2>".$lang['bu_request_message']."</td></tr>
 				<tr><th>".$lang['bu_player']."</th><th>{$player[username]}</th></tr>
 				<tr><th>".$lang['bu_request_text']." (<span id=cntChars>0</span> / 5000 ".$lang['bu_characters'].")</th><th><textarea name=text cols=60 rows=10 onKeyUp=javascript:cntchar(5000)></textarea></th></tr>
 				<tr><td class=c><a href=javascript:back();>".$lang['bu_back']."</a></td><td class=c><input type=submit value=\"".$lang['bu_send']."\"></td></tr>
-				</table></form>";
+				</table></form></div>";
 				display ($page);
 			}
 		break;

@@ -1,6 +1,5 @@
 <script src="scripts/cntchar.js" type="text/javascript"></script>
 <br />
-<div id="content">
     <form action="game.php?page=messages&mode=write&id={id}" method="post">
     <table width="519">
     <tr>
@@ -19,4 +18,3 @@
     </tr>
     </table>
     </form>
-</div>

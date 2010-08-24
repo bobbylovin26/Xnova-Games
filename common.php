@@ -39,9 +39,12 @@ $debug 		= new debug();
 if (INSTALL != true)
 {
 	include($xgp_root . 'includes/vars.'.$phpEx);
+	include($xgp_root . 'includes/functions/RoundUp.' . $phpEx);
 	include($xgp_root . 'includes/functions/CreateOneMoonRecord.'.$phpEx);
 	include($xgp_root . 'includes/functions/CreateOnePlanetRecord.'.$phpEx);
 	include($xgp_root . 'includes/functions/SendSimpleMessage.'.$phpEx);
+	include($xgp_root . 'includes/functions/calculateAttack.'.$phpEx);
+	include($xgp_root . 'includes/functions/formatCR.'.$phpEx);
 
 	$query = doquery("SELECT * FROM {{table}}",'config');
 

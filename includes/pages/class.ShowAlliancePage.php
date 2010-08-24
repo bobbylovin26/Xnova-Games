@@ -438,6 +438,8 @@ class ShowAlliancePage
 				if ($_GET['yes'] == 1)
 				{
 					doquery("UPDATE {{table}} SET `ally_id` = 0, `ally_name` = '', ally_rank_id = 0 WHERE `id`='{$CurrentUser['id']}'", "users");
+					doquery("UPDATE {{table}} SET `ally_members ` = `ally_members ` - 1 WHERE `id`='{$ally['id']}'", "alliance");
+
 					$lang['Go_out_welldone'] = str_replace("%s", $ally_name, $lang['al_leave_sucess']);
 					$page = $this->MessageForm($lang['Go_out_welldone'], "<br>", $PHP_SELF, $lang['al_continue']);
 				}
@@ -930,16 +932,19 @@ class ShowAlliancePage
 						$r['Rank_for'] = str_replace("%s", $u['username'], $lang['Rank_for']);
 						$r['options'] .= "<option onclick=\"document.editar_usu_rango.submit();\" value=\"0\">".$lang['al_new_member_rank_text']."</option>";
 
-						foreach($ally_ranks as $a => $b)
+						if($ally_ranks != null )
 						{
-							$r['options'] 	.= "<option onclick=\"document.editar_usu_rango.submit();\" value=\"" . ($a + 1) . "\"";
-
-							if ($u['ally_rank_id']-1 == $a)
+							foreach($ally_ranks as $a => $b)
 							{
-								$r['options'] .= ' selected=selected';
-							}
+								$r['options'] 	.= "<option onclick=\"document.editar_usu_rango.submit();\" value=\"" . ($a + 1) . "\"";
 
-							$r['options'] .= ">{$b['name']}</option>";
+								if ($u['ally_rank_id']-1 == $a)
+								{
+									$r['options'] .= ' selected=selected';
+								}
+
+								$r['options'] .= ">{$b['name']}</option>";
+							}
 						}
 						$r['id'] = $u['id'];
 

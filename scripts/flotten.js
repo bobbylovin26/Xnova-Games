@@ -17,6 +17,16 @@ function target() {
 	return("["+galaxy+":"+system+":"+planet+"]");
 }
 
+function setACS(id) {
+    document.getElementsByName('fleet_group')[0].value = id;
+	return;
+}
+
+function setACS_target(tacs) {
+    document.getElementsByName('acs_target_mr')[0].value = tacs;
+	return;
+} 
+
 function setTarget(galaxy, solarsystem, planet, planettype) {
 	document.getElementsByName('galaxy')[0].value = galaxy;
 	document.getElementsByName('system')[0].value = solarsystem;
@@ -590,7 +600,7 @@ function hideResources() {
 	document.getElementsByName('holdingtime')[0].disabled = true;
 }
 
-function setShips(s16,s17,s18,s19,s20,s21,s22,s23,s24,s25,s27,s28,s29){
+function setShips(s16,s17,s18,s19,s20,s21,s22,s23,s24,s25,s27,s28,s29,s30,s31,s32,s33){
 
 	setNumber('202',s16);
 	setNumber('203',s17);
@@ -605,6 +615,10 @@ function setShips(s16,s17,s18,s19,s20,s21,s22,s23,s24,s25,s27,s28,s29){
 	setNumber('213',s27);
 	setNumber('214',s28);
 	setNumber('215',s29);
+	setNumber('216',s30);
+	setNumber('217',s31);
+	setNumber('218',s32);
+	setNumber('219',s33);
 
 }
 

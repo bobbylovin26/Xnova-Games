@@ -5,6 +5,31 @@ $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
 
+'2.7' => ' 17/09/09
+
+- [Novedad] Sistema para ver toda la información de la cuenta de un usuario. By Neko.-
+- [Novedad] SACs implementeados [BETA].-
+----------- Código: MadnessRed
+----------- Testeos y funcionamiento, como la adapación a la 0.9a: cyberrichy
+----------- Adaptación a la 2.7: lucky
+
+- [Fix][Varios] Varios bugs menores de estilo, plantillas y lenguaje reparados.-
+- [Fix][Bug #93] Bug al eliminar un jugador.-
+- [Fix][Bug #94] No se muestra la cantidad de flotas en el panel de administración.-
+- [Fix][Bug #95] Deuterio en negativo a causa de la planta de fusión.-
+- [Fix][Bug #96] Plantillas para solicitud de amigos descolocada.-
+- [Fix][Bug #97] No se muestra el estado de baneo y vacaciones en los jugadores dentro del panel de administración.-
+- [Fix][Bug #99] Problemas con la página de busqueda mostrando demsiados resultados o no permitiendo descender en la página.-
+- [Fix][Bug #100] Al mandar naves de distintos tipos a colonizar vuelve el colonizador y se pierden las otras naves.-
+- [Fix][Bug #101] No se generan lunas cuando sale un 20% de probabilidad.-
+- [Fix][Bug #102] Al salir de una alianza el número de miembros no disminuye como debería.-
+- [Fix][Bug #103] Problemas al actualizar las estadísticas.-
+- [Fix][Bug #104] Cuando construis nanobots o robots te permite hacer naves y defensas.-
+- [Fix][Bug #105] Bug menor en la alianza la querer editar el rango de un usuario cuando no existen rangos.-
+- [Fix][Bug #106] Se encuentran invertidas las temperaturas de las lunas.-
+- [Fix][Bug #107] Los planetas destruidos son contados como planetas activos.-
+',
+
 '2.6' => ' 24/08/09
 
 - [Fix][Varios] Varios bugs menores de estilo, plantillas y lenguaje reparados.-
