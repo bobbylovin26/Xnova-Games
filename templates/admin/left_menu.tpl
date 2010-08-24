@@ -116,7 +116,7 @@
             <th width="125"><a href="errors.php" target="Hauptframe">Logs de errores</a></th>
 			          </tr>
 <tr>
-            <th width="125"><div><a href="../frames.php" target="_top" style="color:red">Salir</a></th>
+            <th width="125"><div><a href="../game.php" target="_top" style="color:red">Salir</a></th>
 			          </tr>
 </tbody>
 </table>

@@ -68,7 +68,7 @@ $nextpage = $Page + 1;
 					}
 
 				fwrite($dz, "<?php\n");
-				fwrite($dz, "if(!defined(\"INSIDE\")){ die(\"Intento de Hackeo\"); }\n");
+				fwrite($dz, "if(!defined(\"INSIDE\")){ header(\"location:".$xnova_root_path."\"); }\n");
 				fwrite($dz, "\$dbsettings = Array(\n");
 				fwrite($dz, "\"server\"     => \"".$host."\", // MySQL server name.\n");
 				fwrite($dz, "\"user\"       => \"".$user."\", // MySQL username.\n");

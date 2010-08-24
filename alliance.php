@@ -15,7 +15,7 @@ define('INSIDE', true);
 $xnova_root_path = './';
 include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.'.$phpEx);
-include($xnova_root_path . 'includes/functions/MessageForm.'.$phpEx);
+include($xnova_root_path . 'includes/funciones_A/MessageForm.'.$phpEx);
 
 //MODO PRINCIPAL
 $mode = $_GET['mode'];

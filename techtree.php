@@ -16,8 +16,6 @@ $xnova_root_path = './';
 include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
 
-$HeadTpl = gettemplate('techtree_head');
-$RowTpl  = gettemplate('techtree_row');
 foreach($lang['tech'] as $Element => $ElementName)
 {
 	$parse            = array();
@@ -26,7 +24,7 @@ foreach($lang['tech'] as $Element => $ElementName)
 	if (!isset($resource[$Element]))
 	{
 		$parse['Requirements']  = $lang['Requirements'];
-		$page                  .= parsetemplate($HeadTpl, $parse);
+		$page                  .= parsetemplate(gettemplate('techtree/techtree_head'), $parse);
 	}
 	else
 	{
@@ -56,12 +54,11 @@ foreach($lang['tech'] as $Element => $ElementName)
 			$parse['tt_detail']     = "";
 		}
 		$parse['tt_info']   = $Element;
-		$page              .= parsetemplate($RowTpl, $parse);
+		$page              .= parsetemplate(gettemplate('techtree/techtree_row'), $parse);
 	}
 }
 
 $parse['techtree_list'] = $page;
-$page                   = parsetemplate(gettemplate('techtree_body'), $parse);
 
-display($page, "Tecnologías");
+display(parsetemplate(gettemplate('techtree/techtree_body'), $parse), "Tecnologías");
 ?>

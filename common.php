@@ -9,7 +9,7 @@
  *
  */
 
-define('VERSION','v2.1');
+define('VERSION','v2.2');
 
 $phpEx = "php";
 
@@ -26,43 +26,42 @@ define('DEFAULT_LANG'     , 'es');
 include($xnova_root_path . 'includes/debug.class.'.$phpEx);
 $debug = new debug();
 
-include($xnova_root_path . 'includes/functions.'.$phpEx);
+include($xnova_root_path . 'includes/funciones.'.$phpEx);
 
 if (INSTALL != true)
 {
 	//GENERALES
 	include($xnova_root_path . 'includes/vars.'.$phpEx);
-	include($xnova_root_path . 'includes/constants.'.$phpEx);
+	include($xnova_root_path . 'includes/constantes.'.$phpEx);
 
-	//FUNCIONES
-	include($xnova_root_path . 'includes/functions/CreateOneMoonRecord.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/calculateAttack.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/CheckPlanetUsedFields.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/ChekUser.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/FlyingFleetHandler.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/formatCR.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/IsVacationMode.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/PlanetResourceUpdate.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/raketenangriff.' . $phpEx);
-	include($xnova_root_path . 'includes/functions/SendSimpleMessage.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/SetSelectedPlanet.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/SortUserPlanets.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/strings.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/GetBuildingTime.' . $phpEx);
-	include($xnova_root_path . 'includes/functions/HandleElementBuildingQueue.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/UpdatePlanetBatimentQueueList.'.$phpEx);
-	include($xnova_root_path . "includes/functions/RestoreFleetToPlanet.php");
-	include($xnova_root_path . 'includes/functions/MissionCaseAttack.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/MissionCaseACS.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/MissionCaseTransport.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/MissionCaseStay.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/MissionCaseStayAlly.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/MissionCaseSpy.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/MissionCaseColonisation.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/MissionCaseRecycling.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/MissionCaseDestruction.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/MissionCaseMIP.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/MissionCaseExpedition.'.$phpEx);
+	/**
+	* INICIO DEL BLOQUE
+	*  -----------------------------------------------------------------------------------
+	* ESTO OBTIENE LAS FUNCIONES B
+	* ESTE PEQUEÑO SCRIPT BUSCA EN LA CARPETA FUNCIONES B TODAS LAS FUNCIONES EXISTENTES
+	* CUMPLE LA MISMA FUNCION QUE CUALQUIER INCLUDE, NO MAS QUE SE RESUME EN UNAS,
+	* POCAS LINEAS DE CODIGO.
+	*  -----------------------------------------------------------------------------------
+	* NOTA:
+	* 	- FUNCIONES "A"(funciones_A) = NO GENERAN CONFLICTOS Y SUELEN ESTAR EN 1 O 2 ARCHIVOS.-
+	* 		LAS FUNCIONES "A" ESTAN INCLUIDAS DIRECTAMENTE A SU ARCHIVO CORRESPONDIENTE.-
+	*  -----------------------------------------------------------------------------------
+	* 	- FUNCIONES "B"(funciones_B) = SUELEN ESTAR EN VARIOS ARCHIVOS Y GENERAN CONFLICTOS AL INCLUIRLAS INDIVIDUALMENTE.-
+	* 		ESTO SUCEDE A QUE VARIAS VECES SE HACEN VARIAS PETICIONES A UN MISMO ARCHIVO (EJ: MOVIMIENTOS DE FLOTAS, POR ENDE
+	* CON UN INCLUDE_ONCE NO SE SOLUCIONA ESTE ASPECTO).
+	*
+	*/
+	$carpeta = opendir($xnova_root_path . 'includes/funciones_B');
+
+	while (($archivo = readdir($carpeta)) !== false)
+	{
+		$extension = "." . substr($archivo, -3);
+
+		if ($extension == "." . $phpEx)
+			require_once $xnova_root_path . 'includes/funciones_B/' . $archivo;
+	}
+	//FIN DEL BLOQUE QUE OBTIENE LAS FUNCIONES B
+
 
 	$query = doquery("SELECT * FROM {{table}}",'config');
 
@@ -73,6 +72,8 @@ if (INSTALL != true)
 
 	if ($InLogin != true)
 	{
+		include($xnova_root_path . 'includes/funciones_A/CheckUser.'.$phpEx);
+
 		$Result        = CheckTheUser ( $IsUserChecked );
 		$IsUserChecked = $Result['state'];
 		$user          = $Result['record'];
@@ -99,9 +100,11 @@ if (INSTALL != true)
 		doquery("UPDATE {{table}} SET `config_value` = '". $Time ."' WHERE `config_name` = 'actualizar_puntos';", "config");
 	}
 
-	if ( isset ($user) )
+	if (isset($user))
 	{
-		$_fleets = doquery("SELECT * FROM {{table}} WHERE `fleet_end_time` <= '".time()."';", 'fleets'); //  OR fleet_end_time <= ".time()
+		include($xnova_root_path . 'includes/funciones_A/FlyingFleetHandler.'.$phpEx);
+
+		$_fleets = doquery("SELECT * FROM {{table}} WHERE `fleet_end_time` <= '".time()."';", 'fleets');
 
 		while ($row = mysql_fetch_array($_fleets))
 		{
@@ -125,7 +128,11 @@ if (INSTALL != true)
 
 				$temp = FlyingFleetHandler ($array);
 			}
+
 		}
+
+		unset($_fleets);
+
 		if ( defined('IN_ADMIN') )
 		{
 			$UserSkin  = $user['dpath'];

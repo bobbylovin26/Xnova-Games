@@ -14,7 +14,7 @@ define('IN_ADMIN', true);
 $xnova_root_path = './../';
 include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
-include($xnova_root_path . 'includes/functions/BuildFlyingFleetTable.' . $phpEx);
+include($xnova_root_path . 'includes/funciones_A/BuildFlyingFleetTable.' . $phpEx);
 
 
 	if ($user['authlevel'] >= 1) {

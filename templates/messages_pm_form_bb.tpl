@@ -1,6 +1,4 @@
 <script src="scripts/cntchar.js" type="text/javascript"></script>
-
-<br />
 <center>
 <form action="messages.php?mode=write&id={id}" method="post">
 <table width="519">
@@ -15,9 +13,8 @@
 </tr><tr>
 	<th>Mensaje (<span id="cntChars">0</span> / 5000 caracteres)</th>
 	<th><textarea name="text" cols="40" rows="10" size="100" onkeyup="javascript:cntchar(5000)">{text}</textarea></th>
-</tr>
-<tr>
-	<th colspan="2"><input type="reset" value="Borrar" /><input type="submit" value="Enviar" size="20" style="font-weight:bold" onClick="this.form.submit();this.disabled=true;this.value='Un momento por favor...'"/></th>
+</tr><tr>
+	<th colspan="2"><input type="submit" value="Enviar"/></th>
 </tr>
 </table>
 </form>

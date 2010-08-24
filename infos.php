@@ -13,9 +13,7 @@ define('INSTALL' , false);
 $xnova_root_path = './';
 include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
-include($xnova_root_path . 'includes/functions/InsertJavaScriptChronoApplet.' . $phpEx);
-include($xnova_root_path . 'includes/functions/GetBuildingPrice.' . $phpEx);
-include($xnova_root_path . 'includes/functions/GetBuildingTime.' . $phpEx);
+include($xnova_root_path . 'includes/funciones_A/InsertJavaScriptChronoApplet.' . $phpEx);
 
 function BuildFleetListRows ( $CurrentPlanet ) {
 	global $resource, $lang;

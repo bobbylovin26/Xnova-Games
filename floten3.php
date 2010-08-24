@@ -14,6 +14,8 @@ $xnova_root_path = './';
 include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
 
+	include($xnova_root_path . 'includes/funciones_A/IsVacationMode.' . $phpEx);
+
 	if (IsVacationMode($user))
 	{
        message("El modo vacaciones se encuentra activo","&#161;Error!","overview.php",2);
@@ -193,7 +195,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 			 $UsedPlanet) {
 			$missiontype[2] = $lang['type_mission'][2];
 		}
-*/	
+*/
 		if (($_POST['planettype'] == 3 || $_POST['planettype'] == 1) && ($fleet_group_mr > 0) && ($UsedPlanet)) {
 			$missiontype[2] = $lang['type_mission'][2];
 		}
@@ -485,16 +487,16 @@ include($xnova_root_path . 'common.' . $phpEx);
 			message ("<font color=\"red\"><b>". $lang['fl_adm_attak'] ."</b></font>", $lang['fl_warning'], "fleet." . $phpEx, 2);
 		}
 	}
-	
+
   if ($fleet_group_mr != 0) { // Si c'est une AG
 		$AksStartTime = mysql_fetch_array(doquery("SELECT MAX(`fleet_start_time`) AS Start, MAX(`fleet_end_time`) AS End FROM {{table}} WHERE `fleet_group` = '". $fleet_group_mr . "';", 'fleets'));
-		
+
 		if ($AksStartTime['Start'] > $fleet['start_time']) {
 			$fleet['start_time'] = $AksStartTime['Start'] + 1;
 			$fleet['end_time'] = $AksStartTime['End'] + 1;
-		} else {    
+		} else {
 			$AksTime = mysql_fetch_array(doquery("SELECT fleet_start_time, fleet_end_time FROM {{table}} WHERE `fleet_group` = '". $fleet_group_mr . "' AND `fleet_mission` = '1';", 'fleets'));
-			
+
 			if ($AksTime['fleet_start_time'] < $fleet['start_time']) {
 				$QryUpdateFleets = "UPDATE {{table}} SET ";
 				$QryUpdateFleets .= "`fleet_start_time` = '". $fleet['start_time'] ."', ";
@@ -507,8 +509,8 @@ include($xnova_root_path . 'common.' . $phpEx);
 				$nb = mysql_num_rows($SelectFleets);
 				$i = 0;
 				if ($nb > 0) {
-					while ($row = mysql_fetch_array($SelectFleets)) {    
-						$i++;        
+					while ($row = mysql_fetch_array($SelectFleets)) {
+						$i++;
 						$row['fleet_start_time'] = $fleet['start_time'] + $i;
 						$row['fleet_end_time'] = $fleet['end_time'] + $i;
 						$QryUpdateFleets = "UPDATE {{table}} SET ";
@@ -519,13 +521,13 @@ include($xnova_root_path . 'common.' . $phpEx);
 						   doquery($QryUpdateFleets, "fleets");
 					}
 				}
-				
+
 				$fleet['start_time'] = $fleet['start_time'] + $nb + 1;
 				$fleet['end_time'] = $fleet['end_time'] + $nb + 1;
 			}
 		}
-	} 
-  
+	}
+
 
 	// ecriture de l'enregistrement de flotte (a partir de l�, y a quelque chose qui vole et c'est toujours sur la planete d'origine)
 	$QryInsertFleet  = "INSERT INTO {{table}} SET ";

@@ -1,144 +1,126 @@
-<style type="text/css">
-<!--
-.Stil1 {color: #FF8000}
--->
-</style>
-<img border="0" src="images/leftunten.png" width="138" height="7">
-<table width="125" id="table2">
-<tbody>
-      <th>
-      <table width="125" id="table3">
-        <tbody>
+<body  class="style" topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+<center>
+<div id='menu'>
+<table width="130" cellspacing="0" cellpadding="0">
 <tr>
-            <th width="125"><a href="changelog.php" target="Hauptframe"><font color="#00CCCC">{servername} ({version})</font></a></th>
-			         </tr>
-</tbody>
-</table>
-</table>
-<p>
-<p><img border="0" src="images/leftunten.png" width="138" height="5">
-<img border="0" src="images/leftoben.png" width="138" height="5">
-</p>
-<div align="center">
-<table width="125" id="table1">
-<tbody>
-      <th colspan="3">
-      <table width="125">
-        <tbody>
-<tr>
-            <td class="c" colspan="2">
-			<p align="center"><font color="#00CCCC">Navegación</a></font></td>
-          </tr>
-<tr>
-            <th width="125"><div><a href="overview.php" accesskey="g" target="Hauptframe">Visión general</a></th>
-			          </tr>
-<tr>
-            <th width="125"><a href="imperium.php" accesskey="i" target="Hauptframe">Imperio</a></th>
-			          </tr>
-<tr>
-            <th width="125"><a href="galaxy.php?mode=0" accesskey="s" target="Hauptframe">Galaxia</a></th>
-			          </tr>
-<tr>
-            <th width="125"><a href="fleet.php" accesskey="t" target="Hauptframe">Flota</a></th>
-			          </tr>
-<tr>
-</tbody>
-</table>
-</table>
-<p><img border="0" src="images/leftunten.png" width="138" height="5">
-
-<comment></comment>
-<img border="0" src="images/leftoben.png" width="138" height="5">
-<div align="center">
-
-<table width="125" id="table1">
-<tbody>
+	<td colspan="2" style="border-top: 1px #545454 solid"><div><center><strong>{servername}</strong>(<a href="changelog.php" target="Hauptframe"><font color="red">{version}</font></a>)<center></div></td>
+</tr><tr>
+	<td height="1px" colspan="2" style="background-color:#FFFFFF"></td>
+</tr><tr>
+	<td colspan="2" background="{dpath}img/bg1.gif"><center>Navegación</center></td>
+</tr><tr>
+	<td height="1px" colspan="2" style="background-color:#FFFFFF"></td>
+</tr><tr>
+	<td colspan="2"><div><a href="overview.php" target="Hauptframe">Visión general</a></div></td>
+</tr><tr>
+	<td colspan="2"><div><a href="galaxy.php?mode=0" target="Hauptframe">Galaxia</a></div></td>
+</tr><tr>
+	<td colspan="2"><div><a href="imperium.php" target="Hauptframe">Imperio</a></div></td>
+</tr><tr>
+	<td colspan="2"><div><a href="fleet.php" target="Hauptframe">Flota</a></div></td>
+</tr><tr>
+	<td height="1px" colspan="2" style="background-color:#FFFFFF"></td>
+</tr><tr>
+	<td colspan="2" background="{dpath}img/bg1.gif"><center>Construcciones</center></td>
+</tr><tr>
+	<td height="1px" colspan="2" style="background-color:#FFFFFF"></td>
+</tr><tr>
+	<td colspan="2"><div><a href="buildings.php" target="Hauptframe">Edificios</a></div></td>
+</tr><tr>
+	<td colspan="2"><div><a href="buildings.php?mode=research" target="Hauptframe">Investigación</a></div></td>
+</tr><tr>
+	<td colspan="2"><div><a href="buildings.php?mode=fleet" target="Hauptframe">Hangar</a></div></td>
+</tr><tr>
+	<td colspan="2"><div><a href="buildings.php?mode=defense" target="Hauptframe">Defensa</a></div></td>
+</tr><tr>
+	<td height="1px" colspan="2" style="background-color:#FFFFFF"></td>
+</tr><tr>
+	<td colspan="2" background="{dpath}img/bg1.gif"><center>Economía</center></td>
+</tr><tr>
+	<td height="1px" colspan="2" style="background-color:#FFFFFF"></td>
+</tr><tr>
+	<td colspan="2"><div><a href="resources.php" target="Hauptframe">Recursos</a></div></td>
+</tr><tr>
+	<td colspan="2"><div><a href="officier.php" target="Hauptframe">Oficiales</a></div></td>
+</tr><tr>
+	<td colspan="2"><div><a href="marchand.php" target="Hauptframe">Mercader</a></div></td>
+</tr><tr>
+	<td colspan="2"><div><a href="techtree.php" target="Hauptframe">Tecnología</a></div></td>
+</tr><tr>
+	<td height="1px" colspan="2" style="background-color:#FFFFFF"></td>
+</tr><tr>
+	<td colspan="2" background="{dpath}img/bg1.gif"><center>Relaciones</center></td>
+</tr><tr>
+	<td height="1px" colspan="2" style="background-color:#FFFFFF"></td>
+</tr><tr>
+	<td colspan="2"><div><a href="messages.php" target="Hauptframe">Mensajes</a></div></td>
+</tr><tr>
+	<td colspan="2"><div><a href="alliance.php" target="Hauptframe">Alianzas</a></div></td>
+</tr><tr>
+	<td colspan="2"><div><a href="buddy.php" target="Hauptframe">Lista de compañeros</a></div></td>
+</tr><tr>
+	<td colspan="2"><div><a href="notes.php" target="Hauptframe">Notas</a></div></td>
+</tr><tr>
+	<td height="1px" colspan="2" style="background-color:#FFFFFF"></td>
+</tr><tr>
+	<td colspan="2" background="{dpath}img/bg1.gif"><center>Observación</center></td>
+</tr><tr>
+	<td height="1px" colspan="2" style="background-color:#FFFFFF"></td>
+</tr><tr>
+	<td colspan="2"><div><a href="stat.php?range={user_rank}" target="Hauptframe">Estadísticas</a></div></td>
+</tr><tr>
+	<td colspan="2"><div><a href="search.php" target="Hauptframe">Buscar</a></div></td>
+</tr><tr>
+	<td height="1px" colspan="2" style="background-color:#FFFFFF"></td>
+</tr><tr>
+	<td colspan="2" background="{dpath}img/bg1.gif"><center>Otros</center></td>
+</tr><tr>
+	<td height="1px" colspan="2" style="background-color:#FFFFFF"></td>
+</tr><tr>
+	<td colspan="2"><div><a href="options.php" target="Hauptframe">Opciones</a></div></td>
+</tr><tr>
+	<td colspan="2"><div><a href="banned.php" target="Hauptframe">Baneados</a></div></td>
+</tr><tr>
+	<td height="1px" colspan="2" style="background-color:#FFFFFF"></td>
+</tr><tr>
+	<td colspan="2" background="{dpath}img/bg1.gif"><center>Comunicación</center></td>
+</tr><tr>
+	<td height="1px" colspan="2" style="background-color:#FFFFFF"></td>
+</tr><tr>
+	<td colspan="2"><div><a href="contact.php" target="Hauptframe" >Contacto</a></div></td>
+</tr><tr>
+	<td colspan="2"><div><a href="{forum_url}" target="Hauptframe">Foro</a></div></td>
+</tr><tr>
+	<td colspan="2"><div><a href="javascript:top.location.href='index.php?modo=salir'" style="color:red">Salir</a></div></td>
 </tr>
-      <th colspan="3">
-      <table width="125">
-        <tbody>
-<tr>
-            <td class="c" colspan="2">
-			<p align="center"><font color="#00CCCC">Construcciones</a></font></td>
-          </tr>
-<tr>
-            <th width="125"><div><a href="buildings.php" accesskey="b" target="Hauptframe">Edificios</a></th>
-			          </tr>
-<tr>
-            <th width="125"><a href="buildings.php?mode=fleet" accesskey="f" target="Hauptframe">Hangar</a></th>
-			          </tr>
-<tr>
-            <th width="125"><a href="buildings.php?mode=defense" accesskey="d" target="Hauptframe">Defensas</a></th>
-			          </tr>
-<tr>
-            <th width="125"><a href="buildings.php?mode=research" accesskey="r" target="Hauptframe">Investigación</a></th>
-			          </tr>
-<tr>
-</tbody>
-</table>
-</table>
-<p><img border="0" src="images/leftunten.png" width="138" height="5">
-
-<comment></comment>
-<img border="0" src="images/leftoben.png" width="138" height="5">
-<div align="center">
-
-<table width="125" id="table1">
-<tbody>
+	{admin_link}
+</tr><tr>
+	<td height="1px" colspan="2" style="background-color:#FFFFFF"></td>
+</tr><tr>
+	<td colspan="2" background="{dpath}img/bg1.gif"><center>Velocidades</center></td>
+</tr><tr>
+	<td height="1px" colspan="2" style="background-color:#FFFFFF"></td>
+</tr><tr>
+        <td style="padding-left: 3px">Juego</td>
+        <td align="right" style="padding-right: 3px">x {lm_tx_game}</td>
+    </tr>
+    <tr>
+      <td style="padding-left: 3px">Flotas</td>
+      <td align="right" style="padding-right: 3px">x {lm_tx_fleet}</td>
+    </tr>
+    <tr>
+      <td style="padding-left: 3px">Recursos</td>
+      <td align="right" style="padding-right: 3px">x {lm_tx_serv}</td>
+    </tr>
+    <tr>
+      <td style="padding-left: 3px">Colas</td>
+      <td align="right" style="padding-right: 3px">{lm_tx_queue}</td>
+    </tr>
+<tr><tr>
+	<td height="1px" colspan="2" style="background-color:#FFFFFF"></td>
 </tr>
-      <th colspan="3">
-      <table width="125">
-        <tbody>
-<tr>
-            <td class="c" colspan="2">
-			<p align="center"><font color="#00CCCC">Economía</a></font></td>
-          </tr>
-<tr>
-            <th width="125"><div><a href="resources.php" accesskey="r" target="Hauptframe">Recursos</a></th>
-			          </tr>
-<tr>
-            <th width="125"><a href="officier.php" accesskey="o" target="Hauptframe">Oficiales</a></th>
-			          </tr>
-<tr>
-            <th width="125"><a href="marchand.php" accesskey="m" target="Hauptframe">Mercader</a></th>
-			          </tr>
-<tr>
-            <th width="125"><a href="techtree.php" accesskey="g" target="Hauptframe">Tecnologías</a></th>
-			          </tr>
-<tr>
-</tbody>
-</table>
-</table>
-<p><img border="0" src="images/leftunten.png" width="138" height="5">
-<img border="0" src="images/leftoben.png" width="138" height="5">
-<div align="center">
-<table width="125" id="table1">
-<tbody>
-      <th colspan="3">
-      <table width="125">
-        <tbody>
-<tr>
-            <td class="c" colspan="2">
-			<p align="center"><font color="#00CCCC">Relaciones</a></font></td>
-          </tr>
-<tr>
-            <th width="125"><a href="messages.php" accesskey="c" target="Hauptframe">Mensajes</a></th>
-			          </tr>
-<tr>
-            <th width="125"><div><a href="alliance.php" accesskey="a" target="Hauptframe">Alianzas</a></th>
-			          </tr>
-<tr>
-            <th width="125"><a href="buddy.php" accesskey="c" target="Hauptframe">Amigos</a></th>
-			          </tr>
-<tr>
-            <th width="125"><a href="notes.php" accesskey="c" target="Hauptframe">Notas</a></th>
-			          </tr>
-</tbody>
-</table>
-</table>
-<p>
-<p><img border="0" src="images/leftoben.png" 
-width="138" height="7">
+	<td colspan="2"><div><center><a href="credit.php" target="Hauptframe">&copy; Copyright 2009</a></center></div></td>
+</tr>
 </table>
 </div>
 </center>

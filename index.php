@@ -41,35 +41,28 @@ elseif($_GET[modo] == "")
 			doquery("DELETE FROM {{table}} WHERE `who` = '".$login['username']."'",'banned');
 		}
 
-		if ($login)
+		if ($login && $login['password'] == md5($_POST['password']))
 		{
-			if ($login['password'] == md5($_POST['password']))
+			if (isset($_POST["rememberme"]))
 			{
-				if (isset($_POST["rememberme"]))
-				{
-					$expiretime = time() + 31536000;
-					$rememberme = 1;
-				}
-				else
-				{
-					$expiretime = 0;
-					$rememberme = 0;
-				}
-
-				@include('config.php');
-				$cookie = $login["id"] . "/%/" . $login["username"] . "/%/" . md5($login["password"] . "--" . $dbsettings["secretword"]) . "/%/" . $rememberme;
-				setcookie($game_config['COOKIE_NAME'], $cookie, $expiretime, "/", "", 0);
-
-				doquery("UPDATE {{table}} SET `current_planet`='".$login['id_planet']."' WHERE `id` ='".$login["id"]."'", 'users');
-
-				unset($dbsettings);
-				header("Location: ./frames.php");
-				exit;
+				$expiretime = time() + 31536000;
+				$rememberme = 1;
 			}
 			else
 			{
-				message("¡Datos ingresados incorrectos! <br /><a href=\"index.php\" target=\"_top\">Volver al inicio</a>", "¡Error!", "./",2);
+				$expiretime = 0;
+				$rememberme = 0;
 			}
+
+			@include('config.php');
+			$cookie = $login["id"] . "/%/" . $login["username"] . "/%/" . md5($login["password"] . "--" . $dbsettings["secretword"]) . "/%/" . $rememberme;
+			setcookie($game_config['COOKIE_NAME'], $cookie, $expiretime, "/", "", 0);
+
+			doquery("UPDATE {{table}} SET `current_planet`='".$login['id_planet']."' WHERE `id` ='".$login["id"]."'", 'users');
+
+			unset($dbsettings);
+			header("Location: ./game.php");
+			exit;
 		}
 		else
 		{
@@ -95,7 +88,7 @@ elseif($_GET[modo] == "claveperdida")
 	$xnova_root_path = './';
 	include($xnova_root_path . 'extension.inc.php');
 	include($xnova_root_path . 'common.' . $phpEx);
-	include($xnova_root_path . 'includes/functions/SendNewPassword.' . $phpEx);
+	include($xnova_root_path . 'includes/funciones_A/SendNewPassword.' . $phpEx);
 
 	if($_POST)
 	{

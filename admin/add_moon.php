@@ -14,7 +14,6 @@ define('IN_ADMIN', true);
 $xnova_root_path = './../';
 include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
-include($xnova_root_path . 'includes/functions/CreateOneMoonRecord.' . $phpEx);
 
 	if ($user['authlevel'] >= 2) {
 		includeLang('admin/addmoon');

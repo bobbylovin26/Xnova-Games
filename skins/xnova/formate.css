@@ -13,7 +13,7 @@ __   __ _   _
 ., #, td, th, textarea, body, table
 {
   font-family          : Tahoma,sans-serif;
-  font-size            : 11px;
+  font-size            : 10px;
 }
 
 img
@@ -29,7 +29,7 @@ p table
 p td
 {
   text-align           : center;
-  font-size            : 11px;
+  font-size            : 10px;
   font-family          : Tahoma,sans-serif;
 }
 
@@ -40,7 +40,7 @@ table table
 
 table table td
 {
-  font-size            : 11px;
+  font-size            : 10px;
   font-family          : Tahoma,sans-serif;
 }
 
@@ -62,7 +62,7 @@ body
   scrollbar-3dlight-color: #465673;
   scrollbar-darkshadow-color: #344566;
   scrollbar-shadow-color: #465673;
-  font-size            : 1px;
+  font-size            : 10px;
   font-family          : Tahoma,sans-serif;
 }
 
@@ -73,13 +73,7 @@ body.style{
 body.style table {
   margin               : 0px;
 }
-/*Menu Derecho*/
-body.style1{
-  background-image     : url(img/background3.jpg);
-}
-body.style1 table{
-  margin           		: 0px;
-}
+
 body form table th table input
 {
   width: 60px;
@@ -90,14 +84,14 @@ td.j, td.k, td.l, td.m, td.n, td.o, td.q, td.r,
 td.v, .style td, p td, table.s th img
 {
   border               : 1px #545454 solid;
-  font-size            : 11px;
+  font-size            : 10px;
   font-family          : Tahoma,sans-serif;
 }
 
 input, select, textarea
 {
   border               : 1px #545454 solid;
-  font-size            : 11px;
+  font-size            : 10px;
   font-family          : Tahoma,sans-serif;
 }
 
@@ -231,7 +225,7 @@ td.o
 td.q
 {
   font-weight          : bold;
-  font-size            : 11px;
+  font-size            : 10px;
   font-family          : Tahoma,sans-serif;
   text-align           : center;
   vertical-align       : middle;
@@ -269,7 +263,7 @@ table.s th img
 
 div.z
 {
-  font-size            : 11px;
+  font-size            : 10px;
   font-weight          : bold;
   color                : #FFFFFF;
 }
@@ -301,7 +295,7 @@ a:hover
 {
   color                : #FFFFFF;
   border-top           : 0px;
-  font-size            : 11px;
+  font-size            : 10px;
   font-family          : Tahoma,sans-serif;
 }
 
@@ -310,7 +304,7 @@ a:hover
   padding-left         : 7px;
   height               : 100%;
   width                : 100%;
-  font-size            : 11px;
+  font-size            : 10px;
   font-family          : Tahoma,sans-serif;
 }
 
@@ -318,7 +312,7 @@ a:hover
 {
   height               : 100%;
   width                : 100%;
-  font-size            : 11px;
+  font-size            : 10px;
   font-family          : Tahoma,sans-serif;
 }
 
@@ -326,7 +320,7 @@ a:hover
 {
   height               : 100%;
   width                : 100%;
-  font-size            : 11px;
+  font-size            : 10px;
   font-family          : Tahoma,sans-serif;
 }
 
@@ -338,7 +332,7 @@ a:hover
   height               : 100%;
   width                : 108px;
   text-decoration      : none;
-  font-size            : 11px;
+  font-size            : 10px;
   font-family          : Tahoma,sans-serif;
 }
 
@@ -354,31 +348,4 @@ h2
   border-bottom        : 0px #344566; solid;
   width                : 98%;
   text-align           : center;
-}
-
-#content {
-position:absolute;
-left:190px;
-scrollbars:none;
-overflow:auto;
-top:80px;
-width:82%;
-height:88%;
-}
-div#topnav {
-position: fixed;
-left: 35%;
-top: 0px;
-width: 0px;
-height: 0px;
-z-index:10
-}
-#menu {
-width: 190px;
-background-color: transparent;
-position: fixed;
-top: 0px;
-left: 0px;
-position: expression("absolute");
-
 }

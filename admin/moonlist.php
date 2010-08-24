@@ -16,7 +16,6 @@ include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
 
 	if ($user['authlevel'] >= "2") {
-		includeLang('overview');
 
 		$parse = $lang;
 		$query = doquery("SELECT * FROM {{table}} WHERE planet_type='3'", "planets");

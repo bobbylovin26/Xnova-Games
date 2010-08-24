@@ -13,7 +13,7 @@ define('INSTALL' , false);
 $xnova_root_path = './';
 include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
-include($xnova_root_path . 'includes/functions/BuildFleetEventTable.' . $phpEx);
+include($xnova_root_path . 'includes/funciones_A/BuildFleetEventTable.' . $phpEx);
 
 	includeLang('overview');
 	includeLang('phalanx');

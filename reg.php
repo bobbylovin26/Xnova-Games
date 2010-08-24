@@ -16,11 +16,10 @@ $InLogin = true;
 $xnova_root_path = './';
 include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
-include($xnova_root_path . 'includes/functions/CheckInputStrings.' . $phpEx);
-include($xnova_root_path . 'includes/functions/CreateOnePlanetRecord.'.$phpEx);
 
 function sendpassemail($emailaddress, $password)
 {
+	global $game_config;
     $parse['gameurl'] = GAMEURL;
     $parse['password'] = $password;
     $email = parsetemplate("Muchas gracias por registrarte en nuestro juego. \n Tu contraseña es: {password} \n\n ¡Disfrutá del juego! \n {gameurl}", $parse);
@@ -101,8 +100,8 @@ if ($_POST) {
         message ($errorlist, "<font color=\"red\">Error en el registro</font>", "reg.php", "3");
     } else {
     	$newpass	= $_POST['passwrd'];
-        $UserName 	= CheckInputStrings ($_POST['character']);
-        $UserEmail 	= CheckInputStrings ($_POST['email']);
+        $UserName 	= $_POST['character'];
+        $UserEmail 	= $_POST['email'];
         $md5newpass = md5($newpass);
 
         $QryInsertUser = "INSERT INTO {{table}} SET ";

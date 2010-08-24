@@ -1,41 +1,6 @@
 <?php
 
-$lang['Galaxy'] 			= 'Galaxia';
-$lang['Solar_system'] 			= 'Sistema Solar';
-$lang['Afficher'] 			= "Ver";
-$lang['Show'] 				= 'Mostrar';
-$lang['vacation_shortcut'] 		= "V";
-$lang['banned_shortcut'] 		= "B";
-$lang['inactif_7_shortcut'] 		= "I";
-$lang['inactif_28_shortcut'] 		= "I";
-$lang['strong_player_shortcut'] 	= "F";
-$lang['weak_player_shortcut'] 		= "D";
-
-$lang['Legend'] 			= 'Leyenda';
-$lang['Strong_player'] 			= 'Jugador Fuerte';
-$lang['Weak_player'] 			= 'Jugador Debil';
-$lang['Way_vacation'] 			= 'Modo Vancaciones';
-$lang['Pendent_user'] 			= 'Baneado';
-$lang['Inactive_7_days'] 		= 'Inactivo +7';
-$lang['Inactive_28_days'] 		= 'Inactivo +28';
 $lang['Solar_system_at'] 		= 'Sistema solar a';
-
-$lang['Pos'] 				= 'Posicion';
-$lang['Planet'] 			= 'Planeta';
-$lang['Name'] 				= 'Nombre (Actividad)';
-$lang['Moon'] 				= 'Luna';
-$lang['Debris'] 			= 'Escombros';
-$lang['caracters'] 			= "Caracteristicas";
-$lang['diameter'] 			= "Diametro";
-$lang['temperature'] 			= "Temperatura";
-$lang['Player'] 			= 'Jugador (Estado)';
-$lang['Place'] 				= 'Lugar';
-$lang['State'] 				= 'Estado';
-$lang['Alliance'] 			= 'Alianza';
-$lang['Actions'] 			= 'Acciones';
-//info tips (galaxy_row_ally)
-$lang['AllyInfoText'] 			= 'Alianza %n';//%n = ally_name ; %r = ally_rank ; %m = ally_members ;
-$lang['Planets_count'] 			= '( Planeta habitado: %n (s) )';
 
 //Enviar Flota
 
@@ -98,14 +63,5 @@ $lang['gs_c619']    	= "Error, Usted no es gran cosa!";
 $lang['gs_sending'] 	= "Enviado de";
 $lang['gs_to'] 		= "a";
 $lang['Sending'] 	= 'Enviando';
-
-$lang['gf_cntmone'] 	= "Planetas Conquistados";
-$lang['gf_cntmnone'] 	= "No hay planetas inhabitados.";
-$lang['gf_cntmsome'] 	= "Planetas inhabitados.";
-$lang['gf_mi_title'] 	= "Misiles Interplanetarios";
-$lang['gf_fleetslt'] 	= "Vuelos";
-$lang['gf_rc_title'] 	= "Recicladores Disponibles";
-$lang['gf_sp_title'] 	= "Espias Disponibles";
-$lang['gf_unknowsp'] 	= "Espacio Infinito";
 
 ?>

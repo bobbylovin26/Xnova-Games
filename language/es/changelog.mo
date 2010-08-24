@@ -4,7 +4,27 @@ $lang['Version']     = 'Versión';
 $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
-'2.1' => ' 03/04/09
+
+'2.2' => ' 06/05/09
+
+- Se reemplazo el menú derecho e izquierdo por el original, y la imagen del fondo también.-
+- Revisado todo messages.php,se eliminaron querys innecesarias, se organizo el código, se restringieron algunas querys para optimizar la página, se elimiaron elementos sin utilidad y se integro el lenguaje.-
+- Toda la galaxia fue revisada, se hicieron algunas correciones en los textos y algunas mejoras visuales.-
+- Corregido un bug que impedia cambiar la cantidad de planetas, sistemas y galaxias que se podían utilizar en el universo (modificable desde constantes.php), recomiendo dejarlo en 9-499-15, asi no saturan mucho el juego.-
+- Renombrado functions.php a funciones.php
+- Limpieza y revisado de constants.php, renombrado a constantes.php.-
+- Corregido un bug en la página de tecnologías.-
+- Eliminadas las vars de los mensajes, no tenían utilidad.-
+- Se revisaron nuevamente todas las funciones y fueron nuevamente reasignadas utilizando el sistema de funciones_A y funciones_B.-
+- Solucionado el bug de las páginas en blanco, dejando la versión bastante estable [BETA].-
+- Nueva forma de distribuir las funciones, en A y B. Para mas detalles lean la información que deje comentada en commons.php, esto es provisorio, aunque creo que es la mejor forma de agilizar el juego, y tenerlo más estable.-
+- Pequeño cambio en el ingreso, eliminando algunas lineas.-
+- Algunos cambios en el commons.php y eliminadas algunas cosas innecesarias.-
+- Corregido un pequeño bug en las listas de lunas.-
+- Corregido un bug en la opción de crear lunas.-
+',
+
+'2.1' => ' 02/05/09
 
 - Pequeño cambio en el index y la selección de la página.-
 - Incluido reg.mo directamente a reg_form.tpl y reg.php.-

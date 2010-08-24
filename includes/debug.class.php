@@ -1,13 +1,6 @@
-<?php // debug.class.php ::  Clase Debug, maneja reporte de eventos
+<?php
 
 if(!defined('INSIDE')){ die("attemp hacking");}
-//
-//  Experiment code!!!
-//
-/*vamos a experimentar >:)
-  le veo futuro a las classes, ayudaria mucho a tener un codigo mas ordenado...
-  que esperabas!!! soy newbie!!! D':<
-*/
 
 class debug
 {
@@ -34,7 +27,8 @@ class debug
 	function error($message,$title)
 	{
 		global $link,$game_config;
-		if($game_config['debug']==1){
+		if($game_config['debug']==1)
+		{
 			echo "<h2>$title</h2><br><font color=red>$message</font><br><hr>";
 			echo  "<table>".$this->log."</table>";
 		}
@@ -67,6 +61,4 @@ class debug
 
 
 }
-
-// Created by Perberos. All rights reversed (C) 2006
 ?>

@@ -79,14 +79,14 @@ include($xnova_root_path . 'common.' . $phpEx);
 		$parse['mlst_data_pagemax'] = $MaxPage;
 		$parse['mlst_data_sele']    = $Selected;
 
-		$parse['mlst_data_types']  = "<option value=\"0\"".  (($Selected == "0")  ? " SELECTED" : "") .">". $lang['mlst_mess_typ__0'] ."</option>";
-		$parse['mlst_data_types'] .= "<option value=\"1\"".  (($Selected == "1")  ? " SELECTED" : "") .">". $lang['mlst_mess_typ__1'] ."</option>";
-		$parse['mlst_data_types'] .= "<option value=\"2\"".  (($Selected == "2")  ? " SELECTED" : "") .">". $lang['mlst_mess_typ__2'] ."</option>";
-		$parse['mlst_data_types'] .= "<option value=\"3\"".  (($Selected == "3")  ? " SELECTED" : "") .">". $lang['mlst_mess_typ__3'] ."</option>";
-		$parse['mlst_data_types'] .= "<option value=\"4\"".  (($Selected == "4")  ? " SELECTED" : "") .">". $lang['mlst_mess_typ__4'] ."</option>";
-		$parse['mlst_data_types'] .= "<option value=\"5\"".  (($Selected == "5")  ? " SELECTED" : "") .">". $lang['mlst_mess_typ__5'] ."</option>";
-		$parse['mlst_data_types'] .= "<option value=\"15\"". (($Selected == "15") ? " SELECTED" : "") .">". $lang['mlst_mess_typ_15'] ."</option>";
-		$parse['mlst_data_types'] .= "<option value=\"99\"". (($Selected == "99") ? " SELECTED" : "") .">". $lang['mlst_mess_typ_99'] ."</option>";
+		$parse['mlst_data_types']  = "<option value=\"0\"".  (($Selected == "0")  ? " SELECTED" : "") .">Espionajes</option>";
+		$parse['mlst_data_types'] .= "<option value=\"1\"".  (($Selected == "1")  ? " SELECTED" : "") .">Jugadores</option>";
+		$parse['mlst_data_types'] .= "<option value=\"2\"".  (($Selected == "2")  ? " SELECTED" : "") .">Alianza</option>";
+		$parse['mlst_data_types'] .= "<option value=\"3\"".  (($Selected == "3")  ? " SELECTED" : "") .">Ataques</option>";
+		$parse['mlst_data_types'] .= "<option value=\"4\"".  (($Selected == "4")  ? " SELECTED" : "") .">Recolección</option>";
+		$parse['mlst_data_types'] .= "<option value=\"5\"".  (($Selected == "5")  ? " SELECTED" : "") .">Transporte</option>";
+		$parse['mlst_data_types'] .= "<option value=\"15\"". (($Selected == "15") ? " SELECTED" : "") .">Expedicion</option>";
+		$parse['mlst_data_types'] .= "<option value=\"16\"". (($Selected == "16") ? " SELECTED" : "") .">Construcción</option>";
 
 		$parse['mlst_data_pages']  = "";
 		for ( $cPage = 1; $cPage <= $MaxPage; $cPage++ ) {

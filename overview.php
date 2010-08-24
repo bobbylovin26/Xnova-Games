@@ -15,16 +15,9 @@ define('INSTALL' , false);
 $xnova_root_path = './';
 include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
-include($xnova_root_path . 'includes/functions/BuildFleetEventTable.' . $phpEx);
-include($xnova_root_path . 'includes/functions/CheckInputStrings.' . $phpEx);
-include($xnova_root_path . 'includes/functions/InsertBuildListScript.' . $phpEx);
-include($xnova_root_path . 'includes/functions/InsertJavaScriptChronoApplet.' . $phpEx);
-include($xnova_root_path . 'includes/functions/CheckPlanetBuildingQueue.' . $phpEx);
-include($xnova_root_path . 'includes/functions/SetNextQueueElementOnTop.' . $phpEx);
-include($xnova_root_path . 'includes/functions/GetElementPrice.'.$phpEx);
-include($xnova_root_path . 'includes/functions/GetBuildingPrice.'.$phpEx);
-include($xnova_root_path . 'includes/functions/IsElementBuyable.'.$phpEx);
-include($xnova_root_path . 'includes/functions/AddBuildingToQueue.'.$phpEx);
+include($xnova_root_path . 'includes/funciones_A/InsertJavaScriptChronoApplet.' . $phpEx);
+include($xnova_root_path . 'includes/funciones_A/BuildFleetEventTable.' . $phpEx);
+
 
 $lunarow 			= doquery("SELECT * FROM {{table}} WHERE `id_owner` = '" . $planetrow['id_owner'] . "' AND `galaxy` = '" . $planetrow['galaxy'] . "' AND `system` = '" . $planetrow['system'] . "' AND `lunapos` = '" . $planetrow['planet'] . "';", 'lunas', true);
 CheckPlanetUsedFields($lunarow);
@@ -91,7 +84,7 @@ switch ($_GET['mode'])
 		if ($user['id'] != '')
 		{
 			$mensajes	= doquery ("SELECT * FROM {{table}} WHERE `message_owner`='" . $user['id'] . " ' AND `leido`='1' ", "messages",true);
-			$mensajes2	= doquery ("SELECT * FROM {{table}} WHERE `message_owner`='" . $user['id'] . "' AND `leido`='1'", "messages");
+			$mensajes2	= doquery ("SELECT * FROM {{table}} WHERE `message_owner`='" . $user['id'] . " ' AND `leido`='1' ", "messages");
 
 			$Have_new_message = "";
 			if ($mensajes['leido'] != 0)
@@ -319,6 +312,8 @@ switch ($_GET['mode'])
 
 			if ($planetrow['b_building'] != 0)
 			{
+				include($xnova_root_path . 'includes/funciones_A/InsertBuildListScript.' . $phpEx);
+
 				UpdatePlanetBatimentQueueList ($planetrow, $user);
 
 				$BuildQueue  		 = explode (";", $planetrow['b_building_id']);

@@ -15,8 +15,7 @@ define('INSTALL' , false);
 $xnova_root_path = './';
 include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);
-include($xnova_root_path . 'includes/functions/CheckIfIsBuilding.' . $phpEx);
-include($xnova_root_path . 'includes/functions/CheckInputStrings.' . $phpEx);
+include($xnova_root_path . 'includes/funciones_A/CheckIfIsBuilding.' . $phpEx);
 
 $dpath = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
 
@@ -81,7 +80,7 @@ if ($_POST && $mode == "change")
 	// < ------------------------------------------------------------- NOMBRE DE USUARIO ------------------------------------------------------------- >
 	if (isset($_POST["db_character"]) && $_POST["db_character"] != '')
 	{
-		$username = CheckInputStrings ( $_POST['db_character'] );
+		$username = mysql_escape_string ( $_POST['db_character'] );
 	}
 	else
 	{
@@ -91,7 +90,7 @@ if ($_POST && $mode == "change")
 
 	if (isset($_POST["db_email"]) && $_POST["db_email"] != '')
 	{
-		$db_email = CheckInputStrings ( $_POST['db_email'] );
+		$db_email = mysql_escape_string ( $_POST['db_email'] );
 	}
 	else
 	{
@@ -292,7 +291,6 @@ else
 	}
 	else
 	{
-		$parse['opt_lst_skin_data']  = "<option value =\"skins/xnova/\">skins/xnova/</option>";
 		$parse['opt_lst_ord_data']   = "<option value =\"0\"". (($user['planet_sort'] == 0) ? " selected": "") .">Fecha de colonización</option>";
 		$parse['opt_lst_ord_data']  .= "<option value =\"1\"". (($user['planet_sort'] == 1) ? " selected": "") .">Coordenadas</option>";
 		$parse['opt_lst_ord_data']  .= "<option value =\"2\"". (($user['planet_sort'] == 2) ? " selected": "") .">Orden alfabético</option>";
