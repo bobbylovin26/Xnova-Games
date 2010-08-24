@@ -1,13 +1,26 @@
 <?php
 
-/**
- * vars.php
- *
- * @version 1.0
- * @copyright 2008 by Chlorel for XNova
- */
+##############################################################################
+# *																			 #
+# * XG PROYECT																 #
+# *  																		 #
+# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# *																			 #
+# *																			 #
+# *  This program is free software: you can redistribute it and/or modify    #
+# *  it under the terms of the GNU General Public License as published by    #
+# *  the Free Software Foundation, either version 3 of the License, or       #
+# *  (at your option) any later version.									 #
+# *																			 #
+# *  This program is distributed in the hope that it will be useful,		 #
+# *  but WITHOUT ANY WARRANTY; without even the implied warranty of			 #
+# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the			 #
+# *  GNU General Public License for more details.							 #
+# *																			 #
+##############################################################################
 
-if ( defined('INSIDE')) {
+if ( defined('INSIDE'))
+{
 
 	$resource = array(
 	  1 => "metal_mine",
@@ -71,7 +84,6 @@ if ( defined('INSIDE')) {
 	407 => "small_protection_shield",
 	408 => "big_protection_shield",
 	409 => "planet_protector",
-
 	502 => "interceptor_misil",
 	503 => "interplanetary_misil",
 
@@ -93,17 +105,14 @@ if ( defined('INSIDE')) {
 	);
 
 	$requeriments = array(
-		// Batiments
 		 12 => array(   3 =>   5, 113 =>   3),
 		 15 => array(  14 =>  10, 108 =>  10),
 		 21 => array(  14 =>   2),
 		 33 => array(  15 =>   1, 113 =>  12),
 
-		// Batiments Lunaires
 		 42 => array(  41 =>   1),
 		 43 => array(  41 =>   1, 114 =>   7),
 
-		// Technologies
 		106 => array(  31 =>   3),
 		108 => array(  31 =>   1),
 		109 => array(  31 =>   4),
@@ -121,7 +130,6 @@ if ( defined('INSIDE')) {
 		124 => array(  31 =>   3, 108 =>   4, 117 =>   3),
 		199 => array(  31 =>  12),
 
-		// Flotte
 		202 => array(  21 =>   2, 115 =>   2),
 		203 => array(  21 =>   4, 115 =>   6),
 		204 => array(  21 =>   1, 115 =>   1),
@@ -138,7 +146,6 @@ if ( defined('INSIDE')) {
 		215 => array( 114 =>   5, 120 =>  12, 118 =>   5,   21 =>   8),
 		216 => array( 614 =>   1),
 
-		// Defense
 		401 => array(  21 =>   1),
 		402 => array( 113 =>   1,  21 =>   2, 120 =>   3),
 		403 => array( 113 =>   3,  21 =>   4, 120 =>   6),
@@ -151,8 +158,6 @@ if ( defined('INSIDE')) {
 		502 => array(  44 =>   2),
 		503 => array(  44 =>   4),
 
-
-		// Officier
 		603 => array( 601 =>   5),
 		604 => array( 602 =>   5),
 		605 => array( 601 =>  10, 603 =>   2),
@@ -231,7 +236,6 @@ if ( defined('INSIDE')) {
 		408 => array ( 'metal' =>   50000, 'crystal' =>   50000, 'deuterium' =>       0, 'energy' => 0, 'factor' => 1 ),
         409 => array ( 'metal' =>   10000000, 'crystal' =>   5000000, 'deuterium' =>       2500000, 'energy' => 0, 'factor' => 1 ),
 
-
 		502 => array ( 'metal' =>    8000, 'crystal' =>    0, 'deuterium' =>       2000, 'energy' => 0, 'factor' => 1 ),
 		503 => array ( 'metal' =>   12500, 'crystal' =>    2500, 'deuterium' =>   10000, 'energy' => 0, 'factor' => 1 ),
 
@@ -284,7 +288,7 @@ if ( defined('INSIDE')) {
 	);
 
 	$ProdGrid = array(
-		// Mine de Métal
+
 		1   => array( 'metal' =>   40, 'crystal' =>   10, 'deuterium' =>    0, 'energy' => 0, 'factor' => 3/2,
 			'formule' => array(
 				'metal'     => 'return   (30 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);',
@@ -292,7 +296,7 @@ if ( defined('INSIDE')) {
 				'deuterium' => 'return   "0";',
 				'energy'    => 'return - (10 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);')
 		),
-		// Mine de Cristal
+
 		2   => array( 'metal' =>   30, 'crystal' =>   15, 'deuterium' =>    0, 'energy' => 0, 'factor' => 1.6,
 			'formule' => array(
 				'metal'     => 'return   "0";',
@@ -300,7 +304,7 @@ if ( defined('INSIDE')) {
 				'deuterium' => 'return   "0";',
 				'energy'    => 'return - (10 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);')
 		),
-		// Mine de Deutérium
+
 		3   => array( 'metal' =>  150, 'crystal' =>   50, 'deuterium' =>    0, 'energy' => 0, 'factor' => 3/2,
 			'formule' => array(
 				'metal'     => 'return   "0";',
@@ -308,7 +312,7 @@ if ( defined('INSIDE')) {
 				'deuterium' => 'return  ((10 * $BuildLevel * pow((1.1), $BuildLevel)) * (-0.002 * $BuildTemp + 1.28))  * (0.1 * $BuildLevelFactor);',
 				'energy'    => 'return - (30 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);')
                 ),
-		// Energie Solaire
+
 		4   => array( 'metal' =>   50, 'crystal' =>   20, 'deuterium' =>    0, 'energy' => 0, 'factor' => 3/2,
 			'formule' => array(
 				'metal'     => 'return   "0";',
@@ -316,7 +320,7 @@ if ( defined('INSIDE')) {
 				'deuterium' => 'return   "0";',
 				'energy'    => 'return   (20 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);')
 		),
-		// Energie Fusion
+
 		12  => array( 'metal' =>  500, 'crystal' =>  200, 'deuterium' =>  100, 'energy' => 0, 'factor' => 1.8,
 			'formule' => array(
 				'metal'     => 'return   "0";',
@@ -324,7 +328,7 @@ if ( defined('INSIDE')) {
 				'deuterium' => 'return - (05 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);',
 				'energy'    => 'return   (50 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);')
 		),
-		// Satelitte Solaire
+
 		212 => array( 'metal' =>    0, 'crystal' => 2000, 'deuterium' =>  500, 'energy' => 0, 'factor' => 0.5,
 			'formule' => array(
 				'metal'     => 'return   "0";',
@@ -341,6 +345,4 @@ if ( defined('INSIDE')) {
 	$reslist['officier'] = array ( 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615);
 	$reslist['prod']     = array (   1,   2,   3,   4,  12, 212 );
 }
-
-
 ?>
