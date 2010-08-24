@@ -37,7 +37,7 @@
                   <th><h3>{ow_principal_contributors}</h3></th>
                 </tr>
                 <tr>
-                  <th>angelus_ira<br />Calzon<br />cyberrichy (SACs)<br />Neko<br />PowerMaster<br />zorro2666<br /><br /></th>
+                  <th>angelus_ira<br />Calzon<br />cyberrichy (SACs)<br />Neko<br />PowerMaster<br />Trojan<br />zorro2666<br /><br /></th>
                 </tr>
                 <tr>
                   <th><h3>{ow_special_thanks}</h3></th>

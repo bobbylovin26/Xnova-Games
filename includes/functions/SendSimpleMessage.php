@@ -19,27 +19,29 @@
 # *																			 #
 ##############################################################################
 
-function SendSimpleMessage ( $Owner, $Sender, $Time, $Type, $From, $Subject, $Message) {
+if(!defined('INSIDE')){ die(header("location:../../"));}
 
-	if ($Time == '')
-		$Time = time();
+	function SendSimpleMessage ( $Owner, $Sender, $Time, $Type, $From, $Subject, $Message)
+	{
 
-	$QryInsertMessage  = "INSERT INTO {{table}} SET ";
-	$QryInsertMessage .= "`message_owner` = '". $Owner ."', ";
-	$QryInsertMessage .= "`message_sender` = '". $Sender ."', ";
-	$QryInsertMessage .= "`message_time` = '" . $Time . "', ";
-	$QryInsertMessage .= "`message_type` = '". $Type ."', ";
-	$QryInsertMessage .= "`message_from` = '". addslashes( $From ) ."', ";
-	$QryInsertMessage .= "`message_subject` = '". addslashes( $Subject ) ."', ";
-	$QryInsertMessage .= "`message_text` = '". addslashes( $Message ) ."';";
-	doquery( $QryInsertMessage, 'messages');
+		if ($Time == '')
+			$Time = time();
 
-	$QryUpdateUser  = "UPDATE `{{table}}` SET ";
-	$QryUpdateUser .= "`new_message` = `new_message` + 1 ";
-	$QryUpdateUser .= "WHERE ";
-	$QryUpdateUser .= "`id` = '". $Owner ."';";
-	doquery($QryUpdateUser, "users");
+		$QryInsertMessage  = "INSERT INTO {{table}} SET ";
+		$QryInsertMessage .= "`message_owner` = '". $Owner ."', ";
+		$QryInsertMessage .= "`message_sender` = '". $Sender ."', ";
+		$QryInsertMessage .= "`message_time` = '" . $Time . "', ";
+		$QryInsertMessage .= "`message_type` = '". $Type ."', ";
+		$QryInsertMessage .= "`message_from` = '". addslashes( $From ) ."', ";
+		$QryInsertMessage .= "`message_subject` = '". addslashes( $Subject ) ."', ";
+		$QryInsertMessage .= "`message_text` = '". addslashes( $Message ) ."';";
+		doquery( $QryInsertMessage, 'messages');
 
-}
+		$QryUpdateUser  = "UPDATE `{{table}}` SET ";
+		$QryUpdateUser .= "`new_message` = `new_message` + 1 ";
+		$QryUpdateUser .= "WHERE ";
+		$QryUpdateUser .= "`id` = '". $Owner ."';";
+		doquery($QryUpdateUser, "users");
+	}
 
 ?>

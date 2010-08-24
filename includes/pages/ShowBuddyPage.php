@@ -27,7 +27,7 @@ function ShowBuddyPage($CurrentUser)
 
 	foreach($_GET as $name => $value)
 	{
-		$$name = intval( $value );
+		$name = intval( $value );
 	}
 	switch($mode)
 	{
@@ -111,14 +111,14 @@ function ShowBuddyPage($CurrentUser)
 				else
 				{
 					if($buddy['sender']==$CurrentUser['id'])
-						$owner = doquery("SELECT `id`, `username`, `galaxy`, `system`, `planet`,`ally_id`, `ally_name` FROM {{table}} WHERE `id`='{$buddy[owner]}'","users",true);
+						$owner = doquery("SELECT `id`, `username`, `onlinetime`, `galaxy`, `system`, `planet`,`ally_id`, `ally_name` FROM {{table}} WHERE `id`='{$buddy[owner]}'","users",true);
 					else
-						$owner = doquery("SELECT `id`, `username`, `galaxy`, `system`, `planet`,`ally_id`, `ally_name` FROM {{table}} WHERE `id`='{$buddy[sender]}'","users",true);
+						$owner = doquery("SELECT `id`, `username`, `onlinetime`, `galaxy`, `system`, `planet`,`ally_id`, `ally_name` FROM {{table}} WHERE `id`='{$buddy[sender]}'","users",true);
 
 						$myfriends.="<tr><th><a href=game.php?page=messages&mode=write&id={$owner[id]}>{$owner[username]}</a></th>
 						<th><a href=game.php?page=alliance&mode=ainfo&a={$owner[ally_id]}>{$owner[ally_name]}</a></th>
 						<th><a href=game.php?page=galaxy&mode=3&galaxy={$owner[galaxy]}&system={$owner[system]}>{$owner[galaxy]}:{$owner[system]}:{$owner[planet]}</a></th>
-						<th><font color=".(( $u["onlinetime"] + 60 * 10 >= time() )?"lime>".$lang['bu_connected']."":(( $u["onlinetime"] + 60 * 20 >= time() )?"yellow>".$lang['bu_fifteen_minutes']."":"red>".$lang['bu_disconnected'].""))."</font></th>
+						<th><font color=".(( $owner["onlinetime"] + 60 * 10 >= time() )?"lime>".$lang['bu_connected']."":(( $owner["onlinetime"] + 60 * 15 >= time() )?"yellow>".$lang['bu_fifteen_minutes']."":"red>".$lang['bu_disconnected'].""))."</font></th>
 						<th><a href=game.php?page=buddy&mode=1&sm=1&bid={$buddy[id]}>".$lang['bu_delete']."</a></th></tr>";
 				}
 			}

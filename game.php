@@ -28,10 +28,7 @@ include($xgp_root . 'common.' . $phpEx);
 
 include($xgp_root . 'includes/functions/CheckPlanetBuildingQueue.' . $phpEx);
 include($xgp_root . 'includes/functions/GetBuildingPrice.' . $phpEx);
-include($xgp_root . 'includes/functions/GetBuildingTime.' . $phpEx);
-include($xgp_root . 'includes/functions/HandleElementBuildingQueue.' . $phpEx);
 include($xgp_root . 'includes/functions/IsElementBuyable.' . $phpEx);
-include($xgp_root . 'includes/functions/PlanetResourceUpdate.' . $phpEx);
 include($xgp_root . 'includes/functions/SetNextQueueElementOnTop.' . $phpEx);
 include($xgp_root . 'includes/functions/SortUserPlanets.' . $phpEx);
 include($xgp_root . 'includes/functions/UpdatePlanetBatimentQueueList.' . $phpEx);

@@ -183,7 +183,7 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 	$FlyingFleets = mysql_fetch_assoc(doquery("SELECT COUNT(fleet_id) as Number FROM {{table}} WHERE `fleet_owner`='{$CurrentUser['id']}'", 'fleets'));
 	$ActualFleets = $FlyingFleets["Number"];
 
-	if ((1 + $CurrentUser[$resource[108]]) + ($CurrentUser['rpg_commandant'] * 3) <= $ActualFleets)
+	if ((1 + $CurrentUser[$resource[108]]) + ($CurrentUser['rpg_commandant'] * COMMANDANT) <= $ActualFleets)
 	{
 		message($lang['fl_no_slots'], "game." . $phpEx . "?page=fleet", 1);
 	}
@@ -295,6 +295,11 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 
 	$FleetStorage        -= $consumption;
 	$StorageNeeded        = 0;
+
+	$_POST['resource1'] = max(0, (int)trim($_POST['resource1']));
+	$_POST['resource2'] = max(0, (int)trim($_POST['resource2']));
+	$_POST['resource3'] = max(0, (int)trim($_POST['resource3']));
+
 	if ($_POST['resource1'] < 1)
 		$TransMetal      = 0;
 	else

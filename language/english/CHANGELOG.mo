@@ -5,6 +5,41 @@ $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
 
+'2.8' => ' 10/10/09
+
+- [Seguridad] Mejora de seguridad en varias funciones y archivos.-
+- [Seguridad] Mejora de seguridad y prevención de números y caracteres no permitidos en el salto cuántico (Gracias a Trojan).-
+
+- [Novedad] El pack en inglés se encuentra 100% traducido (Gracias war4head).-
+- [Novedad] Se definieron constantes para los oficiales, asi es más fácil editarlos (no lo recomiendo).-
+
+- [cambio] Mejoras varias en el script que calcula los ataques.-
+- [Cambio] Corregido un bug de seguridad al agregar recursos al envio de una flota (Gracias a MSW).-
+- [Cambio] Los reportes de combate de la sección mensajes ahora solo muestran un link al reporte y no un resumen.-
+- [Cambio] Pequeño fix y mejora de seguridad para el phalanx y el alcance (Gracias a Trojan).-
+- [Cambio] Optimizado el alcance del phalanx, reducida la carga de procesamiento (Gracias a Trojan).-
+- [Cambio] Optimizados los movimientos de flotas (Gracias a Trojan).-
+- [Cambio] Los recicladores valen ahora 10.000 de metal - 6.000 de cristal - 2.000 de deuterio como corresponde.-
+
+- [Fix][Varios] Corrección de varios bugs menores globales.-
+- [Fix][Varios] Corregidos varios bugs menores en el armado de las estadísticas.-
+- [Fix][Varios] Corregidos varios bugs menores en los movimientos de flotas y misiones.-
+- [Fix][Bug #108] Coordenadas erroneas en el mensaje de reciclaje.-
+- [Fix][Bug #109] Los jugadores de la lista de compañeros aparecen siempre como desconectados.-
+- [Fix][Bug #110] Duplicación de recicladores al hacer multiple clicks en la galaxia.-
+- [Fix][Bug #111] Jugadores inactivos y borrados no son eliminados fisicamente.-
+- [Fix][Bug #112] No son actualizados los recursos del planeta de un jugador al ser atacado.-
+- [Fix][Bug #113] Pequeño bug que muestra un mensaje de error en la pagina de los sacs.-
+- [Fix][Bug #114] Bug al intentar eliminar un jugador.-
+- [Fix][Bug #115] Diferencia de estados entre (debil, fuerte) al enviar una flota y la galaxia.-
+- [Fix][Bug #116] Bug en la misión de destrucción.-
+- [Fix][Bug #117] Bug en la alianza que no descuenta los jugadores que salen de ella.-
+- [Fix][Bug #118] Bug que permite ignorar las naves e investigaciones, permitiendo edificar robots, nanos y laboratorio.-
+- [Fix][Bug #119] Bug en los textos de transportes.-
+- [Fix][Bug #120] Bug en las batallas de una sola ronda.-
+- [Fix][Bug #121] Bug en las solicitudes de la alianza.-
+',
+
 '2.7' => ' 17/09/09
 
 - [Novedad] Sistema para ver toda la información de la cuenta de un usuario. By Neko.-

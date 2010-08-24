@@ -438,7 +438,7 @@ class ShowAlliancePage
 				if ($_GET['yes'] == 1)
 				{
 					doquery("UPDATE {{table}} SET `ally_id` = 0, `ally_name` = '', ally_rank_id = 0 WHERE `id`='{$CurrentUser['id']}'", "users");
-					doquery("UPDATE {{table}} SET `ally_members ` = `ally_members ` - 1 WHERE `id`='{$ally['id']}'", "alliance");
+					doquery("UPDATE {{table}} SET `ally_members` = `ally_members` - 1 WHERE `id`='{$ally['id']}'", "alliance");
 
 					$lang['Go_out_welldone'] = str_replace("%s", $ally_name, $lang['al_leave_sucess']);
 					$page = $this->MessageForm($lang['Go_out_welldone'], "<br>", $PHP_SELF, $lang['al_continue']);

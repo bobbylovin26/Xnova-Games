@@ -215,8 +215,8 @@ class ShowOptionsPage
 				{
 					doquery("UPDATE {{table}} SET
 					metal_perhour = '".$game_config['metal_basic_income']."',
-					crystal_perhour = '".$game_config['metal_basic_income']."',
-					deuterium_perhour = '".$game_config['metal_basic_income']."',
+					crystal_perhour = '".$game_config['crystal_basic_income']."',
+					deuterium_perhour = '".$game_config['deuterium_basic_income']."',
 					energy_used = '0',
 					energy_max = '0',
 					metal_mine_porcent = '0',
@@ -234,7 +234,7 @@ class ShowOptionsPage
 			// < ------------------------------------------------------------ BORRAR CUENTA ------------------------------------------------------------ >
 			if (isset($_POST["db_deaktjava"]) && $_POST["db_deaktjava"] == 'on')
 			{
-				$db_deaktjava = "1";
+				$db_deaktjava = time();
 			}
 			else
 			{
@@ -298,9 +298,9 @@ class ShowOptionsPage
 
 			if($CurrentUser['urlaubs_modus'])
 			{
-				$parse['opt_modev_data'] = ($CurrentUser['urlaubs_modus'] == 1)?" checked='checked'/":'';
-				$parse['opt_modev_exit'] = ($CurrentUser['urlaubs_modus'] == 0)?" checked='1'/":'';
-				$parse['vacation_until'] = date("d.m.Y G:i:s",$CurrentUser['urlaubs_until']);
+				$parse['opt_modev_data'] 	= ($CurrentUser['urlaubs_modus'] == 1)?" checked='checked'/":'';
+				$parse['opt_modev_exit'] 	= ($CurrentUser['urlaubs_modus'] == 0)?" checked='1'/":'';
+				$parse['vacation_until'] 	= date("d.m.Y G:i:s",$CurrentUser['urlaubs_until']);
 
 				display(parsetemplate(gettemplate('options/options_body_vmode'), $parse), false);
 			}
@@ -318,23 +318,23 @@ class ShowOptionsPage
 					$parse['adm_pl_prot_data']    = ($IsProtOn['id_level'] > 0) ? " checked='checked'/":'';
 					$parse['opt_adm_frame']      = parsetemplate(gettemplate('options/options_admadd'), $parse);
 				}
-
-				$parse['opt_usern_data'] = $CurrentUser['username'];
-				$parse['opt_mail1_data'] = $CurrentUser['email'];
-				$parse['opt_mail2_data'] = $CurrentUser['email_2'];
-				$parse['opt_dpath_data'] = $CurrentUser['dpath'];
-				$parse['opt_probe_data'] = $CurrentUser['spio_anz'];
-				$parse['opt_toolt_data'] = $CurrentUser['settings_tooltiptime'];
-				$parse['opt_fleet_data'] = $CurrentUser['settings_fleetactions'];
-				$parse['opt_sskin_data'] = ($CurrentUser['design'] == 1) ? " checked='checked'":'';
-				$parse['opt_noipc_data'] = ($CurrentUser['noipcheck'] == 1) ? " checked='checked'":'';
-				$parse['opt_allyl_data'] = ($CurrentUser['settings_allylogo'] == 1) ? " checked='checked'/":'';
-				$parse['opt_delac_data'] = ($CurrentUser['db_deaktjava'] == 1) ? " checked='checked'/":'';
+				$parse['opt_usern_data'] 	= $CurrentUser['username'];
+				$parse['opt_mail1_data'] 	= $CurrentUser['email'];
+				$parse['opt_mail2_data'] 	= $CurrentUser['email_2'];
+				$parse['opt_dpath_data'] 	= $CurrentUser['dpath'];
+				$parse['opt_probe_data'] 	= $CurrentUser['spio_anz'];
+				$parse['opt_toolt_data'] 	= $CurrentUser['settings_tooltiptime'];
+				$parse['opt_fleet_data'] 	= $CurrentUser['settings_fleetactions'];
+				$parse['opt_sskin_data'] 	= ($CurrentUser['design'] == 1) ? " checked='checked'":'';
+				$parse['opt_noipc_data'] 	= ($CurrentUser['noipcheck'] == 1) ? " checked='checked'":'';
+				$parse['opt_allyl_data'] 	= ($CurrentUser['settings_allylogo'] == 1) ? " checked='checked'/":'';
+				$parse['opt_delac_data'] 	= ($CurrentUser['db_deaktjava'] == 1) ? " checked='checked'/":'';
 				$parse['user_settings_rep'] = ($CurrentUser['settings_rep'] == 1) ? " checked='checked'/":'';
 				$parse['user_settings_esp'] = ($CurrentUser['settings_esp'] == 1) ? " checked='checked'/":'';
 				$parse['user_settings_wri'] = ($CurrentUser['settings_wri'] == 1) ? " checked='checked'/":'';
 				$parse['user_settings_mis'] = ($CurrentUser['settings_mis'] == 1) ? " checked='checked'/":'';
 				$parse['user_settings_bud'] = ($CurrentUser['settings_bud'] == 1) ? " checked='checked'/":'';
+				$parse['db_deaktjava']		= ($CurrentUser['db_deaktjava']  > 0) ? " checked='checked'/":'';
 
 				display(parsetemplate(gettemplate('options/options_body'), $parse));
 			}

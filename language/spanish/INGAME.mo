@@ -63,6 +63,7 @@ $lang['tech_rc'] = array (
 //----------------------------------------------------------------------------//
 //TOPNAV
 $lang['tn_vacation_mode']					= 'Modo vacaciones activo hasta el ';
+$lang['tn_delete_mode']						= 'Tu cuenta se encuentra en modo borrar. La misma será borrada el ';
 
 //----------------------------------------------------------------------------//
 //LEFT MENU
@@ -1132,7 +1133,7 @@ $lang['sys_expe_found_ships'] 				= "Tus exploradores han encontrado un escuadro
 $lang['sys_expe_back_home'] 				= "Tu expedición regresó al hangar.";
 $lang['sys_mess_transport'] 				= "Flota de Transporte";
 $lang['sys_tran_mess_owner'] 				= "Una de tus flota llega a %s %s y entrega su mercancía: %s de %s, %s de %s y %s de %s.";
-$lang['sys_tran_mess_user']  				= "Hallada una flota de% s% s% s llega en su libro% s% s% s unidades, las unidades de% s% s% s% s unidades.";
+$lang['sys_tran_mess_user']  				= "Una flota proveniente de %s %s llega a tu planeta y entrega su mercancía: %s de %s, %s de %s y %s de %s.";
 $lang['sys_mess_fleetback'] 				= "Vuelta de la flota";
 $lang['sys_tran_mess_back'] 				= "Una flota regreso al planeta % s% s. La flota no entrego recursos.";
 $lang['sys_recy_gotten'] 					= "Tu flota llego a las coordenadas indicadas y recolecto %s unidades de %s y %s unidades de %s.";

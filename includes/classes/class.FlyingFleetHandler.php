@@ -176,11 +176,11 @@ class FlyingFleetHandler
 			{
 				foreach($CurrentSet as $a => $b)
 				{
-					$CurrentSet[$a]["obrona"] 	= $CurrentSet[$a]['count'] * ($pricelist[$a]['metal'] + $pricelist[$a]['crystal']) / 10 * (1 + (0.1 * ($CurrentTechno["defence_tech"]) + (0.05 * $user['rpg_amiral'])));
+					$CurrentSet[$a]["obrona"] 	= $CurrentSet[$a]['count'] * ($pricelist[$a]['metal'] + $pricelist[$a]['crystal']) / 10 * (1 + (0.1 * ($CurrentTechno["defence_tech"]) + (AMIRAL * $user['rpg_amiral'])));
 					$rand 						= rand(80, 120) / 100;
-					$CurrentSet[$a]["tarcza"] 	= $CurrentSet[$a]['count'] * $CombatCaps[$a]['shield'] * (1 + (0.1 * $CurrentTechno["shield_tech"]) + (0.05 * $user['rpg_amiral'])) * $rand;
+					$CurrentSet[$a]["tarcza"] 	= $CurrentSet[$a]['count'] * $CombatCaps[$a]['shield'] * (1 + (0.1 * $CurrentTechno["shield_tech"]) + (AMIRAL * $user['rpg_amiral'])) * $rand;
 					$atak_statku 				= $CombatCaps[$a]['attack'];
-					$technologie 				= (1 + (0.1 * $CurrentTechno["military_tech"]+(0.05 * $user['rpg_amiral'])));
+					$technologie 				= (1 + (0.1 * $CurrentTechno["military_tech"]+(AMIRAL * $user['rpg_amiral'])));
 					$rand 						= rand(80, 120) / 100;
 					$ilosc 						= $CurrentSet[$a]['count'];
 					$CurrentSet[$a]["atak"] 	= $ilosc * $atak_statku * $technologie * $rand;
@@ -199,11 +199,11 @@ class FlyingFleetHandler
 			{
 				foreach($TargetSet as $a => $b)
 				{
-					$TargetSet[$a]["obrona"] 	= $TargetSet[$a]['count'] * ($pricelist[$a]['metal'] + $pricelist[$a]['crystal']) / 10 * (1 + (0.1 * ($TargetTechno["defence_tech"]) + (0.05 * $user['rpg_amiral'])));
+					$TargetSet[$a]["obrona"] 	= $TargetSet[$a]['count'] * ($pricelist[$a]['metal'] + $pricelist[$a]['crystal']) / 10 * (1 + (0.1 * ($TargetTechno["defence_tech"]) + (AMIRAL* $user['rpg_amiral'])));
 					$rand 						= rand(80, 120) / 100;
-					$TargetSet[$a]["tarcza"] 	= $TargetSet[$a]['count'] * $CombatCaps[$a]['shield'] * (1 + (0.1 * $TargetTechno["shield_tech"])+ (0.05 * $user['rpg_amiral'])) * $rand;
+					$TargetSet[$a]["tarcza"] 	= $TargetSet[$a]['count'] * $CombatCaps[$a]['shield'] * (1 + (0.1 * $TargetTechno["shield_tech"])+ (AMIRAL * $user['rpg_amiral'])) * $rand;
 					$atak_statku 				= $CombatCaps[$a]['attack'];
-					$technologie 				= (1 + (0.1 * $TargetTechno["military_tech"]) + (0.05 * $user['rpg_amiral']));
+					$technologie 				= (1 + (0.1 * $TargetTechno["military_tech"]) + (AMIRAL * $user['rpg_amiral']));
 					$rand 						= rand(80, 120) / 100;
 					$ilosc 						= $TargetSet[$a]['count'];
 					$TargetSet[$a]["atak"] 		= $ilosc * $atak_statku * $technologie * $rand;
@@ -1036,6 +1036,9 @@ class FlyingFleetHandler
 
 			$targetGalaxy = doquery('SELECT * FROM {{table}} WHERE `galaxy` = '. $FleetRow['fleet_end_galaxy'] .' AND `system` = '. $FleetRow['fleet_end_system'] .' AND `planet` = '. $FleetRow['fleet_end_planet'] .';','galaxy', true);
 			$targetUser   = doquery('SELECT * FROM {{table}} WHERE id='.$targetPlanet['id_owner'],'users', true);
+
+			PlanetResourceUpdate ( $targetUser, $targetPlanet, time() );
+
 			$targetGalaxy = doquery('SELECT * FROM {{table}} WHERE `galaxy` = '. $FleetRow['fleet_end_galaxy'] .' AND `system` = '. $FleetRow['fleet_end_system'] .' AND `planet` = '. $FleetRow['fleet_end_planet'] .';','galaxy', true);
 			$targetUser   = doquery('SELECT * FROM {{table}} WHERE id='.$targetPlanet['id_owner'],'users', true);
 
@@ -1319,46 +1322,37 @@ class FlyingFleetHandler
 			$QryInsertRapport .= '`raport` = "'. mysql_real_escape_string( $raport ) .'"';
 			doquery($QryInsertRapport,'rw') or die("Error inserting CR to database".mysql_error()."<br /><br />Trying to execute:".mysql_query());
 
-			$raport  = '<a href # OnClick=\'f( "CombatReport.php?raport='. $rid .'", "");\' >';
-			$raport .= '<center>';
-
-			if       ($result['won'] == "a")
+			if($result['won'] == "a")
 			{
-				$raport .= '<font color=\'green\'>';
+				$style = "green";
 			}
 			elseif ($result['won'] == "w")
 			{
-				$raport .= '<font color=\'orange\'>';
+				$style = "orange";
 			}
 			elseif ($result['won'] == "r")
 			{
-				$raport .= '<font color=\'red\'>';
+				$style = "red";
 			}
 
-			$raport .= $lang['sys_mess_attack_report'] .' ['. $FleetRow['fleet_end_galaxy'] .':'. $FleetRow['fleet_end_system'] .':'. $FleetRow['fleet_end_planet'] .'] </font></a><br /><br />';
-			$raport .= '<font color=\'red\'>'. $lang['sys_perte_attaquant'] .': '. $result['lost']['att'] .'</font>';
-			$raport .= '<font color=\'green\'>   '. $lang['sys_perte_defenseur'] .': '. $result['lost']['def'] .'</font><br />' ;
-			$raport .= $lang['sys_gain'] .' '. $lang['Metal'] .':<font color=\'#adaead\'>'. $steal['metal'] .'</font>   '. $lang['Crystal'] .':<font color=\'#ef51ef\'>'. $steal['crystal'] .'</font>   '. $lang['Deuterium'] .':<font color=\'#f77542\'>'. $steal['deuterium'] .'</font><br />';
-			$raport .= $lang['sys_debris'] .' '. $lang['Metal'] .': <font color=\'#adaead\'>'. ($result['debree']['att'][0]+$result['debree']['def'][0]) .'</font>   '. $lang['Crystal'] .': <font color=\'#ef51ef\'>'. ($result['debree']['att'][1]+$result['debree']['def'][1]) .'</font><br /></center>';
+			$raport  = "<a href=\"#\" style=\"color:".$style.";\" OnClick='f(\"CombatReport.php?raport=". $rid ."\", \"\");' >" . $lang['sys_mess_attack_report'] ." [". $FleetRow['fleet_end_galaxy'] .":". $FleetRow['fleet_end_system'] .":". $FleetRow['fleet_end_planet'] ."]</a>";
 
-			SendSimpleMessage ( $FleetRow['fleet_owner'], '', $FleetRow['fleet_start_time'], 3, $lang['sys_mess_tower'], $lang['sys_mess_attack_report'], $raport );
+			SendSimpleMessage ( $FleetRow['fleet_owner'], '', $FleetRow['fleet_start_time'], 3, $lang['sys_mess_tower'], $raport, '' );
 
-			$raport2  = '<a href # OnClick=\'f( "CombatReport.php?raport='. $rid .'", "");\' >';
-			$raport2 .= '<center>';
-			if       ($result['won'] == "a")
+			if($result['won'] == "a")
 			{
-				$raport2 .= '<font color=\'red\'>';
+				$style = "red";
 			}
 			elseif ($result['won'] == "w")
 			{
-				$raport2 .= '<font color=\'orange\'>';
+				$style = "orange";
 			}
 			elseif ($result['won'] == "r")
 			{
-				$raport2 .= '<font color=\'green\'>';
+				$style = "green";
 			}
 
-			$raport2 .= $lang['sys_mess_attack_report'] .' ['. $FleetRow['fleet_end_galaxy'] .':'. $FleetRow['fleet_end_system'] .':'. $FleetRow['fleet_end_planet'] .'] </font></a><br /><br />';
+			$raport2  = "<a href=\"#\" style=\"color:".$style.";\" OnClick='f(\"CombatReport.php?raport=". $rid ."\", \"\");' >" . $lang['sys_mess_attack_report'] ." [". $FleetRow['fleet_end_galaxy'] .":". $FleetRow['fleet_end_system'] .":". $FleetRow['fleet_end_planet'] ."]</a>";
 
 			foreach ($users2 as $id)
 			{
@@ -1603,11 +1597,14 @@ class FlyingFleetHandler
 			$TargetPlanet        = doquery( $QryGetTargetPlanet, 'planets', true);
 			$TargetUserID        = $TargetPlanet['id_owner'];
 			$CurrentPlanet       = doquery("SELECT * FROM {{table}} WHERE `galaxy` = '".$FleetRow['fleet_start_galaxy']."' AND `system` = '".$FleetRow['fleet_start_system']."' AND `planet` = '".$FleetRow['fleet_start_planet']."';", 'planets', true);
-			$CurrentSpyLvl       = $CurrentUser['spy_tech'] + ($CurrentUser['rpg_espion'] * 5);
+			$CurrentSpyLvl       = $CurrentUser['spy_tech'] + ($CurrentUser['rpg_espion'] * ESPION);
 			$TargetUser          = doquery("SELECT * FROM {{table}} WHERE `id` = '".$TargetUserID."';", 'users', true);
-			$TargetSpyLvl        = $TargetUser['spy_tech'] + ($TargetUser['rpg_espion'] * 5);
+			$TargetSpyLvl        = $TargetUser['spy_tech'] + ($TargetUser['rpg_espion'] * ESPION);
 			$fleet               = explode(";", $FleetRow['fleet_array']);
 			$fquery              = "";
+
+			PlanetResourceUpdate ( $TargetUser, $TargetPlanet, time() );
+
 			foreach ($fleet as $a => $b)
 			{
 				if ($b != '')
@@ -2426,9 +2423,7 @@ class FlyingFleetHandler
 				7 => 408,
 				8 => 502,
 				9 => 503,
-				10 => 409,
-				11 => 410,
-				12 => 411);
+				10 => 409);
 
 				$def =   array(
 				0 => $planet['misil_launcher'],
@@ -2441,9 +2436,7 @@ class FlyingFleetHandler
 				7 => $planet['big_protection_shield'],
 				8 => $planet['interceptor_misil'],
 				9 => $planet['interplanetary_misil'],
-				10 => $planet['planet_protector'],
-				11 => $planet['fotocanyon'],
-				12 => $planet['baseespacial']);
+				10 => $planet['planet_protector']);
 
 				$DefenseLabel =   array(0 => $lang['tech'][401],
 				1 => $lang['tech'][402],
@@ -2455,11 +2448,8 @@ class FlyingFleetHandler
 				7 => $lang['tech'][408],
 				8 => $lang['tech'][502],
 				9 => $lang['tech'][503],
-				10 => $lang['tech'][409],
-				11 => $lang['tech'][410],
-				12 => $lang['tech'][411]);
+				10 => $lang['tech'][409]);
 
-				$irak = $this->raketenangriff($verteidiger, $angreifer, $FleetRow['fleet_amount'], $def, $FleetRow['fleet_target_obj']);
 				$message = '';
 
 				if ($planet['interceptor_misil'] >= $FleetRow['fleet_amount'])
@@ -2468,16 +2458,18 @@ class FlyingFleetHandler
 					$x = $resource[$ids[8]];
 					doquery("UPDATE {{table}} SET " . $x . " = " . $x . "-" . $FleetRow['fleet_amount'] . " WHERE id = " . $planet['id'], 'planets');
 				}
-
-				if ($planet['interceptor_misil'] > 0)
-				{
-					$x = $resource[$ids[8]];
-					doquery("UPDATE {{table}} SET " . $x . " = '0'  WHERE id = " . $planet['id'], 'planets');
-					$message = $planet['interceptor_misil'] . "interplanetario misiles fueron destruidos por misiles interceptores.<br>";
-					$irak = $this->raketenangriff($verteidiger, $angreifer, $FleetRow['fleet_amount']-$planet['interceptor_misil'], $def, $FleetRow['fleet_target_obj']);
-				}
 				else
 				{
+					if ($planet['interceptor_misil'] > 0)
+					{
+						$x = $resource[$ids[8]];
+						doquery("UPDATE {{table}} SET " . $x . " = '0'  WHERE id = " . $planet['id'], 'planets');
+						$message = $planet['interceptor_misil'] . "interplanetario misiles fueron destruidos por misiles interceptores.<br>";
+						$irak = $this->raketenangriff($verteidiger, $angreifer, $FleetRow['fleet_amount']-$planet['interceptor_misil'], $def, $FleetRow['fleet_target_obj']);
+					}
+
+					$irak = $this->raketenangriff($verteidiger, $angreifer, $FleetRow['fleet_amount'], $def, $FleetRow['fleet_target_obj']);
+
 					foreach ($irak['zerstoert'] as $id => $anzahl)
 					{
 						if ($id < 10)
@@ -2733,6 +2725,10 @@ class FlyingFleetHandler
 
 	public function FlyingFleetHandler (&$planet)
 	{
+		global $resource;
+
+		doquery("LOCK TABLE {{table}}aks WRITE, {{table}}lunas WRITE, {{table}}rw WRITE, {{table}}errors WRITE, {{table}}messages WRITE, {{table}}fleets WRITE,  {{table}}planets WRITE, {{table}}galaxy WRITE ,{{table}}users WRITE", "");
+
 		$QryFleet   = "SELECT * FROM {{table}} ";
 		$QryFleet  .= "WHERE (";
 		$QryFleet  .= "( ";
@@ -2801,6 +2797,9 @@ class FlyingFleetHandler
 
 			}
 		}
+
+		doquery("UNLOCK TABLES", "");
+
 	}
 }
 ?>

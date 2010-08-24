@@ -19,6 +19,8 @@
 # *																			 #
 ##############################################################################
 
+if(!defined('INSIDE')){ die(header("location:../../"));}
+
 function SortUserPlanets ($CurrentUser)
 {
 	$Order = ( $CurrentUser['planet_sort_order'] == 1 ) ? "DESC" : "ASC" ;

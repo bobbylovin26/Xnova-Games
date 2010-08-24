@@ -123,7 +123,7 @@ return $RetValue;
 }
 //FIN FIX ACTUALIZACION PUNTOS CON FLOTA VOLANDO
 function MakeStats()
-{global $resource, $pricelist, $reslist, $game_config;
+{global $resource, $pricelist, $reslist, $game_config, $xgp_root, $phpEx;
 	// Initial Time
 	$mtime        = microtime();
 	$mtime        = explode(" ", $mtime);
@@ -134,7 +134,22 @@ function MakeStats()
 	//Change the last stats time
 	$stats_time   = time();
 	//Delete old messages
-	$del_before = time() - (14 * 24 * 60 * 60);
+	$del_before 	= time() - (24 * 60 * 60); // 1 DAY
+	$del_inactive 	= time() - (60 * 60 * 24 * 30); // 1 MONTH
+	$del_deleted 	= time() - (60 * 60 * 24 * 7); // 1 WEEK
+
+	$ChooseToDelete = doquery("SELECT `id`,`db_deaktjava`,`onlinetime` FROM `{{table}}` WHERE (`db_deaktjava` < '".$del_deleted."' AND `db_deaktjava` <> 0) OR `onlinetime` < '".$del_inactive."'", 'users');
+
+	if($ChooseToDelete)
+	{
+		include_once($xgp_root . 'includes/functions/DeleteSelectedUser.' . $phpEx);
+
+		while($delete = mysql_fetch_array($ChooseToDelete))
+		{
+			DeleteSelectedUser($delete[id]);
+		}
+	}
+
 	doquery ("DELETE FROM {{table}} WHERE `message_time` < '". $del_before ."' ;", 'messages');
 	doquery ("DELETE FROM {{table}} WHERE `time` < '". $del_before ."' ;", 'rw');
 	//STATS FOR USERS....

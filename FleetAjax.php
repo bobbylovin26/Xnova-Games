@@ -126,7 +126,7 @@ $TargetPoints  = $User2Points['total_points'];
 
 $TargetVacat   = $TargetUser['urlaubs_modus'];
 
-if ((($user[$resource[108]] + 1) + ($user['rpg_commandant'] * 3)) <= $CurrentFlyingFleets)
+if ((($user[$resource[108]] + 1) + ($user['rpg_commandant'] * COMMANDANT)) <= $CurrentFlyingFleets)
 {
 	$ResultMessage = "612; ".$lang['fa_no_more_slots']." |".$CurrentFlyingFleets." ".$UserSpyProbes." ".$UserRecycles." ".$UserMissiles;
 	die ($ResultMessage);

@@ -32,8 +32,8 @@ $Page     = $_GET['page'];
 $phpself  = $_SERVER['PHP_SELF'];
 $nextpage = $Page + 1;
 
-if(version_compare(PHP_VERSION, "5.2.5", "<"))
-	die("Error! Tu servidor debe tener al menos php 5.2.5");
+if(version_compare(PHP_VERSION, "5.1.0", "<"))
+	die("Error! Tu servidor debe tener al menos php 5.1.0");
 
 if (empty($Mode)) { $Mode = 'intro'; }
 if (empty($Page)) { $Page = 1;       }
@@ -231,10 +231,9 @@ switch ($Mode) {
 					}
 				}
 
-				switch($_POST[modo])
-				{
-					case'2.3':
-						$Qry36 = mysql_query("ALTER TABLE `$_POST[prefix]users`
+				// ALL QUERYS NEEDED
+
+				$Qry1 = "ALTER TABLE `$_POST[prefix]users`
 					  DROP `new_message`,
 					  DROP `raids`,
 					  DROP `p_infligees`,
@@ -247,108 +246,111 @@ switch ($Mode) {
 					  DROP `mnl_expedition`,
 					  DROP `mnl_general`,
 					  DROP `mnl_buildlist`,
-					  DROP `multi_validated`;");
+					  DROP `multi_validated`;";
 
-						$Qry37 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'urlaubs_modus_erz' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '1' LIMIT 1;");
-						$Qry39 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '1' LIMIT 1;");
-						$Qry40 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '0' LIMIT 1;");
-						$Qry41 = mysql_query("ALTER TABLE `$_POST[prefix]users` DROP `lvl_minier`, DROP `lvl_raid`, DROP `xpraid`, DROP `xpminier`;");
-						$Qry42 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('adm_attack', '0');");
-						$Qry43 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('stat', '1');");
-						$Qry44 = mysql_query("ALTER TABLE `$_POST[prefix]users` DROP `lang`;");
-						$Qry45 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name` ,`config_value`)VALUES ('lang', 'spanish');");
-						$Qry46 = mysql_query("ALTER TABLE `$_POST[prefix]users` ADD `new_message` INT( 11 ) NOT NULL DEFAULT '0' AFTER `db_deaktjava` ;");
-						$Qry47 = mysql_query("ALTER TABLE `$_POST[prefix]messages` DROP `leido`");
-						$Qry48 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'stat_level' LIMIT 1;");
-						$Qry49 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'stat' LIMIT 1;");
-						$Qry50 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES
+				$Qry2 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'urlaubs_modus_erz' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '1' LIMIT 1;";
+				$Qry3 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '1' LIMIT 1;";
+				$Qry4 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '0' LIMIT 1;";
+				$Qry5 = "ALTER TABLE `$_POST[prefix]users` DROP `lvl_minier`, DROP `lvl_raid`, DROP `xpraid`, DROP `xpminier`;";
+				$Qry6 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('adm_attack', '0');";
+				$Qry7 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('stat', '1');";
+				$Qry8 = "ALTER TABLE `$_POST[prefix]users` DROP `lang`;";
+				$Qry9 = "INSERT INTO `$_POST[prefix]config` (`config_name` ,`config_value`)VALUES ('lang', 'spanish');";
+				$Qry10 = "ALTER TABLE `$_POST[prefix]users` ADD `new_message` INT( 11 ) NOT NULL DEFAULT '0' AFTER `db_deaktjava` ;";
+				$Qry11 = "ALTER TABLE `$_POST[prefix]messages` DROP `leido`";
+				$Qry12 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'stat_level' LIMIT 1;";
+				$Qry13 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'stat' LIMIT 1;";
+				$Qry14 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES
 								('stat', 1),
 								('stat_level', 2),
 								('stat_last_update', 1),
 								('stat_settings', 1000),
 								('stat_amount', 25),
 								('stat_update_time', 15),
-								('stat_flying', 1);");
-						$Qry51 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'actualizar_puntos' LIMIT 1;");
-						$Qry52 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsFrame' LIMIT 1;");
-						$Qry53 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsText' LIMIT 1;");
-						$Qry54 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE `config_name` = 'VERSION'");
-						$Qry55 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.7');");
-						$Qry56 = mysql_query("ALTER TABLE `$_POST[prefix]rw`DROP `id_owner1`, DROP `id_owner2`;");
-						$Qry57 = mysql_query("ALTER TABLE `$_POST[prefix]rw` ADD `owners` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0';");
-						$Qry58 = mysql_query("ALTER TABLE `$_POST[prefix]fleets` CHANGE `fleet_group` `fleet_group` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' ;");
-						$Qry59 = mysql_query("ALTER TABLE `$_POST[prefix]aks` ADD `planet_type` TINYINT( 1 ) NOT NULL DEFAULT '1' AFTER `planet` ;");
-						$Qry60 = mysql_query("ALTER TABLE `$_POST[prefix]aks` CHANGE `eingeladen` `eingeladen` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL");
-						$Qry61 = mysql_query("ALTER TABLE `$_POST[prefix]rw` DROP INDEX `id_owner1`");
-						$Qry62 = mysql_query("ALTER TABLE `$_POST[prefix]rw` DROP INDEX `id_owner2`");
-						break;
+								('stat_flying', 1);";
+				$Qry15 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'actualizar_puntos' LIMIT 1;";
+				$Qry16 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsFrame' LIMIT 1;";
+				$Qry17 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsText' LIMIT 1;";
+				$Qry18 = "DELETE FROM `$_POST[prefix]config` WHERE `config_name` = 'VERSION'";
+				$Qry19 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.8');";
+				$Qry20 = "ALTER TABLE `$_POST[prefix]rw` ADD `owners` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0';";
+				$Qry21 = "ALTER TABLE `$_POST[prefix]fleets` CHANGE `fleet_group` `fleet_group` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' ;";
+				$Qry22 = "ALTER TABLE `$_POST[prefix]aks` ADD `planet_type` TINYINT( 1 ) NOT NULL DEFAULT '1' AFTER `planet` ;";
+				$Qry23 = "ALTER TABLE `$_POST[prefix]aks` CHANGE `eingeladen` `eingeladen` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL";
+				$Qry24 = "ALTER TABLE `$_POST[prefix]rw` ADD `id_owner1` INT( 11 ) NOT NULL FIRST , ADD `id_owner2` INT( 11 ) NOT NULL AFTER `id_owner1` ";
+				$Qry25 = "ALTER TABLE `$_POST[prefix]users` CHANGE `db_deaktjava` `db_deaktjava` BIGINT( 19 ) NOT NULL DEFAULT '0'";
+				$Qry26 = "ALTER TABLE `$_POST[prefix]statpoints`
+												CHANGE `id_owner` `id_owner` INT(11) NOT NULL DEFAULT '0',
+												CHANGE `id_ally` `id_ally` INT(11) NOT NULL DEFAULT '0',
+												CHANGE `stat_type` `stat_type` INT(2) NOT NULL DEFAULT '0',
+												CHANGE `stat_code` `stat_code` INT(11) NOT NULL DEFAULT '0',
+												CHANGE `tech_rank` `tech_rank` INT(11) NOT NULL DEFAULT '0',
+												CHANGE `tech_old_rank` `tech_old_rank` INT(11) NOT NULL DEFAULT '0',
+												CHANGE `tech_points` `tech_points` BIGINT(20) NOT NULL DEFAULT '0',
+												CHANGE `tech_count` `tech_count` INT(11) NOT NULL DEFAULT '0',
+												CHANGE `build_rank` `build_rank` INT(11) NOT NULL DEFAULT '0',
+												CHANGE `build_old_rank` `build_old_rank` INT(11) NOT NULL DEFAULT '0',
+												CHANGE `build_points` `build_points` BIGINT(20) NOT NULL DEFAULT '0',
+												CHANGE `build_count` `build_count` INT(11) NOT NULL DEFAULT '0',
+												CHANGE `defs_rank` `defs_rank` INT(11) NOT NULL DEFAULT '0',
+												CHANGE `defs_old_rank` `defs_old_rank` INT(11) NOT NULL DEFAULT '0',
+												CHANGE `defs_points` `defs_points` BIGINT(20) NOT NULL DEFAULT '0',
+												CHANGE `defs_count` `defs_count` INT(11) NOT NULL DEFAULT '0',
+												CHANGE `fleet_rank` `fleet_rank` INT(11) NOT NULL DEFAULT '0',
+												CHANGE `fleet_old_rank` `fleet_old_rank` INT(11) NOT NULL DEFAULT '0',
+												CHANGE `fleet_points` `fleet_points` BIGINT(20) NOT NULL DEFAULT '0',
+												CHANGE `fleet_count` `fleet_count` INT(11) NOT NULL DEFAULT '0',
+												CHANGE `total_rank` `total_rank` INT(11) NOT NULL DEFAULT '0',
+												CHANGE `total_old_rank` `total_old_rank` INT(11) NOT NULL DEFAULT '0',
+												CHANGE `total_points` `total_points` BIGINT(20) NOT NULL DEFAULT '0',
+												CHANGE `total_count` `total_count` INT(11) NOT NULL DEFAULT '0',
+												CHANGE `stat_date` `stat_date` INT(11) NOT NULL DEFAULT '0'";
+				$Qry27 = "ALTER TABLE `$_POST[prefix]messages` CHANGE `message_subject` `message_subject` TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL";
+
+				switch($_POST[modo])
+				{
+					case'2.3':
+						$QrysArray	= array($Qry1, $Qry2, $Qry3, $Qry4, $Qry5, $Qry6, $Qry7, $Qry8, $Qry9, $Qry10, $Qry11, $Qry12, $Qry13,
+											$Qry14, $Qry15, $Qry16, $Qry17, $Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry25, $Qry26, $Qry27);
+
+						foreach ( $QrysArray as $DoQuery)
+						{
+							mysql_query($DoQuery);
+						}
+					break;
 					case'2.4':
-						$Qry39 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '1' LIMIT 1;");
-						$Qry40 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '0' LIMIT 1;");
-						$Qry41 = mysql_query("ALTER TABLE `$_POST[prefix]users` DROP `lvl_minier`, DROP `lvl_raid`, DROP `xpraid`, DROP `xpminier`;");
-						$Qry42 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('adm_attack', '0');");
-						$Qry43 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('stat', '1');");
-						$Qry44 = mysql_query("ALTER TABLE `$_POST[prefix]users` DROP `lang`;");
-						$Qry45 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name` ,`config_value`)VALUES ('lang', 'spanish');");
-						$Qry46 = mysql_query("ALTER TABLE `$_POST[prefix]users` ADD `new_message` INT( 11 ) NOT NULL DEFAULT '0' AFTER `db_deaktjava` ;");
-						$Qry47 = mysql_query("ALTER TABLE `$_POST[prefix]messages` DROP `leido`");
-						$Qry48 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'stat_level' LIMIT 1;");
-						$Qry49 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'stat' LIMIT 1;");
-						$Qry50 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES
-								('stat', 1),
-								('stat_level', 2),
-								('stat_last_update', 1),
-								('stat_settings', 1000),
-								('stat_amount', 25),
-								('stat_update_time', 15),
-								('stat_flying', 1);");
-						$Qry51 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'actualizar_puntos' LIMIT 1;");
-						$Qry52 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsFrame' LIMIT 1;");
-						$Qry53 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsText' LIMIT 1;");
-						$Qry54 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE `config_name` = 'VERSION'");
-						$Qry55 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.7');");
-						$Qry56 = mysql_query("ALTER TABLE `$_POST[prefix]rw`DROP `id_owner1`, DROP `id_owner2`;");
-						$Qry57 = mysql_query("ALTER TABLE `$_POST[prefix]rw` ADD `owners` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0';");
-						$Qry58 = mysql_query("ALTER TABLE `$_POST[prefix]fleets` CHANGE `fleet_group` `fleet_group` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' ;");
-						$Qry59 = mysql_query("ALTER TABLE `$_POST[prefix]aks` ADD `planet_type` TINYINT( 1 ) NOT NULL DEFAULT '1' AFTER `planet` ;");
-						$Qry60 = mysql_query("ALTER TABLE `$_POST[prefix]aks` CHANGE `eingeladen` `eingeladen` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL");
-						$Qry61 = mysql_query("ALTER TABLE `$_POST[prefix]rw` DROP INDEX `id_owner1`");
-						$Qry62 = mysql_query("ALTER TABLE `$_POST[prefix]rw` DROP INDEX `id_owner2`");
-						break;
+						$QrysArray	= array($Qry3, $Qry4, $Qry5, $Qry6, $Qry7, $Qry8, $Qry9, $Qry10, $Qry11, $Qry12, $Qry13,
+											$Qry14, $Qry15, $Qry16, $Qry17, $Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry25, $Qry26, $Qry27);
+
+						foreach ( $QrysArray as $DoQuery)
+						{
+							mysql_query($DoQuery);
+						}
+					break;
 					case'2.5':
-						$Qry52 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsFrame' LIMIT 1;");
-						$Qry53 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsText' LIMIT 1;");
-						$Qry54 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE `config_name` = 'VERSION'");
-						$Qry55 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.7');");
-						$Qry56 = mysql_query("ALTER TABLE `$_POST[prefix]rw`DROP `id_owner1`, DROP `id_owner2`;");
-						$Qry57 = mysql_query("ALTER TABLE `$_POST[prefix]rw` ADD `owners` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0';");
-						$Qry58 = mysql_query("ALTER TABLE `$_POST[prefix]fleets` CHANGE `fleet_group` `fleet_group` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' ;");
-						$Qry59 = mysql_query("ALTER TABLE `$_POST[prefix]aks` ADD `planet_type` TINYINT( 1 ) NOT NULL DEFAULT '1' AFTER `planet` ;");
-						$Qry60 = mysql_query("ALTER TABLE `$_POST[prefix]aks` CHANGE `eingeladen` `eingeladen` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL");
-						$Qry61 = mysql_query("ALTER TABLE `$_POST[prefix]rw` DROP INDEX `id_owner1`");
-						$Qry62 = mysql_query("ALTER TABLE `$_POST[prefix]rw` DROP INDEX `id_owner2`");
-						break;
-					case'2.6':
-						$Qry54 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE `config_name` = 'VERSION'");
-						$Qry55 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.7');");
-						$Qry56 = mysql_query("ALTER TABLE `$_POST[prefix]rw`DROP `id_owner1`, DROP `id_owner2`;");
-						$Qry57 = mysql_query("ALTER TABLE `$_POST[prefix]rw` ADD `owners` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0';");
-						$Qry58 = mysql_query("ALTER TABLE `$_POST[prefix]fleets` CHANGE `fleet_group` `fleet_group` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' ;");
-						$Qry59 = mysql_query("ALTER TABLE `$_POST[prefix]aks` ADD `planet_type` TINYINT( 1 ) NOT NULL DEFAULT '1' AFTER `planet` ;");
-						$Qry60 = mysql_query("ALTER TABLE `$_POST[prefix]aks` CHANGE `eingeladen` `eingeladen` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL");
-						$Qry61 = mysql_query("ALTER TABLE `$_POST[prefix]rw` DROP INDEX `id_owner1`");
-						$Qry62 = mysql_query("ALTER TABLE `$_POST[prefix]rw` DROP INDEX `id_owner2`");
-						break;
-					case'2.7':
-						$Qry54 = mysql_query("DELETE FROM `$_POST[prefix]config` WHERE `config_name` = 'VERSION'");
-						$Qry55 = mysql_query("INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.7');");
-						$Qry56 = mysql_query("ALTER TABLE `$_POST[prefix]rw`DROP `id_owner1`, DROP `id_owner2`;");
-						$Qry57 = mysql_query("ALTER TABLE `$_POST[prefix]rw` ADD `owners` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0';");
-						$Qry58 = mysql_query("ALTER TABLE `$_POST[prefix]fleets` CHANGE `fleet_group` `fleet_group` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' ;");
-						$Qry59 = mysql_query("ALTER TABLE `$_POST[prefix]aks` ADD `planet_type` TINYINT( 1 ) NOT NULL DEFAULT '1' AFTER `planet` ;");
-						$Qry60 = mysql_query("ALTER TABLE `$_POST[prefix]aks` CHANGE `eingeladen` `eingeladen` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL");
-						$Qry61 = mysql_query("ALTER TABLE `$_POST[prefix]rw` DROP INDEX `id_owner1`");
-						$Qry62 = mysql_query("ALTER TABLE `$_POST[prefix]rw` DROP INDEX `id_owner2`");
+						$QrysArray	= array($Qry16, $Qry17, $Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry25, $Qry26,$Qry27);
+
+						foreach ( $QrysArray as $DoQuery)
+						{
+							mysql_query($DoQuery);
+						}
+					break;
+					case( ( $_POST[modo] == '2.6' ) or ( $_POST[modo] == '2.7' ) ):
+						$QrysArray	= array($Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry25, $Qry26, $Qry27);
+
+						foreach ( $QrysArray as $DoQuery)
+						{
+							mysql_query($DoQuery);
+						}
+					break;
+					case'2.8':
+						$QrysArray	= array($Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry24, $Qry25, $Qry26, $Qry27);
+
+						foreach ( $QrysArray as $DoQuery)
+						{
+							mysql_query($DoQuery);
+						}
+					break;
 				}
 				message("XG Proyect finalizó la actualización con éxito, para finalizar borra el directorio install y luego haz <a href=\"./../\">click aqui</a>", "", "", false, false);
 			}

@@ -43,7 +43,7 @@ function ShowFleetPage($CurrentUser, $CurrentPlanet)
 		$EnvoiMaxExpedition = 0;
 	}
 
-	$MaxFlottes         = (1 + $CurrentUser[$resource[108]]) + ($CurrentUser['rpg_commandant'] * 3);
+	$MaxFlottes         = (1 + $CurrentUser[$resource[108]]) + ($CurrentUser['rpg_commandant'] * COMMANDANT);
 
 	$missiontype = array(
 		1 => $lang['type_mission'][1],

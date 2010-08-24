@@ -19,43 +19,45 @@
 # *																			 #
 ##############################################################################
 
-function GetElementPrice ($user, $planet, $Element, $userfactor = true)
-{
-	global $pricelist, $resource, $lang;
+if(!defined('INSIDE')){ die(header("location:../../"));}
 
-	if ($userfactor)
-		$level = ($planet[$resource[$Element]]) ? $planet[$resource[$Element]] : $user[$resource[$Element]];
-
-	$is_buyeable = true;
-
-	$array = array(
-		'metal'      => $lang['Metal'],
-		'crystal'    => $lang['Crystal'],
-		'deuterium'  => $lang['Deuterium'],
-		'energy_max' => $lang['Energy']
-	);
-
-	$text = $lang['fgp_require'];
-	foreach ($array as $ResType => $ResTitle)
+	function GetElementPrice ($user, $planet, $Element, $userfactor = true)
 	{
-		if ($pricelist[$Element][$ResType] != 0)
-		{
-			$text .= $ResTitle . ": ";
-			if ($userfactor)
-				$cost = floor($pricelist[$Element][$ResType] * pow($pricelist[$Element]['factor'], $level));
-			else
-				$cost = floor($pricelist[$Element][$ResType]);
+		global $pricelist, $resource, $lang;
 
-			if ($cost > $planet[$ResType])
+		if ($userfactor)
+			$level = ($planet[$resource[$Element]]) ? $planet[$resource[$Element]] : $user[$resource[$Element]];
+
+		$is_buyeable = true;
+
+		$array = array(
+			'metal'      => $lang['Metal'],
+			'crystal'    => $lang['Crystal'],
+			'deuterium'  => $lang['Deuterium'],
+			'energy_max' => $lang['Energy']
+		);
+
+		$text = $lang['fgp_require'];
+		foreach ($array as $ResType => $ResTitle)
+		{
+			if ($pricelist[$Element][$ResType] != 0)
 			{
-				$text .= "<b style=\"color:red;\"> <t title=\"-" . pretty_number ($cost - $planet[$ResType]) . "\">";
-				$text .= "<span class=\"noresources\">" . pretty_number($cost) . "</span></t></b> ";
-				$is_buyeable = false;
+				$text .= $ResTitle . ": ";
+				if ($userfactor)
+					$cost = floor($pricelist[$Element][$ResType] * pow($pricelist[$Element]['factor'], $level));
+				else
+					$cost = floor($pricelist[$Element][$ResType]);
+
+				if ($cost > $planet[$ResType])
+				{
+					$text .= "<b style=\"color:red;\"> <t title=\"-" . pretty_number ($cost - $planet[$ResType]) . "\">";
+					$text .= "<span class=\"noresources\">" . pretty_number($cost) . "</span></t></b> ";
+					$is_buyeable = false;
+				}
+				else
+					$text .= "<b style=\"color:lime;\">" . pretty_number($cost) . "</b> ";
 			}
-			else
-				$text .= "<b style=\"color:lime;\">" . pretty_number($cost) . "</b> ";
 		}
+		return $text;
 	}
-	return $text;
-}
 ?>

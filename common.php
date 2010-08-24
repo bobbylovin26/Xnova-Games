@@ -45,6 +45,9 @@ if (INSTALL != true)
 	include($xgp_root . 'includes/functions/SendSimpleMessage.'.$phpEx);
 	include($xgp_root . 'includes/functions/calculateAttack.'.$phpEx);
 	include($xgp_root . 'includes/functions/formatCR.'.$phpEx);
+	include($xgp_root . 'includes/functions/GetBuildingTime.' . $phpEx);
+	include($xgp_root . 'includes/functions/HandleElementBuildingQueue.' . $phpEx);
+	include($xgp_root . 'includes/functions/PlanetResourceUpdate.' . $phpEx);
 
 	$query = doquery("SELECT * FROM {{table}}",'config');
 
@@ -73,7 +76,7 @@ if (INSTALL != true)
 		}
 	}
 
-	if(time() >= ($game_config['stat_last_update'] + (60 * $game_config['stat_update_time'])))
+	if(time() >= ($game_config['stat_last_update'] + (60 * $game_config['stat_update_time'])) && !defined('LOGIN') && !defined('INSTALL'))
 	{
 		include($xgp_root . 'adm/statfunctions.' . $phpEx);
 		$result		= MakeStats();
@@ -83,28 +86,33 @@ if (INSTALL != true)
 	if (isset($user))
 	{
 		include($xgp_root . 'includes/classes/class.FlyingFleetHandler.'.$phpEx);
+		$_fleets = doquery("SELECT fleet_start_galaxy,fleet_start_system,fleet_start_planet,fleet_start_type FROM {{table}} WHERE `fleet_start_time` <= '".time()."' and `fleet_mess` ='0' order by fleet_id asc;", 'fleets'); // OR fleet_end_time <= ".time()
 
-		$_fleets = doquery("SELECT * FROM {{table}} WHERE (`fleet_start_time` <= '".time()."') OR (`fleet_end_time` <= '".time()."');", 'fleets'); //  OR fleet_end_time <= ".time()
-		while ($row =  mysql_fetch_array($_fleets))
+		while ($row = mysql_fetch_array($_fleets))
 		{
-			if($row['fleet_owner'] == $user['id'] or $row['fleet_target_owner'] == $user['id'])
-			{
-				$array                = array();
-				$array['galaxy']      = $row['fleet_start_galaxy'];
-				$array['system']      = $row['fleet_start_system'];
-				$array['planet']      = $row['fleet_start_planet'];
+			$array = array();
+			$array['galaxy'] 		= $row['fleet_start_galaxy'];
+			$array['system'] 		= $row['fleet_start_system'];
+			$array['planet'] 		= $row['fleet_start_planet'];
+			$array['planet_type'] 	= $row['fleet_start_type'];
 
-				if($row['fleet_start_time'] <= time())
-					$array['planet_type'] = $row['fleet_start_type'];
-				else
-					$array['planet_type'] = $row['fleet_end_type'];
-
-				new FlyingFleetHandler($array);
-
-				unset($array);
-			}
-			unset($row);
+			$temp = new FlyingFleetHandler ($array);
 		}
+		mysql_free_result($_fleets);
+		$_fleets = doquery("SELECT fleet_end_galaxy,fleet_end_system,fleet_end_planet ,fleet_end_type FROM {{table}} WHERE `fleet_end_time` <= '".time()." order by fleet_id asc';", 'fleets'); // OR fleet_end_time <= ".time()
+
+		while ($row = mysql_fetch_array($_fleets))
+		{
+			$array = array();
+			$array['galaxy'] 		= $row['fleet_end_galaxy'];
+			$array['system'] 		= $row['fleet_end_system'];
+			$array['planet'] 		= $row['fleet_end_planet'];
+			$array['planet_type'] 	= $row['fleet_end_type'];
+
+			$temp = new FlyingFleetHandler ($array);
+		}
+
+		mysql_free_result($_fleets);
 		unset($_fleets);
 
 		if ( defined('IN_ADMIN') )

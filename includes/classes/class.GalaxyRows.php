@@ -41,14 +41,16 @@ class GalaxyRows
 	private function GetPhalanxRange($PhalanxLevel)
 	{
 		$PhalanxRange = 0;
+
 		if ($PhalanxLevel > 1)
 		{
-			for ($Level = 2; $Level < $PhalanxLevel + 1; $Level++)
-			{
-				$lvl           = ($Level * 2) - 1;
-				$PhalanxRange += $lvl;
-			}
+			$PhalanxRange = pow($PhalanxLevel, 2) - 1;
 		}
+		elseif($PhalanxLevel == 1)
+		{
+			$PhalanxRange = 1;
+		}
+
 		return $PhalanxRange;
 	}
 
@@ -564,14 +566,14 @@ class GalaxyRows
 
 		if ($GalaxyRowUser && $GalaxyRowPlanet["destruyed"] == 0)
 		{
-			$NoobProt 		= $game_config['noobprotection'];
-			$NoobTime 		= $game_config['noobprotectiontime'];
-			$NoobMulti 		= $game_config['noobprotectionmulti'];
-			$User2Points 	= doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $GalaxyRowUser['id'] ."';", 'statpoints', true);
-			$CurrentPoints 	= $UserPoints['total_points'];
-			$RowUserPoints 	= $User2Points['total_points'];
-			$CurrentLevel 	= $CurrentPoints * $NoobMulti['config_value'];
-			$RowUserLevel 	= $RowUserPoints * $NoobMulti['config_value'];
+			$protection      	= $game_config['noobprotection'];
+			$protectiontime  	= $game_config['noobprotectiontime'];
+			$protectionmulti 	= $game_config['noobprotectionmulti'];
+			$User2Points 		= doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $GalaxyRowUser['id'] ."';", 'statpoints', true);
+			$CurrentPoints 		= $UserPoints['total_points'];
+			$RowUserPoints 		= $User2Points['total_points'];
+			$MyGameLevel 		= $CurrentPoints * $protectionmulti['config_value'];
+			$HeGameLevel 		= $RowUserPoints * $protectionmulti['config_value'];
 
 			if ($GalaxyRowUser['bana'] == 1 && $GalaxyRowUser['urlaubs_modus'] == 1)
 			{
@@ -598,12 +600,12 @@ class GalaxyRows
 				$Systemtatus2 	= "<span class=\"inactive\">".$lang['gl_i']."</span><span class=\"longinactive\">".$lang['gl_I']."</span>";
 				$Systemtatus 	= "<span class=\"longinactive\">";
 			}
-			elseif ($RowUserLevel < $CurrentPoints && $NoobProt['config_value'] == 1 && $NoobTime['config_value'] * 1000 > $RowUserPoints)
+			elseif (($MyGameLevel > ($HeGameLevel * $protectionmulti)) && $protection == 1 && ($HeGameLevel < ($protectiontime * 1000)))
 			{
 				$Systemtatus2 	= "<span class=\"noob\">".$lang['gl_w']."</span>";
 				$Systemtatus 	= "<span class=\"noob\">";
 			}
-			elseif ($RowUserPoints > $CurrentLevel && $NoobProt['config_value'] == 1 && $NoobTime['config_value'] * 1000 > $CurrentPoints)
+			elseif ((($MyGameLevel * $protectionmulti) < $HeGameLevel) && $protection == 1 && ($MyGameLevel < ($protectiontime * 1000)))
 			{
 				$Systemtatus2 	= $lang['gl_s'];
 				$Systemtatus 	= "<span class=\"strong\">";

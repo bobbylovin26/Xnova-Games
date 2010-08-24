@@ -335,6 +335,11 @@ class ShowBuildingsPage
 			$Element 	= $_GET['building'];
 			$ListID 	= $_GET['listid'];
 
+			if (!in_array( trim($Element), $Allowed[$CurrentPlanet['planet_type']]))
+			{
+				unset($Element);
+			}
+
 			if( isset ( $Element ))
 			{
 				if ( !strchr ( $Element, ",") && !strchr ( $Element, " ") &&
@@ -359,6 +364,16 @@ class ShowBuildingsPage
 			elseif ( isset ( $ListID ))
 			{
 				$bDoItNow = true;
+			}
+
+			if ($Element == 31 && $CurrentUser["b_tech_planet"] != 0)
+			{
+				$bDoItNow = false;
+			}
+
+			if ( ( $Element == 21 or $Element == 14 or $Element == 15 ) && $CurrentPlanet["b_hangar"] != 0)
+			{
+				$bDoItNow = false;
 			}
 
 			if ($bDoItNow == true)
@@ -467,7 +482,7 @@ class ShowBuildingsPage
 						$parse['click'] = "<font color=#FF0000>".$lang['bd_working']."</font>";
 					}
 
-					if ($Element == 21 && $CurrentPlanet["b_hangar"] != 0)
+					if ( ( $Element == 21 or $Element == 14 or $Element == 15 ) && $CurrentPlanet["b_hangar"] != 0)
 					{
 						$parse['click'] = "<font color=#FF0000>".$lang['bd_working']."</font>";
 					}

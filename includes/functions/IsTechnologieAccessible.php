@@ -19,34 +19,36 @@
 # *																			 #
 ##############################################################################
 
-function IsTechnologieAccessible($user, $planet, $Element)
-{
-	global $requeriments, $resource;
+if(!defined('INSIDE')){ die(header("location:../../"));}
 
-	if (isset($requeriments[$Element]))
+	function IsTechnologieAccessible($user, $planet, $Element)
 	{
-		$enabled = true;
+		global $requeriments, $resource;
 
-		foreach($requeriments[$Element] as $ReqElement => $EleLevel)
+		if (isset($requeriments[$Element]))
 		{
-			if (@$user[$resource[$ReqElement]] && $user[$resource[$ReqElement]] >= $EleLevel)
+			$enabled = true;
+
+			foreach($requeriments[$Element] as $ReqElement => $EleLevel)
 			{
-				//BREAK
+				if (@$user[$resource[$ReqElement]] && $user[$resource[$ReqElement]] >= $EleLevel)
+				{
+					//BREAK
+				}
+				elseif ($planet[$resource[$ReqElement]] && $planet[$resource[$ReqElement]] >= $EleLevel)
+				{
+					$enabled = true;
+				}
+				else
+				{
+					return false;
+				}
 			}
-			elseif ($planet[$resource[$ReqElement]] && $planet[$resource[$ReqElement]] >= $EleLevel)
-			{
-				$enabled = true;
-			}
-			else
-			{
-				return false;
-			}
+			return $enabled;
 		}
-		return $enabled;
+		else
+		{
+			return true;
+		}
 	}
-	else
-	{
-		return true;
-	}
-}
 ?>

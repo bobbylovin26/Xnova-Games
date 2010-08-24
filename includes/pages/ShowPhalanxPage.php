@@ -26,10 +26,26 @@ function ShowPhalanxPage($CurrentUser, $CurrentPlanet)
 
 	include_once($xgp_root . 'includes/functions/InsertJavaScriptChronoApplet.' . $phpEx);
 	include_once($xgp_root . 'includes/classes/class.FlyingFleetsTable.' . $phpEx);
+	include_once($xgp_root . 'includes/classes/class.GalaxyRows.' . $phpEx);
 
-	$FlyingFleetsTable = new FlyingFleetsTable();
+	$FlyingFleetsTable 	= new FlyingFleetsTable();
+	$GalaxyRows 		= new GalaxyRows();
 
 	$parse	= $lang;
+
+	$radar_menzil_min = $CurrentPlanet['system'] - $GalaxyRows->GetPhalanxRange ( $CurrentPlanet['phalanx'] );
+	$radar_menzil_max = $CurrentPlanet['system'] + $GalaxyRows->GetPhalanxRange ( $CurrentPlanet['phalanx'] );
+
+	if ( $radar_menzil_min < 1 )
+		$radar_menzil_min = 1;
+
+	if ( $radar_menzil_max > MAX_SYSTEM_IN_GALAXY )
+		$radar_menzil_max = MAX_SYSTEM_IN_GALAXY;
+
+	if ( ( intval ( $_GET["system"] ) < $radar_menzil_min ) or ( intval ( $_GET["system"] ) > $radar_menzil_max ) )
+	{
+		$DoScan = false;
+	}
 
 	if ($CurrentPlanet['planet_type'] == 3)
 	{

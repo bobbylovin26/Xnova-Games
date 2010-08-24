@@ -190,7 +190,7 @@ class ShowGalaxyPage extends GalaxyRows
 
 		$lunarow       	= doquery("SELECT * FROM {{table}} WHERE `id` = '". $CurrentUser['current_luna'] ."';", 'lunas', true);
 
-		$fleetmax      	= ($CurrentUser['computer_tech'] + 1) + ($CurrentUser['rpg_commandant'] * 3);
+		$fleetmax      	= ($CurrentUser['computer_tech'] + 1) + ($CurrentUser['rpg_commandant'] * COMMANDANT);
 		$CurrentPlID   	= $CurrentPlanet['id'];
 		$CurrentMIP    	= $CurrentPlanet['interplanetary_misil'];
 		$CurrentRC     	= $CurrentPlanet['recycler'];

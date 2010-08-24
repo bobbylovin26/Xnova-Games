@@ -116,7 +116,7 @@ function ShowFleetACSPage($CurrentUser, $CurrentPlanet)
 			`system` = '" . $fleet['fleet_end_system'] . "' AND
 			`planet` = '" . $fleet['fleet_end_planet'] . "' AND
 			`eingeladen` = '" . $CurrentUser['id'] . "'
-			", 'aks', true);
+			", 'aks');
 
 			doquery(
 			"UPDATE {{table}} SET
@@ -178,7 +178,7 @@ function ShowFleetACSPage($CurrentUser, $CurrentPlanet)
 		if (!$planettype)
 			$planettype = $CurrentPlanet['planet_type'];
 
-		$ile 	= '' . (1 + $CurrentUser[$resource[108]]) + ($CurrentUser['rpg_commandant'] * 3) . '';
+		$ile 	= '' . (1 + $CurrentUser[$resource[108]]) + ($CurrentUser['rpg_commandant'] * COMMANDANT) . '';
 
 		$parse['ile']	= $ile;
 

@@ -88,7 +88,7 @@
         <th><input name="urlaubs_modus"{opt_modev_data} type="checkbox" /></th>
     </tr><tr>
         <th><a title="{op_dlte_account_descrip}">{op_dlte_account}</a></th>
-        <th><input name="db_deaktjava"{opt_delac_data} type="checkbox" /></th>
+        <th><input name="db_deaktjava"{db_deaktjava} type="checkbox" /></th>
     </tr><tr>
         <th colspan="2"><input value="{op_save_changes}" type="submit"></th>
     </tr>

@@ -19,6 +19,8 @@
 # *																			 #
 ##############################################################################
 
+if(!defined('INSIDE')){ die(header("location:../../"));}
+
 function UpdatePlanetBatimentQueueList ( &$CurrentPlanet, &$CurrentUser ) {
 
 	$RetValue = false;

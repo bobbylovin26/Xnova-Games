@@ -19,28 +19,30 @@
 # *																			 #
 ##############################################################################
 
-function GetBuildingPrice ($CurrentUser, $CurrentPlanet, $Element, $Incremental = true, $ForDestroy = false)
-{
-	global $pricelist, $resource;
+if(!defined('INSIDE')){ die(header("location:../../"));}
 
-	if ($Incremental)
-		$level = ($CurrentPlanet[$resource[$Element]]) ? $CurrentPlanet[$resource[$Element]] : $CurrentUser[$resource[$Element]];
-
-	$array = array('metal', 'crystal', 'deuterium', 'energy_max');
-	foreach ($array as $ResType)
+	function GetBuildingPrice ($CurrentUser, $CurrentPlanet, $Element, $Incremental = true, $ForDestroy = false)
 	{
+		global $pricelist, $resource;
+
 		if ($Incremental)
-			$cost[$ResType] = floor($pricelist[$Element][$ResType] * pow($pricelist[$Element]['factor'], $level));
-		else
-			$cost[$ResType] = floor($pricelist[$Element][$ResType]);
+			$level = ($CurrentPlanet[$resource[$Element]]) ? $CurrentPlanet[$resource[$Element]] : $CurrentUser[$resource[$Element]];
 
-		if ($ForDestroy == true)
+		$array = array('metal', 'crystal', 'deuterium', 'energy_max');
+		foreach ($array as $ResType)
 		{
-			$cost[$ResType]  = floor($cost[$ResType]) / 2;
-			$cost[$ResType] /= 2;
-		}
-	}
+			if ($Incremental)
+				$cost[$ResType] = floor($pricelist[$Element][$ResType] * pow($pricelist[$Element]['factor'], $level));
+			else
+				$cost[$ResType] = floor($pricelist[$Element][$ResType]);
 
-	return $cost;
-}
+			if ($ForDestroy == true)
+			{
+				$cost[$ResType]  = floor($cost[$ResType]) / 2;
+				$cost[$ResType] /= 2;
+			}
+		}
+
+		return $cost;
+	}
 ?>

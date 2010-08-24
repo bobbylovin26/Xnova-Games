@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 ##############################################################################
 # *																			 #
@@ -18,6 +18,8 @@
 # *  GNU General Public License for more details.							 #
 # *																			 #
 ##############################################################################
+
+if(!defined('INSIDE')){ die(header("location:../../"));}
 
 function ShowLeftMenu ($Level)
 {
