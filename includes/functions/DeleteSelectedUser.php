@@ -39,7 +39,6 @@ function DeleteSelectedUser ( $UserID ) {
 	doquery ( "DELETE FROM {{table}} WHERE `id_owner2` = '" . $UserID . "';", 'rw' );
 	doquery ( "DELETE FROM {{table}} WHERE `sender` = '" . $UserID . "';", 'buddy' );
 	doquery ( "DELETE FROM {{table}} WHERE `owner` = '" . $UserID . "';", 'buddy' );
-	doquery ( "DELETE FROM {{table}} WHERE `user` = '" . $UserID . "';", 'annonce' );
 	doquery ( "DELETE FROM {{table}} WHERE `id` = '" . $UserID . "';", 'users' );
 
 }

@@ -17,7 +17,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 function ModuleMarchand ( $CurrentUser, &$CurrentPlanet ) {
 	global $lang, $_POST;
 
-	includeLang('Marchand');
+	includeLang('marchand');
 
 	$parse   = $lang;
 
@@ -130,10 +130,4 @@ function ModuleMarchand ( $CurrentUser, &$CurrentPlanet ) {
 
 	$Page = ModuleMarchand ( $user, $planetrow );
 	display ( $Page, $lang['mod_marchand'], true, '', false );
-
-// -----------------------------------------------------------------------------------------------------------
-// History version
-// 1.0 - Version originelle (Tom1991)
-// 1.1 - Version 2.0 de Tom1991 ajout java
-// 1.2 - Réécriture Chlorel passage aux template, optimisation des appels et des requetes SQL
 ?>

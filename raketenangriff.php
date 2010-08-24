@@ -1,25 +1,22 @@
 <?php
-/*
-#############################################################################
-#  Filename: raketenangriff.php
-#  Create date: Friday, May 30, 2008    22:19:17
-#  Project: prethOgame
-#  Description: RPG web based game
-#
-#  Copyright © 2008 Aleksandar Spasojevic <spalekg@gmail.com>
-#  Copyright © 2005 - 2008 KGsystem
-#############################################################################
-*/
+/****************************************/
+/* raketenangriff.php                */
+/* Envio de MIP                     */
+/*                               */
+/* @version 1.1                     */
+/* @copyright 2008 By Minguez for XNova */
+/*                              */
+/****************************************/
 
 define('INSIDE'  , true);
 define('INSTALL' , false);
 
-$ugamela_root_path = './';
-include($ugamela_root_path . 'extension.inc');
-include($ugamela_root_path . 'common.'.$phpEx);
+$xnova_root_path = './';
+include($xnova_root_path . 'extension.inc');
+include($xnova_root_path . 'common.'.$phpEx);
 
-$planet    = doquery("SELECT * FROM {{table}} WHERE `id` = '".$user['current_planet']."';", 'planets', true);
-$iraks = $planet['interplanetary_misil'];
+//$planet    = doquery("SELECT * FROM {{table}} WHERE `id` = '".$user['current_planet']."';", 'planets', true);
+
 
 $g = intval($_GET['galaxy']);
 $s = intval($_GET['system']);
@@ -27,144 +24,92 @@ $i = intval($_GET['planet']);
 $anz = intval($_POST['SendMI']);
 $pziel = $_POST['Target'];
 
-$currentplanet = doquery("SELECT * FROM {{table}} WHERE id={$user['current_planet']}",'planets',true);
 
-$tempvar1 = abs($s - $currentplanet['system']);
+$currentplanet = doquery("SELECT * FROM {{table}} WHERE id={$user['current_planet']}",'planets',true);
+$iraks = $currentplanet['interplanetary_misil'];
+
+$tempvar1 = abs($s-$currentplanet['system']);
 $tempvar2 = ($user['impulse_motor_tech'] * 2) - 1;
 $tempvar3 = doquery("SELECT * FROM {{table}} WHERE galaxy = ".$g." AND
          system = ".$s." AND
          planet = ".$i." AND
-         planet_type = '1'", 'planets');
+         planet_type = 1 limit 1", 'planets',true);
 
-if ($planet['silo'] < 4) {
-   $error = 1;
-
-}elseif ($user['impulse_motor_tech'] == 0) {;
-   $error = 1;
-
+if ($currentplanet['silo'] < 4) {
+   $error = "Debes tener al menos silo al nivel 4.";
+}elseif ($user['impulse_motor_tech'] == 0) {
+   $error = "Debes investigar el Motor de Impulso.";
 }elseif ($tempvar1 >= $tempvar2 || $g != $currentplanet['galaxy']) {
-   $error = 1;
-}elseif (mysql_num_rows($tempvar3) != 1) {
-   $error = 1;
+   $error = "No puedes enviar misiles a otra galaxia.";
+}elseif (!$tempvar3) {
+   $error = "El planeta objetivo no existe.";
 }elseif ($anz > $iraks) {
-   $error = 1;
+   $error = "No puedes enviar $anz misiles, solo dispones de $iraks.";
 }elseif ((!is_numeric($pziel) && $pziel != "all") OR ($pziel < 0 && $pziel > 7 && $pziel != "all")) {
-   $error = 1;
+   $error = "Objetivo Incorrecto";
+}elseif ($iraks==0){
+   $error = "No hay misiles interplanetarios disponibles";
+}elseif ($anz==0){
+   $error = "Ingresar el n&uacute;mero de misiles que deseas enviar";
 }
 
-if ($error == 1) {
-   message('Vous n\'avez pas assez de missiles, la planete que vous visez n\'existe pas ou il vous manque une technologie (impulsion)', 'Erreur');
+
+if ($error != "") {
+   message($error, 'Error');
    exit();
 }
 
-$iraks_anzahl = $iraks;
+$ziel_id = $tempvar3["id_owner"];
 
-if ($pziel == "all"){
-   $pziel = 0;
-}else{
-   $pziel = intval($pziel);
-}
+$flugzeit = round(((30 + (60 * $tempvar1)) * 2500) / $game_config['fleet_speed']);
 
-$planet = doquery("SELECT * FROM {{table}} WHERE galaxy = ".$g." AND
-         system = ".$s." AND
-         planet = ".$i." AND
-         planet_type = '1'", 'planets', true);
+$DefenseLabel =
+   array(
+      '0' => 'Lanzamisiles',
+      '1' => 'L&aacute;ser peque&ntilde;o',
+      '2' => 'L&aacute;ser grande',
+      '3' => 'Ca&ntilde;&oacute;n Gauss',
+      '4' => 'Ca&ntilde;&oacute;n i&oacute;nico',
+      '5' => 'Ca&ntilde;&oacute;n de plasma',
+      '6' => 'C&uacute;pula pequea&ntilde;a de protecci&oacute;n',
+      '7' => 'C&uacute;pula grande de protecci&oacute;n',
+      'all' => 'Todo');
 
-$ziel_id = $planet['id_owner'];
-
-$select = doquery("SELECT * FROM {{table}} WHERE id = ".$ziel_id, 'users', true);
-
-$verteidiger_panzerung = $select['defence_tech'];
-$angreifer_waffen = $user['military_tech'];
-
-$primaerziel = $pziel;
-
-$iraks = $anz;
-
-$def = array(
-         0 => $planet['misil_launcher'], // Raketenwerfer
-         1 => $planet['small_laser'], // Leichtes Lasergeschütz
-         2 => $planet['big_laser'], // Schweres Lasergeschütz
-         3 => $planet['gauss_canyon'], // Gaußkanone
-         4 => $planet['ionic_canyon'], // Ionengeschütz
-         5 => $planet['buster_canyon'], // Plasmawerfer
-         6 => $planet['small_protection_shield'], // Kleine Schildkuppel
-         7 => $planet['big_protection_shield'], // Große Schildkuppel
-         8 => $planet['interplanetary_misil'], // Interplanetarrakete
-         9 => $planet['interceptor_misil'], // Abfangrakete
-      );
-
-$lang = array(
-         0 => $lang['tech'][401],
-         1 => $lang['tech'][402],
-         2 => $lang['tech'][403],
-         3 => $lang['tech'][404],
-         4 => $lang['tech'][405],
-         5 => $lang['tech'][406],
-         6 => $lang['tech'][407],
-         7 => $lang['tech'][408],
-         8 => $lang['tech'][502],
-         9 => $lang['tech'][503],
-       );
-
-$flugzeit = round(((30 + (60 * $tempvar1)) * 2500) / $game_config['game_speed']);
 
 doquery("INSERT INTO {{table}} SET
-      `zeit` = '".(time() + $flugzeit)."',
-      `galaxy` = '".$g."',
-      `system` = '".$s."',
-      `planet` = '".$i."',
-      `galaxy_angreifer` = '".$currentplanet['galaxy']."',
-      `system_angreifer` = '".$currentplanet['system']."',
-      `planet_angreifer` = '".$currentplanet['planet']."',
-      `owner` = '".$user['id']."',
-      `zielid` = '".$ziel_id."',
-      `anzahl` = '".$anz."',
-      `primaer` = '".$primaerziel."'", 'iraks');
-
-doquery("UPDATE {{table}} SET interplanetary_misil = '".($iraks_anzahl - $anz)."' WHERE id = '".$user['current_planet']."'", 'planets');
-
-   $dpath = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
-
-if ($anz == 1){
-   $n = "";
-}else{
-   $n = "n";
-}
-
-?>
-<html>
-<head>
-<title>Attaque MIP</title>
-<link rel="SHORTCUT ICON" href="favicon.ico">
-<link rel="stylesheet" type="text/css" href="<?php echo $dpath; ?>formate.css" />
-<meta http-equiv="refresh" content="3; URL=galaxy.php?mode=3&galaxy=<?php echo $g; ?>&system=<?php echo $s; ?>&target=<?php echo $i; ?>">
+      fleet_owner = ".$user['id'].",
+      fleet_mission = 10,
+      fleet_amount = ".$anz.",
+      fleet_array = '503,".$anz."',
+      fleet_start_time = '".(time() + $flugzeit)."',
+      fleet_start_galaxy = '".$currentplanet['galaxy']."',
+      fleet_start_system = '".$currentplanet['system']."',
+      fleet_start_planet ='".$currentplanet['planet']."',
+      fleet_start_type = 1,
+      fleet_end_time = '".(time() + $flugzeit+1)."',
+      fleet_end_stay = 0,
+      fleet_end_galaxy = '".$g."',
+      fleet_end_system = '".$s."',
+      fleet_end_planet = '".$i."',
+      fleet_end_type = 1,
+      fleet_target_obj = '".$pziel."',
+      fleet_resource_metal = 0,
+      fleet_resource_crystal = 0,
+      fleet_resource_deuterium = 0,
+      fleet_target_owner = '".$ziel_id."',
+      fleet_group = 0,
+      fleet_mess = 0,
+      start_time = ".time().";", 'fleets');
 
 
-</head>
-<body>
-<br><br><br>
-  <center>
+doquery("UPDATE {{table}} SET interplanetary_misil = (interplanetary_misil - ".$anz.") WHERE id = '".$user['current_planet']."'", 'planets');
 
-<table border="0">
-  <tbody><tr>
-    <td>
-      <table>
-        <tbody>
-        <tr>
-         <td class="c" colspan="1">Attaque MIP</td>
-   </tr>
-        <tr>
-   <td class="l"><?php echo "<b>".$anz."</b> missiles interplanetaire ".$n." sont".$n." partit !"; ?>
-        </tr>
-       </tbody></table>
-      </td>
-      </tr>
-     </tbody></table>
-
-</form>
+$dpath = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
 
 
-</body></html>
-<?php
+
+$title = "Ataque con misiles interplanetarios";
+$text = "<b>".$anz."</b> misiles interplanetarios se enviaron. objetivo principal: ".$DefenseLabel[$pziel];
+message($text,$title,"overview.php",3);
+
 ?>

@@ -14,9 +14,6 @@ $xnova_root_path = './';
 include($xnova_root_path . 'extension.inc');
 include($xnova_root_path . 'common.' . $phpEx);
 
-// ----------------------------------------------------------------------------------------------------------
-// Creation de la Liste de flotte disponible sur la lune
-//
 function BuildFleetListRows ( $CurrentPlanet ) {
 	global $resource, $lang;
 
@@ -39,9 +36,6 @@ function BuildFleetListRows ( $CurrentPlanet ) {
 	return $Result;
 }
 
-// ----------------------------------------------------------------------------------------------------------
-// Creation de la combo de selection de Lune d'arrivé
-//
 function BuildJumpableMoonCombo ( $CurrentUser, $CurrentPlanet ) {
 	global $resource;
 	$QrySelectMoons  = "SELECT * FROM {{table}} WHERE `planet_type` = '3' AND `id_owner` = '". $CurrentUser['id'] ."';";
@@ -58,11 +52,6 @@ function BuildJumpableMoonCombo ( $CurrentUser, $CurrentPlanet ) {
 	return $Combo;
 }
 
-// ----------------------------------------------------------------------------------------------------------
-// Creation du tableau de production de ressources
-// Tient compte du parametrage de la planete (si la production n'est pas affectée a 100% par exemple
-// Tient compte aussi du multiplicateur de ressources
-//
 function ShowProductionTable ($CurrentUser, $CurrentPlanet, $BuildID, $Template) {
 	global $ProdGrid, $resource, $game_config;
 
@@ -101,7 +90,7 @@ function ShowProductionTable ($CurrentUser, $CurrentPlanet, $BuildID, $Template)
          if( $BuildID >= 4 ) { // l'énergie augmente avec les centrales et satellites :
             $Prod[4] = (floor(eval($ProdGrid[$BuildID]['formule']['energy'])    * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_ingenieur'] * 0.05)));
          } else $Prod[4] = (floor(eval($ProdGrid[$BuildID]['formule']['energy'])    * $game_config['resource_multiplier']));
-		 
+
 			$bloc['build_lvl']       = ($CurrentBuildtLvl == $BuildLevel) ? "<font color=\"#ff0000\">".$BuildLevel."</font>" : $BuildLevel;
 			if ($ProdFirst > 0) {
 				if ($BuildID != 12) {
@@ -141,9 +130,6 @@ function ShowProductionTable ($CurrentUser, $CurrentPlanet, $BuildID, $Template)
 	return $Table;
 }
 
-// ----------------------------------------------------------------------------------------------------------
-// Creation de l'information des RapidFire contre ...
-//
 function ShowRapidFireTo ($BuildID) {
 	global $lang, $CombatCaps;
 	$ResultString = "";
@@ -155,9 +141,6 @@ function ShowRapidFireTo ($BuildID) {
 	return $ResultString;
 }
 
-// ----------------------------------------------------------------------------------------------------------
-// Creation de l'information des RapidFire de ...
-//
 function ShowRapidFireFrom ($BuildID) {
 	global $lang, $CombatCaps;
 
@@ -170,10 +153,6 @@ function ShowRapidFireFrom ($BuildID) {
 	return $ResultString;
 }
 
-// ----------------------------------------------------------------------------------------------------------
-// Construit la page par rapport a l'information demandée ...
-// Permet de faire la differance entre les divers types et les pages speciales
-//
 function ShowBuildingInfoPage ($CurrentUser, $CurrentPlanet, $BuildID) {
 	global $dpath, $lang, $resource, $pricelist, $CombatCaps;
 
@@ -330,18 +309,9 @@ function ShowBuildingInfoPage ($CurrentUser, $CurrentPlanet, $BuildID) {
 	return $page;
 }
 
-// ----------------------------------------------------------------------------------------------------------
-// Appel de la page ...
-// Tout le reste ne sert qu'a la calculer :)
-//
-
 	$gid  = $_GET['gid'];
 	$page = ShowBuildingInfoPage ($user, $planetrow, $gid);
 
 	display ($page, $lang['nfo_page_title']);
 
-// -----------------------------------------------------------------------------------------------------------
-// History version
-// 1.0 - Réécriture (réinventation de l'eau tiède)
-// 1.1 - Ajout JumpGate pour la porte de saut comme la présente OGame ... Enfin un peu mieux quand meme !
 ?>

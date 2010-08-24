@@ -27,7 +27,7 @@ function MissionCaseSpy ( $FleetRow ) {
 		$CurrentPlanet       = doquery("SELECT * FROM {{table}} WHERE `galaxy` = '".$FleetRow['fleet_start_galaxy']."' AND `system` = '".$FleetRow['fleet_start_system']."' AND `planet` = '".$FleetRow['fleet_start_planet']."';", 'planets', true);
 		$CurrentSpyLvl       = $CurrentUser['spy_tech'];
 		$TargetUser          = doquery("SELECT * FROM {{table}} WHERE `id` = '".$TargetUserID."';", 'users', true);
-		$TargetSpyLvl        = $TargetUser['spy_tech'];
+		$TargetSpyLvl        = $TargetUser['spy_tech'] + ($TargetUser['rpg_espion']*5);
 		$fleet               = explode(";", $FleetRow['fleet_array']);
 		$fquery              = "";
 		foreach ($fleet as $a => $b) {

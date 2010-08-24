@@ -3,9 +3,9 @@
 /**
  * overview.php
  *
- * @version 1
- * @copyright 2008 By Chlorel for XNova
- * @Copyright, bot de mapomme (Britania) modifié et adapté pour XNova by Bono ;)
+ * @version 2.1
+ * @copyright 2008 By lucky for XG Proyect
+ * @Copyright, XNova Proyect - Xtreme-gameZ.com.ar - XG Proyect
  */
 
 define('INSIDE' , true);
@@ -14,6 +14,11 @@ define('INSTALL' , false);
 $xnova_root_path = './';
 include($xnova_root_path . 'extension.inc');
 include($xnova_root_path . 'common.' . $phpEx);
+
+$Tiempo    = time();
+$resto = $Tiempo - $game_config['Actualizacion'];
+$proxactu = 30; //Son segundos 30 = 30 Segundos , es el tiempo que tarda en actualizar
+if($resto > $proxactu) { include("actualiza.php");   }
 
 $lunarow = doquery("SELECT * FROM {{table}} WHERE `id_owner` = '" . $planetrow['id_owner'] . "' AND `galaxy` = '" . $planetrow['galaxy'] . "' AND `system` = '" . $planetrow['system'] . "' AND `lunapos` = '" . $planetrow['planet'] . "';", 'lunas', true);
 
@@ -56,33 +61,35 @@ $sql = mysql_query("SELECT * FROM game_users WHERE `user_lastip`='{$ip}'");
 		$QryBanMulti .= "`email`='" . $mail . "';";
         doquery($QryBanMulti, 'banned');
 		doquery("UPDATE {{table}} SET bana=1 WHERE username='{$user['username']}'","users");
-   doquery("UPDATE {{table}} SET banaday='{$duree}' WHERE username='{$user['username']}'","users"); 
+   doquery("UPDATE {{table}} SET banaday='{$duree}' WHERE username='{$user['username']}'","users");
          }
 
       }
-//robot anti multi -- FIN -- 
+//robot anti multi -- FIN --
 } else {}
 switch ($mode) {
-    case 'renameplanet':
-        // -----------------------------------------------------------------------------------------------
-        if ($_POST['action'] == $lang['namer']) {
+case 'renameplanet':
+         // -----------------------------------------------------------------------------------------------
+         if ($_POST['action'] == $lang['namer']) {
             // Reponse au changement de nom de la planete
-            $UserPlanet = addslashes(CheckInputStrings ($_POST['newname']));
-            $newname = mysql_escape_string(trim($UserPlanet));
+            $UserPlanet     = CheckInputStrings ( $_POST['newname'] );
+            $newname        = mysql_escape_string(strip_tags(trim( $UserPlanet )));
+               if (preg_match("/[^A-z0-9_\- ]/", $newname) == 1) {
+               message('Has introducido alg&uacute;n car&aacute;cter ilegal. Solo se puede introducir caracteres alfanum&eacute;ricos.','Error', "overview.php?mode=renameplanet");
+               }
             if ($newname != "") {
-                // Deja on met jour la planete qu'on garde en memoire (pour le nom)
+
                 $planetrow['name'] = $newname;
-                // Ensuite, on enregistre dans la base de données
+
                 doquery("UPDATE {{table}} SET `name` = '" . $newname . "' WHERE `id` = '" . $user['current_planet'] . "' LIMIT 1;", "planets");
-                // Est ce qu'il sagit d'une lune ??
+
                 if ($planetrow['planet_type'] == 3) {
-                    // Oui ... alors y a plus qu'a changer son nom dans la table des lunes aussi !!!
+
                     doquery("UPDATE {{table}} SET `name` = '" . $newname . "' WHERE `galaxy` = '" . $planetrow['galaxy'] . "' AND `system` = '" . $planetrow['system'] . "' AND `lunapos` = '" . $planetrow['planet'] . "' LIMIT 1;", "lunas");
                 }
             }
         } elseif ($_POST['action'] == $lang['colony_abandon']) {
-            // Cas d'abandon d'une colonie
-            // Affichage de la forme d'abandon de colonie
+
             $parse = $lang;
             $parse['planet_id'] = $planetrow['id'];
             $parse['galaxy_galaxy'] = $planetrow['galaxy'];
@@ -91,10 +98,10 @@ switch ($mode) {
             $parse['planet_name'] = $planetrow['name'];
 
             $page .= parsetemplate(gettemplate('overview_deleteplanet'), $parse);
-            // On affiche la forme pour l'abandon de la colonie
+
             display($page, $lang['rename_and_abandon_planet']);
         } elseif ($_POST['kolonieloeschen'] == 1 && $_POST['deleteid'] == $user['current_planet']) {
-            // Controle du mot de passe pour abandon de colonie
+
             if (md5($_POST['pw']) == $user["password"] && $user['id_planet'] != $user['current_planet']) {
                 $destruyed = time() + 60 * 60 * 24;
 
@@ -165,23 +172,21 @@ switch ($mode) {
             if (($LvlUpMinier + $LvlUpRaid) <= 100) {
                 if ($XpMinier >= $XpMinierUp) {
                     $QryUpdateUser = "UPDATE {{table}} SET ";
-                    $QryUpdateUser .= "`lvl_minier` = '" . $LvlUpMinier . "', ";
-                    $QryUpdateUser .= "`rpg_points` = `rpg_points` + 1 ";
+                    $QryUpdateUser .= "`lvl_minier` = '" . $LvlUpMinier . "'";
                     $QryUpdateUser .= "WHERE ";
                     $QryUpdateUser .= "`id` = '" . $user['id'] . "';";
                     doquery($QryUpdateUser, 'users');
                     $HaveNewLevelMineur = "<tr>";
-                    $HaveNewLevelMineur .= "<th colspan=4><a href=officier.$phpEx>" . $lang['Have_new_level_mineur'] . "</a></th>";
+                    $HaveNewLevelMineur .= "<th colspan=4>" . $lang['Have_new_level_mineur'] . "</th>";
                 }
                 if ($XPRaid >= $XpRaidUp) {
                     $QryUpdateUser = "UPDATE {{table}} SET ";
-                    $QryUpdateUser .= "`lvl_raid` = '" . $LvlUpRaid . "', ";
-                    $QryUpdateUser .= "`rpg_points` = `rpg_points` + 1 ";
+                    $QryUpdateUser .= "`lvl_raid` = '" . $LvlUpRaid . "'";
                     $QryUpdateUser .= "WHERE ";
                     $QryUpdateUser .= "`id` = '" . $user['id'] . "';";
                     doquery($QryUpdateUser, 'users');
                     $HaveNewLevelMineur = "<tr>";
-                    $HaveNewLevelMineur .= "<th colspan=4><a href=officier.$phpEx>" . $lang['Have_new_level_raid'] . "</a></th>";
+                    $HaveNewLevelMineur .= "<th colspan=4>" . $lang['Have_new_level_raid'] . "</th>";
                 }
             }
             // -----------------------------------------------------------------------------------------------
@@ -201,13 +206,14 @@ switch ($mode) {
                     $fpage[$StartTime] = BuildFleetEventTable ($FleetRow, 0, true, $Label, $Record);
                 }
 
-                if ($FleetRow['fleet_mission'] <> 4) {
-                    // Flotte en stationnement
+                // flotas que ya llegaron a destino
+                if ( ($FleetRow['fleet_mission'] <> 4) && ($FleetRow['fleet_mission'] <> 10) ) {
+                    // flota estacionada
                     $Label = "ft";
                     if ($StayTime > time()) {
                         $fpage[$StayTime] = BuildFleetEventTable ($FleetRow, 1, true, $Label, $Record);
                     }
-                    // Flotte au retour
+                    // flota regresando
                     $Label = "fe";
                     if ($EndTime > time()) {
                         $fpage[$EndTime] = BuildFleetEventTable ($FleetRow, 2, true, $Label, $Record);
@@ -294,54 +300,12 @@ switch ($mode) {
                 }
             }
             // -----------------------------------------------------------------------------------------------
-            // --- Gestion des attaques missiles -------------------------------------------------------------
-            $iraks_query = doquery("SELECT * FROM {{table}} WHERE owner = '" . $user['id'] . "'", 'iraks');
-            $Record = 4000;
-            while ($irak = mysql_fetch_array ($iraks_query)) {
-                $Record++;
-                $fpage[$irak['zeit']] = '';
-
-                if ($irak['zeit'] > time()) {
-                    $time = $irak['zeit'] - time();
-
-                    $fpage[$irak['zeit']] .= InsertJavaScriptChronoApplet ("fm", $Record, $time, true);
-
-                    $planet_start = doquery("SELECT * FROM {{table}} WHERE
-						galaxy = '" . $irak['galaxy'] . "' AND
-						system = '" . $irak['system'] . "' AND
-						planet = '" . $irak['planet'] . "' AND
-						planet_type = '1'", 'planets');
-
-                    $user_planet = doquery("SELECT * FROM {{table}} WHERE
-						galaxy = '" . $irak['galaxy_angreifer'] . "' AND
-						system = '" . $irak['system_angreifer'] . "' AND
-						planet = '" . $irak['planet_angreifer'] . "' AND
-						planet_type = '1'", 'planets', true);
-
-                    if (mysql_num_rows($planet_start) == 1) {
-                        $planet = mysql_fetch_array($planet_start);
-                    }
-
-                    $fpage[$irak['zeit']] .= "<tr><th><div id=\"bxxfs$i\" class=\"z\"></div><font color=\"lime\">" . gmdate("H:i:s", $irak['zeit'] + 1 * 60 * 60) . "</font> </th><th colspan=\"3\"><font color=\"#0099FF\">Une attaque de missiles (" . $irak['anzahl'] . ") de " . $user_planet['name'] . " ";
-                    $fpage[$irak['zeit']] .= '<a href="galaxy.php?mode=3&galaxy=' . $irak["galaxy_angreifer"] . '&system=' . $irak["system_angreifer"] . '&planet=' . $irak["planet_angreifer"] . '">[' . $irak["galaxy_angreifer"] . ':' . $irak["system_angreifer"] . ':' . $irak["planet_angreifer"] . ']</a>';
-                    $fpage[$irak['zeit']] .= ' arrive sur la plan&egrave;te' . $planet["name"] . ' ';
-                    $fpage[$irak['zeit']] .= '<a href="galaxy.php?mode=3&galaxy=' . $irak["galaxy"] . '&system=' . $irak["system"] . '&planet=' . $irak["planet"] . '">[' . $irak["galaxy"] . ':' . $irak["system"] . ':' . $irak["planet"] . ']</a>';
-                    $fpage[$irak['zeit']] .= '</font>';
-                    $fpage[$irak['zeit']] .= InsertJavaScriptChronoApplet ("fm", $Record, $time, false);
-                    $fpage[$irak['zeit']] .= "</th>";
-                }
-            }
-            // -----------------------------------------------------------------------------------------------
             $parse = $lang;
             // -----------------------------------------------------------------------------------------------
             // News Frame ...
-            // External Chat Frame ...
             // Banner ADS Google (meme si je suis contre cela)
             if ($game_config['OverviewNewsFrame'] == '1') {
                 $parse['NewsFrame'] = "<tr><th>" . $lang['ov_news_title'] . "</th><th colspan=\"3\">" . stripslashes($game_config['OverviewNewsText']) . "</th></tr>";
-            }
-            if ($game_config['OverviewExternChat'] == '1') {
-                $parse['ExternalTchatFrame'] = "<tr><th colspan=\"4\">" . stripslashes($game_config['OverviewExternChatCmd']) . "</th></tr>";
             }
             if ($game_config['OverviewClickBanner'] != '') {
                 $parse['ClickBanner'] = stripslashes($game_config['OverviewClickBanner']);
@@ -378,10 +342,11 @@ switch ($mode) {
             $parse['galaxy_system'] = $planetrow['system'];
             $StatRecord = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '" . $user['id'] . "';", 'statpoints', true);
 
-            $parse['user_points'] = pretty_number($StatRecord['build_points']);
-            $parse['user_fleet'] = pretty_number($StatRecord['fleet_points']);
-            $parse['player_points_tech'] = pretty_number($StatRecord['tech_points']);
-            $parse['total_points'] = pretty_number($StatRecord['total_points']);;
+            $parse['user_points'] 		   = pretty_number($StatRecord['build_points']);
+            $parse['user_fleet']		   = pretty_number($StatRecord['fleet_points']);
+            $parse['player_points_tech']   = pretty_number($StatRecord['tech_points']);
+            $parse['user_defs']            = pretty_number( $StatRecord['defs_points'] );
+            $parse['total_points'] 		   = pretty_number($StatRecord['total_points']);;
 
             $parse['user_rank'] = $StatRecord['total_rank'];
             $ile = $StatRecord['total_old_rank'] - $StatRecord['total_rank'];
@@ -433,10 +398,10 @@ switch ($mode) {
                     $Build .= $lang['tech'][$CurrBuild[0]] . ' (' . ($CurrBuild[1]) . ')';
                     $Build .= "<br /><div id=\"blc\" class=\"z\">" . pretty_time($RestTime) . "</div>";
                     $Build .= "\n<script language=\"JavaScript\">";
-                    $Build .= "\n	pp = \"" . $RestTime . "\";\n"; // temps necessaire (a compter de maintenant et sans ajouter time() )
-                    $Build .= "\n	pk = \"" . 1 . "\";\n"; // id index (dans la liste de construction)
-                    $Build .= "\n	pm = \"cancel\";\n"; // mot de controle
-                    $Build .= "\n	pl = \"" . $PlanetID . "\";\n"; // id planete
+                    $Build .= "\n	pp = \"" . $RestTime . "\";\n";
+                    $Build .= "\n	pk = \"" . 1 . "\";\n";
+                    $Build .= "\n	pm = \"cancel\";\n";
+                    $Build .= "\n	pl = \"" . $PlanetID . "\";\n";
                     $Build .= "\n	t();\n";
                     $Build .= "\n</script>\n";
 
@@ -483,10 +448,12 @@ switch ($mode) {
             $parse['NumberOfRaids'] = $lang['NumberOfRaids'];
             $parse['RaidsWin'] = $lang['RaidsWin'];
             $parse['RaidsLoose'] = $lang['RaidsLoose'];
+         	$parse['RaidsDraw'] = $lang['RaidsDraw'];
 
             $parse['raids'] = $user['raids'];
             $parse['raidswin'] = $user['raidswin'];
             $parse['raidsloose'] = $user['raidsloose'];
+         	$parse['raidsdraw'] = $user['raidsdraw'];
             // Compteur de Membres en ligne
             $OnlineUsers = doquery("SELECT COUNT(*) FROM {{table}} WHERE onlinetime>='" . (time()-15 * 60) . "'", 'users', 'true');
             $parse['NumberMembersOnline'] = $OnlineUsers[0];

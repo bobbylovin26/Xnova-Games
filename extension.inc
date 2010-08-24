@@ -2,7 +2,7 @@
 
 if ( !defined('INSIDE') )
 {
-	die("Hacking attempt");
+	die("Intento de hackeo");
 }
 
 // Cambiar si la extension que usas no es .php!

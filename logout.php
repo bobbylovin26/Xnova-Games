@@ -20,6 +20,4 @@ include($xnova_root_path . 'common.'.$phpEx);
 
 	message ( $lang['see_you'], $lang['session_closed'], "login.".$phpEx );
 
-// -----------------------------------------------------------------------------------------------------------
-// History version
 ?>

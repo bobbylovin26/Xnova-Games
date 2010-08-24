@@ -26,31 +26,31 @@ $a = $_GET['a'];
 if(isset($_GET['mode'])){
 	if($_POST){
 		//Pegamos el texto :P
-		if($_POST["n"] == ""){$_POST["n"] = "Unbenannt";}
+		if($_POST["n"] == ""){$_POST["n"] = "Anónimos";}
 
 		$r = strip_tags($_POST[n]).",".intval($_POST[g]).",".intval($_POST[s]).",".intval($_POST[p]).",".intval($_POST[t])."\r\n";
 		$user['fleet_shortcut'] .= $r;
 		doquery("UPDATE {{table}} SET fleet_shortcut='{$user[fleet_shortcut]}' WHERE id={$user[id]}","users");
-		message("Le raccourcis a &eacute;t&eacute; enregistr&eacute; !","Enregistrment","fleetshortcut.php");
+		message("¡El acceso directo fue registrado!","Registrar","fleetshortcut.php");
 	}
 	$page = "<form method=POST><table border=0 cellpadding=0 cellspacing=1 width=519>
 	<tr height=20>
-	<td colspan=2 class=c>Nom [Galaxie/Syst&egrave;me solaire/Plan&egrave;te]</td>
+	<td colspan=2 class=c>Nombre[Galaxia/Sistema/Planeta]</td>
 	</tr><tr height=\"20\"><th>
 	<input type=text name=n value=\"$g\" size=32 maxlength=32 title=\"Name\">
 	<input type=text name=g value=\"$s\" size=3 maxlength=1 title=\"Galaxie\">
 	<input type=text name=s value=\"$p\" size=3 maxlength=3 title=\"Sonnensystem\">
 	<input type=text name=p value=\"$t\" size=3 maxlength=3 title=\"Planet\">
 	 <select name=t>";
-	$page .= '<option value="1"'.(($c[4]==1)?" SELECTED":"").">Plan&egrave;te</option>";
-	$page .= '<option value="2"'.(($c[4]==2)?" SELECTED":"").">D&eacute;bris</option>";
-	$page .= '<option value="3"'.(($c[4]==3)?" SELECTED":"").">Lune</option>";
+	$page .= '<option value="1"'.(($c[4]==1)?" SELECTED":"").">Planeta</option>";
+	$page .= '<option value="2"'.(($c[4]==2)?" SELECTED":"").">Escombros</option>";
+	$page .= '<option value="3"'.(($c[4]==3)?" SELECTED":"").">Luna</option>";
 	$page .= "</select>
 	</th></tr><tr>
-	<th><input type=\"reset\" value=\"Zur&uuml;cksetzen\"> <input type=\"submit\" value=\"Enregistrer\">";
+	<th><input type=\"reset\" value=\"Borrar\"> <input type=\"submit\" value=\"Registrar\">";
 	//Muestra un (L) si el destino pertenece a luna, lo mismo para escombros
 	$page .= "</th></tr>";
-	$page .= '<tr><td colspan=2 class=c><a href=fleetshortcut.php>Effacer</a></td></tr></tr></table></form>';
+	$page .= '<tr><td colspan=2 class=c><a href=fleetshortcut.php>Accesos directos</a></td></tr></tr></table></form>';
 }
 elseif(isset($_GET['a'])){
 	if($_POST){
@@ -60,7 +60,7 @@ elseif(isset($_GET['a'])){
 			unset($scarray[$a]);
 			$user['fleet_shortcut'] =  implode("\r\n",$scarray);
 			doquery("UPDATE {{table}} SET fleet_shortcut='{$user[fleet_shortcut]}' WHERE id={$user[id]}","users");
-			message("Shortcut wurde gel&ouml;scht","Gel&ouml;scht","fleetshortcut.php");
+			message("Acceso directo Borrado","Eliminar","fleetshortcut.php");
 		}
 		else{
 			$r = explode(",",$scarray[$a]);
@@ -72,7 +72,7 @@ elseif(isset($_GET['a'])){
 			$scarray[$a] = implode(",",$r);
 			$user['fleet_shortcut'] =  implode("\r\n",$scarray);
 			doquery("UPDATE {{table}} SET fleet_shortcut='{$user[fleet_shortcut]}' WHERE id={$user[id]}","users");
-			message("Le raccourcis a &eacute;t&eacute; &eacute;dit&eacute; !.","Editer","fleetshortcut.php");
+			message("¡El acceso directo ha sido editado!","Edición","fleetshortcut.php");
 		}
 	}
 	if($user['fleet_shortcut']){
@@ -82,7 +82,7 @@ elseif(isset($_GET['a'])){
 
 		$page = "<form method=POST><table border=0 cellpadding=0 cellspacing=1 width=519>
 	<tr height=20>
-	<td colspan=2 class=c>Editer: {$c[0]} [{$c[1]}:{$c[2]}:{$c[3]}]</td>
+	<td colspan=2 class=c>Edicion: {$c[0]} [{$c[1]}:{$c[2]}:{$c[3]}]</td>
 	</tr>";
 		//if($i==0){$page .= "";}
 		$page .= "<tr height=\"20\"><th>
@@ -92,17 +92,17 @@ elseif(isset($_GET['a'])){
 		<input type=text name=s value=\"{$c[2]}\" size=3 maxlength=3>
 		<input type=text name=p value=\"{$c[3]}\" size=3 maxlength=3>
 		 <select name=t>";
-		$page .= '<option value="1"'.(($c[4]==1)?" SELECTED":"").">Plan&egrave;te</option>";
-		$page .= '<option value="2"'.(($c[4]==2)?" SELECTED":"").">D&eacute;bris</option>";
-		$page .= '<option value="3"'.(($c[4]==3)?" SELECTED":"").">Lune</option>";
+		$page .= '<option value="1"'.(($c[4]==1)?" SELECTED":"").">Planeta</option>";
+		$page .= '<option value="2"'.(($c[4]==2)?" SELECTED":"").">Escombros</option>";
+		$page .= '<option value="3"'.(($c[4]==3)?" SELECTED":"").">Luna</option>";
 		$page .= "</select>
 		</th></tr><tr>
-		<th><input type=reset value=\"Reset\"> <input type=submit value=\"Enregistrer\"> <input type=submit name=delete value=\"Supprimer\">";
+		<th><input type=reset value=\"Limpiar\"> <input type=submit value=\"Registrar\"> <input type=submit name=delete value=\"Suprimir\">";
 		$page .= "</th></tr>";
 
-	}else{$page .= message("Le raccourcis a &eacute;t&eacute; enregistr&eacute; !","Enregistrer","fleetshortcut.php");}
+	}else{$page .= message("Ha sido registrado!","Registro","fleetshortcut.php");}
 
-	$page .= '<tr><td colspan=2 class=c><a href=fleetshortcut.php>Retour</a></td></tr></tr></table></form>';
+	$page .= '<tr><td colspan=2 class=c><a href=fleetshortcut.php>Volver</a></td></tr></tr></table></form>';
 
 
 }
@@ -110,7 +110,7 @@ else{
 
 	$page = '<table border="0" cellpadding="0" cellspacing="1" width="519">
 	<tr height="20">
-	<td colspan="2" class="c">Raccourcis(<a href="?mode=add">Ajout</a>)</td>
+	<td colspan="2" class="c">Accesos Directos(<a href="?mode=add">Agregar</a>)</td>
 	</tr>';
 
 	if($user['fleet_shortcut']){
@@ -137,9 +137,9 @@ else{
 		}
 		if($i==1){$page .= "<th></th></tr>";}
 
-	}else{$page .= "<th colspan=\"2\">Pas de Raccourcis</th>";}
+	}else{$page .= "<th colspan=\"2\">No hay accesos directos</th>";}
 
-	$page .= '<tr><td colspan=2 class=c><a href=fleet.php>Retour</a></td></tr></tr></table>';
+	$page .= '<tr><td colspan=2 class=c><a href=fleet.php>Flota</a></td></tr></tr></table>';
 }
 display($page,"Shortcutmanager");
 

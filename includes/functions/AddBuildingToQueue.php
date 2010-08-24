@@ -8,14 +8,6 @@
  * @copyright 2008 by Chlorel for XNova
  */
 
-// Ajoute un batiment dans la queue
-// $CurrentPlanet -> Planete sur laquelle on construit
-// $CurrentUser   -> Joueur courrant
-// $Element       -> Batiment a construire
-//
-// Retour         -> Valeur de l'element inseré
-//                   ou false s'il ne peut pas l'inserer (queue pleine)
-//
 function AddBuildingToQueue ( &$CurrentPlanet, $CurrentUser, $Element, $AddMode = true) {
 	global $lang, $resource;
 

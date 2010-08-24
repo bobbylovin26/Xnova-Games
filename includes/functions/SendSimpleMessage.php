@@ -7,16 +7,6 @@
  * @copyright 2008 by Chlorel for XNova
  */
 
-// Envoi d'un message simple
-//
-// $Owner   -> destinataire
-// $Sender  -> ID de l'emeteur
-// $Time    -> Heure theorique a laquelle l'evenement s'est produit
-// $Type    -> Type de message (pour classement dans les onglets message plus tard)
-// $From    -> Description de l'emeteur
-// $Subject -> Sujet
-// $Message -> Le message lui meme !!
-//
 function SendSimpleMessage ( $Owner, $Sender, $Time, $Type, $From, $Subject, $Message) {
 	global $messfields;
 
@@ -42,11 +32,5 @@ function SendSimpleMessage ( $Owner, $Sender, $Time, $Type, $From, $Subject, $Me
 	doquery( $QryUpdateUser, 'users');
 
 }
-
-// Revision history :
-// 1.0 - Initial release (mise en fonction generique)
-// 1.1 - Ajout gestion des messages par type pour le module de messages
-// 1.2 - Correction bug (addslashes pour les zone texte pouvant contenir une apostrophe)
-// 1.3 - Correction bug (integration de la variable $Time pour afficher l'heure exacte de l'evenement pour les flottes)
 
 ?>

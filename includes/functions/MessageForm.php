@@ -7,15 +7,6 @@
  * @copyright 2008 By Chlorel for XNova
  */
 
-// Parametres en entrée:
-// $Title    -> Titre du Message
-// $Message  -> Texte contenu dans le message
-// $Goto     -> Adresse de saut pour le formulaire
-// $Button   -> Bouton de validation du formulaire
-// $TwoLines -> Sur une ou sur 2 lignes
-//
-// Retour
-//           -> Une chaine formatée affichable en html
 function MessageForm ($Title, $Message, $Goto = '', $Button = ' ok ', $TwoLines = false) {
 	$Form  = "<center>";
 	$Form .= "<form action=\"". $Goto ."\" method=\"post\">";
@@ -37,6 +28,5 @@ function MessageForm ($Title, $Message, $Goto = '', $Button = ' ok ', $TwoLines 
 
 	return $Form;
 }
-// Release History
-// - 1.0 Mise en fonction, Documentation
+
 ?>

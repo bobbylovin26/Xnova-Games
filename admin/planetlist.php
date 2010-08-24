@@ -32,11 +32,11 @@ include($xnova_root_path . 'common.' . $phpEx);
 		}
 
 		if ($i == "1")
-			$parse['planetes'] .= "<tr><th class=b colspan=5>Il y a qu'une seule plan&egrave;te</th></tr>";
+			$parse['planetes'] .= "<tr><th class=b colspan=5>Sólo hay un planeta</th></tr>";
 		else
-			$parse['planetes'] .= "<tr><th class=b colspan=5>Il y a {$i} plan&egrave;tes</th></tr>";
+			$parse['planetes'] .= "<tr><th class=b colspan=5>Hay {$i} planetas</th></tr>";
 
-		display(parsetemplate(gettemplate('admin/planetlist_body'), $parse), 'Planetlist', false, '', true);
+		display(parsetemplate(gettemplate('admin/planetlist_body'), $parse), 'Lista de planetas', false, '', true);
 	} else {
 		message($lang['sys_noalloaw'], $lang['sys_noaccess']);
 	}

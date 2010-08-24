@@ -28,22 +28,19 @@ define('INSTALL' , false);
 		if ($FleetRow['fleet_owner'] == $user['id']) {
 			if ($FleetRow['fleet_mess'] == 0) {
 				if ($FleetRow['fleet_end_stay'] != 0) {
-					// Faut calculer le temps reel de retour
+
 					if ($FleetRow['fleet_start_time'] < time()) {
-						// On a pas encore entamé le stationnement
-						// Il faut calculer la parcelle de temps ecoulée depuis le lancement de la flotte
+
 						$CurrentFlyingTime = time() - $FleetRow['start_time'];
 					} else {
-						// On est deja en stationnement
-						// Il faut donc directement calculer la durée d'un vol aller ou retour
+
 						$CurrentFlyingTime = $FleetRow['fleet_start_time'] - $FleetRow['start_time'];
 					}
 				} else {
-					// C'est quoi le stationnement ??
-					// On calcule sagement la parcelle de temps ecoulée depuis le depart
+
 					$CurrentFlyingTime = time() - $FleetRow['start_time'];
 				}
-				// Allez houste au bout du compte y a la maison !! (E.T. phone home.............)
+
 				$ReturnFlyingTime  = $CurrentFlyingTime + time();
 
 				$QryUpdateFleet  = "UPDATE {{table}} SET ";
@@ -69,12 +66,4 @@ define('INSTALL' , false);
 
 	message ("<font color=\"".$TxtColor."\">". $BoxMessage ."</font>", $BoxTitle, "fleet.". $phpEx, 2);
 
-// -----------------------------------------------------------------------------------------------------------
-// History version
-// Updated by Chlorel. 22 Jan 2008 (String extraction, bug corrections, code uniformisation
-// Created by DxPpLmOs. All rights reversed (C) 2007
-// Updated by -= MoF =- for Deutsches Ugamela Forum
-// 06.12.2007 - 08:41
-// Open Source
-// (c) by MoF
 ?>

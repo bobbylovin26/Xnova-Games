@@ -35,9 +35,9 @@ while($u = mysql_fetch_array($query)){
 }
 
 if ($i=="0")
- $parse['banned'] .= "<tr><th class=b colspan=6>Il n'y a pas de joueurs bannis</th></tr>";
+ $parse['banned'] .= "<tr><th class=b colspan=6>No hay jugadores baneados</th></tr>";
 else
-  $parse['banned'] .= "<tr><th class=b colspan=6>Il y a {$i} joueurs bannis</th></tr>";
+  $parse['banned'] .= "<tr><th class=b colspan=6>Existe {$i} baneo/s</th></tr>";
 
 display(parsetemplate(gettemplate('banned_body'), $parse),'Banned',true);
 

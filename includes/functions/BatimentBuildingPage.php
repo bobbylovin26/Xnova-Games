@@ -175,10 +175,4 @@ function BatimentBuildingPage (&$CurrentPlanet, $CurrentUser) {
 	display($page, $lang['Builds']);
 }
 
-// -----------------------------------------------------------------------------------------------------------
-// History version
-// 1.0 Mise en module initiale (creation)
-// 1.1 FIX interception cheat +1
-// 1.2 FIX interception cheat destruction a -1
-
 ?>

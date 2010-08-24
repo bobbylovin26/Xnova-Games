@@ -71,18 +71,18 @@ if ($_GET['mode'] == 'ainfo') {
    $tag = mysql_escape_string($_GET['tag']);
    // Evitamos errores casuales xD
    // query
-   $lang['Alliance_information'] = "Infos Alliance";
+   $lang['Alliance_information'] = "Informacion Alianza";
 
    if (isset($_GET['tag'])) {
       $allyrow = doquery("SELECT * FROM {{table}} WHERE ally_tag='{$tag}'", "alliance", true);
    } elseif (is_numeric($a) && $a != 0) {
       $allyrow = doquery("SELECT * FROM {{table}} WHERE id='{$a}'", "alliance", true);
    } else {
-      message("Cette alliance n\'existe pas !", "Info Alliance");
+      message("...!!!...", "Informacion Alianza");
    }
    // Si no existe
    if (!$allyrow) {
-      message("Cette alliance n'\existe pas !", "Info Alliance");
+      message("...!!!...", "Informacion Alianza");
    }
    extract($allyrow);
 
@@ -93,7 +93,7 @@ if ($_GET['mode'] == 'ainfo') {
    if ($ally_description != "") {
       $ally_description = "<tr><th colspan=2 height=100>{$ally_description}</th></tr>";
    } else
-      $ally_description = "<tr><th colspan=2 height=100>Pas de description de l'alliance.</th></tr>";
+      $ally_description = "<tr><th colspan=2 height=100>Mensaje de descripcion de la alianza.</th></tr>";
 
    if ($ally_web != "") {
       $ally_web = "<tr>
@@ -123,7 +123,7 @@ if ($_GET['mode'] == 'ainfo') {
    if ($user['ally_id'] == 0) {
       $lang['bewerbung'] = "<tr>
      <th>Bewerben</th>
-     <th><a href=\"alliance.php?mode=apply&amp;allyid=" . $id . "\">Klicke hier um eine Bewerbung zu schreiben</a></th>
+     <th><a href=\"alliance.php?mode=apply&amp;allyid=" . $id . "\">Click aqui para enviar su solicitud a la alianza</a></th>
 
    </tr>";
    } else
@@ -214,6 +214,10 @@ if ($user['ally_id'] == 0) { // Sin alianza
    }
 
    if ($mode == 'apply' && $user['ally_request'] == 0) { // solicitudes
+   if($_GET['allyid'] != NULL) {
+      $alianza = doquery("SELECT * FROM {{table}} WHERE id='{$_GET['allyid']}'", "alliance", true); }
+         if($alianza['ally_request_notallow'] == 1) { message("Esta alianza no admite mas miembros"); } else {
+
       if (!is_numeric($_GET['allyid']) || !$_GET['allyid'] || $user['ally_request'] != 0 || $user['ally_id'] != 0) {
          message($lang['it_is_not_posible_to_apply'], $lang['it_is_not_posible_to_apply']);
       }
@@ -245,6 +249,7 @@ if ($user['ally_id'] == 0) { // Sin alianza
       $page = parsetemplate(gettemplate('alliance_applyform'), $parse);
 
       display($page, $lang['Write_to_alliance']);
+      }
    }
 
    if ($user['ally_request'] != 0) { // Esperando una respuesta
@@ -264,7 +269,7 @@ if ($user['ally_id'] == 0) { // Sin alianza
          $page = parsetemplate(gettemplate('alliance_apply_waitform'), $lang);
       }
       // mysql_escape_string(strip_tags());
-      display($page, "Deine Anfrage");
+      display($page, "Su solicitud");
    } else { // Vista sin allianza
       /*
      Vista normal de cuando no se tiene ni solicitud ni alianza
@@ -395,9 +400,9 @@ array(1 =>
          if ($sort1 == 1) {
             $sort = " ORDER BY `username`";
          } elseif ($sort1 == 2) {
-            $sort = " ORDER BY `username`";
+            $sort = " ORDER BY `ally_rank_id`";
          } elseif ($sort1 == 3) {
-            $sort = " ORDER BY `points`";
+            $sort = " ORDER BY `total_points`";
          } elseif ($sort1 == 4) {
             $sort = " ORDER BY `ally_register_time`";
          } elseif ($sort1 == 5) {
@@ -411,7 +416,7 @@ array(1 =>
          } elseif ($sort2 == 2) {
             $sort .= " ASC;";
          }
-         $listuser = doquery("SELECT * FROM {{table}} WHERE ally_id='{$user['ally_id']}'{$sort}", 'users');
+         $listuser = doquery("SELECT * FROM {{table}} inner join `game_statpoints` on `game_users`.`id`=`game_statpoints`.`id_owner` WHERE ally_id='{$user['ally_id']}' AND STAT_type=1 $sort", 'users');
       } else {
          $listuser = doquery("SELECT * FROM {{table}} WHERE ally_id='{$user['ally_id']}'", 'users');
       }
@@ -420,10 +425,10 @@ array(1 =>
       // Como es costumbre. un row template
       $template = gettemplate('alliance_memberslist_row');
       $page_list = '';
-      while ($u = mysql_fetch_array($listuser)) {
+	  while ($u = mysql_fetch_array($listuser)) {
          $UserPoints = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '" . $u['id'] . "';", 'statpoints', true);
 
-         $i++;
+         $i=$i+1;
          $u['i'] = $i;
 
          if ($u["onlinetime"] + 60 * 10 >= time() && $user_can_watch_memberlist_status) {
@@ -435,11 +440,11 @@ array(1 =>
          } else $u["onlinetime"] = "orange>-<";
          // Nombre de rango
          if ($ally['ally_owner'] == $u['id']) {
-            $u["ally_range"] = ($ally['ally_owner_range'] == '')?"Leader":$ally['ally_owner_range'];
-         } elseif (isset($allianz_raenge[$u['ally_rank_id']]['name'])) {
-            $u["ally_range"] = $allianz_raenge[$u['ally_rank_id']]['name'];
-         } else {
+            $u["ally_range"] = ($ally['ally_owner_range'] == '')?$lang['Founder']:$ally['ally_owner_range'];
+         } elseif ($u['ally_rank_id'] == 0 ) {
             $u["ally_range"] = $lang['Novate'];
+         } else {
+            $u["ally_range"] = $allianz_raenge[$u['ally_rank_id']-1]['name'];
          }
 
          $u["dpath"] = $dpath;
@@ -516,7 +521,7 @@ array(1 =>
          /*
         Aca un mensajito diciendo que a quien se mando.
       */
-         $page = MessageForm($lang['Circular_sended'], "Folgende Mitglieder erhielten eine Nachricht:" . $list, "alliance.php", $lang['Ok'], true);
+         $page = MessageForm($lang['Circular_sended'], "Los siguiente(s) miembro(s) recibieron tu mensaje:" . $list, "alliance.php", $lang['Ok'], true);
          display($page, $lang['Send_circular_mail']);
       }
 
@@ -781,7 +786,7 @@ array(1 =>
       $lang['ally_request_notallow_0'] = (($ally['ally_request_notallow'] == 1) ? ' SELECTED' : '');
       $lang['ally_request_notallow_1'] = (($ally['ally_request_notallow'] == 0) ? ' SELECTED' : '');
       $lang['ally_owner_range'] = $ally['ally_owner_range'];
-      $lang['Transfer_alliance'] = MessageForm("Abandonner / Transf&eacute;rer L'alliance", "", "?mode=admin&edit=give", $lang['Continue']);
+      $lang['Transfer_alliance'] = MessageForm($lang['Transfer_alliance'], "", "?mode=admin&edit=transfer", $lang['Continue']);
       $lang['Disolve_alliance'] = MessageForm("Dissoudre L'alliance", "", "?mode=admin&edit=exit", $lang['Continue']);
 
       $page .= parsetemplate(gettemplate('alliance_admin'), $lang);
@@ -843,7 +848,7 @@ array(1 =>
          } elseif ($sort2 == 2) {
             $sort .= " ASC;";
          }
-         $listuser = doquery("SELECT * FROM {{table}} WHERE ally_id='{$user['ally_id']}'{$sort}", 'users');
+         $listuser = doquery("SELECT * FROM {{table}} inner join `game_statpoints` on `game_users`.`id`=`game_statpoints`.`id_owner` WHERE ally_id='{$user['ally_id']}' AND STAT_type=1 $sort", 'users');
       } else {
          $listuser = doquery("SELECT * FROM {{table}} WHERE ally_id={$user['ally_id']}", 'users');
       }
@@ -970,7 +975,7 @@ array(1 =>
 
          header('Location:alliance.php?mode=admin&edit=requests');
          die();
-         
+
 // ICI VOUS CLIQUEZ SUR REFUSER DONC L'ACTION VA ANNULER LA CANDIDATURE DU MEMBRE
 
       } elseif ($_POST['action'] == "Refuser" && $_POST['action'] != '') {
@@ -1008,7 +1013,7 @@ array(1 =>
          $i++;
       }
       if ($parse['list'] == '') {
-         $parse['list'] = '<tr><th colspan=2>Es liegen keine Bewerbungen vor</th></tr>';
+         $parse['list'] = '<tr><th colspan=2>No hay solicitudes anted de</th></tr>';
       }
       // Con $show
       if (isset($show) && $show != 0 && $parse['list'] != '') {
@@ -1049,7 +1054,7 @@ array(1 =>
       $parse['question']           = str_replace('%s', $ally['ally_name'], $lang['How_you_will_call_the_alliance_in_the_future']);
       $parse['New_name']           = $lang['New_name'];
       $parse['Change']             = $lang['Change'];
-      $parse['name']               = 'newname';
+      $parse['name']               = 'Nuevo Nombre';
       $parse['Return_to_overview'] = $lang['Return_to_overview'];
       $page .= parsetemplate(gettemplate('alliance_admin_rename'), $parse);
       display($page, $lang['Alliance_admin']);
@@ -1074,7 +1079,7 @@ array(1 =>
       $parse['question']           = str_replace('%s', $ally['ally_tag'], $lang['How_you_will_call_the_alliance_in_the_future']);
       $parse['New_name']           = $lang['New_name'];
       $parse['Change']             = $lang['Change'];
-      $parse['name']               = 'newtag';
+      $parse['name']               = 'Nueva Etiqueta';
       $parse['Return_to_overview'] = $lang['Return_to_overview'];
       $page .= parsetemplate(gettemplate('alliance_admin_rename'), $parse);
       display($page, $lang['Alliance_admin']);
@@ -1091,10 +1096,75 @@ array(1 =>
      Si bien, se tendria que confirmar, no tengo animos para hacerlo mas detallado...
      sorry :(
    */
+		$BorrarAlianza = doquery("SELECT id FROM {{table}} WHERE `ally_id`='{$ally['id']}'",'users');
+
+		while ($v = mysql_fetch_array($BorrarAlianza))
+		{
+   			doquery("UPDATE {{table}} SET `ally_name` = '', `ally_id`='0' WHERE `id`='{$v['id']}'", 'users');
+		}
       doquery("DELETE FROM {{table}} WHERE id='{$ally['id']}'", "alliance");
       header('Location: alliance.php');
       exit;
    }
+ // transferir alianza, armado de una mezcla de memberlist, de configuracion de rangos y de lista de planetas
+   if ($mode == 'admin' && $edit == 'transfer') {
+
+      if (isset($_POST['newleader'])) {
+         doquery("UPDATE {{table}} SET `ally_rank_id`='0' WHERE `id`={$user['id']} ", 'users');
+         doquery("UPDATE {{table}} SET `ally_owner`='" . mysql_escape_string(strip_tags($_POST['newleader'])) . "' WHERE `id`={$user['ally_id']} ", 'alliance');
+         doquery("UPDATE {{table}} SET `ally_rank_id`='0' WHERE `id`='" . mysql_escape_string(strip_tags($_POST['newleader'])) . "' ", 'users');
+         header('Location: alliance.php');
+          exit;
+      }
+      // comprobamos el permiso
+      if ($ally['ally_owner'] != $user['id']) {
+         message($lang['Denied_access'], $lang['Members_list']);
+      } else {
+      // obtenemos el array de los rangos
+      $rangos_alianza = unserialize($ally['ally_ranks']);
+      //armamos nuevamente la lista de usuarios de la alianza
+      $listuser = doquery("SELECT * FROM {{table}} WHERE ally_id='{$user['ally_id']}'", 'users');
+      // contamos la cantidad de usuarios.
+      $i = 0;
+      // Como es costumbre. un row template
+      $template1 = gettemplate('alliance_admin_transfer_row');
+      $page_list1 = '';
+      //realizamos el while comprobando usuario a usuario su rango
+      while ($u = mysql_fetch_array($listuser)) {
+         $i=$i+1;
+         $u['i'] = $i;
+         if ($ally['ally_owner'] == $u['id']) {
+         //Si es el lider de la ally carece de sentido que se autotransfiera de rango
+         } elseif ($u['ally_rank_id'] == 0 ) {
+         //Si es un novato nunca tendra el permiso de la mano derecha
+         } else {
+             if ($rangos_alianza[$u['ally_rank_id']-1]['rechtehand'] == 1){
+            //aca se arma la opcion con los usuarios con permiso de mano derecha
+            $righthand['righthand'] .= "\n<option value=\"" . $u['id'] . "\"";
+            $righthand['righthand'] .= ">";
+            $righthand['righthand'] .= "".$u['username'];
+            $righthand['righthand'] .= "&nbsp;[".$rangos_alianza[$u['ally_rank_id']-1]['name'];
+            $righthand['righthand'] .= "]&nbsp;&nbsp;</option>";
+            }
+
+         }
+         //aca envio los datos de lenguaje necesarios
+         $righthand['transfer_to'] = $lang['transfer_to'];
+          $righthand['transfer'] = $lang['transfer'];
+         $righthand["dpath"] = $dpath;
+
+      }
+      // por ultimo unifico todo en los templates correctos
+      $page_list1 .= parsetemplate($template1, $righthand);
+      $parse1 = $lang;
+      $parse1['s'] = $s;
+      $parse1['list'] = $page_list1;
+
+      $page .= parsetemplate(gettemplate('alliance_admin_transfer'), $parse1);
+
+      display($page, $lang['Members_list']);
+   }
+   } //Fin del modo transferir alianza
    {
     // Default *falta revisar...*
       if ($ally['ally_owner'] != $user['id']) {

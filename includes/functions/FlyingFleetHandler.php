@@ -76,7 +76,7 @@ function FlyingFleetHandler (&$planet) {
 
 			case 10:
 				// Missiles !!
-				
+				MissionCaseMIP ( $CurrentFleet );
 				break;
 
 			case 15:

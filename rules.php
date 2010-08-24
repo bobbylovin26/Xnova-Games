@@ -22,6 +22,4 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$page     = parsetemplate( $PageTPL, $parse);
 
 	display($page, $lang['rules'], false);
-
-
 ?>

@@ -23,31 +23,27 @@ if ( defined('INSIDE') ) {
 	// Cases données par niveau de Base Lunaire
 	define('FIELDS_BY_MOONBASIS_LEVEL', 5);
 	// Nombre maximum de colonie par joueur
-	define('MAX_PLAYER_PLANETS'       , 51);
+	define('MAX_PLAYER_PLANETS'       , 9);
 	// Nombre maximum d'element dans la liste de construction de batiments
 	define('MAX_BUILDING_QUEUE_SIZE'  , 10);
 	// Nombre maximum d'element dans une ligne de liste de construction flotte et defenses
-	define('MAX_FLEET_OR_DEFS_PER_ROW', 50000);
+	define('MAX_FLEET_OR_DEFS_PER_ROW', 10000);
 	// Taux de depassement possible dans l'espace de stockage des hangards ...
 	// 1.0 pour 100% - 1.1 pour 110% etc ...
 	define('MAX_OVERFLOW'             , 1.1);
-	// Affiche les administrateur dans la page des records ...
-	// 1 -> les affiche
-	// 0 -> les affiche pas
-	define('SHOW_ADMIN_IN_RECORDS'    , 0);
 
 	// Valeurs de bases pour les colonies ou planetes fraichement crées
-	define('BASE_STORAGE_SIZE'        , 40000000);
+	define('BASE_STORAGE_SIZE'        , 10000);
 	define('BUILD_METAL'              , 400);
 	define('BUILD_CRISTAL'            , 200);
-	define('BUILD_DEUTERIUM'          , 1);
+	define('BUILD_DEUTERIUM'          , 0);
 
 	// Debug Level
 	define('DEBUG', 1); // Debugging off
 	// Mot qui sont interdit a la saisie !
 	$ListCensure = array ( "<", ">", "script", "doquery", "http", "javascript", "'" );
 } else {
-	die("Hacking attempt");
+	die("Intento de Hackeo");
 }
 
 

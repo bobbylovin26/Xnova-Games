@@ -191,8 +191,4 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$page = parsetemplate( gettemplate('stat_body'), $parse );
 
 	display($page, $lang['stat_title']);
-
-// -----------------------------------------------------------------------------------------------------------
-// History version
-// 1.0 - Réécriture module
 ?>

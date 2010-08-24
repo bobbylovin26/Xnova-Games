@@ -6,7 +6,6 @@
  * @copyright 2008 By Chlorel for XNova
  */
 
-// Fonctions deja 'au propre'
 include($xnova_root_path . 'includes/functions/FlyingFleetHandler.'.$phpEx);
 include($xnova_root_path . 'includes/functions/MissionCaseAttack.'.$phpEx);
 include($xnova_root_path . 'includes/functions/MissionCaseStay.'.$phpEx);
@@ -80,11 +79,13 @@ include($xnova_root_path . 'includes/functions/HandleElementBuildingQueue.'.$php
 include($xnova_root_path . 'includes/functions/UpdatePlanetBatimentQueueList.'.$phpEx);
 include($xnova_root_path . 'includes/functions/IsOfficierAccessible.'.$phpEx);
 include($xnova_root_path . 'includes/functions/CheckInputStrings.'.$phpEx);
-include($xnova_root_path . 'includes/functions/MipCombatEngine.'.$phpEx);
 include($xnova_root_path . 'includes/functions/DeleteSelectedUser.'.$phpEx);
 include($xnova_root_path . 'includes/functions/SortUserPlanets.'.$phpEx);
 include($xnova_root_path . 'includes/functions/BuildFleetEventTable.'.$phpEx);
 include($xnova_root_path . 'includes/functions/ResetThisFuckingCheater.'.$phpEx);
 include($xnova_root_path . 'includes/functions/IsVacationMode.'.$phpEx);
+include($xnova_root_path . 'includes/functions/CheckIfIsBuilding.'.$phpEx);
+include($xnova_root_path . 'includes/raketenangriff.' . $phpEx);
+include($xnova_root_path . 'includes/functions/MissionCaseMIP.'.$phpEx);
 
 ?>

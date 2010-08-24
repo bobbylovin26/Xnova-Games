@@ -32,8 +32,8 @@ include($xnova_root_path . 'common.'.$phpEx);
 		$Page .= "<tr>";
 		if (($raportrow["id_owner1"] == $user["id"]) and
 			($raportrow["a_zestrzelona"] == 1)) {
-			$Page .= "<td>Le contact avec la flotte attaquante a &eacute;t&eacute; perdue.<br>";
-			$Page .= "(En d'autres termes, elle a &eacute;t&eacute; abattu au premier tour .)</td>";
+			$Page .= "<td>Se perdio el contacto con la flota atacante.<br>";
+			$Page .= "(La flota fue destruida en la primer ronda)</td>";
 		} else {
 			$Page .= "<td>". stripslashes( $raportrow["raport"] ) ."</td>";
 		}
@@ -45,8 +45,5 @@ include($xnova_root_path . 'common.'.$phpEx);
 
 		echo $Page;
 	}
-
-// -----------------------------------------------------------------------------------------------------------
-// History version
 
 ?>

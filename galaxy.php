@@ -18,10 +18,9 @@ include($xnova_root_path . 'common.' . $phpEx);
 
 	$CurrentPlanet = doquery("SELECT * FROM {{table}} WHERE `id` = '". $user['current_planet'] ."';", 'planets', true);
 	$lunarow       = doquery("SELECT * FROM {{table}} WHERE `id` = '". $user['current_luna'] ."';", 'lunas', true);
-	$galaxyrow     = doquery("SELECT * FROM {{table}} WHERE `id_planet` = '". $CurrentPlanet['id'] ."';", 'galaxy', true);
 
 	$dpath         = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
-	$fleetmax      = $user['computer_tech'] + 1;
+	$fleetmax      = $user['computer_tech'] +($user['rpg_commandant']*3) + 1;
 	$CurrentPlID   = $CurrentPlanet['id'];
 	$CurrentMIP    = $CurrentPlanet['interplanetary_misil'];
 	$CurrentRC     = $CurrentPlanet['recycler'];
@@ -30,11 +29,27 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$CurrentSystem = $CurrentPlanet['system'];
 	$CurrentGalaxy = $CurrentPlanet['galaxy'];
 	$CanDestroy    = $CurrentPlanet[$resource[213]] + $CurrentPlanet[$resource[214]];
+	$UserDeuterium = $CurrentPlanet['deuterium'] - 10;
 
 	$maxfleet       = doquery("SELECT * FROM {{table}} WHERE `fleet_owner` = '". $user['id'] ."';", 'fleets');
 	$maxfleet_count = mysql_num_rows($maxfleet);
 
 	CheckPlanetUsedFields($CurrentPlanet);
+
+	// Vamos a comprobar si el usuario tiene suficiente deuterio
+   	if ($UserDeuterium < 1) {
+     	message($lang['gs_c613'],"Galaxia","overview.php",2);
+      	die ();
+   	}
+
+	//Tomar el valor actual de deuterio y restar $GalaDeuterium importe
+   	$QryGalaxyDeuterium   = "UPDATE {{table}} SET ";
+   	$QryGalaxyDeuterium  .= "`deuterium` = '". $UserDeuterium ."' ";
+   	$QryGalaxyDeuterium  .= "WHERE ";
+   	$QryGalaxyDeuterium  .= "`id` = '". $CurrentPlanet['id'] ."' ";
+   	$QryGalaxyDeuterium  .= "LIMIT 1;";
+   	doquery( $QryGalaxyDeuterium, 'planets');
+
 	CheckPlanetUsedFields($lunarow);
 
 	// Imperatif, dans quel mode suis-je (pour savoir dans quel etat j'ere)
@@ -56,6 +71,35 @@ include($xnova_root_path . 'common.' . $phpEx);
 		$system        = $CurrentPlanet['system'];
 		$planet        = $CurrentPlanet['planet'];
 	} elseif ($mode == 1) {
+
+	  //FIX numeros negativos y caracteres no numericos en galaxia y sistema por Neurus
+      	if (is_numeric($_POST["galaxy"]))
+		{
+         	$_POST["galaxy"] = abs($_POST["galaxy"]);
+      	}
+		else
+		{
+         	$_POST["galaxy"] = 1;
+        }
+        if (is_numeric($_POST["system"]))
+		{
+            $_POST["system"] = abs($_POST["system"]);
+        }
+		else
+		{
+            $_POST["system"] = 1;
+        }
+
+      if ($_POST["galaxy"] > MAX_GALAXY_IN_WORLD)
+	  {
+         $_POST["galaxy"] = MAX_GALAXY_IN_WORLD;
+      }
+      if ($_POST["system"] > MAX_SYSTEM_IN_GALAXY)
+	  {
+         $_POST["system"] = MAX_SYSTEM_IN_GALAXY;
+      }
+      //Fin FIX
+
 		// On vient du selecteur de galaxie
 		// Il nous poste :
 		// $_POST['galaxy']      => Galaxie affichée dans la case a saisir
@@ -156,10 +200,4 @@ include($xnova_root_path . 'common.' . $phpEx);
 
 	display ($page, $lang[''], false, '', false);
 
-// -----------------------------------------------------------------------------------------------------------
-// History version
-// 1.0 - Created by Perberos
-// 1.1 - Modified by -MoF- (UGamela germany)
-// 1.2 - 1er Nettoyage Chlorel ...
-// 1.3 - 2eme Nettoyage Chlorel ... Mise en fonction et debuging complet
 ?>

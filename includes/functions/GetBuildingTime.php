@@ -27,23 +27,18 @@ function GetBuildingTime ($user, $planet, $Element) {
 		$cost_metal   = floor($pricelist[$Element]['metal']   * pow($pricelist[$Element]['factor'], $level));
 		$cost_crystal = floor($pricelist[$Element]['crystal'] * pow($pricelist[$Element]['factor'], $level));
 		$intergal_lab = $user[$resource[123]];
-		if       ( $intergal_lab < "1" ) {
-			$lablevel = $planet[$resource['31']];
-		} elseif ( $intergal_lab >= "1" ) {
-			$empire = doquery("SELECT * FROM {{table}} WHERE id_owner='". $user[id] ."';", 'planets');
-			$NbLabs = 0;
-			while ($colonie = mysql_fetch_array($empire)) {
-				$techlevel[$NbLabs] = $colonie[$resource['31']];
-				$NbLabs++;
-			}
-			if ($intergal_lab >= "1") {
-				$lablevel = 0;
-				for ($lab = 1; $lab <= $intergal_lab; $lab++) {
-					asort($techlevel);
-					$lablevel += $techlevel[$lab - 1];
-				}
-			}
-		}
+
+	if       ( $intergal_lab < "1" ) {
+         $lablevel = $planet[$resource['31']];
+      } else {
+                        $limite = $intergal_lab+1;
+                        $inves = doquery("SELECT laboratory FROM {{table}} WHERE id_owner='".$user['id']."' ORDER BY laboratory DESC limit ".$limite."", 'planets');
+                        $lablevel = 0;
+                        while ($row= mysql_fetch_array($inves)){
+                        $lablevel += $row['laboratory'];
+                        }
+                 }
+
 		$time         = (($cost_metal + $cost_crystal) / $game_config['game_speed']) / (($lablevel + 1) * 2);
 		$time         = floor(($time * 60 * 60) * (1 - (($user['rpg_scientifique']) * 0.1)));
 	} elseif (in_array($Element, $reslist['defense'])) {

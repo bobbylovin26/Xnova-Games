@@ -30,7 +30,8 @@ include($xnova_root_path . 'admin/statfunctions.' . $phpEx);
 
 	while ($CurUser = mysql_fetch_assoc($GameUsers)) {
 		// Recuperation des anciennes statistiques
-		$OldStatRecord  = doquery ("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `id_owner` = '".$CurUser['id']."';",'statpoints');
+		$OldStatRecord  = doquery ("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `id_owner` = '".$CurrentUser['id']."';",'statpoints', true);
+
 		if ($OldStatRecord) {
 			$OldTotalRank = $OldStatRecord['total_rank'];
 			$OldTechRank  = $OldStatRecord['tech_rank'];
@@ -88,6 +89,14 @@ include($xnova_root_path . 'admin/statfunctions.' . $phpEx);
 			$QryUpdatePlanet .= "`id` = '". $CurPlanet['id'] ."';";
 			doquery ( $QryUpdatePlanet , 'planets');
 		}
+
+		// FLYING FLEET TO ADD
+		// PADA
+		$Points = GetFlyingFleetPoints ( $CurrentUser );
+		$TFleetCount  += $Points['FleetCount'];
+		$GCount  += $Points['FleetCount'];
+		$TFleetPoints += ($Points['FleetPoint'] / 1000);
+		$GPoints += ($Points['FleetPoint'] / 1000);
 
 		$QryInsertStats  = "INSERT INTO {{table}} SET ";
 		$QryInsertStats .= "`id_owner` = '". $CurUser['id'] ."', ";

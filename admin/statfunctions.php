@@ -7,6 +7,37 @@
  * @copyright 2008 by Chlorel for XNova
  */
 
+function GetFlyingFleetPoints($CurrentUser) {
+   global $resource, $pricelist, $reslist;
+
+   // PADA FUNCTION
+   // USE AT YOUR OWN RISK :3
+
+   $OwnFleets = doquery("SELECT * FROM {{table}} WHERE `fleet_owner` = '". $CurrentUser['id'] ."';", 'fleets');
+   $Record = 0;
+   while ($FleetRow = mysql_fetch_array($OwnFleets)) {
+
+      $FleetRec     = explode(";", $FleetRow['fleet_array']);
+      if(is_array($FleetRec)){
+         foreach($FleetRec as $Item => $Group) {
+            if ($Group  != '') {
+               $Ship    = explode(",", $Group);
+
+               $Units         = $pricelist[ $Ship[0] ]['metal'] + $pricelist[ $Ship[0] ]['crystal'] + $pricelist[ $Ship[0] ]['deuterium'];
+               $FleetPoints   += ($Units * $Ship[1]);
+               $FleetCounts   += $Ship[1];
+            }
+         }
+      }
+   }
+
+   $RetValue['FleetCount'] = $FleetCounts;
+   $RetValue['FleetPoint'] = $FleetPoints;
+
+   return $RetValue;
+
+}
+
 function GetTechnoPoints ( $CurrentUser ) {
 	global $resource, $pricelist, $reslist;
 

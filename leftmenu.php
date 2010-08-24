@@ -42,7 +42,7 @@ function ShowLeftMenu ( $Level , $Template = 'left_menu') {
 	} else {
 		$parse['ADMIN_LINK']  = "";
 	}
-	//Lien supplémentaire déterminé dans le panel admin
+
 	if ($game_config['link_enable'] == 1) {
 		$parse['added_link']  = "
 		<tr>
@@ -51,32 +51,22 @@ function ShowLeftMenu ( $Level , $Template = 'left_menu') {
 	} else {
 		$parse['added_link']  = "";
 	}
-	
-	//Maintenant on vérifie si les annonces sont activées ou non
-	if ($game_config['enable_announces'] == 1) {
-		$parse['announce_link']  = "
-		<tr>
-			<td colspan=\"2\"><div><a href=\"annonces.php\" target=\"Hauptframe\">Annonces</a></div></td>
-		</tr>";
-	} else {
-		$parse['announce_link']  = "";
-	}
-	
-		//Maintenant le marchand
+
 	if ($game_config['enable_marchand'] == 1) {
 		$parse['marchand_link']  = "
 		<tr>
-			<td colspan=\"2\"><div><a href=\"marchand.php\" target=\"Hauptframe\">Marchand</a></div></td>
+			<td colspan=\"2\"><div><a href=\"marchand.php\" target=\"Hauptframe\">Mercader</a></div></td>
 		</tr>";
 	} else {
 		$parse['marchand_link']  = "";
 	}
-			//Maintenant les notes
+
 	if ($game_config['enable_notes'] == 1) {
 		$parse['notes_link']  = "
 		<tr>
-			<td colspan=\"2\"><div><a href=\"#\" onClick=\"f(\'notes.php\', \'Report\');\" accesskey=\"n\">Notes</a></div></td>
+			<td colspan=\"2\"><div><a href=\"#\" onClick=\"f('notes.php', 'Report');\" accesskey=\"n\">Notas</a></div></td>
 		</tr>";
+
 	} else {
 		$parse['notes_link']  = "";
 	}
@@ -88,8 +78,4 @@ function ShowLeftMenu ( $Level , $Template = 'left_menu') {
 	$Menu = ShowLeftMenu ( $user['authlevel'] );
 	display ( $Menu, "Menu", '', false );
 
-// -----------------------------------------------------------------------------------------------------------
-// History version
-// 1.0 - Passage en fonction pour XNova version future
-// 1.1 - Modification pour gestion Admin / Game OP / Modo
 ?>

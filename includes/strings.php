@@ -45,5 +45,4 @@ function pretty_number($n, $floor = true) {
 	return number_format($n, 0, ",", ".");
 }
 
-// Created by Perberos. All rights reversed (C) 2006
 ?>

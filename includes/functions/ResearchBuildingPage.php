@@ -88,6 +88,7 @@ function ResearchBuildingPage (&$CurrentPlanet, $CurrentUser, $InResearch, $TheP
 					$QryUpdateUser .= "`id` = '".            $CurrentUser['id']            ."';";
 					doquery( $QryUpdateUser, 'users');
 				}
+				$CurrentPlanet = $WorkingPlanet;
 				if ( is_array ($ThePlanet) ) {
 					$ThePlanet     = $WorkingPlanet;
 				} else {
@@ -188,9 +189,4 @@ function ResearchBuildingPage (&$CurrentPlanet, $CurrentUser, $InResearch, $TheP
 
 	display( $Page, $lang['Research'] );
 }
-
-// History revision
-// 1.0 - Release initiale / modularisation / Reecriture / Commentaire / Mise en forme
-// 1.1 - BUG affichage de la techno en cours
-// 1.2 - Restructuration modification pour permettre d'annuller proprement une techno en cours
 ?>

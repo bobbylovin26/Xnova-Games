@@ -7,16 +7,15 @@
 * @copyright 2008 By Chlorel for XNova
 */
 
-function GalaxyRowUser ( $GalaxyRow, $GalaxyRowPlanet, $GalaxyRowUser, $Galaxy, $System, $Planet, $PlanetType ) {
-global $lang, $user;
+function GalaxyRowUser ( $GalaxyRow, $GalaxyRowPlanet, $GalaxyRowUser, $Galaxy, $System, $Planet, $PlanetType, $UserPoints ) {
+global $game_config, $lang, $user;
 
 // Joueur
 $Result = "<th width=150>";
 if ($GalaxyRowUser && $GalaxyRowPlanet["destruyed"] == 0) {
-$NoobProt = doquery("SELECT * FROM {{table}} WHERE `config_name` = 'noobprotection';", 'config', true);
-$NoobTime = doquery("SELECT * FROM {{table}} WHERE `config_name` = 'noobprotectiontime';", 'config', true);
-$NoobMulti = doquery("SELECT * FROM {{table}} WHERE `config_name` = 'noobprotectionmulti';", 'config', true);
-$UserPoints = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $user['id'] ."';", 'statpoints', true);
+$NoobProt = $game_config['noobprotection'];
+$NoobTime = $game_config['noobprotectiontime'];
+$NoobMulti = $game_config['noobprotectionmulti'];
 $User2Points = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $GalaxyRowUser['id'] ."';", 'statpoints', true);
 $CurrentPoints = $UserPoints['total_points'];
 $RowUserPoints = $User2Points['total_points'];
@@ -76,7 +75,7 @@ $Result .= "<a style=\"cursor: pointer;\"";
 $Result .= " onmouseover='return overlib(\"";
 $Result .= "<table width=190>";
 $Result .= "<tr>";
-$Result .= "<td class=c colspan=2>Joueur : ".$GalaxyRowUser['username'].", ".$lang['Place']." : ".$Systemtatus4."</td>";
+$Result .= "<td class=c colspan=2>Jugador : ".$GalaxyRowUser['username'].", ".$lang['Place']." : ".$Systemtatus4."</td>";
 $Result .= "</tr><tr>";
 if ($GalaxyRowUser['id'] != $user['id']) {
 $Result .= "<td><a href=messages.php?mode=write&id=".$GalaxyRowUser['id'].">".$lang['gl_sendmess']."</a></td>";

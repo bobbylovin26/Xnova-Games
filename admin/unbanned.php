@@ -23,12 +23,12 @@ include($xnova_root_path . 'common.' . $phpEx);
 		$mode = $_GET['mode'];
 
 		if ($mode != 'change') {
-			$parse['Name'] = "Nom du joueur";
+			$parse['Name'] = "Nombre del jugador";
 		} elseif ($mode == 'change') {
 			$nam = $_POST['nam'];
 			doquery("DELETE FROM {{table}} WHERE who2='{$nam}'", 'banned');
 			doquery("UPDATE {{table}} SET bana=0, banaday=0 WHERE username='{$nam}'", "users");
-			message("Le joueur {$nam} a bien &eacute;t&eacute; d&eacute;banni!", 'Information');
+			message("¡El jugador {$nam} a sido desbaneado!", 'Información');
 		}
 
 		display(parsetemplate(gettemplate('admin/unbanned'), $parse), "Overview", false, '', true);

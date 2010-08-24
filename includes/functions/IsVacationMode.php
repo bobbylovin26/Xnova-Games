@@ -1,15 +1,4 @@
 <?php
-    /*
-    #############################################################################
-    #  Filename: IsVacationMode.php
-    #  Create date: Monday, March 10, 2008    20:13:20
-    #  Project: prethOgame
-    #  Description: RPG web based game
-    #
-    #  Copyright © 2008 Aleksandar Spasojevic <spalekg@gmail.com>
-    #  Copyright © 2005 - 2008 KGsystem
-    #############################################################################
-    */
     function IsVacationMode($CurrentUser){
        global $game_config;
 
@@ -32,4 +21,4 @@
        }
        return false;
     }
-    ?>
+?>

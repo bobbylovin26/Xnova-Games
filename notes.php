@@ -19,7 +19,7 @@ $dpath = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
 
 $a = $_GET['a'];
 $n = intval($_GET['n']);
-$lang['Please_Wait'] = "Patientez...";
+$lang['Please_Wait'] = "Espere...";
 
 //lenguaje
 includeLang('notes');

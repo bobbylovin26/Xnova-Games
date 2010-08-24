@@ -19,9 +19,7 @@ function SetSelectedPlanet ( &$CurrentUser ) {
 		$RestorePlanet == 0) {
 		$IsPlanetMine   = doquery("SELECT `id` FROM {{table}} WHERE `id` = '". $SelectPlanet ."' AND `id_owner` = '". $CurrentUser['id'] ."';", 'planets', true);
 		if ($IsPlanetMine) {
-			// Ouaip elle est a moi ... Donc ... on met la met comme planete courrante
 			$CurrentUser['current_planet'] = $SelectPlanet;
-			// Puis tant qu'a faire ... On l'enregistre aussi sait on jamais
 			doquery("UPDATE {{table}} SET `current_planet` = '". $SelectPlanet ."' WHERE `id` = '".$CurrentUser['id']."';", 'users');
 		}
 	}

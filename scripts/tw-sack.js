@@ -4,7 +4,7 @@
 /* Software licenced under a modified X11 licence, see documentation or authors website for more details */
 
 function sack(file){
-	this.AjaxFailedAlert = "Your browser does not support the enhanced functionality of this website, and therefore you will have an experience that differs from the intended one.\n";
+	this.AjaxFailedAlert ="Su navegador no soporta la funcionalidad mejorada de este sitio web, y por lo tanto, usted tendrá una experiencia que difiere de la una.\n";
 	this.requestFile = file;
 	this.method = "POST";
 	this.URLString = "";

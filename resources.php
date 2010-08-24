@@ -56,7 +56,7 @@ function BuildRessourcePage ( $CurrentUser, $CurrentPlanet ) {
 		$post_porcent = 0;
 	} elseif ($CurrentPlanet['energy_max'] >  0 &&
 		($CurrentPlanet['energy_used'] + $CurrentPlanet['energy_max']) < 0 ) {
-		$post_porcent = floor(($CurrentPlanet['energy_max']) / $CurrentPlanet['energy_used'] * 100);
+		$post_porcent = floor(($CurrentPlanet['energy_max']) / ($CurrentPlanet['energy_used']*-1) * 100);
 	} else {
 		$post_porcent = 100;
 	}
@@ -86,7 +86,7 @@ function BuildRessourcePage ( $CurrentUser, $CurrentPlanet ) {
 			$crystal   = floor( eval ( $ProdGrid[$ProdID]['formule']['crystal']   ) * ( $game_config['resource_multiplier'] ) * ( 1 + ( $CurrentUser['rpg_geologue']  * 0.05 ) ) );
 			$deuterium = floor( eval ( $ProdGrid[$ProdID]['formule']['deuterium'] ) * ( $game_config['resource_multiplier'] ) * ( 1 + ( $CurrentUser['rpg_geologue']  * 0.05 ) ) );
 			    // Prise en compte du bonus de l'ingénieur :
-         if( $ProdID >= 4 ) { 
+         if( $ProdID >= 4 ) {
             $energy = floor( eval ( $ProdGrid[$ProdID]['formule']['energy']    ) * ( $game_config['resource_multiplier'] ) * ( 1 + ( $CurrentUser['rpg_ingenieur'] * 0.05 ) ) );
          } else $energy = floor( eval ( $ProdGrid[$ProdID]['formule']['energy']    ) * ( $game_config['resource_multiplier'] ) );
 		 if ($energy > 0) {
@@ -138,7 +138,7 @@ function BuildRessourcePage ( $CurrentUser, $CurrentPlanet ) {
 		$parse['production_level'] = 0;
 	} elseif ($CurrentPlanet['energy_max']  > 0 &&
 		abs($CurrentPlanet['energy_used']) > $CurrentPlanet['energy_max']) {
-		$parse['production_level'] = floor(($CurrentPlanet['energy_max']) / $CurrentPlanet['energy_used'] * 100);
+		$parse['production_level'] = floor(($CurrentPlanet['energy_max']) / ($CurrentPlanet['energy_used']*-1) * 100);
 	} elseif ($CurrentPlanet['energy_max'] == 0 &&
 		abs($CurrentPlanet['energy_used']) > $CurrentPlanet['energy_max']) {
 		$parse['production_level'] = 0;
@@ -257,7 +257,4 @@ function BuildRessourcePage ( $CurrentUser, $CurrentPlanet ) {
 	$Page = BuildRessourcePage ( $user, $planetrow );
 	display( $Page, $lang['Resources'] );
 
-// -----------------------------------------------------------------------------------------------------------
-// History version
-// 1.0 - Passage en fonction pour utilisation XNova
 ?>

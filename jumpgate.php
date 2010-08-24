@@ -100,8 +100,4 @@ function DoFleetJump ( $CurrentUser, $CurrentPlanet ) {
 	$Message = DoFleetJump($user, $planetrow);
 	message ($Message, $lang['tech'][43], "infos.php?gid=43", 4);
 
-// -----------------------------------------------------------------------------------------------------------
-// History version
-// 1.0 - Version from scrap .. y avait pas ... bin maintenant y a !!
-
 ?>

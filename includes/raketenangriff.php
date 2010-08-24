@@ -1,17 +1,7 @@
 <?php
-/*
-#############################################################################
-#  Filename: raketenangriff.php
-#  Create date: Friday, April 04, 2008    04:54:58
-#  Project: prethOgame
-#  Description: RPG web based game
-#
-#  Copyright © 2008 Aleksandar Spasojevic <spalekg@gmail.com>
-#  Copyright © 2005 - 2008 KGsystem
-#############################################################################
-*/
+
 function raketenangriff($verteidiger_panzerung, $angreifer_waffen, $iraks, $def, $primaerziel = '0') {
-   // Variablen initialisieren
+
    $temp = '';
    $temp2 = '';
 
@@ -30,21 +20,21 @@ function raketenangriff($verteidiger_panzerung, $angreifer_waffen, $iraks, $def,
 
    $hull = Array();
 
-   $hull[0] = 200 * ((1 + $verteidiger_panzerung) / 10);
+   $hull[0] = 200 * (1 + $verteidiger_panzerung / 10);
    $hull[1] = $hull[0];
-   $hull[2] = 800 * ((1 + $verteidiger_panzerung) / 10);
-   $hull[3] = 3500 * ((1 + $verteidiger_panzerung) / 10);
+   $hull[2] = 800 * (1 + ($verteidiger_panzerung / 10));
+   $hull[3] = 3500 * (1 + ($verteidiger_panzerung / 10));
    $hull[4] = $hull[2];
-   $hull[5] = 10000 * ((1 + $verteidiger_panzerung) / 10);
-   $hull[6] = 2000 * ((1 + $verteidiger_panzerung) / 10);
+   $hull[5] = 10000 * (1 + ($verteidiger_panzerung / 10));
+   $hull[6] = 2000 * (1 + ($verteidiger_panzerung / 10));
    $hull[7] = $hull[5];
-   $hull[8] = 1500 * ((1 + $verteidiger_panzerung) / 10);
+   $hull[8] = 1500 * (1 + ($verteidiger_panzerung / 10));
 
    $metall_cost_tab   = Array( 2, 1.5, 6, 20, 2, 50, 10, 50, 12.5, 8);
    $kristall_cost_tab = Array( 0, 0.5, 2, 15, 6, 50, 10, 50,  2.5, 0);
    $deut_cost_tab     = Array( 0,   0, 0,  2, 0, 30,  0,  0, 10.0, 2);
 
-   $schaden = floor(($def[10] - $def[9]) * (12000 * ((1 + $angreifer_waffen) / 10)));
+   $schaden = floor(($def[10] - $def[9]) * (12000 * (1 + ($angreifer_waffen / 10))));
    if ($schaden < 0)
       $schaden = 0;
 
@@ -77,8 +67,7 @@ function raketenangriff($verteidiger_panzerung, $angreifer_waffen, $iraks, $def,
          $beschussreihenfolge = Array(0, 1, 2, 3, 4, 5, 6, 7, 8);
          break;
    }
-   // Simulation
-   // das Einfachste: I-Raks und Abfangraks ausrechnen...
+
    $verblieben[10] = 0;
    $kaputt[10] += $def[10];
    $metall[10] += $kaputt[10] * $metall_cost_tab[8];
@@ -97,7 +86,7 @@ function raketenangriff($verteidiger_panzerung, $angreifer_waffen, $iraks, $def,
    $metall[11] += $metall[9];
    $kristall[11] += $kristall[9];
    $deut[11] += $deut[9];
-   // und jetzt der Reihe nach alles ABKNALLEN!!!
+
    for($temp = 0; $temp < 9; $temp++) {
       if ($schaden >= ($hull[$beschussreihenfolge[$temp]] * $def[$beschussreihenfolge[$temp]])) {
          $kaputt[$beschussreihenfolge[$temp]] += $def[$beschussreihenfolge[$temp]];
@@ -126,12 +115,13 @@ function raketenangriff($verteidiger_panzerung, $angreifer_waffen, $iraks, $def,
 
    $return = array();
 
-   $return['verbleibt'] = $verblieben; // Übrige Def
-   $return['zerstoert'] = $kaputt; // Zerstörte Def
-   $return['verluste_metall'] = $metall; // Gesamtverluste Metall
-   $return['verluste_kristall'] = $kristall; // Gesamtverluste Kristall
-   $return['verluste_deuterium'] = $deut; // Gesamtverluste Deuterium
+   $return['verbleibt'] = $verblieben;
+   $return['zerstoert'] = $kaputt;
+   $return['verluste_metall'] = $metall;
+   $return['verluste_kristall'] = $kristall;
+   $return['verluste_deuterium'] = $deut;
 
    return $return;
 }
+
 ?>

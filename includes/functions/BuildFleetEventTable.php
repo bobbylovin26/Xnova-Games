@@ -107,41 +107,52 @@ function BuildFleetEventTable ( $FleetRow, $Status, $Owner, $Label, $Record ) {
 		$TargetID .= GetTargetAdressLink ( $FleetRow, $FleetPrefix . $FleetStyle[ $MissionType ] );
 	}
 
-	if ($Owner == true) {
-		$EventString  = $lang['ov_une'];     // 'Une de tes '
-		$EventString .= $FleetContent;
-	} else {
-		$EventString  = $lang['ov_une_hostile']; // 'Une '
-		$EventString .= $FleetContent;
-		$EventString .= $lang['ov_hostile'];	// ' hostile de '
-		$EventString .= BuildHostileFleetPlayerLink ( $FleetRow );
-	}
+	if ($MissionType == 10){
+      $EventString  = "Ataque con misiles ( ".eregi_replace("(503,)","",$FleetRow["fleet_array"])." ) ";
+      $Time         = $FleetRow['fleet_start_time'];
+      $Rest         = $Time - time();
+      $EventString .= " "; //" desde ";
+      $EventString .= $StartID;
+      $EventString .= " "; //" a ";
+      $EventString .= $TargetID;
+      $EventString .= ".";
+   }else{
+      if ($Owner == true) {
+         $EventString  = $lang['ov_une'];     // 'Une de tes '
+         $EventString .= $FleetContent;
+      } else {
+         $EventString  = $lang['ov_une_hostile']; // 'Une '
+         $EventString .= $FleetContent;
+         $EventString .= $lang['ov_hostile'];   // ' hostile de '
+         $EventString .= BuildHostileFleetPlayerLink ( $FleetRow );
+      }
 
-	if       ($Status == 0) {
-		$Time         = $FleetRow['fleet_start_time'];
-		$Rest         = $Time - time();
-		$EventString .= $lang['ov_vennant']; // ' venant '
-		$EventString .= $StartID;
-		$EventString .= $lang['ov_atteint']; // ' atteint '
-		$EventString .= $TargetID;
-		$EventString .= $lang['ov_mission']; // '. Elle avait pour mission: '
-	} elseif ($Status == 1) {
-		$Time         = $FleetRow['fleet_end_stay'];
-		$Rest         = $Time - time();
-		$EventString .= $lang['ov_vennant']; // ' venant '
-		$EventString .= $StartID;
-		$EventString .= $lang['ov_explo_stay']; // ' explore '
-		$EventString .= $TargetID;
-		$EventString .= $lang['ov_explo_mission']; // '. Elle a pour mission: '
-	} elseif ($Status == 2) {
-		$Time         = $FleetRow['fleet_end_time'];
-		$Rest         = $Time - time();
-		$EventString .= $lang['ov_rentrant'];// ' rentrant '
-		$EventString .= $TargetID;
-		$EventString .= $StartID;
-		$EventString .= $lang['ov_mission']; // '. Elle avait pour mission: '
-	}
-	$EventString .= $FleetCapacity;
+      if ($Status == 0) {
+         $Time         = $FleetRow['fleet_start_time'];
+         $Rest         = $Time - time();
+         $EventString .= $lang['ov_vennant']; // ' venant '
+         $EventString .= $StartID;
+         $EventString .= $lang['ov_atteint']; // ' atteint '
+         $EventString .= $TargetID;
+         $EventString .= $lang['ov_mission']; // '. Elle avait pour mission: '
+      } elseif ($Status == 1) {
+         $Time         = $FleetRow['fleet_end_stay'];
+         $Rest         = $Time - time();
+         $EventString .= $lang['ov_vennant']; // ' venant '
+         $EventString .= $StartID;
+         $EventString .= $lang['ov_explo_stay']; // ' explore '
+         $EventString .= $TargetID;
+         $EventString .= $lang['ov_explo_mission']; // '. Elle a pour mission: '
+      } elseif ($Status == 2) {
+         $Time         = $FleetRow['fleet_end_time'];
+         $Rest         = $Time - time();
+         $EventString .= $lang['ov_rentrant'];// ' rentrant '
+         $EventString .= $TargetID;
+         $EventString .= $StartID;
+         $EventString .= $lang['ov_mission']; // '. Elle avait pour mission: '
+      }
+      $EventString .= $FleetCapacity;
+   }
 
 	$bloc['fleet_status'] = $FleetStatus[ $Status ];
 	$bloc['fleet_prefix'] = $FleetPrefix;

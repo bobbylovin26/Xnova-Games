@@ -20,9 +20,9 @@
 function IsElementBuyable ($CurrentUser, $CurrentPlanet, $Element, $Incremental = true, $ForDestroy = false) {
 	global $pricelist, $resource;
 
-	if (IsVacationMode($CurrentUser)){
-   return false;
-}
+    if (IsVacationMode($CurrentUser)){
+       return false;
+    }
 
 	if ($Incremental) {
 		$level  = ($CurrentPlanet[$resource[$Element]]) ? $CurrentPlanet[$resource[$Element]] : $CurrentUser[$resource[$Element]];

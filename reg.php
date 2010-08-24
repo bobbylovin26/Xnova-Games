@@ -60,17 +60,7 @@ if ($_POST) {
 
     $_POST['email'] = strip_tags($_POST['email']);
     if (!is_email($_POST['email'])) {
-        $errorlist .= "\"" . $_POST['email'] . "\" " . $lang['error_mail'];
-        $errors++;
-    }
-
-    if (!$_POST['planet']) {
-        $errorlist .= $lang['error_planet'];
-        $errors++;
-    }
-
-    if (preg_match("/[^A-z0-9_\-]/", $_POST['hplanet']) == 1) {
-        $errorlist .= $lang['error_planetnum'];
+        $errorlist .= $lang['error_mail'];
         $errors++;
     }
 
@@ -106,18 +96,12 @@ if ($_POST) {
         $errors++;
     }
 
-    if ($_POST['sex'] != '' && $_POST['sex'] != 'F' && $_POST['sex'] != 'M') {
-        $errorlist .= $lang['error_sex'];
-        $errors++;
-    }
-
     if ($errors != 0) {
-        message ($errorlist, $lang['Register']);
+        message ($errorlist, $lang['Register'], "reg.php", "3");
     } else {
         $newpass = $_POST['passwrd'];
         $UserName = CheckInputStrings ($_POST['character']);
         $UserEmail = CheckInputStrings ($_POST['email']);
-        $UserPlanet = CheckInputStrings (addslashes($_POST['planet']));
 
         $md5newpass = md5($newpass);
         // Creation de l'utilisateur
@@ -125,7 +109,6 @@ if ($_POST) {
         $QryInsertUser .= "`username` = '" . mysql_escape_string(strip_tags($UserName)) . "', ";
         $QryInsertUser .= "`email` = '" . mysql_escape_string($UserEmail) . "', ";
         $QryInsertUser .= "`email_2` = '" . mysql_escape_string($UserEmail) . "', ";
-        $QryInsertUser .= "`sex` = '" . mysql_escape_string($_POST['sex']) . "', ";
 		$QryInsertUser .= "`ip_at_reg` = '" . $_SERVER["REMOTE_ADDR"] . "', ";
         $QryInsertUser .= "`id_planet` = '0', ";
         $QryInsertUser .= "`register_time` = '" . time() . "', ";
@@ -223,7 +206,7 @@ if ($_POST) {
             $Message .= " (" . htmlentities($_POST["email"]) . ")";
             $Message .= "<br><br>" . $lang['error_mailsend'] . " <b>" . $newpass . "</b>";
         }
-        message( $Message, $lang['reg_welldone'], "login.".$phpEx );
+        message( $Message, $lang['reg_welldone'], "login.".$phpEx, "3" );
     }
 } else {
     // Afficher le formulaire d'enregistrement
@@ -233,8 +216,4 @@ if ($_POST) {
 
     display ($page, $lang['registry'], false);
 }
-// -----------------------------------------------------------------------------------------------------------
-// History version
-// 1.0 - Version originelle
-// 1.1 - Menage + rangement + utilisation fonction de creation planete nouvelle generation
 ?>

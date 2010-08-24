@@ -16,7 +16,7 @@ include($xnova_root_path . 'extension.inc');
 include($xnova_root_path . 'common.' . $phpEx);
 
 	if ($user['authlevel'] >= "1") {
-		includeLang('admin/adminpanel');
+		includeLang('admin');
 
 		$PanelMainTPL = gettemplate('admin/admin_panel_main');
 
@@ -88,6 +88,13 @@ include($xnova_root_path . 'common.' . $phpEx);
 					break;
 
 				case 'usr_level':
+					# only for admins
+					if ($user['authlevel'] < 3)
+					{
+						message($lang['sys_noalloaw'], $lang['sys_noaccess']);
+						die();
+					}
+
 					$Player     = $_GET['player'];
 					$NewLvl     = $_GET['authlvl'];
 

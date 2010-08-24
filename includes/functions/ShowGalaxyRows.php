@@ -10,6 +10,8 @@
 function ShowGalaxyRows ($Galaxy, $System) {
 	global $lang, $planetcount, $CurrentRC, $dpath, $user;
 
+	$UserPoints    = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $user['id'] ."';", 'statpoints', true);
+
 	$Result = "";
 	for ($Planet = 1; $Planet < 16; $Planet++) {
 		unset($GalaxyRowPlanet);
@@ -41,7 +43,7 @@ function ShowGalaxyRows ($Galaxy, $System) {
 						CheckAbandonMoonState ($GalaxyRowMoon);
 					}
 				}
-				$GalaxyRowPlanet = doquery("SELECT * FROM {{table}} WHERE `id` = '". $GalaxyRow["id_planet"] ."';", 'planets', true);
+
 				if ($GalaxyRowPlanet['id_owner'] <> 0) {
 					$GalaxyRowUser     = doquery("SELECT * FROM {{table}} WHERE `id` = '". $GalaxyRowPlanet['id_owner'] ."';", 'users', true);
 				} else {
@@ -60,7 +62,7 @@ function ShowGalaxyRows ($Galaxy, $System) {
 		$Result .= "\n";
 		$Result .= GalaxyRowDebris     ( $GalaxyRow, $GalaxyRowPlanet, $GalaxyRowPlayer, $Galaxy, $System, $Planet, 2 );
 		$Result .= "\n";
-		$Result .= GalaxyRowUser       ( $GalaxyRow, $GalaxyRowPlanet, $GalaxyRowPlayer, $Galaxy, $System, $Planet, 0 );
+		$Result .= GalaxyRowUser       ( $GalaxyRow, $GalaxyRowPlanet, $GalaxyRowPlayer, $Galaxy, $System, $Planet, 0, $UserPoints );
 		$Result .= "\n";
 		$Result .= GalaxyRowAlly       ( $GalaxyRow, $GalaxyRowPlanet, $GalaxyRowPlayer, $Galaxy, $System, $Planet, 0 );
 		$Result .= "\n";

@@ -10,11 +10,6 @@
 // Definition des tables d'XNova
 //
 
-
-	
-	
-	
-	
 	// Table aks
 	$QryTableAks         = "CREATE TABLE `{{table}}` ( ";
 	$QryTableAks        .= "`id` bigint(20) unsigned NOT NULL auto_increment, ";
@@ -28,21 +23,6 @@
 	$QryTableAks        .= "`eingeladen` int(11) default NULL, ";
 	$QryTableAks        .= "PRIMARY KEY  (`id`) ";
 	$QryTableAks        .= ") ENGINE=MyISAM;";
-
-	// Table annonce
-	$QryTableAnnonce     = "CREATE TABLE `{{table}}` ( ";
-	$QryTableAnnonce    .= "`id` int(11) NOT NULL auto_increment, ";
-	$QryTableAnnonce    .= "`user` text collate latin1_general_ci NOT NULL, ";
-	$QryTableAnnonce    .= "`galaxie` int(11) NOT NULL, ";
-	$QryTableAnnonce    .= "`systeme` int(11) NOT NULL, ";
-	$QryTableAnnonce    .= "`metala` bigint(11) NOT NULL, ";
-	$QryTableAnnonce    .= "`cristala` bigint(11) NOT NULL, ";
-	$QryTableAnnonce    .= "`deuta` bigint(11) NOT NULL, ";
-	$QryTableAnnonce    .= "`metals` bigint(11) NOT NULL, ";
-	$QryTableAnnonce    .= "`cristals` bigint(11) NOT NULL, ";
-	$QryTableAnnonce    .= "`deuts` bigint(11) NOT NULL, ";
-	$QryTableAnnonce    .= "PRIMARY KEY  (`id`) ";
-	$QryTableAnnonce    .= ") ENGINE=MyISAM;";
 
 	// Table alliance
 	$QryTableAlliance    = "CREATE TABLE `{{table}}` ( ";
@@ -87,15 +67,6 @@
 	$QryTableBuddy      .= "PRIMARY KEY  (`id`) ";
 	$QryTableBuddy      .= ") ENGINE=MyISAM;";
 
-	// Table chat
-	$QryTableChat        = "CREATE TABLE `{{table}}` ( ";
-	$QryTableChat       .= "`messageid` int(5) unsigned NOT NULL auto_increment, ";
-	$QryTableChat       .= "`user` varchar(255) NOT NULL default '', ";
-	$QryTableChat       .= "`message` text NOT NULL, ";
-	$QryTableChat       .= "`timestamp` int(11) NOT NULL default '0', ";
-	$QryTableChat       .= "PRIMARY KEY  (`messageid`) ";
-	$QryTableChat       .= ") ENGINE=MyISAM;";
-
 	// Table config
 	$QryTableConfig      = "CREATE TABLE `{{table}}` ( ";
 	$QryTableConfig     .= "`config_name` varchar(64) character set latin1 NOT NULL default '', ";
@@ -105,6 +76,7 @@
 	// Valeurs de base de la config
 	$QryInsertConfig     = "INSERT INTO `{{table}}` ";
 	$QryInsertConfig    .= "(`config_name`           , `config_value`) VALUES ";
+	$QryInsertConfig    .= "('Actualizacion'         , '0000000001'), ";
 	$QryInsertConfig    .= "('users_amount'          , '0'), ";
 	$QryInsertConfig    .= "('game_speed'            , '2500'), ";
 	$QryInsertConfig    .= "('fleet_speed'           , '2500'), ";
@@ -112,10 +84,10 @@
 	$QryInsertConfig    .= "('Fleet_Cdr'             , '30'), ";
 	$QryInsertConfig    .= "('Defs_Cdr'              , '30'), ";
 	$QryInsertConfig    .= "('initial_fields'        , '163'), ";
-	$QryInsertConfig    .= "('COOKIE_NAME'           , 'XNova'), ";
-	$QryInsertConfig    .= "('game_name'             , 'XNova'), ";
+	$QryInsertConfig    .= "('COOKIE_NAME'           , 'XGProyect'), ";
+	$QryInsertConfig    .= "('game_name'             , 'XG Proyect'), ";
 	$QryInsertConfig    .= "('game_disable'          , '1'), ";
-	$QryInsertConfig    .= "('close_reason'          , 'Le jeu est clos pour le moment!'), ";
+	$QryInsertConfig    .= "('close_reason'          , '¡En este momento el servidor se encuentra cerrado!'), ";
 	$QryInsertConfig    .= "('metal_basic_income'    , '20'), ";
 	$QryInsertConfig    .= "('crystal_basic_income'  , '10'), ";
 	$QryInsertConfig    .= "('deuterium_basic_income', '0'), ";
@@ -128,44 +100,29 @@
 	$QryInsertConfig    .= "('noobprotection'        , '1'), ";
 	$QryInsertConfig    .= "('noobprotectiontime'    , '5000'), ";
 	$QryInsertConfig    .= "('noobprotectionmulti'   , '5'), ";
-	$QryInsertConfig    .= "('forum_url'             , 'http://www.xnova.fr/forum' ), ";
+	$QryInsertConfig    .= "('forum_url'             , 'http://www.xtreme-gamez.com.ar/foros' ), ";
 	$QryInsertConfig    .= "('OverviewNewsFrame'     , '1' ), ";
-	$QryInsertConfig    .= "('OverviewNewsText'      , 'Bienvenue sur le nouveau serveur XNova' ), ";
-	$QryInsertConfig    .= "('OverviewExternChat'    , '0' ), ";
-	$QryInsertConfig    .= "('OverviewExternChatCmd' , '' ), ";
+	$QryInsertConfig    .= "('OverviewNewsText'      , '¡Bienvenidos al nuevo servidor de XG Proyect!' ), ";
 	$QryInsertConfig    .= "('OverviewBanner'        , '0' ), ";
 	$QryInsertConfig    .= "('OverviewClickBanner'   , '' ), ";
 	$QryInsertConfig    .= "('ExtCopyFrame'          , '0' ), ";
 	$QryInsertConfig    .= "('ExtCopyOwner'          , '' ), ";
 	$QryInsertConfig    .= "('ExtCopyFunct'          , '' ), ";
 	$QryInsertConfig    .= "('ForumBannerFrame'      , '0' ), ";
-	$QryInsertConfig    .= "('stat_settings'          , '1000' ), ";
-	$QryInsertConfig    .= "('link_enable'          , '0' ), ";
-	$QryInsertConfig    .= "('link_name'          , '' ), ";
-	$QryInsertConfig    .= "('link_url'          , '' ), ";
-	$QryInsertConfig    .= "('enable_announces'      , '1' ), ";
-	$QryInsertConfig    .= "('enable_marchand'                 , '1'), ";
-	$QryInsertConfig    .= "('enable_notes'                 , '1'), ";
-	$QryInsertConfig    .= "('bot_name'                 , 'XNoviana Reali'), ";
-	$QryInsertConfig    .= "('bot_adress'          , 'xnova@xnova.fr' ), ";
-	$QryInsertConfig    .= "('banner_source_post'          , '../images/bann.png' ), ";
+	$QryInsertConfig    .= "('stat_settings'         , '1000' ), ";
+	$QryInsertConfig    .= "('link_enable'           , '0' ), ";
+	$QryInsertConfig    .= "('link_name'             , '' ), ";
+	$QryInsertConfig    .= "('link_url'              , '' ), ";
+	$QryInsertConfig    .= "('enable_marchand'       , '1'), ";
+	$QryInsertConfig    .= "('enable_notes'          , '1'), ";
+	$QryInsertConfig    .= "('bot_name'              , 'XNoviana Reali'), ";
+	$QryInsertConfig    .= "('bot_adress'            , 'xnova@xnova.fr' ), ";
+	$QryInsertConfig    .= "('banner_source_post'    , '../images/bann.png' ), ";
 	$QryInsertConfig    .= "('ban_duration'          , '30' ), ";
-	$QryInsertConfig    .= "('enable_bot'          , '0' ), ";
-	$QryInsertConfig    .= "('enable_bbcode'          , '1' ), ";          
+	$QryInsertConfig    .= "('enable_bot'            , '0' ), ";
+	$QryInsertConfig    .= "('enable_bbcode'         , '1' ), ";
 	$QryInsertConfig    .= "('debug'                 , '0') ";
 	$QryInsertConfig    .= ";";
-
-	
-	// Table declared (multicomptes)
-	$QryTabledeclared         = "CREATE TABLE `{{table}}` ( ";
-	$QryTabledeclared        .= "`declarator`TEXT NOT NULL, ";
-	$QryTabledeclared        .= "`declared_1`TEXT NOT NULL, ";
-	$QryTabledeclared        .= "`declared_2`TEXT NOT NULL, ";
-	$QryTabledeclared        .= "`declared_3`TEXT NOT NULL, ";
-	$QryTabledeclared        .= "`reason`TEXT NOT NULL, ";
-	$QryTabledeclared        .= "`declarator_name`TEXT NOT NULL ";
-
-	$QryTabledeclared       .= ") ENGINE=MyISAM;";
 
 	// Table errors
 	$QryTableErrors      = "CREATE TABLE `{{table}}` ( ";
@@ -195,10 +152,11 @@
 	$QryTableFleets     .= "`fleet_end_system` int(11) NOT NULL default '0', ";
 	$QryTableFleets     .= "`fleet_end_planet` int(11) NOT NULL default '0', ";
 	$QryTableFleets     .= "`fleet_end_type` int(11) NOT NULL default '0', ";
-	$QryTableFleets     .= "`fleet_taget_owner` int(11) NOT NULL default '0', ";
+	$QryTableFleets     .= "`fleet_target_obj` int(2) NOT NULL default '0', ";
 	$QryTableFleets     .= "`fleet_resource_metal` bigint(11) NOT NULL default '0', ";
 	$QryTableFleets     .= "`fleet_resource_crystal` bigint(11) NOT NULL default '0', ";
 	$QryTableFleets     .= "`fleet_resource_deuterium` bigint(11) NOT NULL default '0', ";
+	$QryTableFleets     .= "`fleet_resource_darkmatter` bigint(11) NOT NULL default '0', ";
 	$QryTableFleets     .= "`fleet_target_owner` int(11) NOT NULL default '0', ";
 	$QryTableFleets     .= "`fleet_group` int (11) NOT NULL DEFAULT '0', ";
 	$QryTableFleets     .= "`fleet_mess` int(11) NOT NULL default '0', ";
@@ -220,23 +178,6 @@
 	$QryTableGalaxy     .= "KEY `system` (`system`), ";
 	$QryTableGalaxy     .= "KEY `planet` (`planet`) ";
 	$QryTableGalaxy     .= ") ENGINE=MyISAM;";
-
-	// Table iraks
-	$QryTableIraks       = "CREATE TABLE `{{table}}` ( ";
-	$QryTableIraks      .= "`id` bigint(20) unsigned NOT NULL auto_increment, ";
-	$QryTableIraks      .= "`zeit` int(32) default NULL, ";
-	$QryTableIraks      .= "`galaxy` int(2) default NULL, ";
-	$QryTableIraks      .= "`system` int(4) default NULL, ";
-	$QryTableIraks      .= "`planet` int(2) default NULL, ";
-	$QryTableIraks      .= "`galaxy_angreifer` int(2) default NULL, ";
-	$QryTableIraks      .= "`system_angreifer` int(4) default NULL, ";
-	$QryTableIraks      .= "`planet_angreifer` int(2) default NULL, ";
-	$QryTableIraks      .= "`owner` int(32) default NULL, ";
-	$QryTableIraks      .= "`zielid` int(32) default NULL, ";
-	$QryTableIraks      .= "`anzahl` int(32) default NULL, ";
-	$QryTableIraks      .= "`primaer` int(32) default NULL, ";
-	$QryTableIraks      .= "PRIMARY KEY  (`id`) ";
-	$QryTableIraks      .= ") ENGINE=MyISAM;";
 
 	// Table lunas
 	$QryTableLunas       = "CREATE TABLE `{{table}}` ( ";
@@ -282,7 +223,7 @@
 	// Table planets
 	$QryTablePlanets     = "CREATE TABLE `{{table}}` ( ";
 	$QryTablePlanets    .= "`id` bigint(11) NOT NULL auto_increment, ";
-	$QryTablePlanets    .= "`name` varchar(255) character set latin1 default NULL, ";
+	$QryTablePlanets    .= "`name` varchar(255) character set latin1 default 'Planeta Principal', ";
 	$QryTablePlanets    .= "`id_owner` int(11) default NULL, ";
 	$QryTablePlanets    .= "`id_level` int(11) default NULL, ";
 	$QryTablePlanets    .= "`galaxy` int(11) NOT NULL default '0', ";
@@ -427,11 +368,8 @@
 	$QryTableUsers      .= "`password` varchar(64) character set latin1 NOT NULL default '', ";
 	$QryTableUsers      .= "`email` varchar(64) character set latin1 NOT NULL default '', ";
 	$QryTableUsers      .= "`email_2` varchar(64) character set latin1 NOT NULL default '', ";
-	$QryTableUsers      .= "`lang` varchar(8) character set latin1 NOT NULL default 'fr', ";
+	$QryTableUsers      .= "`lang` varchar(8) character set latin1 NOT NULL default 'es', ";
 	$QryTableUsers      .= "`authlevel` tinyint(4) NOT NULL default '0', ";
-	$QryTableUsers      .= "`sex` char(1) character set latin1 default NULL, ";
-	$QryTableUsers      .= "`avatar` varchar(255) character set latin1 NOT NULL default '', ";
-	$QryTableUsers      .= "`sign` text character set latin1, ";
 	$QryTableUsers      .= "`id_planet` int(11) NOT NULL default '0', ";
 	$QryTableUsers      .= "`galaxy` int(11) NOT NULL default '0', ";
 	$QryTableUsers      .= "`system` int(11) NOT NULL default '0', ";
@@ -497,8 +435,8 @@
 	$QryTableUsers      .= "`rpg_constructeur` int(11) NOT NULL default '0', ";
 	$QryTableUsers      .= "`rpg_scientifique` int(11) NOT NULL default '0', ";
 	$QryTableUsers      .= "`rpg_commandant` int(11) NOT NULL default '0', ";
-	$QryTableUsers      .= "`rpg_points` int(11) NOT NULL default '0', ";
 	$QryTableUsers      .= "`rpg_stockeur` int(11) NOT NULL default '0', ";
+	$QryTableUsers      .= "`darkmatter` int(11) NOT NULL default '0', ";
 	$QryTableUsers      .= "`rpg_defenseur` int(11) NOT NULL default '0', ";
 	$QryTableUsers      .= "`rpg_destructeur` int(11) NOT NULL default '0', ";
 	$QryTableUsers      .= "`rpg_general` int(11) NOT NULL default '0', ";
@@ -522,19 +460,11 @@
 	$QryTableUsers      .= "`mnl_buildlist` INT (11) NOT NULL , ";
 	$QryTableUsers      .= "`bana` int(11) default NULL , ";
 	$QryTableUsers      .= "`multi_validated` int(11) default NULL , ";
-	$QryTableUsers      .= "`banaday` int(11) default NULL , ";
-	$QryTableUsers      .= "`raids1` int(11) default NULL , ";
-	$QryTableUsers      .= "`raidswin` int(11) default NULL , ";
-	$QryTableUsers      .= "`raidsloose` int(11) default NULL  ";
+	$QryTableUsers      .= "`banaday` int(11) NOT NULL default '0', ";
+	$QryTableUsers      .= "`raids1` int(11) NOT NULL default '0',";
+ 	$QryTableUsers      .= "`raidsdraw` int(11) NOT NULL default '0',";
+ 	$QryTableUsers      .= "`raidswin` int(11) NOT NULL default '0',";
+ 	$QryTableUsers      .= "`raidsloose` int(11) NOT NULL default '0'";
 	$QryTableUsers      .= ") ENGINE=MyISAM;";
-
-	// Multi
-	$QryTableMulti       = "CREATE TABLE `{{table}}` ( ";
-	$QryTableMulti      .= "`id` int(11) NOT NULL auto_increment, ";
-	$QryTableMulti      .= "`player` bigint(11) unsigned NOT NULL, ";
-	$QryTableMulti      .= "`sharer` bigint(11) unsigned NOT NULL, ";
-	$QryTableMulti      .= "`reason` text character set latin1 NOT NULL, ";
-	$QryTableMulti      .= "PRIMARY KEY  (`id`) ";
-	$QryTableMulti      .= ") ENGINE=MyISAM;";
 
 ?>

@@ -52,10 +52,4 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$page                   = parsetemplate(gettemplate('techtree_body'), $parse);
 
 	display($page, $lang['Tech']);
-
-// -----------------------------------------------------------------------------------------------------------
-// History version
-// - 1.0 mise en conformité code avec skin XNova
-// - 1.1 ajout lien pour les details des technos
-// - 1.2 suppression du lien details ou il n'est pas necessaire
 ?>

@@ -16,6 +16,10 @@ include($xnova_root_path . 'common.' . $phpEx);
 
 	includeLang('fleet');
 
+	if (IsVacationMode($CurrentUser)){
+       return false;
+    }
+
 	$galaxy     = intval($_POST['galaxy']);
 	$system     = intval($_POST['system']);
 	$planet     = intval($_POST['planet']);
@@ -74,7 +78,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 			$missiontype[5] = $lang['type_mission'][5];
 		}
 
-		
+
 	} elseif ($_POST['ship209'] >= 1 || $_POST['ship208']) {
 		$missiontype[3] = $lang['type_mission'][3];
 	}

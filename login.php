@@ -22,6 +22,13 @@ include($xnova_root_path . 'common.' . $phpEx);
 	if ($_POST) {
 		$login = doquery("SELECT * FROM {{table}} WHERE `username` = '" . mysql_escape_string($_POST['username']) . "' LIMIT 1", "users", true);
 
+		if($login['banaday'] <= time() && $login['banaday'] !='0' )
+		{
+
+        	doquery("UPDATE {{table}} SET `banaday` = '0', `bana` = '0' WHERE `username` = '".$login['username']."' LIMIT 1;", 'users');
+        	doquery("DELETE FROM {{table}} WHERE `who` = '".$login['username']."'",'banned');
+
+		}
 		if ($login) {
 			if ($login['password'] == md5($_POST['password'])) {
 				if (isset($_POST["rememberme"])) {
@@ -35,6 +42,8 @@ include($xnova_root_path . 'common.' . $phpEx);
 				@include('config.php');
 				$cookie = $login["id"] . "/%/" . $login["username"] . "/%/" . md5($login["password"] . "--" . $dbsettings["secretword"]) . "/%/" . $rememberme;
 				setcookie($game_config['COOKIE_NAME'], $cookie, $expiretime, "/", "", 0);
+
+				doquery("UPDATE {{table}} SET `current_planet`='".$login['id_planet']."' WHERE `id` ='".$login["id"]."'", 'users');
 
 				unset($dbsettings);
 				header("Location: ./frames.php");
@@ -59,7 +68,6 @@ include($xnova_root_path . 'common.' . $phpEx);
 
 		$page = parsetemplate(gettemplate('login_body'), $parse);
 
-		// Test pour prendre le nombre total de joueur et le nombre de joueurs connectés
 		if ($_GET['ucount'] == 1) {
 			$page = $PlayersOnline['onlinenow']."/".$Count['players'];
 			die ( $page );
@@ -67,8 +75,5 @@ include($xnova_root_path . 'common.' . $phpEx);
 			display($page, $lang['Login']);
 		}
 	}
-
-// -----------------------------------------------------------------------------------------------------------
-// History version
 
 ?>

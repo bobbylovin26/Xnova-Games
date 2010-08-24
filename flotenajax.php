@@ -74,7 +74,10 @@ include($xnova_root_path . 'common.' . $phpEx);
 		$ResultMessage = "602;".$lang['gs_c602']."|".$CurrentFlyingFleets." ".$UserSpyProbes." ".$UserRecycles." ".$UserMissiles;
 		die ( $ResultMessage );
 	}
-
+	if ($UserDeuterium < 1) {
+      	$ResultMessage = "613;".$lang['gs_c613']."|".$CurrentFlyingFleets." ".$UserSpyProbes." ".$UserRecycles." ".$UserMissiles;
+      	die ( $ResultMessage );
+   }
 	$FleetArray = $fleet['fleetarray'];
 
 	$CurrentFlyingFleets = doquery("SELECT COUNT(fleet_id) AS `Nbre` FROM {{table}} WHERE `fleet_owner` = '".$user['id']."';", 'fleets', true);

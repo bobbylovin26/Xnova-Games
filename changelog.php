@@ -34,7 +34,6 @@ $parse['body'] = $body;
 
 $page .= parsetemplate(gettemplate('changelog_body'), $parse);
 
-display($page,"Change Log");
+display($page,"Lista de Cambios");
 
-// Created by Perberos. All rights reversed (C) 2006
 ?>

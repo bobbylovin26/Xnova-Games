@@ -7,9 +7,6 @@
  * @copyright 2008 By Chlorel for XNova
  */
 
-// Retourne un tableau des ressources necessaires par type pour le lot d'elements
-// $Element   -> L'element visé
-// $Count     -> Nombre d'elements a construire
 function GetElementRessources ( $Element, $Count ) {
 	global $pricelist;
 

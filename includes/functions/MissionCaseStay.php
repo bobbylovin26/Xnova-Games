@@ -56,8 +56,4 @@ function MissionCaseStay ( $FleetRow ) {
 	}
 }
 
-// -----------------------------------------------------------------------------------------------------------
-// History version
-// 1.0 Mise en module initiale
-// 1.1 FIX permet un retour de flotte cohérant
 ?>

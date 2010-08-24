@@ -33,21 +33,18 @@ function XNovaResetUnivers ( $CurrentUser ) {
 		// Vider toutes les tables !
 		doquery( "TRUNCATE TABLE {{table}}", 'aks');
 		doquery( "TRUNCATE TABLE {{table}}", 'alliance');
-		doquery( "TRUNCATE TABLE {{table}}", 'annonce');
 		doquery( "TRUNCATE TABLE {{table}}", 'banned');
 		doquery( "TRUNCATE TABLE {{table}}", 'buddy');
-		doquery( "TRUNCATE TABLE {{table}}", 'chat');
 		doquery( "TRUNCATE TABLE {{table}}", 'galaxy');
 		doquery( "TRUNCATE TABLE {{table}}", 'errors');
 		doquery( "TRUNCATE TABLE {{table}}", 'fleets');
-		doquery( "TRUNCATE TABLE {{table}}", 'iraks');
 		doquery( "TRUNCATE TABLE {{table}}", 'lunas');
 		doquery( "TRUNCATE TABLE {{table}}", 'messages');
 		doquery( "TRUNCATE TABLE {{table}}", 'notes');
 		doquery( "TRUNCATE TABLE {{table}}", 'rw');
 		doquery( "TRUNCATE TABLE {{table}}", 'statpoints');
 
-		$AllUsers  = doquery ("SELECT `username`,`password`,`email`, `email_2`,`authlevel`,`galaxy`,`system`,`planet`, `sex`, `dpath`, `onlinetime`, `register_time`, `id_planet` FROM {{table}} WHERE 1;", 'users_s');
+		$AllUsers  = doquery ("SELECT `username`,`password`,`email`, `email_2`,`authlevel`,`galaxy`,`system`,`planet`, `dpath`, `onlinetime`, `register_time`, `id_planet` FROM {{table}} WHERE 1;", 'users_s');
 		$LimitTime = time() - (15 * (24 * (60 * 60)));
 		$TransUser = 0;
 		while ( $TheUser = mysql_fetch_assoc($AllUsers) ) {
@@ -59,7 +56,6 @@ function XNovaResetUnivers ( $CurrentUser ) {
 					$QryInsertUser .= "`username` = '".      $TheUser['username']      ."', ";
 					$QryInsertUser .= "`email` = '".         $TheUser['email']         ."', ";
 					$QryInsertUser .= "`email_2` = '".       $TheUser['email_2']       ."', ";
-					$QryInsertUser .= "`sex` = '".           $TheUser['sex']           ."', ";
 					$QryInsertUser .= "`id_planet` = '0', ";
 					$QryInsertUser .= "`authlevel` = '".     $TheUser['authlevel']     ."', ";
 					$QryInsertUser .= "`dpath` = '".         $TheUser['dpath']         ."', ";
@@ -95,7 +91,7 @@ function XNovaResetUnivers ( $CurrentUser ) {
 		doquery("DROP TABLE {{table}}", 'planets_s');
 		doquery("DROP TABLE {{table}}", 'users_s');
 
-		AdminMessage ( $TransUser . $lang['adm_rz_done'], $lang['adm_rz_ttle'] );
+		AdminMessage ( $lang['adm_rz_done'], $lang['adm_rz_ttle'] );
 	} else {
 		AdminMessage ( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
 	}

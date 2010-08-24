@@ -30,7 +30,6 @@ include($xnova_root_path . 'common.' . $phpEx);
 		$parse                      = $lang;
 		$parse['dpath']             = $dpath;
 		$parse['mf']                = $mf;
-		$parse['adm_ov_data_yourv'] = colorRed(VERSION);
 
 		$Last15Mins = doquery("SELECT * FROM {{table}} WHERE `onlinetime` >= '". (time() - 15 * 60) ."' ORDER BY `". $TypeSort ."` ASC;", 'users');
 		$Count      = 0;
@@ -61,18 +60,18 @@ include($xnova_root_path . 'common.' . $phpEx);
 			$Bloc['adm_ov_data_activ']   = pretty_time ( time() - $TheUser['onlinetime'] );
 			$Bloc['adm_ov_data_pict']    = "m.gif";
 			$PrevIP                      = $TheUser['user_lastip'];
-			
-			//Tweaks vue générale 
+
+			//Tweaks vue générale
 						$Bloc['usr_email']    = $TheUser['email'];
 									$Bloc['usr_xp_raid']    = $TheUser['xpraid'];
 									$Bloc['usr_xp_min']    = $TheUser['xpminier'];
-									
+
 									if ($TheUser['urlaubs_modus'] == 1) {
 											$Bloc['state_vacancy']  = "<img src=\"../images/true.png\" >";
 									} else {
 											$Bloc['state_vacancy']  = "<img src=\"../images/false.png\">";
 									}
-									
+
 									if ($TheUser['bana'] == 1) {
 											$Bloc['is_banned']  = "<img src=\"../images/banned.png\" >";
 									} else {
@@ -81,7 +80,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 									$Bloc['usr_planet_gal']    = $TheUser['galaxy'];
 									$Bloc['usr_planet_sys']    = $TheUser['system'];
 									$Bloc['usr_planet_pos']    = $TheUser['planet'];
-									
+
 
 			$parse['adm_ov_data_table'] .= parsetemplate( $RowsTPL, $Bloc );
 			$Count++;

@@ -30,6 +30,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 			$metal       = $_POST['metal'];
 			$cristal     = $_POST['cristal'];
 			$deut        = $_POST['deut'];
+			$dark        = $_POST['dark'];
 			$QryUpdatePlanet  = "UPDATE {{table}} SET ";
 			$QryUpdatePlanet .= "`metal` = `metal` - '". $metal ."', ";
 			$QryUpdatePlanet .= "`crystal` = `crystal` - '". $cristal ."', ";
@@ -37,6 +38,12 @@ include($xnova_root_path . 'common.' . $phpEx);
 			$QryUpdatePlanet .= "WHERE ";
 			$QryUpdatePlanet .= "`id` = '". $id ."' ";
 			doquery( $QryUpdatePlanet, "planets");
+
+			$QryUpdateUser  = "UPDATE {{table}} SET ";
+			$QryUpdateUser .= "`darkmatter` = `darkmatter` - '". $dark ."' ";
+			$QryUpdateUser .= "WHERE ";
+			$QryUpdateUser .= "`id` = '". $id ."' ";
+			doquery( $QryUpdateUser, "users");
 
 			AdminMessage ( $lang['adm_delmoney2'], $lang['adm_delmoney1'] );
 		}

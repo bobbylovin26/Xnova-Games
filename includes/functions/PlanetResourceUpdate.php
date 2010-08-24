@@ -151,7 +151,4 @@ function PlanetResourceUpdate ( $CurrentUser, &$CurrentPlanet, $UpdateTime, $Sim
 
 }
 
-// Revision History
-// - 1.0 Mise en module initiale
-// - 1.1 Mise a jour automatique mines / silos / energie ...
 ?>

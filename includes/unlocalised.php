@@ -6,12 +6,6 @@
  * @copyright 2008 By Chlorel for XNova
  */
 
-// ----------------------------------------------------------------------------------------------------------------
-//
-// Routine pour la gestion de flottes a envoyer
-//
-
-// Calcul de la distance entre 2 planetes
 function GetTargetDistance ($OrigGalaxy, $DestGalaxy, $OrigSystem, $DestSystem, $OrigPlanet, $DestPlanet) {
 	$distance = 0;
 
@@ -28,7 +22,6 @@ function GetTargetDistance ($OrigGalaxy, $DestGalaxy, $OrigSystem, $DestSystem, 
 	return $distance;
 }
 
-// Calcul de la durée de vol d'une flotte par rapport a sa vitesse max
 function GetMissionDuration ($GameSpeed, $MaxFleetSpeed, $Distance, $SpeedFactor) {
 	$Duration = 0;
 	$Duration = round(((35000 / $GameSpeed * sqrt($Distance * 10 / $MaxFleetSpeed) + 10) / $SpeedFactor));
@@ -36,16 +29,12 @@ function GetMissionDuration ($GameSpeed, $MaxFleetSpeed, $Distance, $SpeedFactor
 	return $Duration;
 }
 
-// Retourne la valeur ajustée de vitesse des flottes
 function GetGameSpeedFactor () {
 	global $game_config;
 
 	return $game_config['fleet_speed'] / 2500;
 }
 
-// ----------------------------------------------------------------------------------------------------------------
-// Calcul de la vitesse de la flotte par rapport aux technos du joueur
-// Avec prise en compte
 function GetFleetMaxSpeed ($FleetArray, $Fleet, $Player) {
 	global $reslist, $pricelist;
 
@@ -85,8 +74,6 @@ function GetFleetMaxSpeed ($FleetArray, $Fleet, $Player) {
 	return $speedalls;
 }
 
-// ----------------------------------------------------------------------------------------------------------------
-// Calcul de la consommation de base d'un vaisseau au regard des technologies
 function GetShipConsumption ( $Ship, $Player ) {
 	global $pricelist;
 	if ($Player['impulse_motor_tech'] >= 5) {
@@ -98,8 +85,6 @@ function GetShipConsumption ( $Ship, $Player ) {
 	return $Consumption;
 }
 
-// ----------------------------------------------------------------------------------------------------------------
-// Calcul de la consommation de la flotte pour cette mission
 function GetFleetConsumption ($FleetArray, $SpeedFactor, $MissionDuration, $MissionDistance, $FleetMaxSpeed, $Player) {
 
 	$consumption = 0;
@@ -120,12 +105,6 @@ function GetFleetConsumption ($FleetArray, $SpeedFactor, $MissionDuration, $Miss
 	return $consumption;
 }
 
-// ----------------------------------------------------------------------------------------------------------------
-//
-// Mise en forme de chaines pour affichage
-//
-
-// Mise en forme de la durée sous forme xj xxh xxm xxs
 function pretty_time ($seconds) {
 	$day = floor($seconds / (24 * 3600));
 	$hs = floor($seconds / 3600 % 24);
@@ -137,7 +116,7 @@ function pretty_time ($seconds) {
 	if ($sr < 10) { $ss = "0" . $sr; } else { $ss = $sr; }
 
 	$time = '';
-	if ($day != 0) { $time .= $day . 'j '; }
+	if ($day != 0) { $time .= $day . 'd '; }
 	if ($hs  != 0) { $time .= $hh . 'h ';  } else { $time .= '00h '; }
 	if ($ms  != 0) { $time .= $mm . 'm ';  } else { $time .= '00m '; }
 	$time .= $ss . 's';
@@ -145,7 +124,6 @@ function pretty_time ($seconds) {
 	return $time;
 }
 
-// Mise en forme de la durée sous forme xxxmin
 function pretty_time_hour ($seconds) {
 	$min = floor($seconds / 60 % 60);
 
@@ -155,15 +133,12 @@ function pretty_time_hour ($seconds) {
 	return $time;
 }
 
-// Mise en forme du temps de construction (avec la phrase de description)
 function ShowBuildTime ($time) {
 	global $lang;
 
 	return "<br>". $lang['ConstructionTime'] .": " . pretty_time($time);
 }
 
-// ----------------------------------------------------------------------------------------------------------------
-//
 function add_points ($resources, $userid) {
 	return false;
 }
@@ -176,10 +151,6 @@ function get_userdata () {
 	return '';
 }
 
-// ----------------------------------------------------------------------------------------------------------------
-//
-// Fonction de lecture / ecriture / exploitation de templates
-//
 function ReadFromFile($filename) {
 	$content = @file_get_contents ($filename);
 	return $content;
@@ -196,15 +167,11 @@ function parsetemplate ($template, $array) {
 function gettemplate ($templatename) {
 	global $xnova_root_path;
 
-	$filename = $xnova_root_path . TEMPLATE_DIR . TEMPLATE_NAME . '/' . $templatename . ".tpl";
+	$filename = $xnova_root_path . TEMPLATE_DIR . '/' . $templatename . ".tpl";
 
 	return ReadFromFile($filename);
 }
 
-// ----------------------------------------------------------------------------------------------------------------
-//
-// Gestion de la localisation des chaines
-//
 function includeLang ($filename, $ext = '.mo') {
 	global $xnova_root_path, $lang, $user;
 
@@ -216,31 +183,25 @@ function includeLang ($filename, $ext = '.mo') {
 	include ($xnova_root_path . "language/". $SelLanguage ."/". $filename.$ext);
 }
 
-
-// ----------------------------------------------------------------------------------------------------------------
-//
-// Affiche une adresse de depart sous forme de lien
 function GetStartAdressLink ( $FleetRow, $FleetType ) {
 	$Link  = "<a href=\"galaxy.php?mode=3&galaxy=".$FleetRow['fleet_start_galaxy']."&system=".$FleetRow['fleet_start_system']."\" ". $FleetType ." >";
 	$Link .= "[".$FleetRow['fleet_start_galaxy'].":".$FleetRow['fleet_start_system'].":".$FleetRow['fleet_start_planet']."]</a>";
 	return $Link;
 }
 
-// Affiche une adresse de cible sous forme de lien
+
 function GetTargetAdressLink ( $FleetRow, $FleetType ) {
 	$Link  = "<a href=\"galaxy.php?mode=3&galaxy=".$FleetRow['fleet_end_galaxy']."&system=".$FleetRow['fleet_end_system']."\" ". $FleetType ." >";
 	$Link .= "[".$FleetRow['fleet_end_galaxy'].":".$FleetRow['fleet_end_system'].":".$FleetRow['fleet_end_planet']."]</a>";
 	return $Link;
 }
 
-// Affiche une adresse de planete sous forme de lien
 function BuildPlanetAdressLink ( $CurrentPlanet ) {
 	$Link  = "<a href=\"galaxy.php?mode=3&galaxy=".$CurrentPlanet['galaxy']."&system=".$CurrentPlanet['system']."\">";
 	$Link .= "[".$CurrentPlanet['galaxy'].":".$CurrentPlanet['system'].":".$CurrentPlanet['planet']."]</a>";
 	return $Link;
 }
 
-// Création d'un lien pour le joueur hostile
 function BuildHostileFleetPlayerLink ( $FleetRow ) {
 	global $lang, $dpath;
 
@@ -275,9 +236,7 @@ function GetNextJumpWaitTime ( $CurMoon ) {
 
 	return $RetValue;
 }
-// ----------------------------------------------------------------------------------------------------------------
-//
-// Céation du lien avec popup pour la flotte
+
 function CreateFleetPopupedFleetLink ( $FleetRow, $Texte, $FleetType ) {
 	global $lang;
 
@@ -297,18 +256,16 @@ function CreateFleetPopupedFleetLink ( $FleetRow, $Texte, $FleetType ) {
 
 }
 
-// ----------------------------------------------------------------------------------------------------------------
-//
-// Céation du lien avec popup pour le type de mission avec ou non les ressources si disponibles
 function CreateFleetPopupedMissionLink ( $FleetRow, $Texte, $FleetType ) {
 	global $lang;
 
-	$FleetTotalC  = $FleetRow['fleet_resource_metal'] + $FleetRow['fleet_resource_crystal'] + $FleetRow['fleet_resource_deuterium'];
+	$FleetTotalC  = $FleetRow['fleet_resource_metal'] + $FleetRow['fleet_resource_crystal'] + $FleetRow['fleet_resource_deuterium'] + $FleetRow['fleet_resource_darkmatter'];
 	if ($FleetTotalC <> 0) {
 		$FRessource   = "<table width=200>";
 		$FRessource  .= "<tr><td width=50% align=left><font color=white>". $lang['Metal'] ."<font></td><td width=50% align=right><font color=white>". pretty_number($FleetRow['fleet_resource_metal']) ."<font></td></tr>";
 		$FRessource  .= "<tr><td width=50% align=left><font color=white>". $lang['Crystal'] ."<font></td><td width=50% align=right><font color=white>". pretty_number($FleetRow['fleet_resource_crystal']) ."<font></td></tr>";
 		$FRessource  .= "<tr><td width=50% align=left><font color=white>". $lang['Deuterium'] ."<font></td><td width=50% align=right><font color=white>". pretty_number($FleetRow['fleet_resource_deuterium']) ."<font></td></tr>";
+		$FRessource  .= "<tr><td width=50% align=left><font color=white>". $lang['Dark'] ."<font></td><td width=50% align=right><font color=white>". pretty_number($FleetRow['fleet_resource_darkmatter']) ."<font></td></tr>";
 		$FRessource  .= "</table>";
 	} else {
 		$FRessource   = "";
@@ -323,8 +280,5 @@ function CreateFleetPopupedMissionLink ( $FleetRow, $Texte, $FleetType ) {
 
 	return $MissionPopup;
 }
-
-// ----------------------------------------------------------------------------------------------------------------
-
 
 ?>

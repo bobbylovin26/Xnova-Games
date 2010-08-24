@@ -120,7 +120,7 @@ function GetWeaponsPerType ( $TypeArray, $Tech ) {
 
 function GetShiedsPerType ( $TypeArray, $Tech ) {
 	global $capacity;
-	// Calcul des points de Bouclier
+
 	if (!is_null($TypeArray)) {
 		foreach($TypeArray as $Type => $Count) {
 			$Shield[$Type]      = round ($capacity[$Type]['shield'] + (($capacity[$Type]['shield'] * $Tech['110']) / 10));
@@ -132,7 +132,7 @@ function GetShiedsPerType ( $TypeArray, $Tech ) {
 
 function GetHullPerType ( $TypeArray, $Tech ) {
 	global $pricelist;
-	// Calcul des points de Coque
+
 	if (!is_null($TypeArray)) {
 		$Units['metal']     = 0;
 		$Units['crystal']   = 0;

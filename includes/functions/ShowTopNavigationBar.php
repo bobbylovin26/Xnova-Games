@@ -83,6 +83,10 @@ function ShowTopNavigationBar ( $CurrentUser, $CurrentPlanet ) {
 		} else {
 			$parse['message'] = "0";
 		}
+// CAMBIOS NECESARIOS REALIZADOS PARA AGREGAR LA MATERIO OSCURA(BY lucky Xtreme-gameZ.com.ar DarkMatter ADD-ON)
+        $darkmatter = pretty_number($CurrentUser["darkmatter"]);
+
+        $parse['darkmatter'] = $darkmatter;
 
 		// Le tout passe dans la template
 		$TopBar = parsetemplate( $NavigationTPL, $parse);

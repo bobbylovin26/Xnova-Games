@@ -117,7 +117,10 @@ function CreateOnePlanetRecord($Galaxy, $System, $Position, $PlanetOwnerID, $Pla
 		$planet['name']        = ($PlanetName == '') ? $lang['sys_colo_defaultname'] : $PlanetName;
 
 		$QryInsertPlanet  = "INSERT INTO {{table}} SET ";
-		$QryInsertPlanet .= "`name` = '".              $planet['name']              ."', ";
+		// SI ES UNA COLONIA ENTONCES REEMPLAZARÁ EL PLANETA PRINCIPAL POR COLONIA
+		if($HomeWorld == false)
+			$QryInsertPlanet .= "`name` = 'Colonia', ";
+
 		$QryInsertPlanet .= "`id_owner` = '".          $planet['id_owner']          ."', ";
 		$QryInsertPlanet .= "`galaxy` = '".            $planet['galaxy']            ."', ";
 		$QryInsertPlanet .= "`system` = '".            $planet['system']            ."', ";

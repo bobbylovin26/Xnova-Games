@@ -18,6 +18,10 @@ include($xnova_root_path . 'common.' . $phpEx);
 
 	includeLang('fleet');
 
+	if (IsVacationMode($CurrentUser)){
+       return false;
+    }
+
 	$CurrentPlanet = doquery("SELECT * FROM {{table}} WHERE `id` = '". $user['current_planet'] ."'", 'planets', true);
 	$TargetPlanet  = doquery("SELECT * FROM {{table}} WHERE `galaxy` = '". $_POST['galaxy'] ."' AND `system` = '". $_POST['system'] ."' AND `planet` = '". $_POST['planet'] ."' AND `planet_type` = '". $_POST['planettype'] ."';", 'planets', true);
 	$MyDBRec       = doquery("SELECT * FROM {{table}} WHERE `id` = '". $user['id']."';", 'users', true);
@@ -32,7 +36,8 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$fleetarray  = unserialize(base64_decode(str_rot13($_POST["usedfleet"])));
 
 	if (!is_array($fleetarray)) {
-		message ("<font color=\"red\"><b>". $lang['fl_fleet_err'] ."</b></font>", $lang['fl_error'], "fleet." . $phpEx, 2);
+        	header("Location: fleet.php");
+        exit;
 	}
 
 	// On verifie s'il y a assez de vaisseaux sur la planete !
@@ -203,6 +208,23 @@ include($xnova_root_path . 'common.' . $phpEx);
 		message("<font color=\"lime\"><b>".$lang['fl_noob_mess_n']."</b></font>", $lang['fl_noob_title'], "fleet." . $phpEx, 2);
 	}
 
+	if ($MyGameLevel > ($HeGameLevel * $protectionmulti) AND
+   		$TargetPlanet['id_owner'] != '' AND
+   		$_POST['mission']     == 9  AND
+   		$protection           == 1  AND
+   		$HeGameLevel < ($protectiontime * 1000)) {
+   		message("<font color=\"lime\"><b>".$lang['fl_noob_mess_n']."</b></font>", $lang['fl_noob_title'], "fleet." . $phpEx, 1);
+	}
+
+		//fix no permitir destruir lunas fuertes por neurus
+
+	if (($MyGameLevel * $protectionmulti) < $HeGameLevel AND
+   		$TargetPlanet['id_owner'] != '' AND
+   		$_POST['mission']     == 9  AND
+   		$protection           == 1  AND
+   		$MyGameLevel < ($protectiontime * 1000)) {
+   		message("<font color=\"lime\"><b>".$lang['fl_noob_mess_n']."</b></font>", $lang['fl_noob_title'], "fleet." . $phpEx, 1);
+	}
 	if (($MyGameLevel * $protectionmulti) < $HeGameLevel AND
 		$TargetPlanet['id_owner'] != '' AND
 		$_POST['mission']     == 1  AND
@@ -505,6 +527,19 @@ include($xnova_root_path . 'common.' . $phpEx);
 		$page .= "<th>". pretty_number($Count) ."</th>";
 	}
 	$page .= "</tr></table></div></center>";
+	$page .= '<script type="text/javascript">
+   var zeit = new Date();
+   var ende = zeit.getTime();
+   ende = ende + 100;
+   function countdown() {
+      var zeit2 = new Date();
+      var jetzt = zeit2.getTime();
+      if(jetzt >= ende) {
+         window.location.href="fleet.php";
+      }
+   }
+   setInterval(countdown, 3000);
+</script>';
 
 	// Provisoire
 	sleep (1);
@@ -512,11 +547,5 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$planetrow = doquery ("SELECT * FROM {{table}} WHERE `id` = '". $CurrentPlanet['id'] ."';", 'planets', true);
 
 	display($page, $lang['fl_title']);
-
-// Updated by Chlorel. 16 Jan 2008 (String extraction, bug corrections, code uniformisation
-// Updated by -= MoF =- for Deutsches Ugamela Forum
-// 06.12.2007 - 08:39
-// Open Source
-// (c) by MoF
 
 ?>

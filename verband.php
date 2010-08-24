@@ -26,13 +26,13 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$query = doquery("SELECT * FROM {{table}} WHERE fleet_id = '" . $fleetid . "'", 'fleets');
 
 	if (mysql_num_rows($query) != 1) {
-		message('Cette flotte n\'existe pas (ou plus)!', 'Erreur');
+		message('¡La flota no existe!', 'Error');
 	}
 
 	$daten = mysql_fetch_array($query);
 
 	if ($daten['fleet_start_time'] <= time() || $daten['fleet_end_time'] < time() || $daten['fleet_mess'] == 1) {
-		message('Votre flotte est déjà sur le chemin du retour!', 'Erreur');
+		message('¡Su flota ya esta regresando', 'Error');
 	}
 
 	if (!isset($_POST['send'])) {
@@ -88,20 +88,20 @@ include($xnova_root_path . 'common.' . $phpEx);
 		, 'aks');
 
 		if (mysql_num_rows($aks) != 1) {
-			message('AKS nicht gefunden!', 'Fehler');
+			message('¡No se enconraron movimientos!', 'Error');
 		}
 		$aks = mysql_num_rows($aks);
 	}
 
-	$missiontype = array(1 => 'Attaquer',
-		2 => 'Zerst&ouml;ren',
-		3 => 'Transporter',
-		4 => 'Stationner',
-		5 => 'Halten',
-		6 => 'Espionner',
-		7 => 'Coloniser',
-		8 => 'Recycler',
-		9 => 'Coloniser',
+	$missiontype = array(1 => 'Ataque',
+		2 => 'SAC',
+		3 => 'Transportar',
+		4 => 'Estacionar',
+		5 => 'Estacionar en Aliado',
+		6 => 'Espionaje',
+		7 => 'Colonizar',
+		8 => 'Reciclar',
+		9 => 'Destruir',
 		);
 
 	$speed = array(10 => 100,
@@ -134,25 +134,25 @@ include($xnova_root_path . 'common.' . $phpEx);
   <center>
     <table width="519" border="0" cellpadding="0" cellspacing="1">
       <tr height="20">
-        <td colspan="9" class="c">Flotte (max. ' . $ile . ')</td>
+        <td colspan="9" class="c">Flota (max. ' . $ile . ')</td>
       </tr>
       <tr height="20">
-        <th>ID</th>
-        <th>Mission</th>
-        <th> Nombre</th>
-	<!--<th>Absendezeit</th>-->
-        <th>Depart</th>
-        <th>Arriv&eacute;e (cible)</th>
-        <th>Objectif</th>
-        <th>Arriv&eacute;e (retour)</th>
-        <th>Retour à</th>
-        <th>Ordre</th>
+        <th>Nº</th>
+        <th>Misión</th>
+        <th>Nombre</th>
+	<!--<th>De</th>-->
+        <th>Hora de envío</th>
+        <th>Destino</th>
+        <th>Hora de llegada</th>
+        <th>Vuelve en</th>
+        <th>Volver</th>
+        <th>Orden</th>
       </tr>';
 	/*
 	  Here must show the fleet movings of owner player.
 	*/
 
-	$fq = doquery("SELECT * FROM {{table}} WHERE fleet_owner={$user[id]}", 'fleets');
+	$fq = doquery("SELECT * FROM {{table}} WHERE fleet_owner='$user[id]' AND fleet_mission <> 10", "fleets");
 
 	$i = 0;
 	while ($f = mysql_fetch_array($fq)) {
@@ -192,7 +192,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 		if ($f['fleet_mess'] == 0) {
 			$page .= "     <form action=\"fleetback.php\" method=\"post\">
       <input name=\"zawracanie\" value=" . $f['fleet_id'] . " type=hidden>
-         <input value=\" Retour \" type=\"submit\">
+         <input value=\" Regresar \" type=\"submit\">
        </form></th>";
 		} else $page .= "&nbsp;</th>";
 
@@ -204,14 +204,14 @@ include($xnova_root_path . 'common.' . $phpEx);
 		$page .= "<th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th><th>-</th>";
 	}
 	if ($ile == $maxfleet_count) {
-		$maxflot = '<tr height="20"><th colspan="9"><font color="red">Nombre de slot de flotte maximum atteint!</font></th></tr>';
+		$maxflot = '<tr height="20"><th colspan="9"><font color="red">Se alcanzo el máximo de slots para las flotas</font></th></tr>';
 	}
 	$page .= '
 		' . $maxflot . '</table>
 	  </center>
     <table width="519" border="0" cellpadding="0" cellspacing="1">
    <tr height="20">
-     <td class="c" colspan="2">	Association de flotte KV50502025</td>
+     <td class="c" colspan="2">SAC de flota KV50502025</td>
    </tr>
 
    <form action="verband.php" method="POST">
@@ -219,7 +219,7 @@ include($xnova_root_path . 'common.' . $phpEx);
    <input type="hidden" name="changename" value="49021" />
    <tr height="20">
 
-  <td class="c" colspan="2">VModifiez le nom de l\'Association</td>
+  <td class="c" colspan="2">Modificar el nombre del SAC</td>
    </tr>
    <tr>
     <th colspan="2"><input name="groupname" value="KV50502025" /> <br /> <input type="submit" value="OK" /></th>
@@ -230,14 +230,14 @@ include($xnova_root_path . 'common.' . $phpEx);
     <th>
      <table width="100%" border="0" cellpadding="0" cellspacing="1">
       <tr height="20">
-       <td class="c">Invités participants</td>
-       <td class="c">Inviter des participants</td>
+       <td class="c">Participantes invitados</td>
+       <td class="c">Invitar a los participantes</td>
       </tr>
       <tr>
 
        <th width="50%">
         <select size="5">
-                   <option>Thunder Storm</option>
+                   <option>Tormenta Eléctrica</option>
                  </select>
        </th>
 
@@ -260,18 +260,18 @@ include($xnova_root_path . 'common.' . $phpEx);
 		<form action="floten1.php" method="post">
 		<table width="519" border="0" cellpadding="0" cellspacing="1">
 		  <tr height="20">
-			<td colspan="4" class="c">Nouveau marché: Choix de la flotte</td>
+			<td colspan="4" class="c">Nuevo mercado: Elección de la flota</td>
 		  </tr>
 		  <tr height="20">
-			<th>Nom du vaisseau</th>
-			<th>Nombre</th>';
+			<th>Nombre de la nave</th>
+			<th>Cantidad</th>';
 	// <!--    <th>Gesch.</th> -->
 	$page .= '
 			<th>-</th>
 			<th>-</th>
 		  </tr>';
 	if (!$planetrow) {
-		message('WTF! FEHLER!', 'ERROR');
+		message('No hay planeta', 'Error');
 	} //uno nunca sabe xD
 	$galaxy = intval($_GET['galaxy']);
 	$system = intval($_GET['system']);
@@ -321,7 +321,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 
 	if (!$have_ships) {
 		$page .= '<tr height="20">
-		<th colspan="4">Aucun vaisseau</th>
+		<th colspan="4">Ninguna Nave/th>
 		</tr>
 		<tr height="20">
 		<th colspan="4">
@@ -333,8 +333,8 @@ include($xnova_root_path . 'common.' . $phpEx);
 	} else {
 		$page .= '
 		  <tr height="20">
-			<th colspan="2"><a href="javascript:noShips();shortInfo();noResources();" >Aucun Vaisseaux</a></th>
-			<th colspan="2"><a href="javascript:maxShips();shortInfo();" >Tout les vaisseaux</a></th>
+			<th colspan="2"><a href="javascript:noShips();shortInfo();noResources();" >No hay naves</a></th>
+			<th colspan="2"><a href="javascript:maxShips();shortInfo();" >Todas las naves</a></th>
 		  </tr>';
 
 		$przydalej = '<tr height="20"><th colspan="4"><input type="submit" value="OK" /></th></tr>';
@@ -353,6 +353,6 @@ include($xnova_root_path . 'common.' . $phpEx);
 } else {
 }
 
-display($page, "Flotten");
+display($page, "Flota");
 
 ?>

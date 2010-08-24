@@ -49,22 +49,18 @@ switch($type){
 		$row = gettemplate('search_user_row');
 		$search = doquery("SELECT * FROM {{table}} WHERE username LIKE '%{$searchtext}%' LIMIT 30","users");
 }
-/*
-  Esta es la tecnica de, "el ahorro de queries".
-  Inventada por Perberos :3
-  ...pero ahora no... porque tengo sueño ;P
-*/
+
 if(isset($searchtext) && isset($type)){
 
 	while($r = mysql_fetch_array($search, MYSQL_BOTH)){
 
 		if($type=='playername'||$type=='planetname'){
 			$s=$r;
-			//para obtener el nombre del planeta
+
 			if ($type == "planetname")
 			{
 			$pquery = doquery("SELECT * FROM {{table}} WHERE id = {$s['id_owner']}","users",true);
-/*			$farray = mysql_fetch_array($pquery);*/
+
 			$s['planet_name'] = $s['name'];
 			$s['username'] = $pquery['username'];
 			$s['ally_name'] = ($pquery['ally_name']!='')?"<a href=\"alliance.php?mode=ainfo&tag={$pquery['ally_name']}\">{$pquery['ally_name']}</a>":'';
@@ -73,7 +69,7 @@ if(isset($searchtext) && isset($type)){
 			$s['planet_name'] = $pquery['name'];
 			$s['ally_name'] = ($aquery['ally_name']!='')?"<a href=\"alliance.php?mode=ainfo&tag={$aquery['ally_name']}\">{$aquery['ally_name']}</a>":'';
 			}
-			//ahora la alianza
+
 			if($s['ally_id']!=0&&$s['ally_request']==0){
 				$aquery = doquery("SELECT ally_name FROM {{table}} WHERE id = {$s['ally_id']}","alliance",true);
 			}else{
@@ -103,14 +99,14 @@ if(isset($searchtext) && isset($type)){
 	}
 }
 
-//el resto...
+
 $lang['type_playername'] = ($_POST["type"] == "playername") ? " SELECTED" : "";
 $lang['type_planetname'] = ($_POST["type"] == "planetname") ? " SELECTED" : "";
 $lang['type_allytag'] = ($_POST["type"] == "allytag") ? " SELECTED" : "";
 $lang['type_allyname'] = ($_POST["type"] == "allyname") ? " SELECTED" : "";
 $lang['searchtext'] = $searchtext;
 $lang['search_results'] = $search_results;
-//esto es algo repetitivo ... w
+
 $page = parsetemplate(gettemplate('search_body'), $lang);
 display($page,$lang['Search']);
 ?>

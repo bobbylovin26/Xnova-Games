@@ -34,11 +34,11 @@ include($xnova_root_path . 'common.' . $phpEx);
 		}
 
 		if ($i == "1")
-			$parse['moon'] .= "<tr><th class=b colspan=6>Il y a qu'une seule lune</th></tr>";
+			$parse['moon'] .= "<tr><th class=b colspan=6>Sólo hay una luna</th></tr>";
 		else
-			$parse['moon'] .= "<tr><th class=b colspan=6>Il y a {$i} lunes</th></tr>";
+			$parse['moon'] .= "<tr><th class=b colspan=6>Hay {$i} lunas</th></tr>";
 
-		display(parsetemplate(gettemplate('admin/moonlist_body'), $parse), 'Lunalist' , false, '', true);
+		display(parsetemplate(gettemplate('admin/moonlist_body'), $parse), 'Lista de Lunas' , false, '', true);
 	} else {
 		message( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
 	}

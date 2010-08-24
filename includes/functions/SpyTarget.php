@@ -86,7 +86,7 @@ function SpyTarget ( $TargetPlanet, $Mode, $TitleString ) {
 				}
 			}
 			$CurrentLook++;
-		} // while
+		}
 	}
 	$String .= "</table>";
 

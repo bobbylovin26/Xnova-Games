@@ -16,7 +16,6 @@ function GalaxyRowPlanet ( $GalaxyRow, $GalaxyRowPlanet, $GalaxyRowUser, $Galaxy
    // Planete (Image)
    $Result  = "<th width=30>";
    //$Buddy = CanDoACS($user['id'], $GalaxyRowUser['id']);
-   $GalaxyRowUser = doquery("SELECT * FROM {{table}} WHERE id='".$GalaxyRowPlanet['id_owner']."';", 'users', true);
    if ($GalaxyRow && $GalaxyRowPlanet["destruyed"] == 0 && $GalaxyRow["id_planet"] != 0) {
       if ($HavePhalanx <> 0) {
          if ($GalaxyRowUser['id'] != $user['id']) {
@@ -100,7 +99,7 @@ function GalaxyRowPlanet ( $GalaxyRow, $GalaxyRowPlanet, $GalaxyRowUser, $Galaxy
       } elseif ($GalaxyRowUser['id'] != $user['id']) {
          $MissionType10Link = "";
       }
-      
+
       $MissionType3Link = "<a href=fleet.php?galaxy=".$Galaxy."&system=".$System."&planet=".$Planet."&planettype=".$PlanetType."&target_mission=3>". $lang['type_mission'][3] ."</a><br />";
 
       $Result .= "<a style=\"cursor: pointer;\"";

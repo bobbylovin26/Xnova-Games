@@ -73,8 +73,8 @@ function MissionCaseExpedition ( $FleetRow ) {
 				}
 			}
 
-			// Espace deja occupé dans les soutes si ce devait etre le cas
-			$FleetUsedCapacity  = $FleetRow['fleet_resource_metal'] + $FleetRow['fleet_resource_crystal'] + $FleetRow['fleet_resource_deuterium'];
+			// CAMBIOS NECESARIOS REALIZADOS PARA AGREGAR LA MATERIA OSCURA(BY lucky Xtreme-gameZ.com.ar DarkMatter ADD-ON)
+			$FleetUsedCapacity  = $FleetRow['fleet_resource_metal'] + $FleetRow['fleet_resource_crystal'] + $FleetRow['fleet_resource_deuterium'] + $FleetRow['fleet_resource_darkmatter'];
 			$FleetCapacity     -= $FleetUsedCapacity;
 
 			//On récupère le nombre total de vaisseaux
@@ -115,7 +115,7 @@ function MissionCaseExpedition ( $FleetRow ) {
 				doquery("UPDATE {{table}} SET `fleet_mess` = '1' WHERE `fleet_id` = ". $FleetRow["fleet_id"], 'fleets');
 				SendSimpleMessage ( $FleetOwner, '', $FleetRow['fleet_end_stay'], 15, $MessSender, $MessTitle, $lang['sys_expe_nothing_1'] );
 			} elseif ($Hasard >= 4 && $Hasard < 7) {
-				// Gains de ressources
+				// CAMBIOS NECESARIOS REALIZADOS PARA AGREGAR LA MATERIA OSCURA(BY lucky Xtreme-gameZ.com.ar DarkMatter ADD-ON)
 				if ($FleetCapacity > 5000) {
 					$MinCapacity = $FleetCapacity - 5000;
 					$MaxCapacity = $FleetCapacity;
@@ -123,11 +123,13 @@ function MissionCaseExpedition ( $FleetRow ) {
 					$FoundMetal  = intval($FoundGoods / 2);
 					$FoundCrist  = intval($FoundGoods / 4);
 					$FoundDeute  = intval($FoundGoods / 6);
-
+					$FoundDark   = intval($FoundGoods / 20);
+					// CAMBIOS NECESARIOS REALIZADOS PARA AGREGAR LA MATERIA OSCURA(BY lucky Xtreme-gameZ.com.ar DarkMatter ADD-ON)
 					$QryUpdateFleet  = "UPDATE {{table}} SET ";
 					$QryUpdateFleet .= "`fleet_resource_metal` = `fleet_resource_metal` + '". $FoundMetal ."', ";
-					$QryUpdateFleet .= "`fleet_resource_crystal` = `fleet_resource_crystal` + '". $FoundCrist ."', ";
+					$QryUpdateFleet .= "`fleet_resource_crystal` = `fleet_resource_crystal` + '". $FoundCrist."', ";
 					$QryUpdateFleet .= "`fleet_resource_deuterium` = `fleet_resource_deuterium` + '". $FoundDeute ."', ";
+					$QryUpdateFleet .= "`fleet_resource_darkmatter` = `fleet_resource_darkmatter` + '". $FoundDark ."', ";
 					$QryUpdateFleet .= "`fleet_mess` = '1'  ";
 					$QryUpdateFleet .= "WHERE ";
 					$QryUpdateFleet .= "`fleet_id` = '". $FleetRow["fleet_id"] ."';";
@@ -135,7 +137,8 @@ function MissionCaseExpedition ( $FleetRow ) {
 					$Message = sprintf($lang['sys_expe_found_goods'],
 						pretty_number($FoundMetal), $lang['Metal'],
 						pretty_number($FoundCrist), $lang['Crystal'],
-						pretty_number($FoundDeute), $lang['Deuterium']);
+						pretty_number($FoundDeute), $lang['Deuterium'],
+						pretty_number($FoundDark), $lang['Dark']);
 					SendSimpleMessage ( $FleetOwner, '', $FleetRow['fleet_end_stay'], 15, $MessSender, $MessTitle, $Message );
 				}
 			} elseif ($Hasard == 7) {
@@ -188,6 +191,7 @@ function MissionCaseExpedition ( $FleetRow ) {
 					$FleetAutoQuery .= "`". $resource[$Class[0]]. "` = `". $resource[$Class[0]] ."` + ". $Class[1] .", ";
 				}
 			}
+			// CAMBIOS NECESARIOS REALIZADOS PARA AGREGAR LA MATERIA OSCURA(BY lucky Xtreme-gameZ.com.ar DarkMatter ADD-ON)
 			$QryUpdatePlanet  = "UPDATE {{table}} SET ";
 			$QryUpdatePlanet .= $FleetAutoQuery;
 			$QryUpdatePlanet .= "`metal` = `metal` + ". $FleetRow['fleet_resource_metal'] .", ";
@@ -201,11 +205,14 @@ function MissionCaseExpedition ( $FleetRow ) {
 			$QryUpdatePlanet .= "LIMIT 1 ;";
 			doquery( $QryUpdatePlanet, 'planets');
 
+			$QrySelectDarkMatter = doquery("SELECT `darkmatter` FROM {{table}} WHERE `id` =".$FleetRow['fleet_owner']." LIMIT 1 ;", 'users', true);
+			$QryUpdateDarkMatter = "UPDATE {{table}} SET `darkmatter` = '".($QrySelectDarkMatter['darkmatter']+$FleetRow['fleet_resource_darkmatter'])."' WHERE `id` =".$FleetRow['fleet_owner']." LIMIT 1 ;";
+			doquery($QryUpdateDarkMatter, 'users');
+
+			doquery ("DELETE FROM {{table}} WHERE `fleet_id` = ". $FleetRow["fleet_id"], 'fleets');
+
 			// Message pour annoncer le retour de flotte
 			SendSimpleMessage ( $FleetOwner, '', $FleetRow['fleet_end_time'], 15, $MessSender, $MessTitle, $lang['sys_expe_back_home'] );
-
-			// Suppression de la flotte
-			doquery ("DELETE FROM {{table}} WHERE `fleet_id` = ". $FleetRow["fleet_id"], 'fleets');
 		}
 	}
 }

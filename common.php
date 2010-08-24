@@ -7,7 +7,7 @@
  * @copyright 2008 by ??????? for XNova
  */
 
-define('VERSION','0.9a');       // Afficher la version d'XNova utilisée...
+define('VERSION','1.4c');
 
 set_magic_quotes_runtime(0);
 $phpEx = "php";
@@ -15,13 +15,12 @@ $phpEx = "php";
 $game_config   = array();
 $user          = array();
 $lang          = array();
-$link          = "";            // Lien pour liaison MySQL :)
+$link          = "";
 $IsUserChecked = false;
 
 define('DEFAULT_SKINPATH' , 'skins/xnova/');
 define('TEMPLATE_DIR'     , 'templates/');
-define('TEMPLATE_NAME'    , 'OpenGame');
-define('DEFAULT_LANG'     , 'fr');
+define('DEFAULT_LANG'     , 'es');
 
 
 
@@ -41,7 +40,6 @@ if (INSTALL != true) {
     include($xnova_root_path . 'includes/db.'.$phpEx);
     include($xnova_root_path . 'includes/strings.'.$phpEx);
 
-    // Lecture de la table de configuration
     $query = doquery("SELECT * FROM {{table}}",'config');
     while ( $row = mysql_fetch_assoc($query) ) {
 	    $game_config[$row['config_name']] = $row['config_value'];
@@ -52,7 +50,6 @@ if (INSTALL != true) {
 		$IsUserChecked = $Result['state'];
 		$user          = $Result['record'];
 	} elseif ($InLogin == false) {
-		// Jeux en mode 'clos' ???
 		if( $game_config['game_disable']) {
 			if ($user['authlevel'] < 1) {
 				message ( stripslashes ( $game_config['close_reason'] ), $game_config['game_name'] );
@@ -88,7 +85,6 @@ if (INSTALL != true) {
 
 		unset($_fleets);
 
-		include($xnova_root_path . 'rak.'.$phpEx);
 		if ( defined('IN_ADMIN') ) {
 			$UserSkin  = $user['dpath'];
 			$local     = stristr ( $UserSkin, "http:");
@@ -111,11 +107,7 @@ if (INSTALL != true) {
 		$galaxyrow = doquery("SELECT * FROM {{table}} WHERE `id_planet` = '".$planetrow['id']."';", 'galaxy', true);
 
 		CheckPlanetUsedFields($planetrow);
-	} else {
-		// Bah si d�ja y a quelqu'un qui passe par l� et qu'a rien a faire de press� ...
-		// On se sert de lui pour mettre a jour tout les retardataires !!
-
-	}
+	} else {}
 } else {
 	$dpath     = "../" . DEFAULT_SKINPATH;
 }

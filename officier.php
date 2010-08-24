@@ -19,30 +19,29 @@ function ShowOfficierPage ( &$CurrentUser ) {
 
 	includeLang('officier');
 
-	// Vérification que le joueur n'a pas un nombre de points négatif
-	if ($CurrentUser['rpg_points'] < 0) {
-		doquery("UPDATE {{table}} SET `rpg_points` = '0' WHERE `id` = '". $CurrentUser['id'] ."';", 'users');
+	// Aqui vemos que el jugador no tenga la materia oscura en negativa, y de ser asi, la ponemos en 0 (BY lucky Xtreme-gameZ.com.ar DarkMatter ADD-ON)
+	if ($CurrentUser['darkmatter'] < 0) {
+		doquery("UPDATE {{table}} SET `darkmatter` = '0' WHERE `id` = '". $CurrentUser['id'] ."';", 'users');
 	}
 
 	// Si recrutement d'un officier
 	if ($_GET['mode'] == 2) {
-		if ($CurrentUser['rpg_points'] > 0) {
+		if ((floor($CurrentUser['darkmatter'] / 1000)) > 0) {
 			$Selected    = $_GET['offi'];
 			if ( in_array($Selected, $reslist['officier']) ) {
 				$Result = IsOfficierAccessible ( $CurrentUser, $Selected );
 				if ( $Result == 1 ) {
 					$CurrentUser[$resource[$Selected]] += 1;
-					$CurrentUser['rpg_points']         -= 1;
+					$CurrentUser['darkmatter']         -= 1000;
 					if       ($Selected == 610) {
 						$CurrentUser['spy_tech']      += 5;
 					} elseif ($Selected == 611) {
 						$CurrentUser['computer_tech'] += 3;
 					}
 
+					// CAMBIE ALGUNOS VALORES Y LOS ADAPTE A LA MATERIA OSCURA (BY lucky Xtreme-gameZ.com.ar DarkMatter ADD-ON)
 					$QryUpdateUser  = "UPDATE {{table}} SET ";
-					$QryUpdateUser .= "`rpg_points` = '". $CurrentUser['rpg_points'] ."', ";
-					$QryUpdateUser .= "`spy_tech` = '". $CurrentUser['spy_tech'] ."', ";
-					$QryUpdateUser .= "`computer_tech` = '". $CurrentUser['computer_tech'] ."', ";
+					$QryUpdateUser .= "`darkmatter` = '". $CurrentUser['darkmatter'] ."', ";
 					$QryUpdateUser .= "`".$resource[$Selected]."` = '". $CurrentUser[$resource[$Selected]] ."' ";
 					$QryUpdateUser .= "WHERE ";
 					$QryUpdateUser .= "`id` = '". $CurrentUser['id'] ."';";
@@ -57,17 +56,15 @@ function ShowOfficierPage ( &$CurrentUser ) {
 		} else {
 			$Message = $lang['NoPoints'];
 		}
-		$MessTPL        = gettemplate('message_body');
-		$parse['title'] = $lang['Officier'];
-		$parse['mes']   = $Message;
 
-		$page           = parsetemplate( $MessTPL, $parse);
+		message($Message,$lang['Officier'], 'officier.php', '2');
+
 	} else {
 		// Pas de recrutement d'officier
 		$PageTPL = gettemplate('officier_body');
 		$RowsTPL = gettemplate('officier_rows');
 		$parse['off_points']   = $lang['off_points'];
-		$parse['alv_points']   = $CurrentUser['rpg_points'];
+		$parse['alv_points']   = floor($CurrentUser['darkmatter'] / 1000);
 		$parse['disp_off_tbl'] = "";
 		for ( $Officier = 601; $Officier <= 615; $Officier++ ) {
 			$Result = IsOfficierAccessible ( $CurrentUser, $Officier );
@@ -92,9 +89,4 @@ function ShowOfficierPage ( &$CurrentUser ) {
 
 	$page = ShowOfficierPage ( $user );
 	display($page, $lang['officier']);
-
-// -----------------------------------------------------------------------------------------------------------
-// History version
-// 1.0 - Version originelle (Tom1991)
-// 1.1 - Réécriture Chlorel pour integration complete dans XNova
 ?>

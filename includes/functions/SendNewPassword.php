@@ -14,7 +14,7 @@
   	$ExistMail = doquery("SELECT `email` FROM {{table}} WHERE `email` = '". $mail ."' LIMIT 1;", 'users', true);
 
     if (empty($ExistMail['email']))	{
-	   message('L\'adresse n\'existe pas !','Erreur');
+	   message('¡La dirección de correo eléctronico no existe','Error');
 	}
 
 	else{
@@ -39,8 +39,8 @@
     //Et un nouveau mot de passe tout chaud ^^
 
     //On va maintenant l'envoyer au destinataire
-    $Title = "XNova : Nouveau mot de passe";
-    $Body = "Voici votre nouveau mot de passe : ";
+    $Title = "XNova: Nueva contraseña";
+    $Body = "Esta es tu nueva contraseña: ";
     $Body .= $NewPass;
 
     mail($mail,$Title,$Body);

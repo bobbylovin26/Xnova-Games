@@ -15,8 +15,6 @@ $xnova_root_path = './../';
 include($xnova_root_path . 'extension.inc');
 include($xnova_root_path . 'common.'.$phpEx);
 include($xnova_root_path . 'includes/databaseinfos.'.$phpEx);
-include($xnova_root_path . 'includes/migrateinfo.'.$phpEx);
-
 
 $Mode     = $_GET['mode'];
 $Page     = $_GET['page'];
@@ -74,7 +72,7 @@ $nextpage = $Page + 1;
 					}
 
 				fwrite($dz, "<?php\n");
-				fwrite($dz, "if(!defined(\"INSIDE\")){ die(\"attemp hacking\"); }\n");
+				fwrite($dz, "if(!defined(\"INSIDE\")){ die(\"Intento de Hackeo\"); }\n");
 				fwrite($dz, "\$dbsettings = Array(\n");
 				fwrite($dz, "\"server\"     => \"".$host."\", // MySQL server name.\n");
 				fwrite($dz, "\"user\"       => \"".$user."\", // MySQL username.\n");
@@ -95,30 +93,22 @@ $nextpage = $Page + 1;
 
 				doquery ( $QryTableAks        , 'aks'        );
 				$parse['aks_created'] == $lang['create_aks'];
-				doquery ( $QryTableAnnonce    , 'annonce'    );
-				$parse['aks_created'] == $lang['create_annonce'];				
 				doquery ( $QryTableAlliance   , 'alliance'   );
 				$parse['aks_created'] == $lang['create_alliance'];
 				doquery ( $QryTableBanned     , 'banned'     );
 				$parse['aks_created'] == $lang['create_banned'];
 				doquery ( $QryTableBuddy      , 'buddy'      );
 				$parse['aks_created'] == $lang['create_buddy'];
-				doquery ( $QryTableChat       , 'chat'       );
-				$parse['aks_created'] == $lang['create_chat'];
 				doquery ( $QryTableConfig     , 'config'     );
 				$parse['aks_created'] == $lang['create_config'];
 				doquery ( $QryInsertConfig    , 'config'     );
 				$parse['aks_created'] == $lang['populate_config'];
-				doquery ( $QryTabledeclared        , 'declared'        );
-				$parse['aks_created'] == $lang['create_declared'];
 				doquery ( $QryTableErrors     , 'errors'     );
 				$parse['aks_created'] == $lang['create_errors'];
 				doquery ( $QryTableFleets     , 'fleets'     );
 				$parse['aks_created'] == $lang['create_fleetss'];
 				doquery ( $QryTableGalaxy     , 'galaxy'     );
 				$parse['aks_created'] == $lang['create_galaxy'];
-				doquery ( $QryTableIraks      , 'iraks'      );
-				$parse['aks_created'] == $lang['create_iraks'];
 				doquery ( $QryTableLunas      , 'lunas'      );
 				$parse['aks_created'] == $lang['create_lunas'];
 				doquery ( $QryTableMessages   , 'messages'   );
@@ -133,8 +123,6 @@ $nextpage = $Page + 1;
 				$parse['aks_created'] == $lang['create_statpoints'];
 				doquery ( $QryTableUsers      , 'users'      );
 				$parse['aks_created'] == $lang['create_users'];
-				doquery ( $QryTableMulti      , 'multi'      );
-				$parse['aks_created'] == $lang['create_multi'];
 
 				$SubTPL = gettemplate ('install/ins_form_done');
 				$bloc   = $lang;
@@ -153,8 +141,6 @@ $nextpage = $Page + 1;
 				$adm_user   = $_POST['adm_user'];
 				$adm_pass   = $_POST['adm_pass'];
 				$adm_email  = $_POST['adm_email'];
-				$adm_planet = $_POST['adm_planet'];
-				$adm_sex    = $_POST['adm_sex'];
 				$md5pass    = md5($adm_pass);
 
 				if (!$_POST['adm_user']) {
@@ -166,10 +152,6 @@ $nextpage = $Page + 1;
 					exit();
 				}
 				if (!$_POST['adm_email']) {
-					header("Location: ?mode=ins&page=3&error=3");
-					exit();
-				}
-				if (!$_POST['adm_planet']) {
 					header("Location: ?mode=ins&page=3&error=3");
 					exit();
 				}
@@ -207,7 +189,6 @@ $nextpage = $Page + 1;
 				$QryInsertAdm .= "`email`             = '". $adm_email ."', ";
 				$QryInsertAdm .= "`email_2`           = '". $adm_email ."', ";
 				$QryInsertAdm .= "`authlevel`         = '3', ";
-				$QryInsertAdm .= "`sex`               = '". $adm_sex ."', ";
 				$QryInsertAdm .= "`id_planet`         = '1', ";
 				$QryInsertAdm .= "`galaxy`            = '1', ";
 				$QryInsertAdm .= "`system`            = '1', ";
@@ -218,7 +199,6 @@ $nextpage = $Page + 1;
 				doquery($QryInsertAdm, 'users');
 
 				$QryAddAdmPlt  = "INSERT INTO {{table}} SET ";
-				$QryAddAdmPlt .= "`name`              = '". $adm_planet ."', ";
 				$QryAddAdmPlt .= "`id_owner`          = '1', ";
 				$QryAddAdmPlt .= "`galaxy`            = '1', ";
 				$QryAddAdmPlt .= "`system`            = '1', ";
@@ -258,78 +238,6 @@ $nextpage = $Page + 1;
 				$frame  = parsetemplate ( $SubTPL, $bloc );
 			}
 			break;
-		case 'goto':
-			if ($Page == 1) {
-				$SubTPL = gettemplate ('install/ins_goto_intro');
-				$bloc   = $lang;
-				$frame  = parsetemplate ( $SubTPL, $bloc );
-			}
-			elseif ($Page == 2) {
-				if ($_GET['error'] == 1) {
-				adminMessage ($lang['ins_error1'], $lang['ins_error']);
-				}
-				elseif ($_GET['error'] == 2) {
-				adminMessage ($lang['ins_error2'], $lang['ins_error']);
-				}
-
-				$SubTPL = gettemplate ('install/ins_goto_form');
-				$bloc   = $lang;
-				$frame  = parsetemplate ( $SubTPL, $bloc );
-			}
-			elseif ($Page == 3) {
-				$host   = $_POST['host'];
-				$user   = $_POST['user'];
-				$pass   = $_POST['passwort'];
-				$prefix = $_POST['prefix'];
-				$db     = $_POST['db'];
-
-				$connection = @mysql_connect($host, $user, $pass);
-					if (!$connection) {
-					header("Location: ?mode=goto&page=2&error=1");
-					exit();
-					}
-
-				$dbselect = @mysql_select_db($db);
-					if (!$dbselect) {
-					header("Location: ?mode=goto&page=2&error=1");
-					exit();
-					}
-
-				$numcookie = mt_rand(1000, 1234567890);
-				$dz = fopen("../config.php", "w");
-					if (!$dz) {
-					header("Location: ?mode=ins&page=1&error=2");
-					exit();
-					}
-
-				fwrite($dz, "<?php\n");
-				fwrite($dz, "if(!defined(\"INSIDE\")){ die(\"attemp hacking\"); }\n");
-				fwrite($dz, "\$dbsettings = Array(\n");
-				fwrite($dz, "\"server\"     => \"".$host."\", // MySQL server name.\n");
-				fwrite($dz, "\"user\"       => \"".$user."\", // MySQL username.\n");
-				fwrite($dz, "\"pass\"       => \"".$pass."\", // MySQL password.\n");
-				fwrite($dz, "\"name\"       => \"".$db."\", // MySQL database name.\n");
-				fwrite($dz, "\"prefix\"     => \"".$prefix."\", // Tables prefix.\n");
-				fwrite($dz, "\"secretword\" => \"XNova".$numcookie."\"); // Cookies.\n");
-				fwrite($dz, "?>");
-				fclose($dz);
-
-				function doquery($query, $p) {
-					$query = str_replace("{{prefix}}", $p, $query);
-					$return = mysql_query($query) or die("MySQL Error: <b>".mysql_error()."</b>");
-				return $return;
-				}
-				foreach ($QryMigrate as $query) {
-					doquery($query, $prefix);
-				}
-
-				$SubTPL = gettemplate ('install/ins_goto_done');
-				$bloc   = $lang;
-				$frame  = parsetemplate ( $SubTPL, $bloc );
-			}
-		 	break;
-		case 'upg':
-		 	break;
 		case 'bye':
 				header("Location: ../");
 		 	break;
@@ -342,6 +250,6 @@ $nextpage = $Page + 1;
 	$parse['dis_ins_btn']  = "?mode=$Mode&page=$nextpage";
 	$Displ                 = parsetemplate ($MainTPL, $parse);
 
-	display ($Displ, "Installeur", false, '', true);
+	display ($Displ, "Instalacion de XNova", false, '', true);
 
 ?>

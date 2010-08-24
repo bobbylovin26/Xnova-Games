@@ -82,7 +82,4 @@ function HandleTechnologieBuild ( &$CurrentPlanet, &$CurrentUser ) {
 	return $Result;
 }
 
-// History revision
-// 1.0 - mise en forme modularisation version initiale
-// 1.1 - Correction retour de fonction (retourne un tableau a la place d'un flag)
 ?>

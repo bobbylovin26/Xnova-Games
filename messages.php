@@ -14,13 +14,13 @@ $xnova_root_path = './';
 include($xnova_root_path . 'extension.inc');
 include($xnova_root_path . 'common.' . $phpEx);
 include($xnova_root_path . 'includes/functions/BBcodeFunction.' . $phpEx);
-if($user['authlevel']!="1"&$user['authlevel']!="2"&$user['authlevel']!="3"&$user['authlevel']!="0"){ header("Location: login.php");} 
+if($user['authlevel']!="1"&$user['authlevel']!="2"&$user['authlevel']!="3"&$user['authlevel']!="0"){ header("Location: login.php");}
 
 	includeLang('messages');
 
 
 	$OwnerID       = $_GET['id'];
-	$MessCategory  = $_GET['messcat'];
+	$MessCategory  = (isset($_GET['messcat'])) ? $_GET['messcat'] : '100';
 	$MessPageMode  = $_GET["mode"];
 	$DeleteWhat    = $_POST['deletemessages'];
 	if (isset ($DeleteWhat)) {
@@ -49,8 +49,6 @@ if($user['authlevel']!="1"&$user['authlevel']!="2"&$user['authlevel']!="3"&$user
 
 	switch ($MessPageMode) {
 		case 'write':
-			// -------------------------------------------------------------------------------------------------------
-			// Envoi d'un messages
 			if ( !is_numeric( $OwnerID ) ) {
 				message ($lang['mess_no_ownerid'], $lang['mess_error']);
 			}
@@ -87,9 +85,9 @@ if($user['authlevel']!="1"&$user['authlevel']!="2"&$user['authlevel']!="3"&$user
 					$From    = $user['username'] ." [".$user['galaxy'].":".$user['system'].":".$user['planet']."]";
 					$Subject = $_POST['subject'];
 					if($game_config['enable_bbcode'] == 1) {
-										$Message = trim ( nl2br (bbcode ( image ( strip_tags ( $_POST['text'], '<br>' ) ) ) ) ); 
-					
-					} else { 
+										$Message = trim ( nl2br (bbcode ( image ( strip_tags ( $_POST['text'], '<br>' ) ) ) ) );
+
+					} else {
 $Message = trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) ); }
 					SendSimpleMessage ( $Owner, $Sender, '', 1, $From, $Subject, $Message);
 					$subject = "";
@@ -114,8 +112,7 @@ $Message = trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) ); }
 			break;
 
 		case 'delete':
-			// -------------------------------------------------------------------------------------------------------
-			// Suppression des messages selectionnés
+
 			$DeleteWhat = $_POST['deletemessages'];
 			if       ($DeleteWhat == 'deleteall') {
 				doquery("DELETE FROM {{table}} WHERE `message_owner` = '". $user['id'] ."';", 'messages');
@@ -146,8 +143,7 @@ $Message = trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) ); }
 			$MessCategory = $_POST['category'];
 
 		case 'show':
-			// -------------------------------------------------------------------------------------------------------
-			// Affichage de la page des messages
+
 			$page  = "<script language=\"JavaScript\">\n";
 			$page .= "function f(target_url, win_name) {\n";
 			$page .= "var new_win = window.open(target_url,win_name,'resizable=yes,scrollbars=yes,menubar=no,toolbar=no,width=550,height=280,top=0,left=0');\n";
@@ -313,11 +309,5 @@ $Message = trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) ); }
 	}
 
 	display($page, $lang['mess_pagetitle']);
-
-// -----------------------------------------------------------------------------------------------------------
-// History version
-// 1.0 - Version originelle (Tom1991)
-// 1.1 - Mise a plat, linearisation, suppression des doublons / triplons / 'n'gnions dans le code (Chlorel)
-// 1.2 - Regroupage des 2 fichiers vers 1 seul plus simple a mettre en oeuvre et a gerer !
 
 ?>

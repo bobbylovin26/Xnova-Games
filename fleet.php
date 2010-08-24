@@ -14,11 +14,14 @@ $xnova_root_path = './';
 include($xnova_root_path . 'extension.inc');
 include($xnova_root_path . 'common.' . $phpEx);
 
+	if (IsVacationMode($CurrentUser)){
+       return false;
+    }
+
 	$maxfleet  = doquery("SELECT COUNT(fleet_owner) AS `actcnt` FROM {{table}} WHERE `fleet_owner` = '".$user['id']."';", 'fleets', true);
 
 	$MaxFlyingFleets     = $maxfleet['actcnt'];
 
-    //Compteur de flotte en expéditions et nombre d'expédition maximum
     $MaxExpedition      = $user[$resource[124]];
     if ($MaxExpedition >= 1) {
 		$maxexpde  = doquery("SELECT COUNT(fleet_owner) AS `expedi` FROM {{table}} WHERE `fleet_owner` = '".$user['id']."' AND `fleet_mission` = '15';", 'fleets', true);
@@ -26,7 +29,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 		$EnvoiMaxExpedition = 1 + floor( $MaxExpedition / 3 );
     }
 
-	$MaxFlottes         = 1 + $user[$resource[108]];
+	$MaxFlottes         = 1 + $user[$resource[108]] + ($user['rpg_commandant']*3);
 
 	CheckPlanetUsedFields($planetrow);
 
@@ -45,7 +48,6 @@ include($xnova_root_path . 'common.' . $phpEx);
 		15 => $lang['type_mission'][15]
 	);
 
-	// Histoire de recuperer les infos passées par galaxy
 	$galaxy         = $_GET['galaxy'];
 	$system         = $_GET['system'];
 	$planet         = $_GET['planet'];
@@ -88,22 +90,18 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$page .= "<th>".$lang['fl_start_t']."</th>";
 	$page .= "<th>".$lang['fl_dest']."</th>";
 	$page .= "<th>".$lang['fl_dest_t']."</th>";
-//	$page .= "<th>".$lang['fl_back_t']."</th>";
 	$page .= "<th>".$lang['fl_back_in']."</th>";
 	$page .= "<th>".$lang['fl_order']."</th>";
 	$page .= "</tr>";
 
-	// Gestion des flottes du joueur actif
-	$fq = doquery("SELECT * FROM {{table}} WHERE fleet_owner={$user[id]}", "fleets");
+	$fq = doquery("SELECT * FROM {{table}} WHERE fleet_owner='$user[id]' AND fleet_mission <> 10", "fleets");
 	$i  = 0;
 
 
 	while ($f = mysql_fetch_array($fq)) {
 		$i++;
 		$page .= "<tr height=20>";
-		// (01) Fleet ID
 		$page .= "<th>".$i."</th>";
-		// (02) Fleet Mission
 		$page .= "<th>";
 		$page .= "<a>". $missiontype[$f[fleet_mission]] ."</a>";
 		if (($f['fleet_start_time'] + 1) == $f['fleet_end_time']) {
@@ -112,9 +110,9 @@ include($xnova_root_path . 'common.' . $phpEx);
 			$page .= "<br><a title=\"".$lang['fl_get_to_ttl']."\">".$lang['fl_get_to']."</a>";
 		}
 		$page .= "</th>";
-		// (03) Fleet Mission
+
 		$page .= "<th><a title=\"";
-		// Fleet details (commentaire)
+
 		$fleet = explode(";", $f['fleet_array']);
 		$e = 0;
 		foreach ($fleet as $a => $b) {
@@ -128,19 +126,17 @@ include($xnova_root_path . 'common.' . $phpEx);
 			}
 		}
 		$page .= "\">". pretty_number($f[fleet_amount]) ."</a></th>";
-		// (04) Fleet From (Planete d'origine)
+
 		$page .= "<th>[".$f[fleet_start_galaxy].":".$f[fleet_start_system].":".$f[fleet_start_planet]."]</th>";
-		// (05) Fleet Start Time
+
 		$page .= "<th>". gmdate("d. M Y H:i:s", $f['fleet_start_time']) ."</th>";
-		// (06) Fleet Target (Planete de destination)
+
 		$page .= "<th>[".$f[fleet_end_galaxy].":".$f[fleet_end_system].":".$f[fleet_end_planet]."]</th>";
-		// (07) Fleet Target Time
+
 		$page .= "<th>". gmdate("d. M Y H:i:s", $f['fleet_end_time']) ."</th>";
-		// (08) Fleet Back Time
-//		$page .= "<th><font color=\"lime\"><div id=\"time_0\"><font>". pretty_time(floor($f['fleet_end_time'] + 1 - time())) ."</font></th>";
-		// (09) Fleet Back In
+
 		$page .= "<th><font color=\"lime\"><div id=\"time_0\"><font>". pretty_time(floor($f['fleet_end_time'] + 1 - time())) ."</font></th>";
-		// (10) Orders
+
 		$page .= "<th>";
 		if ($f['fleet_mess'] == 0) {
 				$page .= "<form action=\"fleetback.php\" method=\"post\">";
@@ -157,11 +153,10 @@ include($xnova_root_path . 'common.' . $phpEx);
 			$page .= "&nbsp;-&nbsp;";
 		}
 		$page .= "</th>";
-		// Fin de ligne
+
 		$page .= "</tr>";
 	}
 
-	// Y a pas de flottes en vol ... on met des '-'
 	if ($i == 0) {
 		$page .= "<tr>";
 		$page .= "<th>-</th>";
@@ -171,7 +166,6 @@ include($xnova_root_path . 'common.' . $phpEx);
 		$page .= "<th>-</th>";
 		$page .= "<th>-</th>";
 		$page .= "<th>-</th>";
-//		$page .= "<th>-</th>";
 		$page .= "<th>-</th>";
 		$page .= "<th>-</th>";
 		$page .= "</tr>";
@@ -185,7 +179,6 @@ include($xnova_root_path . 'common.' . $phpEx);
 
 	$page .= "<center>";
 
-	// Selection d'une nouvelle mission
 	$page .= "<form action=\"floten1.php\" method=\"post\">";
 	$page .= "<table width=\"519\" border=\"0\" cellpadding=\"0\" cellspacing=\"1\">";
 	$page .= "<tr height=\"20\">";
@@ -202,7 +195,6 @@ include($xnova_root_path . 'common.' . $phpEx);
 		message($lang['fl_noplanetrow'], $lang['fl_error']);
 	}
 
-	// Prise des coordonnées sur la ligne de commande
 	$galaxy         = intval($_GET['galaxy']);
 	$system         = intval($_GET['system']);
 	$planet         = intval($_GET['planet']);
@@ -220,7 +212,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 			$ShipData .= "<input type=\"hidden\" name=\"speed" .$i ."\" value=\"" . GetFleetMaxSpeed ("", $i, $user) . "\" />";
 			$ShipData .= "<input type=\"hidden\" name=\"capacity". $i ."\" value=\"". $pricelist[$i]['capacity'] ."\" />";
 			$page .= "</th>";
-			// Satelitte Solaire (eux ne peuvent pas bouger !)
+
 			if ($i == 212) {
 				$page .= "<th></th><th></th>";
 			} else {
@@ -235,7 +227,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$btncontinue = "<tr height=\"20\"><th colspan=\"4\"><input type=\"submit\" value=\" ".$lang['fl_continue']." \" /></th>";
 	$page .= "<tr height=\"20\">";
 	if (!$have_ships) {
-		// Il n'y a pas de vaisseaux sur cette planete
+
 		$page .= "<th colspan=\"4\">". $lang['fl_noships'] ."</th>";
 		$page .= "</tr>";
 		$page .= $btncontinue;
@@ -263,7 +255,4 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$page .= "</center>";
 
 	display($page, $lang['fl_title']);
-
-// Updated by Chlorel. 16 Jan 2008 (String extraction, bug corrections, code uniformisation
-// Created by Perberos. All rights reversed (C) 2006
 ?>
