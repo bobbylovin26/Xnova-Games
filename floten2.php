@@ -20,6 +20,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$system     = intval($_POST['system']);
 	$planet     = intval($_POST['planet']);
 	$planettype = intval($_POST['planettype']);
+	$fleet_group_mr = intval($_POST['fleet_group']);
 
 	// Test d'existance et de proprieté de la planete
 	$YourPlanet = false;
@@ -74,7 +75,9 @@ include($xnova_root_path . 'common.' . $phpEx);
 			$_POST['ship221'] >= 1 ||
 			$_POST['ship222'] >= 1 ||
 			$_POST['ship223'] >= 1 ||
-            $_POST['ship224'] >= 1) {
+			$_POST['ship224'] >= 1 ||
+			$_POST['ship225'] >= 1 ||
+			$_POST['ship226'] >= 1) {
 			if (!$YourPlanet) {
 				$missiontype[1] = $lang['type_mission'][1];
 			}
@@ -88,12 +91,16 @@ include($xnova_root_path . 'common.' . $phpEx);
 	}
 	if ($YourPlanet)
 		$missiontype[4] = $lang['type_mission'][4];
-
+/*
 	if ( $_POST['planettype'] == 3 &&
 		($_POST['ship214']         ||
 		 $_POST['ship213'])        &&
 		 !$YourPlanet              &&
 		 $UsedPlanet) {
+		$missiontype[2] = $lang['type_mission'][2];
+	}
+*/
+	if (($_POST['planettype'] == 3 || $_POST['planettype'] == 1) && ($fleet_group_mr > 0) && ($UsedPlanet)) {
 		$missiontype[2] = $lang['type_mission'][2];
 	}
 	if ( $_POST['planettype'] == 3 &&
@@ -139,7 +146,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 	} else {
 		$MissionSelector .= "<tr height=\"20\">";
 		$MissionSelector .= "<th>";
-		$MissionSelector .= "<font color=\"red\">". $lang['fl_bad_mission'] ."</font>";
+		$MissionSelector .= "<font color=\"red\">". $lang['fl_bad_mission'] ."*</font>";
 		$MissionSelector .= "</th>";
 		$MissionSelector .= "</tr>";
 	}
@@ -178,6 +185,8 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$page .= "<input type=\"hidden\" name=\"usedfleet\"      value=\"". $_POST["usedfleet"] ."\" />\n";
 	$page .= "<input type=\"hidden\" name=\"maxepedition\"   value=\"". $_POST['maxepedition'] ."\" />\n";
 	$page .= "<input type=\"hidden\" name=\"curepedition\"   value=\"". $_POST['curepedition'] ."\" />\n";
+	$page .= "<input type=\"hidden\" name=\"fleet_group\"    value=\"". $_POST['fleet_group'] ."\" />\n";
+	$page .= "<input type=\"hidden\" name=\"acs_target_mr\"  value=\"". $_POST['acs_target_mr'] ."\" />\n";
 	foreach ($fleetarray as $Ship => $Count) {
 		$page .= "<input type=\"hidden\" name=\"ship". $Ship ."\"        value=\"". $Count ."\" />\n";
 		$page .= "<input type=\"hidden\" name=\"capacity". $Ship ."\"    value=\"". $pricelist[$Ship]['capacity'] ."\" />\n";

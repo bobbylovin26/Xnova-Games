@@ -67,7 +67,7 @@ font-weight: bold;
 		{fleet_list}
 	<tr>
 		<th>{moon_img}<br />{moon}</th>
-		<th colspan="2"><img src="{dpath}planeten/{planet_image}.jpg" height="200" width="200"><br />{building}</th>
+		<th colspan="2"><img src="{dpath}planeten/{planet_image}.jpg" height="200" width="200"><br />{building}<br /></th>
 		<th>
 			<table width="100%" border="0">
 				<tr>

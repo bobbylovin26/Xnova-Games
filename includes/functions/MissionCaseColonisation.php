@@ -14,8 +14,6 @@ function MissionCaseColonisation ( $FleetRow ) {
 	global $lang, $resource;
 
 	include("includes/functions/CreateOnePlanetRecord.php");
-	include("includes/functions/RestoreFleetToPlanet.php");
-
 
 	$iPlanetCount = mysql_result(doquery ("SELECT count(*) FROM {{table}} WHERE `id_owner` = '". $FleetRow['fleet_owner'] ."' AND `planet_type` = '1'", 'planets'), 0);
 	if ($FleetRow['fleet_mess'] == 0) {

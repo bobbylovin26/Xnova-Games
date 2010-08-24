@@ -121,7 +121,7 @@ $lang['ov_explo_from']       				= "de la posición ";
 $lang['ov_back_planet']      				= " a el planeta ";
 $lang['ov_back_moon']        				= " la luna ";
 $lang['ov_une_hostile']      				= "Una ";
-$lang['ov_hostile']          				= " flota de ";
+$lang['ov_hostile']          				= " de ";
 $lang['ov_message']          				= "Escribir mensaje";
 
 ?>

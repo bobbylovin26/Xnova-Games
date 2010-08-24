@@ -9,7 +9,7 @@
  *
  */
 
-define('VERSION','v2.0');
+define('VERSION','v2.1');
 
 $phpEx = "php";
 
@@ -35,12 +35,12 @@ if (INSTALL != true)
 	include($xnova_root_path . 'includes/constants.'.$phpEx);
 
 	//FUNCIONES
+	include($xnova_root_path . 'includes/functions/CreateOneMoonRecord.'.$phpEx);
 	include($xnova_root_path . 'includes/functions/calculateAttack.'.$phpEx);
 	include($xnova_root_path . 'includes/functions/CheckPlanetUsedFields.'.$phpEx);
 	include($xnova_root_path . 'includes/functions/ChekUser.'.$phpEx);
 	include($xnova_root_path . 'includes/functions/FlyingFleetHandler.'.$phpEx);
 	include($xnova_root_path . 'includes/functions/formatCR.'.$phpEx);
-	include($xnova_root_path . 'includes/functions/HandleElementBuildingQueue.'.$phpEx);
 	include($xnova_root_path . 'includes/functions/IsVacationMode.'.$phpEx);
 	include($xnova_root_path . 'includes/functions/PlanetResourceUpdate.'.$phpEx);
 	include($xnova_root_path . 'includes/functions/raketenangriff.' . $phpEx);
@@ -48,6 +48,21 @@ if (INSTALL != true)
 	include($xnova_root_path . 'includes/functions/SetSelectedPlanet.'.$phpEx);
 	include($xnova_root_path . 'includes/functions/SortUserPlanets.'.$phpEx);
 	include($xnova_root_path . 'includes/functions/strings.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/GetBuildingTime.' . $phpEx);
+	include($xnova_root_path . 'includes/functions/HandleElementBuildingQueue.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/UpdatePlanetBatimentQueueList.'.$phpEx);
+	include($xnova_root_path . "includes/functions/RestoreFleetToPlanet.php");
+	include($xnova_root_path . 'includes/functions/MissionCaseAttack.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/MissionCaseACS.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/MissionCaseTransport.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/MissionCaseStay.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/MissionCaseStayAlly.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/MissionCaseSpy.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/MissionCaseColonisation.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/MissionCaseRecycling.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/MissionCaseDestruction.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/MissionCaseMIP.'.$phpEx);
+	include($xnova_root_path . 'includes/functions/MissionCaseExpedition.'.$phpEx);
 
 	$query = doquery("SELECT * FROM {{table}}",'config');
 
@@ -86,21 +101,11 @@ if (INSTALL != true)
 
 	if ( isset ($user) )
 	{
-		$_fleets = doquery("SELECT `fleet_start_galaxy`,`fleet_start_system`,`fleet_start_planet`,`fleet_start_type` FROM {{table}} WHERE `fleet_start_time` <= '".time()."';", 'fleets'); //  OR fleet_end_time <= ".time()
+		$_fleets = doquery("SELECT * FROM {{table}} WHERE `fleet_end_time` <= '".time()."';", 'fleets'); //  OR fleet_end_time <= ".time()
+
 		while ($row = mysql_fetch_array($_fleets))
 		{
-			$array                = array();
-			$array['galaxy']      = $row['fleet_start_galaxy'];
-			$array['system']      = $row['fleet_start_system'];
-			$array['planet']      = $row['fleet_start_planet'];
-			$array['planet_type'] = $row['fleet_start_type'];
 
-			$temp = FlyingFleetHandler ($array);
-		}
-
-		$_fleets = doquery("SELECT `fleet_end_galaxy`,`fleet_end_system`,`fleet_end_planet`,`fleet_end_type` FROM {{table}} WHERE `fleet_end_time` <= '".time()."';", 'fleets'); //  OR fleet_end_time <= ".time()
-		while ($row = mysql_fetch_array($_fleets))
-		{
 			$array                = array();
 			$array['galaxy']      = $row['fleet_end_galaxy'];
 			$array['system']      = $row['fleet_end_system'];
@@ -108,10 +113,19 @@ if (INSTALL != true)
 			$array['planet_type'] = $row['fleet_end_type'];
 
 			$temp = FlyingFleetHandler ($array);
+
+			if($row['fleet_end_time'] <= time())
+			{
+				unset($array);
+				$array                = array();
+				$array['galaxy']      = $row['fleet_start_galaxy'];
+				$array['system']      = $row['fleet_start_system'];
+				$array['planet']      = $row['fleet_start_planet'];
+				$array['planet_type'] = $row['fleet_start_type'];
+
+				$temp = FlyingFleetHandler ($array);
+			}
 		}
-
-		unset($_fleets);
-
 		if ( defined('IN_ADMIN') )
 		{
 			$UserSkin  = $user['dpath'];

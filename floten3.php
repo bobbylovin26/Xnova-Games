@@ -23,6 +23,30 @@ include($xnova_root_path . 'common.' . $phpEx);
 
 	includeLang('fleet');
 
+	//Normally... unless its acs...
+	$fleet_group_mr = 0;
+	//But is it acs??
+	//Well all acs fleets must have a fleet code.
+	if($_POST['fleet_group'] > 0){
+		//Also it must be mission type 2
+		if($_POST['mission'] == 2){
+			//The co-ords must be the same as where the acs fleet is going.
+			$target = "g".$_POST["galaxy"]."s".$_POST["system"]."p".$_POST["planet"]."t".$_POST["planettype"];
+			if($_POST['acs_target_mr'] == $target){
+				//ACS attack must exist (if acs fleet has arrived this will also return false (2 checks in 1!!!)
+				$aks_count_mr = doquery("SELECT * FROM {{table}} WHERE id = '".$_POST['fleet_group']."'",'aks');
+				if (mysql_num_rows($aks_count_mr) > 0) {
+					$fleet_group_mr = $_POST['fleet_group'];
+				}
+			}
+		}
+	}
+	//Check that a failed acs attack isn't being sent, if it is, make it an attack fleet.
+	if(($_POST['fleet_group'] == 0) && ($_POST['mission'] == 2)){
+		$_POST['mission'] = 1;
+	}
+
+
 	$CurrentPlanet = doquery("SELECT * FROM {{table}} WHERE `id` = '". $user['current_planet'] ."'", 'planets', true);
 	$TargetPlanet  = doquery("SELECT * FROM {{table}} WHERE `galaxy` = '". $_POST['galaxy'] ."' AND `system` = '". $_POST['system'] ."' AND `planet` = '". $_POST['planet'] ."' AND `planet_type` = '". $_POST['planettype'] ."';", 'planets', true);
 	$MyDBRec       = doquery("SELECT * FROM {{table}} WHERE `id` = '". $user['id']."';", 'users', true);
@@ -144,7 +168,9 @@ include($xnova_root_path . 'common.' . $phpEx);
 				$_POST['ship221'] >= 1 ||
 				$_POST['ship222'] >= 1 ||
 				$_POST['ship223'] >= 1 ||
-				$_POST['ship224'] >= 1) {
+				$_POST['ship224'] >= 1 ||
+				$_POST['ship225'] >= 1 ||
+				$_POST['ship226'] >= 1) {
 				if (!$YourPlanet) {
 					$missiontype[1] = $lang['type_mission'][1];
 				}
@@ -159,11 +185,16 @@ include($xnova_root_path . 'common.' . $phpEx);
 		if ($YourPlanet)
 			$missiontype[4] = $lang['type_mission'][4];
 
+/*
 		if ( $_POST['planettype'] == 3 &&
 			($_POST['ship214']         ||
 			 $_POST['ship213'])        &&
 			 !$YourPlanet              &&
 			 $UsedPlanet) {
+			$missiontype[2] = $lang['type_mission'][2];
+		}
+*/	
+		if (($_POST['planettype'] == 3 || $_POST['planettype'] == 1) && ($fleet_group_mr > 0) && ($UsedPlanet)) {
 			$missiontype[2] = $lang['type_mission'][2];
 		}
 		if ( $_POST['planettype'] == 3 &&
@@ -454,6 +485,47 @@ include($xnova_root_path . 'common.' . $phpEx);
 			message ("<font color=\"red\"><b>". $lang['fl_adm_attak'] ."</b></font>", $lang['fl_warning'], "fleet." . $phpEx, 2);
 		}
 	}
+	
+  if ($fleet_group_mr != 0) { // Si c'est une AG
+		$AksStartTime = mysql_fetch_array(doquery("SELECT MAX(`fleet_start_time`) AS Start, MAX(`fleet_end_time`) AS End FROM {{table}} WHERE `fleet_group` = '". $fleet_group_mr . "';", 'fleets'));
+		
+		if ($AksStartTime['Start'] > $fleet['start_time']) {
+			$fleet['start_time'] = $AksStartTime['Start'] + 1;
+			$fleet['end_time'] = $AksStartTime['End'] + 1;
+		} else {    
+			$AksTime = mysql_fetch_array(doquery("SELECT fleet_start_time, fleet_end_time FROM {{table}} WHERE `fleet_group` = '". $fleet_group_mr . "' AND `fleet_mission` = '1';", 'fleets'));
+			
+			if ($AksTime['fleet_start_time'] < $fleet['start_time']) {
+				$QryUpdateFleets = "UPDATE {{table}} SET ";
+				$QryUpdateFleets .= "`fleet_start_time` = '". $fleet['start_time'] ."', ";
+				$QryUpdateFleets .= "`fleet_end_time` = '". $fleet['end_time'] ."' ";
+				$QryUpdateFleets .= "WHERE ";
+				$QryUpdateFleets .= "`fleet_group` = '". $fleet_group_mr ."' AND ";
+				$QryUpdateFleets .= "`fleet_mission` = '1';";
+				doquery($QryUpdateFleets, "fleets");
+				$SelectFleets = doquery("SELECT * FROM {{table}} WHERE `fleet_group` = '". $fleet_group_mr . "' AND `fleet_mission` = '2' ORDER BY `fleet_id` ASC ;", 'fleets');
+				$nb = mysql_num_rows($SelectFleets);
+				$i = 0;
+				if ($nb > 0) {
+					while ($row = mysql_fetch_array($SelectFleets)) {    
+						$i++;        
+						$row['fleet_start_time'] = $fleet['start_time'] + $i;
+						$row['fleet_end_time'] = $fleet['end_time'] + $i;
+						$QryUpdateFleets = "UPDATE {{table}} SET ";
+						   $QryUpdateFleets .= "`fleet_start_time` = '". $row['fleet_start_time'] ."', ";
+						  $QryUpdateFleets .= "`fleet_end_time` = '". $row['fleet_end_time'] ."' ";
+						   $QryUpdateFleets .= "WHERE ";
+						   $QryUpdateFleets .= "`fleet_id` = '". $row['fleet_id'] ."';";
+						   doquery($QryUpdateFleets, "fleets");
+					}
+				}
+				
+				$fleet['start_time'] = $fleet['start_time'] + $nb + 1;
+				$fleet['end_time'] = $fleet['end_time'] + $nb + 1;
+			}
+		}
+	} 
+  
 
 	// ecriture de l'enregistrement de flotte (a partir de l�, y a quelque chose qui vole et c'est toujours sur la planete d'origine)
 	$QryInsertFleet  = "INSERT INTO {{table}} SET ";
@@ -476,6 +548,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$QryInsertFleet .= "`fleet_resource_crystal` = '". $TransCrystal ."', ";
 	$QryInsertFleet .= "`fleet_resource_deuterium` = '". $TransDeuterium ."', ";
 	$QryInsertFleet .= "`fleet_target_owner` = '". $TargetPlanet['id_owner'] ."', ";
+	$QryInsertFleet .= "`fleet_group` = '". $fleet_group_mr ."', ";
 	$QryInsertFleet .= "`start_time` = '". time() ."';";
 	doquery( $QryInsertFleet, 'fleets');
 

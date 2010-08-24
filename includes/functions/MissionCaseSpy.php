@@ -13,7 +13,6 @@
 function MissionCaseSpy ( $FleetRow ) {
 	global $lang, $resource;
 
-	include("includes/functions/RestoreFleetToPlanet.php");
 	include("includes/functions/SpyTarget.php");
 
 	if ($FleetRow['fleet_start_time'] <= time()) {

@@ -12,6 +12,8 @@
 define('INSIDE'  , true);
 define('INSTALL' , false);
 
+$InLogin = true;
+
 $xnova_root_path = './';
 include($xnova_root_path . 'extension.inc.php');
 include($xnova_root_path . 'common.' . $phpEx);

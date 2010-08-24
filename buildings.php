@@ -38,8 +38,6 @@ include($xnova_root_path . 'includes/functions/GetElementRessources.'.$phpEx);
 include($xnova_root_path . 'includes/functions/GetMaxConstructibleElements.'.$phpEx);
 include($xnova_root_path . 'includes/functions/CheckLabSettingsInQueue.'.$phpEx);
 include($xnova_root_path . 'includes/functions/GetRestPrice.'.$phpEx);
-include($xnova_root_path . 'includes/functions/GetBuildingTime.' . $phpEx);
-include($xnova_root_path . 'includes/functions/UpdatePlanetBatimentQueueList.'.$phpEx);
 
 includeLang('buildings');
 

@@ -1,5 +1,5 @@
 <tr>
-	<th>{ally_rank} {ally_rankplus}</th>
+	<th><a href="#" onmouseover='return overlib("{ally_rankplus}");' onmouseout='return nd();'>{ally_rank}</a></th>
 	<th><a href="alliance.php?mode=ainfo&tag={ally_tag}" target='_ally'>{ally_name}</a></th>
 	<th>{ally_mes}</th>
 	<th>{ally_members}</th>

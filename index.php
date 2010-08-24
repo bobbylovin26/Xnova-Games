@@ -19,7 +19,7 @@ elseif (file_exists('install/'))
 	echo("<h2><b>Por favor, elimine el archivo de instalación antes de continuar</b></h2><br>
 	Por razones de seguridad, es obligatorio eliminar <i> (o cambiar el nombre) </i> gracias.");
 }
-elseif($_GET[claveperdida] == "" && $_GET[salir] == "")
+elseif($_GET[modo] == "")
 {
 	define('INSIDE'  , true);
 	define('INSTALL' , false);
@@ -84,28 +84,31 @@ elseif($_GET[claveperdida] == "" && $_GET[salir] == "")
 		display(parsetemplate(gettemplate('index_body'), $parse), "Bienvenido");
 	}
 }
-elseif($_GET[claveperdida] == "ok" && $_GET[salir] == "")
+elseif($_GET[modo] == "claveperdida")
 {
 	define('INSIDE'  , true);
 	define('INSTALL' , false);
+	define('LOGIN'   , true);
+
+	$InLogin = true;
 
 	$xnova_root_path = './';
 	include($xnova_root_path . 'extension.inc.php');
 	include($xnova_root_path . 'common.' . $phpEx);
 	include($xnova_root_path . 'includes/functions/SendNewPassword.' . $phpEx);
 
-	if($_POST[email])
+	if($_POST)
 	{
-		$email               = $_POST['email'];
-		sendnewpassword($email);
+		sendnewpassword($_POST['email']);
 		message('¡La nueva contraseña ha sido enviado con éxito!', "Enviada", "./",2);
 	}
 	else
 	{
+		$parse['forum_url']    = $game_config['forum_url'];
 		display(parsetemplate(gettemplate('lostpassword'), $parse), "Recuperar clave", false);
 	}
 }
-elseif($_GET[claveperdida] == "" && $_GET[salir] == "salir")
+elseif($_GET[modo] == "salir")
 {
 	define('INSIDE'  , true);
 	define('INSTALL' , false);

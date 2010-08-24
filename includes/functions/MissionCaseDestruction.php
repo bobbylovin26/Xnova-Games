@@ -11,7 +11,6 @@
 function MissionCaseDestruction($FleetRow) {
    global $user, $phpEx, $xnova_root_path, $pricelist, $lang, $resource, $CombatCaps;
 
-   include($xnova_root_path. "includes/functions/CreateOneMoonRecord.php");
    includeLang('system');
 
    if ($FleetRow['fleet_start_time'] <= time()) {

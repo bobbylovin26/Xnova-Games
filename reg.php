@@ -9,6 +9,9 @@
 
 define('INSIDE' , true);
 define('INSTALL' , false);
+define('LOGIN'   , true);
+
+$InLogin = true;
 
 $xnova_root_path = './';
 include($xnova_root_path . 'extension.inc.php');
@@ -16,16 +19,12 @@ include($xnova_root_path . 'common.' . $phpEx);
 include($xnova_root_path . 'includes/functions/CheckInputStrings.' . $phpEx);
 include($xnova_root_path . 'includes/functions/CreateOnePlanetRecord.'.$phpEx);
 
-includeLang('reg');
-
 function sendpassemail($emailaddress, $password)
 {
-    global $lang;
-
     $parse['gameurl'] = GAMEURL;
     $parse['password'] = $password;
-    $email = parsetemplate($lang['mail_welcome'], $parse);
-    $status = mymail($emailaddress, $lang['mail_title'], $email);
+    $email = parsetemplate("Muchas gracias por registrarte en nuestro juego. \n Tu contraseña es: {password} \n\n ¡Disfrutá del juego! \n {gameurl}", $parse);
+    $status = mymail($emailaddress, "Registro en " . $game_config['game_name'], $email);
     return $status;
 }
 
@@ -62,51 +61,50 @@ if ($_POST) {
 
     $_POST['email'] = strip_tags($_POST['email']);
     if (!is_email($_POST['email'])) {
-        $errorlist .= $lang['error_mail'];
+        $errorlist .= "&#161;Correo electr&oacute;nico inv&aacute;lido!<br />";
         $errors++;
     }
 
     if (!$_POST['character']) {
-        $errorlist .= $lang['error_character'];
+        $errorlist .= "&#161;El campo del usuario no puedo estar vac&#237;o!<br />";
         $errors++;
     }
 
     if (strlen($_POST['passwrd']) < 4) {
-        $errorlist .= $lang['error_password'];
+        $errorlist .= "&#161;La contrase&ntilde;a debe tener al menos 4 caracteres!<br />";
         $errors++;
     }
 
     if (preg_match("/[^A-z0-9_\-]/", $_POST['character']) == 1) {
-        $errorlist .= $lang['error_charalpha'];
+        $errorlist .= "&#161;El campo de usuario s&oacute;lo puede contener caracteres alfanum&eacute;ricos!<br />";
         $errors++;
     }
 
     if ($_POST['rgt'] != 'on') {
-        $errorlist .= $lang['error_rgt'];
+        $errorlist .= "&#161;Debe aceptar nuestros t&#233;rminos y condiciones de uso!<br />";
         $errors++;
     }
-    // Le meilleur moyen de voir si un nom d'utilisateur est pris c'est d'essayer de l'appeler !!
+
     $ExistUser = doquery("SELECT `username` FROM {{table}} WHERE `username` = '" . mysql_escape_string($_POST['character']) . "' LIMIT 1;", 'users', true);
     if ($ExistUser) {
-        $errorlist .= $lang['error_userexist'];
+        $errorlist .= "&#161;El nombre de usuario elegido ya existe!<br />";
         $errors++;
     }
-    // Si l'on verifiait que l'adresse email n'existe pas encore ???
+
     $ExistMail = doquery("SELECT `email` FROM {{table}} WHERE `email` = '" . mysql_escape_string($_POST['email']) . "' LIMIT 1;", 'users', true);
     if ($ExistMail) {
-        $errorlist .= $lang['error_emailexist'];
+        $errorlist .= "&#161;El email ingresado ya existe!<br />";
         $errors++;
     }
 
     if ($errors != 0) {
-        message ($errorlist, $lang['Register'], "reg.php", "3");
+        message ($errorlist, "<font color=\"red\">Error en el registro</font>", "reg.php", "3");
     } else {
-        $newpass = $_POST['passwrd'];
-        $UserName = CheckInputStrings ($_POST['character']);
-        $UserEmail = CheckInputStrings ($_POST['email']);
-
+    	$newpass	= $_POST['passwrd'];
+        $UserName 	= CheckInputStrings ($_POST['character']);
+        $UserEmail 	= CheckInputStrings ($_POST['email']);
         $md5newpass = md5($newpass);
-        // Creation de l'utilisateur
+
         $QryInsertUser = "INSERT INTO {{table}} SET ";
         $QryInsertUser .= "`username` = '" . mysql_escape_string(strip_tags($UserName)) . "', ";
         $QryInsertUser .= "`email` = '" . mysql_escape_string($UserEmail) . "', ";
@@ -193,30 +191,26 @@ if ($_POST) {
         $QryUpdateUser .= "LIMIT 1;";
         doquery($QryUpdateUser, 'users');
         // Envois d'un message in-game sympa ^^
-        $from = $lang['sender_message_ig'];
+        $from = "Admin";
         $sender = "Admin";
-        $Subject = $lang['subject_message_ig'];
-        $message = $lang['text_message_ig'];
+        $Subject = "Bienvenido";
+        $message = "&#161;Bienvenido a XG Proyect!<p>Al comenzar, construye una mina de Metal.<br />Para hacerlo, haz click en el enlace \"Edificios\" en la izquierda, y dale a \"construir\" a la derecha de la mina de metal.<br />Ahora tienes algo de tiempo para conocer m&#225;s cosas del juego.<p>Podr&#225;s encontrar ayuda:<br />En el <a href=\"http://www.xtreme-gamez.com.ar/foros\" target=\"_blank\">Foro</a><br />Ahora, tu mina deber&#237;a estar acabada.<br />Como no producen nada sin energ&#237;a, deber&#237;as construir una Planta de energ&#237;a solar, vuelve a Edificios, y elige construir la Planta de energ&#237;a solar.<p>Para ver todas las naves, estructuras defensivas, edificios e investigaciones que puedes investigar, puedes echarle un vistazo al &#226;rbol de tecnolog&#237;a en \"Tecnolog&#237;a\" en el menú izquierdo.<p>Ahora ya puedes empezar la conquista del universo... &#161;Buena suerte!";
         SendSimpleMessage($iduser, $sender, $Time, 1, $from, $Subject, $message);
 
-        // Mise a jour du nombre de joueurs inscripts
         doquery("UPDATE {{table}} SET `config_value` = `config_value` + '1' WHERE `config_name` = 'users_amount' LIMIT 1;", 'config');
 
-        $Message = $lang['thanksforregistry'];
+        $Message = "&#161;Gracias por registrarte!";
         if (sendpassemail($_POST['email'], "$newpass")) {
             $Message .= " (" . htmlentities($_POST["email"]) . ")";
         } else {
             $Message .= " (" . htmlentities($_POST["email"]) . ")";
-            $Message .= "<br><br>" . $lang['error_mailsend'] . " <b>" . $newpass . "</b>";
+            $Message .= "<br><br>Un error se produjo en el env&iacute;o del e-mail. Tu contrase&ntilde;a es: <b>" . $newpass . "</b>";
         }
-        message( $Message, $lang['reg_welldone'], "index.".$phpEx, "3" );
+        message( $Message, "&#161;Registro completado con &#233;xito!", "index.".$phpEx, "3" );
     }
 } else {
-    // Afficher le formulaire d'enregistrement
-    $parse = $lang;
-    $parse['servername'] = $game_config['game_name'];
-    $page = parsetemplate(gettemplate('registry_form'), $parse);
-
-    display ($page, $lang['registry'], false);
+	$parse['servername']   = $game_config['game_name'];
+	$parse['forum_url']    = $game_config['forum_url'];
+    display (parsetemplate(gettemplate('registry_form'), $parse), "Registro", false);
 }
 ?>

@@ -117,17 +117,17 @@ if ($who == 2)
 
 		if ($ranking == "0")
 		{
-			$parse['ally_rankplus']   = "<font color=\"#87CEEB\">*</font>";
+			$parse['ally_rankplus']   = "<font color=#87CEEB>*</font>";
 		}
 
 		if ($ranking < "0")
 		{
-			$parse['ally_rankplus']   = "<font color=\"red\">".$ranking."</font>";
+			$parse['ally_rankplus']   = "<font color=red>".$ranking."</font>";
 		}
 
 		if ($ranking > "0")
 		{
-			$parse['ally_rankplus']   = "<font color=\"green\">+".$ranking."</font>";
+			$parse['ally_rankplus']   = "<font color=green>+".$ranking."</font>";
 		}
 
 		$parse['ally_tag']        	  = $AllyRow['ally_tag'];
@@ -171,7 +171,7 @@ else
 		$parse['stat_date']       = date("d M Y - H:i:s", $StatRow['stat_date']);
 		$parse['player_rank']     = $start;
 		$UsrRow                   = doquery("SELECT * FROM {{table}} WHERE `id` = '". $StatRow['id_owner'] ."';", 'users',true);
-		$QryUpdateStats .= "`stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $TheRank['id_owner'] ."';";
+		$QryUpdateStats 		 .= "`stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $TheRank['id_owner'] ."';";
 		$rank_old                 = $StatRow[ $OldRank ];
 		if ( $rank_old == 0)
 		{
@@ -187,15 +187,15 @@ else
 
 		if ($ranking == "0")
 		{
-			$parse['player_rankplus'] = "<font color=\"#87CEEB\">*</font>";
+			$parse['player_rankplus'] = "<font color=#87CEEB>*</font>";
 		}
 		if ($ranking < "0")
 		{
-			$parse['player_rankplus'] = "<font color=\"red\">".$ranking."</font>";
+			$parse['player_rankplus'] = "<font color=red>".$ranking."</font>";
 		}
 		if ($ranking > "0")
 		{
-			$parse['player_rankplus'] = "<font color=\"green\">+".$ranking."</font>";
+			$parse['player_rankplus'] = "<font color=green>+".$ranking."</font>";
 		}
 		if ($UsrRow['id'] == $user['id'])
 		{

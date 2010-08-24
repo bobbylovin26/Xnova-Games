@@ -4,7 +4,23 @@ $lang['Version']     = 'Versión';
 $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
-'<font color="lime">2.0</font>' => ' 03/04/09 12:57
+'2.1' => ' 03/04/09
+
+- Pequeño cambio en el index y la selección de la página.-
+- Incluido reg.mo directamente a reg_form.tpl y reg.php.-
+- Modificado el diseño del registro y de la página de clave perdida.-
+- Correcciones gráficas en el index.-
+- SACS funcionando al 50% [problemas en la coordinación de los tiempos y en la visión de los movimientos de flotas].-
+- Cambio visual en las estadísticas, ahora el *, +1 y -1 (rankplus), se muestra con js(overlib).-
+- Limpieza en commons.php con lo que durante el movimiento de flotas reducira la carga del juego.-
+- Ahora al realizar un espionaje ya no aparecerá la página en blanco ni tampoco tirara error.-
+- Corregidos unos cuantos bugs provocados por la distribución de las funciones.-
+- Nuevas imágenes de planetas, mucho más vistosas.-
+- Corregido un pequeño bug que no permitía ver las páginas publicas(contact.php, reg.php, credit.php y la sección de clave perdida).-
+',
+
+'2.0' => ' 23/04/09
+
 - Visión general del panel del admin mejorada, ajustada mejor la tabla e integrado el lenguaje a las plantillas.-
 - Simplificación del sistema de créditos, e integración del lenguaje.-
 - Integrado el idioma a resources.php y a las respectivas plantillas.-
@@ -127,7 +143,8 @@ $lang['changelog']   = array(
 --------- Proyecto ogame para todos y con todas las funciones iniciado por Perberos.-
 ',
 
-'1.5b' => ' 03/04/09 12:57
+'1.5b' => ' 03/04/09
+
 - Cambios y correcciones en templates y textos.-
 - Loteria reparada (By lucky).-
 - Correciones en el instalador, soportando correctamente las razas, y también en el auto-update.-
@@ -135,7 +152,8 @@ $lang['changelog']   = array(
 - Corregido un bug en el instalador.-
 ',
 
-'1.5a' => ' 26/03/09 12:00
+'1.5a' => ' 26/03/09
+
 - Corregido el link de administración.-
 - Mejoras en el instalador.-
 - Fix corregido bug que mostraba mal la leyenda en la galaxia.-
@@ -146,7 +164,8 @@ $lang['changelog']   = array(
 - Unificamos la versión de XG Proyect con la de calzon.-
 ',
 
-'1.4f' => ' 18/03/09 12:00
+'1.4f' => ' 18/03/09
+
 - Fix pequeñas correciones en la base de datos.-
 - Fix pequeñas correcciones en traducciones generales.-
 - Fix Corregidas variables en alianza, nueva estructuracion, mejor optimizada.-
@@ -160,7 +179,8 @@ $lang['changelog']   = array(
 <font color="red">- Fix a bug destruccion de luna.-</font>
 ',
 
-'1.4e' => ' 12/03/09 12:00
+'1.4e' => ' 12/03/09
+
 - Fix a textos e imagenes de naves y defensas nuevas asi como a razas.-
 - Fix Enviar mutiples flotas, expediciones, misiones, al ir atras (modo test por ahora).-
 - Fix Corregido bug en consumo de deuterio (flotenajax.php).-
@@ -176,7 +196,8 @@ $lang['changelog']   = array(
 <font color="green">- Darks: Sintetizador Deuterio +3% produccion, +4% Blindaje y Escudos.-</font>
 ',
 
-'1.4d' => ' 09/03/09 12:00
+'1.4d' => ' 09/03/09
+
 - Fix algunas traducciones.-
 - Fix Ajustado a resolucion 1024x768, reacomodo en columnas de edificios y frames.php-
 - Fix multiplicacion/Duplicacion de ligeros y estrellas de la muerte (flotten1.php).-
@@ -199,7 +220,7 @@ $lang['changelog']   = array(
 - Borrado actualizacion automatica, consume muchos recursos (todos haciendo click a vision general).-
 ',
 
-'1.4c' => ' 08/02/09 19:00
+'1.4c' => ' 08/02/09
 
 - Eliminados los recursos en tiempo real debido a que se quedaban congelados.-
 - Reparados los oficiales espía y comandante.- (By jtsamper foro project.xnova.es)
@@ -215,7 +236,7 @@ $lang['changelog']   = array(
 - Ahora en la busqueda al hacer click en el link te redirecciona al sistema del jugador y no al tuyo (By Anghelito).-
 ',
 
-'1.4b' => ' 06/12/08 17:13
+'1.4b' => ' 06/12/08
 
 - Desbaneo reparado.-
 - Oficiales reparados.-
@@ -231,7 +252,7 @@ $lang['changelog']   = array(
 - Mejoras, organización, limpieza y optimización del lenguaje (No pongo más que cambie en los lenguajes porque ya es detallar mucho, para nada).-
 ',
 
-'1.4a' => ' 06/12/08 17:13
+'1.4a' => ' 06/12/08
 
 - Reparado el reset del universo.-
 - El auto-update no soporta más las siguientes versiones: v1.0a/v1.0b/v1.1a/v1.1b/v1.1c/v1.2a (Si tienes alguna des estas versiones deberás usar un update anterior).-
@@ -261,7 +282,7 @@ $lang['changelog']   = array(
 - Correciones de lenguaje en el install y limpieza de dicho archivo (Gracias Alberto14).-
 ',
 
-'1.3c DMV' => ' 30/11/08 05:30 "DMV = Dark Matter Version Exclusivo Xtreme-gameZ.com.ar" 
+'1.3c DMV' => ' 30/11/08 "DMV = Dark Matter Version Exclusivo Xtreme-gameZ.com.ar" 
 
 - Correciones en los lenguajes de la supernova o super nave de batalla y el protector planetario (algo siempre me olvido).-
 - Modificación de la ubicación de algunos arhcivos.-
@@ -282,7 +303,7 @@ $lang['changelog']   = array(
 ',
 
 
-'1.3b EU' => ' 30/11/08 05:30
+'1.3b EU' => ' 30/11/08
 
 - No hace falta más ingresar el nombre del planeta, por defecto es "Planeta Principal".-
 - Eliminadas imagenes del "sexo".-
@@ -292,7 +313,7 @@ $lang['changelog']   = array(
 - Reparado el problema con la instalación (Gracias Anghelito).-
 ',
 
-'1.3a' => ' 29/11/08 19:50
+'1.3a' => ' 29/11/08
 
 - XNova 100% TRADUCIDO AL ESPAÑOL [PUDE HABERME SALTEADO ALGO POR FAVOR AVISAR](By lucky).-
 - Limpieza de scripts, eliminamos varios archivos de la carpeta scrips que notamos no necesarios.-
@@ -307,12 +328,12 @@ $lang['changelog']   = array(
 - Reparada la instalación, ahora funcionan los misiles al instalar el juego.-
 ',
 
-'1.2c EU' => ' 26/11/08 21:40
+'1.2c EU' => ' 26/11/08
 
 - Reparada la instalación.-
 ',
 
-'1.2b' => ' 26/11/08 20:59
+'1.2b' => ' 26/11/08
 
 - Misiles finalmente funcionando (By lucky).-
 - Desbaneo automático (By Anghelito).-
@@ -330,7 +351,7 @@ $lang['changelog']   = array(
 - Se elimino una tabla que no hacia falta.-
 ',
 
-'1.2a' => ' 19/11/08 20:38
+'1.2a' => ' 19/11/08
 
 - Actualizado el auto-update para poder actualizar: 0.9a -> 1.2a y 1.1b -> 1.2a .-
 - Reorganización, recodificación y reestructuración de los misiles interplanetarios, ademas de solucionar seberos bugs.-
@@ -345,7 +366,7 @@ $lang['changelog']   = array(
 - Cupula y protector planetario funcionando, y cada una solo puede ser edificada una vez.-
 ',
 
-'1.1c' => ' 19/11/08 11:29
+'1.1c' => ' 19/11/08
 
 - Cambios en la organización de la carpeta templates.-
 - Algunos fixes en el leftmenu del admin.-
@@ -359,7 +380,7 @@ $lang['changelog']   = array(
 - Mejoras en la instalación.-
 ',
 
-'1.1b' => ' 30/10/08 19:39
+'1.1b' => ' 30/10/08
 
 - Añadido un tutorial, desarrollado por PowerMaster para el XNova de Xtreme-gameZ.com.ar.-
 - Cambios de nombre del archivo de instalacion "Installeur" a "Instalacion de XNova".-
@@ -369,7 +390,7 @@ $lang['changelog']   = array(
 - Cambios de idioma de carpeta "fr" a carpeta "es" (requiere instalacion).-
 ',
 
-'1.1a' => ' 28/10/08 11:30
+'1.1a' => ' 28/10/08
 
 - Antes, si mandaban una flota y cambian de planeta, tiraba error.-
 - Antes, cuando estaban leyendo mensajes y cambian de planeta, tiraba error.-
@@ -380,7 +401,7 @@ $lang['changelog']   = array(
 ',
 
 
-'1.0b' => ' 26/10/08 22:44
+'1.0b' => ' 26/10/08
 
 - Primer release disponible para los usuarios.-
 - Eliminado el warning que aparecía en la instalación del sistema.-
@@ -389,7 +410,7 @@ $lang['changelog']   = array(
 ',
 
 
-'1.0a' => ' 24/10/08 13:11 "Versión Inicial"
+'1.0a' => ' 24/10/08 "Versión Inicial"
 
 - Cambios de lenguaje en el changelog (100% traducido).-
 - Mejora del menú de la izquierda se "visualiza" algo mejor.-

@@ -12,9 +12,7 @@
 // Mission Case 5: -> Stationner chez un allié
 //
 function MissionCaseStayAlly ( $FleetRow ) {
-	global $lang;
-
-	include("includes/functions/RestoreFleetToPlanet.php");
+	global $lang, $xnova_root_path;
 
 	$QryStartPlanet   = "SELECT * FROM {{table}} ";
 	$QryStartPlanet  .= "WHERE ";

@@ -25,14 +25,9 @@ include($xnova_root_path . 'includes/functions/GetElementPrice.'.$phpEx);
 include($xnova_root_path . 'includes/functions/GetBuildingPrice.'.$phpEx);
 include($xnova_root_path . 'includes/functions/IsElementBuyable.'.$phpEx);
 include($xnova_root_path . 'includes/functions/AddBuildingToQueue.'.$phpEx);
-include($xnova_root_path . 'includes/functions/GetBuildingTime.' . $phpEx);
-include($xnova_root_path . 'includes/functions/UpdatePlanetBatimentQueueList.'.$phpEx);
 
 $lunarow 			= doquery("SELECT * FROM {{table}} WHERE `id_owner` = '" . $planetrow['id_owner'] . "' AND `galaxy` = '" . $planetrow['galaxy'] . "' AND `system` = '" . $planetrow['system'] . "' AND `lunapos` = '" . $planetrow['planet'] . "';", 'lunas', true);
 CheckPlanetUsedFields($lunarow);
-$mode 				= $_GET['mode'];
-$pl 				= mysql_escape_string($_GET['pl']);
-$_POST['deleteid'] 	= intval($_POST['deleteid']);
 
 $parse['planet_id'] 	= $planetrow['id'];
 $parse['planet_name'] 	= $planetrow['name'];
@@ -40,7 +35,7 @@ $parse['galaxy_galaxy'] = $planetrow['galaxy'];
 $parse['galaxy_system'] = $planetrow['system'];
 $parse['galaxy_planet'] = $planetrow['planet'];
 
-switch ($mode)
+switch ($_GET['mode'])
 {
 	case 'renameplanet':
 
@@ -66,7 +61,7 @@ switch ($mode)
 		{
 			display(parsetemplate(gettemplate('overview/overview_deleteplanet'), $parse), "Abandonar planetas");
 		}
-		elseif ($_POST['kolonieloeschen'] == 1 && $_POST['deleteid'] == $user['current_planet'])
+		elseif ($_POST['kolonieloeschen'] == 1 && intval($_POST['deleteid']) == $user['current_planet'])
 		{
 			if (md5($_POST['pw']) == $user["password"] && $user['id_planet'] != $user['current_planet'])
 			{

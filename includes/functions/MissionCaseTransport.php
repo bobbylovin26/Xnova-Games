@@ -10,7 +10,6 @@
 function MissionCaseTransport ( $FleetRow ) {
 	global $lang;
 
-	include("includes/functions/RestoreFleetToPlanet.php");
 	include("includes/functions/StoreGoodsToPlanet.php");
 
 	$QryStartPlanet   = "SELECT * FROM {{table}} ";

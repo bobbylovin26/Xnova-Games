@@ -88,7 +88,7 @@
             <th width="125"><a href="{forum_url}" accesskey="1" target="Hauptframe">Foros</a></th>
 			          </tr>
 <tr>
-            <th width="140"><a href="javascript:top.location.href='index.php?salir=salir'" accesskey="s" style="color:red">Salir</a></th>
+            <th width="140"><a href="javascript:top.location.href='index.php?modo=salir'" accesskey="s" style="color:red">Salir</a></th>
 			          </tr>
 {admin_link}
 </tbody>

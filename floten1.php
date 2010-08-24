@@ -112,6 +112,8 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$page .= "<option value=\"2\"". (($t == 2) ? " SELECTED" : "" ) .">". $lang['fl_ruins']  ." </option>";
 	$page .= "<option value=\"3\"". (($t == 3) ? " SELECTED" : "" ) .">". $lang['fl_moon'] ." </option>";
 	$page .= "</select>";
+	$page .= "<input name=\"fleet_group\" type=\"hidden\" onChange=\"shortInfo()\" onKeyUp=\"shortInfo()\" value=\"0\" />";
+	$page .= "<input name=\"acs_target_mr\" type=\"hidden\" onChange=\"shortInfo()\" onKeyUp=\"shortInfo()\" value=\"0:0:0\" />";
 	$page .= "</th>";
 	$page .= "</tr>";
 	$page .= "<tr height=\"20\">";
@@ -245,12 +247,42 @@ include($xnova_root_path . 'common.' . $phpEx);
 	}
 
 	$page .= "</tr>";
+
+	//ACS Start
 	$page .= "<tr height=\"20\">";
 	$page .= "<td colspan=\"2\" class=\"c\">". $lang['fl_grattack'] ."</td>";
 	$page .= "</tr>";
-	$page .= "<tr height=\"20\">";
-	$page .= "<th colspan=\"2\">-</th>";
-	$page .= "</tr>";
+
+	//Need to look for acs attacks.
+	$aks_madnessred = doquery("SELECT * FROM {{table}} ;", 'aks');
+
+	$aks_code_mr = '';
+	$aks_invited_mr = '';
+	while($row = mysql_fetch_array($aks_madnessred))
+	{
+		$members = explode(",", $row['eingeladen']);
+		foreach($members as $a => $b) {
+			if ($b == $user['id']) {
+				$aks_fleets_mr .= "<tr height=\"20\">";
+				$aks_fleets_mr .= "<th colspan=\"2\">";
+
+				$aks_fleets_mr .= "<a href=\"javascript:";
+				$aks_fleets_mr .= "setTarget(". $row['galaxy'] .",". $row['system'] .",". $row['planet'] ."); ";
+				$aks_fleets_mr .= "shortInfo(); ";
+				$aks_fleets_mr .= "setACS(". $row['id'] ."); ";
+				$aks_fleets_mr .= "setACS_target('"."g". $row['galaxy'] ."s". $row['system'] ."p". $row['planet'] ."t". $row['planet_type'] ."');";
+				$aks_fleets_mr .= "\">";
+				$aks_fleets_mr .= "(".$row['name'].")";
+ 				$aks_fleets_mr .= "</a>";
+
+				$aks_fleets_mr .= "</th>";
+				$aks_fleets_mr .= "</tr>";
+			}
+		}
+	}
+
+	$page .= $aks_fleets_mr;
+
 	$page .= "<tr height=\"20\">";
 	$page .= "<th colspan=\"2\"><input type=\"submit\" name=\"submit\" value=\"". $lang['fl_continue'] ."\" /></th>";
 	$page .= "</tr>";

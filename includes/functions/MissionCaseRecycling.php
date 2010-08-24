@@ -10,8 +10,6 @@
 function MissionCaseRecycling ($FleetRow) {
 	global $pricelist, $lang;
 
-	include("includes/functions/RestoreFleetToPlanet.php");
-
 	if ($FleetRow["fleet_mess"] == "0") {
 		if ($FleetRow['fleet_start_time'] <= time()) {
 			$QrySelectGalaxy  = "SELECT * FROM {{table}} ";

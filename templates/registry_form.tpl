@@ -1,37 +1,45 @@
-<center>
-<br/><br/>
-<h2><font size="+3">{registry}</font><br>{servername}</h2>
-<form action="" method="post">
-<table width="438">
-<tbody>
-	  <tr>
-	    <td colspan="2" class="c"><b>{form}</b></td>
-</tr><tr>
-	<th width="293">{GameName}</th>
-    <th width="293"><input name="character" size="20" maxlength="20" type="text" onKeypress="
-     if (event.keyCode==60 || event.keyCode==62) event.returnValue = false;
-     if (event.which==60 || event.which==62) return false;"></th>
-</tr>
-<tr>
-  <th>{neededpass}</th>
-  <th><input name="passwrd" size="20" maxlength="20" type="password" onKeypress="
-     if (event.keyCode==60 || event.keyCode==62) event.returnValue = false;
-     if (event.which==60 || event.which==62) return false;"></th>
-</tr>
-<tr>
-  <th>{E-Mail}</th>
-  <th><input name="email" size="20" maxlength="40" type="text" onKeypress="
-     if (event.keyCode==60 || event.keyCode==62) event.returnValue = false;
-     if (event.which==60 || event.which==62) return false;"></th>
-</tr>
-<tr>
-  <td height="20" colspan="2"></td>
-  </tr>
-<tr>
-  <th><input name="rgt" type="checkbox">
-    {accept}</th>
-  <th><input name="submit" type="submit" value="{signup}"></th>
-</tr>
-</table>
+<form action="" name="reg_form" method="post">
+    <div id="main">
+        <div id="login">
+            <div id="login_input">
+            	<center><h3><strong>¡Únete ya y forma parte del fantástico mundo de {servername}!</strong></h3></center>
+            </div>
+        </div>
+        <div id="mainmenu" style="margin-top: 20px;">
+            <a href="index.php">Inicio</a>
+            <a href="reg.php">Registrarse</a>
+            <a href="{forum_url}">Foros</a>
+            <a href="contact.php">Contacto</a>
+            <a href="credit.php">Créditos</a>
+        </div>
+        <div id="rightmenu" class="rightmenu">
+            <div id="title">Registro en {servername}</div>
+            <div id="content">
+                <center>
+                    <div id="text1">
+                    	<table>
+                        	<tr>
+                            	<td>Usuario:</td>
+                                <td><input name="character" size="20" maxlength="20" type="text"></td>
+                            </tr>
+                        	<tr>
+                            	<td>Contraseña:</td>
+                                <td><input name="passwrd" size="20" maxlength="20" type="password"></td>
+                            </tr>
+                        	<tr>
+                            	<td>Correo electrónico:</td>
+                                <td><input name="email" size="20" maxlength="40" type="text"></td>
+                            </tr>
+                        </table>
+                    </div>
+            		<div id="register" class="bigbutton" onclick="document.reg_form.submit();">¡Registrate!</div>
+            		<div id="text2">
+                		<div id="text3">
+							<center><b>Aceptar el reglamento <input name="rgt" type="checkbox"></b></center>
+               			 </div>
+            		</div>
+                </center>
+			</div>
+		</div>
+	</div>
 </form>
-</center>

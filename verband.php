@@ -18,12 +18,32 @@ include($xnova_root_path . 'common.' . $phpEx);
 
 	$fleetid = $_POST['fleetid'];
 
-	if (!is_numeric($fleetid) || empty($fleetid)) {
-		header("Location: overview.php");
-		exit();
-	}
+    if (!is_numeric($fleetid) || empty($fleetid)) {
+        header("Location: fleet.php");
+        exit();
+    }
 
-	$query = doquery("SELECT * FROM {{table}} WHERE fleet_id = '" . $fleetid . "'", 'fleets');
+    // Ajout d'un joueur dans la liste des invités (MadnessRed code)
+    if($_POST['add_member_to_aks'] == "madnessred"){
+        $added_user_id_mr = 0;
+        $member_qry_mr = doquery("SELECT `id` FROM {{table}} WHERE `username` ='".$_POST['addtogroup']."' ;",'users');
+        while($row = mysql_fetch_array($member_qry_mr)){
+            $added_user_id_mr .= $row['id'];
+        }
+        if($added_user_id_mr > 0){
+            $new_eingeladen_mr = $_POST['aks_invited_mr'].','.$added_user_id_mr;
+            doquery("UPDATE {{table}} SET `eingeladen` = '".$new_eingeladen_mr."' ;",'aks') or die($lang['fl_Add_member_to_fleet'].": <br />".mysql_error());
+            $add_user_message_mr = "<font color=\"lime\">".$lang['fl_player']." ".$_POST['addtogroup']." ". $lang['fl_Add_to_attack'];
+        }else{
+            $add_user_message_mr = "<font color=\"red\">".$lang['fl_error']." ".$lang['fl_player']." ".$_POST['addtogroup']." ".$lang['fl_dont_exist'].".";
+        }
+        // Envois du message
+        $invite_message = "El juador ".$user['username']." te invita a participar en un SAC.";
+        SendSimpleMessage ( $added_user_id_mr, $user['id'], time(), 1, $user['username'], "Invitación a SAC", $invite_message);
+    }
+
+    // Liste des flottes
+    $query = doquery("SELECT * FROM {{table}} WHERE fleet_id = '" . $fleetid . "'", 'fleets');
 
 	if (mysql_num_rows($query) != 1) {
 		message('¡La flota no existe!', 'Error');
@@ -32,7 +52,7 @@ include($xnova_root_path . 'common.' . $phpEx);
 	$daten = mysql_fetch_array($query);
 
 	if ($daten['fleet_start_time'] <= time() || $daten['fleet_end_time'] < time() || $daten['fleet_mess'] == 1) {
-		message('¡Su flota ya esta regresando', 'Error');
+		message('¡Su flota ya esta regresando!', 'Error');
 	}
 
 	if (!isset($_POST['send'])) {
@@ -48,33 +68,47 @@ include($xnova_root_path . 'common.' . $phpEx);
 
 		$fleet = doquery("SELECT * FROM {{table}} WHERE fleet_id = '" . $fleetid . "'", 'fleets', true);
 
-		if (empty($fleet['fleet_group'])) {
-			$rand = mt_rand(100000, 999999999);
+        if (empty($fleet['fleet_group'])) {
+            $rand = mt_rand(100000, 999999999);
+            $aks_code_mr = "AG".$rand;
+            $aks_invited_mr = $user['id'];
 
-		doquery(
-		"INSERT INTO {{table}} SET
-		`name` = 'KV" . $rand . "',
-		`teilnehmer` = '" . $user['id'] . "',
-		`flotten` = '" . $fleetid . "',
-		`ankunft` = '" . $fleet['fleet_start_time'] . "',
-		`galaxy` = '" . $fleet['fleet_start_galaxy'] . "',
-		`system` = '" . $fleet['fleet_start_system'] . "',
-		`planet` = '" . $fleet['fleet_start_planet'] . "',
-		`eingeladen` = '" . $user['id'] . "'
-		",
-		'aks');
+        doquery(
+        "INSERT INTO {{table}} SET
+        `name` = '" . $aks_code_mr . "',
+        `teilnehmer` = '" . $user['id'] . "',
+        `flotten` = '" . $fleetid . "',
+        `ankunft` = '" . $fleet['fleet_start_time'] . "',
+        `galaxy` = '" . $fleet['fleet_end_galaxy'] . "',
+        `system` = '" . $fleet['fleet_end_system'] . "',
+        `planet` = '" . $fleet['fleet_end_planet'] . "',
+        `eingeladen` = '" . $aks_invited_mr . "'
+        ",
+        'aks');
 
-		$aks = doquery(
-		"SELECT * FROM {{table}} WHERE
-		`name` = 'KV" . $rand . "' AND
-		`teilnehmer` = '" . $user['id'] . "' AND
-		`flotten` = '" . $fleetid . "' AND
-		`ankunft` = '" . $fleet['fleet_start_time'] . "' AND
-		`galaxy` = '" . $fleet['fleet_start_galaxy'] . "' AND
-		`system` = '" . $fleet['fleet_start_system'] . "' AND
-		`planet` = '" . $fleet['fleet_start_planet'] . "' AND
-		`eingeladen` = '" . $user['id'] . "'
-		", 'aks', true);
+        $aks = doquery(
+        "SELECT * FROM {{table}} WHERE
+        `name` = '" . $aks_code_mr . "' AND
+        `teilnehmer` = '" . $user['id'] . "' AND
+        `flotten` = '" . $fleetid . "' AND
+        `ankunft` = '" . $fleet['fleet_start_time'] . "' AND
+        `galaxy` = '" . $fleet['fleet_end_galaxy'] . "' AND
+        `system` = '" . $fleet['fleet_end_system'] . "' AND
+        `planet` = '" . $fleet['fleet_end_planet'] . "' AND
+        `eingeladen` = '" . $user['id'] . "'
+        ", 'aks', true);
+
+        $aks_madnessred = doquery(
+        "SELECT * FROM {{table}} WHERE
+        `name` = '" . $aks_code_mr . "' AND
+        `teilnehmer` = '" . $user['id'] . "' AND
+        `flotten` = '" . $fleetid . "' AND
+        `ankunft` = '" . $fleet['fleet_start_time'] . "' AND
+        `galaxy` = '" . $fleet['fleet_end_galaxy'] . "' AND
+        `system` = '" . $fleet['fleet_end_system'] . "' AND
+        `planet` = '" . $fleet['fleet_end_planet'] . "' AND
+        `eingeladen` = '" . $user['id'] . "'
+        ", 'aks', true);
 
 		doquery(
 		"UPDATE {{table}} SET
@@ -87,34 +121,44 @@ include($xnova_root_path . 'common.' . $phpEx);
 		id = '" . $fleet['fleet_group'] . "'"
 		, 'aks');
 
-		if (mysql_num_rows($aks) != 1) {
-			message('¡No se enconraron movimientos!', 'Error');
-		}
-		$aks = mysql_num_rows($aks);
-	}
+        $aks_madnessred = doquery(
+        "SELECT * FROM {{table}} WHERE
+        id = '" . $fleet['fleet_group'] . "'"
+        , 'aks');
 
-	$missiontype = array(1 => 'Ataque',
-		2 => 'SAC',
-		3 => 'Transportar',
-		4 => 'Estacionar',
-		5 => 'Estacionar en Aliado',
-		6 => 'Espionaje',
-		7 => 'Colonizar',
-		8 => 'Reciclar',
-		9 => 'Destruir',
-		);
+        if (mysql_num_rows($aks) != 1) {
+            message('AKS nicht gefunden!', 'Fehler');
+        }
+        $aks = mysql_num_rows($aks);
+    }
 
-	$speed = array(10 => 100,
-		9 => 90,
-		8 => 80,
-		7 => 70,
-		6 => 60,
-		5 => 50,
-		4 => 40,
-		3 => 30,
-		2 => 20,
-		1 => 10,
-		);
+    $missiontype = array(
+        1 => $lang['type_mission'][1],
+        2 => $lang['type_mission'][2],
+        3 => $lang['type_mission'][3],
+        4 => $lang['type_mission'][4],
+        5 => $lang['type_mission'][5],
+        6 => $lang['type_mission'][6],
+        7 => $lang['type_mission'][7],
+        8 => $lang['type_mission'][8],
+        9 => $lang['type_mission'][9],
+        15 => $lang['type_mission'][15],
+        16 => $lang['type_mission'][16],
+        17 => $lang['type_mission'][17],
+        );
+
+    $speed = array(
+        10 => 100,
+        9 => 90,
+        8 => 80,
+        7 => 70,
+        6 => 60,
+        5 => 50,
+        4 => 40,
+        3 => 30,
+        2 => 20,
+        1 => 10,
+        );
 
 	if (!$galaxy) {
 		$galaxy = $planetrow['galaxy'];
@@ -206,6 +250,11 @@ include($xnova_root_path . 'common.' . $phpEx);
 	if ($ile == $maxfleet_count) {
 		$maxflot = '<tr height="20"><th colspan="9"><font color="red">Se alcanzo el máximo de slots para las flotas</font></th></tr>';
 	}
+    while($row = mysql_fetch_array($aks_madnessred))
+    {
+        $aks_code_mr .= $row['name'];
+        $aks_invited_mr .= $row['eingeladen'];
+    }
 	$page .= '
 		' . $maxflot . '</table>
 	  </center>
@@ -214,17 +263,13 @@ include($xnova_root_path . 'common.' . $phpEx);
      <td class="c" colspan="2">SAC de flota KV50502025</td>
    </tr>
 
-   <form action="verband.php" method="POST">
-   <input type="hidden" name="fleet_id value="' . $fleetid . '" />
-   <input type="hidden" name="changename" value="49021" />
    <tr height="20">
 
   <td class="c" colspan="2">Modificar el nombre del SAC</td>
    </tr>
    <tr>
-    <th colspan="2"><input name="groupname" value="KV50502025" /> <br /> <input type="submit" value="OK" /></th>
+    <th colspan="2">'.$aks_code_mr.' <br /> </th>
    </tr>
-   </form>
 
    <tr>
     <th>
@@ -236,17 +281,27 @@ include($xnova_root_path . 'common.' . $phpEx);
       <tr>
 
        <th width="50%">
-        <select size="5">
-                   <option>Tormenta Eléctrica</option>
-                 </select>
+        <select size="5">';
+
+    $members = explode(",", $aks_invited_mr);
+    foreach($members as $a => $b) {
+        if ($b != '') {
+            $member_qry_mr = doquery("SELECT `username` FROM {{table}} WHERE `id` ='".$b."' ;",'users');
+            while($row = mysql_fetch_array($member_qry_mr)){
+                $page .= "<option>".$row['username']."</option>";
+            }
+        }
+    }
+
+        $page .= '</select>
        </th>
 
-	    <form action="index.php?page=flotten1&session=388eb542c1d0" method="POST">
-	<input type="hidden" name="order_union" value="49021" />
-       <input type="hidden" name="adduser" value="49021" />
-
-       <td><input name="addtogroup" /> <br /><input type="submit" value="OK" /></td>
-    </form>
+        <form action="verband.php" method="POST">
+    <input type="hidden" name="add_member_to_aks" value="madnessred" />
+    <input name="fleetid" value="'.$_POST[fleetid].'" type="hidden">
+    <input name="aks_invited_mr" value="'.$aks_invited_mr.'" type="hidden">
+       <td><input name="addtogroup" type="text" /> <br /><input type="submit" value="OK" /></td>
+    </form><br />'.$add_user_message_mr.'
              </tr>
      </table>
     </th>

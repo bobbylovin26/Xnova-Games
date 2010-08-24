@@ -1,7 +1,7 @@
 <?php
 
 /**
- * frames.php
+ * index.php
  *
  * @version 2.0
  * @copyright 2009 By lucky for XG PROYECT XNova - Argentina
@@ -11,6 +11,7 @@
 
 define('INSIDE'  , true);
 define('INSTALL' , false);
+define('IN_ADMIN', true);
 
 $xnova_root_path = './../';
 include($xnova_root_path . 'extension.inc.php');

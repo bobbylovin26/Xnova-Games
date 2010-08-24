@@ -13,8 +13,6 @@ function MissionCaseAttack ($FleetRow)
 {
     global $user, $phpEx, $xnova_root_path, $pricelist, $lang, $resource, $CombatCaps;
 
-	include($xnova_root_path. "includes/functions/CreateOneMoonRecord.php");
-
     if ($FleetRow['fleet_start_time'] <= time()) {
         if ($FleetRow['fleet_mess'] == 0) {
             if (!isset($CombatCaps[202]['sd'])) {
