@@ -26,19 +26,13 @@ define('IN_ADMIN', true);
 $xgp_root = '../';
 include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.' . $phpEx);
-include('AdminFunctions/Autorization.' . $phpEx);
 
-if ($ConfigGame != 1) die();
+if ($ConfigGame != 1) die(message ($lang['404_page']));
 
 	$parse = $lang;
 
 	extract($_GET);
-
-	if (isset($delete))
-		doquery("DELETE FROM {{table}} WHERE `error_id`=$delete", 'errors');
-	elseif ($deleteall == 'yes')
-		doquery("TRUNCATE TABLE {{table}}", 'errors');
-
+	
 	$query = doquery("SELECT * FROM {{table}}", 'errors');
 
 	$i = 0;
@@ -57,6 +51,20 @@ if ($ConfigGame != 1) die();
 	}
 
 	$parse['errors_list'] .= "<tr><th class=b colspan=5>". $i . $lang['er_errors'] ."</th></tr>";
+	
+	
+	if (isset($delete)){
+		doquery("DELETE FROM {{table}} WHERE `error_id`=$delete", 'errors');
+		$Log	.=	"\n".$lang['log_errores_title']."\n";
+		$Log	.=	$lang['log_the_user'].$user['username']." ".$lang['log_delete_errors']."\n";
+		LogFunction($Log, "GeneralLog", $LogCanWork);
+		header ("Location: ErrorPage.php");}
+	elseif ($deleteall == 'yes'){
+		doquery("TRUNCATE TABLE {{table}}", 'errors');
+		$Log	.=	"\n".$lang['log_errores_title']."\n";
+		$Log	.=	$lang['log_the_user'].$user['username']." ".$lang['log_delete_all_errors']."\n";
+		LogFunction($Log, "GeneralLog", $LogCanWork);
+		header ("Location: ErrorPage.php");}
 
 	display(parsetemplate(gettemplate('adm/ErrorMessagesBody'), $parse), false, '', true, false);
 

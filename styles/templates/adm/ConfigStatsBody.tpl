@@ -17,8 +17,8 @@
 	<tr>
       <th>{cs_fleets_on_block}</th>
       <th><select name="stat_flying" id="stat_flying">
-          <option value="1" {sel_sf1}>{cs_yes}</option>
-          <option value="0" {sel_sf0}>{cs_no}</option>
+          <option value="1" {sel_sf1}>{yes}</option>
+          <option value="0" {sel_sf0}>{no}</option>
       </select></th>
     </tr>
 	<tr>
@@ -28,8 +28,8 @@
     <tr>
       <th>{cs_points_to_zero}</th>
       <th><select name="stat" id="stat">
-          <option value="0" {sel_sta1}>{cs_yes}</option>
-          <option value="1" {sel_sta0}>{cs_no}</option>
+          <option value="0" {sel_sta1}>{yes}</option>
+          <option value="1" {sel_sta0}>{no}</option>
       </select></th>
     </tr>
     <tr>

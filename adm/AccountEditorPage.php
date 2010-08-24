@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2010 By lucky from Xtreme-gameZ.com.ar	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -26,12 +26,12 @@ define('IN_ADMIN', true);
 $xgp_root = './../';
 include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.' . $phpEx);
-include('AdminFunctions/Autorization.' . $phpEx);
 
-if ($EditUsers != 1) die();
+
+if ($EditUsers != 1) die(message ($lang['404_page']));
 
 $parse = $lang;	
-			
+
 switch($_GET[page])
 {
 	case'resources':
@@ -65,7 +65,7 @@ switch($_GET[page])
 					$QryUpdateUser .= "`id` = '". $id_dark ."' ";
 					doquery( $QryUpdateUser, "users");
 				}
-
+				$Name	=	$lang['log_moree'];
 				$parse['display']	=	'<tr><th colspan="2"><font color=lime>'.$lang['ad_add_sucess'].'</font></th></tr>';
 			}
 			elseif ($_POST['delete'])
@@ -87,14 +87,28 @@ switch($_GET[page])
 					$QryUpdateUser .= "`id` = '". $id_dark ."' ";
 					doquery( $QryUpdateUser, "users");
 				}
-
+				$Name	=	$lang['log_nomoree'];
 				$parse['display']	=	'<tr><th colspan="2"><font color=lime>'.$lang['ad_delete_sucess'].'</font></th></tr>';
+			}
+			
+			if ($_POST['add'] || $_POST['delete'])
+			{
+				$Log	.=	"\n".$lang['log_the_user'].$user['username']." ".$Name.":\n";
+				$Log	.=	$lang['metal'].": ".$metal."\n";
+				$Log	.=	$lang['crystal'].": ".$cristal."\n";
+				$Log	.=	$lang['deuterium'].": ".$deut."\n";
+				$Log	.=	$lang['log_to_planet'].$id."\n";
+				$Log	.=	$lang['log_and'].$lang['darkmatter'].": ".$dark."\n";
+				$Log	.=	$lang['log_to_user'].$id_dark."\n";
+				
+				LogFunction($Log, "ResourcesLog", $LogCanWork);
 			}
 		}
 		else
 		{
 			$parse['display']	=	'<tr><th colspan="2"><font color=red>'.$lang['ad_only_numbers'].'</font></th></tr>';
 		}
+		
 	}
 			
 			display (parsetemplate(gettemplate("adm/EditorTPL/ResourcesBody"), $parse), false, '', true, false);
@@ -148,6 +162,7 @@ switch($_GET[page])
 					$QryUpdatePlanet .= "`id` = '". $id ."' ";
 					doquery( $QryUpdatePlanet, "planets");
 
+					$Name	=	$lang['log_moree'];
 					$parse['display']	=	'<tr><th colspan="3"><font color=lime>'.$lang['ad_add_sucess_ships'].'</font></th></tr>';
 				}
 				elseif ($_POST['delete'])
@@ -172,7 +187,31 @@ switch($_GET[page])
 					$QryUpdatePlanet .= "`id` = '". $id ."' ";
 					doquery( $QryUpdatePlanet, "planets");
 
+					$Name	=	$lang['log_nomoree'];
 					$parse['display']	=	'<tr><th colspan="3"><font color=lime>'.$lang['ad_delete_sucess_ships'].'</font></th></tr>';
+				}
+				
+				if ($_POST['add'] || $_POST['delete'])
+				{
+					$Log	.=	"\n".$lang['log_the_user'].$user['username']." ".$Name.":\n";
+					$Log	.=	$lang['small_ship_cargo'].": ".$small_ship_cargo."\n";
+					$Log	.=	$lang['big_ship_cargo'].": ".$big_ship_cargo."\n";
+					$Log	.=	$lang['light_hunter'].": ".$light_hunter."\n";
+					$Log	.=	$lang['heavy_hunter'].": ".$heavy_hunter."\n";
+					$Log	.=	$lang['crusher'].": ".$crusher."\n";
+					$Log	.=	$lang['battle_ship'].": ".$battle_ship."\n";
+					$Log	.=	$lang['colonizer'].": ".$colonizer."\n";
+					$Log	.=	$lang['recycler'].": ".$recycler."\n";
+					$Log	.=	$lang['spy_sonde'].": ".$spy_sonde."\n";
+					$Log	.=	$lang['bomber_ship'].": ".$bomber_ship."\n";
+					$Log	.=	$lang['solar_satelit'].": ".$solar_satelit."\n";
+					$Log	.=	$lang['destructor'].": ".$destructor."\n";
+					$Log	.=	$lang['dearth_star'].": ".$dearth_star."\n";
+					$Log	.=	$lang['battleship'].": ".$battleship."\n";
+					$Log	.=	$lang['supernova'].": ".$supernova."\n";
+					$Log	.=	$lang['log_to_planet'].$id."\n";
+				
+					LogFunction($Log, "ShipsLog", $LogCanWork);
 				}
 			}
 			else
@@ -222,6 +261,7 @@ switch($_GET[page])
 					$QryUpdatePlanet .= "`id` = '". $id ."' ";
 					doquery( $QryUpdatePlanet, "planets");
 
+					$Name	=	$lang['log_moree'];
 					$parse['display']	=	'<tr><th colspan="3"><font color=lime>'.$lang['ad_add_defenses_succes'].'</font></th></tr>';
 				}
 				elseif ($_POST['delete'])
@@ -242,7 +282,27 @@ switch($_GET[page])
 					$QryUpdatePlanet .= "`id` = '". $id ."' ";
 					doquery( $QryUpdatePlanet, "planets");
 
+					$Name	=	$lang['log_nomoree'];
 					$parse['display']	=	'<tr><th colspan="3"><font color=lime>'.$lang['ad_delete_defenses_succes'].'</font></th></tr>';
+				}
+				
+				if ($_POST['add'] || $_POST['delete'])
+				{
+					$Log	.=	"\n".$lang['log_the_user'].$user['username']." ".$Name.":\n";
+					$Log	.=	$lang['misil_launcher'].": ".$misil_launcher."\n";
+					$Log	.=	$lang['small_laser'].": ".$small_laser."\n";
+					$Log	.=	$lang['big_laser'].": ".$big_laser."\n";
+					$Log	.=	$lang['gauss_canyon'].": ".$gauss_canyon."\n";
+					$Log	.=	$lang['ionic_canyon'].": ".$ionic_canyon."\n";
+					$Log	.=	$lang['buster_canyon'].": ".$buster_canyon."\n";
+					$Log	.=	$lang['small_protection_shield'].": ".$small_protection_shield."\n";
+					$Log	.=	$lang['big_protection_shield'].": ".$big_protection_shield."\n";
+					$Log	.=	$lang['planet_protector'].": ".$planet_protector."\n";
+					$Log	.=	$lang['interceptor_misil'].": ".$interceptor_misil."\n";
+					$Log	.=	$lang['interplanetary_misil'].": ".$interplanetary_misil."\n";
+					$Log	.=	$lang['log_to_planet'].$id."\n";
+				
+					LogFunction($Log, "DefensesLog", $LogCanWork);
 				}
 			}
 			else
@@ -331,6 +391,7 @@ switch($_GET[page])
 						}
 					}
 
+					$Name	=	$lang['log_moree'];
 					$parse['display']	=	'<tr><th colspan="3"><font color=lime>'.$lang['ad_add_succes'].'</font></th></tr>';
 				}
 				elseif ($_POST['delete'])
@@ -380,7 +441,35 @@ switch($_GET[page])
 						}
 					}
 
+					$Name	=	$lang['log_nomoree'];
 					$parse['display']	=	'<tr><th colspan="3"><font color=lime>'.$lang['ad_delete_succes'].'</font></th></tr>';
+				}
+				
+				
+				if ($_POST['add'] || $_POST['delete'])
+				{
+					$Log	.=	"\n".$lang['log_the_user'].$user['username']." ".$Name.":\n";
+					$Log	.=	$lang['metal_mine'].": ".$metal_mine."\n";
+					$Log	.=	$lang['crystal_mine'].": ".$crystal_mine."\n";
+					$Log	.=	$lang['deuterium_sintetizer'].": ".$deuterium_sintetizer."\n";
+					$Log	.=	$lang['solar_plant'].": ".$solar_plant."\n";
+					$Log	.=	$lang['fusion_plant'].": ".$fusion_plant."\n";
+					$Log	.=	$lang['robot_factory'].": ".$robot_factory."\n";
+					$Log	.=	$lang['nano_factory'].": ".$nano_factory."\n";
+					$Log	.=	$lang['shipyard'].": ".$hangar."\n";
+					$Log	.=	$lang['metal_store'].": ".$metal_store."\n";
+					$Log	.=	$lang['crystal_store'].": ".$crystal_store."\n";
+					$Log	.=	$lang['deuterium_store'].": ".$deuterium_store."\n";
+					$Log	.=	$lang['laboratory'].": ".$laboratory."\n";
+					$Log	.=	$lang['terraformer'].": ".$terraformer."\n";
+					$Log	.=	$lang['ally_deposit'].": ".$ally_deposit."\n";
+					$Log	.=	$lang['silo'].": ".$silo."\n";
+					$Log	.=	$lang['moonbases'].": ".$mondbasis."\n";
+					$Log	.=	$lang['phalanx'].": ".$phalanx."\n";
+					$Log	.=	$lang['cuantic'].": ".$sprungtor."\n";
+					$Log	.=	$lang['log_to_planet'].$id."\n";
+				
+					LogFunction($Log, "BuildingsLog", $LogCanWork);
 				}
 			}
 			else
@@ -442,6 +531,7 @@ switch($_GET[page])
 					$QryUpdatePlanet .= "`id` = '". $id ."' ";
 					doquery( $QryUpdatePlanet, "users");
 
+					$Name	=	$lang['log_moree'];
 					$parse['display']	=	'<tr><th colspan="3"><font color=lime>'.$lang['ad_add_succes'].'</font></th></tr>';
 				}
 				elseif ($_POST['delete'])
@@ -467,7 +557,32 @@ switch($_GET[page])
 					$QryUpdatePlanet .= "`id` = '". $id ."' ";
 					doquery( $QryUpdatePlanet, "users");
 
+					$Name	=	$lang['log_nomoree'];
 					$parse['display']	=	'<tr><th colspan="3"><font color=lime>'.$lang['ad_delete_succes'].'</font></th></tr>';
+				}
+				
+				if ($_POST['add'] || $_POST['delete'])
+				{
+					$Log	.=	"\n".$lang['log_the_user'].$user['username']." ".$Name.":\n";
+					$Log	.=	$lang['spy_tech'].": ".$spy_tech."\n";
+					$Log	.=	$lang['computer_tech'].": ".$computer_tech."\n";
+					$Log	.=	$lang['military_tech'].": ".$military_tech."\n";
+					$Log	.=	$lang['defence_tech'].": ".$defence_tech."\n";
+					$Log	.=	$lang['shield_tech'].": ".$shield_tech."\n";
+					$Log	.=	$lang['energy_tech'].": ".$energy_tech."\n";
+					$Log	.=	$lang['hyperspace_tech'].": ".$hyperspace_tech."\n";
+					$Log	.=	$lang['combustion_tech'].": ".$combustion_tech."\n";
+					$Log	.=	$lang['impulse_motor_tech'].": ".$impulse_motor_tech."\n";
+					$Log	.=	$lang['hyperspace_motor_tech'].": ".$hyperspace_motor_tech."\n";
+					$Log	.=	$lang['laser_tech'].": ".$laser_tech."\n";
+					$Log	.=	$lang['ionic_tech'].": ".$ionic_tech."\n";
+					$Log	.=	$lang['buster_tech'].": ".$buster_tech."\n";
+					$Log	.=	$lang['intergalactic_tech'].": ".$intergalactic_tech."\n";
+					$Log	.=	$lang['expedition_tech'].": ".$expedition_tech."\n";
+					$Log	.=	$lang['graviton_tech'].": ".$graviton_tech."\n";
+					$Log	.=	$lang['log_to_user'].$id."\n";
+				
+					LogFunction($Log, "ResearchLog", $LogCanWork);
 				}
 			}
 			else
@@ -479,28 +594,69 @@ switch($_GET[page])
 		display (parsetemplate(gettemplate("adm/EditorTPL/ResearchBody"), $parse), false, '', true, false);
 	break;
 	
-	case 'personal':		
+	case 'personal':
+		$parse['yes']	=	$lang['one_is_yes'][1];
+		$parse['no']	=	$lang['one_is_yes'][0];
+		if ($user['authlevel'] != 3) $parse['Block']	=	"disabled='disabled'";
 		if ($_POST)
 		{
+			if ($user['authlevel'] != 3 && $_POST['username'] != NULL && $_POST['password'] != NULL && $_POST['email_2'] != NULL && 
+			$_POST['email'] != NULL ) die();
+				
 			if(!$_POST['id'])
 			{
 				$parse['display']	=	'<tr><th colspan="3"><font color=red>'.$lang['ad_forgiven_id'].'</font></th></tr>';
 			}
 			else
-			{					
-				if($_POST['username'] != NULL)
-					doquery("UPDATE {{table}} SET `username` = '".$_POST['username']."' WHERE `id` = '".$_POST['id']."'", "users");
+			{	
+				$Log	.=	"\n".$lang['log_the_user'].$user['username']." ".$lang['log_modify_personal'].":\n";
 				
-				if($_POST['email'] != NULL)
-					doquery("UPDATE {{table}} SET `email` = '".$_POST['email']."' WHERE `id` = '".$_POST['id']."'", "users");
+					$PersonalQuery	=	"UPDATE {{table}} SET ";		
+					if($_POST['username'] != NULL){
+						$PersonalQuery	.=	"`username` = '".$_POST['username']."', ";
+						$Log	.=	$lang['ad_personal_name'].": ".$_POST['username']."\n";}
+				
+					if($_POST['email'] != NULL){
+						$PersonalQuery	.=	"`email` = '".$_POST['email']."', ";
+						$Log	.=	$lang['ad_personal_email'].": ".$_POST['email']."\n";}
 					
-				if($_POST['email_2'] != NULL)
-					doquery("UPDATE {{table}} SET `email_2` = '".$_POST['email_2']."' WHERE `id` = '".$_POST['id']."'", "users");
+					if($_POST['email_2'] != NULL){
+						$PersonalQuery	.=	"`email_2` = '".$_POST['email_2']."', ";
+						$Log	.=	$lang['ad_personal_email2'].": ".$_POST['email_2']."\n";}
 					
-				if($_POST['password'] != NULL)
-					doquery("UPDATE {{table}} SET `password` = '".md5($_POST['password'])."' WHERE `id` = '".$_POST['id']."'", "users");
+					if($_POST['password'] != NULL){
+						$PersonalQuery	.=	"`password` = '".md5($_POST['password'])."', ";
+						doquery("UPDATE {{table}} SET `password` = '".md5($_POST['password'])."' WHERE `id` = '".$_POST['id']."'", "users");}
 					
-			
+					if($_POST['vacation'] != '')
+					{
+						if ($_POST['vacation'] == 'no')
+						{
+							$Answer		=	0;
+							$TimeAns	=	"";
+						}
+						elseif ($_POST['vacation'] == 'yes')
+						{
+							$Answer		=	1;
+							$VTime    	= 	$_POST['d'] * 86400;
+							$VTime    	+= 	$_POST['h'] * 3600;
+							$VTime    	+= 	$_POST['m'] * 60;
+							$VTime		+= 	$_POST['s'];
+							$TimeAns	=	$VTime + time();
+						}
+					
+						$PersonalQuery	.=	"`urlaubs_modus` = '".$Answer."', `urlaubs_until` = '".$TimeAns."'";
+					}
+				
+				
+				if ($_POST['username'] or $_POST['email'] or $_POST['email_2'] or $_POST['password'] or $_POST['vacation'] != '')
+				{
+					$PersonalQuery	.=	"WHERE `id` = '".$_POST['id']."'";
+					doquery($PersonalQuery, "users");
+					$Log	.=	$lang['log_to_user'].$_POST['id']."\n";
+					LogFunction($Log, "PersonalLog", $LogCanWork);
+				}
+				
 				$parse['display']	=	'<tr><th colspan="3"><font color=lime>'.$lang['ad_personal_succes'].'</font></th></tr>';
 			}
 		}
@@ -555,6 +711,7 @@ switch($_GET[page])
 					$QryUpdatePlanet .= "`id` = '". $id ."' ";
 					doquery( $QryUpdatePlanet, "users");
 
+					$Name	=	$lang['log_moree'];
 					$parse['display']	=	'<tr><th colspan="3"><font color=lime>'.$lang['ad_offi_succes_add'].'</font></th></tr>';
 				}
 				elseif ($_POST['delete'])
@@ -579,7 +736,31 @@ switch($_GET[page])
 					$QryUpdatePlanet .= "`id` = '". $id ."' ";
 					doquery( $QryUpdatePlanet, "users");
 
+					$Name	=	$lang['log_nomoree'];
 					$parse['display']	=	'<tr><th colspan="3"><font color=lime>'.$lang['ad_offi_succes_delete'].'</font></th></tr>';
+				}
+				
+				if ($_POST['add'] || $_POST['delete'])
+				{
+					$Log	.=	"\n".$lang['log_the_user'].$user['username']." ".$Name.":\n";
+					$Log	.=	$lang['geologist'].": ".$rpg_geologue."\n";
+					$Log	.=	$lang['admiral'].": ".$rpg_amiral."\n";
+					$Log	.=	$lang['engineer'].": ".$rpg_ingenieur."\n";
+					$Log	.=	$lang['technocrat'].": ".$rpg_technocrate."\n";
+					$Log	.=	$lang['spy'].": ".$rpg_espion."\n";
+					$Log	.=	$lang['constructor'].": ".$rpg_constructeur."\n";
+					$Log	.=	$lang['scientific'].": ".$rpg_scientifique."\n";
+					$Log	.=	$lang['commander'].": ".$rpg_commandant."\n";
+					$Log	.=	$lang['storer'].": ".$rpg_stockeur."\n";
+					$Log	.=	$lang['defender'].": ".$rpg_defenseur."\n";
+					$Log	.=	$lang['destroyer'].": ".$rpg_destructeur."\n";
+					$Log	.=	$lang['general'].": ".$rpg_general."\n";
+					$Log	.=	$lang['protector'].": ".$rpg_bunker."\n";
+					$Log	.=	$lang['conqueror'].": ".$rpg_raideur."\n";
+					$Log	.=	$lang['emperor'].": ".$rpg_empereur."\n";
+					$Log	.=	$lang['log_to_user'].$id."\n";
+				
+					LogFunction($Log, "OfficierLog", $LogCanWork);
 				}
 			}
 			else
@@ -608,50 +789,63 @@ switch($_GET[page])
 			$galaxy			=	$_POST['g'];
 			$system			=	$_POST['s'];
 			$planet			=	$_POST['p'];
+			$delete			=	$_POST['delete'];
 			
 			if ($id != NULL)
 			{
 			 	if (is_numeric($id))
 			 	{
-					if ($name != NULL)
-						doquery("UPDATE {{table}} SET `name` = '".$name."' WHERE `id` = '".$id."'", "planets");					
+					$Log	.=	"\n".$lang['log_the_user'].$user['username']." ".$lang['log_modify_personal'].":\n";
 					
-					if ($buildings == 'on')
+				if ($delete != 'on')
+				{
+					if ($name != NULL){
+						doquery("UPDATE {{table}} SET `name` = '".$name."' WHERE `id` = '".$id."'", "planets");	
+						$Log	.=	$lang['log_change_name_pla'].": ".$name."\n";}				
+					
+					if ($buildings == 'on'){
 						doquery("UPDATE {{table}} SET `metal_mine` = '0', `crystal_mine` = '0', `deuterium_sintetizer` = '0',
 									`solar_plant` = '0', `fusion_plant` = '0', `robot_factory` = '0',
 									`nano_factory` = '0', `hangar` = '0', `metal_store` = '0',
 									`crystal_store` = '0', `deuterium_store` = '0', `laboratory` = '0',
 									`terraformer` = '0', `ally_deposit` = '0', `silo` = '0', `mondbasis` = '0', 
 									`phalanx` = '0', `sprungtor` = '0', `last_jump_time` = '0' WHERE `id` = '".$id."'", "planets");
+						$Log	.=	$lang['log_delete_all_edi']."\n";}
 									
-					if ($ships == 'on')
+					if ($ships == 'on'){
 						doquery("UPDATE {{table}} SET `small_ship_cargo` = '0', `big_ship_cargo` = '0', `light_hunter` = '0',
 									`heavy_hunter` = '0', `crusher` = '0', `battle_ship` = '0',
 									`colonizer` = '0', `recycler` = '0', `spy_sonde` = '0',
 									`bomber_ship` = '0', `solar_satelit` = '0', `destructor` = '0',
-									`dearth_star` = '0', `battleship` = '0', `supernova` = '0' WHERE `id` = '".$id."'", "planets");	
+									`dearth_star` = '0', `battleship` = '0', `supernova` = '0' WHERE `id` = '".$id."'", "planets");
+						$Log	.=	$lang['log_delete_all_ships']."\n";}	
 									
-					if ($defenses == 'on')
+					if ($defenses == 'on'){
 						doquery("UPDATE {{table}} SET `misil_launcher` = '0', `small_laser` = '0', `big_laser` = '0',
 									`gauss_canyon` = '0', `ionic_canyon` = '0', `buster_canyon` = '0',
 									`small_protection_shield` = '0', `planet_protector` = '0', `big_protection_shield` = '0',
 									`interceptor_misil` = '0', `interplanetary_misil` = '0' WHERE `id` = '".$id."'", "planets");
+						$Log	.=	$lang['log_delete_all_def']."\n";}
 									
-					if ($c_hangar == 'on')
+					if ($c_hangar == 'on'){
 						doquery("UPDATE {{table}} SET `b_hangar` = '0', `b_hangar_plus` = '0', `b_hangar_id` = '' WHERE `id` = '".$id."'", "planets");
+						$Log	.=	$lang['log_delete_all_c_han']."\n";}
 						
 						
-					if ($c_buildings == 'on')
+					if ($c_buildings == 'on'){
 						doquery("UPDATE {{table}} SET `b_building` = '0', `b_building_id` = '' WHERE `id` = '".$id."'", "planets");
+						$Log	.=	$lang['log_delete_all_c_edi']."\n";}
 						
 						
 					$P	=	doquery("SELECT * FROM {{table}} WHERE `id` = '".$id."'", "planets", true);
 					
-					if ($diameter != NULL && is_numeric($diameter) && $diameter > 0)
+					if ($diameter != NULL && is_numeric($diameter) && $diameter > 0){
 						doquery("UPDATE {{table}} SET `diameter` = '".$diameter."' WHERE `id` = '".$id."'", "planets");
+						$Log	.=	$lang['log_change_diameter'].": ".$diameter."\n";}
 						
-					if ($fields != NULL && is_numeric($fields) && $fields > 0)
+					if ($fields != NULL && is_numeric($fields) && $fields > 0){
 						doquery("UPDATE {{table}} SET `field_max` = '".$fields."' WHERE `id` = '".$id."'", "planets");
+						$Log	.=	$lang['log_change_fields'].": ".$fields."\n";}
 						
 					if ($change_pos == 'on')
 					{
@@ -676,6 +870,8 @@ switch($_GET[page])
 										
 									doquery ("UPDATE {{table}} SET `galaxy` = '".$galaxy."', `system` = '".$system."', `planet` = '".$planet."' WHERE
 										`id_planet` = '".$id."'", "galaxy");
+										
+									$Name	=	$lang['log_planet_pos'];
 								}
 								else
 								{
@@ -699,6 +895,7 @@ switch($_GET[page])
 										
 										doquery ("UPDATE {{table}} SET `galaxy` = '".$galaxy."', `system` = '".$system."', `planet` = '".$planet."', 
 										`id_owner` = '".$QMOON2['id_owner']."', `id_level` = '".$QMOON2['id_level']."' WHERE `id` = '".$id."' AND `planet_type` = '3'", "planets");
+										$Name	=	$lang['log_moon_pos'];
 									}
 									else
 									{
@@ -710,6 +907,8 @@ switch($_GET[page])
 									$Error	.=	'<tr><th colspan="3"><font color=red>'.$lang['ad_pla_error_planets5'].'</font></th></tr>';
 								}
 							}
+							
+							$Log	.=	$lang['log_change_pla_pos'].$Name.": [".$galaxy.":".$system.":".$planet."]\n";
 						}
 						else
 						{
@@ -719,10 +918,31 @@ switch($_GET[page])
 			
 					$parse['display']	=	'<tr><th colspan="3"><font color=lime>'.$lang['ad_pla_succes'].'</font></th></tr>';
 					$parse['display2']	=	$Error;
+				}
+				else
+				{
+					$QueryPlanetsS	=	doquery("SELECT planet_type FROM {{table}} WHERE id = '".$id."'", "planets", true);
+					if ($QueryPlanetsS['planet_type'] == '1')
+					{
+						doquery("DELETE FROM {{table}} WHERE id = '".$id."'", "planets");
+						doquery("DELETE FROM {{table}} WHERE id_planet = '".$id."'", "galaxy");
+					}
+					else
+					{
+						doquery("DELETE FROM {{table}} WHERE id = '".$id."'", "planets");
+						doquery("UPDATE {{table}} SET id_luna = '0', luna = '0' WHERE id_luna = '".$id."'", "galaxy");
+					}
+					
+					$parse['display']	=	'<tr><th colspan="3"><font color=lime>'.$lang['ad_pla_delete_planet_s'].'</font></th></tr>';
+				}
+				
+					$Log	.=	$lang['log_to_planet'].$id."\n";
+				
+					LogFunction($Log, "PlanetsAndMoonsLog", $LogCanWork);
 			 	}
 			 	else
 			 	{
-					$parse['display']	=	'<tr><th colspan="3"><font color=red>'.$lang['ad_only_numbers'].'</font></th></tr>';
+					$parse['display']	=	'<tr><th colspan="3"><font color=red>'.$lang['only_numbers'].'</font></th></tr>';
 			 	}
 			}
 			else
@@ -753,36 +973,45 @@ switch($_GET[page])
 				
 			 	if ($QueryF)
 			 	{
+					$Log	.=	"\n".$lang['log_the_user'].$user['username']." ".$lang['log_modify_personal'].":\n";
+					
 					if ($name != NULL){
 						doquery("UPDATE {{table}} SET `ally_name` = '".$name."' WHERE `id` = '".$id."'", "alliance");
-						doquery("UPDATE {{table}} SET `ally_name` = '".$name."' WHERE `ally_id` = '".$id."'", "users");}
+						doquery("UPDATE {{table}} SET `ally_name` = '".$name."' WHERE `ally_id` = '".$id."'", "users");
+						$Log	.=	$lang['log_name_of_ally'].": ".$name."\n";}
 						
-					if ($tag != NULL)
+					if ($tag != NULL){
 						doquery("UPDATE {{table}} SET `ally_tag` = '".$tag."' WHERE `id` = '".$id."'", "alliance");
+						$Log	.=	$lang['log_tag_of_ally'].": ".$tag."\n";}
 						
 						
 					$i	=	0;
 					$QueryF2	=	doquery("SELECT * FROM {{table}} WHERE `id` = '".$changeleader."'", "users", true);
 					if ($QueryF2 && $changeleader != NULL && $QueryF2['ally_id'] == $id){
 						doquery("UPDATE {{table}} SET `ally_owner` = '".$changeleader."' WHERE `id` = '".$id."'", "alliance");
-						doquery("UPDATE {{table}} SET `ally_rank_id` = '0' WHERE `id` = '".$changeleader."'", "users");}
+						doquery("UPDATE {{table}} SET `ally_rank_id` = '0' WHERE `id` = '".$changeleader."'", "users");
+						$Log	.=	$lang['log_idnewleader'].": ".$changeleader."\n";}
 					elseif (!$QueryF2 && $changeleader != NULL){
 						$Error	.=	'<tr><th colspan="3"><font color=red>'.$lang['ad_ally_not_exist3'].'</font></th></tr>';
 						$i++;}
 						
-					if ($externo != NULL)
+					if ($externo != NULL){
 						doquery("UPDATE {{table}} SET `ally_description` = '".$externo."' WHERE `id` = '".$id."'", "alliance");
+						$Log	.=	$lang['log_text_ext'].": ".$externo."\n";}
 						
-					if ($interno != NULL)
+					if ($interno != NULL){
 						doquery("UPDATE {{table}} SET `ally_text` = '".$interno."' WHERE `id` = '".$id."'", "alliance");
+						$Log	.=	$lang['log_text_int'].": ".$interno."\n";}
 						
-					if ($solicitud != NULL)
+					if ($solicitud != NULL){
 						doquery("UPDATE {{table}} SET `ally_request` = '".$solicitud."' WHERE `id` = '".$id."'", "alliance");
+						$Log	.=	$lang['log_text_sol'].": ".$solicitud."\n";}
 						
 					if ($delete == 'on'){
 						doquery("DELETE FROM {{table}} WHERE `id` = '".$id."'", "alliance");
 						doquery("UPDATE {{table}} SET `ally_id` = '0', `ally_name` = '', `ally_request` = '0', `ally_rank_id` = '0', `ally_register_time` = '0',
-							`ally_request` = '0' WHERE `ally_id` = '".$id."'", "users");}
+							`ally_request` = '0' WHERE `ally_id` = '".$id."'", "users");
+						$Log	.=	$lang['log_ally_delete']."\n";}
 						
 						
 						
@@ -790,7 +1019,8 @@ switch($_GET[page])
 					if ($QueryF3 && $delete_u != NULL){
 						doquery("UPDATE {{table}} SET `ally_members` = ally_members - 1 WHERE `id` = '".$id."'", "alliance");
 						doquery("UPDATE {{table}} SET `ally_id` = '0', `ally_name` = '', `ally_request` = '0', `ally_rank_id` = '0', `ally_register_time` = '0',
-							`ally_request` = '0' WHERE `id` = '".$delete_u."' AND `ally_id` = '".$id."'", "users");}
+							`ally_request` = '0' WHERE `id` = '".$delete_u."' AND `ally_id` = '".$id."'", "users");
+						$Log	.=	$lang['log_id_user_expu'].": ".$delete_u."\n";}
 					elseif (!$QueryF3 && $delete_u != NULL){
 						$Error	.=	'<tr><th colspan="3"><font color=red>'.$lang['ad_ally_not_exist2'].'</font></th></tr>';
 						$i++;}						
@@ -799,6 +1029,10 @@ switch($_GET[page])
 						$parse['display']	=	'<tr><th colspan="3"><font color=lime>'.$lang['ad_ally_succes'].'</font></th></tr>';
 					else
 						$parse['display']	=	$Error;
+						
+						
+					$Log	.=	$lang['log_to_ally_whosid'].$id."\n";
+					LogFunction($Log, "AllianceLog", $LogCanWork);
 					
 			 	}
 			 	else
@@ -816,6 +1050,13 @@ switch($_GET[page])
 	break;
 
 	default:
+	if ($user['authlevel'] == 3) 
+		$parse['changepersonal'] = 
+	'<tr>
+		<th><a href="AccountEditorPage.php?page=personal'.$parse['getuser'].'"><img src="../styles/images/Adm/arrowright.png" width="16" height="10"/> '.$lang['ad_editor_personal'].'</a></th>
+	</tr>';
+	
+	
 	display(parsetemplate(gettemplate('adm/EditorTPL/EditorBody'), $parse), false, '', true, false);
 }
 ?>

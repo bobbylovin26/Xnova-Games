@@ -27,7 +27,7 @@ $xgp_root = './../';
 include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.' . $phpEx);
 
-if ($user['authlevel'] < 1) die();
+if ($user['authlevel'] < 1) die(message ($lang['404_page']));
 
 	$page  = "<html>\n";
 	$page .= "<head>\n";
@@ -37,9 +37,9 @@ if ($user['authlevel'] < 1) die();
 	$page .= "</head>\n";
 	$page .= "<frameset cols=\"180,*\" frameborder=\"no\" border=\"0\" framespacing=\"0\">\n";
 	$page .= "<frame src=\"menu.php\" name=\"rightFrame\" id=\"rightFrame\"/>\n";
-	$page .= "<frameset rows=\"65,*\" frameborder=\"no\" border=\"0\" framespacing=\"0\">\n";
+	$page .= "<frameset rows=\"85,*\" frameborder=\"no\" border=\"0\" framespacing=\"0\">\n";
 	$page .= "<frame src=\"topnav.php\" name=\"topFrame\" scrolling=\"No\" noresize=\"noresize\" id=\"topFrame\"/>\n";
-	$page .= "<frame src=\"OverviewPage.php\" name=\"Hauptframe\" scrolling=\"Auto\" noresize=\"noresize\" id=\"mainFrame\"/>\n";
+	$page .= "<frame src=\"OverviewPage.php\" name=\"Hauptframe\" scrolling=\"yes\" noresize=\"noresize\" id=\"mainFrame\"/>\n";
 	$page .= "</frameset>\n";
 	$page .= "<noframes><body>\n";
 	$page .= "</body>\n";

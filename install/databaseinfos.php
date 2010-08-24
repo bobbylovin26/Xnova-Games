@@ -80,9 +80,9 @@ $QryTableConfig     .= ") ENGINE=MyISAM;";
 
 $QryInsertConfig     = "INSERT INTO `{{table}}` ";
 $QryInsertConfig    .= "(`config_name`           , `config_value`) VALUES ";
-$QryInsertConfig    .= "('VERSION'          	 , '2.9.2'), ";
+$QryInsertConfig    .= "('VERSION'          	 , '2.9.3'), ";
 $QryInsertConfig    .= "('users_amount'          , '0'), ";
-$QryInsertConfig    .= "('moderation'            , '1,0,0,1;1,1,0,1;'), ";
+$QryInsertConfig    .= "('moderation'            , '1,0,0,1,1;1,1,0,1,1;1;'), ";
 $QryInsertConfig    .= "('game_speed'            , '2500'), ";
 $QryInsertConfig    .= "('fleet_speed'           , '2500'), ";
 $QryInsertConfig    .= "('resource_multiplier'   , '1'), ";

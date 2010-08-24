@@ -399,8 +399,9 @@ function ShowOverviewPage($CurrentUser, $CurrentPlanet)
 				$parse['user_rank']			= pretty_number($StatRecord['total_points']) . " (". $lang['ov_place'] ." <a href=\"game.php?page=statistics&range=".$StatRecord['total_rank']."\">".$StatRecord['total_rank']."</a> ". $lang['ov_of'] ." ".$game_config['users_amount'].")";
 			else
 				$parse['user_rank']			= "-";
-			setlocale(LC_ALL, 'es_ES');
-			$parse['date_time']				= strftime("Hoy es %A, %e de %B de %Y, son las %H:%M:%S" ,time());
+
+			$parse['date_time']				= date("D M j H:i:s", time());
+
 			return display(parsetemplate(gettemplate('overview/overview_body'), $parse));
 			break;
 	}

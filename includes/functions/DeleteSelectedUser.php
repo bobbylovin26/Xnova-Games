@@ -4,7 +4,7 @@
 # *																			 #
 # * XG PROYECT																 #
 # *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from Xtreme-gameZ.com.ar	 #
+# * @copyright Copyright (C) 2008 - 2010 By lucky from Xtreme-gameZ.com.ar	 #
 # *																			 #
 # *																			 #
 # *  This program is free software: you can redistribute it and/or modify    #
@@ -53,6 +53,7 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 			doquery ( "DELETE FROM {{table}} WHERE `id` = '" . $OnePlanet['id'] . "';", 'planets' );
 		}
 
+		doquery ( "DELETE FROM {{table}} WHERE `id_owner` = '" . $UserID . "';", 'planets' );
 		doquery ( "DELETE FROM {{table}} WHERE `message_sender` = '" . $UserID . "';", 'messages' );
 		doquery ( "DELETE FROM {{table}} WHERE `message_owner` = '" . $UserID . "';", 'messages' );
 		doquery ( "DELETE FROM {{table}} WHERE `owner` = '" . $UserID . "';", 'notes' );
@@ -62,5 +63,22 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 		doquery ( "DELETE FROM {{table}} WHERE `id` = '" . $UserID . "';", 'users' );
 		doquery ( "UPDATE `{{table}}` SET `config_value` = `config_value` - '1' WHERE `config_name` = 'users_amount' LIMIT 1 ;", "config" );
 	}
-
+	
+function DeleteSelectedPlanet ($ID)
+{
+	global $lang;
+	
+	$QueryPlanet = doquery ("SELECT galaxy,planet,system,planet_type FROM {{table}} WHERE id = '".$ID."'", 'planets', true );
+	
+	if ($QueryPlanet['planet_type'] == '3')
+	{
+		doquery("DELETE FROM {{table}} WHERE id = '".$ID."'", "planets");
+		doquery("UPDATE {{table}} SET id_luna = 0 WHERE id_luna = '".$ID."'", "galaxy");
+	}
+	else
+	{
+		doquery("DELETE FROM {{table}} WHERE galaxy = '".$QueryPlanet['galaxy']."' AND system = '".$QueryPlanet['system']."' AND planet = '".$QueryPlanet['planet']."'", "planets");
+		doquery("DELETE FROM {{table}} WHERE id_planet = '".$ID."'", "galaxy");
+	}
+}
 ?>

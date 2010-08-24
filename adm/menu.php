@@ -26,13 +26,13 @@ define('IN_ADMIN', true);
 $xgp_root = './../';
 include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.'.$phpEx);
-include('AdminFunctions/Autorization.' . $phpEx);
 
-if ($user['authlevel'] < 1) die();
+if ($user['authlevel'] < 1) die(message ($lang['404_page']));
 
 $parse			=	$lang;
 
-$onMouseOverIE	=	"onMouseOver=\"this.className='ForIEHover'\" onMouseOut=\"this.className='ForIE'\"";
+$onMouseOverIE		=	"onMouseOver=\"this.className='ForIEHover'\" onMouseOut=\"this.className='ForIE'\"";
+$onMouseOverIELime	=	"onMouseOver=\"this.className='ForIEHoverLime'\" onMouseOut=\"this.className='ForIEHoverr'\"";
 
 
 $ConfigTable	=
@@ -44,19 +44,16 @@ $ConfigTable	=
         	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"SettingsPage.php\" target=\"Hauptframe\">".$lang['mu_settings']."</a></th>
     	</tr>
 		<tr>
-        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"ConfigStatsPage.php\" target=\"Hauptframe\">".$lang['mu_stats_options']."</a></th>
-    	</tr>
-    	<tr>
-        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"ResetPage.php\" target=\"Hauptframe\">".$lang['re_reset_universe']."</a></th>
-    	</tr>
-		<tr>
         	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"DataBaseViewPage.php\" target=\"Hauptframe\">".$lang['mu_optimize_db']."</a></th>
     	</tr>
 		<tr>
         	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"ErrorPage.php\" target=\"Hauptframe\">".$lang['mu_error_list']."</a></th>
     	</tr>
 		<tr>
-        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"QueriesPage.php\" target=\"Hauptframe\">".$lang['qe_title_menu']."</a></th>
+        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"LogToolPage.php\" target=\"Hauptframe\">".$lang['mu_user_logs']."</a></th>
+    	</tr>
+		<tr>
+        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"ConfigStatsPage.php\" target=\"Hauptframe\">".$lang['mu_stats_options']."</a></th>
     	</tr>
 		</table>";
 		
@@ -67,23 +64,14 @@ $EditTable	=
         	<td colspan=\"2\" class=\"t\">".$lang['mu_users_settings']."</td>
     	</tr>
 		<tr>
-        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"CreateNewUserPage.php\" target=\"Hauptframe\">".$lang['new_title']."</a></th>
-    	</tr>
+        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"MakerPage.php\" target=\"Hauptframe\">".$lang['new_creator_title']."</a></th>
+   	 	</tr>
     	<tr>
         	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"AccountEditorPage.php\" target=\"Hauptframe\">".$lang['mu_add_delete_resources']."</a></th>
    	 	</tr>
 		<tr>
-        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"PlanetsOptionsPage.php\" target=\"Hauptframe\">".$lang['mu_planets_options']."</a></th>
-    	</tr>
-		<tr>
-        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"MoonOptionsPage.php\" target=\"Hauptframe\">".$lang['mu_moon_options']."</a></th>
-    	</tr>
-		<tr>
         	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"BanPage.php\" target=\"Hauptframe\">".$lang['mu_ban_options']."</a></th>
     	</tr>
-		<tr>
-        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"ChangePassPage.php\" target=\"Hauptframe\">".$lang['mu_change_pass']."</a></th>
-   		</tr>
 		</table>";
 		
 $ViewTable	=
@@ -92,22 +80,22 @@ $ViewTable	=
         	<td colspan=\"2\" class=\"t\">".$lang['mu_observation']."</td>
     	</tr>
 		<tr>
-        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"OnlineUsersPage.php\" target=\"Hauptframe\">".$lang['mu_connected']."</a></th>
+        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"SearchingPage.php?search=online&minimize=on\" target=\"Hauptframe\">".$lang['mu_connected']."</a></th>
     	</tr>
 		<tr>
-        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"ActivePlanets.php\" target=\"Hauptframe\">".$lang['mu_active_planets']."</a></th>
+        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"SearchingPage.php?search=p_connect&minimize=on\" target=\"Hauptframe\">".$lang['mu_active_planets']."</a></th>
     	</tr>
     	<tr>
         	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"ShowFlyingFleets.php\" target=\"Hauptframe\">".$lang['mu_flying_fleets']."</a></th>
     	</tr>
 		<tr>
-        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"UserListPage.php\" target=\"Hauptframe\">".$lang['mu_user_list']."</a></th>
+        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"SearchingPage.php?search=users&minimize=on\" target=\"Hauptframe\">".$lang['mu_user_list']."</a></th>
     	</tr>
 		<tr>
-        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"PlanetListPage.php\" target=\"Hauptframe\">".$lang['mu_planet_list']."</a></th>
+        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"SearchingPage.php?search=planet&minimize=on\" target=\"Hauptframe\">".$lang['mu_planet_list']."</a></th>
     	</tr>
 		<tr>
-        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"MoonListPage.php\" target=\"Hauptframe\">".$lang['mu_moon_list']."</a></th>
+        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"SearchingPage.php?search=moon&minimize=on\" target=\"Hauptframe\">".$lang['mu_moon_list']."</a></th>
     	</tr>
 		<tr>
         	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"MessageListPage.php\" target=\"Hauptframe\">".$lang['mu_mess_list']."</a></th>
@@ -116,7 +104,7 @@ $ViewTable	=
         	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"AccountDataPage.php\" target=\"Hauptframe\">".$lang['mu_info_account_page']."</a></th>
     	</tr>
 		<tr>
-        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"SearchInDBPage.php\" target=\"Hauptframe\">".$lang['mu_search_page']."</a></th>
+        	<th ".$onMouseOverIE." class=\"ForIE\"><a href=\"SearchingPage.php\" target=\"Hauptframe\">".$lang['mu_search_page']."</a></th>
     	</tr>
 		</table>";
 		
@@ -165,9 +153,6 @@ if($user['authlevel'] == 3)
 	$parse['ConfigTable']	=	$ConfigTable;
 	$parse['ToolsTable']	=	$ToolsTable;
 }
-
-
-
 
 
 

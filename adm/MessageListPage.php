@@ -26,9 +26,8 @@ define('IN_ADMIN', true);
 $xgp_root = './../';
 include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.' . $phpEx);
-include('AdminFunctions/Autorization.' . $phpEx);
 
-if ($Observation != 1) die();
+if ($Observation != 1) die(message ($lang['404_page']));
 
 	$parse		= $lang;
 	$Prev       = ( !empty($_POST['prev'])   ) ? true : false;
@@ -59,7 +58,7 @@ if ($Observation != 1) die();
 		else
 			$ViewPage = 1;
 	}
-	elseif ($Next   == true)
+	elseif ($Next   == true && $_POST['page'])
 	{
 		if ($Selected < 100)
 			$Mess      = doquery("SELECT COUNT(*) AS `max` FROM {{table}} WHERE `message_type` = '". $Selected ."';", 'messages', true);
@@ -140,7 +139,7 @@ if ($Observation != 1) die();
 			$OwnerData = doquery ("SELECT `username` FROM {{table}} WHERE `id` = '". $row['message_owner'] ."';", 'users',true);
 			$bloc['mlst_id']      = $row['message_id'];
 			$bloc['mlst_from']    = $row['message_from'];
-			$bloc['mlst_to']      = $OwnerData['username'] ." ID:". $row['message_owner'];
+			$bloc['mlst_to']      = $OwnerData['username'] ." ".$lang['input_id'].":". $row['message_owner'];
 			$bloc['mlst_subject'] = $row['message_subject'];
 			$bloc['mlst_text']    = $row['message_text'];
 			$bloc['mlst_time']    = gmdate ("d/M/y H:i:s", $row['message_time'] );

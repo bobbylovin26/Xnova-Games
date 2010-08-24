@@ -22,12 +22,17 @@ define('INSIDE'  , true);
 define('INSTALL' , false);
 define('IN_ADMIN', true);
 
+$xgp_root = './../';
+include($xgp_root . 'extension.inc.php');
+include_once('LogFunction.' . $phpEx);
+
 if ($user['authlevel'] < 1){die();}
 
 $QueryModeration	=	doquery("SELECT * FROM {{table}} WHERE `config_name` = 'moderation'", "config", true);
 $QueryModerationEx	=	explode(";", $QueryModeration[1]);
 $Moderator			=	explode(",", $QueryModerationEx[0]);
 $Operator			=	explode(",", $QueryModerationEx[1]);
+$Administrator		=	explode(",", $QueryModerationEx[2]);
 
 if ($user['authlevel'] == 1)
 {
@@ -35,6 +40,7 @@ if ($user['authlevel'] == 1)
 	$EditUsers		=	$Moderator[1];
 	$ConfigGame		=	$Moderator[2];
 	$ToolsCanUse	=	$Moderator[3];
+	$LogCanWork		=	$Moderator[4];
 }
 	
 if ($user['authlevel'] == 2)
@@ -43,6 +49,7 @@ if ($user['authlevel'] == 2)
 	$EditUsers		=	$Operator[1];
 	$ConfigGame		=	$Operator[2];
 	$ToolsCanUse	=	$Operator[3];
+	$LogCanWork		=	$Operator[4];
 }
 
 if ($user['authlevel'] == 3)
@@ -51,5 +58,6 @@ if ($user['authlevel'] == 3)
 	$EditUsers		=	1;
 	$ConfigGame		=	1;
 	$ToolsCanUse	=	1;
+	$LogCanWork		=	$Administrator[0];
 }
 ?>

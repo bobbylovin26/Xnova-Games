@@ -22,18 +22,15 @@ table
 	border: 0px #000000 solid;
 	font-size: 10px;
 	background-color: #344566;
-	/*filter: alpha(opacity=80);
-  	_moz-opacity: 0.8;
-  	_khtml-opacity: 0.8;
-  	opacity: 0.8;*/
 }
 
 textarea
 {
 	font:Verdana, Arial, Helvetica, sans-serif;
   	color               : #FFFFFF;
-  	background-color    : #050E1F;
+  	background-color    : #091D39;
   	width               : 85%;
+	border:1px #FFFFFF solid;
 }
 
 
@@ -71,6 +68,11 @@ td.k
 	background-color: #0A1B2A;
 }
 
+input[type='submit'], select
+{
+	cursor:pointer;
+}
+
 td.c
 {
   font-weight          : bold;
@@ -103,16 +105,26 @@ a:hover {
 	text-decoration: none;
 }
 
-/*h1
+
+a.ForIEHoverr
 {
-	font-size:22px;
-	text-align:left;
-	padding:14px;
-	padding-left:90px;
-	height:60px;
-	background-image:url(../images/Adm/h1.png);
-	background-repeat:no-repeat;
-}*/
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #FFFFFF;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+a.ForIEHoverLime
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	cursor: pointer;
+	color: #00FF00;
+	text-decoration: none;
+}
+
 
 img
 {
@@ -179,7 +191,6 @@ a.out {
 	border: 1px #FF0000 solid;
 	color: #FF0000;
 	cursor: pointer;
-	width:50px;
 	text-align:center;
 }
 a.out:hover {
@@ -189,7 +200,6 @@ a.out:hover {
 	cursor: pointer;
 	color: #FFFFFF;
 	background-color: #CC0000;
-	width:50px;
 	text-align:center;
 }
 
@@ -199,7 +209,6 @@ a.topn {
 	border: 1px #FFFFFF solid;
 	color: #FFFFFF;
 	cursor: pointer;
-	width:50px;
 	text-align:center;
 }
 a.topn:hover {
@@ -209,7 +218,6 @@ a.topn:hover {
 	cursor: pointer;
 	color: #000000;
 	background-color: #66CCFF;
-	width:50px;
 	text-align:center;
 }
 

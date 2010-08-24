@@ -27,7 +27,7 @@ $xgp_root = './../';
 include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.' . $phpEx);
 
-if ($user['authlevel'] < 1) die();
+if ($user['authlevel'] < 1) die(message ($lang['404_page']));
 
 function check_updates()
 {

@@ -26,9 +26,8 @@ define('IN_ADMIN', true);
 $xgp_root = '../';
 include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.' . $phpEx);
-include('AdminFunctions/Autorization.' . $phpEx);
 
-if ($ConfigGame != 1) die();
+if ($ConfigGame != 1) die(message ($lang['404_page']));
 
 $parse = $lang;
 
@@ -48,21 +47,25 @@ if (!$_POST)
 else
 {
 	$Tablas = doquery("SHOW TABLES",'todas');
+	
 	while ($row = mysql_fetch_assoc($Tablas))
 	{
 		foreach ($row as $opcion => $tabla)
 		{
 			if ($_POST['Optimize']){
 				doquery("OPTIMIZE TABLE {$tabla}", "$tabla");
-				$Message	=	$lang['od_opt'];}
+				$Message	=	$lang['od_opt'];
+				$Log	=	"\n".$lang['log_database_title']."\n".$lang['log_the_user'].$user['username'].$lang['log_database_view'].":\n".$lang['log_data_optimize']."\n";}
 				
 			if ($_POST['Repair']){
 				doquery("REPAIR TABLE {$tabla}", "$tabla");
-				$Message	=	$lang['od_rep'];}
+				$Message	=	$lang['od_rep'];
+				$Log	=	"\n".$lang['log_database_title']."\n".$lang['log_the_user'].$user['username'].$lang['log_database_view'].":\n".$lang['log_data_repair']."\n";}
 				
 			if ($_POST['Check']){
 				doquery("CHECK TABLE {$tabla}", "$tabla");
-				$Message	=	$lang['od_check_ok'];}
+				$Message	=	$lang['od_check_ok'];
+				$Log	=	"\n".$lang['log_database_title']."\n".$lang['log_the_user'].$user['username'].$lang['log_database_view'].":\n".$lang['log_data_check']."\n";}
 				
 			if (mysql_errno())
 			{
@@ -80,6 +83,8 @@ else
 			}
 		}
 	}
+		
+	LogFunction($Log, "GeneralLog", $LogCanWork);
 }
 
 display(parsetemplate(gettemplate('adm/DataBaseViewBody'), $parse), false, '', true, false);

@@ -118,7 +118,7 @@ if (INSTALL != true)
 		if ( defined('IN_ADMIN') )
 		{
 			includeLang('ADMIN');
-
+			include('../adm/AdminFunctions/Autorization.' . $phpEx);
 			$dpath     = "../". DEFAULT_SKINPATH  ;
 		}
 		else

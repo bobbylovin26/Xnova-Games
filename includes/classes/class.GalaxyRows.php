@@ -255,7 +255,7 @@ class GalaxyRows
 				$Result .= "<td class=c colspan=2>".$lang['gl_actions'].":</td>";
 				$Result .= "</tr><tr>";
 				$Result .= "<th colspan=2 align=left>";
-				$Result .= "<a href= # onclick=&#039javascript:doit (8, ".$Galaxy.", ".$System.", ".$Planet.", ".$PlanetType.", ".$RecSended.");&#039 >".$lang['gl_collect']."</a>";
+				$Result .= "<a href= # onclick=&#039javascript:doit (8, ".$Galaxy.", ".$System.", ".$Planet.", ".$PlanetType.", ".$RecSended."); return nd();&#039 >".$lang['gl_collect']."</a>";
 				$Result .= "</tr>";
 				$Result .= "</table>";
 				$Result .= "</th>";

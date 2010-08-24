@@ -27,46 +27,52 @@ define('IN_ADMIN', true);
 $xgp_root = './../';
 include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.' . $phpEx);
-include('AdminFunctions/Autorization.' . $phpEx);
 
-if ($Observation != 1) die();
+if ($Observation != 1) die(message ($lang['404_page']));
 
 $parse	= 	$lang;
 
 
-$UserWhileLogin	=	doquery("SELECT `id`, `username` FROM {{table}} ORDER BY `username` ASC", "users");
+if ($user['authlevel']	!=	3)
+	$NOSUPERMI	=	"WHERE `authlevel` < '".$user['authlevel']."'";
+	
+$UserWhileLogin	=	doquery("SELECT `id`, `username`, `authlevel` FROM {{table}} ".$NOSUPERMI." ORDER BY `username` ASC", "users");
 while($UserList	=	mysql_fetch_array($UserWhileLogin))
 {
-	$parse['lista']	.=	"<option value=\"".$UserList['id']."\">".$UserList['username']."</option>";
+	$parse['lista']	.=	"<option value=\"".$UserList['id']."\">".$UserList['username']."&nbsp;&nbsp; (".$lang['rank'][$UserList['authlevel']].")</option>";
 }
 
 
-if($_POST['id_u'] != NULL)
-	$id_u	=	$_POST['id_u'];
+if($_GET['id_u'] != NULL)
+	$id_u	=	$_GET['id_u'];
 else
-	$id_u	=	$_POST['id_u2'];
+	$id_u	=	$_GET['id_u2'];
 
 
-$OnlyQueryLogin 	= 	doquery("SELECT `id` FROM {{table}} WHERE `id` = '".$id_u."'", "users", true);
+$OnlyQueryLogin 	= 	doquery("SELECT `id`, `authlevel` FROM {{table}} WHERE `id` = '".$id_u."'", "users", true);
 
 		
-	if ($_POST['modo'] == "datos")
+	if ($_GET)
 	{
 		if ($id_u == NULL)
 		{
-			$parse['error']	=	$lang['ac_user_id_required'];
+			$parse['error']	=	"<tr><th height=25 style=\"border: 2px red solid;\"><font color=red>".$lang['ac_user_id_required']."</font></th></tr>";
 		}
-		elseif($_POST['id_u'] != NULL && $_POST['id_u2'] != NULL)
+		elseif($_GET['id_u'] != NULL && $_GET['id_u2'] != NULL)
 		{
-			$parse['error']	=	$lang['ac_select_one_id'];
+			$parse['error']	=	"<tr><th height=25 style=\"border: 2px red solid;\"><font color=red>".$lang['ac_select_one_id']."</font></th></tr>";
 		}
 		elseif(!is_numeric($id_u))
 		{
-			$parse['error']	=	$lang['ac_no_character'];
+			$parse['error']	=	"<tr><th height=25 style=\"border: 2px red solid;\"><font color=red>".$lang['ac_no_character']."</font></th></tr>";
 		}
 		elseif($OnlyQueryLogin == NULL or $OnlyQueryLogin == 0)
 		{
-			$parse['error']	=	$lang['ac_username_doesnt'];
+			$parse['error']	=	"<tr><th height=25 style=\"border: 2px red solid;\"><font color=red>".$lang['ac_username_doesnt']."</font></th></tr>";
+		}
+		elseif($user['authlevel'] != 3 && $OnlyQueryLogin['authlevel'] > $user['authlevel'])
+		{
+			$parse['error']	=	"<tr><th height=25 style=\"border: 2px red solid;\"><font color=red>".$lang['ac_no_rank_level']."</font></th></tr>";
 		}
 		else
 		{
@@ -81,8 +87,8 @@ $OnlyQueryLogin 	= 	doquery("SELECT `id` FROM {{table}} WHERE `id` = '".$id_u."'
 			$UserQuery 	= 	doquery("SELECT ".$SpecifyItemsU." FROM {{table}} WHERE `id` = '".$id_u."'", "users", true);
 
 			
-			$parse['reg_time']		=	gmdate("d-m-Y H:i:s", $UserQuery['register_time']);
-			$parse['onlinetime']	=	gmdate("d-m-Y H:i:s", $UserQuery['onlinetime']);
+			$parse['reg_time']		=	date("d-m-Y H:i:s", $UserQuery['register_time']);
+			$parse['onlinetime']	=	date("d-m-Y H:i:s", $UserQuery['onlinetime']);
 			$parse['id']			=	$UserQuery['id'];
 			$parse['nombre']		=	$UserQuery['username'];
 			$parse['email_1']		=	$UserQuery['email'];
@@ -95,14 +101,17 @@ $OnlyQueryLogin 	= 	doquery("SELECT `id` FROM {{table}} WHERE `id` = '".$id_u."'
 			$parse['p']				=	$UserQuery['planet'];
 			$parse['info']			=	$UserQuery['user_agent'];
 			$alianza				=	$UserQuery['ally_name'];
-			$parse['nivel']			=	$lang['se_authlevel'][$UserQuery['authlevel']];
+			$parse['nivel']			=	$lang['rank'][$UserQuery['authlevel']];
 			$parse['ipcheck']		=	$lang['ac_checkip'][$UserQuery['noipcheck']];
-			if($UserQuery['vacas'] == 1) $parse['vacas'] = $lang['ac_res'][1]; else $parse['vacas'] = $lang['ac_res'][0];
-			if($UserQuery['bana'] == 1) $parse['suspen'] = $lang['ac_res'][1]; else $parse['suspen'] = $lang['ac_res'][0];
+			if($UserQuery['urlaubs_modus'] == 1) $parse['vacas'] = $lang['one_is_yes'][1]; else $parse['vacas'] = $lang['one_is_yes'][0];
+			if($UserQuery['bana'] == 1) $parse['suspen'] = $lang['one_is_yes'][1]; else $parse['suspen'] = $lang['one_is_yes'][0];
 
 
 			$parse['mo']	=	"<a title=\"".pretty_number($UserQuery['darkmatter'])."\">".shortly_number($UserQuery['darkmatter'])."</a>";
-
+			
+			$Log	.=	"\n".$lang['log_info_detail_title']."\n";
+			$Log	.=	$lang['log_the_user'].$user['username'].$lang['log_searchto_1'].$UserQuery['username']."\n";				
+			LogFunction($Log, "GeneralLog", $LogCanWork);
 
 			$parse['tec_espia']				=	$UserQuery['spy_tech'];
 			$parse['tec_compu']				=	$UserQuery['computer_tech'];
@@ -146,8 +155,8 @@ $OnlyQueryLogin 	= 	doquery("SELECT `id` FROM {{table}} WHERE `id` = '".$id_u."'
 				$BannedQuery	=	doquery("SELECT theme,time,longer,author FROM {{table}} WHERE `who` = '".$UserQuery['username']."'", "banned", true);
 				
 				
-				$parse['sus_longer']	=	gmdate("d-m-Y H-i-s", $BannedQuery['longer']);
-				$parse['sus_time']		=	gmdate("d-m-Y H-i-s", $BannedQuery['time']);
+				$parse['sus_longer']	=	date("d-m-Y H-i-s", $BannedQuery['longer']);
+				$parse['sus_time']		=	date("d-m-Y H-i-s", $BannedQuery['time']);
 				$parse['sus_reason']	=	$BannedQuery['theme'];
 				$parse['sus_author']	=	$BannedQuery['author'];
 				
@@ -214,12 +223,12 @@ $OnlyQueryLogin 	= 	doquery("SELECT `id` FROM {{table}} WHERE `id` = '".$id_u."'
 				$parse['tag']					=	$AllianceQuery['ally_tag'];
 				$parse['ali_nom']				=	$AllianceQuery['ally_name'];
 				$parse['ali_cant']				=	$AllianceQuery['ally_members'];
-				$parse['ally_register_time']	=	gmdate("d-m-Y H:i:s", $AllianceQuery['ally_register_time']);
+				$parse['ally_register_time']	=	date("d-m-Y H:i:s", $AllianceQuery['ally_register_time']);
 				$ali_lider						=	$AllianceQuery['ally_owner'];
 					
 					
 				if($AllianceQuery['ally_web'] != NULL)
-					$parse['ali_web'] = $AllianceQuery['ally_web'];
+					$parse['ali_web'] = "<a href=".$AllianceQuery['ally_web']." target=_blank>".$AllianceQuery['ally_web']."</a>";
 				else
 					$parse['ali_web'] = $lang['ac_no_web'];
 					
@@ -340,10 +349,15 @@ $OnlyQueryLogin 	= 	doquery("SELECT `id` FROM {{table}} WHERE `id` = '".$id_u."'
 						<th>".pretty_number($PlanetsWhile['temp_min'])."/".pretty_number($PlanetsWhile['temp_max'])."</th>
 					</tr>";
 					
-					if ($PlanetsWhile['energy_used'] < 0) 
-						$Color	=	"<font color=#FF6600>".shortly_number($PlanetsWhile['energy_used'])."</font>";
-					else 
-						$Color	=	shortly_number($PlanetsWhile['energy_used']);
+					
+					$SumOfEnergy	=	($PlanetsWhile['energy_max'] + $PlanetsWhile['energy_used']);
+					
+					if ($SumOfEnergy < 0) 
+						$Color	=	"<font color=#FF6600>".shortly_number($SumOfEnergy)."</font>";
+					elseif ($SumOfEnergy > 0) 
+						$Color	=	"<font color=lime>".shortly_number($SumOfEnergy)."</font>";
+					else
+						$Color	=	shortly_number($SumOfEnergy);
 					
 					
 					$parse['resources']	.=	"
@@ -352,8 +366,7 @@ $OnlyQueryLogin 	= 	doquery("SELECT `id` FROM {{table}} WHERE `id` = '".$id_u."'
 						<th><a title=\"".pretty_number($PlanetsWhile['metal'])."\">".shortly_number($PlanetsWhile['metal'])."</a></th>
 						<th><a title=\"".pretty_number($PlanetsWhile['crystal'])."\">".shortly_number($PlanetsWhile['crystal'])."</a></th>
 						<th><a title=\"".pretty_number($PlanetsWhile['deuterium'])."\">".shortly_number($PlanetsWhile['deuterium'])."</a></th>
-						<th><a title=\"".pretty_number($PlanetsWhile['energy_used'])."\">".$Color."</a>/
-						<a title=\"".pretty_number($PlanetsWhile['energy_max'])."\">".shortly_number($PlanetsWhile['energy_max'])."</a></th>
+						<th><a title=\"".pretty_number($SumOfEnergy)."\">".$Color."</a>/<a title=\"".pretty_number($PlanetsWhile['energy_max'])."\">".shortly_number($PlanetsWhile['energy_max'])."</a></th>
 					</tr>";
 				
 				
@@ -432,10 +445,10 @@ $OnlyQueryLogin 	= 	doquery("SELECT `id` FROM {{table}} WHERE `id` = '".$id_u."'
 					
 					if ($MoonZ != 0)
 						$parse['MoonHave']	=	"<a href=\"javascript:animatedcollapse.toggle('especiales')\" class=\"link\">
-							<img src=\"../styles/images/Adm/arrowright.png\" width=\"16\" height=\"10\"/> ".$lang['ac_lunar_buildings']."</a>";
+							<img src=\"../styles/images/Adm/arrowright.png\" width=\"16\" height=\"10\"/> ".$lang['moon_build']."</a>";
 					else
 						$parse['MoonHave']	=	"<span class=\"no_moon\"><img src=\"../styles/images/Adm/arrowright.png\" width=\"16\" height=\"10\"/> 
-							".$lang['ac_lunar_buildings']."&nbsp;".$lang['ac_moons_no']."</span>";	
+							".$lang['moon_build']."&nbsp;".$lang['ac_moons_no']."</span>";	
 					
 				}
 				
@@ -447,7 +460,7 @@ $OnlyQueryLogin 	= 	doquery("SELECT `id` FROM {{table}} WHERE `id` = '".$id_u."'
 							<th>".$PlanetsWhile['name']."</th>
 							<th>".$PlanetsWhile['id']."</th>
 							<th>[".$PlanetsWhile['galaxy'].":".$PlanetsWhile['system'].":".$PlanetsWhile['planet']."]</th>
-							<th>".gmdate("d-m-Y   H:i:s", $PlanetsWhile['destruyed'])."</th>
+							<th>".date("d-m-Y   H:i:s", $PlanetsWhile['destruyed'])."</th>
 						</tr>";	
 					$DestruyeD++;
 				}

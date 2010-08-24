@@ -344,9 +344,10 @@ function maxResource(id) {
 function maxResources() {
 	var id;
 	var storCap = storage();
-	var metalToTransport = document.getElementsByName("thisresource1")[0].value;
-	var crystalToTransport = document.getElementsByName("thisresource2")[0].value;
-	var deuteriumToTransport = document.getElementsByName("thisresource3")[0].value - consumption();
+	var metalToTransport = Math.round(document.getElementsByName("thisresource1")[0].value);
+    var crystalToTransport = Math.round(document.getElementsByName("thisresource2")[0].value);
+    var deuteriumToTransport = Math.round(document.getElementsByName("thisresource3")[0].value - consumption());
+
 
 	var freeCapacity = storCap - metalToTransport - crystalToTransport - deuteriumToTransport;
 	if (freeCapacity < 0) {
@@ -391,9 +392,9 @@ function noShips (){
 }
 
 function calculateTransportCapacity() {
-	var metal = Math.abs(document.getElementsByName("resource1")[0].value);
-	var crystal = Math.abs(document.getElementsByName("resource2")[0].value);
-	var deuterium = Math.abs(document.getElementsByName("resource3")[0].value);
+	var metal = Math.round(Math.abs(document.getElementsByName("resource1")[0].value));
+    var crystal = Math.round(Math.abs(document.getElementsByName("resource2")[0].value));
+    var deuterium = Math.round(Math.abs(document.getElementsByName("resource3")[0].value));
 
 	transportCapacity =  storage() - metal - crystal - deuterium;
 

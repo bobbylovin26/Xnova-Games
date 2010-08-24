@@ -26,8 +26,6 @@ $xgp_root = './';
 include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.' . $phpEx);
 
-$planetrow 		= doquery("SELECT * FROM {{table}} WHERE `id` = '". $user['current_planet'] ."';", 'planets', true);
-
 $UserSpyProbes  = $planetrow['spy_sonde'];
 $UserRecycles   = $planetrow['recycler'];
 $UserDeuterium  = $planetrow['deuterium'];
@@ -96,11 +94,7 @@ if ($planet > MAX_PLANET_IN_SYSTEM || $planet < 1)
 	$ResultMessage = "602; ".$lang['fa_planet_not_exist']." |".$CurrentFlyingFleets." ".$UserSpyProbes." ".$UserRecycles." ".$UserMissiles;
 	die ( $ResultMessage );
 }
-if ($UserDeuterium < 1)
-{
-	$ResultMessage = "613; ".$lang['fa_not_enough_fuel']." |".$CurrentFlyingFleets." ".$UserSpyProbes." ".$UserRecycles." ".$UserMissiles;
-	die ( $ResultMessage );
-}
+
 $FleetArray = $fleet['fleetarray'];
 
 $CurrentFlyingFleets = doquery("SELECT COUNT(fleet_id) AS `Nbre` FROM {{table}} WHERE `fleet_owner` = '".$user['id']."';", 'fleets', true);
@@ -232,6 +226,12 @@ foreach ($FleetArray as $Ship => $Count)
 }
 $consumption = round($consumption) + 1;
 
+if ($UserDeuterium < $consumption)
+{
+	$ResultMessage = "613; ".$lang['fa_not_enough_fuel']." |".$CurrentFlyingFleets." ".$UserSpyProbes." ".$UserRecycles." ".$UserMissiles;
+	die ( $ResultMessage );
+}
+
 if ($TargetRow['id_level'] > $user['authlevel'])
 {
 	$Allowed = true;
@@ -280,7 +280,7 @@ doquery( $QryInsertFleet, 'fleets');
 
 $UserDeuterium   -= $consumption;
 
-if($UserDeuterium < 0)
+if($UserDeuterium < 1)
 	exit();
 
 $QryUpdatePlanet  = "UPDATE {{table}} SET ";
@@ -291,6 +291,8 @@ $QryUpdatePlanet .= "`id` = '". $planetrow['id'] ."';";
 doquery( $QryUpdatePlanet, 'planets');
 
 $CurrentFlyingFleets++;
+
+$planetrow 		= doquery("SELECT * FROM {{table}} WHERE `id` = '". $user['current_planet'] ."';", 'planets', true);
 $ResultMessage  = "600; ".$lang['fa_sending']." ". $FleetShipCount  ." ". $lang['tech'][$Ship] ." a ". $_POST['galaxy'] .":". $_POST['system'] .":". $_POST['planet'] ."...|";
 $ResultMessage .= $CurrentFlyingFleets ." ".$UserSpyProbes." ".$UserRecycles." ".$UserMissiles;
 

@@ -26,9 +26,8 @@ define('IN_ADMIN', true);
 $xgp_root = './../';
 include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.' . $phpEx);
-include('AdminFunctions/Autorization.' . $phpEx);
 
-if ($ToolsCanUse != 1) die();
+if ($ToolsCanUse != 1) die(message ($lang['404_page']));
 
 	$parse 	= $lang;
 
@@ -65,13 +64,23 @@ if ($ToolsCanUse != 1) die();
 				SendSimpleMessage ( $u['id'], $user['id'], $Time, 1, $From, $Subject, $Message);
 				$_POST['tresc'] = str_replace(":name:",$u['username'],$_POST['tresc']);
 			}
-			message($lang['ma_message_sended'], "GlobalMessagePage." . $phpEx, 3);
+			
+			
+			$Log	.=	"\n".$lang['log_circular_message']."\n";
+			$Log	.=	$lang['log_the_user'].$user['username'].$lang['log_message_specify'].":\n";
+			$Log	.=	$lang['log_mes_subject'].": ".$_POST["temat"]."\n";
+			$Log	.=	$lang['log_mes_text'].": ".$_POST["tresc"]."\n";
+				
+			LogFunction($Log, "GeneralLog", $LogCanWork);
+		
+			$parse['display']	=	"<tr><th colspan=5><font color=lime>".$lang['ma_message_sended']."</font></th></tr>";
 		}
 		else
 		{
-			message($lang['ma_subject_needed'], "GlobalMessagePage." . $phpEx, 3);
+			$parse['display']	=	"<tr><th colspan=5><font color=red>".$lang['ma_subject_needed']."</font></th></tr>";
 		}
 	}
-	else
-		display(parsetemplate(gettemplate('adm/GlobalMessageBody'), $parse), false,'', true, false);
+	
+	
+display(parsetemplate(gettemplate('adm/GlobalMessageBody'), $parse), false,'', true, false);
 ?>

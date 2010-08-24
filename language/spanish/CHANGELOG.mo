@@ -4,20 +4,78 @@ $lang['Version']     = 'Versión';
 $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
-'2.9.2' => ' 01/11/09
+'2.9.3' => ' 01/12/09
+- [Seguridad] Mejoras de seguridad en el movimiento de recursos (By calzon).-
+
+- [Fix][Bug #-------] Multiplicación de recicladores (By tomtom).-
+- [Fix][Bug #-------] Bug que permitía el incremento de naves en el salto cuántico (By war4head).-
+
+
+- [Cambio] Nuevamente se volvio al viejo reloj en la visión general.-
+
+# Version 0.2 del panel administrativo
+
+.- Los moderadores y operadores ya no podran:
+ || Suspender administradores.
+ || Crear usuarios con rango mayor al de un jugador.
+ || Reiniciar universo.
+ || Ejecutar consultas SQL.
+ || Editar datos personales.
+ || Editar/Vaciar el historial.
+.- [MINOR ADD] Adherida la ID en el sistema de suspensión.
+.- Agregado un historial en el panel administrativo, la cual custodiara los movimientos de los siguientes archivos:
+ || BanPage.php
+ || ErrorPage.php
+ || AccountEditorPage.php
+ || Moderation.php
+ || QueriesPage.php
+ || ResetPage.php
+ || AccountDataPage.php
+ || CreateNewUserPage.php
+ || GlobalMessagePage.php
+ || DataBaseViewPage.php
+ || ConfigStatsPage.php
+ || SettingsPage.php
+ || SearchInDBPage.php
+.- Logs protegidos con .htaccess para que nadie pueda leerlos.
+.- Agregada opción de modo vacaciones en Datos Personales.
+.- Agregado de vuelta el scrolling en el frame (No funciona en IE).
+.- Pequeño fix en la lista de mensajes.
+.- Las siguientes funciones han sido reemplazadas por una redirección al buscador avanzado:
+ || Lista de jugadores.
+ || Lista de lunas.
+ || Lista de planetas.
+ || Lista de usuarios conectados.
+ || Lista de planetas activos.
+.- Agregado al buscador avanzado:
+ || Expandir / contraer.
+ || Paginación.
+ || Nuevos filtros y tipos de búsqueda.
+.- [FIX] borrar usuarios (No borraba las colonias de la tabla xgp_planets).
+.- [FIX] bugs pequeños en el ejecutador de consultas SQL.
+.- Cambios en el ADMIN.mo y traduccion completa al inglés. (Gracias Arali)
+.- Agregada nueva función -> DeleteSelectedPlanet.
+',
+
+'2.9.2' => ' 01/12/09
 - [Seguridad] Cerrado un agujero en la alianza que permitía sql injection (Gracias a privatethedawn).-
 
-- [Novedad] Implementado un nuevo sistema de plugins/mods/adds.-
+- [Novedad] Implementado un nuevo sistema de Plugins v0.3 (Gracias adri93).-
 - [Novedad] Ahora cuando hay muchos recursos en la cuenta de un usuario se muestra K,M,B,T,T+ en la información de cuentas del panel del admin.-
+- [Novedad] Hora y fecha del servidor, en el overview, en Castellano. (Sustituir en la linea 402 el (es_ES), por el idioma deseado.).-
 
 - [Fix][Bug varios] Fueron corregidos varios bugs menores.-
 - [Fix][Bug #0000019] Famoso error en las estadísticas provocado por una query que no era finalizada.-
 - [Fix][Bug #0000020] Información de cuentas en el panel del admin.
 - [Fix][Bug #-------] No se muestra bien el tiempo de estacionar en aliado en el panel del admin.-
 - [Fix][Bug #-------] Corregidos varios textos (español,inglés) en el panel de administración.-
+- [Fix][Bug #-------] Arreglado pequeño error en los datos mostrados en la seccion de recursos.-
+- [Fix][Bug #-------] Ahora muestra correctamente la inactividad de los jugadores de tu alianza desde.-
+- [Fix][Bug #-------] Al borrar un usuario se borraran todos sus planetas.-
 
 
 - [Cambio] Algunas mejoras de optimización en la información de cuentas en el panel administrativo.
+- [Otros]  Mejoras en el sistema de envio de flotas del FleetAjax.php
 ',
 
 '2.9.1' => ' 01/11/09

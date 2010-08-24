@@ -59,6 +59,53 @@ class ShowInfosPage
 	{
 		global $resource, $lang;
 
+		$inp_ok	= TRUE;
+		for ($Ship = 300; $Ship > 200; $Ship-- )
+		{
+			if ($resource[$Ship] != "")
+			{
+				if ($CurrentPlanet[$resource[$Ship]] > 0)
+				{
+					$bla['c' .strval($Ship)]= $CurrentPlanet[$resource[$Ship]];
+				}
+			}
+		}
+
+		$keyPOST	= array_keys($_POST);
+		$keyBLA		= array_keys($bla);
+		$pos	= 0;
+		$pos2	= 0;
+
+		foreach ($_POST as &$fldp)
+		{
+			if (is_numeric($fldp))
+			{
+				foreach ($bla as &$fmax)
+				{
+					if ($keyPOST[$pos]==$keyBLA[$pos2])
+					{
+						if (!($fldp >= 0 && $fldp <= $fmax))
+						{
+							$inp_ok=FALSE;
+						}
+					}
+					$pos2++;
+				}
+				$pos2=0;
+
+			}
+			else
+			{
+				$inp_ok=FALSE;
+			}
+			$pos++;
+		}
+
+		if ($inp_ok == FALSE)
+		{
+			header("location:overview.php");
+		}
+
 		if ($_POST)
 		{
 			$RestString   = $this->GetNextJumpWaitTime ($CurrentPlanet);

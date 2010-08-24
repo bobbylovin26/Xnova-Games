@@ -37,35 +37,30 @@ function checkedAll (frm1) {
 		<tr>
             <th>
             <select name="page" onChange="submit();">
-            {mlst_data_pages}
+            	{mlst_data_pages}
             </select>
             </th>
             <th>
             <select name="type" onChange="submit();">
-            {mlst_data_types}
+            	{mlst_data_types}
             </select>
             </th>
 			<th>
-			<input type="text" name="selday" value="dd" size="3" maxlength="2" /> 
-			<input type="text" name="selmonth"  value="mm" size="3"  maxlength="2"/> 
-			<input type="text" value="yyyy" name="selyear" size="6"  maxlength="4"/></th>
+			<input type="text" name="selday" onClick="if(this.value == 'dd') this.value = '';" onBlur="if(this.value == '') this.value= 'dd';" value="dd" size="3" maxlength="2" /> 
+			<input type="text" name="selmonth" onClick="if(this.value == 'mm') this.value = '';" onBlur="if(this.value == '') this.value= 'mm';" value="mm" size="3"  maxlength="2"/> 
+			<input type="text" name="selyear" onClick="if(this.value == 'yyyy') this.value = '';" onBlur="if(this.value == '') this.value= 'yyyy';" value="yyyy" size="6"  maxlength="4"/></th>
         </tr> 
 		<tr>
             <th><input type="submit" name="prev" value="[ &lt;- ]" />&nbsp;<input type="submit" name="next" value="[ -&gt; ]" /></th>
-            <th>&nbsp;</td>
-        	<th>&nbsp;</th>
-        </tr>   
-        <tr>
-            <th><input type="button" name="checkall" onClick="checkedAll(select_all);" value="{ml_select_all_messages}"></th>
-			<th><input type="submit" name="delsel" value="{ml_dlte_selection}" /></th>
+            <th><input type="submit" name="delsel" value="{ml_dlte_selection}" /></th>
 			<th><input type="submit" name="deldat" value="{ml_dlte_since_button}" /></th>
-        </tr>
+        </tr>   
         <tr>
             <th colspan="3">
                 <table width="100%" border="0" cellspacing="1" cellpadding="1">
                     <tr align="center">
-                        <td class="c">&nbsp;</td>
-                        <td class="c">{ml_id}</td>
+                        <td class="c"><input title="{button_des_se}" type="checkbox" name="checkall" onClick="checkedAll(select_all);" value="{ml_select_all_messages}"></td>
+                        <td class="c">{input_id}</td>
                         <td class="c">{ml_date}</td>
                         <td class="c">{ml_from}</td>
                         <td class="c">{ml_to}</td>

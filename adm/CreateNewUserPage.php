@@ -89,9 +89,6 @@ if ($_POST)
 		$Query1 .= "`password`='" . $pass . "';";
 		doquery($Query1, "users");
 	
-		doquery("UPDATE {{table}} SET `config_value` = '".$galaxy."' WHERE `config_name` = 'LastSettedGalaxyPos';", 'config');
-		doquery("UPDATE {{table}} SET `config_value` = '".$system."' WHERE `config_name` = 'LastSettedSystemPos';", 'config');
-		doquery("UPDATE {{table}} SET `config_value` = '".$planet."' WHERE `config_name` = 'LastSettedPlanetPos';", 'config');
 		doquery("UPDATE {{table}} SET `config_value` = config_value + '1' WHERE `config_name` = 'users_amount';", 'config');
 
 		$ID_USER 	= doquery("SELECT `id` FROM {{table}} WHERE `username` = '" . mysql_escape_string($name) . "' LIMIT 1", "users", true);

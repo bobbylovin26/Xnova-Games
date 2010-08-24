@@ -26,9 +26,8 @@ define('IN_ADMIN', true);
 $xgp_root = './../';
 include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.' . $phpEx);
-include('AdminFunctions/Autorization.' . $phpEx);
 
-if ($ToolsCanUse != 1) die();
+if ($ToolsCanUse != 1) die(message ($lang['404_page']));
 
 	$parse = $lang;
 	if ($_POST['md5q'] != "")
