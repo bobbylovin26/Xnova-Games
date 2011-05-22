@@ -21,11 +21,13 @@
 
 if(!defined('INSIDE')){ die(header("location:../../"));}
 
-	function GetElementPrice ($user, $planet, $Element, $userfactor = true)
+	function GetElementPrice ($user, $planet, $Element, $userfactor = true, $level = false)
+	//function GetElementPrice ($user, $planet, $Element, $userfactor = true)
 	{
 		global $pricelist, $resource, $lang;
 
-		if ($userfactor)
+		//if ($userfactor) // OLD CODE
+		if ($userfactor && ($level === false)) // FIX BY JSTAR
 			$level = ($planet[$resource[$Element]]) ? $planet[$resource[$Element]] : $user[$resource[$Element]];
 
 		$is_buyeable = true;

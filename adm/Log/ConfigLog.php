@@ -1,7 +1,8 @@
 
 El usuario lucky ha cambiado los parametros de estadisticas:
-Tiempo entre actualización de estadísticas (minutos): 1
-Operación realizada el: 15-08-2010 20:08:38
+¿La administración puede figurar en el ranking?: 
+Operación realizada el: 09-12-2010 21:40:13
+08:38
 peración realizada el: 15-08-2010 19:55:09
 d de flota : x1
 Velocidad de producción : x1

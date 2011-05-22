@@ -198,14 +198,22 @@ class ShowAlliancePage
 		if ($_GET['mode'] == 'ainfo')
 		{
 			if (isset($tag) && $a == "")
-				$allyrow = doquery("SELECT * FROM {{table}} WHERE ally_tag='".mysql_escape_string ( $tag )."}'", "alliance", true);
+			{
+				$allyrow = doquery("SELECT * FROM {{table}} WHERE ally_tag='".mysql_escape_string ( $tag )."'", "alliance", true);
+			}
 			elseif(is_numeric($a) && $a != 0 && $tag == "")
-				$allyrow = doquery("SELECT * FROM {{table}} WHERE id='".mysql_escape_string ( $a )."", "alliance", true);
+			{
+				$allyrow = doquery("SELECT * FROM {{table}} WHERE id=".intval ( $a )."", "alliance", true);
+			}
 			else
+			{
 				header("location:game.". $phpEx . "?page=alliance",2);
+			}
 
 			if (!$allyrow)
+			{
 				header("location:game.". $phpEx . "?page=alliance",2);
+			}
 
 			extract($allyrow);
 
@@ -1019,17 +1027,19 @@ class ShowAlliancePage
 
 				$query = doquery("SELECT id,username,ally_request_text,ally_register_time FROM {{table}} WHERE ally_request='".($ally['id'])."'", 'users');
 
+				/***start fix by jstar***/
+				$s = array();
 				while ($r = mysql_fetch_array($query))
 				{
-					$s = $lang;
+
 					if (isset($show) && $r['id'] == $show)
 					{
-						$s['username'] 			= $r['username'];
-						$s['ally_request_text'] = nl2br($r['ally_request_text']);
-						$s['id'] 				= $r['id'];
+						$s[$show]['username']                  = $r['username'];
+						$s[$show]['ally_request_text'] = nl2br($r['ally_request_text']);
+						$s[$show]['id']                         = $r['id'];
 					}
 
-					$r['time'] 		= date("Y-m-d h:i:s", $r['ally_register_time']);
+					$r['time']         = date("Y-m-d h:i:s", $r['ally_register_time']);
 					$parse['list'] .= parsetemplate(gettemplate('alliance/alliance_admin_request_row'), $r);
 					$i++;
 				}
@@ -1041,9 +1051,10 @@ class ShowAlliancePage
 
 				if (isset($show) && $show != 0 && $parse['list'] != '')
 				{
-					$s['Request_from'] 	= str_replace('%s', $s['username'], $lang['al_request_from']);
-					$parse['request'] 	= parsetemplate(gettemplate('alliance/alliance_admin_request_form'), $s);
+					$s[$show]['Request_from']     = str_replace('%s', $s[$show]['username'], $lang['al_request_from']);
+					$parse['request']     = parsetemplate(gettemplate('alliance/alliance_admin_request_form'), array_merge($s[$show],$lang));
 				}
+				/***end fix***/
 				else
 					$parse['request'] = '';
 

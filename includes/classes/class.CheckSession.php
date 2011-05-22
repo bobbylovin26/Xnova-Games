@@ -32,7 +32,9 @@ class CheckSession
 		if (isset($_COOKIE[$game_config['COOKIE_NAME']]))
 		{
 			$TheCookie  = explode("/%/", $_COOKIE[$game_config['COOKIE_NAME']]);
+			// START FIX BY JSTAR
 			$TheCookie 	= array_map('mysql_escape_string',$TheCookie);
+			// END FIX BY JSTAR
 			$UserResult = doquery("SELECT * FROM {{table}} WHERE `username` = '". mysql_escape_string($TheCookie[1]). "';", 'users');
 
 			if (mysql_num_rows($UserResult) != 1)

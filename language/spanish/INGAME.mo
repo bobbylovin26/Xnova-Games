@@ -1159,6 +1159,8 @@ $lang['sys_destruc_echec'] 					= ". Los temblores empiezan a sacudir la superfi
 $lang['sys_destruc_reussi'] 				= ", Los temblores empiezan a sacudir la superficie de la luna, despues de unos instantes la luna no soporta mas y vuela en mil pedazos, mision cumplida, la flota vuelve al planeta de origen.";
 $lang['sys_destruc_null'] 					= ", Las estrellas de la muerten no generan el poder necesario, la mision falla y las naves vuelven de regreso.";
 $lang['sys_the']							= " el ";
+$lang['sys_stay_mess_back']        			= "Una de sus flotas vuelve de ";
+$lang['sys_stay_mess_bend']        			= " y entrega su mercancía ";
 
 //----------------------------------------------------------------------------//
 //class.CheckSession.php

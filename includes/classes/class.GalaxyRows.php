@@ -572,10 +572,9 @@ class GalaxyRows
 			$protectiontime  	= $game_config['noobprotectiontime'];
 			$protectionmulti 	= $game_config['noobprotectionmulti'];
 			$User2Points 		= doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $GalaxyRowUser['id'] ."';", 'statpoints', true);
-			$CurrentPoints 		= $UserPoints['total_points'];
-			$RowUserPoints 		= $User2Points['total_points'];
-			$MyGameLevel 		= $CurrentPoints * $protectionmulti['config_value'];
-			$HeGameLevel 		= $RowUserPoints * $protectionmulti['config_value'];
+			$MyGameLevel		= $UserPoints['total_points'];
+			$HeGameLevel		= $User2Points['total_points'];
+
 
 			if ($GalaxyRowUser['bana'] == 1 && $GalaxyRowUser['urlaubs_modus'] == 1)
 			{
@@ -602,12 +601,12 @@ class GalaxyRows
 				$Systemtatus2 	= "<span class=\"inactive\">".$lang['gl_i']."</span><span class=\"longinactive\">".$lang['gl_I']."</span>";
 				$Systemtatus 	= "<span class=\"longinactive\">";
 			}
-			elseif (($MyGameLevel > ($HeGameLevel * $protectionmulti)) && $protection == 1 && ($HeGameLevel < ($protectiontime * 1000)))
+			elseif (($MyGameLevel > ($HeGameLevel * $protectionmulti)) && $protection == 1 && ($HeGameLevel < $protectiontime))
 			{
 				$Systemtatus2 	= "<span class=\"noob\">".$lang['gl_w']."</span>";
 				$Systemtatus 	= "<span class=\"noob\">";
 			}
-			elseif ((($MyGameLevel * $protectionmulti) < $HeGameLevel) && $protection == 1 && ($MyGameLevel < ($protectiontime * 1000)))
+			elseif ((($MyGameLevel * $protectionmulti) < $HeGameLevel) && $protection == 1 && ($MyGameLevel < $protectiontime))
 			{
 				$Systemtatus2 	= $lang['gl_s'];
 				$Systemtatus 	= "<span class=\"strong\">";

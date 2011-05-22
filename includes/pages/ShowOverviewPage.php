@@ -176,6 +176,14 @@ function ShowOverviewPage($CurrentUser, $CurrentPlanet)
 						$fpage[$EndTime.$id] = $FlyingFleetsTable->BuildFleetEventTable ($FleetRow, 2, true, $Label, $Record);
 					}
 				}
+
+				/**fix fleet table return by jstar**/
+				if($FleetRow['fleet_mission'] == 4 && $StartTime < time() && $EndTime > time())
+				{
+					$fpage[$EndTime.$id] = $FlyingFleetsTable->BuildFleetEventTable ($FleetRow, 2, true, "fjstar", $Record);
+				}
+				/**end fix**/
+
 			}
 			mysql_free_result($OwnFleets);
 			//iss ye katilan filo////////////////////////////////////

@@ -21,12 +21,17 @@
 
 if(!defined('INSIDE')){ die(header("location:../../"));}
 
-	function GetBuildingTime ($user, $planet, $Element)
+	//function GetBuildingTime ($user, $planet, $Element) OLD CODE
+	function GetBuildingTime ($user, $planet, $Element, $level = false)
 	{
 		global $pricelist, $resource, $reslist, $game_config;
 
+		// IF ROUTINE FIX BY JSTAR
+		if($level === false)
+		{
+			$level = ($planet[$resource[$Element]]) ? $planet[$resource[$Element]] : $user[$resource[$Element]];//ORIGINAL LINE
+		}
 
-		$level = ($planet[$resource[$Element]]) ? $planet[$resource[$Element]] : $user[$resource[$Element]];
 		if       (in_array($Element, $reslist['build']))
 		{
 			$cost_metal   = floor($pricelist[$Element]['metal']   * pow($pricelist[$Element]['factor'], $level));

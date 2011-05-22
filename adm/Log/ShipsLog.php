@@ -7,14 +7,14 @@ Cazador pesado: 1000
 Crucero: 1000
 Nave de batalla: 1000
 Colonizador: 1000
-Reciclador: 0
-Sonda de espionaje: 0
-Bombardero: 0
-Satélite solar: 0
-Destructor: 0
-Estrella de la muerte: 0
-Acorazado: 0
-Supernova: 0
+Reciclador: 1000
+Sonda de espionaje: 1000
+Bombardero: 1000
+Satélite solar: 1000
+Destructor: 1000
+Estrella de la muerte: 1000
+Acorazado: 1000
+Supernova: 1000
 al planeta con el ID: 1
-Operación realizada el: 15-08-2010 19:59:41
- el: 27-02-2010 15:25:06
+Operación realizada el: 09-12-2010 21:41:18
+

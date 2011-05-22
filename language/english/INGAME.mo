@@ -1148,6 +1148,8 @@ $lang['sys_destruc_echec'] 					= ". The tremors began to shake off the surface 
 $lang['sys_destruc_reussi'] 				= ", The tremors began to shake off the surface of the moon, after a while the moon does not support more and fly to pieces, mission accomplished, the fleet returns to home planet.";
 $lang['sys_destruc_null'] 					= ", The stars of death did not generate the power, the mission fails and the ships returned home.";
 $lang['sys_the']							= " the ";
+$lang['sys_stay_mess_back']         		= "One of your fleet return from ";
+$lang['sys_stay_mess_bend']         		= " and offers ";
 
 //----------------------------------------------------------------------------//
 //class.CheckSession.php

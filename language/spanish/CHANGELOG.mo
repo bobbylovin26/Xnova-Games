@@ -4,7 +4,25 @@ $lang['Version']     = 'Versión';
 $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
-'2.9.6' => ' 00/00/10
+'2.9.7' => ' 16/08/10
+
+- [Fixs]
+#4546: Problemas con los tiempos en los edificios (By jstar).-
+#4869: Error al intentar construir algunos edificios inexistentes (By alivan).-
+#5018: Calculo erróneo del límite de la p. novatos (By alivan).-
+#5168: errores en la seccion de alianzas y en msjs (By lucky).-
+#5169: Error envío de misiles sin deuterio y error en &mode=3 en tu propio sistema (By alivan).-
+#6017: Fuegos rápidos (By lucky).-
+#7610: minifix showFleetAcsPage.php (By jstar).-
+#7612: Mas campos en el planeta agregando una base lunar a su luna(ACP) (By alivan).-
+#7613: Buildings time and price (By jstar).-
+#7616: Bug in buildings tail (By jstar).-
+#7618: Proteccion de Novatos en los misiles (By tomtom).-
+#7619: solicitudes alianza (By jstar).-
+#7620: Call back fleet in placement mission (By jstar).-
+',
+
+'2.9.6' => ' 16/08/10
 
 - [Seguridad] Validaciones globales para prevenir SQL Injections.-
 - [Seguridad] Cerrados varios agujeros de seguridad que permitian SQL Injection.-

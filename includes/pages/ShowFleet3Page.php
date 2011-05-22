@@ -166,14 +166,14 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 			&& $TargetPlanet['id_owner'] != ''
 			&& ($_POST['mission'] == 1 or $_POST['mission'] == 6 or $_POST['mission'] == 9)
 			&& $protection == 1
-			&& $HeGameLevel < ($protectiontime * 1000))
+			&& $HeGameLevel < $protectiontime)
 			message("<font color=\"lime\"><b>".$lang['fl_week_player']."</b></font>", "game." . $phpEx . "?page=fleet", 2);
 
 		if (($MyGameLevel * $protectionmulti) < $HeGameLevel
 			&& $TargetPlanet['id_owner'] != ''
 			&& ($_POST['mission'] == 1 or $_POST['mission'] == 5 or $_POST['mission'] == 6 or $_POST['mission'] == 9)
 			&& $protection == 1
-			&& $MyGameLevel < ($protectiontime * 1000))
+			&& $MyGameLevel < $protectiontime)
 			message("<font color=\"red\"><b>".$lang['fl_strong_player']."</b></font>", "game." . $phpEx . "?page=fleet", 2);
 	}
 

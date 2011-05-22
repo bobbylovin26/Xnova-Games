@@ -341,19 +341,28 @@ class ShowGalaxyPage extends GalaxyRows
 			$system        = 1;
 		}
 
-		if ( ( $CurrentPlanet['system'] != ( $_POST["system"] - 1 ) ) && ( $mode != 0 ) && ( $CurrentPlanet['deuterium'] < 10 ) )
+		// START FIX BY alivan
+		if ($mode != 2)
 		{
-			die (message($lang['gl_no_deuterium_to_view_galaxy'], "game.php?page=galaxy&mode=0", 2));
+			if ( ( $CurrentPlanet['system'] != ( $_POST["system"] - 1 ) ) && ( $CurrentPlanet['system'] != $_GET['system'] or $CurrentPlanet['galaxy'] != $_GET['galaxy'] ) && ( $mode != 0 ) && ( $CurrentPlanet['deuterium'] < 10 ) )
+			{
+				die (message($lang['gl_no_deuterium_to_view_galaxy'], "game.php?page=galaxy&mode=0", 2));
+			}
+			elseif( ( $CurrentPlanet['system'] != ( $_POST["system"] - 1 ) ) && ( $CurrentPlanet['system'] != $_GET['system'] or $CurrentPlanet['galaxy'] != $_GET['galaxy'] ) && ( $mode != 0 ) )
+			{
+				$QryGalaxyDeuterium   = "UPDATE {{table}} SET ";
+				$QryGalaxyDeuterium  .= "`deuterium` = `deuterium` -  10 ";
+				$QryGalaxyDeuterium  .= "WHERE ";
+				$QryGalaxyDeuterium  .= "`id` = '". $CurrentPlanet['id'] ."' ";
+				$QryGalaxyDeuterium  .= "LIMIT 1;";
+				doquery($QryGalaxyDeuterium, 'planets');
+			}
 		}
-		elseif( ( $CurrentPlanet['system'] != ( $_POST["system"] - 1 ) ) && ( $mode != 0 ) )
+		elseif ($mode == 2 && $CurrentPlanet['interplanetary_misil'] < 1)
 		{
-			$QryGalaxyDeuterium   = "UPDATE {{table}} SET ";
-			$QryGalaxyDeuterium  .= "`deuterium` = `deuterium` -  10 ";
-			$QryGalaxyDeuterium  .= "WHERE ";
-			$QryGalaxyDeuterium  .= "`id` = '". $CurrentPlanet['id'] ."' ";
-			$QryGalaxyDeuterium  .= "LIMIT 1;";
-			doquery($QryGalaxyDeuterium, 'planets');
+			die (message($lang['ma_no_missiles'], "game.php?page=galaxy&mode=0", 2));
 		}
+		// END FIX BY alivan
 
 		$planetcount = 0;
 		$lunacount   = 0;

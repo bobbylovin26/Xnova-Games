@@ -235,7 +235,9 @@ class ShowBuildingsPage
 		return $QueueID;
 	}
 
-	private function ShowBuildingQueue ( $CurrentPlanet, $CurrentUser )
+	// OLD CODE
+	// private function ShowBuildingQueue ( $CurrentPlanet, $CurrentUser )
+	private function ShowBuildingQueue ( $CurrentPlanet, $CurrentUser, &$Sprice = false )
 	{
 		global $lang;
 
@@ -270,6 +272,10 @@ class ShowBuildingsPage
 					$BuildMode    = $BuildArray[4];
 					$BuildTime    = $BuildEndTime - time();
 					$ElementTitle = $lang['tech'][$Element];
+					// START FIX BY JSTAR
+					if ( $Sprice !== false && $BuildLevel > $Sprice[$Element] )
+						$Sprice[$Element]	=	$BuildLevel;
+					// END FIX BY JSTAR
 
 					if ($ListID > 0)
 					{
@@ -325,7 +331,7 @@ class ShowBuildingsPage
 		CheckPlanetUsedFields ( $CurrentPlanet );
 
 		$parse			= $lang;
-		$Allowed['1'] 	= array(  1,  2,  3,  4, 12, 14, 15, 21, 22, 23, 24, 31, 33, 34, 35, 44, 45);
+		$Allowed['1'] 	= array(  1,  2,  3,  4, 12, 14, 15, 21, 22, 23, 24, 31, 33, 34, 44);
 		$Allowed['3'] 	= array( 12, 14, 21, 22, 23, 24, 34, 41, 42, 43);
 
 		if (isset($_GET['cmd']))
@@ -406,7 +412,11 @@ class ShowBuildingsPage
 		}
 
 		SetNextQueueElementOnTop($CurrentPlanet, $CurrentUser);
-		$Queue = $this->ShowBuildingQueue($CurrentPlanet, $CurrentUser);
+		// $Queue = $this->ShowBuildingQueue($CurrentPlanet, $CurrentUser); // OLD CODE
+		// START FIX BY JSTAR
+		$Sprice	=	array();
+		$Queue 	= 	$this->ShowBuildingQueue($CurrentPlanet, $CurrentUser, $Sprice);
+		// END FIX BY JSTAR
 		$this->BuildingSavePlanetRecord($CurrentPlanet);
 
 		if ($Queue['lenght'] < (MAX_BUILDING_QUEUE_SIZE))
@@ -446,9 +456,19 @@ class ShowBuildingsPage
 					$parse['nivel']        	= ($BuildingLevel == 0) ? "" : " (". $lang['bd_lvl'] . " " . $BuildingLevel .")";
 					$parse['n']            	= $ElementName;
 					$parse['descriptions'] 	= $lang['res']['descriptions'][$Element];
+/* OLD CODE ---------------------------------------------------- OLD CODE ------------------------------------- //
 					$ElementBuildTime      	= GetBuildingTime($CurrentUser, $CurrentPlanet, $Element);
 					$parse['time']         	= ShowBuildTime($ElementBuildTime);
 					$parse['price']        	= GetElementPrice($CurrentUser, $CurrentPlanet, $Element);
+   OLD CODE ---------------------------------------------------- OLD CODE ------------------------------------- //
+*/
+					// START FIX BY JSTAR
+					$really_lvl 			= ( isset ( $Sprice[$Element] ) ) ? $Sprice[$Element]:$BuildingLevel;
+					$ElementBuildTime 		= GetBuildingTime ( $CurrentUser , $CurrentPlanet , $Element , $really_lvl );
+					$parse['price'] 		= GetElementPrice ( $CurrentUser , $CurrentPlanet , $Element , true , $really_lvl );
+					$parse['time'] 			= ShowBuildTime ( $ElementBuildTime );
+					// END FIX BY JSTAR
+
 					$parse['click']        	= '';
 					$NextBuildLevel        	= $CurrentPlanet[$resource[$Element]] + 1;
 
