@@ -275,7 +275,7 @@ switch ($Mode) {
 				$Qry16 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsFrame' LIMIT 1;";
 				$Qry17 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsText' LIMIT 1;";
 				$Qry18 = "DELETE FROM `$_POST[prefix]config` WHERE `config_name` = 'VERSION'";
-				$Qry19 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.9.7');";
+				$Qry19 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.9.8');";
 				$Qry20 = "ALTER TABLE `$_POST[prefix]rw` ADD `owners` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0';";
 				$Qry21 = "ALTER TABLE `$_POST[prefix]fleets` CHANGE `fleet_group` `fleet_group` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' ;";
 				$Qry22 = "ALTER TABLE `$_POST[prefix]aks` ADD `planet_type` TINYINT( 1 ) NOT NULL DEFAULT '1' AFTER `planet` ;";
@@ -321,34 +321,11 @@ switch ($Mode) {
 
 				switch($_POST[modo])
 				{
-					case'2.3':
+					case'2.x':
 						UpdateMoonID();
 						$QrysArray	= array($Qry1, $Qry2, $Qry3, $Qry4, $Qry5, $Qry6, $Qry7, $Qry8, $Qry9, $Qry10, $Qry11, $Qry12, $Qry13,
-											$Qry14, $Qry15, $Qry16, $Qry17, $Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry25, $Qry26,
-											$Qry27, $Qry28, $Qry29, $Qry30, $Qry31, $Qry32, $Qry33);
-					break;
-					case'2.4':
-						UpdateMoonID();
-						$QrysArray	= array($Qry3, $Qry4, $Qry5, $Qry6, $Qry7, $Qry8, $Qry9, $Qry10, $Qry11, $Qry12, $Qry13,
-											$Qry14, $Qry15, $Qry16, $Qry17, $Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23,
-											$Qry25, $Qry26, $Qry27, $Qry28, $Qry29, $Qry30, $Qry31, $Qry32, $Qry33);
-					break;
-					case'2.5':
-						UpdateMoonID();
-						$QrysArray	= array($Qry16, $Qry17, $Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry25, $Qry26,$Qry27, $Qry28,
-											$Qry29, $Qry30, $Qry31, $Qry32, $Qry33);
-					break;
-					case( ( $_POST[modo] == '2.6' ) or ( $_POST[modo] == '2.7' ) ):
-						UpdateMoonID();
-						$QrysArray	= array($Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry25, $Qry26, $Qry27, $Qry28, $Qry29, $Qry30, $Qry31, $Qry32, $Qry33);
-					break;
-					case'2.8':
-						UpdateMoonID();
-						$QrysArray	= array($Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry24, $Qry25, $Qry26, $Qry27, $Qry28, $Qry29, $Qry30, $Qry31, $Qry32, $Qry33);
-					break;
-					case'2.9':
-						UpdateMoonID();
-						$QrysArray	= array($Qry18, $Qry19, $Qry28, $Qry29, $Qry30, $Qry31, $Qry32, $Qry33);
+						$Qry14, $Qry15, $Qry16, $Qry17, $Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry25, $Qry26,
+						$Qry27, $Qry28, $Qry29, $Qry30, $Qry31, $Qry32, $Qry33, $Qry24);
 					break;
 					case( ( $_POST[modo] == '2.9.1' ) or ( $_POST[modo] == '2.9.2' ) or ( $_POST[modo] == '2.9.3' ) ):
 						$QrysArray	= array($Qry18, $Qry19, $Qry30, $Qry31, $Qry32, $Qry33);
@@ -356,7 +333,7 @@ switch ($Mode) {
 					case'2.9.4':
 						$QrysArray	= array($Qry18, $Qry19, $Qry33);
 					break;
-					case( ( $_POST[modo] == '2.9.5' ) or ( $_POST[modo] == '2.9.6' ) or ( $_POST[modo] == '2.9.7' ) ):
+					case( ( $_POST[modo] == '2.9.5' ) or ( $_POST[modo] == '2.9.6' ) or ( $_POST[modo] == '2.9.7' ) or ( $_POST[modo] == '2.9.8' ) ):
 						$QrysArray	= array($Qry18, $Qry19);
 					break;
 				}

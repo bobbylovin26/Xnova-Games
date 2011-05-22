@@ -32,9 +32,9 @@ function ShowFleetShortcuts($CurrentUser)
 			if ($_POST["n"] == "")
 				$_POST["n"] = $lang['fl_anonymous'];
 
-			$r = strip_tags($_POST[n]) . "," . intval($_POST[g]) . "," . intval($_POST[s]) . "," . intval($_POST[p]) . "," . intval($_POST[t]) . "\r\n";
+			$r = strip_tags(addslashes($_POST['n'])) . "," . intval($_POST['g']) . "," . intval($_POST['s']) . "," . intval($_POST['p']) . "," . intval($_POST['t']) . "\r\n";
 			$CurrentUser['fleet_shortcut'] .= $r;
-			doquery("UPDATE {{table}} SET fleet_shortcut='".addslashes(mysql_escape_string($CurrentUser[fleet_shortcut]))."' WHERE id=".intval($CurrentUser[id])."", "users");
+			doquery("UPDATE {{table}} SET fleet_shortcut='".mysql_escape_string($CurrentUser['fleet_shortcut'])."' WHERE id=".intval($CurrentUser['id'])."", "users");
 			header("location:game.".$phpEx."?page=shortcuts");
 		}
 

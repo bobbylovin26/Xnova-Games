@@ -4,7 +4,33 @@ $lang['Version']     = 'Versión';
 $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
-'2.9.7' => ' 16/08/10
+'2.9.8' => ' 09/01/11
+
+-[Seguridad]
+- Cerrado un agujero de seguridad (By jstar).-
+
+-[Velocidad] (By lucky)
+- Algunas mejoras globales en el código.-
+- Algunas mejoras en el código de la galaxia.-
+- Reducción de Querys Gloabales (11 a 9).
+- Reducción de Querys en la Galaxia (45 a 9).
+
+-[Mejoras]
+- Mejoras en las expediciones (By jstar).-
+- Mejora en el calculo de materia oscura (By h2swider).- 
+
+- [Fixs]
+#4547: No se le puede cambiar el nombre a los sacs (By Lugii) (Gracias Kalax).-
+#7617: bug maintaining position (By jstar).-
+#7622: sql injection (By jstar).-
+#7624: buddy message (By jstar - Think).-
+#7625: Fallo en accesos directos (By Think).-
+#7626: Falla de seguridad en el hangar (By Think).-
+#7627: Bug en la cola de construcción (By jstar).-
+
+',
+
+'2.9.7' => ' 09/12/10
 
 - [Fixs]
 #4546: Problemas con los tiempos en los edificios (By jstar).-

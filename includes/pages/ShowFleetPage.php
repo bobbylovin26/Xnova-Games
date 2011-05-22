@@ -119,7 +119,8 @@ function ShowFleetPage($CurrentUser, $CurrentPlanet)
 		$FleetPageRow .= "<th><font color=\"lime\"><div id=\"time_0\"><font>". pretty_time(floor($f['fleet_end_time'] + 1 - time())) ."</font></th>";
 		$FleetPageRow .= "<th>";
 
-		if ($f['fleet_mess'] == 0)
+		//now we can view the call back button for ships in maintaing position (2)
+		if ($f['fleet_mess'] == 0 or $f['fleet_mess'] == 2)
 		{
 				$FleetPageRow .= "<form action=\"SendFleetBack.php\" method=\"post\">";
 				$FleetPageRow .= "<input name=\"fleetid\" value=\"". $f['fleet_id'] ."\" type=\"hidden\">";

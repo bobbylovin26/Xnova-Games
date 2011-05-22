@@ -164,23 +164,23 @@ function MakeStats()
 	{
 		if ($resource[ $Defense ] != 'small_protection_shield' && $resource[ $Defense ] != 'big_protection_shield')
 		{
-			$select_defenses	.= " SUM(p.".$resource[ $Defense ].") AS ".$resource[ $Defense ].",";
+			$select_defenses	.= " SUM(p.`".$resource[ $Defense ]."`) AS `".$resource[ $Defense ]."`,";
 		}
 	}
 	$select_buildings	=	'';
 	foreach($reslist['build'] as $n => $Building)
 	{
-		$select_buildings	.= " p.".$resource[ $Building ].",";
+		$select_buildings	.= " p.`".$resource[ $Building ]."`,";
 	}
 	$selected_tech	=	'';
 	foreach($reslist['tech'] as $n => $Techno)
 	{
-			$selected_tech	.= " u.".$resource[ $Techno ].",";
+			$selected_tech	.= " u.`".$resource[ $Techno ]."`,";
 	}
 	$select_fleets	=	'';
 	foreach($reslist['fleet'] as $n => $Fleet)
 	{
-			$select_fleets	.= " SUM(p.".$resource[ $Fleet ].") AS ".$resource[ $Fleet ].",";
+			$select_fleets	.= " SUM(p.`".$resource[ $Fleet ]."`) AS `".$resource[ $Fleet ]."`,";
 	}
 	//If you have some data type enmu is better if you put it here, because that data give a error in the SUM function.
 	$selected_enum	=	"p.small_protection_shield, p.big_protection_shield";//For now...

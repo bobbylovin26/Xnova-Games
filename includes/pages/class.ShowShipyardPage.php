@@ -117,10 +117,18 @@ class ShowShipyardPage
 
 			foreach($_POST['fmenge'] as $Element => $Count)
 			{
+				if($Element < 200 OR $Element > 300)
+				{
+					continue;
+				}
+
 				$Element = intval($Element);
 				$Count   = intval($Count);
+
 				if ($Count > MAX_FLEET_OR_DEFS_PER_ROW)
+				{
 					$Count = MAX_FLEET_OR_DEFS_PER_ROW;
+				}
 
 				if ($Count != 0)
 				{
@@ -271,14 +279,20 @@ class ShowShipyardPage
 				}
 			}
 
-
 			foreach($_POST['fmenge'] as $Element => $Count)
 			{
+				if($Element < 300 OR $Element > 550)
+				{
+					continue;
+				}
+
 				$Element = intval($Element);
 				$Count   = intval($Count);
 
 				if ($Count > MAX_FLEET_OR_DEFS_PER_ROW)
+				{
 					$Count = MAX_FLEET_OR_DEFS_PER_ROW;
+				}
 
 				if ($Count != 0)
 				{

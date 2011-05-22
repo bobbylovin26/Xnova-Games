@@ -101,7 +101,7 @@ function display ($page, $topnav = true, $metatags = '', $AdminPage = false, $me
 	if ($menu && !$AdminPage)
 	{
 		include_once($xgp_root . 'includes/functions/ShowLeftMenu.' . $phpEx);
-		$DisplayPage .= ShowLeftMenu ($user['authlevel']);
+		$DisplayPage .= ShowLeftMenu ($user);
 	}
 
 	$DisplayPage .= "\n<center>\n". $page ."\n</center>\n";

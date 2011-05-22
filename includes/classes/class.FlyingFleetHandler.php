@@ -2175,7 +2175,7 @@ class FlyingFleetHandler
 						$TypeVaisseau 				= $Class[0];
 						$NbreVaisseau 				= $Class[1];
 						$LaFlotte[$TypeVaisseau]	= $NbreVaisseau;
-						$FleetCapacity 			   += $pricelist[$TypeVaisseau]['capacity'];
+						$FleetCapacity             += $pricelist[$TypeVaisseau]['capacity'] * $NbreVaisseau;
 						$FleetPoints   			   += ($NbreVaisseau * $PointsFlotte[$TypeVaisseau]);
 					}
 				}
@@ -2198,18 +2198,31 @@ class FlyingFleetHandler
 					}
 					else
 					{
+						$all_destroyed = true;
 						foreach ($LaFlotte as $Ship => $Count)
 						{
-							$LostShips[$Ship] = intval($Count * $LostAmount);
-							$NewFleetArray   .= $Ship.",". ($Count - $LostShips[$Ship]) .";";
+							if(floor($Count * $LostAmount)!=0)
+							{
+								$LostShips[$Ship] 	= floor($Count * $LostAmount);
+								$NewFleetArray     .= $Ship.",". ($Count - $LostShips[$Ship]) .";";
+								$all_destroyed 		= false;
+							}
 						}
-						$QryUpdateFleet  = "UPDATE {{table}} SET ";
-						$QryUpdateFleet .= "`fleet_array` = '". $NewFleetArray ."', ";
-						$QryUpdateFleet .= "`fleet_mess` = '1'  ";
-						$QryUpdateFleet .= "WHERE ";
-						$QryUpdateFleet .= "`fleet_id` = '". $FleetRow["fleet_id"] ."';";
-						doquery( $QryUpdateFleet, 'fleets');
-						SendSimpleMessage ( $FleetOwner, '', $FleetRow['fleet_end_stay'], 15, $MessSender, $MessTitle, $lang['sys_expe_blackholl_1'] );
+						if(!$all_destroyed)
+						{
+							$QryUpdateFleet  = "UPDATE {{table}} SET ";
+							$QryUpdateFleet .= "`fleet_array` = '". $NewFleetArray ."', ";
+							$QryUpdateFleet .= "`fleet_mess` = '1'  ";
+							$QryUpdateFleet .= "WHERE ";
+							$QryUpdateFleet .= "`fleet_id` = '". $FleetRow["fleet_id"] ."';";
+							doquery( $QryUpdateFleet, 'fleets');
+							SendSimpleMessage ( $FleetOwner, '', $FleetRow['fleet_end_stay'], 15, $MessSender, $MessTitle, $lang['sys_expe_blackholl_1'] );
+						}
+						else
+						{
+							SendSimpleMessage ( $FleetOwner, '', $FleetRow['fleet_end_stay'], 15, $MessSender, $MessTitle, $lang['sys_expe_blackholl_2'] );
+							doquery ("DELETE FROM {{table}} WHERE `fleet_id` = ". $FleetRow["fleet_id"], 'fleets');
+						}
 					}
 				}
 				elseif ($Hasard == 3)
@@ -2221,13 +2234,14 @@ class FlyingFleetHandler
 				{
 					if ($FleetCapacity > 5000)
 					{
-						$MinCapacity = $FleetCapacity - 5000;
-						$MaxCapacity = $FleetCapacity;
-						$FoundGoods  = rand($MinCapacity, $MaxCapacity);
-						$FoundMetal  = intval($FoundGoods / 2);
-						$FoundCrist  = intval($FoundGoods / 4);
-						$FoundDeute  = intval($FoundGoods / 6);
-						$FoundDark   = intval($FoundGoods / 20);
+						$MinCapacity	= $FleetCapacity - 5000;
+						$MaxCapacity 	= $FleetCapacity;
+						$FoundGoods  	= rand($MinCapacity, $MaxCapacity);
+						$FoundMetal  	= intval($FoundGoods / 2);
+						$FoundCrist  	= intval($FoundGoods / 4);
+						$FoundDeute  	= intval($FoundGoods / 6);
+						$FoundDark	 	= ( $FleetCapacity > 10000 ) ? intval ( 3 * log ( $FleetCapacity / 10000 ) * 100 ) : 0;
+						$FoundDark		= mt_rand ( $FoundDark / 2 , $FoundDark );
 
 						$QryUpdateFleet  = "UPDATE {{table}} SET ";
 						$QryUpdateFleet .= "`fleet_resource_metal` = `fleet_resource_metal` + '". $FoundMetal ."', ";

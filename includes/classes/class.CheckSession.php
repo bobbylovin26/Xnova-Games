@@ -35,7 +35,14 @@ class CheckSession
 			// START FIX BY JSTAR
 			$TheCookie 	= array_map('mysql_escape_string',$TheCookie);
 			// END FIX BY JSTAR
-			$UserResult = doquery("SELECT * FROM {{table}} WHERE `username` = '". mysql_escape_string($TheCookie[1]). "';", 'users');
+			//$UserResult = doquery("SELECT * FROM {{table}} WHERE `username` = '". mysql_escape_string($TheCookie[1]). "';", 'users');
+
+			// BETTER QUERY BY LUCKY! REDUCE GENERAL QUERY FROM 11 TO 10.
+			$UserResult = doquery("SELECT {{table}}users.*, {{table}}statpoints.total_rank, {{table}}statpoints.total_points, {{table}}users.id
+									FROM {{table}}statpoints
+									RIGHT JOIN {{table}}users ON {{table}}statpoints.id_owner = {{table}}users.id
+									WHERE ({{table}}users.username = '". mysql_escape_string($TheCookie[1]). "') LIMIT 1;", '');
+
 
 			if (mysql_num_rows($UserResult) != 1)
 			{

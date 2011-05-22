@@ -104,25 +104,50 @@ class ShowBuildingsPage
 		if ($QueueID > 1)
 		{
 			$CurrentQueue  = $CurrentPlanet['b_building_id'];
+
 			if ($CurrentQueue != 0)
 			{
 				$QueueArray    = explode ( ";", $CurrentQueue );
 				$ActualCount   = count ( $QueueArray );
-				$ListIDArray   = explode ( ",", $QueueArray[$QueueID - 2] );
-				$BuildEndTime  = $ListIDArray[3];
-				for ($ID = $QueueID; $ID < $ActualCount; $ID++ )
+
+				//  finding the buildings time
+				$ListIDArrayToDelete   = explode ( ",", $QueueArray[$QueueID - 1] );
+				$lastB	= $ListIDArrayToDelete;
+				$lastID	= $QueueID-1;
+
+				//search for biggest element
+				for ( $ID = $QueueID; $ID < $ActualCount; $ID++ )
 				{
-					$ListIDArray          = explode ( ",", $QueueArray[$ID] );
-					$BuildEndTime        += $ListIDArray[2];
-					$ListIDArray[3]       = $BuildEndTime;
-					$QueueArray[$ID - 1]  = implode ( ",", $ListIDArray );
+					//next buildings
+					$nextListIDArray     = explode ( ",", $QueueArray[$ID] );
+					//if same type of element
+					if($nextListIDArray[0] == $ListIDArrayToDelete[0])
+					{
+						$lastB=$nextListIDArray;
+						$lastID=$ID;
+					}
 				}
+
+				// update the rest of buildings queue
+				for( $ID=$lastID; $ID < $ActualCount-1; $ID++ )
+				{
+
+					$nextListIDArray		= explode ( ",", $QueueArray[$ID+1] );
+					$nextBuildEndTime    	= $nextListIDArray[3]-$lastB[2];
+					$nextListIDArray[3]  	= $nextBuildEndTime;
+					$QueueArray[$ID] 		= implode ( ",", $nextListIDArray );
+				}
+
 				unset ($QueueArray[$ActualCount - 1]);
 				$NewQueue     = implode ( ";", $QueueArray );
 			}
+
 			$CurrentPlanet['b_building_id'] = $NewQueue;
+
 		}
+
 		return $QueueID;
+
 	}
 
 	private function AddBuildingToQueue (&$CurrentPlanet, $CurrentUser, $Element, $AddMode = true)
@@ -235,8 +260,6 @@ class ShowBuildingsPage
 		return $QueueID;
 	}
 
-	// OLD CODE
-	// private function ShowBuildingQueue ( $CurrentPlanet, $CurrentUser )
 	private function ShowBuildingQueue ( $CurrentPlanet, $CurrentUser, &$Sprice = false )
 	{
 		global $lang;
@@ -327,6 +350,7 @@ class ShowBuildingsPage
 
 		include_once($xgp_root . 'includes/functions/IsTechnologieAccessible.' . $phpEx);
 		include_once($xgp_root . 'includes/functions/GetElementPrice.' . $phpEx);
+		include_once($xgp_root . 'includes/functions/CheckPlanetUsedFields.' . $phpEx);
 
 		CheckPlanetUsedFields ( $CurrentPlanet );
 

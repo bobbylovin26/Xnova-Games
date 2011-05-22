@@ -306,6 +306,7 @@ $lang['fl_sac_of_fleet']					= 'ACS fleet';
 $lang['fl_modify_sac_name']					= 'Change the name of the ACS';
 $lang['fl_members_invited']					= 'Members invited';
 $lang['fl_invite_members']					= 'Invite other members';
+$lang['fl_hours']						= 'hour(s)';
 
 //----------------------------------------------------------------------------//
 //BUILDINGS - RESEARCH - SHIPYARD - DEFENSES

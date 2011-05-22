@@ -30,32 +30,35 @@ function ShowSearchPage()
 
 	$searchtext = mysql_escape_string($_POST["searchtext"]);
 
-	switch($type)
+	if ( $_POST )
 	{
-		case "playername":
-			$table 	= gettemplate('search/search_user_table');
-			$row 	= gettemplate('search/search_user_row');
-			$search = doquery("SELECT * FROM {{table}} WHERE username LIKE '%{$searchtext}%' LIMIT 25;","users");
-		break;
-		case "planetname":
-			$table 	= gettemplate('search/search_user_table');
-			$row 	= gettemplate('search/search_user_row');
-			$search = doquery("SELECT * FROM {{table}} WHERE name LIKE '%{$searchtext}%' LIMIT 25",'planets');
-		break;
-		case "allytag":
-			$table 	= gettemplate('search/search_ally_table');
-			$row 	= gettemplate('search/search_ally_row');
-			$search = doquery("SELECT * FROM {{table}} WHERE ally_tag LIKE '%{$searchtext}%' LIMIT 25","alliance");
-		break;
-		case "allyname":
-			$table 	= gettemplate('search/search_ally_table');
-			$row 	= gettemplate('search/search_ally_row');
-			$search = doquery("SELECT * FROM {{table}} WHERE ally_name LIKE '%{$searchtext}%' LIMIT 25","alliance");
-		break;
-		default:
-			$table 	= gettemplate('search/search_user_table');
-			$row 	= gettemplate('search/search_user_row');
-			$search = doquery("SELECT * FROM {{table}} WHERE username LIKE '%{$searchtext}%' LIMIT 25","users");
+		switch($type)
+		{
+			case "playername":
+				$table 	= gettemplate('search/search_user_table');
+				$row 	= gettemplate('search/search_user_row');
+				$search = doquery("SELECT * FROM {{table}} WHERE username LIKE '%{$searchtext}%' LIMIT 25;","users");
+			break;
+			case "planetname":
+				$table 	= gettemplate('search/search_user_table');
+				$row 	= gettemplate('search/search_user_row');
+				$search = doquery("SELECT * FROM {{table}} WHERE name LIKE '%{$searchtext}%' LIMIT 25",'planets');
+			break;
+			case "allytag":
+				$table 	= gettemplate('search/search_ally_table');
+				$row 	= gettemplate('search/search_ally_row');
+				$search = doquery("SELECT * FROM {{table}} WHERE ally_tag LIKE '%{$searchtext}%' LIMIT 25","alliance");
+			break;
+			case "allyname":
+				$table 	= gettemplate('search/search_ally_table');
+				$row 	= gettemplate('search/search_ally_row');
+				$search = doquery("SELECT * FROM {{table}} WHERE ally_name LIKE '%{$searchtext}%' LIMIT 25","alliance");
+			break;
+			default:
+				$table 	= gettemplate('search/search_user_table');
+				$row 	= gettemplate('search/search_user_row');
+				$search = doquery("SELECT * FROM {{table}} WHERE username LIKE '%{$searchtext}%' LIMIT 25","users");
+		}
 	}
 
 	if(isset($searchtext) && isset($type))

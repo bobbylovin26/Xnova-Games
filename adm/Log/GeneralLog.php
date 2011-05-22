@@ -1,8 +1,5 @@
 
-<font color=lime>||| SISTEMA DE SUSPENSIONES |||</font>
-El usuario lucky ha suspendido al usuario lucky con las siguientes especificaciones:
-Razón: Estoy haciendo una prueba.
-el: 15-08-2010 19:43:52
-hasta el: 15-08-2010 19:44:52
-¿En modo vacaciones? 
-Operación realizada el: 15-08-2010 19:43:52
+<font color=lime>||| LISTA DE ERRORES |||</font>
+El usuario lucky ha borrado un error
+Operación realizada el: 31-12-2010 11:51:46
+1-12-2010 03:46:27

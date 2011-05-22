@@ -244,6 +244,7 @@ if ($_POST)
 }
 else
 {
+	$parse['version']	   = VERSION;
 	$parse['servername']   = $game_config['game_name'];
 	$parse['forum_url']    = $game_config['forum_url'];
 	display (parsetemplate(gettemplate('public/registry_form'), $parse), false, '',false, false);

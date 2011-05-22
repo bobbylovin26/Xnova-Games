@@ -134,8 +134,8 @@ if (INSTALL != true)
 
 		$planetrow = doquery("SELECT * FROM `{{table}}` WHERE `id` = '".$user['current_planet']."';", "planets", true);
 
-		include($xgp_root . 'includes/functions/CheckPlanetUsedFields.' . $phpEx);
-		CheckPlanetUsedFields($planetrow);
+		//include($xgp_root . 'includes/functions/CheckPlanetUsedFields.' . $phpEx);
+		//CheckPlanetUsedFields($planetrow);
 	}
 }
 else

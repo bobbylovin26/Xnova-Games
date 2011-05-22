@@ -21,30 +21,25 @@
 
 if(!defined('INSIDE')){ die(header("location:../../"));}
 
-function ShowLeftMenu ($Level)
+function ShowLeftMenu ()
 {
-	global $game_config, $dpath, $user, $lang;;
+	global $game_config, $dpath, $lang, $user;
 
 	$parse					= $lang;
 	$parse['dpath']			= $dpath;
 	$parse['version']   	= VERSION;
 	$parse['servername']	= $game_config['game_name'];
-	$parse['lm_tx_serv']	= $game_config['resource_multiplier'];
-	$parse['lm_tx_game']    = $game_config['game_speed'] / 2500;
-	$parse['lm_tx_fleet']   = $game_config['fleet_speed'] / 2500;
-	$parse['lm_tx_queue']   = MAX_FLEET_OR_DEFS_PER_ROW;
 	$parse['forum_url']     = $game_config['forum_url'];
-	$parse['servername']   	= $game_config['game_name'];
-	$rank                   = doquery("SELECT `total_rank` FROM {{table}} WHERE `stat_code` = '1' AND `stat_type` = '1' AND `id_owner` = '". intval($user['id']) ."';",'statpoints',true);
-	$parse['user_rank']     = $rank['total_rank'];
+	$parse['user_rank']     = $user['total_rank'];
 
-	if ($Level > 0)
+	if ($user['authlevel'] > 0)
+	{
 		$parse['admin_link']	="<tr><td><div align=\"center\"><a href=\"javascript:top.location.href='adm/index.php'\"> <font color=\"lime\">" . $lang['lm_administration'] . "</font></a></div></td></tr>";
+	}
 	else
+	{
 		$parse['admin_link']  	= "";
-
-
-
+	}
 
 	return parsetemplate(gettemplate('left_menu'), $parse);
 }

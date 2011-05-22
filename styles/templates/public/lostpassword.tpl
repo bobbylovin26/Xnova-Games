@@ -19,6 +19,11 @@
                         <div id="text3">
                             <center><b>{email}: <input type="text" name="email" /></b></center>
                         </div>
+                        <!-- PLEASE DO NOT REMOVE THE COPYRGHT LINE // POR FAVOR NO BORRES LA LINEA DE COPYRIGHTS -->
+                        <div id="copyright">
+                    	Powered by <a href="http://www.xgproyect.net/" target="_blanck" title="XG Proyect {version}">XG Proyect</a> &#169; 2008 - 2010.
+                    	</div>
+                        <!-- PLEASE DO NOT REMOVE THE COPYRGHT LINE // POR FAVOR NO BORRES LA LINEA DE COPYRIGHTS -->
                     </div>
                 </center>
 			</div>

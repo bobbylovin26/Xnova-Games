@@ -204,6 +204,27 @@ function ShowFleet2Page($CurrentUser, $CurrentPlanet)
 		$StayBlock .= "</th>";
 		$StayBlock .= "</tr>";
 	}
+	if ($planet == 16)
+	{
+		$StayBlock .= "<tr height=\"20\">";
+		$StayBlock .= "<td class=\"c\" colspan=\"3\">".$lang['fl_hold_time']."</td>";
+		$StayBlock .= "</tr>";
+		$StayBlock .= "<tr height=\"20\">";
+		$StayBlock .= "<th colspan=\"3\">";
+		$StayBlock .= "<select name=\"expeditiontime\" >";
+
+		$max = floor ( sqrt ( $CurrentUser['expedition_tech'] ) );
+
+		for ( $i = 1 ; $i <= $max && $i < 10 ; $i++ )
+		{
+			$StayBlock .= "<option value='".$i."'>". $i."</option>";
+		}
+
+		$StayBlock .= "</select>";
+		$StayBlock .= $lang['fl_hours'];
+		$StayBlock .= "</th>";
+		$StayBlock .= "</tr>";
+	}
 	elseif($missiontype[5] != '')
 	{
 		$StayBlock .= "<tr height=\"20\">";

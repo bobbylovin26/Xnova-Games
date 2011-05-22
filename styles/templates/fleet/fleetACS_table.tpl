@@ -27,7 +27,14 @@
 			<td class="c" colspan="2">{fl_modify_sac_name}</td>
 		</tr>
 		<tr>
-			<th colspan="2">{aks_code_mr}<br /> </th>
+			<th colspan="2">
+				<form action="game.php?page=fleetACS" method="POST">
+					<input name="fleetid" value="{fleetid}" type="hidden">
+					<input name="txt_name_aks" type="text" id="txt_name_aks" value="{aks_code_mr}" />
+					<br />
+					<input type="submit" value="{fl_continue}" />
+				</form>
+			</th>
 		</tr>
 		<tr>
 			<th>

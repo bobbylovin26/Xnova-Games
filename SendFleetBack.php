@@ -34,7 +34,8 @@ if ( is_numeric($_POST['fleetid']) )
 
 	if ($FleetRow['fleet_owner'] == $user['id'])
 	{
-		if ($FleetRow['fleet_mess'] == 0)
+		//now we can call back the ships in maintaing position (2).
+		if ($FleetRow['fleet_mess'] == 0 || $FleetRow['fleet_mess'] == 2)
 		{
 			if ($FleetRow['fleet_group'] > 0)
 			{
@@ -70,7 +71,19 @@ if ( is_numeric($_POST['fleetid']) )
 			}															// LOS TIEMPOS DE REGRESO DE LAS FLOTAS
 																		// FUNCIONABA BIEN PERO FALLABA PARA LA MISION MATENER POSICION
 			*/
-			$ReturnFlyingTime  = $CurrentFlyingTime + time();
+
+			/*** start fix by jstar ***/
+			//the fleet time duration between 2 planet, it is equal for go and return when maintaining time=0
+			$fleetLeght	=	$FleetRow['fleet_start_time'] - $FleetRow['start_time'];
+			//the return time when you press "call back ships"
+			$ReturnFlyingTime  =
+			//if the ships mission is maintaining position and they are already in target pianet
+			( $FleetRow['fleet_end_stay'] != 0 && $CurrentFlyingTime > $fleetLeght )
+			//then the return time is the $fleetLeght + the current time in maintaining position
+			  ? $fleetLeght + time()
+			// else normal mission
+			  : $CurrentFlyingTime + time();
+			/***end fix by jstar***/
 
 			$QryUpdateFleet  = "UPDATE {{table}} SET ";
 			$QryUpdateFleet .= "`fleet_start_time` = '". (time() - 1) ."', ";

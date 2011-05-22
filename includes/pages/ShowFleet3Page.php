@@ -37,9 +37,11 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 			$target = "g".intval($_POST["galaxy"])."s".intval($_POST["system"])."p".intval($_POST["planet"])."t".intval($_POST["planettype"]);
 			if($_POST['acs_target_mr'] == $target)
 			{
-				$aks_count_mr = doquery("SELECT * FROM {{table}} WHERE id = '".intval($_POST['fleet_group'])."'",'aks');
-				if (mysql_num_rows($aks_count_mr) > 0)
+				$aks_count_mr = doquery("SELECT COUNT(*) FROM {{table}} WHERE id = '".intval($_POST['fleet_group'])."'",'aks');
+				if ($aks_count_mr > 0)
+				{
 					$fleet_group_mr = $_POST['fleet_group'];
+				}
 			}
 		}
 	}
@@ -263,11 +265,21 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 	$consumption   = GetFleetConsumption($fleetarray, $SpeedFactor, $duration, $distance, $MaxFleetSpeed, $CurrentUser);
 
 	$fleet['start_time'] = $duration + time();
+	// START CODE BY JSTAR
 	if ($_POST['mission'] == 15)
 	{
-		$StayDuration    = $_POST['expeditiontime'] * 3600;
-		$StayTime        = $fleet['start_time'] + $_POST['expeditiontime'] * 3600;
-	}
+		$StayDuration	= floor($_POST['expeditiontime']);
+
+		if ( $StayDuration <= floor ( sqrt ( $CurrentUser['expedition_tech'] ) ) && $StayDuration > 0 )
+		{
+			$StayDuration    = $StayDuration  * 3600;
+			$StayTime        = $fleet['start_time'] + $StayDuration;
+		}
+		else
+		{
+			exit(header("location:game." . $phpEx . "?page=fleet"));
+		}
+	} // END CODE BY JSTAR
 	elseif ($_POST['mission'] == 5)
 	{
 		$StayDuration    = $_POST['holdingtime'] * 3600;

@@ -306,6 +306,7 @@ $lang['fl_sac_of_fleet']					= 'SAC de flota';
 $lang['fl_modify_sac_name']					= 'Modificar el nombre del SAC';
 $lang['fl_members_invited']					= 'Participantes invitados';
 $lang['fl_invite_members']					= 'Invitar a los participantes';
+$lang['fl_hours']						= 'hora(s)';
 
 //----------------------------------------------------------------------------//
 //BUILDINGS - RESEARCH - SHIPYARD - DEFENSES

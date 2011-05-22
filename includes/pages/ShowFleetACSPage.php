@@ -66,7 +66,7 @@ function ShowFleetACSPage($CurrentUser, $CurrentPlanet)
 
 	if (!isset($_POST['send']))
 	{
-		SetSelectedPlanet($CurrentUser);
+		//SetSelectedPlanet($CurrentUser);
 
 		$galaxyrow 		= doquery("SELECT * FROM {{table}} WHERE `id_planet` = '".intval($CurrentPlanet['id'])."';", 'galaxy', true);
 		$maxfleet  		= doquery("SELECT COUNT(fleet_owner) as ilosc FROM {{table}} WHERE fleet_owner='".intval($CurrentPlanet['id'])."'", 'fleets', true);
@@ -126,6 +126,11 @@ function ShowFleetACSPage($CurrentUser, $CurrentPlanet)
 		}
 		else
 		{
+			if($_POST['txt_name_aks'] != "")
+			{
+				doquery("UPDATE {{table}} SET name = '" . mysql_escape_string($_POST['txt_name_aks']) . "' WHERE teilnehmer = '" . intval($CurrentUser['id']) . "'", 'aks');
+			}
+
 			$aks = doquery("SELECT * FROM {{table}} WHERE id = '" . intval($fleet['fleet_group']) . "'", 'aks');
 			$aks_madnessred = doquery("SELECT * FROM {{table}} WHERE id = '" . intval($fleet['fleet_group']) . "'", 'aks');
 

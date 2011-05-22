@@ -29,26 +29,37 @@ function ShowBuddyPage($CurrentUser)
 	{
 		$$name = intval( $value );
 	}
+
 	switch($mode)
 	{
 		case 1:
 			switch($sm)
 			{
 				case 1:
-					doquery("DELETE FROM {{table}} WHERE `id`='".intval($bid)."'","buddy");
+					$senderID = doquery("SELECT * FROM {{table}} WHERE `id`='".intval($bid)."'","buddy",true);
+					if($senderID['sender'] != $CurrentUser['id'])
+					{
+						SendSimpleMessage($senderID['sender'],$CurrentUser['id'],'',1,$CurrentUser['username'],$lang['bu_deleted_title'],str_replace('%u', $CurrentUser['username'],$lang['bu_deleted_text']));
+					}
+					elseif($senderID['sender'] == $CurrentUser['id'])
+					{
+						SendSimpleMessage($senderID['owner'],$CurrentUser['id'],'',1,$CurrentUser['username'],$lang['bu_deleted_title'],str_replace('%u', $CurrentUser['username'],$lang['bu_deleted_text']));
+					}
+					doquery("DELETE FROM {{table}} WHERE `id`='".intval($bid)."'  AND (`owner`='".$CurrentUser['id']."' OR `sender`='".$CurrentUser['id']."') ","buddy");
 					header("location:game.php?page=buddy");
 				break;
-
 				case 2:
-					doquery("UPDATE {{table}} SET `active` = '1' WHERE `id` ='".intval($bid)."'","buddy");
+					$senderID = doquery("SELECT * FROM {{table}} WHERE `id`='".intval($bid)."'","buddy",true);
+					SendSimpleMessage($senderID['sender'],$CurrentUser['id'],'',1,$CurrentUser['username'],$lang['bu_accepted_title'],str_replace('%u', $CurrentUser['username'],$lang['bu_accepted_text']));
+					doquery("UPDATE {{table}} SET `active` = '1' WHERE `id` ='".intval($bid)."' AND `owner`='".$CurrentUser['id']."'","buddy");
 					header("location:game.php?page=buddy");
 				break;
-
 				case 3:
-					$test = doquery("SELECT `id` FROM {{table}} WHERE `sender`='".intval($CurrentUser[id])."' AND `owner`='".intval($_POST)."' OR `owner`='".intval($CurrentUser[id])."' AND `sender`='".intval($_POST[u])."'","buddy",true);
-					if($test == array())
+					$query = doquery("SELECT `id` FROM {{table}} WHERE `sender`='".intval($CurrentUser[id])."' AND `owner`='".intval($_POST)."' OR `owner`='".intval($CurrentUser[id])."' AND `sender`='".intval($_POST[u])."'","buddy",true);
+					if($query == array())
 					{
 						$text = mysql_escape_string( strip_tags( $_POST['text'] ) );
+						SendSimpleMessage(intval($_POST['u']),$CurrentUser['id'],'',1,$CurrentUser['username'],$lang['bu_to_accept_title'],str_replace('%u', $CurrentUser['username'],$lang['bu_to_accept_text']));
 						doquery("INSERT INTO {{table}} SET `sender`='".intval($CurrentUser[id])."' ,`owner`='".intval($_POST[u])."' ,`active`='0' ,`text`='{$text}'","buddy");
 						header("location:game.php?page=buddy");
 					}
@@ -59,7 +70,6 @@ function ShowBuddyPage($CurrentUser)
 				break;
 			}
 		break;
-
 		case 2:
 			if($u==$CurrentUser['id'])
 			{

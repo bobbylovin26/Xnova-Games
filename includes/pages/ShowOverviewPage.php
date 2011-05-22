@@ -27,6 +27,7 @@ function ShowOverviewPage($CurrentUser, $CurrentPlanet)
 
 	include_once($xgp_root . 'includes/functions/InsertJavaScriptChronoApplet.' . $phpEx);
 	include_once($xgp_root . 'includes/classes/class.FlyingFleetsTable.' . $phpEx);
+	include_once($xgp_root . 'includes/functions/CheckPlanetUsedFields.' . $phpEx);
 
 	$FlyingFleetsTable = new FlyingFleetsTable();
 
