@@ -90,9 +90,6 @@ function f(target_url,win_name) {
 	<td colspan="2" background="{dpath}img/bg1.gif"><center>{infog}</center></td>
 </tr>
 	{server_info}
-<tr>
-	<td colspan="2"><div><center><a href="credit.php" accesskey="T" target="{mf}">XNova Team</a><br>&copy; Copyright 2008</center></div></td>
-</tr>
 </table>
 </div>
 </center>

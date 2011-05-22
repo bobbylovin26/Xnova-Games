@@ -68,7 +68,7 @@ function AdminMessage ($mes, $title = 'Error', $dest = '', $time = '3', $color= 
 
 	$page = parsetemplate(gettemplate('admin/message_body'), $parse);
 
-	display ($page, $title, false, (($dest != "") ? "<meta http-equiv=\"refresh\" content=\"$time;URL=javascript:self.location='$dest';\">" : ""), true);
+	display ($page, $title, false, (($dest != "") ? "<meta http-equiv=\"refresh\" content=\"$time;URL={$dest}\">" : ""), true);
 }
 
 // ----------------------------------------------------------------------------------------------------------------
@@ -82,7 +82,7 @@ function message($mes, $title = 'Error', $dest = "", $time = "3", $color = 'oran
 
     $page = parsetemplate(gettemplate('admin/message_body'), $parse);
 
-    display ($page, $title, false, (($dest != "") ? "<meta http-equiv=\"refresh\" content=\"$time;URL=javascript:self.location='$dest';\">" : ""), true);
+    display ($page, $title, false, (($dest != "") ? "<meta http-equiv=\"refresh\" content=\"$time;URL={$dest}\">" : ""), true);
 }
 
 // ----------------------------------------------------------------------------------------------------------------

@@ -43,9 +43,10 @@ SELECT * FROM {{table}}
 EOF;
         $userData = doquery($sql, 'users', true);
     } else if (isset($_COOKIE['nova-cookie'])) {
+        $cookieData = unserialize($_COOKIE['nova-cookie']);
         $cookieData = array(
-            'id' => (isset($_COOKIE['nova-cookie']['id']) ? (int) $_COOKIE['nova-cookie']['id'] : 0),
-            'key' => (isset($_COOKIE['nova-cookie']['key']) ? (string) $_COOKIE['nova-cookie']['key'] : NULL)
+            'id' => (isset($cookieData['id']) ? (int) $cookieData['id'] : 0),
+            'key' => (isset($cookieData['key']) ? (string) $cookieData['key'] : null)
             );
 
         $sql =<<<EOF
@@ -59,13 +60,19 @@ EOF;
         if (empty($userData)) {
             message($lang['cookies']['Error2'] );
         }
-
-        $sessionData = array(
-            'request_uri' => mysql_real_escape_string($_SERVER['REQUEST_URI']),
-            'remote_addr' => mysql_real_escape_string($_SERVER['REMOTE_ADDR']/* . (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? '|' . $_SERVER['HTTP_X_FORWARDED_FOR'] : '')*/),
-            'user_agent' => mysql_real_escape_string($_SERVER['HTTP_USER_AGENT'])
+    } else {
+        return array(
+            'state' => false,
+            'record' => array()
             );
-        $sql =<<<EOF
+    }
+
+    $sessionData = array(
+        'request_uri' => mysql_real_escape_string($_SERVER['REQUEST_URI']),
+        'remote_addr' => mysql_real_escape_string($_SERVER['REMOTE_ADDR']/* . (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? '|' . $_SERVER['HTTP_X_FORWARDED_FOR'] : '')*/),
+        'user_agent' => mysql_real_escape_string($_SERVER['HTTP_USER_AGENT'])
+        );
+    $sql =<<<EOF
 UPDATE {{table}}
     SET `onlinetime` = UNIX_TIMESTAMP(NOW()),
         `current_page` = "{$sessionData['request_uri']}",
@@ -74,9 +81,8 @@ UPDATE {{table}}
     WHERE `id`={$_SESSION['user_id']}
     LIMIT 1;
 EOF;
-        doquery($sql, 'users');
-        $IsUserChecked = true;
-    }
+    doquery($sql, 'users');
+    $IsUserChecked = true;
 
     return array(
         'state' => $IsUserChecked,

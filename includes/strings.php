@@ -52,11 +52,11 @@ function colorNumber($n, $s = '') {
 }
 
 function colorRed($n) {
-	return '<font color="#f00">' . $n . '</font>';
+	return '<font color="#FF0000">' . $n . '</font>';
 }
 
 function colorGreen($n) {
-	return '<font color="#0f0">' . $n . '</font>';
+	return '<font color="#00FF00">' . $n . '</font>';
 }
 
 function pretty_number($n, $floor = true) {

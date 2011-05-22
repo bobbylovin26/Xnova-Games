@@ -33,9 +33,4 @@ if (filesize('config.php') == 0) {
 	exit();
 }
 
-header('location: login.php');
-
-// -----------------------------------------------------------------------------------------------------------
-// History version
-// 1.0 - Creation avec redirection vers l'installeur si pas de config.php
-?>
+header('location: frames.php');

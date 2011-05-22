@@ -21,7 +21,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- *                                --> NOTICE <--
+ *                                --//NOTICE <--
  *  This file is part of the core development branch, changing its contents will
  * make you unable to use the automatic updates manager. Please refer to the
  * documentation for further information about customizing XNova.
@@ -31,31 +31,49 @@
 function HandleElementBuildingQueue($currentUser, &$currentPlanet, $productionTime) {
     global $resource;
     // Pendant qu'on y est, si on verifiait ce qui se passe dans la queue de construction du chantier ?
-    if ($currentPlanet['b_hangar_id']) {
+    if ($currentPlanet['b_hangar_id'] != '') {
+
         $buildArray = array();
         $currentPlanet['b_hangar'] += $productionTime;
 
         $buildQueue = explode(';', $currentPlanet['b_hangar_id']);
 
         $currentPlanet['b_hangar_id'] = '';
+        $stopUpdate = false;
         foreach ($buildQueue as $element) {
-            if (empty($element) || !($element = explode(',', $element)) || count($element) != 2) {
+            if (empty($element) || !($element = explode(',', $element))) {
+                continue;
+            } else if (count($element) < 2) {
                 continue;
             }
             list($item, $count) = $element;
             $buildTime = GetBuildingTime($currentUser, $currentPlanet, $item);
 
-            if($currentPlanet['b_hangar'] >= $buildTime && $count > 0) {
-                $currentPlanet['b_hangar'] -= $buildTime * $count;
-                $buildArray[$element] += $count;
-                $currentPlanet[$resource[$element]] += $count;
+            if($currentPlanet['b_hangar'] >= $buildTime && !$stopUpdate) {
+                $itemsBuilt = max(0, min(floor($productionTime / $buildTime), $count));
 
-                $currentPlanet['b_hangar_id'] .= "$element,$Count;";
+                if ($itemsBuilt <= 0) {
+                    $stopUpdate = true;
+                } else {
+                    $count -= $itemsBuilt;
+                    $productionTime -= $buildTime * $itemsBuilt;
+
+                    $currentPlanet['b_hangar'] -= ($buildTime * $itemsBuilt);
+                    $buildArray[$item] = $itemsBuilt;
+                }
+            } else {
+                $stopUpdate = true;
+            }
+
+            if ($itemsBuilt > 0) {
+                $itemsLeft = $count - $itemsBuilt;
+                $currentPlanet['b_hangar_id'] .= "$item,$itemsLeft;";
             }
         }
     } else {
         $buildArray = array();
         $currentPlanet['b_hangar'] = 0;
+        $currentPlanet['b_hangar_id'] = '';
     }
 
     return $buildArray;

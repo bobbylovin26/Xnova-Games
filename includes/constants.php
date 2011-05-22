@@ -29,7 +29,7 @@
  */
 
 if ( defined('INSIDE') ) {
-	define('ADMINEMAIL'               , "admin@xnova.fr");
+	define('ADMINEMAIL'               , "admin@xnova-ng.org");
 	define('GAMEURL'                  , "http://".$_SERVER['HTTP_HOST']."/");
 
 	// Definition du monde connu !

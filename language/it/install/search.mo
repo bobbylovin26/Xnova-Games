@@ -28,20 +28,28 @@
  *
  */
 
-define('INSIDE' , true);
-define('INSTALL' , false);
-require_once dirname(__FILE__) .'/common.php';
+$lang['Position'] = 'Posizione';
+$lang['Player'] = 'Giocatore';
+$lang['Name'] = 'Nome';
+$lang['Player_name'] = 'Nome giocatore';
+$lang['Planet'] = 'Pianeta';
+$lang['Planet_name'] = 'Nome pianeta';
+$lang['Alliance'] = 'Alleanza';
+$lang['Alliance_name'] = 'Nome dell\'alleanza';
+$lang['Tag'] = 'Tag';
+$lang['Alliance_tag'] = 'Tag dell\'alleanza';
+$lang['Members'] = 'Membri';
+$lang['Points'] = 'Punti';
+$lang['PerMember'] = 'Per membro';
+$lang['Coordinated'] = 'Coordinate';
+$lang['Position'] = 'Posizione';
+$lang['Search'] = 'Cerca';
+$lang['Search_in_all_game'] = "Cerca sul server";
+$lang['Back'] = 'Indietro';
+$lang['Search'] = 'Cerca';
+$lang['write_a_messege'] = 'Scrivi messaggio';
+$lang['buddy_request'] = 'Richiesta amico';
 
-	includeLang('credit');
-	$parse = $lang;
-
-	if ($game_config['ExtCopyFrame'] == '1') {
-		$parse['ExtCopyFrame'] = "<tr><td colspan=\"2\" class=\"c\">". $lang['cred_ext'] ."</td></tr><tr><th>". nl2br($game_config['ExtCopyOwner']) ."</th><th>". nl2br($game_config['ExtCopyFunct']) ."</th></tr>";
-	}
-
-	$BodyTPL = gettemplate('credit_body');
-
-	$page = parsetemplate($BodyTPL, $parse);
-	display($page, $lang['cred_credit'], false);
-
+// Created by Perberos. All rights reversed (C) 2006
+// Complet by XNova Team. All rights reversed (C) 2008
 ?>

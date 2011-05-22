@@ -63,7 +63,7 @@ EOF;
     if ($login) {
         if (intval($login['login_success'])) {
             if (isset($_POST["rememberme"])) {
-                setcookie('nova-cookie', array('id' => $login['id'], 'key' => $login['login_rememberme']), time() + 2592000);
+                setcookie('nova-cookie', serialize(array('id' => $login['id'], 'key' => $login['login_rememberme'])), time() + 2592000);
             }
 
             $sql =<<<EOF
