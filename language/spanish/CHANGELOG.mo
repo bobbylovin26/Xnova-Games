@@ -4,6 +4,38 @@ $lang['Version']     = 'Versión';
 $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
+'2.9.9' => ' 09/01/11
+
+-[Seguridad]
+- Cerrados algunos agujeros de seguridad (By shoghicp).-
+
+-[Mejoras]
+- Se eliminaron los campos id_owner1 y id_owner2 definitivamente de la tabla rw y se reemplazo por owners (Gracias akademik).- 
+
+-[Fixs]
+#1: Lanzamiento de misiles (By Think, alivan, tomtom).-
+#5167: En el mensaje global se ven todos los código HTML (By tomtom).-
+#7628: La columna Acciones no aparece en galaxia.-
+#7629: Diferencia Planta de Fusión (By alivan).-
+#7630: La administración se puede banear a si misma (By Think).-
+#7631: Diversos bugs misiles (By Think, alivan, tomtom).-
+#7632: Tiempos negativos en construcciones (By alivan).-
+#7633: No se muestra el último mensaje en el panel de administración (By alivan).-
+#7634: hack: ships to colonization (By jstar).-
+#7635: Hack phalanx (By jstar).-
+#7636: hack destruction mission (By jstar).-
+#7637: Recycling without debris (By jstar).-
+#7640: CSRF attack (By jstar).-
+#7641: xss desde panel administrativo (By jstar).-
+#7643: Spy probos capacity (By jstar).-
+#7644: mantener la posición de amigos (By jstar).-
+#7646: Mandar naves a espiar (By Think).-
+#7649: Terraformer no cuesta energía (By Think).-
+#7651: resources no update before fleet arrive (By jstar).-
+#7655: overflow (By jstar).-
+
+',
+
 '2.9.8' => ' 09/01/11
 
 -[Seguridad]
@@ -27,7 +59,6 @@ $lang['changelog']   = array(
 #7625: Fallo en accesos directos (By Think).-
 #7626: Falla de seguridad en el hangar (By Think).-
 #7627: Bug en la cola de construcción (By jstar).-
-
 ',
 
 '2.9.7' => ' 09/12/10

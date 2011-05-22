@@ -182,7 +182,7 @@ class GalaxyRows
 			$Result .= "<th>";
 			$Result .= "<table>";
 			$Result .= "<tr>";
-			$Result .= "<td><a href=game.php?page=alliance&mode=ainfo&a=". $GalaxyInfo['id'] .">".$lang['gl_alliance_page']."</a></td>";
+			$Result .= "<td><a href=game.php?page=alliance&mode=ainfo&a=". $GalaxyInfo['ally_id'] .">".$lang['gl_alliance_page']."</a></td>";
 			$Result .= "</tr><tr>";
 			$Result .= "<td><a href=game.php?page=statistics&start=101&who=ally>".$lang['gl_see_on_stats']."</a></td>";
 			if ($GalaxyInfo["ally_web"] != "")

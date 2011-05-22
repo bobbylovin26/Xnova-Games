@@ -36,13 +36,13 @@ if ($_GET['order'] == 'id')
 	$ORDER	=	"id";
 else
 	$ORDER	=	"username";
-	
-	
-	
+
+
+
 if ($user['authlevel'] != 3)
-	$ListWHERE		=	"WHERE `authlevel` != 3";
-	
-	
+	$ListWHERE = "WHERE `authlevel` < '".($user['authlevel'])."'";
+
+
 if ($_GET['view'] == 'bana' && $user['authlevel'] != 3)
 	$WHEREBANA	=	"AND `bana` = 1";
 elseif ($_GET['view'] == 'bana' && $user['authlevel'] == 3)
@@ -57,7 +57,7 @@ while ($a	=	mysql_fetch_array($UserList))
 		$SuspendedNow	=	$lang['bo_characters_suus'];
 	else
 		$SuspendedNow	=	"";
-		
+
 	$parse['List']	.=	'<option value="'.$a['username'].'">'.$a['username'].'&nbsp;&nbsp;(ID:&nbsp;'.$a['id'].')'.$SuspendedNow.'</option>';
 	$Users++;
 }
@@ -67,7 +67,7 @@ if ($_GET['order2'] == 'id')
 	$ORDER2	=	"id";
 else
 	$ORDER2	=	"username";
-	
+
 $Banneds	=	0;
 $UserListBan	=	doquery("SELECT `username`, `id` FROM {{table}} WHERE `bana` = '1' ORDER BY ".$ORDER2." ASC", "users");
 while ($b	=	mysql_fetch_array($UserListBan))
@@ -87,7 +87,7 @@ if($_GET['panel'])
 {
 	$QueryUserBan			=	doquery("SELECT * FROM {{table}} WHERE `who` = '".$_GET['ban_name']."'", "banned", true);
 	$QueryUserBanVacation	=	doquery("SELECT urlaubs_modus FROM {{table}} WHERE `username` = '".$_GET['ban_name']."'", "users", true);
-		
+
 	if (!$QueryUserBan)
 	{
 		$parse['title']			=	$lang['bo_bbb_title_1'];
@@ -97,23 +97,23 @@ if($_GET['panel'])
 	{
 		$parse['title']			=	$lang['bo_bbb_title_3'];
 		$parse['changedate']	=	$lang['bo_bbb_title_6'];
-		$parse['changedate_advert']	=	"<td class=c width=5%><img src=\"../styles/images/Adm/i.gif\" onMouseOver='return overlib(\"".$lang['bo_bbb_title_4']."\", 
+		$parse['changedate_advert']	=	"<td class=c width=5%><img src=\"../styles/images/Adm/i.gif\" onMouseOver='return overlib(\"".$lang['bo_bbb_title_4']."\",
 			CENTER, OFFSETX, -80, OFFSETY, -65, WIDTH, 250);' onMouseOut='return nd();'></td>";
-			
+
 		$parse['reas']			=	$QueryUserBan['theme'];
-		$parse['timesus']		=	
+		$parse['timesus']		=
 			"<tr>
 				<th>".$lang['bo_bbb_title_5']."</th>
 				<th height=25 colspan=2>".date("d-m-Y H:i:s", $QueryUserBan['longer'])."</th>
 			</tr>";
 	}
-	
-	
+
+
 	if ($QueryUserBanVacation['urlaubs_modus'] == 1)
 		$parse['vacation']	=	'checked	=	"checked"';
 	else
 		$parse['vacation']	=	'';
-		
+
 	$parse['name']			=	$_GET['ban_name'];
 
 
@@ -122,7 +122,7 @@ if($_GET['panel'])
 	{
 		if(!is_numeric($_POST['days']) || !is_numeric($_POST['hour']) || !is_numeric($_POST['mins']) || !is_numeric($_POST['secs']))
 			return display( parsetemplate(gettemplate("adm/BanOptionsResultBody"), $parse), false, '', true, false);
-			
+
 		$name              = $_POST['ban_name'];
 		$reas              = $_POST['why'];
 		$days              = $_POST['days'];
@@ -138,13 +138,13 @@ if($_GET['panel'])
 		$BanTime          += $secs;
 		if ($QueryUserBan['longer'] > time())
 			$BanTime          += ($QueryUserBan['longer'] - time());
-			
+
 		if (($BanTime + $Now) < time())
 			$BannedUntil       = $Now;
 		else
 			$BannedUntil       = $Now + $BanTime;
-		
-		
+
+
 		if ($QueryUserBan)
 		{
 			$QryInsertBan      = "UPDATE {{table}} SET ";
@@ -197,16 +197,16 @@ if($_GET['panel'])
 		$PunishThePlanets    .= "WHERE ";
 		$PunishThePlanets    .= "`id_owner` = '". $GetUserData['id'] ."';";
 		doquery( $PunishThePlanets, 'planets');
-		
-		
-		
+
+
+
 		$Log	.=	"\n".$lang['log_suspended_title']."\n";
 		$Log	.=	$lang['log_the_user'].$user['username']." ".$lang['log_suspended_1'].$name.$lang['log_suspended_2']."\n";
 		$Log	.=	$lang['log_reason'].$reas."\n";
 		$Log	.=	$lang['log_time'].date("d-m-Y H:i:s", time())."\n";
 		$Log	.=	$lang['log_longer'].date("d-m-Y H:i:s", $BannedUntil)."\n";
 		$Log	.=	$lang['log_vacations'].$lang['log_viewmod'][$ASD]."\n";
-				
+
 		LogFunction($Log, "GeneralLog", $LogCanWork);
 
 
@@ -221,14 +221,14 @@ elseif($_POST && $_POST['unban_name'])
 	$name = $_POST['unban_name'];
 	doquery("DELETE FROM {{table}} WHERE who = '".$name."'", 'banned');
 	doquery("UPDATE {{table}} SET bana = '0', banaday = '0' WHERE username = '".$name."'", "users");
-	
-	
-	
+
+
+
 	$Log	.=	"\n".$lang['log_suspended_title']."\n";
 	$Log	.=	$lang['log_the_user'].$user['username']." ".$lang['log_suspended_3'].$name."\n";
-				
+
 	LogFunction($Log, "GeneralLog", $LogCanWork);
-	
+
 	header ("Location: BanPage.php?succes2=yes");
 }
 	if ($_GET['succes2'] == 'yes')

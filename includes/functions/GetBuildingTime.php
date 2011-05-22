@@ -72,6 +72,11 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 			$time         = floor(($time * 60 * 60) * (1 - ((($user['rpg_general']) * GENERAL) + (($user['rpg_technocrate']) * TECHNOCRATE))));
 		}
 
+		if ($time < 0)
+		{
+			$time = 0;
+		}
+
 		return $time;
 	}
 

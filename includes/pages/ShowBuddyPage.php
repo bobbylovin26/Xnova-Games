@@ -25,6 +25,11 @@ function ShowBuddyPage($CurrentUser)
 {
 	global $lang;
 
+	if ( isset ( $_GET["lang"] ) or isset ( $_POST["lang"] ) )
+	{
+		die();
+	}
+
 	foreach($_GET as $name => $value)
 	{
 		$$name = intval( $value );

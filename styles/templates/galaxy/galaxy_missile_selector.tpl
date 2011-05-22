@@ -7,7 +7,7 @@
 			<tr>
 
 				<td class="c">{missile_count} <input type="text" name="SendMI" size="2" maxlength="3" /></td>
-				<td class="c">{gl_objective}: 
+				<td class="c">{gl_objective}:
                 	<select name="Target">
                         <option value="all" selected>{gl_all_defenses}</option>
                         <option value="0">{ma_misil_launcher}</option>
@@ -18,6 +18,7 @@
                         <option value="5">{ma_buster_canyon}</option>
                         <option value="6">{ma_small_protection_shield}</option>
                         <option value="7">{ma_big_protection_shield}</option>
+                        <option value="8">{ma_planet_protector}</option>
                     </select>
                 </td>
 			</tr>

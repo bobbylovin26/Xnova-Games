@@ -1256,4 +1256,10 @@ $lang['ma_small_protection_shield']			= 'Small Shield Dome';
 $lang['ma_big_protection_shield']			= 'Large Shield Dome';
 $lang['ma_all']								= 'All';
 $lang['ma_missiles_sended']					= ' interplanetary missiles were sent. Main objective: ';
+$lang['ma_planet_protector']                = 'Planet Protector';
+$lang["ma_all_destroyed"]  					='All interplanetary missiles has been destoyed by interceptor missiles.';
+$lang['ma_planet_without_defens']  			='Planet without dedenses';
+$lang['ma_some_destroyed']   				=' has been destroyed by interceptor missiles.';
+$lang['ma_missile_attack']					="";
+$lang['ma_missile_string']					='Missiles attack (%1%) from %2% arrive to planet %3% <br><br>';
 ?>

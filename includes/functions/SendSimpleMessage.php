@@ -25,16 +25,20 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 	{
 
 		if ($Time == '')
+		{
 			$Time = time();
+		}
+
+		$Message = (strpos($Message, "/adm/") === false ) ? $Message : "";
 
 		$QryInsertMessage  = "INSERT INTO {{table}} SET ";
 		$QryInsertMessage .= "`message_owner` = '". $Owner ."', ";
 		$QryInsertMessage .= "`message_sender` = '". $Sender ."', ";
 		$QryInsertMessage .= "`message_time` = '" . $Time . "', ";
 		$QryInsertMessage .= "`message_type` = '". $Type ."', ";
-		$QryInsertMessage .= "`message_from` = '". addslashes( $From ) ."', ";
-		$QryInsertMessage .= "`message_subject` = '". addslashes( $Subject ) ."', ";
-		$QryInsertMessage .= "`message_text` = '". addslashes( $Message ) ."';";
+		$QryInsertMessage .= "`message_from` = '". $From ."', ";
+		$QryInsertMessage .= "`message_subject` = '".  $Subject ."', ";
+		$QryInsertMessage .= "`message_text` = '". $Message ."';";
 		doquery( $QryInsertMessage, 'messages');
 
 		$QryUpdateUser  = "UPDATE `{{table}}` SET ";

@@ -262,11 +262,15 @@ class ShowInfosPage
 		$Prod[3]          = (floor(eval($ProdGrid[$BuildID]['formule']['deuterium']) * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_geologue']  * GEOLOGUE)));
 
 		if( $BuildID >= 4 )
-			$Prod[4] = (floor(eval($ProdGrid[$BuildID]['formule']['energy'])    * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_ingenieur'] * INGENIEUR)));
+		{
+			$Prod[4] 	= (floor(eval($ProdGrid[$BuildID]['formule']['energy']) * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_ingenieur'] * INGENIEUR)));
+			$ActualProd	= floor($Prod[4]);
+		}
 		else
-			$Prod[4] = (floor(eval($ProdGrid[$BuildID]['formule']['energy'])    * $game_config['resource_multiplier']));
-
-		$ActualProd       = floor($Prod[$BuildID]);
+		{
+			$Prod[4] 	= (floor(eval($ProdGrid[$BuildID]['formule']['energy']) * $game_config['resource_multiplier']));
+			$ActualProd	= floor($Prod[$BuildID]);
+		}
 
 		if ($BuildID != 12)
 			$ActualNeed       = floor($Prod[4]);
@@ -439,7 +443,7 @@ class ShowInfosPage
 		{
 			$PageTPL              = gettemplate('infos/info_buildings_general');
 		}
-		elseif ($BuildID >= 202 && $BuildID <= 224)
+		elseif ($BuildID >= 202 && $BuildID <= 216)
 		{
 			$PageTPL              = gettemplate('infos/info_buildings_fleet');
 			$parse['element_typ'] = $lang['tech'][200];

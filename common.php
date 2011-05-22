@@ -19,6 +19,14 @@
 # *																			 #
 ##############################################################################
 
+// SETEADO PARA EVITAR ERRORRES EN VERSION DE PHP MAYORES A 5.3.0
+error_reporting(E_ALL & ~E_NOTICE);
+
+if ( isset ( $_GET["xgp_root"] ) or isset ( $_POST["xgp_root"] ) )
+{
+	die();
+}
+
 if(filesize($xgp_root . 'config.php') == 0 && INSTALL != true)
 {
 	exit ( header ( "location:" . $xgp_root .  "install/" ) );

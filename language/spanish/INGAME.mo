@@ -1267,4 +1267,10 @@ $lang['ma_small_protection_shield']			= 'Cúpula pequeña de protección';
 $lang['ma_big_protection_shield']			= 'Cúpula grande de protección';
 $lang['ma_all']								= 'Todo';
 $lang['ma_missiles_sended']					= ' misiles interplanetarios se enviaron. objetivo principal: ';
+$lang['ma_planet_protector']                = 'Protección planetaria';
+$lang["ma_all_destroyed"]  					='Todos los misiles interplanetarios han sido destruidos por los misiles de intercepción.';
+$lang['ma_planet_without_defens']  			='Planeta sin defensa.';
+$lang['ma_some_destroyed']   				=' han sido destruidos por los misiles de intercepción.';
+$lang['ma_missile_attack']					="";
+$lang['ma_missile_string']					='Un ataque con misiles (%1%) de %2% llega al planeta %3% <br><br>';
 ?>

@@ -42,12 +42,15 @@ function ShowPhalanxPage($CurrentUser, $CurrentPlanet)
 	if ( $radar_menzil_max > MAX_SYSTEM_IN_GALAXY )
 		$radar_menzil_max = MAX_SYSTEM_IN_GALAXY;
 
-	if ( ( intval ( $_GET["system"] ) < $radar_menzil_min ) or ( intval ( $_GET["system"] ) > $radar_menzil_max ) )
+
+	$DoScan=true;
+
+	if (intval ( $_GET["system"] ) < $radar_menzil_min or intval ( $_GET["system"] ) > $radar_menzil_max or intval ( $_GET["galaxy"] ) != $CurrentPlanet['galaxy'])
 	{
 		$DoScan = false;
 	}
 
-	if ($CurrentPlanet['planet_type'] == 3)
+	if ($CurrentPlanet['planet_type'] == 3 && $DoScan)
 	{
 		$parse['phl_pl_galaxy']    = $CurrentPlanet['galaxy'];
 		$parse['phl_pl_system']    = $CurrentPlanet['system'];

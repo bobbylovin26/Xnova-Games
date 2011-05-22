@@ -109,10 +109,23 @@ $QrySelectEnemy .= "`planet_type` = '". intval($_POST['planettype']) ."';";
 $TargetRow = doquery( $QrySelectEnemy, 'planets', true);
 
 if ($TargetRow['id_owner'] == '')
+{
 	$TargetUser = $user;
+}
 elseif ($TargetRow['id_owner'] != '')
+{
 	$TargetUser = doquery("SELECT * FROM {{table}} WHERE `id` = '". $TargetRow['id_owner'] ."';", 'users', true);
+}
 
+if ($_POST['mission']== 8)
+{
+	$TargetGPlanet = doquery("SELECT metal, crystal FROM {{table}} WHERE galaxy = '". intval($_POST['galaxy']) ."' AND system = '". intval($_POST['system']) ."' AND planet = '". intval($_POST['planet']) ."'", "galaxy",true);
+
+	if($TargetGPlanet['metal'] == 0 && $TargetGPlanet['crystal'] == 0)
+	{
+		die();
+	}
+}
 
 $UserPoints    = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $user['id'] ."';", 'statpoints', true);
 $User2Points   = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $TargetUser['id'] ."';", 'statpoints', true);

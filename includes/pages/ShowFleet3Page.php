@@ -81,6 +81,12 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 	$planettype         = intval($_POST['planettype']);
 	$fleetmission       = intval($_POST['mission']);
 
+	//fix by jstar
+	if ( $fleetmission == 7 && ( count ( $fleetarray ) != 1 or !isset($fleetarray[208] ) ) )
+	{
+		exit(header("location:game." . $phpEx . "?page=fleet"));
+	}
+
 	if ($planettype != 1 && $planettype != 2 && $planettype != 3)
 		exit(header("location:game." . $phpEx . "?page=fleet"));
 
@@ -89,6 +95,12 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 		$YourPlanet = false;
 		$UsedPlanet = false;
 		$select     = doquery("SELECT * FROM {{table}} WHERE galaxy = '". $galaxy ."' AND system = '". $system ."' AND planet = '". $planet ."'", "planets");
+		$select2    = doquery("SELECT metal, crystal FROM {{table}} WHERE galaxy = '". $galaxy ."' AND system = '". $system ."' AND planet = '". $planet ."'", "galaxy",true);
+		if($select2['metal'] == 0 && $select2['crystal'] == 0)
+		{
+			exit(header("location:game." . $phpEx . "?page=fleet"));
+		}
+
 	}
 	else
 	{
@@ -148,6 +160,29 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 		$UsedPlanet = false;
 	}
 
+	//fix by jstar
+	if($fleetmission == 9)
+	{
+		$countfleettype = count ( $fleetarray );
+
+		if($YourPlanet or !$UsedPlanet or $planettype != 3)
+		{
+			exit(header("location:game." . $phpEx . "?page=fleet"));
+		}
+		elseif($countfleettype==1 && !(isset($fleetarray[214]) or isset($fleetarray[216])))
+		{
+			exit(header("location:game." . $phpEx . "?page=fleet"));
+		}
+		elseif($countfleettype==2 && !(isset($fleetarray[214]) && isset($fleetarray[216])))
+		{
+			exit(header("location:game." . $phpEx . "?page=fleet"));
+		}
+		elseif($countfleettype>2)
+		{
+			exit(header("location:game." . $phpEx . "?page=fleet"));
+		}
+	}
+
 	if (empty($fleetmission))
 		exit(header("location:game." . $phpEx . "?page=fleet"));
 
@@ -204,14 +239,31 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 		if ($HeDBRec['ally_id'] != $MyDBRec['ally_id'] && $_POST['mission'] == 4)
 			message ("<font color=\"red\"><b>".$lang['fl_stay_not_on_enemy']."</b></font>", "game." . $phpEx . "?page=fleet", 2);
 
-		if ($TargetPlanet['ally_deposit'] < 1 && $HeDBRec != $MyDBRec && $_POST['mission'] == 5)
-			message ("<font color=\"red\"><b>".$lang['fl_not_ally_deposit']."</b></font>", "game." . $phpEx . "?page=fleet", 2);
-
 		if (($TargetPlanet["id_owner"] == $CurrentPlanet["id_owner"]) && (($_POST["mission"] == 1) or ($_POST["mission"] == 6)))
 			exit(header("location:game." . $phpEx . "?page=fleet"));
 
 		if (($TargetPlanet["id_owner"] != $CurrentPlanet["id_owner"]) && ($_POST["mission"] == 4))
 			message ("<font color=\"red\"><b>".$lang['fl_deploy_only_your_planets']."</b></font>","game." . $phpEx . "?page=fleet", 2);
+
+		if($_POST['mission'] == 5)
+		{
+			$buddy = doquery("SELECT count(*) FROM {{table}} WHERE `owner` = '". intval($TargetPlanet['id_owner']) ."' OR `sender`='".intval($TargetPlanet['id_owner'])."' AND `active` = '1';", 'buddy');
+
+			if ($_POST['planettype']==3)
+			{
+				$x = doquery("SELECT `ally_deposit` FROM {{table}} WHERE `galaxy` = '". intval($_POST['galaxy']) ."' AND `system` = '". intval($_POST['system']) ."' AND `planet` = '". intval($_POST['planet']) ."' AND `planet_type` = 1;", 'planets', true);
+			}
+			else
+			{
+				$x = $TargetPlanet;
+			}
+
+			if (($HeDBRec['ally_id'] != $MyDBRec['ally_id'] && $buddy<1) ||  $x['ally_deposit'] < 1)
+			{
+				message ("<font color=\"red\"><b>".$lang['fl_stay_not_on_enemy']."</b></font>", "game." . $phpEx . "?page=fleet", 2);
+			}
+
+		}
 	}
 
 	$missiontype = array(
@@ -299,6 +351,11 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 
 	foreach ($fleetarray as $Ship => $Count)
 	{
+		if($Ship != 210 && $_POST['mission'] == 6)
+		{
+			exit(header("location:game." . $phpEx . "?page=fleet"));
+		}
+
 		$FleetStorage    += $pricelist[$Ship]["capacity"] * $Count;
 		$FleetShipCount  += $Count;
 		$fleet_array     .= $Ship .",". $Count .";";

@@ -80,7 +80,7 @@ $QryTableConfig     .= ") ENGINE=MyISAM;";
 
 $QryInsertConfig     = "INSERT INTO `{{table}}` ";
 $QryInsertConfig    .= "(`config_name`           , `config_value`) VALUES ";
-$QryInsertConfig    .= "('VERSION'          	 , '2.9.8'), ";
+$QryInsertConfig    .= "('VERSION'          	 , '2.9.9'), ";
 $QryInsertConfig    .= "('users_amount'          , '0'), ";
 $QryInsertConfig    .= "('moderation'            , '1,0,0,1,1;1,1,0,1,1;1;'), ";
 $QryInsertConfig    .= "('game_speed'            , '2500'), ";
@@ -288,8 +288,6 @@ $QryTablePlugins	.= "`plugin` varchar(32) NOT NULL";
 $QryTablePlugins	.= ") ENGINE=MyISAM;";
 
 $QryTableRw          = "CREATE TABLE `{{table}}` ( ";
-$QryTableRw         .= "`id_owner1` int(11) NOT NULL default '0', ";
-$QryTableRw         .= "`id_owner2` int(11) NOT NULL default '0', ";
 $QryTableRw      	.= "`owners` VARCHAR(255) character set latin1 NOT NULL, ";
 $QryTableRw         .= "`rid` VARCHAR(72) character set latin1 NOT NULL, ";
 $QryTableRw         .= "`raport` text character set latin1 NOT NULL, ";

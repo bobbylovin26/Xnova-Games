@@ -32,17 +32,7 @@ class CheckSession
 		if (isset($_COOKIE[$game_config['COOKIE_NAME']]))
 		{
 			$TheCookie  = explode("/%/", $_COOKIE[$game_config['COOKIE_NAME']]);
-			// START FIX BY JSTAR
-			$TheCookie 	= array_map('mysql_escape_string',$TheCookie);
-			// END FIX BY JSTAR
-			//$UserResult = doquery("SELECT * FROM {{table}} WHERE `username` = '". mysql_escape_string($TheCookie[1]). "';", 'users');
-
-			// BETTER QUERY BY LUCKY! REDUCE GENERAL QUERY FROM 11 TO 10.
-			$UserResult = doquery("SELECT {{table}}users.*, {{table}}statpoints.total_rank, {{table}}statpoints.total_points, {{table}}users.id
-									FROM {{table}}statpoints
-									RIGHT JOIN {{table}}users ON {{table}}statpoints.id_owner = {{table}}users.id
-									WHERE ({{table}}users.username = '". mysql_escape_string($TheCookie[1]). "') LIMIT 1;", '');
-
+			$UserResult = doquery("SELECT * FROM {{table}} WHERE `username` = '". mysql_real_escape_string($TheCookie[1]). "';", 'users');
 
 			if (mysql_num_rows($UserResult) != 1)
 			{
@@ -77,9 +67,9 @@ class CheckSession
 				setcookie ($game_config['COOKIE_NAME'], $NextCookie, $ExpireTime, "/", "", 0);
 				$QryUpdateUser  = "UPDATE {{table}} SET ";
 				$QryUpdateUser .= "`onlinetime` = '". time() ."', ";
-				$QryUpdateUser .= "`current_page` = '". mysql_escape_string($_SERVER['REQUEST_URI']) ."', ";
-				$QryUpdateUser .= "`user_lastip` = '". mysql_escape_string($_SERVER['REMOTE_ADDR']) ."', ";
-				$QryUpdateUser .= "`user_agent` = '". mysql_escape_string($_SERVER['HTTP_USER_AGENT']) ."' ";
+				$QryUpdateUser .= "`current_page` = '". mysql_real_escape_string(htmlspecialchars($_SERVER['REQUEST_URI'])) ."', ";
+				$QryUpdateUser .= "`user_lastip` = '". mysql_real_escape_string(htmlspecialchars($_SERVER['REMOTE_ADDR'])) ."', ";
+				$QryUpdateUser .= "`user_agent` = '". mysql_real_escape_string(htmlspecialchars($_SERVER['HTTP_USER_AGENT'])) ."' ";
 				$QryUpdateUser .= "WHERE ";
 				$QryUpdateUser .= "`id` = '". intval($TheCookie[0]) ."' LIMIT 1;";
 				doquery( $QryUpdateUser, 'users');
@@ -89,9 +79,9 @@ class CheckSession
 			{
 				$QryUpdateUser  = "UPDATE {{table}} SET ";
 				$QryUpdateUser .= "`onlinetime` = '". time() ."', ";
-				$QryUpdateUser .= "`current_page` = '". mysql_escape_string($_SERVER['REQUEST_URI']) ."', ";
-				$QryUpdateUser .= "`user_lastip` = '". mysql_escape_string($_SERVER['REMOTE_ADDR']) ."', ";
-				$QryUpdateUser .= "`user_agent` = '". mysql_escape_string($_SERVER['HTTP_USER_AGENT']) ."' ";
+				$QryUpdateUser .= "`current_page` = '". mysql_real_escape_string(htmlspecialchars($_SERVER['REQUEST_URI'])) ."', ";
+				$QryUpdateUser .= "`user_lastip` = '". mysql_real_escape_string(htmlspecialchars($_SERVER['REMOTE_ADDR'])) ."', ";
+				$QryUpdateUser .= "`user_agent` = '". mysql_real_escape_string(htmlspecialchars($_SERVER['HTTP_USER_AGENT'])) ."' ";
 				$QryUpdateUser .= "WHERE ";
 				$QryUpdateUser .= "`id` = '". intval($TheCookie[0]) ."' LIMIT 1;";
 				doquery( $QryUpdateUser, 'users');

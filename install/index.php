@@ -26,7 +26,6 @@ $xgp_root = './../';
 include($xgp_root . 'extension.inc.php');
 include($xgp_root . 'common.'.$phpEx);
 include_once('databaseinfos.'.$phpEx);
-include_once('UpdateMoonID.'.$phpEx);
 
 $Mode     = $_GET['mode'];
 $Page     = $_GET['page'];
@@ -235,106 +234,30 @@ switch ($Mode) {
 				}
 
 				// ALL QUERYS NEEDED
-
-				$Qry1 = "ALTER TABLE `$_POST[prefix]users`
-					  DROP `new_message`,
-					  DROP `raids`,
-					  DROP `p_infligees`,
-					  DROP `mnl_alliance`,
-					  DROP `mnl_joueur`,
-					  DROP `mnl_attaque`,
-					  DROP `mnl_spy`,
-					  DROP `mnl_exploit`,
-					  DROP `mnl_transport`,
-					  DROP `mnl_expedition`,
-					  DROP `mnl_general`,
-					  DROP `mnl_buildlist`,
-					  DROP `multi_validated`;";
-
-				$Qry2 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'urlaubs_modus_erz' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '1' LIMIT 1;";
-				$Qry3 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '1' LIMIT 1;";
-				$Qry4 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'enable_bbcode' AND CONVERT(`$_POST[prefix]config`.`config_value` USING utf8) = '0' LIMIT 1;";
-				$Qry5 = "ALTER TABLE `$_POST[prefix]users` DROP `lvl_minier`, DROP `lvl_raid`, DROP `xpraid`, DROP `xpminier`;";
-				$Qry6 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('adm_attack', '0');";
-				$Qry7 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('stat', '1');";
-				$Qry8 = "ALTER TABLE `$_POST[prefix]users` DROP `lang`;";
-				$Qry9 = "INSERT INTO `$_POST[prefix]config` (`config_name` ,`config_value`)VALUES ('lang', 'spanish');";
-				$Qry10 = "ALTER TABLE `$_POST[prefix]users` ADD `new_message` INT( 11 ) NOT NULL DEFAULT '0' AFTER `db_deaktjava` ;";
-				$Qry11 = "ALTER TABLE `$_POST[prefix]messages` DROP `leido`";
-				$Qry12 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'stat_level' LIMIT 1;";
-				$Qry13 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'stat' LIMIT 1;";
-				$Qry14 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES
-								('stat', 1),
-								('stat_level', 2),
-								('stat_last_update', 1),
-								('stat_settings', 1000),
-								('stat_amount', 25),
-								('stat_update_time', 15),
-								('stat_flying', 1);";
-				$Qry15 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'actualizar_puntos' LIMIT 1;";
-				$Qry16 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsFrame' LIMIT 1;";
-				$Qry17 = "DELETE FROM `$_POST[prefix]config` WHERE CONVERT(`$_POST[prefix]config`.`config_name` USING utf8) = 'OverviewNewsText' LIMIT 1;";
-				$Qry18 = "DELETE FROM `$_POST[prefix]config` WHERE `config_name` = 'VERSION'";
-				$Qry19 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.9.8');";
-				$Qry20 = "ALTER TABLE `$_POST[prefix]rw` ADD `owners` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0';";
-				$Qry21 = "ALTER TABLE `$_POST[prefix]fleets` CHANGE `fleet_group` `fleet_group` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' ;";
-				$Qry22 = "ALTER TABLE `$_POST[prefix]aks` ADD `planet_type` TINYINT( 1 ) NOT NULL DEFAULT '1' AFTER `planet` ;";
-				$Qry23 = "ALTER TABLE `$_POST[prefix]aks` CHANGE `eingeladen` `eingeladen` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL";
-				$Qry24 = "ALTER TABLE `$_POST[prefix]rw` ADD `id_owner1` INT( 11 ) NOT NULL FIRST , ADD `id_owner2` INT( 11 ) NOT NULL AFTER `id_owner1` ";
-				$Qry25 = "ALTER TABLE `$_POST[prefix]users` CHANGE `db_deaktjava` `db_deaktjava` BIGINT( 19 ) NOT NULL DEFAULT '0'";
-				$Qry26 = "ALTER TABLE `$_POST[prefix]statpoints`
-												CHANGE `id_owner` `id_owner` INT(11) NOT NULL DEFAULT '0',
-												CHANGE `id_ally` `id_ally` INT(11) NOT NULL DEFAULT '0',
-												CHANGE `stat_type` `stat_type` INT(2) NOT NULL DEFAULT '0',
-												CHANGE `stat_code` `stat_code` INT(11) NOT NULL DEFAULT '0',
-												CHANGE `tech_rank` `tech_rank` INT(11) NOT NULL DEFAULT '0',
-												CHANGE `tech_old_rank` `tech_old_rank` INT(11) NOT NULL DEFAULT '0',
-												CHANGE `tech_points` `tech_points` BIGINT(20) NOT NULL DEFAULT '0',
-												CHANGE `tech_count` `tech_count` INT(11) NOT NULL DEFAULT '0',
-												CHANGE `build_rank` `build_rank` INT(11) NOT NULL DEFAULT '0',
-												CHANGE `build_old_rank` `build_old_rank` INT(11) NOT NULL DEFAULT '0',
-												CHANGE `build_points` `build_points` BIGINT(20) NOT NULL DEFAULT '0',
-												CHANGE `build_count` `build_count` INT(11) NOT NULL DEFAULT '0',
-												CHANGE `defs_rank` `defs_rank` INT(11) NOT NULL DEFAULT '0',
-												CHANGE `defs_old_rank` `defs_old_rank` INT(11) NOT NULL DEFAULT '0',
-												CHANGE `defs_points` `defs_points` BIGINT(20) NOT NULL DEFAULT '0',
-												CHANGE `defs_count` `defs_count` INT(11) NOT NULL DEFAULT '0',
-												CHANGE `fleet_rank` `fleet_rank` INT(11) NOT NULL DEFAULT '0',
-												CHANGE `fleet_old_rank` `fleet_old_rank` INT(11) NOT NULL DEFAULT '0',
-												CHANGE `fleet_points` `fleet_points` BIGINT(20) NOT NULL DEFAULT '0',
-												CHANGE `fleet_count` `fleet_count` INT(11) NOT NULL DEFAULT '0',
-												CHANGE `total_rank` `total_rank` INT(11) NOT NULL DEFAULT '0',
-												CHANGE `total_old_rank` `total_old_rank` INT(11) NOT NULL DEFAULT '0',
-												CHANGE `total_points` `total_points` BIGINT(20) NOT NULL DEFAULT '0',
-												CHANGE `total_count` `total_count` INT(11) NOT NULL DEFAULT '0',
-												CHANGE `stat_date` `stat_date` INT(11) NOT NULL DEFAULT '0'";
-				$Qry27 = "ALTER TABLE `$_POST[prefix]messages` CHANGE `message_subject` `message_subject` TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL";
-				$Qry28 = "DROP TABLE `$_POST[prefix]lunas`";
-				$Qry29 = "ALTER TABLE `$_POST[prefix]users` ADD `current_luna` INT( 11 ) NOT NULL DEFAULT '0' AFTER `ally_rank_id` ";
-				$Qry30 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('moderation', '1,0,0,1;1,1,0,1;');";
-				$Qry31 = " ALTER TABLE `$_POST[prefix]banned` CHANGE `who` `who` VARCHAR( 64 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
+				$Qry1 = "DELETE FROM `$_POST[prefix]config` WHERE `config_name` = 'VERSION'";
+				$Qry2 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.9.9');";
+				$Qry3 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('moderation', '1,0,0,1;1,1,0,1;');";
+				$Qry4 = " ALTER TABLE `$_POST[prefix]banned` CHANGE `who` `who` VARCHAR( 64 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
 							CHANGE `who2` `who2` VARCHAR( 64 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
 							CHANGE `author` `author` VARCHAR( 64 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
 							CHANGE `email` `email` VARCHAR( 64 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ";
-				$Qry32 = "UPDATE `$_POST[prefix]config` SET `config_value` = '1,0,0,1,1;1,1,0,1,1;1;' WHERE `xgp_config`.`config_name` = 'moderation';";
-				$Qry33 = "ALTER TABLE `$_POST[prefix]planets` CHANGE `small_protection_shield` `small_protection_shield` TINYINT( 1 ) NOT NULL DEFAULT '0', CHANGE `planet_protector` `planet_protector` TINYINT( 1 ) NOT NULL DEFAULT '0', CHANGE `big_protection_shield` `big_protection_shield` TINYINT( 1 ) NOT NULL DEFAULT '0'";
+				$Qry5 = "UPDATE `$_POST[prefix]config` SET `config_value` = '1,0,0,1,1;1,1,0,1,1;1;' WHERE `xgp_config`.`config_name` = 'moderation';";
+				$Qry6 = "ALTER TABLE `$_POST[prefix]planets` CHANGE `small_protection_shield` `small_protection_shield` TINYINT( 1 ) NOT NULL DEFAULT '0', CHANGE `planet_protector` `planet_protector` TINYINT( 1 ) NOT NULL DEFAULT '0', CHANGE `big_protection_shield` `big_protection_shield` TINYINT( 1 ) NOT NULL DEFAULT '0'";
+				$Qry7 = "UPDATE `xgp_rw` SET `xgp_rw`.`owners` = CONCAT(id_owner1,\",\",id_owner2)";
+				$Qry8 = "ALTER TABLE `xgp_rw`
+  							DROP `id_owner1`,
+  							DROP `id_owner2`;";
 
 				switch($_POST[modo])
 				{
-					case'2.x':
-						UpdateMoonID();
-						$QrysArray	= array($Qry1, $Qry2, $Qry3, $Qry4, $Qry5, $Qry6, $Qry7, $Qry8, $Qry9, $Qry10, $Qry11, $Qry12, $Qry13,
-						$Qry14, $Qry15, $Qry16, $Qry17, $Qry18, $Qry19, $Qry20, $Qry21, $Qry22, $Qry23, $Qry25, $Qry26,
-						$Qry27, $Qry28, $Qry29, $Qry30, $Qry31, $Qry32, $Qry33, $Qry24);
-					break;
 					case( ( $_POST[modo] == '2.9.1' ) or ( $_POST[modo] == '2.9.2' ) or ( $_POST[modo] == '2.9.3' ) ):
-						$QrysArray	= array($Qry18, $Qry19, $Qry30, $Qry31, $Qry32, $Qry33);
+						$QrysArray	= array($Qry1, $Qry2, $Qry3, $Qry4, $Qry5, $Qry6, $Qry7, $Qry8);
 					break;
 					case'2.9.4':
-						$QrysArray	= array($Qry18, $Qry19, $Qry33);
+						$QrysArray	= array($Qry1, $Qry2, $Qry6, $Qry7, $Qry8);
 					break;
-					case( ( $_POST[modo] == '2.9.5' ) or ( $_POST[modo] == '2.9.6' ) or ( $_POST[modo] == '2.9.7' ) or ( $_POST[modo] == '2.9.8' ) ):
-						$QrysArray	= array($Qry18, $Qry19);
+					case( ( $_POST[modo] == '2.9.5' ) or ( $_POST[modo] == '2.9.6' ) or ( $_POST[modo] == '2.9.7' ) or ( $_POST[modo] == '2.9.8' ) or ( $_POST[modo] == '2.9.9' ) ):
+						$QrysArray	= array($Qry1, $Qry2, $Qry7, $Qry8);
 					break;
 				}
 
