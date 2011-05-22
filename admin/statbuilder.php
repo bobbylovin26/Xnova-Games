@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -37,7 +37,7 @@ require_once dirname(dirname(__FILE__)) .'/common.php';
 include(ROOT_PATH . 'admin/statfunctions.' . PHPEXT);
 
 
-	if ($user['authlevel'] >= 1) {
+if (strtolower(substr(PHP_SAPI, 0, 3)) == 'cli' || in_array($user['authlevel'], array(LEVEL_ADMIN, LEVEL_OPERATOR, LEVEL_MODERATOR))) {
 	includeLang('admin');
 
 	$StatDate   = time();
@@ -45,7 +45,7 @@ include(ROOT_PATH . 'admin/statfunctions.' . PHPEXT);
 	doquery ( "DELETE FROM {{table}} WHERE `stat_code` = '2';" , 'statpoints');
 	doquery ( "UPDATE {{table}} SET `stat_code` = `stat_code` + '1';" , 'statpoints');
 
-	$GameUsers  = doquery("SELECT * FROM {{table}}", 'users');
+	$GameUsers  = doquery("SELECT * FROM {{table}} WHERE authlevel<3", 'users');
 
 	while ($CurUser = mysql_fetch_assoc($GameUsers)) {
 		// Recuperation des anciennes statistiques
@@ -264,7 +264,7 @@ include(ROOT_PATH . 'admin/statfunctions.' . PHPEXT);
 
 	AdminMessage ( $lang['adm_done'], $lang['adm_stat_title'] );
 
-	} else {
-		AdminMessage ( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
-	}
+} else {
+	AdminMessage ( $lang['sys_noalloaw'], $lang['sys_noaccess'] );
+}
 

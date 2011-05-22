@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -72,7 +72,7 @@ $lang['Circular_sended'] = 'I seguenti giocatori hanno ricevuto il messaggio';
 $lang['it_is_not_posible_to_apply'] = "Impossibile in questo modo";
 $lang['write_apply'] = "Testo della richiesta";
 $lang['your_apply'] = 'Propria richiesta';
-$lang['apply_registered'] = 'La tua richiesta è stata inoltrata. Si visualizzer&agrave; un messaggio alla risposta<br><br><a href=alliance.php>Torna indietro</a>';
+$lang['apply_registered'] = 'La tua richiesta ï¿½ stata inoltrata. Si visualizzer&agrave; un messaggio alla risposta<br><br><a href=alliance.php>Torna indietro</a>';
 $lang['apply_cantbeadded'] = 'La richiesta non pu&oacute; essere inviata!';
 
 $lang['Exit_of_this_alliance'] = "Esci dall\'alleanza";
@@ -94,7 +94,7 @@ $lang['Write_to_alliance'] = 'Invia richiesta di partecipazione [%s]';
 
 $lang['There_is_no_a_text_apply'] = 'La direzione di questa alleanza non ha creato un testo';
 $lang['Waiting_a_request_text'] = 'Avete gi&agrave; inviato una richiesta all\'alleanza[%s]. Attendere la risposta o ritirare la domanda.';
-$lang['Canceled_a_request_text'] = 'L\'alleanza [%s] non ha  accettato la richiesta, è possibile inviare una nuova richiesta o creare una propria alleanza.';
+$lang['Canceled_a_request_text'] = 'L\'alleanza [%s] non ha  accettato la richiesta, ï¿½ possibile inviare una nuova richiesta o creare una propria alleanza.';
 
 $lang['Online'] = 'Online';
 $lang['Ammount'] = 'Numero';

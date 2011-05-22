@@ -36,7 +36,7 @@ require_once dirname(dirname(__FILE__)) .'/common.php';
 includeLang('admin');
 $parse = $lang;
 
-	if ($user['authlevel'] >= 3) {
+	if (in_array($user['authlevel'], array(LEVEL_ADMIN))) {
 
 		// Supprimer les erreurs
 		extract($_GET);

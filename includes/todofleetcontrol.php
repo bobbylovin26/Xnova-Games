@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -98,7 +98,6 @@ include(ROOT_PATH . 'includes/functions/MessageForm.'.PHPEXT);
 include(ROOT_PATH . 'includes/functions/PlanetResourceUpdate.'.PHPEXT);
 include(ROOT_PATH . 'includes/functions/BuildFlyingFleetTable.'.PHPEXT);
 include(ROOT_PATH . 'includes/functions/SendNewPassword.'.PHPEXT);
-include(ROOT_PATH . 'includes/functions/HandleElementBuildingQueue.'.PHPEXT);
 include(ROOT_PATH . 'includes/functions/UpdatePlanetBatimentQueueList.'.PHPEXT);
 include(ROOT_PATH . 'includes/functions/IsOfficierAccessible.'.PHPEXT);
 include(ROOT_PATH . 'includes/functions/CheckInputStrings.'.PHPEXT);
@@ -109,4 +108,3 @@ include(ROOT_PATH . 'includes/functions/BuildFleetEventTable.'.PHPEXT);
 include(ROOT_PATH . 'includes/functions/ResetThisFuckingCheater.'.PHPEXT);
 include(ROOT_PATH . 'includes/functions/IsVacationMode.'.PHPEXT);
 
-?>

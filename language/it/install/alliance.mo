@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  
 * @license http://www.gnu.org/licenses/gpl-3.0.txt
@@ -81,7 +81,7 @@ $lang['Novate'] = 'Novizio';
 
 $lang['Founder'] = 'Fondatore';
 
-$lang['Circular_sended'] = 'Il messaggio è stato inviato agli altri giocatori';
+$lang['Circular_sended'] = 'Il messaggio ï¿½ stato inviato agli altri giocatori';
 
 //Solicitud
 $lang['it_is_not_posible_to_apply'] = "Impossibile applicare";
@@ -109,7 +109,7 @@ $lang['Write_to_alliance'] = 'Invia una richiesta all\'alleanza [%s]';
 
 $lang['There_is_no_a_text_apply'] = 'L\'alleanza non ha ancora creato un testo';
 $lang['Waiting_a_request_text'] = 'Avete gi&agrave; inviato una richiesta all\'alleanza [%s]. Attendete una risposta.';
-$lang['Canceled_a_request_text'] = 'L\'alleanza [%s] non ha  accettato la richiesta, è possibile inviare una nuova richiesta o creare una propria alleanza.';
+$lang['Canceled_a_request_text'] = 'L\'alleanza [%s] non ha  accettato la richiesta, ï¿½ possibile inviare una nuova richiesta o creare una propria alleanza.';
 
 $lang['Online'] = 'Online';
 $lang['Ammount'] = 'Numero';

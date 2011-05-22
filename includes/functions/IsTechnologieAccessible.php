@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -28,12 +28,13 @@
  *
  */
 
-function IsTechnologieAccessible($user, $planet, $Element) {
-	global $requeriments, $resource;
+function IsTechnologieAccessible($user, $planet, $element)
+{
+	global $requirements, $resource;
 
-	if (isset($requeriments[$Element])) {
+	if (isset($requirements[$element])) {
 		$enabled = true;
-		foreach($requeriments[$Element] as $ReqElement => $EleLevel) {
+		foreach($requirements[$element] as $ReqElement => $EleLevel) {
 			if (@$user[$resource[$ReqElement]] && $user[$resource[$ReqElement]] >= $EleLevel) {
 				// break;
 			} elseif ($planet[$resource[$ReqElement]] && $planet[$resource[$ReqElement]] >= $EleLevel) {

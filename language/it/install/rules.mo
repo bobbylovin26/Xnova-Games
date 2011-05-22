@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -43,10 +43,10 @@ $lang['MailIngame']   = 'VIII. Abus de la fonction de signalement de messages in
 $lang['OutXnova']     = 'IX.   Minacce al di fuori del campo di applicazione del server';
 $lang['Spam']         = 'X.    Spam, insulti e contenuti offensivi';
 
-$lang['AccountText']  = 'Un giocatore può giocare solo su un account per universo.';
+$lang['AccountText']  = 'Un giocatore puï¿½ giocare solo su un account per universo.';
 $lang['AccountText2'] = 'Un account deve essere gestito da una sola persona.';
 
-$lang['MultiAccountText']  = 'Giocare più di un account per ogni universo è severamente vietato.';
+$lang['MultiAccountText']  = 'Giocare piï¿½ di un account per ogni universo ï¿½ severamente vietato.';
 $lang['MultiAccountText2'] = 'Si 2 joueurs ou plus se partagent la m&ecirc;me adresse IP (membres d\'une m&ecirc;me famille, couples, &eacute;coles etc), il ne doit y avoir aucun autre point commun entre ces comptes (faire partie de la m&ecirc;me alliance est tol&eacute;r&eacute;), ceci pouvant &ecirc;tre consid&eacute;r&eacute; comme du multi compte et &eacute;tant passible d\'un blocage.';
 $lang['MultiAccountText3'] = 'Toute interaction entre comptes sur la m&ecirc;me IP est interdite.';
 

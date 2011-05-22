@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -27,6 +27,8 @@
  * documentation for further information about customizing XNova.
  *
  */
+
+require_once ROOT_PATH . 'includes/classes/Legacies/Empire/Shipyard.php';
 
 function PlanetResourceUpdate ( $CurrentUser, &$CurrentPlanet, $UpdateTime, $Simul = false ) {
     global $ProdGrid, $resource, $reslist, $game_config;
@@ -137,38 +139,9 @@ function PlanetResourceUpdate ( $CurrentUser, &$CurrentPlanet, $UpdateTime, $Sim
     }
 
     if ($Simul == false) {
-        // Gestion de l'eventuelle queue de fabrication d'elements
-        $itemsBuilt          = HandleElementBuildingQueue ( $CurrentUser, $CurrentPlanet, $ProductionTime );
-
-        // On enregistre la planete !
-        $sql =<<<SQL_EOF
-UPDATE {{table}} SET
-    `metal` = '{$CurrentPlanet['metal']}',
-    `crystal` = '{$CurrentPlanet['crystal']}',
-    `deuterium` = '{$CurrentPlanet['deuterium']}',
-    `last_update` = '{$CurrentPlanet['last_update']}',
-    `b_hangar_id` = '{$CurrentPlanet['b_hangar_id']}',
-    `metal_perhour` = '{$CurrentPlanet['metal_perhour']}',
-    `crystal_perhour` = '{$CurrentPlanet['crystal_perhour']}',
-    `deuterium_perhour` = '{$CurrentPlanet['deuterium_perhour']}',
-    `energy_used` = '{$CurrentPlanet['energy_used']}',
-    `energy_max` = '{$CurrentPlanet['energy_max']}',
-SQL_EOF;
-        // Par hasard des elements etaient finis ....
-        if (!empty($itemsBuilt)) {
-            foreach ($itemsBuilt as $element => $count ) {
-                $sql .= "`{$resource[$element]}` = '{$CurrentPlanet[$resource[$element]]}' + '{$count}', ";
-            }
-        }
-        $sql .=<<<SQL_EOF
-    `b_hangar` = {$CurrentPlanet['b_hangar']},
-    `b_hangar_id` = "{$CurrentPlanet['b_hangar_id']}"
-  WHERE`id` = {$CurrentPlanet['id']}
-SQL_EOF;
-
-        doquery("LOCK TABLE {{table}} WRITE", 'planets');
-        doquery($sql, 'planets');
-        doquery("UNLOCK TABLES", '');
+        $shipyard = Legacies_Empire_Shipyard::factory($CurrentPlanet, $CurrentUser);
+        $shipyard->updateQueue();
+        $CurrentPlanet = $shipyard->save();
     }
 
 }

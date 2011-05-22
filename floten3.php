@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -147,16 +147,17 @@ require_once dirname(__FILE__) .'/common.php';
 				$_POST['ship211'] >= 1 ||
 				$_POST['ship213'] >= 1 ||
 				$_POST['ship214'] >= 1 ||
-				$_POST['ship215'] >= 1) {
+				$_POST['ship215'] >= 1 ||
+				$_POST['ship216'] >= 1) {
 				if (!$YourPlanet) {
 					$missiontype[1] = $lang['type_mission'][1];
+					$missiontype[5] = $lang['type_mission'][5];
 				}
 				$missiontype[3] = $lang['type_mission'][3];
-				$missiontype[5] = $lang['type_mission'][5];
 			}
 
 
-		} elseif ($_POST['ship209'] >= 1 || $_POST['ship208']) {
+		} elseif ($_POST['ship209'] >= 1 || $_POST['ship208'] >= 1) {
 			$missiontype[3] = $lang['type_mission'][3];
 		}
 		if ($YourPlanet)
@@ -169,11 +170,10 @@ require_once dirname(__FILE__) .'/common.php';
 			 $UsedPlanet) {
 			$missiontype[2] = $lang['type_mission'][2];
 		}
-        if ( $_POST['planettype'] == 3 &&
-	     $_POST['ship214'] >= 1    &&
-           !$YourPlanet            &&
-           $UsedPlanet) {
-          $missiontype[9] = $lang['type_mission'][9];
+        if ($_POST['planettype'] == 3 &&
+	       ($_POST['ship214'] >= 1 || $_POST['ship216'] >= 1) &&
+           !$YourPlanet && $UsedPlanet) {
+           $missiontype[9] = $lang['type_mission'][9];
         }
 	}
 
@@ -457,9 +457,9 @@ require_once dirname(__FILE__) .'/common.php';
 	$QryInsertFleet .= "`fleet_end_system` = '". intval($_POST['system']) ."', ";
 	$QryInsertFleet .= "`fleet_end_planet` = '". intval($_POST['planet']) ."', ";
 	$QryInsertFleet .= "`fleet_end_type` = '". intval($_POST['planettype']) ."', ";
-	$QryInsertFleet .= "`fleet_resource_metal` = '". $TransMetal ."', ";
-	$QryInsertFleet .= "`fleet_resource_crystal` = '". $TransCrystal ."', ";
-	$QryInsertFleet .= "`fleet_resource_deuterium` = '". $TransDeuterium ."', ";
+	$QryInsertFleet .= "`fleet_resource_metal` = '". intval($TransMetal) ."', ";
+	$QryInsertFleet .= "`fleet_resource_crystal` = '". intval($TransCrystal) ."', ";
+	$QryInsertFleet .= "`fleet_resource_deuterium` = '". intval($TransDeuterium) ."', ";
 	$QryInsertFleet .= "`fleet_target_owner` = '". $TargetPlanet['id_owner'] ."', ";
 	$QryInsertFleet .= "`start_time` = '". time() ."';";
 	doquery( $QryInsertFleet, 'fleets');

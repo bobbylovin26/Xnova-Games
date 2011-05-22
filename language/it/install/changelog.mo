@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -120,7 +120,7 @@ $lang['changelog']   = array(
 '0.7a' => 'Diversi : (di Chlorel)
 - Bug Tecnologia (la durata delle ricerche appare nuovamente quando si ritorna al Laboratorio)
 - Bug Missili (corretta la portata dei missili interplanetari ed inserito il limite di costruzione in base alla dimensione del silo missilistico)
-- Corretto il bug della portata della Falange; (non si può pi&ugrave; falangiare tutta la galassia)
+- Corretto il bug della portata della Falange; (non si puï¿½ pi&ugrave; falangiare tutta la galassia)
 - Corretto il bug del consumo di deuterio quando si passa nel men&ugrave; galassia',
 
 '0.7' => 'Edifici :

@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -31,7 +31,7 @@
 $lang['Production_of_resources_in_the_planet'] = 'produzione di merci sul pianeta "%s"';
 $lang['Production_level'] = 'Livello di produzione';
 $lang['Basic_income'] = 'produzione di base';
-$lang['quantity'] = 'Quantità';
+$lang['quantity'] = 'Quantitï¿½';
 $lang['level'] = 'Livello';
 $lang['Stores_capacity'] = 'Capacit&aacute; dei depositi';
 $lang['Widespread_production'] = 'misura di produzione';

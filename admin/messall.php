@@ -33,7 +33,7 @@ define('INSTALL' , false);
 define('IN_ADMIN', true);
 require_once dirname(dirname(__FILE__)) .'/common.php';
 
-	if ($user['authlevel'] >= 1) {
+	if (in_array($user['authlevel'], array(LEVEL_ADMIN, LEVEL_OPERATOR, LEVEL_MODERATOR))) {
 		if ($_POST && $mode == "change") {
 			if (isset($_POST["tresc"]) && $_POST["tresc"] != '') {
 				$game_config['tresc'] = $_POST['tresc'];
@@ -41,15 +41,15 @@ require_once dirname(dirname(__FILE__)) .'/common.php';
 			if (isset($_POST["temat"]) && $_POST["temat"] != '') {
 				$game_config['temat'] = $_POST['temat'];
 			}
-			if ($user['authlevel'] == 3) {
+			if ($user['authlevel'] == LEVEL_ADMIN) {
 				$kolor = 'red';
 				$ranga = 'Administrator';
-			} elseif ($user['authlevel'] == 4) {
+			} elseif ($user['authlevel'] == LEVEL_OPERATOR) {
 				$kolor = 'skyblue';
-				$ranga = 'GameOperator';
-			} elseif ($user['authlevel'] == 5) {
+				$ranga = 'Operator';
+			} elseif ($user['authlevel'] == LEVEL_MODERATOR) {
 				$kolor = 'yellow';
-				$ranga = 'SuperGameOperator';
+				$ranga = 'Moderator';
 			}
 			if ($game_config['tresc'] != '' and $game_config['temat']) {
 				$sq      = doquery("SELECT `id` FROM {{table}}", "users");

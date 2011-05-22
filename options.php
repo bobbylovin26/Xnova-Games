@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -80,7 +80,7 @@ require_once dirname(__FILE__) .'/common.php';
 			$dpath = (!$user["dpath"]) ? DEFAULT_SKINPATH : $user["dpath"];
 
        // Gestion des options speciales pour les admins
-       if ($user['authlevel'] > 0) {
+       if ($user['authlevel'] != LEVEL_PLAYER) {
           if ($_POST['adm_pl_prot'] == 'on') {
              doquery ("UPDATE {{table}} SET `id_level` = '".$user['authlevel']."' WHERE `id_owner` = '".$user['id']."';", 'planets');
           } else {
@@ -269,7 +269,7 @@ require_once dirname(__FILE__) .'/common.php';
        $parse['opt_lst_cla_data']   = "<option value =\"0\"". (($user['planet_sort_order'] == 0) ? " selected": "") .">". $lang['opt_lst_cla0'] ."</option>";
        $parse['opt_lst_cla_data']  .= "<option value =\"1\"". (($user['planet_sort_order'] == 1) ? " selected": "") .">". $lang['opt_lst_cla1'] ."</option>";
 
-       if ($user['authlevel'] > 0) {
+       if ($user['authlevel'] != LEVEL_PLAYER) {
           $FrameTPL = gettemplate('options_admadd');
           $IsProtOn = doquery ("SELECT `id_level` FROM {{table}} WHERE `id_owner` = '".$user['id']."' LIMIT 1;", 'planets', true);
           $bloc['opt_adm_title']       = $lang['opt_adm_title'];

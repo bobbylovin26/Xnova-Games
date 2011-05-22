@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -254,7 +254,7 @@ function ShowBuildingInfoPage ($CurrentUser, $CurrentPlanet, $BuildID) {
 	} elseif ($BuildID >= 106 && $BuildID <= 199) {
 		// Laboratoire
 		$PageTPL              = gettemplate('info_buildings_general');
-	} elseif ($BuildID >= 202 && $BuildID <= 215) {
+	} elseif ($BuildID >= 202 && $BuildID <= 216) {
 		// Flotte
 		$PageTPL              = gettemplate('info_buildings_fleet');
 		$parse['element_typ'] = $lang['tech'][200];

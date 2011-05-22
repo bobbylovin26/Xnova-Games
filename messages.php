@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -32,38 +32,41 @@ define('INSIDE' , true);
 define('INSTALL' , false);
 require_once dirname(__FILE__) .'/common.php';
 include(ROOT_PATH . 'includes/functions/BBcodeFunction.' . PHPEXT);
-if($user['authlevel']!="1"&$user['authlevel']!="3"&$user['authlevel']!="0"){ header("Location: login.php");}
 
-	includeLang('messages');
+if(!isset($user['authlevel'])) {
+    header("Location: login.php");
+}
+
+includeLang('messages');
 
 
-	$OwnerID       = $_GET['id'];
-	$MessCategory  = $_GET['messcat'];
-	$MessPageMode  = $_GET["mode"];
-	$DeleteWhat    = $_POST['deletemessages'];
-	if (isset ($DeleteWhat)) {
-		$MessPageMode = "delete";
+$OwnerID       = $_GET['id'];
+$MessCategory  = $_GET['messcat'];
+$MessPageMode  = (string) $_GET['mode'];
+$DeleteWhat    = $_POST['deletemessages'];
+if (isset ($DeleteWhat)) {
+	$MessPageMode = "delete";
+}
+
+$UsrMess       = doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".strval($user['id'])."' ORDER BY `message_time` DESC", 'messages');
+$UnRead        = doquery("SELECT * FROM {{table}} WHERE `id` = '". strval($user['id']) ."'", 'users', true);
+
+$MessageType   = array (0, 1, 2, 3, 4, 5, 15, 99, 100 );
+$TitleColor    = array (0 => '#FFFF00', 1 => '#FF6699', 2 => '#FF3300', 3 => '#FF9900', 4 => '#773399', 5 => '#009933', 15 => '#030070', 99 => '#007070', 100 => '#ABABAB');
+$BackGndColor  = array (0 => '#663366', 1 => '#336666', 2 => '#000099', 3 => '#666666', 4 => '#999999', 5 => '#999999', 15 => '#999999', 99 => '#999999', 100 => '#999999');
+
+for ($MessType = 0; $MessType < 101; $MessType++) {
+	if (in_array($MessType, $MessageType) ) {
+		$WaitingMess[$MessType] = $UnRead[$messfields[$MessType]];
+		$TotalMess[$MessType] = 0;
 	}
+}
 
-	$UsrMess       = doquery("SELECT * FROM {{table}} WHERE `message_owner` = '".$user['id']."' ORDER BY `message_time` DESC;", 'messages');
-	$UnRead        = doquery("SELECT * FROM {{table}} WHERE `id` = '". $user['id'] ."';", 'users', true);
-
-	$MessageType   = array ( 0, 1, 2, 3, 4, 5, 15, 99, 100 );
-	$TitleColor    = array ( 0 => '#FFFF00', 1 => '#FF6699', 2 => '#FF3300', 3 => '#FF9900', 4 => '#773399', 5 => '#009933', 15 => '#030070', 99 => '#007070', 100 => '#ABABAB'  );
-	$BackGndColor  = array ( 0 => '#663366', 1 => '#336666', 2 => '#000099', 3 => '#666666', 4 => '#999999', 5 => '#999999', 15 => '#999999', 99 => '#999999', 100 => '#999999'  );
-
-	for ($MessType = 0; $MessType < 101; $MessType++) {
-		if ( in_array($MessType, $MessageType) ) {
-			$WaitingMess[$MessType] = $UnRead[$messfields[$MessType]];
-			$TotalMess[$MessType]   = 0;
-		}
-	}
-
-	while ($CurMess = mysql_fetch_array($UsrMess)) {
-		$MessType              = $CurMess['message_type'];
-		$TotalMess[$MessType] += 1;
-		$TotalMess[100]       += 1;
-	}
+while ($CurMess = mysql_fetch_array($UsrMess)) {
+	$MessType              = $CurMess['message_type'];
+	$TotalMess[$MessType] += 1;
+	$TotalMess[100]       += 1;
+}
 
 	switch ($MessPageMode) {
 		case 'write':
@@ -73,7 +76,7 @@ if($user['authlevel']!="1"&$user['authlevel']!="3"&$user['authlevel']!="0"){ hea
 				message ($lang['mess_no_ownerid'], $lang['mess_error']);
 			}
 
-			$OwnerRecord = doquery("SELECT * FROM {{table}} WHERE `id` = '".$OwnerID."';", 'users', true);
+			$OwnerRecord = doquery("SELECT * FROM {{table}} WHERE `id` = '".strval($OwnerID)."';", 'users', true);
 
 			if (!$OwnerRecord) {
 				message ($lang['mess_no_owner']  , $lang['mess_error']);
@@ -213,7 +216,7 @@ $Message = trim ( nl2br ( strip_tags ( $_POST['text'], '<br>' ) ) ); }
 				}
 				$QryUpdateUser  = "UPDATE {{table}} SET ";
 				$QryUpdateUser .= $SubUpdateQry;
-				$QryUpdateUser .= "`id` = '".$user['id']."' "; // Vraiment pas envie de me casser le fion a virer la derniere virgule du sub query
+				$QryUpdateUser .= "`id` = '".$user['id']."' ";
 				$QryUpdateUser .= "WHERE ";
 				$QryUpdateUser .= "`id` = '".$user['id']."';";
 				doquery ( $QryUpdateUser, 'users' );

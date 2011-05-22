@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -40,9 +40,9 @@ require_once dirname(__FILE__) .'/common.php';
 			$parse['Requirements']  = $lang['Requirements'];
 			$page                  .= parsetemplate($HeadTpl, $parse);
 		} else {
-			if (isset($requeriments[$Element])) {
+			if (isset($requirements[$Element])) {
 				$parse['required_list'] = "";
-				foreach($requeriments[$Element] as $ResClass => $Level) {
+				foreach($requirements[$Element] as $ResClass => $Level) {
 					if       ( isset( $user[$resource[$ResClass]] ) &&
 						 $user[$resource[$ResClass]] >= $Level) {
 						$parse['required_list'] .= "<font color=\"#00ff00\">";

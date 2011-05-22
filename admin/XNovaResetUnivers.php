@@ -38,15 +38,19 @@ includeLang('admin');
 function XNovaResetUnivers ( $CurrentUser ) {
 	global $lang;
 
-	if ($CurrentUser['authlevel'] >= 3) {
+	if (in_array($CurrentUser['authlevel'], array(LEVEL_ADMIN))) {
 
 		// Copier la table users et planets vers des tables de replis !
-		doquery( "RENAME TABLE {{table}} TO {{table}}_s", 'planets' );
-		doquery( "RENAME TABLE {{table}} TO {{table}}_s", 'users' );
+		doquery( "RENAME TABLE {{table}} TO {{table}}_s", 'planets');
+		doquery( "RENAME TABLE {{table}} TO {{table}}_s", 'users');
+		doquery( "RENAME TABLE {{table}} TO {{table}}_s", 'galaxy');
+		doquery( "RENAME TABLE {{table}} TO {{table}}_s", 'banned');
 
 		// Recreer la structure des tables renommées
 		doquery( "CREATE  TABLE IF NOT EXISTS {{table}} ( LIKE {{table}}_s );", 'planets');
 		doquery( "CREATE  TABLE IF NOT EXISTS {{table}} ( LIKE {{table}}_s );", 'users');
+		doquery( "CREATE  TABLE IF NOT EXISTS {{table}} ( LIKE {{table}}_s );", 'galaxy');
+		doquery( "CREATE  TABLE IF NOT EXISTS {{table}} ( LIKE {{table}}_s );", 'banned');
 
 		// Vider toutes les tables !
 		doquery( "TRUNCATE TABLE {{table}}", 'aks');

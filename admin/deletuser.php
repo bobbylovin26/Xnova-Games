@@ -33,7 +33,7 @@ define('INSTALL' , false);
 define('IN_ADMIN', true);
 require_once dirname(dirname(__FILE__)) .'/common.php';
 
-	if ( $CurrentUser['authlevel'] >= 1 ) {
+	if (in_array($CurrentUser['authlevel'], array(LEVEL_ADMIN, LEVEL_OPERATOR))) {
 		$PageTpl = gettemplate( "admin/deletuser" );
 
 		if ( $mode != "delet" ) {

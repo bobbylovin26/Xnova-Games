@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -84,8 +84,12 @@ function GalaxyRowUser ( $GalaxyRow, $GalaxyRowPlanet, $GalaxyRowUser, $Galaxy, 
 			$Systemtatus7 = "";
 		}
 		$admin = "";
-		if ($GalaxyRowUser['authlevel'] > 0) {
-			$admin = "<font color=\"lime\"><blink>A</blink></font>";
+		if ($GalaxyRowUser['authlevel'] == LEVEL_ADMIN) {
+			$admin = "<font color=\"red\"><blink>A</blink></font>";
+		} else if ($GalaxyRowUser['authlevel'] == LEVEL_OPERATOR) {
+			$admin = "<font color=\"lime\"><blink>O</blink></font>";
+		} else if ($GalaxyRowUser['authlevel'] == LEVEL_MODERATOR) {
+			$admin = "<font color=\"skyblue\"><blink>M</blink></font>";
 		}
 		$Systemtart = $User2Points['total_rank'];
 		if (strlen($Systemtart) < 3) {

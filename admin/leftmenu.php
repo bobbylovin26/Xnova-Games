@@ -35,7 +35,7 @@ require_once dirname(dirname(__FILE__)) .'/common.php';
 
 includeLang('leftmenu');
 
-	if ($user['authlevel'] >= "1") {
+	if (in_array($user['authlevel'], array(LEVEL_ADMIN, LEVEL_OPERATOR, LEVEL_MODERATOR))) {
 		$parse                 = $lang;
 		$parse['mf']           = "Hauptframe";
 		$parse['dpath']        = $dpath;

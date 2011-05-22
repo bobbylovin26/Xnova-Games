@@ -34,7 +34,7 @@ define('IN_ADMIN', true);
 
 require_once dirname(dirname(__FILE__)) .'/common.php';
 
-if ($user['authlevel'] >= "1") {
+	if (in_array($user['authlevel'], array(LEVEL_ADMIN, LEVEL_OPERATOR, LEVEL_MODERATOR))) {
 
     includeLang('admin/adminpanel');
 
@@ -119,7 +119,7 @@ if ($user['authlevel'] >= "1") {
                 $player = isset($_GET['player']) ? mysql_real_escape_string($_GET['player']) : '';
                 $level  = isset($_GET['authlvl']) ? mysql_real_escape_string($_GET['authlvl']) : '';
 
-                if ($level >= $user['authlevel'] && $user['authlevel'] < 3) {
+                if ($level >= $user['authlevel'] && $user['authlevel'] != LEVEL_ADMIN) {
                     AdminMessage('Not enough privilleges to promote user.', $lang['adm_mod_level']);
                     break;
                 }

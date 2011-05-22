@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -43,16 +43,16 @@ SELECT * FROM {{table}}
 EOF;
         $userData = doquery($sql, 'users', true);
     } else if (isset($_COOKIE['nova-cookie'])) {
-        $cookieData = unserialize($_COOKIE['nova-cookie']);
+        $cookieData = unserialize(stripslashes($_COOKIE['nova-cookie']));
         $cookieData = array(
             'id' => (isset($cookieData['id']) ? (int) $cookieData['id'] : 0),
             'key' => (isset($cookieData['key']) ? (string) $cookieData['key'] : null)
             );
 
         $sql =<<<EOF
-SELECT * FROM {{table}}
+SELECT * FROM {{table}} AS user
     WHERE id={$cookieData['id']}
-      AND (@key:={$cookieData['key']})=CONCAT((@salt:=MID(@key, 0, 4)), SHA1(CONCAT(u.username, u.password, @salt))
+      AND (@key:="{$cookieData['key']}")=CONCAT((@salt:=MID(@key, 0, 4)), SHA1(CONCAT(user.username, user.password, @salt)))
     LIMIT 1
 EOF;
         $userData = doquery($sql, 'users', true);
@@ -72,9 +72,10 @@ EOF;
         'remote_addr' => mysql_real_escape_string($_SERVER['REMOTE_ADDR']/* . (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? '|' . $_SERVER['HTTP_X_FORWARDED_FOR'] : '')*/),
         'user_agent' => mysql_real_escape_string($_SERVER['HTTP_USER_AGENT'])
         );
+    $now = time();
     $sql =<<<EOF
 UPDATE {{table}}
-    SET `onlinetime` = UNIX_TIMESTAMP(NOW()),
+    SET `onlinetime` = "{$now}",
         `current_page` = "{$sessionData['request_uri']}",
         `user_lastip` = "{$sessionData['remote_addr']}",
         `user_agent` = "{$sessionData['user_agent']}"

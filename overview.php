@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -34,7 +34,7 @@ require_once dirname(__FILE__) .'/common.php';
 
 $lunarow = doquery("SELECT * FROM {{table}} WHERE `id_owner` = '" . $planetrow['id_owner'] . "' AND `galaxy` = '" . $planetrow['galaxy'] . "' AND `system` = '" . $planetrow['system'] . "' AND `lunapos` = '" . $planetrow['planet'] . "';", 'lunas', true);
 
-CheckPlanetUsedFields ($lunarow);
+//CheckPlanetUsedFields ($lunarow);
 
 $mode = isset($_GET['mode']) ? $_GET['mode'] : '';
 $_POST['deleteid'] = intval($_POST['deleteid']);

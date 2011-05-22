@@ -277,6 +277,11 @@ $data = array_merge(
     doquery($sql, '', true)
     );
 
+function number_format_custom($number)
+{
+    return number_format($number, 0, ',', '.');
+}
+
 $image = new Legacies_Block_Image_Png();
 $image
     ->setBackground(BACKGROUND_FILE)
@@ -285,21 +290,14 @@ $image
 
     ->addText('Batiments:',
         14, FONT_FILE, 5, 50, 0, $textColor)
-    ->addText(number_format($data['build_points'], 0, ',', '.'),
-        14, FONT_FILE, 100, 50, 0, $textColor)
-    ->addText('Flottes:',
-        14, FONT_FILE, 5, 70, 0, $textColor)
-    ->addText(number_format($data['fleet_points'], 0, ',', '.'),
-        14, FONT_FILE, 100, 70, 0, $textColor)
+    ->addText(number_format_custom($data['build_points']), 14, FONT_FILE, 100, 50, 0, $textColor)
+    ->addText('Flottes:', 14, FONT_FILE, 5, 70, 0, $textColor)
+    ->addText(number_format_custom($data['fleet_points']), 14, FONT_FILE, 100, 70, 0, $textColor)
 
-    ->addText('Technologies:',
-        14, FONT_FILE, 205, 50, 0, $textColor)
-    ->addText(number_format($data['tech_points'], 0, ',', '.'),
-        14, FONT_FILE, 320, 50, 0, $textColor)
-    ->addText('Total:',
-        14, FONT_FILE, 205, 70, 0, $textColor)
-    ->addText(number_format($data['total_points'], 0, ',', '.'),
-        14, FONT_FILE, 320, 70, 0, $textColor)
+    ->addText('Technologies:', 14, FONT_FILE, 205, 50, 0, $textColor)
+    ->addText(number_format_custom($data['tech_points']), 14, FONT_FILE, 320, 50, 0, $textColor)
+    ->addText('Total:', 14, FONT_FILE, 205, 70, 0, $textColor)
+    ->addText(number_format_custom($data['total_points']), 14, FONT_FILE, 320, 70, 0, $textColor)
 ;
 
 foreach ($image->getHeaders() as $headerName => $headerValue) {

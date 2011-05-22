@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -28,8 +28,8 @@
  *
  */
 
-function ResearchBuildingPage (&$CurrentPlanet, $CurrentUser, $InResearch, $ThePlanet) {
-	       $_GET['tech']=ereg_replace("[^0-9]",'',$_GET['tech']);
+function ResearchBuildingPage (&$CurrentPlanet, $CurrentUser, $InResearch, $ThePlanet)
+{
 	global $lang, $resource, $reslist, $dpath, $game_config, $_GET;
 
 

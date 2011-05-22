@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -58,7 +58,7 @@ function MissionCaseAttack ($FleetRow)
             $TargetUser = doquery($QryTargetUser, 'users', true);
 
             // Actualisation des ressources de la planete.
-      		PlanetResourceUpdate($TargetUser, $TargetPlanet, time());
+//      		PlanetResourceUpdate($TargetUser, $TargetPlanet, time());
 
             $QryTargetTech = "SELECT ";
             $QryTargetTech .= "`military_tech`, `defence_tech`, `shield_tech` ";

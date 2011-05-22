@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -29,37 +29,40 @@
  */
 
 function IsElementBuyable ($CurrentUser, $CurrentPlanet, $Element, $Incremental = true, $ForDestroy = false) {
-	global $pricelist, $resource;
+    global $pricelist, $resource;
 
-	if (IsVacationMode($CurrentUser)){
-   return false;
+    if (IsVacationMode($CurrentUser)) {
+        return false;
+    }
+
+    if ($Incremental) {
+        $level  = ($CurrentPlanet[$resource[$Element]]) ? $CurrentPlanet[$resource[$Element]] : $CurrentUser[$resource[$Element]];
+    }
+
+    $array = array(
+        Legacies_Empire::RESOURCE_METAL,
+        Legacies_Empire::RESOURCE_CRISTAL,
+        Legacies_Empire::RESOURCE_DEUTERIUM,
+        'energy_max'
+        );
+
+    $cost = array();
+    foreach ($array as $ResType) {
+        if ($pricelist[$Element][$ResType] != 0) {
+            if ($Incremental) {
+                $cost[$ResType] = bcmul($pricelist[$Element][$ResType], bcpow($pricelist[$Element]['factor'], $level), 0);
+            } else {
+                $cost[$ResType] = $pricelist[$Element][$ResType];
+            }
+
+            if ($ForDestroy) {
+                $cost[$ResType]  = bcdiv($cost[$ResType], 2, 0);
+            }
+
+            if (bccomp($cost[$ResType], $CurrentPlanet[$ResType]) > 0) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
-
-	if ($Incremental) {
-		$level  = ($CurrentPlanet[$resource[$Element]]) ? $CurrentPlanet[$resource[$Element]] : $CurrentUser[$resource[$Element]];
-	}
-
-	$RetValue = true;
-	$array    = array('metal', 'crystal', 'deuterium', 'energy_max');
-
-	foreach ($array as $ResType) {
-		if ($pricelist[$Element][$ResType] != 0) {
-			if ($Incremental) {
-				$cost[$ResType]  = floor($pricelist[$Element][$ResType] * pow($pricelist[$Element]['factor'], $level));
-			} else {
-				$cost[$ResType]  = floor($pricelist[$Element][$ResType]);
-			}
-
-			if ($ForDestroy) {
-				$cost[$ResType]  = floor($cost[$ResType] / 2);
-			}
-
-			if ($cost[$ResType] > $CurrentPlanet[$ResType]) {
-				$RetValue = false;
-			}
-		}
-	}
-	return $RetValue;
-}
-
-?>

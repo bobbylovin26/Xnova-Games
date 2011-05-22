@@ -33,7 +33,7 @@ define('INSTALL' , false);
 define('IN_ADMIN', true);
 require_once dirname(dirname(__FILE__)) .'/common.php';
 
-	if ($user['authlevel'] >= 3) {
+	if (in_array($user['authlevel'], array(LEVEL_ADMIN))) {
 		$lang['PHP_SELF'] = 'options.'.PHPEXT;
 		doquery("UPDATE {{table}} SET `banaday` =` banaday` - '1' WHERE `banaday` != '0';",'users');
 		doquery("UPDATE {{table}} SET `bana` = '0' WHERE `banaday` < '1';",'users');

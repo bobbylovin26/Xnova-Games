@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -82,16 +82,17 @@ require_once dirname(__FILE__) .'/common.php';
 			$_POST['ship211'] >= 1 ||
 			$_POST['ship213'] >= 1 ||
 			$_POST['ship214'] >= 1 ||
-			$_POST['ship215'] >= 1) {
+			$_POST['ship215'] >= 1 ||
+			$_POST['ship216'] >= 1) {
 			if (!$YourPlanet) {
 				$missiontype[1] = $lang['type_mission'][1];
+				$missiontype[5] = $lang['type_mission'][5];
 			}
 			$missiontype[3] = $lang['type_mission'][3];
-			$missiontype[5] = $lang['type_mission'][5];
 		}
 
 
-	} elseif ($_POST['ship209'] >= 1 || $_POST['ship208']) {
+	} elseif ($_POST['ship209'] >= 1 || $_POST['ship208'] >= 1) {
 		$missiontype[3] = $lang['type_mission'][3];
 	}
 	if ($YourPlanet)
@@ -105,10 +106,10 @@ require_once dirname(__FILE__) .'/common.php';
 		$missiontype[2] = $lang['type_mission'][2];
 	}
 	if ( $_POST['planettype'] == 3 &&
-	     $_POST['ship214'] >= 1    &&
-           !$YourPlanet            &&
-           $UsedPlanet) {
-          $missiontype[9] = $lang['type_mission'][9];
+       ($_POST['ship214'] >= 1 || $_POST['ship216'] >= 1) &&
+       !$YourPlanet            &&
+       $UsedPlanet) {
+       $missiontype[9] = $lang['type_mission'][9];
    }
 
 	$fleetarray    = unserialize(base64_decode(str_rot13($_POST["usedfleet"])));

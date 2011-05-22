@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -145,6 +145,7 @@ $lang['res']['fleet'] = array(
 213 => "Destructeur",
 214 => "&eacute;toile de la mort",
 215 => "Traqueur",
+216 => "Supernova",
 );
 
 

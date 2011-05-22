@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -69,11 +69,11 @@ function GetBuildingTime ($user, $planet, $Element) {
 		$time         = floor(($time * 60 * 60) * (1 - (($user['rpg_defenseur'])   * 0.375)));
 	} elseif (in_array($Element, $reslist['fleet'])) {
 		$time         = (($pricelist[$Element]['metal'] + $pricelist[$Element]['crystal']) / $game_config['game_speed']) * (1 / ($planet[$resource['21']] + 1)) * pow(1 / 2, $planet[$resource['15']]);
-		$time         = floor(($time * 60 * 60) * (1 - (($user['rpg_technocrate']) * 0.05)));
+		$time         = floor(($time * 60 * 60) * (1 - ($user['rpg_technocrate'] * 0.05)));
 	}
 
 
-	return $time;
+	return max(1, $time);
 }
 
 ?>

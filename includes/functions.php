@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -108,7 +108,7 @@ function display ($page, $title = '', $topnav = true, $metatags = '', $AdminPage
 	}
 	$DisplayPage .= "<center>\n". $page ."\n</center>\n";
 	// Affichage du Debug si necessaire
-	if (isset($user['authlevel']) && ($user['authlevel'] == 1 || $user['authlevel'] == 3)) {
+	if (isset($user['authlevel']) && in_array($user['authlevel'], array(LEVEL_ADMIN, LEVEL_OPERATOR))) {
 		if ($game_config['debug'] == 1) $debug->echo_log();
 	}
 

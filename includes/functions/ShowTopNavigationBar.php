@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -31,13 +31,14 @@
 function ShowTopNavigationBar ( $CurrentUser, $CurrentPlanet ) {
 	global $lang, $_GET;
 
+//	debug_print_backtrace();
+
 	if ($CurrentUser) {
 		if ( !$CurrentPlanet ) {
 			$CurrentPlanet = doquery("SELECT * FROM {{table}} WHERE `id` = '". $CurrentUser['current_planet'] ."';", 'planets', true);
 		}
 
 		// Actualisation des ressources de la planete
-		PlanetResourceUpdate ( $CurrentUser, $CurrentPlanet, time() );
 
 		$NavigationTPL       = gettemplate('topnav');
 

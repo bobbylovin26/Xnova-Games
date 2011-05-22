@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -28,185 +28,114 @@
  *
  */
 
-function DefensesBuildingPage ( &$CurrentPlanet, $CurrentUser ) {
- 	global $lang, $resource, $dpath, $_POST;
+require_once ROOT_PATH . 'includes/classes/Legacies/Empire/Shipyard.php';
 
-	if (isset($_POST['fmenge'])) {
-		// On vient de Cliquer ' Construire '
+function DefensesBuildingPage ( &$currentPlanet, $currentUser ) {
+    global $lang, $resource, $dpath;
 
-		// Et y a une liste de doléances
-		// Ici, on sait precisement ce qu'on aimerait bien construire ...
+    // S'il n'y a pas de Chantier
+    if (!isset($currentPlanet[$resource[Legacies_Empire::ID_BUILDING_SHIPYARD]]) || $currentPlanet[$resource[Legacies_Empire::ID_BUILDING_SHIPYARD]] == 0) {
+        message($lang['need_hangar'], $lang['tech'][Legacies_Empire::ID_BUILDING_SHIPYARD]);
+        return;
+    }
 
-		// Gestion de la place disponible dans les silos !
-		$Missiles[502] = $CurrentPlanet[ $resource[502] ];
-		$Missiles[503] = $CurrentPlanet[ $resource[503] ];
-		$SiloSize      = $CurrentPlanet[ $resource[44] ];
-		$MaxMissiles   = $SiloSize * 10;
-		// On prend les missiles deja dans la queue de fabrication aussi (ca aide)
-		$BuildQueue    = $CurrentPlanet['b_hangar_id'];
-		$BuildArray    = explode (";", $BuildQueue);
-		for ($QElement = 0; $QElement < count($BuildArray); $QElement++) {
-			$ElmentArray = explode (",", $BuildArray[$QElement] );
-			if       ($ElmentArray[502] != 0) {
-				$Missiles[502] += $ElmentArray[502];
-			} elseif ($ElmentArray[503] != 0) {
-				$Missiles[503] += $ElmentArray[503];
-			}
-		}
-		foreach($_POST['fmenge'] as $Element => $Count) {
-			// Construction d'Element recuperés sur la page de Flotte ...
-			// ATTENTION ! La file d'attente Flotte est Commune a celle des Defenses
-			// Dans fmenge, on devrait trouver un tableau des elements constructibles etdu nombre d'elements souhaités
+    $shipyard = Legacies_Empire_Shipyard::factory($currentPlanet, $currentUser);
+    if (isset($_POST['fmenge']) && is_array($_POST['fmenge'])) {
+        foreach ($_POST['fmenge'] as $shipId => $count) {
+            $shipId = intval($shipId);
+            if (in_array($shipId, $resource)) {
+                continue;
+            }
+            $count = intval($count);
 
-			$Element = intval($Element);
-			$Count   = intval($Count);
-			if ($Count > MAX_FLEET_OR_DEFS_PER_ROW) {
-				$Count = MAX_FLEET_OR_DEFS_PER_ROW;
-			}
+            $shipyard->appendQueue($shipId, $count);
+        }
+        $currentPlanet = $shipyard->save();
+    }
 
+    // -------------------------------------------------------------------------------------------------------
+    // Construction de la page du Chantier (car si j'arrive ici ... c'est que j'ai tout ce qu'il faut pour ...
+    $TabIndex  = 0;
+    $PageTable = "";
+    $types = include ROOT_PATH . 'includes/data/types.php';
+    foreach ($types[Legacies_Empire::TYPE_DEFENSE] as $shipId) {
+        if ($shipyard->checkAvailability($shipId)) {
+            // Disponible à la construction
 
-			if ($Count != 0) {
-				// Cas particulier (Petit Bouclier et Grand Bouclier
-				// ne peuvent exister qu'une seule et unique fois
-				$InQueue = strpos ( $CurrentPlanet['b_hangar_id'], $Element.",");
-				$IsBuild = ($CurrentPlanet[$resource[407]] >= 1) ? true : false;
-				if ($Element == 407 || $Element == 408) {
-					if ($InQueue === false && !$IsBuild) {
-                        $Count = 1;
-					}
-				}
+            // On regarde combien de temps il faut pour construire l'element
+            $BuildOneElementTime = $shipyard->getBuildTime($shipId, 1);
+            // Disponibilité actuelle
+            $shipIdCount        = $currentPlanet[$resource[$shipId]];
+            $shipIdNbre         = ($shipIdCount == 0) ? "" : " (".$lang['dispo'].": " . pretty_number($shipIdCount) . ")";
 
-				// On verifie si on a les technologies necessaires a la construction de l'element
-				if ( IsTechnologieAccessible ($CurrentUser, $CurrentPlanet, $Element) ) {
-					// On verifie combien on sait faire de cet element au max
-					$MaxElements   = GetMaxConstructibleElements ( $Element, $CurrentPlanet );
+            // Construction des 3 cases de la ligne d'un element dans la page d'achat !
+            // Début de ligne
+            $PageTable .= "\n<tr>";
 
-					// Testons si on a de la place pour ces nouveaux missiles !
-					if ($Element == 502 || $Element == 503) {
-						// Cas particulier des missiles
-						$ActuMissiles  = $Missiles[502] + ( 2 * $Missiles[503] );
-						$MissilesSpace = $MaxMissiles - $ActuMissiles;
-						if ($Element == 502) {
-							if ( $Count > $MissilesSpace ) {
-								$Count = $MissilesSpace;
-							}
-						} else {
-							if ( $Count > floor( $MissilesSpace / 2 ) ) {
-								$Count = floor( $MissilesSpace / 2 );
-							}
-						}
-						if ($Count > $MaxElements) {
-							$Count = $MaxElements;
-						}
-						$Missiles[$Element] += $Count;
-					} else {
-						// Si pas assez de ressources, on ajuste le nombre d'elements
-						if ($Count > $MaxElements) {
-							$Count = $MaxElements;
-						}
-					}
+            // Imagette + Link vers la page d'info
+            $PageTable .= "<th class=l>";
+            $PageTable .= "<a href=infos.".PHPEXT."?gid=".$shipId.">";
+            $PageTable .= "<img border=0 src=\"".$dpath."gebaeude/".$shipId.".gif\" align=top width=120 height=120></a>";
+            $PageTable .= "</th>";
 
-					$Ressource = GetElementRessources ( $Element, $Count );
-					$BuildTime = GetBuildingTime($CurrentUser, $CurrentPlanet, $Element);
-					if ($Count >= 1) {
-						$CurrentPlanet['metal']           -= $Ressource['metal'];
-						$CurrentPlanet['crystal']         -= $Ressource['crystal'];
-						$CurrentPlanet['deuterium']       -= $Ressource['deuterium'];
-						$CurrentPlanet['b_hangar_id']     .= "". $Element .",". $Count .";";
-					}
-				}
-			}
-		}
-	}
+            // Description
+            $PageTable .= "<td class=l>";
+            $PageTable .= "<a href=infos.".PHPEXT."?gid=".$shipId.">".$shipIdName."</a> ".$shipIdNbre."<br>";
+            $PageTable .= "".$lang['res']['descriptions'][$shipId]."<br>";
+            // On affiche le 'prix' avec eventuellement ce qui manque en ressource
+            $PageTable .= GetElementPrice($currentUser, $currentPlanet, $shipId, false);
+            // On affiche le temps de construction (c'est toujours tellement plus joli)
+            $PageTable .= ShowBuildTime($BuildOneElementTime);
+            $PageTable .= "</td>";
 
-	// -------------------------------------------------------------------------------------------------------
-	// S'il n'y a pas de Chantier ...
-	if ($CurrentPlanet[$resource[21]] == 0) {
-		// Veuillez avoir l'obligeance de construire le Chantier Spacial !!
-		message($lang['need_hangar'], $lang['tech'][21]);
-	}
+            // Case nombre d'elements a construire
+            $PageTable .= "<td class=k>";
+            // Si ... Et Seulement si je peux construire je mets la p'tite zone de saisie
+            $maxElements = $shipyard->getMaximumBuildableElementsCount($shipId);
+            if (bccomp($maxElements, 0) > 0) {
+                $TabIndex++;
+                $PageTable .= "<input type=\"text\" id=\"fmenge:{$shipId}\" name=\"fmenge[".$shipId."]\" alt='".$lang['tech'][$shipId]."' size=5 maxlength=5 value=0 tabindex=".$TabIndex.">";
 
-	// -------------------------------------------------------------------------------------------------------
-	// Construction de la page du Chantier (car si j'arrive ici ... c'est que j'ai tout ce qu'il faut pour ...
-	$TabIndex  = 0;
-	$PageTable = "";
-	foreach($lang['tech'] as $Element => $ElementName) {
-		if ($Element > 400 && $Element <= 599) {
-			if (IsTechnologieAccessible($CurrentUser, $CurrentPlanet, $Element)) {
-				// Disponible à la construction
+                if (MAX_FLEET_OR_DEFS_PER_ROW > 0 && $maxElements > MAX_FLEET_OR_DEFS_PER_ROW) {
+                    $maxElements = MAX_FLEET_OR_DEFS_PER_ROW;
+                }
 
-				// On regarde si on peut en acheter au moins 1
-				$CanBuildOne         = IsElementBuyable($CurrentUser, $CurrentPlanet, $Element, false);
-				// On regarde combien de temps il faut pour construire l'element
-				$BuildOneElementTime = GetBuildingTime($CurrentUser, $CurrentPlanet, $Element);
-				// Disponibilité actuelle
-				$ElementCount        = $CurrentPlanet[$resource[$Element]];
-				$ElementNbre         = ($ElementCount == 0) ? "" : " (".$lang['dispo'].": " . pretty_number($ElementCount) . ")";
+                $PageTable .= '<br /><a onclick="document.getElementById(\'fmenge:'.$shipId.'\').value=\''.strval($maxElements).'\';" style="cursor:pointer;">Nombre max ('.number_format($maxElements, 0, ',', '.').')</a>';
+            } else if (in_array($shipId, array(Legacies_Empire::ID_DEFENSE_SMALL_SHIELD_DOME, Legacies_Empire::ID_DEFENSE_LARGE_SHIELD_DOME))) {
+                $PageTable .= '<span style="color:red">Limite de construction atteinte.</span>';
+            } else if (in_array($shipId, array(Legacies_Empire::ID_DEFENSE_SMALL_SHIELD_DOME, Legacies_Empire::ID_DEFENSE_LARGE_SHIELD_DOME))) {
+                $PageTable .= '<span style="color:red">Silo plein.</span>';
+            }
+            $PageTable .= '</td>';
 
-				// Construction des 3 cases de la ligne d'un element dans la page d'achat !
-				// Début de ligne
-				$PageTable .= "\n<tr>";
+            // Fin de ligne (les 3 cases sont construites !!
+            $PageTable .= "</tr>";
+        }
+    }
 
-				// Imagette + Link vers la page d'info
-				$PageTable .= "<th class=l>";
-				$PageTable .= "<a href=infos.".PHPEXT."?gid=".$Element.">";
-				$PageTable .= "<img border=0 src=\"".$dpath."gebaeude/".$Element.".gif\" align=top width=120 height=120></a>";
-				$PageTable .= "</th>";
+    if (!empty($currentPlanet['b_hangar_id'])) {
+        $data = array();
+        foreach ($shipyard->getQueue() as $item) {
+            $data[] = array_merge($item, array(
+                'label' => $lang['tech'][$item['ship_id']],
+                'speed' => $shipyard->getBuildTime($item['ship_id'], 1)
+                ));
+        }
+        $parse = array(
+            'data' => json_encode($data)
+            );
+        $BuildQueue = parsetemplate(gettemplate('buildings_script'), $parse);
+    }
 
-				// Description
-				$PageTable .= "<td class=l>";
-				$PageTable .= "<a href=infos.".PHPEXT."?gid=".$Element.">".$ElementName."</a> ".$ElementNbre."<br>";
-				$PageTable .= "".$lang['res']['descriptions'][$Element]."<br>";
-				// On affiche le 'prix' avec eventuellement ce qui manque en ressource
-				$PageTable .= GetElementPrice($CurrentUser, $CurrentPlanet, $Element, false);
-				// On affiche le temps de construction (c'est toujours tellement plus joli)
-				$PageTable .= ShowBuildTime($BuildOneElementTime);
-				$PageTable .= "</td>";
+    $parse = $lang;
+    // La page se trouve dans $PageTable;
+    $parse['buildlist']    = $PageTable;
+    // Et la liste de constructions en cours dans $BuildQueue;
+    $parse['buildinglist'] = $BuildQueue;
+    // fragmento de template
+    $page .= parsetemplate(gettemplate('buildings_defense'), $parse);
 
-				// Case nombre d'elements a construire
-				$PageTable .= "<th class=k>";
-				// Si ... Et Seulement si je peux construire je mets la p'tite zone de saisie
-				if ($CanBuildOne) {
-					$InQueue = strpos ( $CurrentPlanet['b_hangar_id'], $Element.",");
-					$IsBuild = ($CurrentPlanet[$resource[407]] >= 1) ? true : false;
-					$BuildIt = true;
-					if ($Element == 407 || $Element == 408) {
-                        $BuildIt = false;
-						if ( $InQueue === false && !$IsBuild) {
-							$BuildIt = true;
-						}
-					}
-
-					if ( !$BuildIt ) {
-						$PageTable .= "<font color=\"red\">".$lang['only_one']."</font>";
-					} else {
-						$TabIndex++;
-						$PageTable .= "<input type=text name=fmenge[".$Element."] alt='".$lang['tech'][$Element]."' size=5 maxlength=5 value=0 tabindex=".$TabIndex.">";
-						$PageTable .= "</th>";
-					}
-				} else {
-					$PageTable .= "</th>";
-				}
-
-				// Fin de ligne (les 3 cases sont construites !!
-				$PageTable .= "</tr>";
-			}
-		}
-	}
-
-	if ($CurrentPlanet['b_hangar_id'] != '') {
-		$BuildQueue .= ElementBuildListBox( $CurrentUser, $CurrentPlanet );
-	}
-
-	$parse = $lang;
-	// La page se trouve dans $PageTable;
-	$parse['buildlist']    = $PageTable;
-	// Et la liste de constructions en cours dans $BuildQueue;
-	$parse['buildinglist'] = $BuildQueue;
-	// fragmento de template
-	$page .= parsetemplate(gettemplate('buildings_defense'), $parse);
-
-	display($page, $lang['Defense']);
+    display($page, $lang['Defense']);
 
 }
 // Version History

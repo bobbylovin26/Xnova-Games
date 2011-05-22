@@ -29,15 +29,20 @@
  */
 
 session_start();
-defined('DEBUG') || @ini_set('display_errors', false);
-defined('DEBUG') || @error_reporting(E_ALL | E_STRICT);
+
+if (in_array(strtolower(getenv('DEBUG')), array('1', 'on', 'true'))) {
+    define('DEBUG', true);
+}
+
+!defined('DEBUG') || @ini_set('display_errors', false);
+!defined('DEBUG') || @error_reporting(E_ALL | E_STRICT);
 
 define('ROOT_PATH', realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
 define('PHPEXT', require 'extension.inc');
 
-define('VERSION', '2009.3');
+define('VERSION', '2009.4');
 
-if (0 === filesize(ROOT_PATH . 'config.php') /*&& !defined('IN_INSTALL')*/) {
+if (0 === filesize(ROOT_PATH . 'config.php')) {
     header('Location: install/');
     die();
 }
@@ -73,7 +78,7 @@ if (!defined('DISABLE_IDENTITY_CHECK')) {
     $Result        = CheckTheUser ( $IsUserChecked );
     $IsUserChecked = $Result['state'];
     $user          = $Result['record'];
-} else if (!defined('DISABLE_IDENTITY_CHECK') && $game_config['game_disable'] && $user['authlevel'] < 1) {
+} else if (!defined('DISABLE_IDENTITY_CHECK') && $game_config['game_disable'] && $user['authlevel'] == LEVEL_PLAYER) {
     message(stripslashes($game_config['close_reason']), $game_config['game_name']);
 }
 
@@ -84,26 +89,29 @@ if (empty($user) && !defined('DISABLE_IDENTITY_CHECK')) {
     header('Location: login.php');
     exit(0);
 }
-$_fleets = doquery('SELECT * FROM {{table}} WHERE `fleet_start_time` <= UNIX_TIMESTAMP()', 'fleets'); //  OR fleet_end_time <= ".time()
+
+$now = time();
+$sql =<<<SQL_EOF
+SELECT
+  fleet_start_galaxy AS galaxy,
+  fleet_start_system AS system,
+  fleet_start_planet AS planet,
+  fleet_start_type AS planet_type
+    FROM {{table}}
+    WHERE `fleet_start_time` <= {$now}
+UNION
+SELECT
+  fleet_end_galaxy AS galaxy,
+  fleet_end_system AS system,
+  fleet_end_planet AS planet,
+  fleet_end_type AS planet_type
+    FROM {{table}}
+    WHERE `fleet_end_time` <= {$now}
+SQL_EOF;
+
+$_fleets = doquery($sql, 'fleets');
 while ($row = mysql_fetch_array($_fleets)) {
-    $array                = array();
-    $array['galaxy']      = $row['fleet_start_galaxy'];
-    $array['system']      = $row['fleet_start_system'];
-    $array['planet']      = $row['fleet_start_planet'];
-    $array['planet_type'] = $row['fleet_start_type'];
-
-    $temp = FlyingFleetHandler($array);
-}
-
-$_fleets = doquery('SELECT * FROM {{table}} WHERE `fleet_end_time` <= UNIX_TIMESTAMP()', 'fleets'); //  OR fleet_end_time <= ".time()
-while ($row = mysql_fetch_array($_fleets)) {
-    $array                = array();
-    $array['galaxy']      = $row['fleet_end_galaxy'];
-    $array['system']      = $row['fleet_end_system'];
-    $array['planet']      = $row['fleet_end_planet'];
-    $array['planet_type'] = $row['fleet_end_type'];
-
-    $temp = FlyingFleetHandler($array);
+    FlyingFleetHandler($row);
 }
 
 unset($_fleets);
@@ -116,9 +124,15 @@ if (!defined('IN_ADMIN')) {
 }
 
 
-SetSelectedPlanet($user);
+if (!empty($user)) {
+    SetSelectedPlanet($user);
 
-$planetrow = doquery("SELECT * FROM {{table}} WHERE `id` = '".$user['current_planet']."';", 'planets', true);
-$galaxyrow = doquery("SELECT * FROM {{table}} WHERE `id_planet` = '".$planetrow['id']."';", 'galaxy', true);
+    $planetrow = doquery("SELECT * FROM {{table}} WHERE `id` = '".$user['current_planet']."';", 'planets', true);
+    $galaxyrow = doquery("SELECT * FROM {{table}} WHERE `id_planet` = '".$planetrow['id']."';", 'galaxy', true);
 
-CheckPlanetUsedFields($planetrow);
+    CheckPlanetUsedFields($planetrow);
+    PlanetResourceUpdate($user, $planetrow, time());
+} else {
+    $planetrow = array();
+    $galaxyrow = array();
+}

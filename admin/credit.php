@@ -35,7 +35,7 @@ require_once dirname(dirname(__FILE__)) .'/common.php';
 includeLang('credit');
 $parse   = $lang;
 
-if ($user['authlevel'] >= 3) {
+if (in_array($user['authlevel'], array(LEVEL_ADMIN))) {
 	if ($_POST['opt_save'] == "1") {
 		// Extended copyright is activated?
 		if (isset($_POST['ExtCopyFrame']) && $_POST['ExtCopyFrame'] == 'on') {

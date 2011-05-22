@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -29,11 +29,11 @@
  */
 
 function IsOfficierAccessible ($CurrentUser, $Officier) {
-	global $requeriments, $resource, $pricelist;
+	global $requirements, $resource, $pricelist;
 
-	if (isset($requeriments[$Officier])) {
+	if (isset($requirements[$Officier])) {
 		$enabled = true;
-		foreach($requeriments[$Officier] as $ReqOfficier => $OfficierLevel) {
+		foreach($requirements[$Officier] as $ReqOfficier => $OfficierLevel) {
 			if ($CurrentUser[$resource[$ReqOfficier]] &&
 				$CurrentUser[$resource[$ReqOfficier]] >= $OfficierLevel) {
 				$enabled = 1;

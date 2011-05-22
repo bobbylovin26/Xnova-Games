@@ -35,11 +35,11 @@ require_once dirname(dirname(__FILE__)) .'/common.php';
 
 
 function DisplayGameSettingsPage ( $CurrentUser ) {
-	global $lang, $game_config, $_POST;
+	global $lang, $game_config;
 
 	includeLang('admin/settings');
 
-	if ( $CurrentUser['authlevel'] >= 3 ) {
+	if (in_array((int) $CurrentUser['authlevel'], array(LEVEL_ADMIN))) {
 		if ($_POST['opt_save'] == "1") {
 			// Jeu Ouvert ou Ferm� !
 			if (isset($_POST['closed']) && $_POST['closed'] == 'on') {
@@ -200,6 +200,7 @@ $game_config['banner_source_post'] = $_POST['banner_source_post'];
 
 				// Configuration du Jeu
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['forum_url']              ."' WHERE `config_name` = 'forum_url';", 'config');
+			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['game_name']              ."' WHERE `config_name` = 'game_name';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['game_speed']             ."' WHERE `config_name` = 'game_speed';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['fleet_speed']            ."' WHERE `config_name` = 'fleet_speed';", 'config');
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['resource_multiplier']    ."' WHERE `config_name` = 'resource_multiplier';", 'config');
@@ -214,7 +215,7 @@ $game_config['banner_source_post'] = $_POST['banner_source_post'];
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['ForumBannerFrame']       ."' WHERE `config_name` = 'ForumBannerFrame';", 'config');
 
 			//Bannière
-						doquery("UPDATE {{table}} SET `config_value` = '". $game_config['banner_source_post']       ."' WHERE `config_name` = 'banner_source_post';", 'config');
+			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['banner_source_post']       ."' WHERE `config_name` = 'banner_source_post';", 'config');
 
 			// Lien supplémentaire dans le menu
 			doquery("UPDATE {{table}} SET `config_value` = '". $game_config['link_enable']         ."' WHERE `config_name` = 'link_enable';", 'config');

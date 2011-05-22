@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -29,8 +29,8 @@
  */
 
 $lang['adm_usr_level'][0] = "Player";
-$lang['adm_usr_level'][1] = "Operator";
-$lang['adm_usr_level'][2] = "Moderator";
+$lang['adm_usr_level'][2] = "Operator";
+$lang['adm_usr_level'][1] = "Moderator";
 $lang['adm_usr_level'][3] = "Administrator";
 $lang['adm_usr_genre']['M'] = "Male";
 $lang['adm_usr_genre']['F'] = "Female";

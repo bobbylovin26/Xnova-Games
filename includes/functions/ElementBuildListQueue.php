@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -42,35 +42,35 @@ change `b_building_queue` `b_building_queue` text NULL COLLATE latin1_general_ci
 change `unbau` `unbau` varchar (100) NULL COLLATE latin1_general_ci;
 
 */
-	global $lang, $pricelist;
-
-	// Array del b_hangar_id
-	$b_building_id = explode(';', $CurrentPlanet['b_building_queue']);
-
-	$a = $b = $c = "";
-	foreach($b_hangar_id as $n => $array) {
-		if ($array != '') {
-			$array = explode(',', $array);
-			// calculamos el tiempo
-			$time = GetBuildingTime($user, $CurrentPlanet, $array[0]);
-			$totaltime += $time * $array[1];
-			$c .= "$time,";
-			$b .= "'{$lang['tech'][$array[0]]}',";
-			$a .= "{$array[1]},";
-		}
-	}
-
-	$parse = $lang;
-	$parse['a'] = $a;
-	$parse['b'] = $b;
-	$parse['c'] = $c;
-	$parse['b_hangar_id_plus'] = $CurrentPlanet['b_hangar'];
-
-	$parse['pretty_time_b_hangar'] = pretty_time($totaltime - $CurrentPlanet['b_hangar']); // //$CurrentPlanet['last_update']
-
-	$text .= parsetemplate(gettemplate('buildings_script'), $parse);
-
-	return $text;
+//	global $lang, $pricelist;
+//
+//	// Array del b_hangar_id
+//	$b_building_id = explode(';', $CurrentPlanet['b_building_queue']);
+//
+//	$a = $b = $c = "";
+//	foreach($b_hangar_id as $n => $array) {
+//		if ($array != '') {
+//			$array = explode(',', $array);
+//			// calculamos el tiempo
+//			$time = GetBuildingTime($user, $CurrentPlanet, $array[0]);
+//			$totaltime += $time * $array[1];
+//			$c .= "$time,";
+//			$b .= "'{$lang['tech'][$array[0]]}',";
+//			$a .= "{$array[1]},";
+//		}
+//	}
+//
+//	$parse = $lang;
+//	$parse['a'] = $a;
+//	$parse['b'] = $b;
+//	$parse['c'] = $c;
+//	$parse['b_hangar_id_plus'] = $CurrentPlanet['b_hangar'];
+//
+//	$parse['pretty_time_b_hangar'] = pretty_time($totaltime - $CurrentPlanet['b_hangar']); // //$CurrentPlanet['last_update']
+//
+//	$text .= parsetemplate(gettemplate('buildings_script'), $parse);
+//
+//	return $text;
 }
 
 ?>

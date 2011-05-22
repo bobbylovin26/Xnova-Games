@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -54,23 +54,23 @@ $lang['adm_opt_game_oth_plan'] = "Pianeta";
 $lang['adm_opt_btn_save']      = "Salva";
 
 $lang['adm_opt_warning1']      = "libreria GD del server Apache deve essere attivato! "
-$lang['adm_opt_menu_link_enable']      = "Abilita link personalizzabile? <br> (1 = sì, 0 = no)";  
+$lang['adm_opt_menu_link_enable']      = "Abilita link personalizzabile? <br> (1 = sï¿½, 0 = no)";  
 $lang['adm_opt_menu_link_text']      = "Link <br> Nome (se abilitato) ";
 $lang['adm_opt_menu_link_url']      = "Link URL <br> (se abilitato) ";
 $lang['adm_opt_control_pages']      = "Controllare le pagine visualizzate nel menu;
-$lang['enable_the_anounces']      = "Gli annunci di visualizzazione? <br> (Sì = 1 No = 0)";
-$lang['enable_the_marchand']      ="Mostra il mercante? <br> (Sì = 1 No = 0)";
-$lang['enable_the_notes']      = "Note Show? <br> (Sì = 1 No = 0)";
+$lang['enable_the_anounces']      = "Gli annunci di visualizzazione? <br> (Sï¿½ = 1 No = 0)";
+$lang['enable_the_marchand']      ="Mostra il mercante? <br> (Sï¿½ = 1 No = 0)";
+$lang['enable_the_notes']      = "Note Show? <br> (Sï¿½ = 1 No = 0)";
 $lang['multi_bot_settings']      ="Bot Impostazioni anti-multiaccount";
-$lang['bot_name_multi']      = "<br> Bot Nome (verrà visualizzato dentro il pilori);
-$lang['bot_adress_multi']      = "Indirizzo di risposta del <br> bot (verrà visualizzato dentro il pilori)"; 
+$lang['bot_name_multi']      = "<br> Bot Nome (verrï¿½ visualizzato dentro il pilori);
+$lang['bot_adress_multi']      = "Indirizzo di risposta del <br> bot (verrï¿½ visualizzato dentro il pilori)"; 
 $lang['bot_ban_duration']      = "Durata del divieto da parte <br> bot (in giorni) "; 
-$lang['bot_active']      = "Attivazione <br> bot (1 = attiva, 0 = non attiva) <br> Per impostazione predefinita, il bot è spento;."; 
+$lang['bot_active']      = "Attivazione <br> bot (1 = attiva, 0 = non attiva) <br> Per impostazione predefinita, il bot ï¿½ spento;."; 
 $lang['stat_settings_desc']      = "Tuning di statistiche ";
 $lang['stat_desc']      = "1 Punto= ";
 $lang['stat_units']      = "Risorse spese ";
 $lang['banner']      = "Banner";
 $lang['source_banner']      = "Fonte <u> PNG </ u> il banner ";
-$lang['banner_currently_installed']      = "Banner è attualmente installato ";
+$lang['banner_currently_installed']      = "Banner ï¿½ attualmente installato ";
 
 ?>

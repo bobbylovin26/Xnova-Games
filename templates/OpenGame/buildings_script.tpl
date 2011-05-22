@@ -1,98 +1,39 @@
-<br>Production Actuelle: <div id=bx class=z></div>
-<script  type="text/javascript">
-v  = new Date();
-p  = 0;
-g  = {b_hangar_id_plus};
-s  = 0;
-hs = 0;
-of = 1;
-c  = new Array({c}'');
-b  = new Array({b}'');
-a  = new Array({a}'');
-aa = '{completed}';
+<div>Production Actuelle:
+  <select id="buildList" size="10"></select>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+var date = new Date();
+var data = {data};
+var select = document.getElementById('buildList');
 
-function t() {
-	if ( hs == 0 ) {
-		xd();
-		hs = 1;
-	}
-	n = new Date();
-	s = c[p] - g - Math.round((n.getTime() - v.getTime()) / 1000.);
-	s = Math.round(s);
-	m = 0;
-	h = 0;
-	if ( s < 0 ) {
-		a[p]--;
-		xd();
-		if ( a[p] <= 0 ) {
-			p++;
-			xd();
-		}
-		g = 0;
-		v = new Date();
-		s = 0;
-	}
-	if ( s > 59 ) {
-		m = Math.floor(s / 60);
-		s = s - m * 60;
-	}
-	if ( m > 59 ) {
-		h = Math.floor(m / 60);
-		m = m - h * 60;
-	}
-	if ( s < 10 ) {
-		s = "0" + s;
-    }
-    if (m < 10) {
-      m = "0" + m;
-	}
-	if ( p > b.length - 2 ) {
-		document.getElementById("bx").innerHTML=aa ;
+setInterval(function(){
+  var now = new Date();
+  var datediff = (now.getTime() - date.getTime()) / 1000;
+
+  var option = null;
+  var index = 0;
+  if (data.length == 0) {
+    select.parentNode.style.display = 'none';
+    return;
+  }
+  select.length = 0;
+  for (i in data) {
+    if (datediff > 0) {
+      data[i]['actual_qty'] = data[i]['qty'] - Math.floor(datediff / data[i]['speed']);
     } else {
-		document.getElementById("bx").innerHTML=b[p]+" "+h+":"+m+":"+s;
+      data[i]['actual_qty'] = data[i]['qty'];
     }
-	window.setTimeout("t();", 200);
-}
-
-function xd() {
-	while (document.Atr.auftr.length > 0) {
-		document.Atr.auftr.options[document.Atr.auftr.length-1] = null;
-	}
-	if ( p > b.length - 2 ) {
-		document.Atr.auftr.options[document.Atr.auftr.length] = new Option(aa);
-	}
-	for ( iv = p; iv <= b.length - 2; iv++ ) {
-		if ( a[iv] < 2 ) {
-			ae = " ";
-		} else {
-			ae = " ";
-		}
-		if ( iv == p ) {
-			act = " ({in_working})";
-		} else {
-			act = "";
-		}
-		document.Atr.auftr.options[document.Atr.auftr.length] = new Option( a[iv] + ae + " \"" + b[iv] + "\"" + act, iv + of );
-	}
-}
-
-window.onload = t;
+    if (data[i]['actual_qty'] <= 0) {
+      datediff = datediff - (data[i]['speed'] * data[i]['qty']);
+      delete data[i];
+      continue;
+    } else {
+      datediff = 0;
+    }
+    option = new Option(data[i]['label'] + ' (' + data[i]['actual_qty'] + ')', data[i]['speed'], false, true);
+    select.options[index++] = option;
+  }
+  }, 1000);
+//]]>
 </script>
-<br />
-<form name="Atr" method="get" action="buildings.php">
-<input type="hidden" name="mode" value="fleet">
-<table width="530">
-<tr>
-	<td class="c" >{work_todo}</td>
-</tr>
-<tr>
-	<th ><select name="auftr" size="10"></select></th>
-</tr>
-<tr>
-	<td class="c" ></td>
-</tr>
-</table>
-</form>
-<br />
-{total_left_time} {pretty_time_b_hangar}<br></center>
-<br />

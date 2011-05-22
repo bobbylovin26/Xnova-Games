@@ -1,6 +1,6 @@
 <?php
 /**
- * Tis file is part of XNova:Legacies
+ * This file is part of XNova:Legacies
  *
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @see http://www.xnova-ng.org/
@@ -49,22 +49,22 @@ $lang['ins_error2']       = "Il file config.php non puO&grave essere sostituito"
 
 $lang['ins_tx_welco']     = "Benvenuti alla installazione di XNova";
 $lang['ins_tx_intr1']     = "Il progetto XNova ti permette di installare un clone quasi perfetto ogame";
-$lang['ins_tx_intr2']     = "Il progetto XNova è libero, gratuito ed open source. Grazie di non fare un uso commerciale";
+$lang['ins_tx_intr2']     = "Il progetto XNova ï¿½ libero, gratuito ed open source. Grazie di non fare un uso commerciale";
 $lang['ins_tx_intr3']     = "In segno di rispetto per il team che sviluppa questo progetto, siete pregati di non rimuovere il materiale protetto da copyright dai file sorgente.";
 $lang['ins_tx_inst1']     = "Il file config.php deve essere CHMOD 777";
-$lang['ins_tx_inst2']     = "È necessario disporre di un database MySQL";
-$lang['ins_tx_inst3']     = "È necessario compilare correttamente il modulo sottostante per continuare l'installazione: ";
+$lang['ins_tx_inst2']     = "ï¿½ necessario disporre di un database MySQL";
+$lang['ins_tx_inst3']     = "ï¿½ necessario compilare correttamente il modulo sottostante per continuare l'installazione: ";
 $lang['ins_tx_acc1']      = "Si sta per creare un account amministratore ";
 $lang['ins_tx_acc2']      = "Compila il modulo con le informazioni account: ";
 $lang['ins_tx_goto1']     = "Scegliendo questa metodo  d'installazione, potrete trasformare una banca dati in un database XNova UGamela".
-$lang['ins_tx_goto2']     = "Questo funziona, ma è preferibile ad una installazione completa di XNova".
+$lang['ins_tx_goto2']     = "Questo funziona, ma ï¿½ preferibile ad una installazione completa di XNova".
 $lang['ins_tx_goto3']     = "Si prende un rischio da trasformare il database, fare un backup prima! "
-$lang['ins_tx_goto4']     = "Occorre aver già installato UGamela ";
-$lang['ins_tx_goto5']     = "Compila il modulo sottostante con informazioni esatte dal database di cui è stato installato UGamela. Se si è sbagliato, il rookeries trasferimento: ";
-$lang['ins_tx_done1']     = "Il database è installato! ";
-$lang['ins_tx_done2']     = "L'account Administrator è stato creato correttamente! "
+$lang['ins_tx_goto4']     = "Occorre aver giï¿½ installato UGamela ";
+$lang['ins_tx_goto5']     = "Compila il modulo sottostante con informazioni esatte dal database di cui ï¿½ stato installato UGamela. Se si ï¿½ sbagliato, il rookeries trasferimento: ";
+$lang['ins_tx_done1']     = "Il database ï¿½ installato! ";
+$lang['ins_tx_done2']     = "L'account Administrator ï¿½ stato creato correttamente! "
 $lang['ins_tx_done3']     = "Si consiglia di rimuovere la cartella <i> installa </ i> se non hai bisogno di installazione!"
-$lang['ins_tx_done4']     = "Il trasferimento è stato fatto correttamente! "
+$lang['ins_tx_done4']     = "Il trasferimento ï¿½ stato fatto correttamente! "
 
 $lang['ins_form_server']  = "Server SQL";
 $lang['ins_form_db']      = "Database";
