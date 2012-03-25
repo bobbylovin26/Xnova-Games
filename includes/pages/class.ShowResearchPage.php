@@ -1,23 +1,10 @@
 <?php
 
-##############################################################################
-# *																			 #
-# * XG PROYECT																 #
-# *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
-# *																			 #
-# *																			 #
-# *  This program is free software: you can redistribute it and/or modify    #
-# *  it under the terms of the GNU General Public License as published by    #
-# *  the Free Software Foundation, either version 3 of the License, or       #
-# *  (at your option) any later version.									 #
-# *																			 #
-# *  This program is distributed in the hope that it will be useful,		 #
-# *  but WITHOUT ANY WARRANTY; without even the implied warranty of			 #
-# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the			 #
-# *  GNU General Public License for more details.							 #
-# *																			 #
-##############################################################################
+/**
+ * @project XG Proyect
+ * @version 2.10.x build 0000
+ * @copyright Copyright (C) 2008 - 2012
+ */
 
 if(!defined('INSIDE')){ die(header("location:../../"));}
 
@@ -50,16 +37,16 @@ class ShowResearchPage
 
 			if ($CurrentBuilding == 31 or $Element == 31) // ADDED (or $Element == 31) BY LUCKY
 			{
-				$return = false;
+				$return = FALSE;
 			}
 			else
 			{
-				$return = true;
+				$return = TRUE;
 			}
 		}
 		else
 		{
-			$return = true;
+			$return = TRUE;
 		}
 
 		return $return;
@@ -67,22 +54,31 @@ class ShowResearchPage
 
 	public function __construct (&$CurrentPlanet, $CurrentUser, $InResearch, $ThePlanet)
 	{
-		global $lang, $resource, $reslist, $phpEx, $dpath, $game_config, $_GET;
+		global $lang, $resource, $reslist, $_GET;
 
-		include_once($xgp_root . 'includes/functions/IsTechnologieAccessible.' . $phpEx);
-		include_once($xgp_root . 'includes/functions/GetElementPrice.' . $phpEx);
+		include_once(XGP_ROOT . 'includes/functions/IsTechnologieAccessible.php');
+		include_once(XGP_ROOT . 'includes/functions/GetElementPrice.php');
 
 		$PageParse			= $lang;
 		$NoResearchMessage 	= "";
-		$bContinue         	= true;
+		$bContinue         	= TRUE;
+		$intergal_lab 		= $CurrentUser[$resource[123]];
+		$limite 			= $intergal_lab+1;
+		$inves 				= doquery("SELECT laboratory FROM {{table}} WHERE id_owner='".intval($CurrentUser['id'])."' ORDER BY laboratory DESC LIMIT ".$limite."", 'planets');
+		$lablevel 			= 0;
+
+		while (	$row = mysql_fetch_array ( $inves ) )
+		{
+			$lablevel 	   += $row['laboratory'];
+		}
 
 		if ($CurrentPlanet[$resource[31]] == 0)
-			message($lang['bd_lab_required'], '', '', true);
+			message($lang['bd_lab_required'], '', '', TRUE);
 
 		if (!$this->CheckLabSettingsInQueue ($CurrentPlanet))
 		{
 			$NoResearchMessage = $lang['bd_building_lab'];
-			$bContinue         = false;
+			$bContinue         = FALSE;
 		}
 
 		if (isset($_GET['cmd']))
@@ -124,8 +120,8 @@ class ShowResearchPage
 									$WorkingPlanet['b_tech_id']   = 0;
 									$WorkingPlanet["b_tech"]      = 0;
 									$CurrentUser['b_tech_planet'] = 0;
-									$UpdateData                   = true;
-									$InResearch                   = false;
+									$UpdateData                   = TRUE;
+									$InResearch                   = FALSE;
 								}
 								break;
 							case 'search':
@@ -136,14 +132,14 @@ class ShowResearchPage
 									$WorkingPlanet['crystal']    -= $costs['crystal'];
 									$WorkingPlanet['deuterium']  -= $costs['deuterium'];
 									$WorkingPlanet["b_tech_id"]   = $Techno;
-									$WorkingPlanet["b_tech"]      = time() + GetBuildingTime($CurrentUser, $WorkingPlanet, $Techno);
+									$WorkingPlanet["b_tech"]      = time() + GetBuildingTime($CurrentUser, $WorkingPlanet, $Techno, FALSE, $lablevel);
 									$CurrentUser["b_tech_planet"] = $WorkingPlanet["id"];
-									$UpdateData                   = true;
-									$InResearch                   = true;
+									$UpdateData                   = TRUE;
+									$InResearch                   = TRUE;
 								}
 								break;
 						}
-						if ($UpdateData == true)
+						if ($UpdateData == TRUE)
 						{
 							$QryUpdatePlanet  = "UPDATE {{table}} SET ";
 							$QryUpdatePlanet .= "`b_tech_id` = '".   $WorkingPlanet['b_tech_id']   ."', ";
@@ -171,6 +167,7 @@ class ShowResearchPage
 						{
 							$CurrentPlanet = $WorkingPlanet;
 							if ($TheCommand == 'search')
+
 							{
 								$ThePlanet = $CurrentPlanet;
 							}
@@ -182,15 +179,15 @@ class ShowResearchPage
 			}
 			else
 			{
-				$bContinue = false;
+				$bContinue = FALSE;
 			}
 
 			header ("Location: game.php?page=buildings&mode=research");
 
 		}
 
-		$TechRowTPL = gettemplate('buildings/buildings_research_row');
-		$TechScrTPL = gettemplate('buildings/buildings_research_script');
+		$TechRowTPL 	= gettemplate('buildings/buildings_research_row');
+		$TechScrTPL 	= gettemplate('buildings/buildings_research_script');
 
 		foreach($lang['tech'] as $Tech => $TechName)
 		{
@@ -198,27 +195,27 @@ class ShowResearchPage
 			{
 				if ( IsTechnologieAccessible($CurrentUser, $CurrentPlanet, $Tech))
 				{
-					$RowParse['dpath']       = $dpath;
+					$RowParse['dpath']       = DPATH;
 					$RowParse['tech_id']     = $Tech;
 					$building_level          = $CurrentUser[$resource[$Tech]];
 
 					if($Tech == 106)
 					{
 						$RowParse['tech_level']  = ($building_level == 0 ) ? "" : "(". $lang['bd_lvl'] . " ".$building_level .")" ;
-						$RowParse['tech_level']  .= ($CurrentUser['rpg_espion'] == 0) ? "" : "<strong><font color=\"lime\"> +" . ($CurrentUser['rpg_espion'] * ESPION) . $lang['bd_spy']	. "</font></strong>";
+						$RowParse['tech_level']  .= ($CurrentUser['rpg_technocrate'] == 0) ? "" : "<strong><font color=\"lime\"> +" . ($CurrentUser['rpg_technocrate'] * TECHNOCRATE_SPY) . $lang['bd_spy']	. "</font></strong>";
 					}
 					elseif($Tech == 108)
 					{
 						$RowParse['tech_level']  = ($building_level == 0) ? "" : "(". $lang['bd_lvl'] . " ".$building_level .")";
-						$RowParse['tech_level']  .= ($CurrentUser['rpg_commandant'] == 0) ? "" : "<strong><font color=\"lime\"> +" . ($CurrentUser['rpg_commandant'] * COMMANDANT) . $lang['bd_commander'] . "</font></strong>";
+						$RowParse['tech_level']  .= ($CurrentUser['rpg_amiral'] == 0) ? "" : "<strong><font color=\"lime\"> +" . ($CurrentUser['rpg_amiral'] * AMIRAL) . $lang['bd_commander'] . "</font></strong>";
 					}
 					else
-						$RowParse['tech_level']  = ($building_level == 0) ? "" : "(". $lang['bd_lvl'] . " ".$building_level." )";
+						$RowParse['tech_level']  = ($building_level == 0) ? "" : "(". $lang['bd_lvl'] . " ".$building_level.")";
 
 					$RowParse['tech_name']   = $TechName;
 					$RowParse['tech_descr']  = $lang['res']['descriptions'][$Tech];
 					$RowParse['tech_price']  = GetElementPrice($CurrentUser, $CurrentPlanet, $Tech);
-					$SearchTime              = GetBuildingTime($CurrentUser, $CurrentPlanet, $Tech);
+					$SearchTime              = GetBuildingTime($CurrentUser, $CurrentPlanet, $Tech, FALSE, $lablevel);
 					$RowParse['search_time'] = ShowBuildTime($SearchTime);
 					$CanBeDone               = IsElementBuyable($CurrentUser, $CurrentPlanet, $Tech);
 
@@ -293,3 +290,4 @@ class ShowResearchPage
 		display($Page);
 	}
 }
+?>

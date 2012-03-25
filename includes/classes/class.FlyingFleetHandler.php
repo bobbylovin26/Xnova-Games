@@ -1,29 +1,16 @@
 <?php
 
-##############################################################################
-# *																			 #
-# * XG PROYECT																 #
-# *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
-# *																			 #
-# *																			 #
-# *  This program is free software: you can redistribute it and/or modify    #
-# *  it under the terms of the GNU General Public License as published by    #
-# *  the Free Software Foundation, either version 3 of the License, or       #
-# *  (at your option) any later version.									 #
-# *																			 #
-# *  This program is distributed in the hope that it will be useful,		 #
-# *  but WITHOUT ANY WARRANTY; without even the implied warranty of			 #
-# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the			 #
-# *  GNU General Public License for more details.							 #
-# *																			 #
-##############################################################################
+/**
+ * @project XG Proyect
+ * @version 2.10.x build 0000
+ * @copyright Copyright (C) 2008 - 2012
+ */
 
 if (!defined('INSIDE'))die(header("location:../../"));
 
 class FlyingFleetHandler
 {
-	public static function calculateAKSSteal($attackFleets, $defenderPlanet, $ForSim = false)
+	public static function calculateAKSSteal($attackFleets, $defenderPlanet, $ForSim = FALSE)
 	{
 		//Steal-Math by Slaver for 2Moons(http://www.titanspace.org) based on http://www.owiki.de/Beute
 		global $pricelist, $db;
@@ -92,7 +79,7 @@ class FlyingFleetHandler
 	{
 		global $lang, $resource;
 
-		$LookAtLoop = true;
+		$LookAtLoop = TRUE;
 		if ($Mode == 0)
 		{
 			$String  = "<table width=\"440\"><tr><td class=\"c\" colspan=\"5\">";
@@ -107,7 +94,7 @@ class FlyingFleetHandler
 			$String .= "<td width=220>". $lang['Deuterium'] ."</td><td width=220 align=right>". pretty_number($TargetPlanet['deuterium'])  ."</td><td>&nbsp;</td>";
 			$String .= "<td width=220>". $lang['Energy']    ."</td><td width=220 align=right>". pretty_number($TargetPlanet['energy_max']) ."</td>";
 			$String .= "</tr>";
-			$LookAtLoop = false;
+			$LookAtLoop = FALSE;
 		}
 		elseif ($Mode == 1)
 		{
@@ -136,7 +123,7 @@ class FlyingFleetHandler
 			$Loops      = 1;
 		}
 
-		if ($LookAtLoop == true)
+		if ($LookAtLoop == TRUE)
 		{
 			$String  = "<table width=\"440\" cellspacing=\"1\"><tr><td class=\"c\" colspan=\"". ((2 * SPY_REPORT_ROW) + (SPY_REPORT_ROW - 1))."\">". $TitleString ."</td></tr>";
 			$Count       = 0;
@@ -188,7 +175,7 @@ class FlyingFleetHandler
 
 	private function walka ($CurrentSet, $TargetSet, $CurrentTechno, $TargetTechno)
 	{
-		global $pricelist, $CombatCaps, $game_config, $user;
+		global $pricelist, $CombatCaps, $user;
 
 		$runda       = array();
 		$atakujacy_n = array();
@@ -241,11 +228,11 @@ class FlyingFleetHandler
 			{
 				foreach($CurrentSet as $a => $b)
 				{
-					$CurrentSet[$a]["obrona"] 	= $CurrentSet[$a]['count'] * ($pricelist[$a]['metal'] + $pricelist[$a]['crystal']) / 10 * (1 + (0.1 * ($CurrentTechno["defence_tech"]) + (AMIRAL * $user['rpg_amiral'])));
+					$CurrentSet[$a]["obrona"] 	= $CurrentSet[$a]['count'] * ($pricelist[$a]['metal'] + $pricelist[$a]['crystal']) / 10 * (1 + (0.1 * ($CurrentTechno["defence_tech"])));
 					$rand 						= rand(80, 120) / 100;
-					$CurrentSet[$a]["tarcza"] 	= $CurrentSet[$a]['count'] * $CombatCaps[$a]['shield'] * (1 + (0.1 * $CurrentTechno["shield_tech"]) + (AMIRAL * $user['rpg_amiral'])) * $rand;
+					$CurrentSet[$a]["tarcza"] 	= $CurrentSet[$a]['count'] * $CombatCaps[$a]['shield'] * (1 + (0.1 * $CurrentTechno["shield_tech"])) * $rand;
 					$atak_statku 				= $CombatCaps[$a]['attack'];
-					$technologie 				= (1 + (0.1 * $CurrentTechno["military_tech"]+(AMIRAL * $user['rpg_amiral'])));
+					$technologie 				= (1 + (0.1 * $CurrentTechno["military_tech"]));
 					$rand 						= rand(80, 120) / 100;
 					$ilosc 						= $CurrentSet[$a]['count'];
 					$CurrentSet[$a]["atak"] 	= $ilosc * $atak_statku * $technologie * $rand;
@@ -264,11 +251,11 @@ class FlyingFleetHandler
 			{
 				foreach($TargetSet as $a => $b)
 				{
-					$TargetSet[$a]["obrona"] 	= $TargetSet[$a]['count'] * ($pricelist[$a]['metal'] + $pricelist[$a]['crystal']) / 10 * (1 + (0.1 * ($TargetTechno["defence_tech"]) + (AMIRAL* $user['rpg_amiral'])));
+					$TargetSet[$a]["obrona"] 	= $TargetSet[$a]['count'] * ($pricelist[$a]['metal'] + $pricelist[$a]['crystal']) / 10 * (1 + (0.1 * ($TargetTechno["defence_tech"])));
 					$rand 						= rand(80, 120) / 100;
-					$TargetSet[$a]["tarcza"] 	= $TargetSet[$a]['count'] * $CombatCaps[$a]['shield'] * (1 + (0.1 * $TargetTechno["shield_tech"])+ (AMIRAL * $user['rpg_amiral'])) * $rand;
+					$TargetSet[$a]["tarcza"] 	= $TargetSet[$a]['count'] * $CombatCaps[$a]['shield'] * (1 + (0.1 * $TargetTechno["shield_tech"])) * $rand;
 					$atak_statku 				= $CombatCaps[$a]['attack'];
-					$technologie 				= (1 + (0.1 * $TargetTechno["military_tech"]) + (AMIRAL * $user['rpg_amiral']));
+					$technologie 				= (1 + (0.1 * $TargetTechno["military_tech"]));
 					$rand 						= rand(80, 120) / 100;
 					$ilosc 						= $TargetSet[$a]['count'];
 					$TargetSet[$a]["atak"] 		= $ilosc * $atak_statku * $technologie * $rand;
@@ -467,11 +454,14 @@ class FlyingFleetHandler
 		if (($ilosc_wrog > 0) && ($atakujacy_ilosc == 0))
 			$wygrana = "w";
 
-		$zlom['metal']    = ((($atakujacy_zlom_poczatek['metal']   - $atakujacy_zlom_koniec['metal'])   + ($wrog_zlom_poczatek['metal']   - $wrog_zlom_koniec['metal']))   * ($game_config['Fleet_Cdr'] / 100));
-		$zlom['crystal']  = ((($atakujacy_zlom_poczatek['crystal'] - $atakujacy_zlom_koniec['crystal']) + ($wrog_zlom_poczatek['crystal'] - $wrog_zlom_koniec['crystal'])) * ($game_config['Fleet_Cdr'] / 100));
+		$game_fleet_cdr	=	read_config ( 'fleet_cdr' );
+		$game_def_cdr	=	read_config ( 'defs_cdr' );
 
-		$zlom['metal']   += ((($atakujacy_zlom_poczatek['metal']   - $atakujacy_zlom_koniec['metal'])   + ($wrog_zlom_poczatek['metal']   - $wrog_zlom_koniec['metal']))   * ($game_config['Defs_Cdr'] / 100));
-		$zlom['crystal'] += ((($atakujacy_zlom_poczatek['crystal'] - $atakujacy_zlom_koniec['crystal']) + ($wrog_zlom_poczatek['crystal'] - $wrog_zlom_koniec['crystal'])) * ($game_config['Defs_Cdr'] / 100));
+		$zlom['metal']    = ((($atakujacy_zlom_poczatek['metal']   - $atakujacy_zlom_koniec['metal'])   + ($wrog_zlom_poczatek['metal']   - $wrog_zlom_koniec['metal']))   * ($game_fleet_cdr / 100));
+		$zlom['crystal']  = ((($atakujacy_zlom_poczatek['crystal'] - $atakujacy_zlom_koniec['crystal']) + ($wrog_zlom_poczatek['crystal'] - $wrog_zlom_koniec['crystal'])) * ($game_fleet_cdr / 100));
+
+		$zlom['metal']   += ((($atakujacy_zlom_poczatek['metal']   - $atakujacy_zlom_koniec['metal'])   + ($wrog_zlom_poczatek['metal']   - $wrog_zlom_koniec['metal']))   * ($game_def_cdr / 100));
+		$zlom['crystal'] += ((($atakujacy_zlom_poczatek['crystal'] - $atakujacy_zlom_koniec['crystal']) + ($wrog_zlom_poczatek['crystal'] - $wrog_zlom_koniec['crystal'])) * ($game_def_cdr / 100));
 
 		$zlom["atakujacy"] = (($atakujacy_zlom_poczatek['metal'] - $atakujacy_zlom_koniec['metal']) + ($atakujacy_zlom_poczatek['crystal'] - $atakujacy_zlom_koniec['crystal']));
 		$zlom["wrog"]      = (($wrog_zlom_poczatek['metal']      - $wrog_zlom_koniec['metal'])      + ($wrog_zlom_poczatek['crystal']      - $wrog_zlom_koniec['crystal']) + $straty_obrona_wrog);
@@ -479,13 +469,13 @@ class FlyingFleetHandler
 		return array("atakujacy" => $CurrentSet, "wrog" => $TargetSet, "wygrana" => $wygrana, "dane_do_rw" => $runda, "zlom" => $zlom);
 	}
 
-	private function RestoreFleetToPlanet ($FleetRow, $Start = true)
+	private function RestoreFleetToPlanet ($FleetRow, $Start = TRUE)
 	{
 		global $resource;
 
 		//fix resource by jstar
-		$targetPlanet = doquery("SELECT * FROM {{table}} WHERE `galaxy` = ". intval($FleetRow['fleet_start_galaxy']) ." AND `system` = ". intval($FleetRow['fleet_start_system']) ." AND `planet_type` = ". intval($FleetRow['fleet_start_type']) ." AND `planet` = ". intval($FleetRow['fleet_start_planet']) .";",'planets', true);
-		$targetUser   = doquery('SELECT * FROM {{table}} WHERE id='.intval($targetPlanet['id_owner']),'users', true);
+		$targetPlanet = doquery("SELECT * FROM {{table}} WHERE `galaxy` = ". intval($FleetRow['fleet_start_galaxy']) ." AND `system` = ". intval($FleetRow['fleet_start_system']) ." AND `planet_type` = ". intval($FleetRow['fleet_start_type']) ." AND `planet` = ". intval($FleetRow['fleet_start_planet']) .";",'planets', TRUE);
+		$targetUser   = doquery('SELECT * FROM {{table}} WHERE id='.intval($targetPlanet['id_owner']),'users', TRUE);
 		PlanetResourceUpdate ( $targetUser, $targetPlanet, time() );
 		//
 
@@ -509,7 +499,7 @@ class FlyingFleetHandler
 		$QryUpdatePlanet  .= "`deuterium` = `deuterium` + '". $FleetRow['fleet_resource_deuterium'] ."' ";
 		$QryUpdatePlanet  .= "WHERE ";
 
-		if ($Start == true)
+		if ($Start == TRUE)
 		{
 			$QryUpdatePlanet  .= "`galaxy` = '". $FleetRow['fleet_start_galaxy'] ."' AND ";
 			$QryUpdatePlanet  .= "`system` = '". $FleetRow['fleet_start_system'] ."' AND ";
@@ -527,12 +517,12 @@ class FlyingFleetHandler
 		doquery( $QryUpdatePlanet, 'planets');
 	}
 
-	private function StoreGoodsToPlanet ($FleetRow, $Start = false)
+	private function StoreGoodsToPlanet ($FleetRow, $Start = FALSE)
 	{
 
 		//fix resource by jstar
-		$targetPlanet = doquery("SELECT * FROM {{table}} WHERE `galaxy` = ". intval($FleetRow['fleet_start_galaxy']) ." AND `system` = ". intval($FleetRow['fleet_start_system']) ." AND `planet_type` = ". intval($FleetRow['fleet_start_type']) ." AND `planet` = ". intval($FleetRow['fleet_start_planet']) .";",'planets', true);
-		$targetUser   = doquery('SELECT * FROM {{table}} WHERE id='.intval($targetPlanet['id_owner']),'users', true);
+		$targetPlanet = doquery("SELECT * FROM {{table}} WHERE `galaxy` = ". intval($FleetRow['fleet_start_galaxy']) ." AND `system` = ". intval($FleetRow['fleet_start_system']) ." AND `planet_type` = ". intval($FleetRow['fleet_start_type']) ." AND `planet` = ". intval($FleetRow['fleet_start_planet']) .";",'planets', TRUE);
+		$targetUser   = doquery('SELECT * FROM {{table}} WHERE id='.intval($targetPlanet['id_owner']),'users', TRUE);
 		PlanetResourceUpdate ( $targetUser, $targetPlanet, time() );
 		//
 
@@ -542,7 +532,7 @@ class FlyingFleetHandler
 		$QryUpdatePlanet  .= "`deuterium` = `deuterium` + '". $FleetRow['fleet_resource_deuterium'] ."' ";
 		$QryUpdatePlanet  .= "WHERE ";
 
-		if ($Start == true)
+		if ($Start == TRUE)
 		{
 			$QryUpdatePlanet  .= "`galaxy` = '". $FleetRow['fleet_start_galaxy'] ."' AND ";
 			$QryUpdatePlanet  .= "`system` = '". $FleetRow['fleet_start_system'] ."' AND ";
@@ -563,11 +553,11 @@ class FlyingFleetHandler
 
 	private function MissionCaseAttack ($FleetRow)
 	{
-		global $pricelist, $lang, $resource, $CombatCaps, $game_config, $user;
+		global $pricelist, $lang, $resource, $CombatCaps, $user;
 
 		if ($FleetRow['fleet_mess'] == 0 && $FleetRow['fleet_start_time'] <= time())
 		{
-			$targetPlanet = doquery("SELECT * FROM {{table}} WHERE `galaxy` = ". intval($FleetRow['fleet_end_galaxy']) ." AND `system` = ". intval($FleetRow['fleet_end_system']) ." AND `planet_type` = ". intval($FleetRow['fleet_end_type']) ." AND `planet` = ". intval($FleetRow['fleet_end_planet']) .";",'planets', true);
+			$targetPlanet = doquery("SELECT * FROM {{table}} WHERE `galaxy` = ". intval($FleetRow['fleet_end_galaxy']) ." AND `system` = ". intval($FleetRow['fleet_end_system']) ." AND `planet_type` = ". intval($FleetRow['fleet_end_type']) ." AND `planet` = ". intval($FleetRow['fleet_end_planet']) .";",'planets', TRUE);
 
 			if ($FleetRow['fleet_group'] > 0)
 			{
@@ -579,13 +569,13 @@ class FlyingFleetHandler
 				doquery("UPDATE {{table}} SET fleet_mess=1 WHERE fleet_id=".intval($FleetRow['fleet_id']),'fleets');
 			}
 
-			$targetGalaxy = doquery('SELECT * FROM {{table}} WHERE `galaxy` = '. intval($FleetRow['fleet_end_galaxy']) .' AND `system` = '. intval($FleetRow['fleet_end_system']) .' AND `planet` = '. intval($FleetRow['fleet_end_planet']) .';','galaxy', true);
-			$targetUser   = doquery('SELECT * FROM {{table}} WHERE id='.intval($targetPlanet['id_owner']),'users', true);
+			$targetGalaxy = doquery('SELECT * FROM {{table}} WHERE `galaxy` = '. intval($FleetRow['fleet_end_galaxy']) .' AND `system` = '. intval($FleetRow['fleet_end_system']) .' AND `planet` = '. intval($FleetRow['fleet_end_planet']) .';','galaxy', TRUE);
+			$targetUser   = doquery('SELECT * FROM {{table}} WHERE id='.intval($targetPlanet['id_owner']),'users', TRUE);
 
 			PlanetResourceUpdate ( $targetUser, $targetPlanet, time() );
 
-			$targetGalaxy = doquery('SELECT * FROM {{table}} WHERE `galaxy` = '. intval($FleetRow['fleet_end_galaxy']) .' AND `system` = '. intval($FleetRow['fleet_end_system']) .' AND `planet` = '. intval($FleetRow['fleet_end_planet']) .';','galaxy', true);
-			$targetUser   = doquery('SELECT * FROM {{table}} WHERE id='.intval($targetPlanet['id_owner']),'users', true);
+			$targetGalaxy = doquery('SELECT * FROM {{table}} WHERE `galaxy` = '. intval($FleetRow['fleet_end_galaxy']) .' AND `system` = '. intval($FleetRow['fleet_end_system']) .' AND `planet` = '. intval($FleetRow['fleet_end_planet']) .';','galaxy', TRUE);
+			$targetUser   = doquery('SELECT * FROM {{table}} WHERE id='.intval($targetPlanet['id_owner']),'users', TRUE);
 
 			$TargetUserID = $targetUser['id'];
 			$attackFleets = array();
@@ -596,7 +586,7 @@ class FlyingFleetHandler
 				while ($fleet = mysql_fetch_assoc($fleets))
 				{
 					$attackFleets[$fleet['fleet_id']]['fleet'] = $fleet;
-					$attackFleets[$fleet['fleet_id']]['user'] = doquery('SELECT * FROM {{table}} WHERE id ='.intval($fleet['fleet_owner']),'users', true);
+					$attackFleets[$fleet['fleet_id']]['user'] = doquery('SELECT * FROM {{table}} WHERE id ='.intval($fleet['fleet_owner']),'users', TRUE);
 					$attackFleets[$fleet['fleet_id']]['detail'] = array();
 					$temp = explode(';', $fleet['fleet_array']);
 					foreach ($temp as $temp2)
@@ -616,7 +606,7 @@ class FlyingFleetHandler
 			else
 			{
 				$attackFleets[$FleetRow['fleet_id']]['fleet'] = $FleetRow;
-				$attackFleets[$FleetRow['fleet_id']]['user'] = doquery('SELECT * FROM {{table}} WHERE id='.intval($FleetRow['fleet_owner']),'users', true);
+				$attackFleets[$FleetRow['fleet_id']]['user'] = doquery('SELECT * FROM {{table}} WHERE id='.intval($FleetRow['fleet_owner']),'users', TRUE);
 				$attackFleets[$FleetRow['fleet_id']]['detail'] = array();
 				$temp = explode(';', $FleetRow['fleet_array']);
 				foreach ($temp as $temp2)
@@ -647,7 +637,7 @@ class FlyingFleetHandler
 						$defense[$defRow['fleet_id']][$Element[0]] = 0;
 
 					$defense[$defRow['fleet_id']]['def'][$Element[0]] += $Element[1];
-					$defense[$defRow['fleet_id']]['user'] = doquery('SELECT * FROM {{table}} WHERE id='.intval($defRow['fleet_owner']),'users', true);
+					$defense[$defRow['fleet_id']]['user'] = doquery('SELECT * FROM {{table}} WHERE id='.intval($defRow['fleet_owner']),'users', TRUE);
 				}
 			}
 
@@ -660,9 +650,9 @@ class FlyingFleetHandler
 					$defense[0]['def'][$i] = $targetPlanet[$resource[$i]];
 				}
 			}
-			$start 		= microtime(true);
+			$start 		= microtime(TRUE);
 			$result 	= calculateAttack($attackFleets, $defense);
-			$totaltime 	= microtime(true) - $start;
+			$totaltime 	= microtime(TRUE) - $start;
 
 			$QryUpdateGalaxy = "UPDATE {{table}} SET ";
 			$QryUpdateGalaxy .= "`invisible_start_time` = '".time()."', ";
@@ -869,7 +859,7 @@ class FlyingFleetHandler
 
 	private function MissionCaseACS($FleetRow)
 	{
-		global $pricelist, $lang, $resource, $CombatCaps, $game_config;
+		global $pricelist, $lang, $resource, $CombatCaps;
 
 		if ($FleetRow['fleet_mess'] == 0 && $FleetRow['fleet_start_time'] > time())
 		{
@@ -893,7 +883,7 @@ class FlyingFleetHandler
 		$QryStartPlanet  .= "`system` = '". $FleetRow['fleet_start_system'] ."' AND ";
 		$QryStartPlanet  .= "`planet` = '". $FleetRow['fleet_start_planet'] ."' AND ";
 		$QryStartPlanet  .= "`planet_type` = '". $FleetRow['fleet_start_type'] ."';";
-		$StartPlanet      = doquery( $QryStartPlanet, 'planets', true);
+		$StartPlanet      = doquery( $QryStartPlanet, 'planets', TRUE);
 		$StartName        = $StartPlanet['name'];
 		$StartOwner       = $StartPlanet['id_owner'];
 
@@ -903,7 +893,7 @@ class FlyingFleetHandler
 		$QryTargetPlanet .= "`system` = '". $FleetRow['fleet_end_system'] ."' AND ";
 		$QryTargetPlanet .= "`planet` = '". $FleetRow['fleet_end_planet'] ."' AND ";
 		$QryTargetPlanet .= "`planet_type` = '". $FleetRow['fleet_end_type'] ."';";
-		$TargetPlanet     = doquery( $QryTargetPlanet, 'planets', true);
+		$TargetPlanet     = doquery( $QryTargetPlanet, 'planets', TRUE);
 		$TargetName       = $TargetPlanet['name'];
 		$TargetOwner      = $TargetPlanet['id_owner'];
 
@@ -911,7 +901,7 @@ class FlyingFleetHandler
 		{
 			if ($FleetRow['fleet_start_time'] < time())
 			{
-				$this->StoreGoodsToPlanet ($FleetRow, false);
+				$this->StoreGoodsToPlanet ($FleetRow, FALSE);
 				$Message         = sprintf( $lang['sys_tran_mess_owner'],
 							$TargetName, GetTargetAdressLink($FleetRow, ''),
 							$FleetRow['fleet_resource_metal'], $lang['Metal'],
@@ -946,7 +936,7 @@ class FlyingFleetHandler
 			{
 				$Message             = sprintf ($lang['sys_tran_mess_back'], $StartName, GetStartAdressLink($FleetRow, ''));
 				SendSimpleMessage ( $StartOwner, '', $FleetRow['fleet_end_time'], 5, $lang['sys_mess_tower'], $lang['sys_mess_fleetback'], $Message);
-				$this->RestoreFleetToPlanet ( $FleetRow, true );
+				$this->RestoreFleetToPlanet ( $FleetRow, TRUE );
 				doquery("DELETE FROM {{table}} WHERE fleet_id=" . $FleetRow["fleet_id"], 'fleets');
 			}
 		}
@@ -966,7 +956,7 @@ class FlyingFleetHandler
 				$QryGetTargetPlanet  .= "`system` = '". $FleetRow['fleet_end_system'] ."' AND ";
 				$QryGetTargetPlanet  .= "`planet` = '". $FleetRow['fleet_end_planet'] ."' AND ";
 				$QryGetTargetPlanet  .= "`planet_type` = '". $FleetRow['fleet_end_type'] ."';";
-				$TargetPlanet         = doquery( $QryGetTargetPlanet, 'planets', true);
+				$TargetPlanet         = doquery( $QryGetTargetPlanet, 'planets', TRUE);
 				$TargetUserID         = $TargetPlanet['id_owner'];
 
 				$TargetAdress         = sprintf ($lang['sys_adress_planet'], $FleetRow['fleet_end_galaxy'], $FleetRow['fleet_end_system'], $FleetRow['fleet_end_planet']);
@@ -979,7 +969,7 @@ class FlyingFleetHandler
 				$TargetMessage       .= $TargetAdress. "</a>". $lang['sys_stay_mess_end'] ."<br />". $TargetAddedGoods;
 
 				SendSimpleMessage ( $TargetUserID, '', $FleetRow['fleet_start_time'], 5, $lang['sys_mess_qg'], $lang['sys_stay_mess_stay'], $TargetMessage);
-				$this->RestoreFleetToPlanet ( $FleetRow, false );
+				$this->RestoreFleetToPlanet ( $FleetRow, FALSE );
 				doquery("DELETE FROM {{table}} WHERE `fleet_id` = '". $FleetRow["fleet_id"] ."';", 'fleets');
 			}
 		}
@@ -997,7 +987,7 @@ class FlyingFleetHandler
 				$TargetMessage       .= $TargetAdress. "</a>". $lang['sys_stay_mess_bend'] ."<br />". $TargetAddedGoods;
 
 				SendSimpleMessage ( $FleetRow['fleet_owner'], '', $FleetRow['fleet_end_time'], 5, $lang['sys_mess_qg'], $lang['sys_mess_fleetback'], $TargetMessage);
-				$this->RestoreFleetToPlanet ( $FleetRow, true );
+				$this->RestoreFleetToPlanet ( $FleetRow, TRUE );
 				doquery("DELETE FROM {{table}} WHERE `fleet_id` = '". $FleetRow["fleet_id"] ."';", 'fleets');
 			}
 		}
@@ -1012,7 +1002,7 @@ class FlyingFleetHandler
 		$QryStartPlanet  .= "`galaxy` = '". $FleetRow['fleet_start_galaxy'] ."' AND ";
 		$QryStartPlanet  .= "`system` = '". $FleetRow['fleet_start_system'] ."' AND ";
 		$QryStartPlanet  .= "`planet` = '". $FleetRow['fleet_start_planet'] ."';";
-		$StartPlanet      = doquery( $QryStartPlanet, 'planets', true);
+		$StartPlanet      = doquery( $QryStartPlanet, 'planets', TRUE);
 		$StartName        = $StartPlanet['name'];
 		$StartOwner       = $StartPlanet['id_owner'];
 
@@ -1021,7 +1011,7 @@ class FlyingFleetHandler
 		$QryTargetPlanet .= "`galaxy` = '". $FleetRow['fleet_end_galaxy'] ."' AND ";
 		$QryTargetPlanet .= "`system` = '". $FleetRow['fleet_end_system'] ."' AND ";
 		$QryTargetPlanet .= "`planet` = '". $FleetRow['fleet_end_planet'] ."';";
-		$TargetPlanet     = doquery( $QryTargetPlanet, 'planets', true);
+		$TargetPlanet     = doquery( $QryTargetPlanet, 'planets', TRUE);
 		$TargetName       = $TargetPlanet['name'];
 		$TargetOwner      = $TargetPlanet['id_owner'];
 
@@ -1066,7 +1056,7 @@ class FlyingFleetHandler
 			{
 				$Message         = sprintf ($lang['sys_tran_mess_back'], $StartName, GetStartAdressLink($FleetRow, ''));
 				SendSimpleMessage ( $StartOwner, '', $FleetRow['fleet_end_time'], 5, $lang['sys_mess_tower'], $lang['sys_mess_fleetback'], $Message);
-				$this->RestoreFleetToPlanet ( $FleetRow, true );
+				$this->RestoreFleetToPlanet ( $FleetRow, TRUE );
 				doquery("DELETE FROM {{table}} WHERE fleet_id=" . $FleetRow["fleet_id"], 'fleets');
 			}
 		}
@@ -1078,7 +1068,7 @@ class FlyingFleetHandler
 
 		if ($FleetRow['fleet_start_time'] <= time())
 		{
-			$CurrentUser         = doquery("SELECT * FROM {{table}} WHERE `id` = '".$FleetRow['fleet_owner']."';", 'users', true);
+			$CurrentUser         = doquery("SELECT * FROM {{table}} WHERE `id` = '".$FleetRow['fleet_owner']."';", 'users', TRUE);
 			$CurrentUserID       = $FleetRow['fleet_owner'];
 			$QryGetTargetPlanet  = "SELECT * FROM {{table}} ";
 			$QryGetTargetPlanet .= "WHERE ";
@@ -1086,12 +1076,12 @@ class FlyingFleetHandler
 			$QryGetTargetPlanet .= "`system` = '". $FleetRow['fleet_end_system'] ."' AND ";
 			$QryGetTargetPlanet .= "`planet` = '". $FleetRow['fleet_end_planet'] ."' AND ";
 			$QryGetTargetPlanet .= "`planet_type` = '". $FleetRow['fleet_end_type'] ."';";
-			$TargetPlanet        = doquery( $QryGetTargetPlanet, 'planets', true);
+			$TargetPlanet        = doquery( $QryGetTargetPlanet, 'planets', TRUE);
 			$TargetUserID        = $TargetPlanet['id_owner'];
-			$CurrentPlanet       = doquery("SELECT * FROM {{table}} WHERE `galaxy` = '".$FleetRow['fleet_start_galaxy']."' AND `system` = '".$FleetRow['fleet_start_system']."' AND `planet` = '".$FleetRow['fleet_start_planet']."';", 'planets', true);
-			$CurrentSpyLvl       = $CurrentUser['spy_tech'] + ($CurrentUser['rpg_espion'] * ESPION);
-			$TargetUser          = doquery("SELECT * FROM {{table}} WHERE `id` = '".$TargetUserID."';", 'users', true);
-			$TargetSpyLvl        = $TargetUser['spy_tech'] + ($TargetUser['rpg_espion'] * ESPION);
+			$CurrentPlanet       = doquery("SELECT * FROM {{table}} WHERE `galaxy` = '".$FleetRow['fleet_start_galaxy']."' AND `system` = '".$FleetRow['fleet_start_system']."' AND `planet` = '".$FleetRow['fleet_start_planet']."';", 'planets', TRUE);
+			$CurrentSpyLvl       = $CurrentUser['spy_tech'] + ($CurrentUser['rpg_technocrate'] * TECHNOCRATE_SPY);
+			$TargetUser          = doquery("SELECT * FROM {{table}} WHERE `id` = '".$TargetUserID."';", 'users', TRUE);
+			$TargetSpyLvl        = $TargetUser['spy_tech'] + ($TargetUser['rpg_technocrate'] * TECHNOCRATE_SPY);
 			$fleet               = explode(";", $FleetRow['fleet_array']);
 			$fquery              = "";
 
@@ -1110,7 +1100,7 @@ class FlyingFleetHandler
 						$QryTargetGalaxy .= "`galaxy` = '". $FleetRow['fleet_end_galaxy'] ."' AND ";
 						$QryTargetGalaxy .= "`system` = '". $FleetRow['fleet_end_system'] ."' AND ";
 						$QryTargetGalaxy .= "`planet` = '". $FleetRow['fleet_end_planet'] ."';";
-						$TargetGalaxy     = doquery( $QryTargetGalaxy, 'galaxy', true);
+						$TargetGalaxy     = doquery( $QryTargetGalaxy, 'galaxy', TRUE);
 						$CristalDebris    = $TargetGalaxy['crystal'];
 						$SpyToolDebris    = $LS * 300;
 
@@ -1186,7 +1176,7 @@ class FlyingFleetHandler
 						$TargetMessage .= " [". $TargetPlanet["galaxy"] .":". $TargetPlanet["system"] .":". $TargetPlanet["planet"] ."].";
 
 						SendSimpleMessage ( $TargetUserID, '', $FleetRow['fleet_start_time'], 0, $lang['sys_mess_spy_control'], $lang['sys_mess_spy_activity'], $TargetMessage);
-						
+
 						if ($TargetChances >= $SpyerChances)
 						{
 							$QryUpdateGalaxy  = "UPDATE {{table}} SET ";
@@ -1204,7 +1194,7 @@ class FlyingFleetHandler
 				{
 					if ($FleetRow['fleet_end_time'] <= time())
 					{
-						$this->RestoreFleetToPlanet ( $FleetRow, true );
+						$this->RestoreFleetToPlanet ( $FleetRow, TRUE );
 						doquery("DELETE FROM {{table}} WHERE `fleet_id` = ". $FleetRow["fleet_id"], 'fleets');
 					}
 				}
@@ -1226,7 +1216,7 @@ class FlyingFleetHandler
 				$QrySelectGalaxy .= "`system` = '".$FleetRow['fleet_end_system']."' AND ";
 				$QrySelectGalaxy .= "`planet` = '".$FleetRow['fleet_end_planet']."' ";
 				$QrySelectGalaxy .= "LIMIT 1;";
-				$TargetGalaxy     = doquery( $QrySelectGalaxy, 'galaxy', true);
+				$TargetGalaxy     = doquery( $QrySelectGalaxy, 'galaxy', TRUE);
 
 				$FleetRecord         = explode(";", $FleetRow['fleet_array']);
 				$RecyclerCapacity    = 0;
@@ -1313,7 +1303,7 @@ class FlyingFleetHandler
 				pretty_number($FleetRow['fleet_resource_crystal']), $lang['Crystal'],
 				pretty_number($FleetRow['fleet_resource_deuterium']), $lang['Deuterium'] );
 				SendSimpleMessage ( $FleetRow['fleet_owner'], '', $FleetRow['fleet_end_time'], 4, $lang['sys_mess_spy_control'], $lang['sys_mess_fleetback'], $Message);
-				$this->RestoreFleetToPlanet ( $FleetRow, true );
+				$this->RestoreFleetToPlanet ( $FleetRow, TRUE );
 				doquery("DELETE FROM {{table}} WHERE `fleet_id` = '". $FleetRow["fleet_id"] ."';", 'fleets');
 			}
 		}
@@ -1339,8 +1329,8 @@ class FlyingFleetHandler
 				}
 				else
 				{
-					$NewOwnerPlanet = CreateOnePlanetRecord($FleetRow['fleet_end_galaxy'], $FleetRow['fleet_end_system'], $FleetRow['fleet_end_planet'], $FleetRow['fleet_owner'], $lang['sys_colo_defaultname'], false);
-					if ( $NewOwnerPlanet == true )
+					$NewOwnerPlanet = CreateOnePlanetRecord($FleetRow['fleet_end_galaxy'], $FleetRow['fleet_end_system'], $FleetRow['fleet_end_planet'], $FleetRow['fleet_owner'], $lang['sys_colo_defaultname'], FALSE);
+					if ( $NewOwnerPlanet == TRUE )
 					{
 						$TheMessage = $lang['sys_colo_arrival'] . $TargetAdress . $lang['sys_colo_allisok'];
 						SendSimpleMessage ( $FleetRow['fleet_owner'], '', $FleetRow['fleet_start_time'], 0, $lang['sys_colo_mess_from'], $lang['sys_colo_mess_report'], $TheMessage);
@@ -1403,21 +1393,21 @@ class FlyingFleetHandler
 		}
 		elseif ($FleetRow['fleet_end_time'] < time())
 		{
-			$this->RestoreFleetToPlanet ( $FleetRow, true );
+			$this->RestoreFleetToPlanet ( $FleetRow, TRUE );
 			doquery("DELETE FROM {{table}} WHERE fleet_id=" . $FleetRow["fleet_id"], 'fleets');
 		}
 	}
 
 	private function MissionCaseDestruction($FleetRow)
 	{
-		global $user, $phpEx, $pricelist, $lang, $resource, $CombatCaps;
+		global $user, $pricelist, $lang, $resource, $CombatCaps;
 
 		if ($FleetRow['fleet_start_time'] <= time())
 		{
 			if ($FleetRow['fleet_mess'] == 0)
 			{
 				if (!isset($CombatCaps[202]['sd']))
-					header("location:game." . $phpEx . "?page=fleet");
+					header("location:game.php?page=fleet");
 
 				$QryTargetPlanet  = "SELECT * FROM {{table}} ";
 				$QryTargetPlanet .= "WHERE ";
@@ -1425,7 +1415,7 @@ class FlyingFleetHandler
 				$QryTargetPlanet .= "`system` = '". $FleetRow['fleet_end_system'] ."' AND ";
 				$QryTargetPlanet .= "`planet` = '". $FleetRow['fleet_end_planet'] ."' AND ";
 				$QryTargetPlanet .= "`planet_type` = '". $FleetRow['fleet_end_type'] ."';";
-				$TargetPlanet     = doquery( $QryTargetPlanet, 'planets', true);
+				$TargetPlanet     = doquery( $QryTargetPlanet, 'planets', TRUE);
 				$TargetUserID     = $TargetPlanet['id_owner'];
 
 				$QryDepPlanet  = "SELECT * FROM {{table}} ";
@@ -1434,19 +1424,19 @@ class FlyingFleetHandler
 				$QryDepPlanet .= "`system` = '". $FleetRow['fleet_start_system'] ."' AND ";
 				$QryDepPlanet .= "`planet` = '". $FleetRow['fleet_start_planet'] ."' AND ";
 				$QryDepPlanet .= "`planet_type` = '". $FleetRow['fleet_start_type'] ."';";
-				$DepPlanet     = doquery( $QryDepPlanet, 'planets', true);
+				$DepPlanet     = doquery( $QryDepPlanet, 'planets', TRUE);
 				$DepName       = $DepPlanet['name'];
 
 				$QryCurrentUser   = "SELECT * FROM {{table}} ";
 				$QryCurrentUser  .= "WHERE ";
 				$QryCurrentUser  .= "`id` = '". $FleetRow['fleet_owner'] ."';";
-				$CurrentUser      = doquery($QryCurrentUser , 'users', true);
+				$CurrentUser      = doquery($QryCurrentUser , 'users', TRUE);
 				$CurrentUserID    = $CurrentUser['id'];
 
 				$QryTargetUser    = "SELECT * FROM {{table}} ";
 				$QryTargetUser   .= "WHERE ";
 				$QryTargetUser   .= "`id` = '". $TargetUserID ."';";
-				$TargetUser       = doquery($QryTargetUser, 'users', true);
+				$TargetUser       = doquery($QryTargetUser, 'users', TRUE);
 
 				for ($SetItem = 200; $SetItem < 500; $SetItem++)
 				{
@@ -1550,7 +1540,7 @@ class FlyingFleetHandler
 							$QryPlanet .= "`system` = '". $FleetRow['fleet_end_system'] ."' AND ";
 							$QryPlanet .= "`planet` = '". $FleetRow['fleet_end_planet'] ."' AND ";
 							$QryPlanet .= "`planet_type` = '1';";
-							$Planet     = doquery( $QryPlanet, 'planets', true);
+							$Planet     = doquery( $QryPlanet, 'planets', TRUE);
 							$IDPlanet     = $Planet['id'];
 
 							$Qryvue  = "UPDATE {{table}} SET ";
@@ -1645,7 +1635,7 @@ class FlyingFleetHandler
 				$AttackDate        = date("r", $FleetRow["fleet_start_time"]);
 				$title             = sprintf ($lang['sys_destruc_title'], $AttackDate);
 				$raport            = "<center><table><tr><td>". $title ."<br />";
-				$zniszczony        = false;
+				$zniszczony        = FALSE;
 				$a_zestrzelona     = 0;
 				$AttackTechon['A'] = $CurrentUser["military_tech"] * 10;
 				$AttackTechon['B'] = $CurrentUser["defence_tech"] * 10;
@@ -1698,7 +1688,7 @@ class FlyingFleetHandler
 						if ($a == 2)
 							$a_zestrzelona = 1;
 
-						$zniszczony = true;
+						$zniszczony = TRUE;
 						$raport .= "<br />". $lang['sys_destroyed'];
 					}
 
@@ -1738,7 +1728,7 @@ class FlyingFleetHandler
 					}
 					else
 					{
-						$zniszczony = true;
+						$zniszczony = TRUE;
 						$raport .= "<br />". $lang['sys_destroyed'];
 					}
 
@@ -1746,7 +1736,7 @@ class FlyingFleetHandler
 
 
 
-					if (($zniszczony == false) and !($a == 8))
+					if (($zniszczony == FALSE) and !($a == 8))
 					{
 						$AttackWaveStat    = sprintf ($lang['sys_attack_attack_wave'], floor($b["atakujacy"]["atak"]), floor($b["wrog"]["tarcza"]));
 						$DefendWavaStat    = sprintf ($lang['sys_attack_defend_wave'], floor($b["wrog"]["atak"]), floor($b["atakujacy"]["tarcza"]));
@@ -1886,8 +1876,8 @@ class FlyingFleetHandler
 		{
 			if ($FleetRow['fleet_mess'] == 0)
 			{
-				$planet = doquery('SELECT * FROM {{table}} WHERE `galaxy` = '.$FleetRow['fleet_end_galaxy'].' AND `system` = '.$FleetRow['fleet_end_system'].' AND `planet` = '.$FleetRow['fleet_end_planet'].' AND `planet_type` = '.$FleetRow['fleet_end_type'], 'planets', true);
-				$Target = doquery('SELECT id, defence_tech FROM  {{table}} WHERE `galaxy` = '.$FleetRow['fleet_end_galaxy'].' AND  `system` = '.$FleetRow['fleet_end_system'].' AND `planet` =  '.$FleetRow['fleet_end_planet'], 'users', true);
+				$planet = doquery('SELECT * FROM {{table}} WHERE `galaxy` = '.$FleetRow['fleet_end_galaxy'].' AND `system` = '.$FleetRow['fleet_end_system'].' AND `planet` = '.$FleetRow['fleet_end_planet'].' AND `planet_type` = '.$FleetRow['fleet_end_type'], 'planets', TRUE);
+				$Target = doquery('SELECT id, defence_tech FROM  {{table}} WHERE `galaxy` = '.$FleetRow['fleet_end_galaxy'].' AND  `system` = '.$FleetRow['fleet_end_system'].' AND `planet` =  '.$FleetRow['fleet_end_planet'], 'users', TRUE);
 
 				if ($planet['interceptor_misil'] >= $FleetRow['fleet_amount'])
 				{
@@ -1906,31 +1896,31 @@ class FlyingFleetHandler
 					switch ($FleetRow['fleet_target_obj'])
 					{
 						case 0:
-							$attack_order = Array(401, 402, 403, 404, 405, 406, 407, 408, 409, 503);
+							$attack_order = Array(401, 402, 403, 404, 405, 406, 407, 408, 503);
 							break;
 						case 1:
-							$attack_order = Array(402, 401, 403, 404, 405, 406, 407, 408, 409, 503);
+							$attack_order = Array(402, 401, 403, 404, 405, 406, 407, 408, 503);
 							break;
 						case 2:
-							$attack_order = Array(403, 401, 402, 404, 405, 406, 407, 408, 409, 503);
+							$attack_order = Array(403, 401, 402, 404, 405, 406, 407, 408, 503);
 							break;
 						case 3:
-							$attack_order = Array(404, 401, 402, 403, 405, 406, 407, 408, 409, 503);
+							$attack_order = Array(404, 401, 402, 403, 405, 406, 407, 408, 503);
 							break;
 						case 4:
-							$attack_order = Array(405, 401, 402, 403, 404, 406, 407, 408, 409, 503);
+							$attack_order = Array(405, 401, 402, 403, 404, 406, 407, 408, 503);
 							break;
 						case 5:
-							$attack_order = Array(406, 401, 402, 403, 404, 405, 407, 408, 409, 503);
+							$attack_order = Array(406, 401, 402, 403, 404, 405, 407, 408, 503);
 							break;
 						case 6:
-							$attack_order = Array(407, 401, 402, 403, 404, 405, 406, 408, 409, 503);
+							$attack_order = Array(407, 401, 402, 403, 404, 405, 406, 408, 503);
 							break;
 						case 7:
-							$attack_order = Array(408, 401, 402, 403, 404, 405, 406, 407, 409, 503);
+							$attack_order = Array(408, 401, 402, 403, 404, 405, 406, 407, 503);
 							break;
 						case 8:
-							$attack_order = Array(409, 401, 402, 403, 404, 405, 406, 407, 408, 503);
+							$attack_order = Array(401, 402, 403, 404, 405, 406, 407, 408, 503);
 							break;
 					}
 
@@ -1962,7 +1952,7 @@ class FlyingFleetHandler
 					}
 				}
 
-				$UserPlanet = doquery('SELECT name FROM {{table}} WHERE `galaxy` = '.$FleetRow['fleet_start_galaxy'].' AND `system` = '.$FleetRow['fleet_start_system'].' AND `planet` = '.$FleetRow['fleet_start_planet'].' AND `planet_type` = '.$FleetRow['fleet_start_type'], 'planets', true);
+				$UserPlanet = doquery('SELECT name FROM {{table}} WHERE `galaxy` = '.$FleetRow['fleet_start_galaxy'].' AND `system` = '.$FleetRow['fleet_start_system'].' AND `planet` = '.$FleetRow['fleet_start_planet'].' AND `planet_type` = '.$FleetRow['fleet_start_type'], 'planets', TRUE);
 
 				$search=array('%1%','%2%','%3%');
 				$replace=array($FleetRow['fleet_amount'], $UserPlanet['name'].' ['.  $FleetRow['fleet_start_galaxy'] .':'. $FleetRow['fleet_start_system']  .':'. $FleetRow['fleet_start_planet'].'] ', $planet['name']. ' ['.  $FleetRow['fleet_end_galaxy'] .':'. $FleetRow['fleet_end_system'] .':'.  $FleetRow['fleet_end_planet'].'] ');
@@ -1990,41 +1980,39 @@ class FlyingFleetHandler
 		{
 			if ($FleetRow['fleet_end_stay'] < time())
 			{
-				$PointsFlotte = array(
-				202 => 1.0,
-				203 => 1.5,
-				204 => 0.5,
-				205 => 1.5,
-				206 => 2.0,
-				207 => 2.5,
-				208 => 0.5,
-				209 => 1.0,
-				210 => 0.01,
-				211 => 3.0,
-				212 => 0.0,
-				213 => 3.5,
-				214 => 5.0,
-				215 => 3.2,
-				216 => 3.5,
-				);
+				$PointsFlotte = array	(
+											202 => 1.0,
+											203 => 1.5,
+											204 => 0.5,
+											205 => 1.5,
+											206 => 2.0,
+											207 => 2.5,
+											208 => 0.5,
+											209 => 1.0,
+											210 => 0.01,
+											211 => 3.0,
+											212 => 0.0,
+											213 => 3.5,
+											214 => 5.0,
+											215 => 3.2,
+										);
 
-				$RatioGain = array (
-				202 => 0.1,
-				203 => 0.1,
-				204 => 0.1,
-				205 => 0.5,
-				206 => 0.25,
-				207 => 0.125,
-				208 => 0.5,
-				209 => 0.1,
-				210 => 0.1,
-				211 => 0.0625,
-				212 => 0.0,
-				213 => 0.0625,
-				214 => 0.03125,
-				215 => 0.0625,
-				216 => 0.03125,
-				);
+				$RatioGain = array	(
+										202 => 0.1,
+										203 => 0.1,
+										204 => 0.1,
+										205 => 0.5,
+										206 => 0.25,
+										207 => 0.125,
+										208 => 0.5,
+										209 => 0.1,
+										210 => 0.1,
+										211 => 0.0625,
+										212 => 0.0,
+										213 => 0.0625,
+										214 => 0.03125,
+										215 => 0.0625,
+									);
 
 				$FleetStayDuration 	= ($FleetRow['fleet_end_stay'] - $FleetRow['fleet_start_time']) / 3600;
 				$farray 			= explode(";", $FleetRow['fleet_array']);
@@ -2060,14 +2048,14 @@ class FlyingFleetHandler
 					}
 					else
 					{
-						$all_destroyed = true;
+						$all_destroyed = TRUE;
 						foreach ($LaFlotte as $Ship => $Count)
 						{
 							if(floor($Count * $LostAmount)!=0)
 							{
 								$LostShips[$Ship] 	= floor($Count * $LostAmount);
 								$NewFleetArray     .= $Ship.",". ($Count - $LostShips[$Ship]) .";";
-								$all_destroyed 		= false;
+								$all_destroyed 		= FALSE;
 							}
 						}
 						if(!$all_destroyed)
@@ -2132,7 +2120,7 @@ class FlyingFleetHandler
 				elseif ($Hasard >= 8 && $Hasard < 11)
 				{
 					$FoundChance = $FleetPoints / $FleetCount;
-					for ($Ship = 202; $Ship < 216; $Ship++)
+					for ($Ship = 202; $Ship <= 215; $Ship++)
 					{
 						if ($LaFlotte[$Ship] != 0)
 						{
@@ -2150,7 +2138,7 @@ class FlyingFleetHandler
 							$NewFleetArray   .= $Ship.",". $Count .";";
 					}
 
-					if ( $FoundShip != null )
+					if ( $FoundShip != NULL )
 					{
 						foreach ($FoundShip as $Ship => $Count)
 						{
@@ -2189,6 +2177,7 @@ class FlyingFleetHandler
 				$QryUpdatePlanet .= "`metal` = `metal` + ". $FleetRow['fleet_resource_metal'] .", ";
 				$QryUpdatePlanet .= "`crystal` = `crystal` + ". $FleetRow['fleet_resource_crystal'] .", ";
 				$QryUpdatePlanet .= "`deuterium` = `deuterium` + ". $FleetRow['fleet_resource_deuterium'] ." ";
+
 				$QryUpdatePlanet .= "WHERE ";
 				$QryUpdatePlanet .= "`galaxy` = '". $FleetRow['fleet_start_galaxy'] ."' AND ";
 				$QryUpdatePlanet .= "`system` = '". $FleetRow['fleet_start_system'] ."' AND ";
@@ -2225,6 +2214,7 @@ class FlyingFleetHandler
 		$QryFleet  .= "`fleet_end_type`= ".      $planet['planet_type'] ." ) AND ";
 		$QryFleet  .= "( `fleet_start_time` < '". time() ."' OR `fleet_end_time` < '". time() ."' );";
 		$fleetquery = doquery( $QryFleet, 'fleets' );
+
 
 		while ($CurrentFleet = mysql_fetch_array($fleetquery))
 		{

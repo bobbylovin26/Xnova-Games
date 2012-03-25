@@ -1,30 +1,16 @@
 <?php
 
-##############################################################################
-# *                                                                          #
-# * XG PROYECT                                                               #
-# *                                                                          #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net         #
-# *                                                                          #
-# *                                                                          #
-# *  This program is free software: you can redistribute it and/or modify    #
-# *  it under the terms of the GNU General Public License as published by    #
-# *  the Free Software Foundation, either version 3 of the License, or       #
-# *  (at your option) any later version.                                     #
-# *                                                                          #
-# *  This program is distributed in the hope that it will be useful,         #
-# *  but WITHOUT ANY WARRANTY; without even the implied warranty of          #
-# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #
-# *  GNU General Public License for more details.                            #
-# *                                                                          #
-##############################################################################
+/**
+ * @project XG Proyect
+ * @version 2.10.x build 0000
+ * @copyright Copyright (C) 2008 - 2012
+ */
 
-define('INSIDE'  , true);
-define('INSTALL' , false);
+define('INSIDE'  , TRUE);
+define('INSTALL' , FALSE);
+define('XGP_ROOT',	'./');
 
-$xgp_root = './';
-include($xgp_root . 'extension.inc.php');
-include($xgp_root . 'common.'.$phpEx);
+include(XGP_ROOT . 'global.php');
 
 $g     = intval($_GET['galaxy']);
 $s     = intval($_GET['system']);
@@ -37,19 +23,19 @@ if ($anz < 0)
 	$anz = 0;
 }
 
-$currentplanet      = doquery("SELECT * FROM {{table}} WHERE id={$user['current_planet']}",'planets',true);
+$currentplanet      = doquery("SELECT * FROM {{table}} WHERE id={$user['current_planet']}",'planets',TRUE);
 $iraks          = $currentplanet['interplanetary_misil'];
 $tempvar1      = abs($s - $currentplanet['system']);
 $tempvar2      = ($user['impulse_motor_tech'] * 2) - 1;
-$tempvar3      = doquery("SELECT * FROM {{table}} WHERE galaxy = ".$g."  AND system = ".$s." AND planet = ".$i." AND planet_type = 1 limit 1",  'planets',true);
-$tempvar4      = doquery("SELECT * FROM {{table}} WHERE id = ".$tempvar3['id_owner']. " limit 1",'users', true);
+$tempvar3      = doquery("SELECT * FROM {{table}} WHERE galaxy = ".$g."  AND system = ".$s." AND planet = ".$i." AND planet_type = 1 limit 1",  'planets',TRUE);
+$tempvar4      = doquery("SELECT * FROM {{table}} WHERE id = ".$tempvar3['id_owner']. " limit 1",'users', TRUE);
 
-$protection      = $game_config['noobprotection'];
-$protectiontime  = $game_config['noobprotectiontime'];
-$protectionmulti = $game_config['noobprotectionmulti'];
+$protection      = read_config ( 'noobprotection' );
+$protectiontime  = read_config ( 'noobprotectiontime' );
+$protectionmulti = read_config ( 'noobprotectionmulti' );
 
-$UserPoints      = doquery("SELECT * FROM {{table}} WHERE `stat_type` =  '1' AND `stat_code` = '1' AND `id_owner` = '". $user['id'] ."';",  'statpoints', true);
-$User2Points      = doquery("SELECT * FROM {{table}} WHERE `stat_type` =  '1' AND `stat_code` = '1' AND `id_owner` = '". $tempvar3['id_owner']  ."';", 'statpoints', true);
+$UserPoints      = doquery("SELECT * FROM {{table}} WHERE `stat_type` =  '1' AND `stat_code` = '1' AND `id_owner` = '". $user['id'] ."';",  'statpoints', TRUE);
+$User2Points      = doquery("SELECT * FROM {{table}} WHERE `stat_type` =  '1' AND `stat_code` = '1' AND `id_owner` = '". $tempvar3['id_owner']  ."';", 'statpoints', TRUE);
 
 $MyGameLevel     = $UserPoints['total_points'];
 $HeGameLevel     = $User2Points['total_points'];
@@ -117,7 +103,7 @@ if ($errors != 0)
 
 $ziel_id = $tempvar3["id_owner"];
 
-$flugzeit = round(((30 + (60 * $tempvar1)) * 2500) / $game_config['fleet_speed']);
+$flugzeit = round(((30 + (60 * $tempvar1)) * 2500) / read_config ( 'fleet_speed' ) );
 
 $DefenseLabel =
 array(
@@ -129,7 +115,6 @@ array(
 5 => $lang['tech'][406],
 6 => $lang['tech'][407],
 7 => $lang['tech'][408],
-8 => $lang['tech'][409],
 'all' => $lang['ma_all']);
 
 

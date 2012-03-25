@@ -1,30 +1,16 @@
 <?php
 
-##############################################################################
-# *																			 #
-# * XG PROYECT																 #
-# *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
-# *																			 #
-# *																			 #
-# *  This program is free software: you can redistribute it and/or modify    #
-# *  it under the terms of the GNU General Public License as published by    #
-# *  the Free Software Foundation, either version 3 of the License, or       #
-# *  (at your option) any later version.									 #
-# *																			 #
-# *  This program is distributed in the hope that it will be useful,		 #
-# *  but WITHOUT ANY WARRANTY; without even the implied warranty of			 #
-# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the			 #
-# *  GNU General Public License for more details.							 #
-# *																			 #
-##############################################################################
+/**
+ * @project XG Proyect
+ * @version 2.10.x build 0000
+ * @copyright Copyright (C) 2008 - 2012
+ */
 
-define('INSIDE'  , true);
-define('INSTALL' , false);
+define('INSIDE'  ,  TRUE);
+define('INSTALL' , FALSE);
+define('XGP_ROOT',	'./');
 
-$xgp_root = './';
-include($xgp_root . 'extension.inc.php');
-include($xgp_root . 'common.' . $phpEx);
+include(XGP_ROOT . 'global.php');
 
 $UserSpyProbes  = $planetrow['spy_sonde'];
 $UserRecycles   = $planetrow['recycler'];
@@ -33,7 +19,7 @@ $UserMissiles   = $planetrow['interplanetary_misil'];
 
 $fleet          = array();
 $speedalls      = array();
-$PartialFleet   = false;
+$PartialFleet   = FALSE;
 $PartialCount   = 0;
 
 foreach ($reslist['fleet'] as $Node => $ShipID)
@@ -47,7 +33,7 @@ foreach ($reslist['fleet'] as $Node => $ShipID)
 			$fleet['fleetlist']            .= $ShipID .",". $planetrow[$resource[$ShipID]] .";";
 			$fleet['amount']               += $planetrow[$resource[$ShipID]];
 			$PartialCount                  += $planetrow[$resource[$ShipID]];
-			$PartialFleet                   = true;
+			$PartialFleet                   = TRUE;
 		}
 		else
 		{
@@ -59,7 +45,7 @@ foreach ($reslist['fleet'] as $Node => $ShipID)
 	}
 }
 
-if ($PartialFleet == true)
+if ($PartialFleet == TRUE)
 {
 	if ( $PartialCount < 1 )
 	{
@@ -68,9 +54,9 @@ if ($PartialFleet == true)
 	}
 }
 
-$PrNoob      = $game_config['noobprotection'];
-$PrNoobTime  = $game_config['noobprotectiontime'];
-$PrNoobMulti = $game_config['noobprotectionmulti'];
+$PrNoob      = read_config ( 'noobprotection' );
+$PrNoobTime  = read_config ( 'noobprotectiontime' );
+$PrNoobMulti = read_config ( 'noobprotectionmulti' );
 
 $galaxy          = intval($_POST['galaxy']);
 if ($galaxy > MAX_GALAXY_IN_WORLD || $galaxy < 1)
@@ -97,7 +83,7 @@ if ($planet > MAX_PLANET_IN_SYSTEM || $planet < 1)
 
 $FleetArray = $fleet['fleetarray'];
 
-$CurrentFlyingFleets = doquery("SELECT COUNT(fleet_id) AS `Nbre` FROM {{table}} WHERE `fleet_owner` = '".$user['id']."';", 'fleets', true);
+$CurrentFlyingFleets = doquery("SELECT COUNT(fleet_id) AS `Nbre` FROM {{table}} WHERE `fleet_owner` = '".$user['id']."';", 'fleets', TRUE);
 $CurrentFlyingFleets = $CurrentFlyingFleets["Nbre"];
 
 $QrySelectEnemy  = "SELECT * FROM {{table}} ";
@@ -106,7 +92,7 @@ $QrySelectEnemy .= "`galaxy` = '". intval($_POST['galaxy']) ."' AND ";
 $QrySelectEnemy .= "`system` = '". intval($_POST['system']) ."' AND ";
 $QrySelectEnemy .= "`planet` = '". intval($_POST['planet']) ."' AND ";
 $QrySelectEnemy .= "`planet_type` = '". intval($_POST['planettype']) ."';";
-$TargetRow = doquery( $QrySelectEnemy, 'planets', true);
+$TargetRow = doquery( $QrySelectEnemy, 'planets', TRUE);
 
 if ($TargetRow['id_owner'] == '')
 {
@@ -114,13 +100,13 @@ if ($TargetRow['id_owner'] == '')
 }
 elseif ($TargetRow['id_owner'] != '')
 {
-	$TargetUser = doquery("SELECT * FROM {{table}} WHERE `id` = '". $TargetRow['id_owner'] ."';", 'users', true);
+	$TargetUser = doquery("SELECT * FROM {{table}} WHERE `id` = '". $TargetRow['id_owner'] ."';", 'users', TRUE);
 }
 
 // invisible debris by jstar
 if ($_POST['mission']== 8)
 {
-	$TargetGPlanet = doquery("SELECT invisible_start_time, metal, crystal FROM {{table}} WHERE galaxy = '". intval($_POST['galaxy']) ."' AND system = '". intval($_POST['system']) ."' AND planet = '". intval($_POST['planet']) ."'", "galaxy",true);
+	$TargetGPlanet = doquery("SELECT invisible_start_time, metal, crystal FROM {{table}} WHERE galaxy = '". intval($_POST['galaxy']) ."' AND system = '". intval($_POST['system']) ."' AND planet = '". intval($_POST['planet']) ."'", "galaxy",TRUE);
 
 	if($TargetGPlanet['metal'] == 0 && $TargetGPlanet['crystal'] == 0 && time() > ($TargetGPlanet['invisible_start_time']+DEBRIS_LIFE_TIME))
 	{
@@ -128,15 +114,15 @@ if ($_POST['mission']== 8)
 	}
 }
 
-$UserPoints    = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $user['id'] ."';", 'statpoints', true);
-$User2Points   = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $TargetUser['id'] ."';", 'statpoints', true);
+$UserPoints    = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $user['id'] ."';", 'statpoints', TRUE);
+$User2Points   = doquery("SELECT * FROM {{table}} WHERE `stat_type` = '1' AND `stat_code` = '1' AND `id_owner` = '". $TargetUser['id'] ."';", 'statpoints', TRUE);
 
 $CurrentPoints = $UserPoints['total_points'];
 $TargetPoints  = $User2Points['total_points'];
 
 $TargetVacat   = $TargetUser['urlaubs_modus'];
 
-if ((($user[$resource[108]] + 1) + ($user['rpg_commandant'] * COMMANDANT)) <= $CurrentFlyingFleets)
+if ((get_max_fleets ( $user[$resource[108]] , $user['rpg_amiral'] )) <= $CurrentFlyingFleets)
 {
 	$ResultMessage = "612; ".$lang['fa_no_more_slots']." |".$CurrentFlyingFleets." ".$UserSpyProbes." ".$UserRecycles." ".$UserMissiles;
 	die ($ResultMessage);
@@ -248,14 +234,14 @@ if ($UserDeuterium < $consumption)
 
 if ($TargetRow['id_level'] > $user['authlevel'])
 {
-	$Allowed = true;
+	$Allowed = TRUE;
 	switch ($_POST['mission'])
 	{
 		case 1:
 		case 2:
 		case 6:
 		case 9:
-		$Allowed = false;
+		$Allowed = FALSE;
 		break;
 		case 3:
 		case 4:
@@ -266,7 +252,7 @@ if ($TargetRow['id_level'] > $user['authlevel'])
 		break;
 		default:
 	}
-	if ($Allowed == false)
+	if ($Allowed == FALSE)
 	{
 		$ResultMessage = "619; ".$lang['fa_action_not_allowed']." |".$CurrentFlyingFleets." ".$UserSpyProbes." ".$UserRecycles." ".$UserMissiles;
 		die ( $ResultMessage );
@@ -306,7 +292,7 @@ doquery( $QryUpdatePlanet, 'planets');
 
 $CurrentFlyingFleets++;
 
-$planetrow 		= doquery("SELECT * FROM {{table}} WHERE `id` = '". $user['current_planet'] ."';", 'planets', true);
+$planetrow 		= doquery("SELECT * FROM {{table}} WHERE `id` = '". $user['current_planet'] ."';", 'planets', TRUE);
 $ResultMessage  = "600; ".$lang['fa_sending']." ". $FleetShipCount  ." ". $lang['tech'][$Ship] ." a ". $_POST['galaxy'] .":". $_POST['system'] .":". $_POST['planet'] ."...|";
 $ResultMessage .= $CurrentFlyingFleets ." ".$UserSpyProbes." ".$UserRecycles." ".$UserMissiles;
 

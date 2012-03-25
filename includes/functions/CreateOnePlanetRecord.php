@@ -1,33 +1,17 @@
 <?php
 
-##############################################################################
-# *																			 #
-# * XG PROYECT																 #
-# *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
-# *																			 #
-# *																			 #
-# *  This program is free software: you can redistribute it and/or modify    #
-# *  it under the terms of the GNU General Public License as published by    #
-# *  the Free Software Foundation, either version 3 of the License, or       #
-# *  (at your option) any later version.									 #
-# *																			 #
-# *  This program is distributed in the hope that it will be useful,		 #
-# *  but WITHOUT ANY WARRANTY; without even the implied warranty of			 #
-# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the			 #
-# *  GNU General Public License for more details.							 #
-# *																			 #
-##############################################################################
+/**
+ * @project XG Proyect
+ * @version 2.10.x build 0000
+ * @copyright Copyright (C) 2008 - 2012
+ */
 
 
-if(!defined('INSIDE'))
+if(!defined('INSIDE')){die(header("location:../../"));}
+
+function PlanetSizeRandomiser($Position,$HomeWorld = FALSE)
 {
-   die(header("location:../../"));
-}
-
-function PlanetSizeRandomiser($Position,$HomeWorld = false)
-{
-   global $game_config,$user;
+   global $user;
    if(!$HomeWorld)
    {
       // linear distribution probability with right average, information from http://www.osite.it/index.php?zone=guide=colonizzare
@@ -38,7 +22,7 @@ function PlanetSizeRandomiser($Position,$HomeWorld = false)
    }
    else
    {
-      $PlanetFields = $game_config['initial_fields'];
+      $PlanetFields = read_config ( 'initial_fields' );
    }
    $PlanetSize = floor(sqrt($PlanetFields) * 1000);
    $return['diameter'] = $PlanetSize;
@@ -46,18 +30,18 @@ function PlanetSizeRandomiser($Position,$HomeWorld = false)
    return $return;
 }
 
-function CreateOnePlanetRecord($Galaxy,$System,$Position,$PlanetOwnerID,$PlanetName = '',$HomeWorld = false)
+function CreateOnePlanetRecord($Galaxy,$System,$Position,$PlanetOwnerID,$PlanetName = '',$HomeWorld = FALSE)
 {
    global $lang;
-   
+
    $QrySelectPlanet = "SELECT	`id` ";
    $QrySelectPlanet .= "FROM {{table}} ";
    $QrySelectPlanet .= "WHERE ";
    $QrySelectPlanet .= "`galaxy` = '" . $Galaxy . "' AND ";
    $QrySelectPlanet .= "`system` = '" . $System . "' AND ";
    $QrySelectPlanet .= "`planet` = '" . $Position . "';";
-   $PlanetExist = doquery($QrySelectPlanet,'planets',true);
-   
+   $PlanetExist = doquery($QrySelectPlanet,'planets',TRUE);
+
    if(!$PlanetExist)
    {
       $planet = PlanetSizeRandomiser($Position,$HomeWorld);
@@ -65,24 +49,24 @@ function CreateOnePlanetRecord($Galaxy,$System,$Position,$PlanetOwnerID,$PlanetN
       $planet['metal'] = BUILD_METAL;
       $planet['crystal'] = BUILD_CRISTAL;
       $planet['deuterium'] = BUILD_DEUTERIUM;
-      $planet['metal_perhour'] = $game_config['metal_basic_income'];
-      $planet['crystal_perhour'] = $game_config['crystal_basic_income'];
-      $planet['deuterium_perhour'] = $game_config['deuterium_basic_income'];
+      $planet['metal_perhour'] = read_config ( 'metal_basic_income' );
+      $planet['crystal_perhour'] = read_config ( 'crystal_basic_income' );
+      $planet['deuterium_perhour'] = read_config ( 'deuterium_basic_income' );
       $planet['metal_max'] = BASE_STORAGE_SIZE;
       $planet['crystal_max'] = BASE_STORAGE_SIZE;
       $planet['deuterium_max'] = BASE_STORAGE_SIZE;
-      
+
       // Posistion  1 -  3: 80% entre  40 et  70 Cases (  55+ / -15 )
       // Posistion  4 -  6: 80% entre 120 et 310 Cases ( 215+ / -95 )
       // Posistion  7 -  9: 80% entre 105 et 195 Cases ( 150+ / -45 )
       // Posistion 10 - 12: 80% entre  75 et 125 Cases ( 100+ / -25 )
       // Posistion 13 - 15: 80% entre  60 et 190 Cases ( 125+ / -65 )
-      
+
 
       $planet['galaxy'] = $Galaxy;
       $planet['system'] = $System;
       $planet['planet'] = $Position;
-      
+
       if($Position == 1 || $Position == 2 || $Position == 3)
       {
          $PlanetType = array('trocken');
@@ -131,7 +115,7 @@ function CreateOnePlanetRecord($Galaxy,$System,$Position,$PlanetOwnerID,$PlanetN
          $planet['temp_min'] = rand(-120,10);
          $planet['temp_max'] = $planet['temp_min'] + 40;
       }
-      
+
       $planet['image'] = $PlanetType[rand(0,count($PlanetType) - 1)];
       $planet['image'] .= $PlanetClass[rand(0,count($PlanetClass) - 1)];
       $planet['image'] .= $PlanetDesign[rand(0,count($PlanetDesign) - 1)];
@@ -139,12 +123,12 @@ function CreateOnePlanetRecord($Galaxy,$System,$Position,$PlanetOwnerID,$PlanetN
       $planet['id_owner'] = $PlanetOwnerID;
       $planet['last_update'] = time();
       $planet['name'] = ($PlanetName == '') ? $lang['sys_colo_defaultname'] : $PlanetName;
-      
+
       $QryInsertPlanet = "INSERT INTO {{table}} SET ";
-      
-      if($HomeWorld == false)
+
+      if($HomeWorld == FALSE)
          $QryInsertPlanet .= "`name` = '" . $lang['fcp_colony'] . "', ";
-      
+
       $QryInsertPlanet .= "`id_owner` = '" . $planet['id_owner'] . "', ";
       $QryInsertPlanet .= "`id_level` = '" . $user['authlevel'] . "', ";
       $QryInsertPlanet .= "`galaxy` = '" . $planet['galaxy'] . "', ";
@@ -167,7 +151,7 @@ function CreateOnePlanetRecord($Galaxy,$System,$Position,$PlanetOwnerID,$PlanetN
       $QryInsertPlanet .= "`deuterium_perhour` = '" . $planet['deuterium_perhour'] . "', ";
       $QryInsertPlanet .= "`deuterium_max` = '" . $planet['deuterium_max'] . "';";
       doquery($QryInsertPlanet,'planets');
-      
+
       $QrySelectPlanet = "SELECT `id` ";
       $QrySelectPlanet .= "FROM {{table}} ";
       $QrySelectPlanet .= "WHERE ";
@@ -175,16 +159,16 @@ function CreateOnePlanetRecord($Galaxy,$System,$Position,$PlanetOwnerID,$PlanetN
       $QrySelectPlanet .= "`system` = '" . $planet['system'] . "' AND ";
       $QrySelectPlanet .= "`planet` = '" . $planet['planet'] . "' AND ";
       $QrySelectPlanet .= "`id_owner` = '" . $planet['id_owner'] . "';";
-      $GetPlanetID = doquery($QrySelectPlanet,'planets',true);
-      
+      $GetPlanetID = doquery($QrySelectPlanet,'planets',TRUE);
+
       $QrySelectGalaxy = "SELECT * ";
       $QrySelectGalaxy .= "FROM {{table}} ";
       $QrySelectGalaxy .= "WHERE ";
       $QrySelectGalaxy .= "`galaxy` = '" . $planet['galaxy'] . "' AND ";
       $QrySelectGalaxy .= "`system` = '" . $planet['system'] . "' AND ";
       $QrySelectGalaxy .= "`planet` = '" . $planet['planet'] . "';";
-      $GetGalaxyID = doquery($QrySelectGalaxy,'galaxy',true);
-      
+      $GetGalaxyID = doquery($QrySelectGalaxy,'galaxy',TRUE);
+
       if($GetGalaxyID)
       {
          $QryUpdateGalaxy = "UPDATE {{table}} SET ";
@@ -204,14 +188,14 @@ function CreateOnePlanetRecord($Galaxy,$System,$Position,$PlanetOwnerID,$PlanetN
          $QryInsertGalaxy .= "`id_planet` = '" . $GetPlanetID['id'] . "';";
          doquery($QryInsertGalaxy,'galaxy');
       }
-      
-      $RetValue = true;
+
+      $RetValue = TRUE;
    }
    else
    {
-      $RetValue = false;
+      $RetValue = FALSE;
    }
-   
+
    return $RetValue;
 }
 ?>

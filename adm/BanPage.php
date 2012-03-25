@@ -1,31 +1,18 @@
 <?php
 
-##############################################################################
-# *																			 #
-# * XG PROYECT																 #
-# *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
-# *																			 #
-# *																			 #
-# *  This program is free software: you can redistribute it and/or modify    #
-# *  it under the terms of the GNU General Public License as published by    #
-# *  the Free Software Foundation, either version 3 of the License, or       #
-# *  (at your option) any later version.									 #
-# *																			 #
-# *  This program is distributed in the hope that it will be useful,		 #
-# *  but WITHOUT ANY WARRANTY; without even the implied warranty of			 #
-# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the			 #
-# *  GNU General Public License for more details.							 #
-# *																			 #
-##############################################################################
+/**
+ * @project XG Proyect
+ * @version 2.10.x build 0000
+ * @copyright Copyright (C) 2008 - 2012
+ */
 
-define('INSIDE'  , true);
-define('INSTALL' , false);
-define('IN_ADMIN', true);
+define('INSIDE'  , TRUE);
+define('INSTALL' , FALSE);
+define('IN_ADMIN', TRUE);
+define('XGP_ROOT', './../');
 
-$xgp_root = './../';
-include($xgp_root . 'extension.inc.php');
-include($xgp_root . 'common.' . $phpEx);
+include(XGP_ROOT . 'global.php');
+include('AdminFunctions/Autorization.php');
 
 if ($EditUsers != 1) die(message ($lang['404_page']));
 
@@ -85,8 +72,8 @@ mysql_free_result($UserListBan);
 
 if($_GET['panel'])
 {
-	$QueryUserBan			=	doquery("SELECT * FROM {{table}} WHERE `who` = '".$_GET['ban_name']."'", "banned", true);
-	$QueryUserBanVacation	=	doquery("SELECT urlaubs_modus FROM {{table}} WHERE `username` = '".$_GET['ban_name']."'", "users", true);
+	$QueryUserBan			=	doquery("SELECT * FROM {{table}} WHERE `who` = '".$_GET['ban_name']."'", "banned", TRUE);
+	$QueryUserBanVacation	=	doquery("SELECT urlaubs_modus FROM {{table}} WHERE `username` = '".$_GET['ban_name']."'", "users", TRUE);
 
 	if (!$QueryUserBan)
 	{
@@ -121,7 +108,7 @@ if($_GET['panel'])
 	if ($_POST['bannow'])
 	{
 		if(!is_numeric($_POST['days']) || !is_numeric($_POST['hour']) || !is_numeric($_POST['mins']) || !is_numeric($_POST['secs']))
-			return display( parsetemplate(gettemplate("adm/BanOptionsResultBody"), $parse), false, '', true, false);
+			return display( parsetemplate(gettemplate("adm/BanOptionsResultBody"), $parse), FALSE, '', TRUE, FALSE);
 
 		$name              = $_POST['ban_name'];
 		$reas              = $_POST['why'];
@@ -209,12 +196,11 @@ if($_GET['panel'])
 
 		LogFunction($Log, "GeneralLog", $LogCanWork);
 
-
-		header ("Location: BanPage.php?panel=ban_name&ban_name=".$_GET['ban_name']."&succes=yes");
+		header ( 'location:BanPage.php?panel=ban_name&ban_name='.$_GET['ban_name'].'&succes=yes' );
 	}
 	if ($_GET['succes']	==	'yes')
 		$parse['display']	=	"<tr><th colspan=\"2\"><font color=lime>". $lang['bo_the_player'] . $name . $lang['bo_banned'] ."</font></th></tr>";
-	display( parsetemplate(gettemplate("adm/BanOptionsResultBody"), $parse), false, '', true, false);
+	display( parsetemplate(gettemplate("adm/BanOptionsResultBody"), $parse), FALSE, '', TRUE, FALSE);
 }
 elseif($_POST && $_POST['unban_name'])
 {
@@ -229,12 +215,12 @@ elseif($_POST && $_POST['unban_name'])
 
 	LogFunction($Log, "GeneralLog", $LogCanWork);
 
-	header ("Location: BanPage.php?succes2=yes");
+	header ( 'location:BanPage.php?succes2=yes' );
 }
 	if ($_GET['succes2'] == 'yes')
 		$parse['display2']	=	"<tr><th colspan=\"2\"><font color=lime>". $lang['bo_the_player2'] . $name . $lang['bo_unbanned'] ."</font></th></tr>";
 
 
 
-display( parsetemplate(gettemplate("adm/BanOptions"), $parse), false, '', true, false);
+display( parsetemplate(gettemplate("adm/BanOptions"), $parse), FALSE, '', TRUE, FALSE);
 ?>

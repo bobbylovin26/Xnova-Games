@@ -1,41 +1,32 @@
 <?php
 
-##############################################################################
-# *                                                                             #
-# * XG PROYECT                                                                 #
-# *                                                                           #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net           #
-# *                                                                             #
-# *                                                                             #
-# *  This program is free software: you can redistribute it and/or modify    #
-# *  it under the terms of the GNU General Public License as published by    #
-# *  the Free Software Foundation, either version 3 of the License, or       #
-# *  (at your option) any later version.                                     #
-# *                                                                             #
-# *  This program is distributed in the hope that it will be useful,         #
-# *  but WITHOUT ANY WARRANTY; without even the implied warranty of             #
-# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             #
-# *  GNU General Public License for more details.                             #
-# *                                                                             #
-##############################################################################
+/**
+ * @project XG Proyect
+ * @version 2.10.x build 0000
+ * @copyright Copyright (C) 2008 - 2012
+ */
+
+if(!defined('INSIDE')){ die(header ( 'location:../../' ));}
 
 class CheckSession
 {
     private function CheckCookies ($IsUserChecked)
     {
-        global $game_config, $xgp_root, $phpEx, $lang;
+        global $lang;
 
         $UserRow = array();
 
-        include($xgp_root . 'config.' . $phpEx);
+        include(XGP_ROOT . 'config.php');
 
-        if (isset($_COOKIE[$game_config['COOKIE_NAME']]))
+    	$game_cookie	=	read_config ( 'cookie_name' );
+
+        if (isset($_COOKIE[$game_cookie]))
         {
-            $TheCookie  = explode("/%/", $_COOKIE[$game_config['COOKIE_NAME']]);
+            $TheCookie	= explode("/%/", $_COOKIE[$game_cookie]);
+
             // START FIX BY JSTAR
-            $TheCookie     = array_map('mysql_real_escape_string',$TheCookie);
+            $TheCookie	= array_map ( 'mysql_escape_string' , $TheCookie );
             // END FIX BY JSTAR
-            //$UserResult = doquery("SELECT * FROM {{table}} WHERE `username` = '". mysql_escape_string($TheCookie[1]). "';", 'users');
 
             // BETTER QUERY BY LUCKY! REDUCE GENERAL QUERY FROM 11 TO 10.
             $UserResult = doquery("SELECT {{table}}users.*, {{table}}statpoints.total_rank, {{table}}statpoints.total_points, {{table}}users.id
@@ -46,19 +37,19 @@ class CheckSession
 
             if (mysql_num_rows($UserResult) != 1)
             {
-                message($lang['ccs_multiple_users'], $xgp_root, 5, false, false);
+                message($lang['ccs_multiple_users'], XGP_ROOT, 5, FALSE, FALSE);
             }
 
             $UserRow    = mysql_fetch_array($UserResult);
 
             if ($UserRow["id"] != $TheCookie[0])
             {
-                message($lang['ccs_other_user'], $xgp_root, 5,  false, false);
+                message($lang['ccs_other_user'], XGP_ROOT, 5,  FALSE, FALSE);
             }
 
             if (md5($UserRow["password"] . "--" . $dbsettings["secretword"]) !== $TheCookie[2])
             {
-                message($lang['css_different_password'], $xgp_root, 5,  false, false);
+                message($lang['css_different_password'], XGP_ROOT, 5,  FALSE, FALSE);
             }
 
             $NextCookie = implode("/%/", $TheCookie);
@@ -72,9 +63,9 @@ class CheckSession
                 $ExpireTime = 0;
             }
 
-            if ($IsUserChecked == false)
+            if ($IsUserChecked == FALSE)
             {
-                setcookie ($game_config['COOKIE_NAME'], $NextCookie, $ExpireTime, "/", "", 0);
+                setcookie ($game_cookie, $NextCookie, $ExpireTime, "/", "", 0);
                 $QryUpdateUser  = "UPDATE {{table}} SET ";
                 $QryUpdateUser .= "`onlinetime` = '". time() ."', ";
                 $QryUpdateUser .= "`current_page` = '". mysql_real_escape_string(htmlspecialchars($_SERVER['REQUEST_URI'])) ."', ";
@@ -83,7 +74,7 @@ class CheckSession
                 $QryUpdateUser .= "WHERE ";
                 $QryUpdateUser .= "`id` = '". intval($TheCookie[0]) ."' LIMIT 1;";
                 doquery( $QryUpdateUser, 'users');
-                $IsUserChecked = true;
+                $IsUserChecked = TRUE;
             }
             else
             {
@@ -95,7 +86,7 @@ class CheckSession
                 $QryUpdateUser .= "WHERE ";
                 $QryUpdateUser .= "`id` = '". intval($TheCookie[0]) ."' LIMIT 1;";
                 doquery( $QryUpdateUser, 'users');
-                $IsUserChecked = true;
+                $IsUserChecked = TRUE;
             }
         }
 
@@ -109,12 +100,12 @@ class CheckSession
 
     public function CheckUser($IsUserChecked)
     {
-        global $user, $xgp_root, $lang;
+        global $user, $lang;
 
         $Result        = $this->CheckCookies($IsUserChecked);
         $IsUserChecked = $Result['state'];
 
-        if ($Result['record'] != false)
+        if ($Result['record'] != FALSE)
         {
             $user = $Result['record'];
 
@@ -129,8 +120,8 @@ class CheckSession
         else
         {
             $RetValue['record'] = array();
-            $RetValue['state']  = false;
-            header("location:".$xgp_root);
+            $RetValue['state']  = FALSE;
+        	header ( 'location:' . XGP_ROOT );
         }
 
         return $RetValue;

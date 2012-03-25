@@ -1,62 +1,52 @@
 <?php
 
-##############################################################################
-# *																			 #
-# * XG PROYECT																 #
-# *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
-# *																			 #
-# *																			 #
-# *  This program is free software: you can redistribute it and/or modify    #
-# *  it under the terms of the GNU General Public License as published by    #
-# *  the Free Software Foundation, either version 3 of the License, or       #
-# *  (at your option) any later version.									 #
-# *																			 #
-# *  This program is distributed in the hope that it will be useful,		 #
-# *  but WITHOUT ANY WARRANTY; without even the implied warranty of			 #
-# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the			 #
-# *  GNU General Public License for more details.							 #
-# *																			 #
-##############################################################################
+/**
+ * @project XG Proyect
+ * @version 2.10.x build 0000
+ * @copyright Copyright (C) 2008 - 2012
+ */
 
-define('INSIDE'  , true);
-define('INSTALL' , true);
+define('INSIDE'  		,   	 TRUE);
+define('XGP_ROOT'		, 	  './../');
 
-$xgp_root = './../';
-include($xgp_root . 'extension.inc.php');
-include($xgp_root . 'common.'.$phpEx);
-include_once('databaseinfos.'.$phpEx);
+include_once(XGP_ROOT . 'global.php');
+include_once('databaseinfos.php');
+include_once('migration.php');
 
 $Mode     = $_GET['mode'];
 $Page     = $_GET['page'];
 $phpself  = $_SERVER['PHP_SELF'];
 $nextpage = $Page + 1;
 
-if(version_compare(PHP_VERSION, "5.1.0", "<"))
-	die("Error! Tu servidor debe tener al menos php 5.1.0");
+if(version_compare(PHP_VERSION, "5.2.0", "<"))
+	die("&iexcl;Error! Tu servidor debe tener al menos php 5.2.0");
 
 if (empty($Mode)) { $Mode = 'intro'; }
 if (empty($Page)) { $Page = 1;       }
 
-switch ($Mode) {
+switch ($Mode)
+{
 	case'license':
-		$frame  = parsetemplate(gettemplate('install/ins_license'), false);
-		break;
+		$frame  = parsetemplate(gettemplate('install/ins_license'), FALSE);
+	break;
 	case 'intro':
-		$frame  = parsetemplate(gettemplate('install/ins_intro'), false);
-		break;
+		$frame  = parsetemplate(gettemplate('install/ins_intro'), FALSE);
+	break;
 	case 'ins':
 		if ($Page == 1) {
-			if ($_GET['error'] == 1) {
-				message ("La conexi&oacute;n a la base de datos a fallado","?mode=ins&page=1", 3, false, false);
+			if ($_GET['error'] == 1)
+			{
+				message ("La conexi&oacute;n a la base de datos a fallado","?mode=ins&page=1", 3, FALSE, FALSE);
 			}
-			elseif ($_GET['error'] == 2) {
-				message ("El fichero config.php no puede ser sustituido, no tenia acceso chmod 777","?mode=ins&page=1", 3, false, false);
+			elseif ($_GET['error'] == 2)
+			{
+				message ("El fichero config.php no puede ser sustituido, no tenia acceso chmod 777","?mode=ins&page=1", 3, FALSE, FALSE);
 			}
 
-			$frame  = parsetemplate ( gettemplate ('install/ins_form'), false);
+			$frame  = parsetemplate ( gettemplate ('install/ins_form'), FALSE);
 		}
-		elseif ($Page == 2) {
+		elseif ($Page == 2)
+		{
 			$host   = $_POST['host'];
 			$user   = $_POST['user'];
 			$pass   = $_POST['passwort'];
@@ -64,14 +54,16 @@ switch ($Mode) {
 			$db     = $_POST['db'];
 
 			$connection = @mysql_connect($host, $user, $pass);
-			if (!$connection) {
-				header("Location: ?mode=ins&page=1&error=1");
+			if (!$connection)
+			{
+				header ( 'location:?mode=ins&page=1&error=1' );
 				exit();
 			}
 
 			$dbselect = @mysql_select_db($db);
-			if (!$dbselect) {
-				header("Location: ?mode=ins&page=1&error=1");
+			if (!$dbselect)
+			{
+				header ( 'location:?mode=ins&page=1&error=1' );
 				exit();
 			}
 
@@ -79,14 +71,14 @@ switch ($Mode) {
 			$dz = fopen("../config.php", "w");
 			if (!$dz)
 			{
-				header("Location: ?mode=ins&page=1&error=2");
+				header ( 'location:?mode=ins&page=1&error=2' );
 				exit();
 			}
 
-			$parse[first]	= "Conexión establecida con éxito...";
+			$parse[first]	= "Conexi&oacute;n establecida con &eacute;xito...";
 
 			fwrite($dz, "<?php\n");
-			fwrite($dz, "if(!defined(\"INSIDE\")){ header(\"location:".$xgp_root."\"); }\n");
+			fwrite($dz, "if(!defined(\"INSIDE\")){ header(\"location:".XGP_ROOT."\"); }\n");
 			fwrite($dz, "\$dbsettings = Array(\n");
 			fwrite($dz, "\"server\"     => \"".$host."\", // MySQL server name.\n");
 			fwrite($dz, "\"user\"       => \"".$user."\", // MySQL username.\n");
@@ -103,8 +95,6 @@ switch ($Mode) {
 			doquery ($QryTableAlliance   , 'alliance'   );
 			doquery ($QryTableBanned     , 'banned'     );
 			doquery ($QryTableBuddy      , 'buddy'      );
-			doquery ($QryTableConfig     , 'config'     );
-			doquery ($QryInsertConfig    , 'config'     );
 			doquery ($QryTableErrors     , 'errors'     );
 			doquery ($QryTableFleets     , 'fleets'     );
 			doquery ($QryTableGalaxy     , 'galaxy'     );
@@ -116,16 +106,16 @@ switch ($Mode) {
 			doquery ($QryTableStatPoints , 'statpoints'	);
 			doquery ($QryTableUsers      , 'users'  	);
 
-			$parse[third]	= "Tablas creadas con éxito...";
+			$parse[third]	= "Tablas creadas con &eacute;xito...";
 
 			$frame  = parsetemplate(gettemplate('install/ins_form_done'), $parse);
 		}
 		elseif ($Page == 3)
 		{
 			if ($_GET['error'] == 3)
-				message ("¡Debes completar todos los campos!","?mode=ins&page=3", 2, false, false);
+				message ("&iexcl;Debes completar todos los campos!","?mode=ins&page=3", 2, FALSE, FALSE);
 
-			$frame  = parsetemplate(gettemplate('install/ins_acc'), false);
+			$frame  = parsetemplate(gettemplate('install/ins_acc'), FALSE);
 		}
 		elseif ($Page == 4)
 		{
@@ -197,95 +187,107 @@ switch ($Mode) {
 			$QryAddAdmGlx .= "`id_planet`         = '1'; ";
 			doquery($QryAddAdmGlx, 'galaxy');
 
-			doquery("UPDATE {{table}} SET `config_value` = '1' WHERE `config_name` = 'LastSettedGalaxyPos';", 'config');
-			doquery("UPDATE {{table}} SET `config_value` = '1' WHERE `config_name` = 'LastSettedSystemPos';", 'config');
-			doquery("UPDATE {{table}} SET `config_value` = '1' WHERE `config_name` = 'LastSettedPlanetPos';", 'config');
-			doquery("UPDATE {{table}} SET `config_value` = `config_value` + '1' WHERE `config_name` = 'users_amount' LIMIT 1;", 'config');
+			update_config ( 'stat_last_update' , time() );
 
 			$frame  = parsetemplate(gettemplate('install/ins_acc_done'), $parse);
 		}
 		break;
 	case'upgrade':
+
 		if ($_POST)
 		{
-			$conexion = mysql_connect($_POST[servidor], $_POST[usuario], $_POST[clave])
-			or die ('<font color=red><strong>Problemas en la conexión con el servidor, es probable que el <u>nombre del servidor, usuario o clave sean incorrectas o que mysql no esta funcionando.</u></strong></font>');
-			@mysql_select_db($_POST[base],$conexion)
-			or die ('<font color=red><strong>Problemas en la conexión con la base de datos. Este error puede deberse a que <u>la base de datos no existe o escribiste mal el nombre de la misma.</u></strong></font>');
+			$administrator	=	doquery("SELECT id
+											FROM {{table}}
+											WHERE password = '" . md5 ( $_POST['adm_pass'] ) . "' AND
+													email = '" . mysql_real_escape_string ( $_POST['adm_email'] ) . "' AND
+													authlevel = 3" , 'users' , TRUE );
 
-			if ($_POST[continuar] && (empty($_POST[modo]) or empty($_POST[servidor]) or empty($_POST[usuario]) or empty($_POST[clave]) or empty($_POST[base]) or empty($_POST[prefix])))
+			if ( !$administrator )
 			{
-				message("Error!, debes rellenar todos los campos<br><a href=\"./index.php\">Volver</a>","", "", false, false);
+				die(message("&iexcl;Error! - &iexcl;El administrador ingresado no existe o el usuario no tiene permisos administrativos!","index.php?mode=upgrade", "3", FALSE, FALSE));
+			}
+
+			if(filesize('../config.php') == 0)
+			{
+				die(message("&iexcl;Error! - Tu archivo config.php se encuentra vaci&oacute; o no configurado. En caso de no ser as&iacute; verifica que su chmod sea de 777","", "", FALSE, FALSE));
 			}
 			else
 			{
-				if(filesize('../config.php') == 0)
-				{
-					die(message("Error!, tu archivo config.php se encuentra vació o no configurado. En caso de no ser así verifica que su chmod sea de 777","", "", false, false));
-				}
-				else
-				{
-					include_once("../config.php");
+				include("../config.php");
 
-					if($_POST[prefix] != $dbsettings["prefix"])
-					{
-						die(message("Error!, el prefix seleccionado (<font color=\"red\"><strong>".$_POST[prefix]."</strong></font>) no coincide con el de la base de datos.","", "", false, false));
-					}
-				}
+				$system_version	=	str_replace ( 'v' , '' , VERSION );
 
 				// ALL QUERYS NEEDED
-				$Qry1 = "DELETE FROM `$_POST[prefix]config` WHERE `config_name` = 'VERSION'";
-				$Qry2 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '".$_POST['modo']."');";
-				$Qry3 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('moderation', '1,0,0,1;1,1,0,1;');";
-				$Qry4 = " ALTER TABLE `$_POST[prefix]banned` CHANGE `who` `who` VARCHAR( 64 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
+				$Qry1 = "DELETE FROM `$dbsettings[prefix]config` WHERE `config_name` = 'VERSION'";
+				$Qry2 = "INSERT INTO `$dbsettings[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '".SYSTEM_VERSION."');";
+				$Qry3 = "INSERT INTO `$dbsettings[prefix]config` (`config_name`, `config_value`) VALUES ('moderation', '1,0,0,1;1,1,0,1;');";
+				$Qry4 = " ALTER TABLE `$dbsettings[prefix]banned` CHANGE `who` `who` VARCHAR( 64 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
 							CHANGE `who2` `who2` VARCHAR( 64 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
 							CHANGE `author` `author` VARCHAR( 64 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
 							CHANGE `email` `email` VARCHAR( 64 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ";
-				$Qry5 = "UPDATE `$_POST[prefix]config` SET `config_value` = '1,0,0,1,1;1,1,0,1,1;1;' WHERE `$_POST[prefix]config`.`config_name` = 'moderation';";
-				$Qry6 = "ALTER TABLE `$_POST[prefix]planets` CHANGE `small_protection_shield` `small_protection_shield` TINYINT( 1 ) NOT NULL DEFAULT '0', CHANGE `planet_protector` `planet_protector` TINYINT( 1 ) NOT NULL DEFAULT '0', CHANGE `big_protection_shield` `big_protection_shield` TINYINT( 1 ) NOT NULL DEFAULT '0'";
-				$Qry7 = "UPDATE `$_POST[prefix]rw` SET `$_POST[prefix]rw`.`owners` = CONCAT(id_owner1,\",\",id_owner2)";
-				$Qry8 = "ALTER TABLE `$_POST[prefix]rw`
+				$Qry5 = "UPDATE `$dbsettings[prefix]config` SET `config_value` = '1,0,0,1,1;1,1,0,1,1;1;' WHERE `$dbsettings[prefix]config`.`config_name` = 'moderation';";
+				$Qry6 = "ALTER TABLE `$dbsettings[prefix]planets` CHANGE `small_protection_shield` `small_protection_shield` TINYINT( 1 ) NOT NULL DEFAULT '0', CHANGE `big_protection_shield` `big_protection_shield` TINYINT( 1 ) NOT NULL DEFAULT '0'";
+				$Qry7 = "UPDATE `$dbsettings[prefix]rw` SET `$dbsettings[prefix]rw`.`owners` = CONCAT(id_owner1,\",\",id_owner2)";
+				$Qry8 = "ALTER TABLE `$dbsettings[prefix]rw`
   							DROP `id_owner1`,
   							DROP `id_owner2`;";
-                $Qry9 = "ALTER TABLE $_POST[prefix]galaxy ADD `invisible_start_time` int(11) NOT NULL default '0'; ";
+				$Qry9 = "ALTER TABLE $dbsettings[prefix]galaxy ADD `invisible_start_time` int(11) NOT NULL default '0'; ";
+				$Qry10 = "ALTER TABLE `$dbsettings[prefix]users` DROP `rpg_espion`,DROP `rpg_constructeur`,DROP `rpg_scientifique`,DROP `rpg_commandant`,DROP `rpg_stockeur`,DROP `rpg_defenseur`,DROP `rpg_destructeur`,DROP `rpg_general`,DROP `rpg_empereur`;";
+				$Qry11 = "DROP TABLE `$dbsettings[prefix]config`";
 
-				switch($_POST['modo'])
+				switch($system_version)
 				{
-					case '2.9.1': 
-                    case '2.9.2':
-                    case '2.9.3':
-						$QrysArray	= array($Qry1, $Qry2, $Qry3, $Qry4, $Qry5, $Qry6, $Qry7, $Qry8);
+					case '2.9.0':
+					case '2.9.1':
+					case '2.9.2':
+						$QrysArray	= array($Qry1, $Qry2, $Qry3, $Qry4, $Qry5, $Qry6, $Qry7, $Qry8, $Qry9, $Qry10, $Qry11);
+						migrate_to_xml();
+					break;
+					case '2.9.3':
+						$QrysArray	= array($Qry1, $Qry2, $Qry6, $Qry7, $Qry8, $Qry9, $Qry10, $Qry11);
+						migrate_to_xml();
 					break;
 					case '2.9.4':
-						$QrysArray	= array($Qry1, $Qry2, $Qry6, $Qry7, $Qry8);
-					break;
 					case '2.9.5':
-                    case '2.9.6':
-                    case '2.9.7':
-                    case '2.9.8':
-                    case '2.9.9':
-						$QrysArray	= array($Qry1, $Qry2, $Qry7, $Qry8);
+					case '2.9.6':
+					case '2.9.7':
+					case '2.9.8':
+						$QrysArray	= array($Qry1, $Qry2, $Qry7, $Qry8, $Qry9, $Qry10, $Qry11);
+						migrate_to_xml();
+					break;
+					case '2.9.9':
+						$QrysArray	= array($Qry1, $Qry2, $Qry9, $Qry10, $Qry11 );
+						migrate_to_xml();
 					break;
 					case '2.9.10':
-						$QrysArray	= array($Qry1, $Qry2,$Qry9 );
+					case '2.9.11':
+					case '2.10.0':
+						$QrysArray	= array($Qry1, $Qry2 , $Qry10, $Qry11);
+						migrate_to_xml();
+					break;
+					default:
+						message("&iexcl;La versi&oacute;n de tu proyecto no es compatible con XG Proyect, o estas intentando actualizar desde una versi&oacute;n m&aacute;s nueva!", "", "", FALSE, FALSE);
 					break;
 				}
 
-				foreach ( $QrysArray as $DoQuery)
+				foreach ( $QrysArray as $DoQuery )
 				{
 					mysql_query($DoQuery);
 				}
 
-				message("XG Proyect finalizó la actualización con éxito, para finalizar borra el directorio install y luego haz <a href=\"./../\">click aqui</a>", "", "", false, false);
+				message("XG Proyect finaliz&oacute; la actualizaci&oacute;n con &eacute;xito, para finalizar borra el directorio install y luego haz <a href=\"./../\">click aqui</a>", "", "", FALSE, FALSE);
 			}
 		}
 		else
-			$frame  = parsetemplate(gettemplate('install/ins_update'), false);
+		{
+			$parse['version']	=	SYSTEM_VERSION;
+			$frame  = parsetemplate(gettemplate('install/ins_update'), $parse);
+		}
 		break;
 	default:
 }
 $parse['ins_state']    = $Page;
 $parse['ins_page']     = $frame;
 $parse['dis_ins_btn']  = "?mode=$Mode&page=$nextpage";
-display (parsetemplate (gettemplate('install/ins_body'), $parse), false, '', true, false);
+display (parsetemplate (gettemplate('install/ins_body'), $parse), FALSE, '', TRUE, FALSE);
 ?>

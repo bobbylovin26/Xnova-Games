@@ -1,23 +1,10 @@
 <?php
 
-##############################################################################
-# *																			 #
-# * XG PROYECT																 #
-# *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
-# *																			 #
-# *																			 #
-# *  This program is free software: you can redistribute it and/or modify    #
-# *  it under the terms of the GNU General Public License as published by    #
-# *  the Free Software Foundation, either version 3 of the License, or       #
-# *  (at your option) any later version.									 #
-# *																			 #
-# *  This program is distributed in the hope that it will be useful,		 #
-# *  but WITHOUT ANY WARRANTY; without even the implied warranty of			 #
-# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the			 #
-# *  GNU General Public License for more details.							 #
-# *																			 #
-##############################################################################
+/**
+ * @project XG Proyect
+ * @version 2.10.x build 0000
+ * @copyright Copyright (C) 2008 - 2012
+ */
 
 if(!defined('INSIDE')){ die(header("location:../../"));}
 
@@ -43,7 +30,7 @@ function HandleElementBuildingQueue ( $CurrentUser, &$CurrentPlanet, $Production
 		}
 
 		$CurrentPlanet['b_hangar_id'] 	= '';
-		$UnFinished 					= false;
+		$UnFinished 					= FALSE;
 
 		foreach ( $BuildArray as $Node => $Item )
 		{
@@ -63,7 +50,7 @@ function HandleElementBuildingQueue ( $CurrentUser, &$CurrentPlanet, $Production
 					if($Count > $Done)
 					{
 						$CurrentPlanet['b_hangar'] -= $BuildTime * $Done;
-						$UnFinished = true;
+						$UnFinished = TRUE;
 						$Count -= $Done;
 					}
 					else
@@ -78,7 +65,7 @@ function HandleElementBuildingQueue ( $CurrentUser, &$CurrentPlanet, $Production
 				}
 				else
 				{
-					$UnFinished = true;
+					$UnFinished = TRUE;
 				}
 			}
 			elseif(!$UnFinished)

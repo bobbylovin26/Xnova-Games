@@ -1,23 +1,10 @@
 <?php
 
-##############################################################################
-# *                                                                             #
-# * XG PROYECT                                                                 #
-# *                                                                           #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net           #
-# *                                                                             #
-# *                                                                             #
-# *  This program is free software: you can redistribute it and/or modify    #
-# *  it under the terms of the GNU General Public License as published by    #
-# *  the Free Software Foundation, either version 3 of the License, or       #
-# *  (at your option) any later version.                                     #
-# *                                                                             #
-# *  This program is distributed in the hope that it will be useful,         #
-# *  but WITHOUT ANY WARRANTY; without even the implied warranty of             #
-# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             #
-# *  GNU General Public License for more details.                             #
-# *                                                                             #
-##############################################################################
+/**
+ * @project XG Proyect
+ * @version 2.10.x build 0000
+ * @copyright Copyright (C) 2008 - 2012
+ */
 
 if(!defined('INSIDE')){ die(header("location:../../"));}
 
@@ -116,7 +103,7 @@ class ShowInfosPage
             if ( $NextJumpTime == 0 )
             {
                 $TargetPlanet = $_POST['jmpto'];
-                $TargetGate   = doquery ( "SELECT `id`, `sprungtor`, `last_jump_time` FROM {{table}} WHERE `id` = '". intval($TargetPlanet) ."';", 'planets', true);
+                $TargetGate   = doquery ( "SELECT `id`, `sprungtor`, `last_jump_time` FROM {{table}} WHERE `id` = '". intval($TargetPlanet) ."';", 'planets', TRUE);
 
                 if ($TargetGate['sprungtor'] > 0)
                 {
@@ -251,25 +238,25 @@ class ShowInfosPage
 
     private function ShowProductionTable ($CurrentUser, $CurrentPlanet, $BuildID, $Template)
     {
-        global $ProdGrid, $resource, $game_config;
+        global $ProdGrid, $resource;
 
         $BuildLevelFactor = $CurrentPlanet[ $resource[$BuildID]."_porcent" ];
         $BuildTemp        = $CurrentPlanet[ 'temp_max' ];
         $CurrentBuildtLvl = $CurrentPlanet[ $resource[$BuildID] ];
 
         $BuildLevel       = ($CurrentBuildtLvl > 0) ? $CurrentBuildtLvl : 1;
-        $Prod[1]          = (floor(eval($ProdGrid[$BuildID]['formule']['metal'])     * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_geologue']  * GEOLOGUE)));
-        $Prod[2]          = (floor(eval($ProdGrid[$BuildID]['formule']['crystal'])   * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_geologue']  * GEOLOGUE)));
-        $Prod[3]          = (floor(eval($ProdGrid[$BuildID]['formule']['deuterium']) * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_geologue']  * GEOLOGUE)));
+        $Prod[1]          = (floor(eval($ProdGrid[$BuildID]['formule']['metal'])     * read_config ( 'resource_multiplier' ) ) * (1 + ($CurrentUser['rpg_geologue']  * GEOLOGUE)));
+        $Prod[2]          = (floor(eval($ProdGrid[$BuildID]['formule']['crystal'])   * read_config ( 'resource_multiplier' ) ) * (1 + ($CurrentUser['rpg_geologue']  * GEOLOGUE)));
+        $Prod[3]          = (floor(eval($ProdGrid[$BuildID]['formule']['deuterium']) * read_config ( 'resource_multiplier' ) ) * (1 + ($CurrentUser['rpg_geologue']  * GEOLOGUE)));
 
         if( $BuildID >= 4 )
         {
-            $Prod[4]     = (floor(eval($ProdGrid[$BuildID]['formule']['energy']) * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_ingenieur'] * INGENIEUR)));
+            $Prod[4]     = (floor(eval($ProdGrid[$BuildID]['formule']['energy']) * read_config ( 'resource_multiplier' )) * (1 + ($CurrentUser['rpg_ingenieur'] * ENGINEER_ENERGY)));
             $ActualProd    = floor($Prod[4]);
         }
         else
         {
-            $Prod[4]     = (floor(eval($ProdGrid[$BuildID]['formule']['energy']) * $game_config['resource_multiplier']));
+            $Prod[4]     = (floor(eval($ProdGrid[$BuildID]['formule']['energy']) * read_config ( 'resource_multiplier' )));
             $ActualProd    = floor($Prod[$BuildID]);
         }
 
@@ -289,14 +276,14 @@ class ShowInfosPage
         {
             if ($BuildID != 42)
             {
-                $Prod[1] = (floor(eval($ProdGrid[$BuildID]['formule']['metal'])     * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_geologue']  * GEOLOGUE)));
-                $Prod[2] = (floor(eval($ProdGrid[$BuildID]['formule']['crystal'])   * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_geologue']  * GEOLOGUE)));
-                $Prod[3] = (floor(eval($ProdGrid[$BuildID]['formule']['deuterium']) * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_geologue']  * GEOLOGUE)));
+                $Prod[1] = (floor(eval($ProdGrid[$BuildID]['formule']['metal'])     * read_config ( 'resource_multiplier' )) * (1 + ($CurrentUser['rpg_geologue']  * GEOLOGUE)));
+                $Prod[2] = (floor(eval($ProdGrid[$BuildID]['formule']['crystal'])   * read_config ( 'resource_multiplier' )) * (1 + ($CurrentUser['rpg_geologue']  * GEOLOGUE)));
+                $Prod[3] = (floor(eval($ProdGrid[$BuildID]['formule']['deuterium']) * read_config ( 'resource_multiplier' )) * (1 + ($CurrentUser['rpg_geologue']  * GEOLOGUE)));
 
                 if( $BuildID >= 4 )
-                    $Prod[4] = (floor(eval($ProdGrid[$BuildID]['formule']['energy'])    * $game_config['resource_multiplier']) * (1 + ($CurrentUser['rpg_ingenieur'] * INGENIEUR)));
+                    $Prod[4] = (floor(eval($ProdGrid[$BuildID]['formule']['energy'])    * read_config ( 'resource_multiplier' )) * (1 + ($CurrentUser['rpg_ingenieur'] * ENGINEER_ENERGY)));
                 else
-                    $Prod[4] = (floor(eval($ProdGrid[$BuildID]['formule']['energy'])    * $game_config['resource_multiplier']));
+                    $Prod[4] = (floor(eval($ProdGrid[$BuildID]['formule']['energy'])    * read_config ( 'resource_multiplier' )));
 
                 $bloc['build_lvl']       = ($CurrentBuildtLvl == $BuildLevel) ? "<font color=\"#ff0000\">".$BuildLevel."</font>" : $BuildLevel;
 
@@ -368,14 +355,14 @@ class ShowInfosPage
 
     public function __construct ($CurrentUser, $CurrentPlanet, $BuildID)
     {
-        global $dpath, $lang, $resource, $pricelist, $CombatCaps, $phpEx, $xgp_root;
+        global $lang, $resource, $pricelist, $CombatCaps;
 
         $GateTPL              = '';
         $DestroyTPL           = '';
         $TableHeadTPL         = '';
 
         $parse                = $lang;
-        $parse['dpath']       = $dpath;
+        $parse['dpath']       = DPATH;
         $parse['name']        = $lang['info'][$BuildID]['name'];
         $parse['image']       = $BuildID;
         $parse['description'] = $lang['info'][$BuildID]['description'];
@@ -390,7 +377,7 @@ class ShowInfosPage
             $PageTPL = gettemplate('infos/info_buildings_defense');
         else
             $PageTPL = gettemplate('infos/info_officiers_general');
-        
+
         //Sólo hay destroy en <200
         if($BuildID < 200 AND $BuildID != 33 AND $BuildID != 41)
             $DestroyTPL           = gettemplate('infos/info_buildings_destroy');
@@ -398,19 +385,19 @@ class ShowInfosPage
         if ($BuildID >=   1 && $BuildID <=   3)
         {
             $PageTPL              = gettemplate('infos/info_buildings_table');
-            $TableHeadTPL         = "<tr><td class=\"c\">{in_level}</td><td class=\"c\">{in_prod_p_hour}</td><td class=\"c\">{in_difference}</td><td class=\"c\">{in_used_energy}</td><td class=\"c\">{in_difference}</td></tr>";
-            $TableTPL             = "<tr><th>{build_lvl}</th><th>{build_prod} {build_gain}</th><th>{build_prod_diff}</th><th>{build_need}</th><th>{build_need_diff}</th></tr>";
+            $TableHeadTPL         = gettemplate('infos/info_production_header');
+            $TableTPL             = gettemplate('infos/info_production_body');
         }
         elseif ($BuildID ==   4)
         {
             $PageTPL              = gettemplate('infos/info_buildings_table');
-            $TableHeadTPL         = "<tr><td class=\"c\">{in_level}</td><td class=\"c\">{in_prod_energy}</td><td class=\"c\">{in_difference}</td></tr>";
-            $TableTPL             = "<tr><th>{build_lvl}</th><th>{build_prod} {build_gain}</th><th>{build_prod_diff}</th></tr>";
+            $TableHeadTPL         = gettemplate('infos/info_production_simple_header');
+            $TableTPL             = gettemplate('infos/info_production_simple_body');
         }
         elseif ($BuildID ==  12)
         {
-            $TableHeadTPL         = "<tr><td class=\"c\">{in_level}</td><td class=\"c\">{in_prod_energy}</td><td class=\"c\">{in_difference}</td><td class=\"c\">{in_used_deuter}</td><td class=\"c\">{in_difference}</td></tr>";
-            $TableTPL             = "<tr><th>{build_lvl}</th><th>{build_prod} {build_gain}</th><th>{build_prod_diff}</th><th>{build_need}</th><th>{build_need_diff}</th></tr>";
+            $TableHeadTPL         = gettemplate('infos/info_energy_header');
+            $TableTPL             = gettemplate('infos/info_energy_body');
         }
         /*elseif ($BuildID >=  14 AND $BuildID <= 100 AND $BuildID != 42 AND $BuildID != 41 AND $BuildID != 33 AND $BuildID != 43)
         {
@@ -426,8 +413,8 @@ class ShowInfosPage
         }*/
         elseif ($BuildID ==  42)
         {
-            $TableHeadTPL         = "<tr><td class=\"c\">{in_level}</td><td class=\"c\">{in_range}</td></tr>";
-            $TableTPL             = "<tr><th>{build_lvl}</th><th>{build_range}</th></tr>";
+        	$TableHeadTPL         = gettemplate('infos/info_range_header');
+        	$TableTPL             = gettemplate('infos/info_range_body');
         }
         elseif ($BuildID ==  43)
         {
@@ -479,7 +466,7 @@ class ShowInfosPage
             $parse['shield_pt']   = pretty_number ($CombatCaps[$BuildID]['shield']);
             $parse['attack_pt']   = pretty_number ($CombatCaps[$BuildID]['attack']);
         }
-        elseif ($BuildID >= 601 && $BuildID <= 615)
+        elseif ($BuildID >= 601 && $BuildID <= 604)
             $PageTPL              = gettemplate('infos/info_officiers_general');
 
         if ($TableHeadTPL != '')
@@ -497,11 +484,11 @@ class ShowInfosPage
                 $parse['gate_start_link'] = BuildPlanetAdressLink ( $CurrentPlanet );
                 if ($RestString['value'] != 0)
                 {
-                    include($xgp_root . 'includes/functions/InsertJavaScriptChronoApplet.' . $phpEx);
+                    include(XGP_ROOT . 'includes/functions/InsertJavaScriptChronoApplet.php');
 
-                    $parse['gate_time_script'] = InsertJavaScriptChronoApplet ( "Gate", "1", $RestString['value'], true );
+                    $parse['gate_time_script'] = InsertJavaScriptChronoApplet ( "Gate", "1", $RestString['value'], TRUE );
                     $parse['gate_wait_time']   = "<div id=\"bxx". "Gate" . "1" ."\"></div>";
-                    $parse['gate_script_go']   = InsertJavaScriptChronoApplet ( "Gate", "1", $RestString['value'], false );
+                    $parse['gate_script_go']   = InsertJavaScriptChronoApplet ( "Gate", "1", $RestString['value'], FALSE );
                 }
                 else
                 {
@@ -519,7 +506,7 @@ class ShowInfosPage
         {
             if ($CurrentPlanet[$resource[$BuildID]] > 0)
             {
-                $NeededRessources     = GetBuildingPrice ($CurrentUser, $CurrentPlanet, $BuildID, true, true);
+                $NeededRessources     = GetBuildingPrice ($CurrentUser, $CurrentPlanet, $BuildID, TRUE, TRUE);
                 $DestroyTime          = GetBuildingTime  ($CurrentUser, $CurrentPlanet, $BuildID) / 2;
                 $parse['destroyurl']  = "game.php?page=buildings&cmd=destroy&building=".$BuildID;
                 $parse['levelvalue']  = $CurrentPlanet[$resource[$BuildID]];
@@ -533,6 +520,6 @@ class ShowInfosPage
                 $page .= parsetemplate($DestroyTPL, $parse);
             }
         }
-        return display($page);
+        display($page);
     }
 }

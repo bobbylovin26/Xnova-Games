@@ -1,23 +1,10 @@
 <?php
 
-##############################################################################
-# *																			 #
-# * XG PROYECT																 #
-# *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
-# *																			 #
-# *																			 #
-# *  This program is free software: you can redistribute it and/or modify    #
-# *  it under the terms of the GNU General Public License as published by    #
-# *  the Free Software Foundation, either version 3 of the License, or       #
-# *  (at your option) any later version.									 #
-# *																			 #
-# *  This program is distributed in the hope that it will be useful,		 #
-# *  but WITHOUT ANY WARRANTY; without even the implied warranty of			 #
-# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the			 #
-# *  GNU General Public License for more details.							 #
-# *																			 #
-##############################################################################
+/**
+ * @project XG Proyect
+ * @version 2.10.x build 0000
+ * @copyright Copyright (C) 2008 - 2012
+ */
 
 $QryTableAks         = "CREATE TABLE `{{table}}` ( ";
 $QryTableAks        .= "`id` bigint(20) unsigned NOT NULL auto_increment, ";
@@ -72,50 +59,6 @@ $QryTableBuddy      .= "`active` tinyint(3) NOT NULL default '0', ";
 $QryTableBuddy      .= "`text` text character set latin1, ";
 $QryTableBuddy      .= "PRIMARY KEY  (`id`) ";
 $QryTableBuddy      .= ") ENGINE=MyISAM;";
-
-$QryTableConfig      = "CREATE TABLE `{{table}}` ( ";
-$QryTableConfig     .= "`config_name` varchar(64) character set latin1 NOT NULL default '', ";
-$QryTableConfig     .= "`config_value` text character set latin1 NOT NULL ";
-$QryTableConfig     .= ") ENGINE=MyISAM;";
-
-$QryInsertConfig     = "INSERT INTO `{{table}}` ";
-$QryInsertConfig    .= "(`config_name`           , `config_value`) VALUES ";
-$QryInsertConfig    .= "('VERSION'          	 , '2.9.10'), ";
-$QryInsertConfig    .= "('users_amount'          , '0'), ";
-$QryInsertConfig    .= "('moderation'            , '1,0,0,1,1;1,1,0,1,1;1;'), ";
-$QryInsertConfig    .= "('game_speed'            , '2500'), ";
-$QryInsertConfig    .= "('fleet_speed'           , '2500'), ";
-$QryInsertConfig    .= "('resource_multiplier'   , '1'), ";
-$QryInsertConfig    .= "('Fleet_Cdr'             , '30'), ";
-$QryInsertConfig    .= "('Defs_Cdr'              , '30'), ";
-$QryInsertConfig    .= "('initial_fields'        , '163'), ";
-$QryInsertConfig    .= "('COOKIE_NAME'           , 'XGProyect'), ";
-$QryInsertConfig    .= "('game_name'             , 'XG Proyect'), ";
-$QryInsertConfig    .= "('game_disable'          , '1'), ";
-$QryInsertConfig    .= "('close_reason'          , '¡En este momento el servidor se encuentra cerrado!'), ";
-$QryInsertConfig    .= "('metal_basic_income'    , '20'), ";
-$QryInsertConfig    .= "('crystal_basic_income'  , '10'), ";
-$QryInsertConfig    .= "('deuterium_basic_income', '0'), ";
-$QryInsertConfig    .= "('energy_basic_income'   , '0'), ";
-$QryInsertConfig    .= "('BuildLabWhileRun'      , '0'), ";
-$QryInsertConfig    .= "('LastSettedGalaxyPos'   , '1'), ";
-$QryInsertConfig    .= "('LastSettedSystemPos'   , '8'), ";
-$QryInsertConfig    .= "('LastSettedPlanetPos'   , '3'), ";
-$QryInsertConfig    .= "('noobprotection'        , '1'), ";
-$QryInsertConfig    .= "('noobprotectiontime'    , '5000'), ";
-$QryInsertConfig    .= "('noobprotectionmulti'   , '5'), ";
-$QryInsertConfig    .= "('forum_url'             , 'http://www.xgproyect.net/' ), ";
-$QryInsertConfig    .= "('adm_attack'         	 , '0' ), ";
-$QryInsertConfig    .= "('debug'                 , '0'), ";
-$QryInsertConfig    .= "('lang'                  , 'spanish'), ";
-$QryInsertConfig    .= "('stat'                  , '1'), ";
-$QryInsertConfig    .= "('stat_level'            , '2'), ";
-$QryInsertConfig    .= "('stat_last_update'      , '".time()."'), ";
-$QryInsertConfig    .= "('stat_settings'         , '1000'), ";
-$QryInsertConfig    .= "('stat_amount'           , '25'), ";
-$QryInsertConfig    .= "('stat_update_time'      , '15'), ";
-$QryInsertConfig    .= "('stat_flying'           , '1') ";
-$QryInsertConfig    .= ";";
 
 $QryTableErrors      = "CREATE TABLE `{{table}}` ( ";
 $QryTableErrors     .= "`error_id` bigint(11) NOT NULL auto_increment, ";
@@ -258,7 +201,6 @@ $QryTablePlanets    .= "`solar_satelit` bigint(11) NOT NULL default '0', ";
 $QryTablePlanets    .= "`destructor` bigint(11) NOT NULL default '0', ";
 $QryTablePlanets    .= "`dearth_star` bigint(11) NOT NULL default '0', ";
 $QryTablePlanets    .= "`battleship` bigint(11) NOT NULL default '0', ";
-$QryTablePlanets    .= "`supernova` bigint(11) NOT NULL default '0', ";
 $QryTablePlanets    .= "`misil_launcher` bigint(11) NOT NULL default '0', ";
 $QryTablePlanets    .= "`small_laser` bigint(11) NOT NULL default '0', ";
 $QryTablePlanets    .= "`big_laser` bigint(11) NOT NULL default '0', ";
@@ -266,7 +208,6 @@ $QryTablePlanets    .= "`gauss_canyon` bigint(11) NOT NULL default '0', ";
 $QryTablePlanets    .= "`ionic_canyon` bigint(11) NOT NULL default '0', ";
 $QryTablePlanets    .= "`buster_canyon` bigint(11) NOT NULL default '0', ";
 $QryTablePlanets    .= "`small_protection_shield` tinyint(1) NOT NULL default '0', ";
-$QryTablePlanets    .= "`planet_protector` tinyint(1) NOT NULL default '0', ";
 $QryTablePlanets    .= "`big_protection_shield` tinyint(1) NOT NULL default '0', ";
 $QryTablePlanets    .= "`interceptor_misil` int(11) NOT NULL default '0', ";
 $QryTablePlanets    .= "`interplanetary_misil` int(11) NOT NULL default '0', ";
@@ -396,18 +337,7 @@ $QryTableUsers      .= "`rpg_geologue` int(11) NOT NULL default '0', ";
 $QryTableUsers      .= "`rpg_amiral` int(11) NOT NULL default '0', ";
 $QryTableUsers      .= "`rpg_ingenieur` int(11) NOT NULL default '0', ";
 $QryTableUsers      .= "`rpg_technocrate` int(11) NOT NULL default '0', ";
-$QryTableUsers      .= "`rpg_espion` int(11) NOT NULL default '0', ";
-$QryTableUsers      .= "`rpg_constructeur` int(11) NOT NULL default '0', ";
-$QryTableUsers      .= "`rpg_scientifique` int(11) NOT NULL default '0', ";
-$QryTableUsers      .= "`rpg_commandant` int(11) NOT NULL default '0', ";
-$QryTableUsers      .= "`rpg_stockeur` int(11) NOT NULL default '0', ";
 $QryTableUsers      .= "`darkmatter` int(11) NOT NULL default '0', ";
-$QryTableUsers      .= "`rpg_defenseur` int(11) NOT NULL default '0', ";
-$QryTableUsers      .= "`rpg_destructeur` int(11) NOT NULL default '0', ";
-$QryTableUsers      .= "`rpg_general` int(11) NOT NULL default '0', ";
-$QryTableUsers      .= "`rpg_bunker` int(11) NOT NULL default '0', ";
-$QryTableUsers      .= "`rpg_raideur` int(11) NOT NULL default '0', ";
-$QryTableUsers      .= "`rpg_empereur` int(11) NOT NULL default '0', ";
 $QryTableUsers      .= "`bana` int(11) default NULL , ";
 $QryTableUsers      .= "`banaday` int(11) NOT NULL default '0' ";
 $QryTableUsers      .= ") ENGINE=MyISAM;";

@@ -1,29 +1,16 @@
 <?php
 
-##############################################################################
-# *																			 #
-# * XG PROYECT																 #
-# *  																		 #
-# * @copyright Copyright (C) 2008 - 2009 By lucky from xgproyect.net      	 #
-# *																			 #
-# *																			 #
-# *  This program is free software: you can redistribute it and/or modify    #
-# *  it under the terms of the GNU General Public License as published by    #
-# *  the Free Software Foundation, either version 3 of the License, or       #
-# *  (at your option) any later version.									 #
-# *																			 #
-# *  This program is distributed in the hope that it will be useful,		 #
-# *  but WITHOUT ANY WARRANTY; without even the implied warranty of			 #
-# *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the			 #
-# *  GNU General Public License for more details.							 #
-# *																			 #
-##############################################################################
+/**
+ * @project XG Proyect
+ * @version 2.10.x build 0000
+ * @copyright Copyright (C) 2008 - 2012
+ */
 
 if(!defined('INSIDE')){ die(header("location:../../"));}
 
 	function ShowTopNavigationBar ($CurrentUser, $CurrentPlanet)
 	{
-		global $lang, $game_config, $dpath;
+		global $lang;
 
 		if($CurrentUser['urlaubs_modus'] == 0)
 			PlanetResourceUpdate($CurrentUser, $CurrentPlanet, time());
@@ -31,7 +18,7 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 			doquery("UPDATE {{table}} SET `deuterium_sintetizer_porcent` = 0, `metal_mine_porcent` = 0, `crystal_mine_porcent` = 0 WHERE id_owner = ".intval($CurrentUser['id']),"planets");
 
 		$parse				 			= $lang;
-		$parse['dpath']      			= $dpath;
+		$parse['dpath']      			= DPATH;
 		$parse['image']      			= $CurrentPlanet['image'];
 
 
@@ -98,7 +85,7 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 			$parse['deuterium'] = $deuterium;
 		}
 		$parse['darkmatter'] 		= pretty_number($CurrentUser["darkmatter"]);
-		$TopBar 			 		= parsetemplate(gettemplate('topnav'), $parse);
+		$TopBar 			 		= parsetemplate(gettemplate('general/topnav'), $parse);
 
 		return $TopBar;
 	}
