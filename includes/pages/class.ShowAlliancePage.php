@@ -321,7 +321,7 @@ class ShowAlliancePage
 			if ($mode == 'apply' && $CurrentUser['ally_request'] == 0)
 			{ //SOLICITUDES
 				if($_GET['allyid'] != NULL)
-					$alianza = doquery("SELECT * FROM {{table}} WHERE id='{".intval($_GET['allyid'])."'", "alliance", true);
+					$alianza = doquery("SELECT * FROM {{table}} WHERE id='".intval($_GET['allyid'])."'", "alliance", true);
 
 				if($alianza['ally_request_notallow'] == 1)
 					message($lang['al_alliance_closed'], "game.php?page=alliance",2);

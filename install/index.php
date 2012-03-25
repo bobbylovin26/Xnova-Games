@@ -235,29 +235,39 @@ switch ($Mode) {
 
 				// ALL QUERYS NEEDED
 				$Qry1 = "DELETE FROM `$_POST[prefix]config` WHERE `config_name` = 'VERSION'";
-				$Qry2 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '2.9.9');";
+				$Qry2 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('VERSION', '".$_POST['modo']."');";
 				$Qry3 = "INSERT INTO `$_POST[prefix]config` (`config_name`, `config_value`) VALUES ('moderation', '1,0,0,1;1,1,0,1;');";
 				$Qry4 = " ALTER TABLE `$_POST[prefix]banned` CHANGE `who` `who` VARCHAR( 64 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
 							CHANGE `who2` `who2` VARCHAR( 64 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
 							CHANGE `author` `author` VARCHAR( 64 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ,
 							CHANGE `email` `email` VARCHAR( 64 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ";
-				$Qry5 = "UPDATE `$_POST[prefix]config` SET `config_value` = '1,0,0,1,1;1,1,0,1,1;1;' WHERE `xgp_config`.`config_name` = 'moderation';";
+				$Qry5 = "UPDATE `$_POST[prefix]config` SET `config_value` = '1,0,0,1,1;1,1,0,1,1;1;' WHERE `$_POST[prefix]config`.`config_name` = 'moderation';";
 				$Qry6 = "ALTER TABLE `$_POST[prefix]planets` CHANGE `small_protection_shield` `small_protection_shield` TINYINT( 1 ) NOT NULL DEFAULT '0', CHANGE `planet_protector` `planet_protector` TINYINT( 1 ) NOT NULL DEFAULT '0', CHANGE `big_protection_shield` `big_protection_shield` TINYINT( 1 ) NOT NULL DEFAULT '0'";
-				$Qry7 = "UPDATE `xgp_rw` SET `xgp_rw`.`owners` = CONCAT(id_owner1,\",\",id_owner2)";
-				$Qry8 = "ALTER TABLE `xgp_rw`
+				$Qry7 = "UPDATE `$_POST[prefix]rw` SET `$_POST[prefix]rw`.`owners` = CONCAT(id_owner1,\",\",id_owner2)";
+				$Qry8 = "ALTER TABLE `$_POST[prefix]rw`
   							DROP `id_owner1`,
   							DROP `id_owner2`;";
+                $Qry9 = "ALTER TABLE $_POST[prefix]galaxy ADD `invisible_start_time` int(11) NOT NULL default '0'; ";
 
-				switch($_POST[modo])
+				switch($_POST['modo'])
 				{
-					case( ( $_POST[modo] == '2.9.1' ) or ( $_POST[modo] == '2.9.2' ) or ( $_POST[modo] == '2.9.3' ) ):
+					case '2.9.1': 
+                    case '2.9.2':
+                    case '2.9.3':
 						$QrysArray	= array($Qry1, $Qry2, $Qry3, $Qry4, $Qry5, $Qry6, $Qry7, $Qry8);
 					break;
-					case'2.9.4':
+					case '2.9.4':
 						$QrysArray	= array($Qry1, $Qry2, $Qry6, $Qry7, $Qry8);
 					break;
-					case( ( $_POST[modo] == '2.9.5' ) or ( $_POST[modo] == '2.9.6' ) or ( $_POST[modo] == '2.9.7' ) or ( $_POST[modo] == '2.9.8' ) or ( $_POST[modo] == '2.9.9' ) ):
+					case '2.9.5':
+                    case '2.9.6':
+                    case '2.9.7':
+                    case '2.9.8':
+                    case '2.9.9':
 						$QrysArray	= array($Qry1, $Qry2, $Qry7, $Qry8);
+					break;
+					case '2.9.10':
+						$QrysArray	= array($Qry1, $Qry2,$Qry9 );
 					break;
 				}
 

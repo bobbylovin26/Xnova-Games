@@ -117,11 +117,12 @@ elseif ($TargetRow['id_owner'] != '')
 	$TargetUser = doquery("SELECT * FROM {{table}} WHERE `id` = '". $TargetRow['id_owner'] ."';", 'users', true);
 }
 
+// invisible debris by jstar
 if ($_POST['mission']== 8)
 {
-	$TargetGPlanet = doquery("SELECT metal, crystal FROM {{table}} WHERE galaxy = '". intval($_POST['galaxy']) ."' AND system = '". intval($_POST['system']) ."' AND planet = '". intval($_POST['planet']) ."'", "galaxy",true);
+	$TargetGPlanet = doquery("SELECT invisible_start_time, metal, crystal FROM {{table}} WHERE galaxy = '". intval($_POST['galaxy']) ."' AND system = '". intval($_POST['system']) ."' AND planet = '". intval($_POST['planet']) ."'", "galaxy",true);
 
-	if($TargetGPlanet['metal'] == 0 && $TargetGPlanet['crystal'] == 0)
+	if($TargetGPlanet['metal'] == 0 && $TargetGPlanet['crystal'] == 0 && time() > ($TargetGPlanet['invisible_start_time']+DEBRIS_LIFE_TIME))
 	{
 		die();
 	}

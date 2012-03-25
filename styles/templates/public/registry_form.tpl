@@ -22,7 +22,7 @@
                             </tr>
                         	<tr>
                             	<td>{pass_reg}:</td>
-                                <td><input name="passwrd" size="20" maxlength="20" type="password"></td>
+                                <td><input name="passwrd" size="20" maxlength="20" type="password" autocomplete="off"></td>
                             </tr>
                         	<tr>
                             	<td>{email_reg}:</td>

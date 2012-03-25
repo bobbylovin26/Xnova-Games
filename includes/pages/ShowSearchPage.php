@@ -29,35 +29,40 @@ function ShowSearchPage()
 	$type 	= $_POST['type'];
 
 	$searchtext = mysql_escape_string($_POST["searchtext"]);
-
+	//queries fixed by Jstar
 	if ( $_POST )
 	{
 		switch($type)
 		{
 			case "playername":
-				$table 	= gettemplate('search/search_user_table');
+				$table 	= gettemplate('search/search_user_table');			
 				$row 	= gettemplate('search/search_user_row');
-				$search = doquery("SELECT * FROM {{table}} WHERE username LIKE '%{$searchtext}%' LIMIT 25;","users");
+				$search=doquery("SELECT * ,{{table}}statpoints.total_rank as rank FROM {{table}}users , {{table}}statpoints  WHERE {{table}}users.id = {{table}}statpoints.id_owner AND {{table}}users.username LIKE '%".$searchtext."%' LIMIT 25 ; ","");  			
+				//$search = doquery("SELECT * FROM {{table}} WHERE username LIKE '%{$searchtext}%' LIMIT 25 ;","users");
 			break;
 			case "planetname":
 				$table 	= gettemplate('search/search_user_table');
 				$row 	= gettemplate('search/search_user_row');
-				$search = doquery("SELECT * FROM {{table}} WHERE name LIKE '%{$searchtext}%' LIMIT 25",'planets');
+				$search=doquery("SELECT * ,{{table}}statpoints.total_rank as rank FROM {{table}}planets , {{table}}statpoints  WHERE {{table}}planets.id_owner = {{table}}statpoints.id_owner AND {{table}}planets.name LIKE '%".$searchtext."%' LIMIT 25 ; ","");  			
+		  		//$search = doquery("SELECT * FROM {{table}} WHERE name LIKE '%{$searchtext}%' LIMIT 25",'planets');
 			break;
 			case "allytag":
 				$table 	= gettemplate('search/search_ally_table');
 				$row 	= gettemplate('search/search_ally_row');
-				$search = doquery("SELECT * FROM {{table}} WHERE ally_tag LIKE '%{$searchtext}%' LIMIT 25","alliance");
+				$search=doquery("SELECT * ,{{table}}statpoints.total_points as points FROM {{table}}alliance , {{table}}statpoints  WHERE {{table}}alliance.id = {{table}}statpoints.id_owner AND {{table}}alliance.ally_tag LIKE '%".$searchtext."%' LIMIT 25 ; ","");  			
+				//$search = doquery("SELECT * FROM {{table}} WHERE ally_tag LIKE '%{$searchtext}%' LIMIT 25","alliance");
 			break;
 			case "allyname":
 				$table 	= gettemplate('search/search_ally_table');
 				$row 	= gettemplate('search/search_ally_row');
-				$search = doquery("SELECT * FROM {{table}} WHERE ally_name LIKE '%{$searchtext}%' LIMIT 25","alliance");
+				$search=doquery("SELECT * ,{{table}}statpoints.total_points as points FROM {{table}}alliance , {{table}}statpoints  WHERE {{table}}alliance.id = {{table}}statpoints.id_owner AND {{table}}alliance.ally_name LIKE '%".$searchtext."%' LIMIT 25 ; ","");  			
+         	//$search = doquery("SELECT * FROM {{table}} WHERE ally_name LIKE '%{$searchtext}%' LIMIT 25","alliance");
 			break;
 			default:
 				$table 	= gettemplate('search/search_user_table');
 				$row 	= gettemplate('search/search_user_row');
-				$search = doquery("SELECT * FROM {{table}} WHERE username LIKE '%{$searchtext}%' LIMIT 25","users");
+				$search=doquery("SELECT * ,{{table}}statpoints.total_rank as rank FROM {{table}}users , {{table}}statpoints  WHERE {{table}}users.id = {{table}}statpoints.id_owner AND {{table}}users.username LIKE '%".$searchtext."%' LIMIT 25 ; ","");  			
+         		//$search = doquery("SELECT * FROM {{table}} WHERE username LIKE '%{$searchtext}%' LIMIT 25","users");
 		}
 	}
 

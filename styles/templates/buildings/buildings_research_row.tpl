@@ -7,7 +7,6 @@
 		<a href="game.php?page=infos&gid={tech_id}">{tech_name}</a> {tech_level}<br>{tech_descr}<br>
 		{tech_price}
 		{search_time}
-		{tech_restp}
 	</td>
 	<th class="l">
 		{tech_link}

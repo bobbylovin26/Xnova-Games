@@ -8,7 +8,7 @@
             <tr style="vertical-align: top;">
                 <td style="padding-right: 4px;">
                     {user} <input name="username" value="" type="text">
-                    {pass} <input name="password" value="" type="password">
+                    {pass} <input name="password" value="" type="password" autocomplete="off">
                 </td>
             </tr><tr>
                 <td style="padding-right: 4px;">

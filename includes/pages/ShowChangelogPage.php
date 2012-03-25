@@ -26,13 +26,13 @@ function ShowChangelogPage()
 	global $lang;
 
 	includeLang('CHANGELOG');
-
+	$ChangelogTableTPL=gettemplate('changelog_table');
 	foreach($lang['changelog'] as $a => $b)
 	{
 		$parse['version_number'] = $a;
 		$parse['description'] = nl2br($b);
 
-		$body .= parsetemplate(gettemplate('changelog_table'), $parse);
+		$body .= parsetemplate($ChangelogTableTPL , $parse);
 	}
 
 	$parse 			= $lang;

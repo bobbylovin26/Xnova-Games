@@ -21,68 +21,84 @@
 
 if(!defined('INSIDE')){ die(header("location:../../"));}
 
-	function HandleElementBuildingQueue ( $CurrentUser, &$CurrentPlanet, $ProductionTime )
+function HandleElementBuildingQueue ( $CurrentUser, &$CurrentPlanet, $ProductionTime )
+{
+	global $resource;
+
+	if ($CurrentPlanet['b_hangar_id'] != 0)
 	{
-		global $resource;
+		$Builded                    = array ();
+		$CurrentPlanet['b_hangar'] += $ProductionTime;
+		$BuildQueue                 = explode(';', $CurrentPlanet['b_hangar_id']);
+		$BuildArray					= array();
 
-		if ($CurrentPlanet['b_hangar_id'] != 0)
+		foreach ($BuildQueue as $Node => $Array)
 		{
-			$Builded                    = array ();
-			$CurrentPlanet['b_hangar'] += $ProductionTime;
-			$BuildQueue                 = explode(';', $CurrentPlanet['b_hangar_id']);
-
-			foreach ($BuildQueue as $Node => $Array)
+			if ($Array != '')
 			{
-				if ($Array != '')
-				{
-					$Item              = explode(',', $Array);
-					$AcumTime		   += GetBuildingTime ($CurrentUser, $CurrentPlanet, $Item[0]);
-					$BuildArray[$Node] = array($Item[0], $Item[1], $AcumTime);
-				}
+				$Item              = explode(',', $Array);
+				$AcumTime		   = GetBuildingTime ($CurrentUser, $CurrentPlanet, $Item[0]);
+				$BuildArray[$Node] = array($Item[0], $Item[1], $AcumTime);
 			}
+		}
 
-			$CurrentPlanet['b_hangar_id'] 	= '';
-			$UnFinished 					= false;
+		$CurrentPlanet['b_hangar_id'] 	= '';
+		$UnFinished 					= false;
 
-			foreach ( $BuildArray as $Node => $Item )
+		foreach ( $BuildArray as $Node => $Item )
+		{
+			$Element   			= $Item[0];
+			$Count     			= $Item[1];
+			$BuildTime 			= $Item[2];
+			$Builded[$Element] 	= 0;
+
+			if (!$UnFinished and $BuildTime > 0)
 			{
-				if (!$UnFinished)
+				$AllTime = $BuildTime * $Count;
+
+				if($CurrentPlanet['b_hangar'] >= $BuildTime)
 				{
-					$Element   = $Item[0];
-					$Count     = $Item[1];
-					$BuildTime = $Item[2];
-					while ( $CurrentPlanet['b_hangar'] >= $BuildTime && !$UnFinished )
+					$Done = min($Count, floor( $CurrentPlanet['b_hangar'] / $BuildTime));
+
+					if($Count > $Done)
 					{
-						if ( $Count > 0 )
-						{
-							$CurrentPlanet['b_hangar'] -= $BuildTime;
-							$Builded[$Element]++;
-							$CurrentPlanet[$resource[$Element]]++;
-							$Count--;
-							if ($Count == 0)
-							{
-								break;
-							}
-						}
-						else
-						{
-							$UnFinished = true;
-							break;
-						}
+						$CurrentPlanet['b_hangar'] -= $BuildTime * $Done;
+						$UnFinished = true;
+						$Count -= $Done;
 					}
+					else
+					{
+						$CurrentPlanet['b_hangar'] -= $AllTime;
+						$Count = 0;
+					}
+
+					$Builded[$Element] += $Done;
+					$CurrentPlanet[$resource[$Element]] += $Done;
+
 				}
-				if ( $Count != 0 )
+				else
 				{
-					$CurrentPlanet['b_hangar_id'] .= $Element.",".$Count.";";
+					$UnFinished = true;
 				}
 			}
+			elseif(!$UnFinished)
+			{
+				$Builded[$Element] += $Count;
+				$CurrentPlanet[$resource[$Element]] += $Count;
+				$Count = 0;
+			}
+			if ( $Count != 0 )
+			{
+				$CurrentPlanet['b_hangar_id'] .= $Element.",".$Count.";";
+			}
 		}
-		else
-		{
-			$Builded                   = '';
-			$CurrentPlanet['b_hangar'] = 0;
-		}
-
-		return $Builded;
 	}
+	else
+	{
+		$Builded                   = '';
+		$CurrentPlanet['b_hangar'] = 0;
+	}
+
+	return $Builded;
+}
 ?>

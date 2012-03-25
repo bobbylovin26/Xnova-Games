@@ -46,7 +46,7 @@ if(!defined('INSIDE')){ die(header("location:../../"));}
 					$cost[$ResType]  = floor($pricelist[$Element][$ResType]);
 
 				if ($ForDestroy)
-					$cost[$ResType]  = floor($cost[$ResType] / 2);
+					$cost[$ResType]  = floor($cost[$ResType] / 4);
 
 				if ($cost[$ResType] > $CurrentPlanet[$ResType])
 					$RetValue = false;

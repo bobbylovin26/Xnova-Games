@@ -80,7 +80,7 @@ $QryTableConfig     .= ") ENGINE=MyISAM;";
 
 $QryInsertConfig     = "INSERT INTO `{{table}}` ";
 $QryInsertConfig    .= "(`config_name`           , `config_value`) VALUES ";
-$QryInsertConfig    .= "('VERSION'          	 , '2.9.9'), ";
+$QryInsertConfig    .= "('VERSION'          	 , '2.9.10'), ";
 $QryInsertConfig    .= "('users_amount'          , '0'), ";
 $QryInsertConfig    .= "('moderation'            , '1,0,0,1,1;1,1,0,1,1;1;'), ";
 $QryInsertConfig    .= "('game_speed'            , '2500'), ";
@@ -162,6 +162,7 @@ $QryTableGalaxy     .= "`planet` int(2) NOT NULL default '0', ";
 $QryTableGalaxy     .= "`id_planet` int(11) NOT NULL default '0', ";
 $QryTableGalaxy     .= "`metal` bigint(11) NOT NULL default '0', ";
 $QryTableGalaxy     .= "`crystal` bigint(11) NOT NULL default '0', ";
+$QryTableGalaxy     .= "`invisible_start_time` int(11) NOT NULL default '0', ";
 $QryTableGalaxy     .= "`id_luna` int(11) NOT NULL default '0', ";
 $QryTableGalaxy     .= "`luna` int(2) NOT NULL default '0', ";
 $QryTableGalaxy     .= "KEY `galaxy` (`galaxy`), ";

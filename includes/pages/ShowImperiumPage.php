@@ -48,6 +48,7 @@ function ShowImperiumPage($CurrentUser)
 
 	$parse['mount'] = count($planet) + 1;
 
+	$EmpireRowTPL=gettemplate('empire/empire_row');
 	foreach ($planet as $p)
 	{
 		$datat = array('<a href="game.php?page=overview&cp=' . $p['id'] . '&amp;re=0"><img src="' . $dpath . 'planeten/small/s_' . $p['image'] . '.jpg" border="0" height="80" width="80"></a>', $p['name'], "[<a href=\"game.php?page=galaxy&mode=3&galaxy={$p['galaxy']}&system={$p['system']}\">{$p['galaxy']}:{$p['system']}:{$p['planet']}</a>]", $p['field_current'] . '/' . $p['field_max'], '<a href="game.php?page=resources&cp=' . $p['id'] . '&amp;re=0&amp;planettype=' . $p['planet_type'] . '">' . pretty_number($p['metal']) . '</a> / ' . pretty_number($p['metal_perhour']), '<a href="game.php?page=resources&cp=' . $p['id'] . '&amp;re=0&amp;planettype=' . $p['planet_type'] . '">' . pretty_number($p['crystal']) . '</a> / ' . pretty_number($p['crystal_perhour']), '<a href="game.php?page=resources&cp=' . $p['id'] . '&amp;re=0&amp;planettype=' . $p['planet_type'] . '">' . pretty_number($p['deuterium']) . '</a> / ' . pretty_number($p['deuterium_perhour']), pretty_number($p['energy_max'] - $p['energy_used']) . ' / ' . pretty_number($p['energy_max']));
@@ -55,13 +56,13 @@ function ShowImperiumPage($CurrentUser)
 		for ($k = 0; $k < 8; $k++)
 		{
 			$data['text'] = $datat[$k];
-			$parse[$f[$k]] .= parsetemplate(gettemplate('empire/empire_row'), $data);
+			$parse[$f[$k]] .= parsetemplate($EmpireRowTPL, $data);
 		}
 
 		foreach ($resource as $i => $res)
 		{
 			$data['text'] = ($p[$resource[$i]] == 0 && $CurrentUser[$resource[$i]] == 0) ? '-' : ((in_array($i, $reslist['build'])) ? "<a href=\"game.php?page=buildings&cp={$p['id']}&amp;re=0&amp;planettype={$p['planet_type']}\">{$p[$resource[$i]]}</a>" : ((in_array($i, $reslist['tech'])) ? "<a href=\"game.php?page=buildings&mode=research&cp={$p['id']}&amp;re=0&amp;planettype={$p['planet_type']}\">{$CurrentUser[$resource[$i]]}</a>" : ((in_array($i, $reslist['fleet'])) ? "<a href=\"game.php?page=buildings&mode=fleet&cp={$p['id']}&amp;re=0&amp;planettype={$p['planet_type']}\">{$p[$resource[$i]]}</a>" : ((in_array($i, $reslist['defense'])) ? "<a href=\"game.php?page=buildings&mode=defense&cp={$p['id']}&amp;re=0&amp;planettype={$p['planet_type']}\">{$p[$resource[$i]]}</a>" : '-'))));
-			$r[$i] .= parsetemplate(gettemplate('empire/empire_row'), $data);
+			$r[$i] .= parsetemplate($EmpireRowTPL, $data);
 		}
 	}
 
@@ -74,7 +75,7 @@ function ShowImperiumPage($CurrentUser)
 		foreach ($reslist[$m[$j]] as $a => $i)
 		{
 			$data['text'] = $lang['tech'][$i];
-			$parse[$n[$j]] .= "<tr>" . parsetemplate(gettemplate('empire/empire_row'), $data) . $r[$i] . "</tr>";
+			$parse[$n[$j]] .= "<tr>" . parsetemplate($EmpireRowTPL, $data) . $r[$i] . "</tr>";
 		}
 	}
 

@@ -101,6 +101,7 @@ class ShowOfficierPage
 		else
 		{
 			$parse['alv_points']   	= floor($CurrentUser['darkmatter'] / 1000);
+			$officier_row_template=gettemplate('officier/officier_row');
 			foreach($lang['tech'] as $Element => $ElementName)
 			{
 				$Result = $this->IsOfficierAccessible ($CurrentUser, $Element);
@@ -124,7 +125,7 @@ class ShowOfficierPage
 						$bloc['off_link'] = "<font color=\"red\">".$lang['of_max_lvl']."</font>";
 					}
 
-					$parse['disp_off_tbl'] .= parsetemplate( gettemplate('officier/officier_row'), $bloc );
+					$parse['disp_off_tbl'] .= parsetemplate( $officier_row_template , $bloc );
 				}
 			}
 			$page = parsetemplate( gettemplate('officier/officier_table'), $parse);

@@ -104,7 +104,7 @@ function ShowFleet1Page($CurrentUser, $CurrentPlanet)
 
 	if ($CurrentUser['fleet_shortcut'])
 	{
-		$scarray = explode("\r\n", $CurrentUser['fleet_shortcut']);
+		$scarray = explode(";", $CurrentUser['fleet_shortcut']);
 		$i = 0;
 		foreach ($scarray as $a => $b)
 		{

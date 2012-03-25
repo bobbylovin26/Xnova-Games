@@ -35,9 +35,9 @@ function doit (order, galaxy, system, planet, planettype, shipcount) {
 	ajax.requestFile = "FleetAjax.php?action=send";
 	ajax.runResponse = whenResponse;
 	ajax.execute = true;
-	ajax.setVar("thisgalaxy", {galaxy});
-	ajax.setVar("thissystem", {system});
-	ajax.setVar("thisplanet", {planet});
+	ajax.setVar("thisgalaxy", {current_galaxy});
+    ajax.setVar("thissystem", {current_system});
+    ajax.setVar("thisplanet", {current_planet});  
 	ajax.setVar("thisplanettype", {planet_type});
 	ajax.setVar("mission", order);
 	ajax.setVar("galaxy", galaxy);

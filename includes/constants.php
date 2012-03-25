@@ -55,6 +55,9 @@ if ( !defined('INSIDE') ) die(header("location:../"));
 	// PERCENTAGE OF RESOURCES THAT CAN BE OVER STORED
 	// 1.0 TO 100% - 1.1% FOR 110 AND SO ON
 	define('MAX_OVERFLOW'             , 1);
+	
+	//PLANET SIZE MULTIPLER
+	define('PLANETSIZE_MULTIPLER',1);
 
 	// INITIAL RESOURCE OF NEW PLANETS
 	define('BASE_STORAGE_SIZE'        , 100000);
@@ -77,5 +80,9 @@ if ( !defined('INSIDE') ) die(header("location:../"));
 
 	// TRADER DARK MATTER DEFAULT VALUE
 	define('TR_DARK_MATTER'			  ,   2500);
+	
+	// INVISIBLES DEBRIS
+	define('DEBRIS_LIFE_TIME'      ,   604800);	
+	define('DEBRIS_MIN_VISIBLE_SIZE', 300);
 
 ?>

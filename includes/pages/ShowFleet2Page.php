@@ -32,6 +32,7 @@ function ShowFleet2Page($CurrentUser, $CurrentPlanet)
 
 	$YourPlanet 	= false;
 	$UsedPlanet 	= false;
+	/* OLD SELECT WAY
 	$select       	= doquery("SELECT `id_owner`,`galaxy`,`system`,`planet`,`planet_type` FROM `{{table}}`", "planets");
 
 	while ($row = mysql_fetch_array($select))
@@ -48,7 +49,22 @@ function ShowFleet2Page($CurrentUser, $CurrentPlanet)
 
 			break;
 		}
+	}*/
+	
+	//New way (Way better) - START FIX [jtsamper/think]
+   $select        = doquery("SELECT `id_owner` FROM `{{table}}` WHERE galaxy = '$galaxy' AND system = '$system' AND planet = '$planet' AND planet_type = '$planettype'", "planets",true);
+
+	if($select)
+	{
+		if ($select['id_owner'] == $CurrentUser['id'])
+		{
+			$YourPlanet = true;
+			$UsedPlanet = true;
+		}
+		else
+			$UsedPlanet = true;
 	}
+	//END FIX
 
 	if ($_POST['planettype'] == 2)
 	{
@@ -100,10 +116,13 @@ function ShowFleet2Page($CurrentUser, $CurrentPlanet)
 	if ($YourPlanet)
 		$missiontype[4] = $lang['type_mission'][4];
 
-	if (($_POST['planettype'] == 3 || $_POST['planettype'] == 1) && ($fleet_group_mr > 0) && ($UsedPlanet))
-	{
-		$missiontype[2] = $lang['type_mission'][2];
-	}
+	// fixed by tomtom
+	if ($_POST['planettype'] == 3 || $_POST['planettype'] == 1 && ($fleet_group_mr > 0) && $UsedPlanet)
+    {
+        $aks = doquery("SELECT * FROM `{{table}}` WHERE `id`= ".$fleet_group_mr."", "aks", true);
+        if ($aks['galaxy'] == $galaxy && $aks['planet'] == $planet && $aks['system'] == $system && $aks['planet_type'] == $planettype)
+            $missiontype[2] = $lang['type_mission'][2];
+    } 
 
 	if($_POST['planettype'] == 3 && $_POST['ship214'] >= 1 && !$YourPlanet && $UsedPlanet && $CurrentUser['rpg_empereur'] == 1)
 		$missiontype[9] = $lang['type_mission'][9];
@@ -189,21 +208,6 @@ function ShowFleet2Page($CurrentUser, $CurrentPlanet)
 	$parse['input_extra'] 			= $input_extra;
 	$parse['missionselector'] 		= $MissionSelector;
 
-	if ($planet == 16)
-	{
-		$StayBlock .= "<tr height=\"20\">";
-		$StayBlock .= "<td class=\"c\" colspan=\"3\">".$lang['fl_hold_time']."</td>";
-		$StayBlock .= "</tr>";
-		$StayBlock .= "<tr height=\"20\">";
-		$StayBlock .= "<th colspan=\"3\">";
-		$StayBlock .= "<select name=\"expeditiontime\" >";
-		$StayBlock .= "<option value=\"1\">1</option>";
-		$StayBlock .= "<option value=\"2\">2</option>";
-		$StayBlock .= "</select>";
-		$StayBlock .= "hora(s)";
-		$StayBlock .= "</th>";
-		$StayBlock .= "</tr>";
-	}
 	if ($planet == 16)
 	{
 		$StayBlock .= "<tr height=\"20\">";

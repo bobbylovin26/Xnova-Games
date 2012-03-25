@@ -26,7 +26,10 @@ function ShowTechTreePage($CurrentUser, $CurrentPlanet)
 	global $resource, $requeriments, $lang;
 
 	$parse = $lang;
-
+	
+	$TechTreeHeadTPL=gettemplate('techtree/techtree_head');
+	$TechTreeRowTPL =gettemplate('techtree/techtree_row');
+	
 	foreach($lang['tech'] as $Element => $ElementName)
 	{
 		$parse            = array();
@@ -35,7 +38,7 @@ function ShowTechTreePage($CurrentUser, $CurrentPlanet)
 		if (!isset($resource[$Element]))
 		{
 			$parse['Requirements']  = $lang['tt_requirements'];
-			$page                  .= parsetemplate(gettemplate('techtree/techtree_head'), $parse);
+			$page                  .= parsetemplate($TechTreeHeadTPL, $parse);
 		}
 		else
 		{
@@ -61,7 +64,7 @@ function ShowTechTreePage($CurrentUser, $CurrentPlanet)
 				$parse['tt_detail']     = "";
 			}
 			$parse['tt_info']   = $Element;
-			$page              .= parsetemplate(gettemplate('techtree/techtree_row'), $parse);
+			$page              .= parsetemplate($TechTreeRowTPL, $parse);
 		}
 	}
 

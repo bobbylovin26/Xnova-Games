@@ -115,6 +115,7 @@ function ShowNotesPage($CurrentUser)
 
 			$count = 0;
 
+			$NotesBodyEntryTPL=gettemplate('notes/notes_body_entry');
 			while($note = mysql_fetch_array($notes_query))
 			{
 				$count++;
@@ -128,7 +129,7 @@ function ShowNotesPage($CurrentUser)
 				$parse['NOTE_TITLE'] 	= $note['title'];
 				$parse['NOTE_TEXT'] 	= strlen($note['text']);
 
-				$list .= parsetemplate(gettemplate('notes/notes_body_entry'), $parse);
+				$list .= parsetemplate($NotesBodyEntryTPL, $parse);
 
 			}
 

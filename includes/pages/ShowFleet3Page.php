@@ -70,6 +70,7 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 
 	foreach ($fleetarray as $Ship => $Count)
 	{
+		$Count = intval($Count);
 		if ($Count > $CurrentPlanet[$resource[$Ship]])
 			exit(header("location:game." . $phpEx . "?page=fleet"));
 	}
@@ -82,7 +83,7 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 	$fleetmission       = intval($_POST['mission']);
 
 	//fix by jstar
-	if ( $fleetmission == 7 && ( count ( $fleetarray ) != 1 or !isset($fleetarray[208] ) ) )
+	if ( $fleetmission == 7 && !isset($fleetarray[208]) )
 	{
 		exit(header("location:game." . $phpEx . "?page=fleet"));
 	}
@@ -95,8 +96,8 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 		$YourPlanet = false;
 		$UsedPlanet = false;
 		$select     = doquery("SELECT * FROM {{table}} WHERE galaxy = '". $galaxy ."' AND system = '". $system ."' AND planet = '". $planet ."'", "planets");
-		$select2    = doquery("SELECT metal, crystal FROM {{table}} WHERE galaxy = '". $galaxy ."' AND system = '". $system ."' AND planet = '". $planet ."'", "galaxy",true);
-		if($select2['metal'] == 0 && $select2['crystal'] == 0)
+		$select2    = doquery("SELECT invisible_start_time, metal, crystal FROM {{table}} WHERE galaxy = '". $galaxy ."' AND system = '". $system ."' AND planet = '". $planet ."'", "galaxy",true);
+		if($select2['metal'] == 0 && $select2['crystal'] == 0 && time() > ($select2['invisible_start_time']+DEBRIS_LIFE_TIME))
 		{
 			exit(header("location:game." . $phpEx . "?page=fleet"));
 		}
@@ -349,18 +350,22 @@ function ShowFleet3Page($CurrentUser, $CurrentPlanet)
 	$fleet_array         = "";
 	$FleetSubQRY         = "";
 
+	//fix by jstar
+	$haveSpyProbos=false;
 	foreach ($fleetarray as $Ship => $Count)
 	{
-		if($Ship != 210 && $_POST['mission'] == 6)
-		{
-			exit(header("location:game." . $phpEx . "?page=fleet"));
-		}
+		$Count = intval($Count);
+		
+		if($Ship == 210)
+        	$haveSpyProbos=true;  
 
 		$FleetStorage    += $pricelist[$Ship]["capacity"] * $Count;
 		$FleetShipCount  += $Count;
 		$fleet_array     .= $Ship .",". $Count .";";
 		$FleetSubQRY     .= "`".$resource[$Ship] . "` = `" . $resource[$Ship] . "` - " . $Count . ", ";
 	}
+	if(!$haveSpyProbos AND $_POST['mission'] == 6)
+      exit(header("location:game." . $phpEx . "?page=fleet"));
 
 	$FleetStorage        -= $consumption;
 	$StorageNeeded        = 0;

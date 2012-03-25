@@ -223,7 +223,7 @@ if ( defined('INSIDE'))
 		211 => array ( 'metal' =>    50000, 'crystal' =>    25000, 'deuterium' =>   15000, 'energy' => 0, 'factor' => 1, 'consumption' => 500 , 'consumption2' => 500 , 'speed' =>      4000, 'speed2' =>      5000, 'capacity' =>      500 ),
 		212 => array ( 'metal' =>        0, 'crystal' =>     2000, 'deuterium' =>     500, 'energy' => 0, 'factor' => 1, 'consumption' => 0   , 'consumption2' => 0   , 'speed' =>         0, 'speed2' =>         0, 'capacity' =>        0 ),
 		213 => array ( 'metal' =>    60000, 'crystal' =>    50000, 'deuterium' =>   15000, 'energy' => 0, 'factor' => 1, 'consumption' => 500 , 'consumption2' => 500 , 'speed' =>      5000, 'speed2' =>      5000, 'capacity' =>     2000 ),
-		214 => array ( 'metal' =>  5000000, 'crystal' =>  4000000, 'deuterium' => 1000000, 'energy' => 0, 'factor' => 1, 'consumption' => 1   , 'consumption2' => 1   , 'speed' =>       200, 'speed2' =>       200, 'capacity' =>  1000000 ),
+		214 => array ( 'metal' =>  5000000, 'crystal' =>  4000000, 'deuterium' => 1000000, 'energy' => 0, 'factor' => 1, 'consumption' => 1   , 'consumption2' => 1   , 'speed' =>       100, 'speed2' =>       100, 'capacity' =>  1000000 ),
 		215 => array ( 'metal' =>    30000, 'crystal' =>    40000, 'deuterium' =>   15000, 'energy' => 0, 'factor' => 1, 'consumption' => 125 , 'consumption2' => 125 , 'speed' =>     10000, 'speed2' =>     10000, 'capacity' =>      750 ),
         216 => array ( 'metal' => 10000000, 'crystal' =>  8000000, 'deuterium' => 4000000, 'energy' => 0, 'factor' => 1, 'consumption' => 3000, 'consumption2' => 3000, 'speed' =>       300, 'speed2' =>       300, 'capacity' =>  2000000 ),
 
@@ -258,7 +258,7 @@ if ( defined('INSIDE'))
 	);
 
 	$CombatCaps = array(
-		202 => array ( 'shield' =>    10, 'attack' =>      5, 'sd' => array (202 =>   0, 203 =>   0, 204 =>   0, 205 =>   0, 206 =>   0, 207 =>   0, 208 =>   0, 209 =>   0, 210 =>    5, 211 =>   0, 212 =>    5, 213 =>   0, 214 =>   0, 215 =>   0, 216 =>   0, 401 =>   0, 402 =>   0, 403 =>   0, 404 =>   0, 405 =>   0, 406 =>   0, 407 =>   0, 408 =>   0, 409 =>  1)),
+		202 => array ( 'shield' =>    10, 'attack' =>      5, 'sd' => array (202 =>   0, 203 =>   0, 204 =>   0, 205 =>   0, 206 =>   0, 207 =>   0, 208 =>   0, 209 =>   0, 210 =>    5, 211 =>   0, 212 =>    5, 213 =>   0, 214 =>   0, 215 =>   0, 216 =>   0, 401 =>   0, 402 =>   0, 403 =>   0, 404 =>   0, 405 =>   0, 406 =>   0, 407 =>   0, 408 =>   0, 409 =>  0)),
 		203 => array ( 'shield' =>    25, 'attack' =>      5, 'sd' => array (202 =>   0, 203 =>   0, 204 =>   0, 205 =>   0, 206 =>   0, 207 =>   0, 208 =>   0, 209 =>   0, 210 =>    5, 211 =>   0, 212 =>    5, 213 =>   0, 214 =>   0, 215 =>   0, 216 =>   0, 401 =>   0, 402 =>   0, 403 =>   0, 404 =>   0, 405 =>   0, 406 =>   0, 407 =>   0, 408 =>   0, 409 =>  0)),
 		204 => array ( 'shield' =>    10, 'attack' =>     50, 'sd' => array (202 =>   2, 203 =>   0, 204 =>   0, 205 =>   0, 206 =>   0, 207 =>   0, 208 =>   0, 209 =>   0, 210 =>    5, 211 =>   0, 212 =>    5, 213 =>   0, 214 =>   0, 215 =>   0, 216 =>   0, 401 =>   0, 402 =>   0, 403 =>   0, 404 =>   0, 405 =>   0, 406 =>   0, 407 =>   0, 408 =>   0, 409 =>  0)),
 		205 => array ( 'shield' =>    25, 'attack' =>    150, 'sd' => array (202 =>   3, 203 =>   0, 204 =>   0, 205 =>   0, 206 =>   0, 207 =>   0, 208 =>   0, 209 =>   0, 210 =>    5, 211 =>   0, 212 =>    5, 213 =>   0, 214 =>   0, 215 =>   0, 216 =>   0, 401 =>   0, 402 =>   0, 403 =>   0, 404 =>   0, 405 =>   0, 406 =>   0, 407 =>   0, 408 =>   0, 409 =>  0)),
@@ -311,7 +311,7 @@ if ( defined('INSIDE'))
 				'metal'     => 'return   "0";',
 				'crystal'   => 'return   "0";',
 				'deuterium' => 'return  ((10 * $BuildLevel * pow((1.1), $BuildLevel)) * (-0.002 * $BuildTemp + 1.28))  * (0.1 * $BuildLevelFactor);',
-				'energy'    => 'return - (30 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);')
+				'energy'    => 'return - (20 * $BuildLevel * pow((1.1), $BuildLevel)) * (0.1 * $BuildLevelFactor);')
                 ),
 
 		4   => array( 'metal' =>   50, 'crystal' =>   20, 'deuterium' =>    0, 'energy' => 0, 'factor' => 3/2,

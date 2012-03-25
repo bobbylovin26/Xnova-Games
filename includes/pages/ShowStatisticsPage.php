@@ -122,7 +122,7 @@ function ShowStatisticsPage($CurrentUser)
 		$parse['stat_date']   = date("Y-m-d, H:i:s",$game_config['stat_last_update']);
 		$parse['stat_values'] = "";
 		$query = doquery($stats_sql, '');
-
+		$StatAllianceTableTPL=gettemplate('stat/stat_alliancetable');
 		while ($StatRow = mysql_fetch_assoc($query))
 		{
 			$parse['ally_rank']       = $start;
@@ -157,7 +157,7 @@ function ShowStatisticsPage($CurrentUser)
 			$parse['ally_members']    	  = $StatRow['ally_members'];
 			$parse['ally_points']     	  = pretty_number( $StatRow[ $Order ] );
 			$parse['ally_members_points'] =  pretty_number( floor($StatRow[ $Order ] / $StatRow['ally_members']) );
-			$parse['stat_values']    	 .= parsetemplate(gettemplate('stat/stat_alliancetable'), $parse);
+			$parse['stat_values']    	 .= parsetemplate($StatAllianceTableTPL, $parse);
 			$start++;
 		}
 	}
@@ -198,7 +198,7 @@ function ShowStatisticsPage($CurrentUser)
 		$parse['stat_values'] = "";
 
 		$previusId = 0;
-
+		$StatPlayerTableTPL=gettemplate('stat/stat_playertable');
 		while ($StatRow = mysql_fetch_assoc($query))
 		{
 			$parse['player_rank']     = $start;
@@ -246,7 +246,7 @@ function ShowStatisticsPage($CurrentUser)
 					$parse['player_alliance'] = "<a href=\"game.php?page=alliance&mode=ainfo&a=".$StatRow['ally_id']."\">".$StatRow['ally_name']."</a>";
 				}
 				$parse['player_points']   = pretty_number( $StatRow[ $Order ] );
-				$parse['stat_values']    .= parsetemplate(gettemplate('stat/stat_playertable'), $parse);
+				$parse['stat_values']    .= parsetemplate($StatPlayerTableTPL, $parse);
 				$start++;
 			}
 		}

@@ -4,6 +4,42 @@ $lang['Version']     = 'Versión';
 $lang['Description'] = 'Descripción';
 $lang['changelog']   = array(
 
+'2.9.10' => ' 09/01/11
+*** foundation of the development team (Lucky,Green,Think,Jstar) ***
+
+-[Mejoras]
+Incluido un class.ShowInfosPage.php optimizado (by Think).-
+Optimizada importantemente la 2ª página de lanzamiento de flota (by jtsamper/Think)
+Incluído idioma francés (by Mizur).-
+Código repetido en class.ShowShipyardPage.php (by Alivan).-
+Rewritten ShowShortcutsPages.php with new 3 templates (by Jstar).-
+Less tpl-loads from HDD in some files (by Jstar).-
+Deleted unnecessary and heavy protection system in generalFunction.php (by Jstar).-
+Invisible debris like ogame (by Jstar).-
+
+-[Fixs]
+Arreglado un error con el nivel de edificio construyendo al cancelar en la cola de construcción (by Think)
+Se pueden hacer saltar satélites solares por el salto cuántico (by Think)
+Agujero de seguridad en flotas (by Think).-
+Formula de energía del sint. de deuterio (by Think).-
+Un SAC diferentes destinos (by Tomtom).-
+FIX expedicion nunca es destruida completamente (by Tomtom,Think).-
+No llega el informe de batalla (by Lucky,Think).-
+Deathstar speed (by Jstar).-
+Ships disappeared in spy mission (by Jstar).-
+Rapid fire of small cargo (by Jstar).-
+Old code not deleted (by Jstar).-
+Edit moon in ACP (by Jstar).-
+Buildings for free (by Jstar).-
+Planets destroyed don\'t disappear (by Jstar).-
+Planet size (by Jstar).-
+Player position and alliance total points in search page.-
+Hyperspace Portal redirect (by Quaua).-
+Varios fix time (by Quaua).-
+Send Fleet Back after AKS (youhou35).-
+
+',
+
 '2.9.9' => ' 09/01/11
 
 -[Seguridad]

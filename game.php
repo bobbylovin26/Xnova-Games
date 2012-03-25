@@ -81,8 +81,8 @@ switch($_GET[page])
 		ShowFleetACSPage($user, $planetrow);
 	break;
 	case'shortcuts':
-		include_once($xgp_root . 'includes/pages/ShowFleetShortcuts.' . $phpEx);
-		ShowFleetShortcuts($user);
+		include_once($xgp_root . 'includes/pages/class.ShowFleetShortcuts.' . $phpEx);
+		new ShowFleetShortcuts($user);
 	break;
 // ----------------------------------------------------------------------------------------------------------------------------------------------//
 	case'buildings':

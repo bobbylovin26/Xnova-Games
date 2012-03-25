@@ -384,8 +384,10 @@ switch($_GET[page])
 								$Sum	=	$mondbasis * FIELDS_BY_MOONBASIS_LEVEL;
 								//doquery("UPDATE {{table}} SET `field_max` = field_max + '".$Sum."', `field_current` = field_current + '".$mondbasis."'", "planets");
 								// FIX START BY alivan
-								doquery("UPDATE {{table}} SET `field_max` = field_max '".$Sum."', `field_current` = field_current '".$mondbasis."' WHERE `id` = '". $id ."'", "planets");
+								//doquery("UPDATE {{table}} SET `field_max` = field_max '".$Sum."', `field_current` = field_current '".$mondbasis."' WHERE `id` = '". $id ."'", "planets");
 								// FIX END BY alivan
+								//fix by jstar lol
+								doquery("UPDATE {{table}} SET `field_max` = field_max + '".$Sum."', `field_current` = field_current + '".$mondbasis."' WHERE `id` = '". $id ."'", "planets");
 							}
 						}
 						else
@@ -437,8 +439,10 @@ switch($_GET[page])
 								$Sum	=	$mondbasis * FIELDS_BY_MOONBASIS_LEVEL;
 								//doquery("UPDATE {{table}} SET `field_max` = field_max - '".$Sum."', `field_current` = field_current - '".$mondbasis."'", "planets");
 								// FIX START BY alivan
-								doquery("UPDATE {{table}} SET `field_max` = field_max - '".$Sum."', `field_current` = field_current - '".$mondbasis."' WHERE `id` = '". $id ."'", "planets");
+								//doquery("UPDATE {{table}} SET `field_max` = field_max - '".$Sum."', `field_current` = field_current - '".$mondbasis."' WHERE `id` = '". $id ."'", "planets");
 								// FIX END BY alivan
+								//fix by jstar
+								doquery("UPDATE {{table}} SET `field_max` = field_max - '".$Sum."', `field_current` = field_current - '".$mondbasis."' WHERE `id` = '". $id ."'", "planets");
 							}
 						}
 						else

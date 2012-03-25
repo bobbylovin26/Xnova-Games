@@ -62,14 +62,14 @@ class GalaxyRows
 		doquery("DELETE FROM {{table}} WHERE `id` = ".intval($lunarow['id'])."", 'planets');
 	}
 
-	public function CheckAbandonPlanetState(&$planet)
-	{
-		if ($planet['destruyed'] <= time())
-		{
-			doquery("DELETE FROM {{table}} WHERE `id_planet` = '".intval($planet['id'])."' LIMIT 1;" , 'galaxy');
-			doquery("DELETE FROM {{table}} WHERE `id` = ".intval($planet['id'])."", 'planets');
-		}
-	}
+   public function CheckAbandonPlanetState(&$planet)
+    {
+        if ($planet['destruyed'] <= time())
+        {
+            doquery("DELETE FROM {{table}} WHERE `id_planet` = '".$planet['id_planet']."' LIMIT 1;" , 'galaxy');
+            doquery("DELETE FROM {{table}} WHERE `id` = '".$planet['id_planet']."'", 'planets');
+        }
+    }
 
 	public function GalaxyRowActions($GalaxyInfo, $Galaxy, $System, $Planet, $CurrentGalaxy, $CurrentSystem, $CurrentMIP)
 	{
@@ -220,7 +220,7 @@ class GalaxyRows
 		$Result  = "<th style=\"white-space: nowrap;\" width=30>";
 		if ($GalaxyInfo)
 		{
-			if ($GalaxyInfo["metal"] != 0 || $GalaxyInfo["crystal"] != 0)
+			if ($GalaxyInfo["metal"]+$GalaxyInfo["crystal"] >= DEBRIS_MIN_VISIBLE_SIZE)
 			{
 				$RecNeeded = ceil(($GalaxyInfo["metal"] + $GalaxyInfo["crystal"]) / $pricelist[209]['capacity']);
 

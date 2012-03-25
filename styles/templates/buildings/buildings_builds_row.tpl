@@ -9,7 +9,6 @@
 		{descriptions}<br>
 		{price}
 		{time}
-		{rest_price}
 	</td>
 	<td class="k">{click}</td>
 </tr>

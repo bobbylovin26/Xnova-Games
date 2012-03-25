@@ -19,6 +19,7 @@
 # *																			 #
 ##############################################################################
 
+/* no needed
 $_POST 		=	array_map ( 'deep' , $_POST );
 $_POST 		= 	array_map ( 'addslashes_deep' , $_POST );
 $_GET 		= 	array_map ( 'deep' ,  $_GET );
@@ -41,7 +42,7 @@ function  addslashes_deep ( $value )
 	$value = is_array($value) ?  array_map('addslashes_deep', $value) : addslashes($value);
 	return $value;
 }
-
+*/
 function unset_vars( $prefix )
 {
 	$vars = array_keys($GLOBALS);
